@@ -33,7 +33,7 @@
   - [ ] Parallax sensor values are wrong sometimes
   - [ ] Dialer rotating back to it's original state sometimes causes resource and input lock
   - [x] ~~Updating sensor values in the background **Handler Thread** to free up the UI load~~ <br/>
-      <sub>**(21 Oct, 2020)** - Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI and communication delay lag<sub>
+      <sub>**(21 Oct, 2020)** - Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI lag and communication delay<sub>
   
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
