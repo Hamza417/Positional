@@ -1,0 +1,19 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="bottom_sheet_list_item_height">48dp</dimen>
+    <dimen name="bottom_sheet_title_height">56dp</dimen>
+    <dimen name="bottom_sheet_padding_horizontal">16dp</dimen>
+    <dimen name="bottom_sheet_list_item_text_size">16sp</dimen>
+    <dimen name="bottom_sheet_title_text_size">16sp</dimen>
+
+    <dimen name="compass_details_text_size">14sp</dimen>
+    <dimen name="compass_details_accuracy_min_width">48dp</dimen>
+    <dimen name="compass_details_mode_min_width">72dp</dimen>
+
+    <dimen name="location_stat_row_gap_horizontal">16dp</dimen>
+    <dimen name="location_stat_row_gap_vertical">24dp</dimen>
+    <dimen name="location_stat_row_image_size">24dp</dimen>
+</resources>

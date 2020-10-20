@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="textPrimary" format="color" />
+    <attr name="textSecondary" format="color" />
+    <attr name="appAccent" format="color" />
+    <attr name="iconColor" format="color" />
+    <attr name="rippleColor" format="color" />
+    <attr name="mainBackground" format="color" />
+    <attr name="dividerColor" format="color" />
+
+    <declare-styleable name="ParallaxImageView">
+        <attr name="intensity" format="float" />
+        <attr name="tiltSensitivity" format="float" />
+        <attr name="forwardTiltOffset" format="float" />
+        <attr name="scaledIntensity" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ElevationImageView">
+        <attr name="compatElevation" format="dimension" />
+        <attr name="clipShadow" format="boolean" />
+        <attr name="isTranslucent" format="boolean" />
+        <attr name="forceClip" format="boolean" />
+    </declare-styleable>
+</resources>
