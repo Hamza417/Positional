@@ -31,5 +31,10 @@
   - [x] ~~Updating sensor values in the background **Handler Thread** to free up the UI load~~ <br/>
       <sub>**(21 Oct, 2020)** - Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI and communication delay lag<sub>
   
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+  
 ## License
   <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
