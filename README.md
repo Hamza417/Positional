@@ -28,7 +28,7 @@
   - [ ] Swipeable interface
 
  ### Least priority
-  - [ ] Simplifying interface by adding few indicators refering the current visible screens
+  - [ ] Simplifying interface by adding few indicators refering the currently visible screen
   - [ ] Set of icons to choose from
 
 ## Known Issues (so far)
