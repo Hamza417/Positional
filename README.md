@@ -2,7 +2,7 @@
 
   A very flexible and customizable location related information app..
 
-  ![alt text](https://github.com/Hamza417/Positional/blob/master/poster.png?raw=false)
+  ![banner](https://github.com/Hamza417/Positional/blob/master/poster.png?raw=false)
 
 
 <br/>
@@ -15,13 +15,16 @@
 
 <br/>
 
+## Screenshots
+![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png?raw=false) ![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png?raw=false) ![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png?raw=false) ![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png?raw=false) ![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png?raw=false)
+
 ## Features
   * Easy to use<br/>
   * Smooth, with fluid animations<br/>
   * Minimal UI<br/>
   * Parallax effect<br/>
   * Customisable with various options to choose from<br/>
-  * Flexible, options for different elements can be choosen seprately or can be disabled entirely<br/>
+  * Flexible, options for different elements can be chosen separately or can be disabled entirely<br/>
   * Torch
 
 <br/>
@@ -29,13 +32,13 @@
 ## Features yet to be added
 
    #### Most Priority
-  - [ ] GPS information panel
+  - [x] ~~GPS information panel~~
   - [ ] Dark Mode - Providing options for skins made this part a bit complicated
   - [ ] A separate fragment for torch
-  - [ ] Swipeable interface
+  - [x] ~~Swipe-able interface~~
 
    #### Least priority
-  - [ ] Simplifying interface by adding few indicators refering the currently visible screen
+  - [ ] Simplifying interface by adding few indicators referring the currently visible screen
   - [ ] Set of icons to choose from
 
 <br/>
