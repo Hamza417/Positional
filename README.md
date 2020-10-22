@@ -10,7 +10,7 @@
 ## Stats
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Download](https://badgen.net/badge/Download/v1.0-beta/grey?icon=https://svgshare.com/i/Qk3.svg)](https://github.com/Hamza417/Positional/releases/tag/v1.0-beta)
+[![Download](https://badgen.net/badge/Download/v1.1-beta/grey?icon=https://svgshare.com/i/Qk3.svg)](https://github.com/Hamza417/Positional/releases/tag/v1.1-beta)
 ![Status](https://badgen.net/badge/Status/beta/orange?icon)
 
 <br/>
