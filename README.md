@@ -36,12 +36,14 @@
    #### Most Priority
   - [x] ~~GPS information panel~~
   - [ ] Dark Mode - Providing options for skins made this part a bit complicated
-  - [ ] A separate fragment for torch
-  - [ ] A unified integrated location provider
+  - [ ] Speedometer
+  - [x] ~~A separate fragment for torch~~ <br/>
+        <sub>not feasible for a GPS app</sub>
+  - [x] ~~A unified integrated location provider library~~
   - [x] ~~Swipe-able interface~~
 
    #### Least priority
-  - [ ] Simplifying interface by adding few indicators referring the currently visible screen
+  - [x] ~~Simplifying interface by adding few indicators referring the currently visible screen~~
   - [ ] Set of icons to choose from
 
 <br/>
@@ -64,6 +66,8 @@ Please make sure to update tests as appropriate.
 
 ## Libraries Used
 * [Material Popup Menu](https://github.com/zawadz88/MaterialPopupMenu) by **Piotr Zawadzki**
+* [Material View Pager Dots Indicator](https://github.com/tommybuonomo/dotsindicator) by **Tommy Buonomo**
+* [commons-suncalc](https://github.com/shred/commons-suncalc) by **Richard Körber**
   
 <br/>
 
