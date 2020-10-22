@@ -36,7 +36,7 @@
    #### Most Priority
   - [x] ~~GPS information panel~~
   - [ ] Dark Mode - Providing options for skins made this part a bit complicated
-  - [x] Speedometer
+  - [x] ~~Speedometer~~
   - [x] ~~A separate fragment for torch~~ <br/>
         <sub>not feasible for a GPS app</sub>
   - [x] ~~A unified integrated location provider library~~
