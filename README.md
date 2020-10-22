@@ -16,7 +16,7 @@
 <br/>
 
 ## Screenshots
-![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png?raw=false) ![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png?raw=false) ![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png?raw=false) ![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png?raw=false) ![01](https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png?raw=false)
+<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="20%">
 
 ## Features
   * Easy to use<br/>
