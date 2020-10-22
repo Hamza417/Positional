@@ -320,12 +320,16 @@ class Compass : Fragment(), SensorEventListener {
                         label = "Torch"
                         icon = if (isTorchOn) R.drawable.ic_flash_off else R.drawable.ic_flash_on
                         callback = {
-                            if (!isTorchOn) {
-                                cameraManager.setTorchMode(cameraId, true)
-                                isTorchOn = true
+                            isTorchOn = if (!isTorchOn) {
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                                    cameraManager.setTorchMode(cameraId, true)
+                                }
+                                true
                             } else {
-                                cameraManager.setTorchMode(cameraId, false)
-                                isTorchOn = false
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                                    cameraManager.setTorchMode(cameraId, false)
+                                }
+                                false
                             }
                         }
                     }
@@ -436,6 +440,7 @@ class Compass : Fragment(), SensorEventListener {
     }
 
     private fun register() {
+        if (context == null) return
         sensorManager.registerListener(this, sensorAccelerometer, sensorDelay)
         sensorManager.registerListener(this, sensorMagneticField, sensorDelay)
         if (CompassPreference().getParallax(requireContext())) {
@@ -444,6 +449,7 @@ class Compass : Fragment(), SensorEventListener {
     }
 
     private fun unregister() {
+        if (context == null) return
         sensorManager.unregisterListener(this, sensorAccelerometer)
         sensorManager.unregisterListener(this, sensorMagneticField)
         if (CompassPreference().getParallax(requireContext())) {
@@ -518,18 +524,22 @@ class Compass : Fragment(), SensorEventListener {
         override fun onTouch(v: View?, event: MotionEvent): Boolean {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    handler.removeCallbacksAndMessages(null)
                     startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dial.width.toFloat(), dial.height.toFloat())
+                    return true
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val currentAngle: Double = getAngle(event.x.toDouble(), event.y.toDouble(), dial.width.toFloat(), dial.height.toFloat())
                     rotateDial((startAngle - currentAngle).toFloat())
 
                     //startAngle = currentAngle
+                    return true
                 }
                 MotionEvent.ACTION_UP -> {
                     if (rotateWhich != 2 || rotateWhich != 3) {
                         handler.postDelayed({ animate(dial, 0f) }, 1000)
                     }
+                    return true
                 }
             }
             //detector.onTouchEvent(event)

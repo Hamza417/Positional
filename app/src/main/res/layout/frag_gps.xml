@@ -90,12 +90,180 @@
                             android:layout_marginHorizontal="5dp"
                             android:layout_marginTop="5dp"
                             android:fontFamily="sans-serif-medium"
+                            android:text="Provider"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="6pt" />
+
+                        <com.elyeproj.loaderviewlibrary.LoaderTextView
+                            android:id="@+id/gps_provider"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="sans-serif-light"
+                            android:maxLines="1"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="22pt"
+                            app:corners="20"
+                            app:use_gradient="true" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:elevation="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:contentPadding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="sans-serif-medium"
                             android:text="Accuracy"
                             android:textColor="?attr/textPrimary"
                             android:textSize="6pt" />
 
                         <com.elyeproj.loaderviewlibrary.LoaderTextView
                             android:id="@+id/gps_accuracy"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="sans-serif-light"
+                            android:maxLines="1"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="22pt"
+                            app:corners="20"
+                            app:use_gradient="true" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:elevation="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:contentPadding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Altitude"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="6pt" />
+
+                        <com.elyeproj.loaderviewlibrary.LoaderTextView
+                            android:id="@+id/gps_altitude"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="sans-serif-light"
+                            android:maxLines="1"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="22pt"
+                            app:corners="20"
+                            app:use_gradient="true" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:elevation="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:contentPadding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Bearing"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="6pt" />
+
+                        <com.elyeproj.loaderviewlibrary.LoaderTextView
+                            android:id="@+id/gps_bearing"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="sans-serif-light"
+                            android:maxLines="1"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="22pt"
+                            app:corners="20"
+                            app:use_gradient="true" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:elevation="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:contentPadding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Speed"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="6pt" />
+
+                        <com.elyeproj.loaderviewlibrary.LoaderTextView
+                            android:id="@+id/gps_speed"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"

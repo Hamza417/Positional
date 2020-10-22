@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,12 +17,14 @@ import app.simple.positional.adapters.ModelAdapter;
 public class ViewModel extends Fragment {
     private ViewPager model;
     private ModelAdapter modelAdapter;
+    private WormDotsIndicator wormDotsIndicator;
     
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.frag_view_model, container, false);
         model = v.findViewById(R.id.view_model);
+        wormDotsIndicator = v.findViewById(R.id.dots);
         setRetainInstance(true);
         return v;
     }
@@ -35,27 +39,9 @@ public class ViewModel extends Fragment {
         modelAdapter.addFrag(new GPS(), "GPS");
     
         model.setAdapter(modelAdapter);
-        model.setOffscreenPageLimit(3);
-    
-        if (savedInstanceState != null) {
-            model.setCurrentItem(savedInstanceState.getInt("current_visible_screen", 0));
-        }
-    
-        model.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            
-            }
-        
-            @Override
-            public void onPageSelected(int position) {
-            }
-        
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            
-            }
-        });
+        model.setOffscreenPageLimit(0);
+        model.setCurrentItem(1);
+        wormDotsIndicator.setViewPager(model);
     }
     
     @Override

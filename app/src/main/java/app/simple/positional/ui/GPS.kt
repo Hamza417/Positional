@@ -1,11 +1,13 @@
 package app.simple.positional.ui
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.*
+import android.animation.ValueAnimator
+import android.annotation.SuppressLint
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Handler
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -13,16 +15,20 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
+import app.simple.positional.location.LocalLocationProvider
+import app.simple.positional.location.callbacks.LocationProviderListener
 import app.simple.positional.util.LocationConverter
+import app.simple.positional.util.isNetworkAvailable
+import app.simple.positional.util.round
 import com.elyeproj.loaderviewlibrary.LoaderTextView
 import java.util.*
 
 
-class GPS : Fragment(), LocationListener {
+class GPS : Fragment(), LocationProviderListener {
 
     lateinit var range: ImageView
     lateinit var dot: ImageView
@@ -32,8 +38,15 @@ class GPS : Fragment(), LocationListener {
     lateinit var address: LoaderTextView
     lateinit var latitude: LoaderTextView
     lateinit var longitude: LoaderTextView
+    lateinit var provider: LoaderTextView
+    lateinit var altitude: LoaderTextView
+    lateinit var bearing: LoaderTextView
+    lateinit var speed: LoaderTextView
+    lateinit var handler: Handler
 
-    lateinit var locationManager: LocationManager
+    private var oldAccuracy: Float = 0f
+
+    lateinit var locationProvider: LocalLocationProvider
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_gps, container, false)
@@ -45,50 +58,63 @@ class GPS : Fragment(), LocationListener {
         address = view.findViewById(R.id.gps_address)
         latitude = view.findViewById(R.id.latitude)
         longitude = view.findViewById(R.id.longitude)
+        speed = view.findViewById(R.id.gps_speed)
+        altitude = view.findViewById(R.id.gps_altitude)
+        bearing = view.findViewById(R.id.gps_bearing)
+        provider = view.findViewById(R.id.gps_provider)
 
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        locationProvider = LocalLocationProvider()
+        locationProvider.init(requireActivity(), this)
+        locationProvider.delay = 500
 
-            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                val location: Location? = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-
-                if (location != null) {
-                    onLocationChanged(location)
-                }
-            }
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 1f, this@GPS)
+        handler = Handler()
+        handler.post(repeatAnimation)
 
         return view
     }
 
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(repeatAnimation)
+        locationProvider.removeLocationCallbacks()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        handler.post(repeatAnimation)
+        locationProvider.initLocationCallbacks()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(repeatAnimation)
+    }
+
+    @SuppressLint("SetTextI18n")
     override fun onLocationChanged(location: Location?) {
-        if (location != null) {
-            println(location.accuracy)
+        if (location == null) return
 
-            accuracy.text = "${location.accuracy.toString().substring(0, 4)} m"
+        altitude.text = "${round(location.altitude, 2)} m"
+        speed.text = "${location.speed}"
+        bearing.text = "${location.bearing}"
+        provider.text = location.provider.toUpperCase(Locale.getDefault())
+        accuracy.text = "${round(location.accuracy.toDouble(), 2)} m"
 
-            location.latitude = -28.425751
-            location.longitude = 134.239923
+        //location.latitude = -28.425751
+        //location.longitude = 134.239923
 
-            getAddress(location.latitude, location.longitude)
+        getAddress(location.latitude, location.longitude)
 
-            val scaled = 0.066f * location.accuracy
+        val scaled = 0.066f * location.accuracy
 
-            if (scaled < 1.0f) {
-                changeRangeSize(scaled)
-            } else {
-                changeRangeSize(1.0f)
-            }
-
-            latitude.text = Html.fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location.latitude, 3)}")
-            longitude.text = Html.fromHtml("<b>Longitude:</b> ${LocationConverter.latitudeAsDMS(location.longitude, 3)}°")
-
-            if (context != null) {
-                val animIn: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.gps_scanned_animation)
-                scanned.startAnimation(animIn)
-            }
+        if (scaled < 1.0f) {
+            changeRangeSize(scaled)
+        } else {
+            changeRangeSize(1.0f)
         }
+
+        latitude.text = Html.fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location.latitude, 3)}")
+        longitude.text = Html.fromHtml("<b>Longitude:</b> ${LocationConverter.latitudeAsDMS(location.longitude, 3)}°")
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
@@ -96,10 +122,7 @@ class GPS : Fragment(), LocationListener {
     }
 
     override fun onProviderEnabled(provider: String?) {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 1f, this@GPS)
+
     }
 
     override fun onProviderDisabled(provider: String?) {
@@ -111,12 +134,33 @@ class GPS : Fragment(), LocationListener {
         range.animate().scaleX(value).scaleY(value).setDuration(1500).setInterpolator(AccelerateDecelerateInterpolator()).start()
     }
 
+    private fun updateAccuracy(value: Float) {
+        val va = ValueAnimator.ofFloat(oldAccuracy, value)
+        va.duration = 2000
+        va.addUpdateListener { animation ->
+            try {
+                accuracy.text = "${round(animation.animatedValue.toString().toDouble(), 2)} m"
+            } catch (e: NumberFormatException) {
+                // Just in case
+                accuracy.resetLoader()
+            }
+        }
+        va.interpolator = DecelerateInterpolator()
+        va.start()
+
+        oldAccuracy = value
+    }
+
     private fun getAddress(latitude: Double, longitude: Double) {
         class GetAddress : AsyncTask<Void, Void, String>() {
             override fun doInBackground(vararg params: Void?): String? {
 
                 if (context == null) {
                     return ""
+                }
+
+                if (!isNetworkAvailable(requireContext())) {
+                    return "Internet connection not available"
                 }
 
                 val addresses: List<Address>
@@ -143,9 +187,20 @@ class GPS : Fragment(), LocationListener {
 
         val getAddress = GetAddress()
         if (getAddress.status == AsyncTask.Status.RUNNING) {
-            getAddress.cancel(true)
+            if (getAddress.cancel(true)) {
+                getAddress.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            }
         } else {
             getAddress.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+    }
+
+    private val repeatAnimation: Runnable = object : Runnable {
+        override fun run() {
+            if (context == null) return
+            val animIn: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.gps_scanned_animation)
+            scanned.startAnimation(animIn)
+            handler.postDelayed(this, 3000)
         }
     }
 }
