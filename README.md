@@ -16,7 +16,9 @@
 <br/>
 
 ## Screenshots
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="20%">
+<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="30%">
+
+<br/>
 
 ## Features
   * Easy to use<br/>
@@ -35,6 +37,7 @@
   - [x] ~~GPS information panel~~
   - [ ] Dark Mode - Providing options for skins made this part a bit complicated
   - [ ] A separate fragment for torch
+  - [ ] A unified integrated location provider
   - [x] ~~Swipe-able interface~~
 
    #### Least priority
@@ -44,6 +47,7 @@
 <br/>
 
 ## Known Issues (so far)
+  - [ ] Rotation causes view to move back to first panel
   - [ ] Parallax sensor values are wrong sometimes
   - [ ] Dialer rotating back to it's original state sometimes causes resource and input lock
   - [x] ~~Updating sensor values in the background **Handler Thread** to free up the UI load~~ <br/>
