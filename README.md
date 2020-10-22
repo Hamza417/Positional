@@ -51,7 +51,8 @@
 ## Known Issues (so far)
   - [ ] Rotation causes view to move back to first panel
   - [ ] Parallax sensor values are wrong sometimes
-  - [ ] Dialer rotating back to it's original state sometimes causes resource and input lock
+  - [ ] Trying to rotate compass dialer also moves the screen
+  - [x] ~~Dialer rotating back to it's original state sometimes causes resource and input lock~~
   - [x] ~~Updating sensor values in the background **Handler Thread** to free up the UI load~~ <br/>
       <sub>**(21 Oct, 2020)** - Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI lag and communication delay<sub>
   
@@ -68,6 +69,7 @@ Please make sure to update tests as appropriate.
 * [Material Popup Menu](https://github.com/zawadz88/MaterialPopupMenu) by **Piotr Zawadzki**
 * [Material View Pager Dots Indicator](https://github.com/tommybuonomo/dotsindicator) by **Tommy Buonomo**
 * [commons-suncalc](https://github.com/shred/commons-suncalc) by **Richard Körber**
+* [Loader View for Android](https://github.com/elye/loaderviewlibrary) by **Elye**
   
 <br/>
 
