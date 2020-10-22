@@ -1,9 +1,8 @@
-package app.simple.positional.menu.needle
+package app.simple.positional.menu.compass.needle
 
 import android.content.Context
 import android.view.Gravity
 import app.simple.positional.R
-import app.simple.positional.menu.dial.setDialTheme
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
 import com.github.zawadz88.materialpopupmenu.popupMenu

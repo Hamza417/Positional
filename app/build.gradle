@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId "app.simple.positional"
-        minSdkVersion 23
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "1.1-beta"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -20,6 +20,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -44,6 +48,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
     implementation 'com.github.zawadz88.materialpopupmenu:material-popup-menu:4.0.1'
+
+    implementation 'com.elyeproj.libraries:loaderviewlibrary:2.0.0'
+
+    implementation "androidx.dynamicanimation:dynamicanimation:1.0.0"
+
+    implementation 'org.shredzone.commons:commons-suncalc:3.4'
 }
 
 repositories {

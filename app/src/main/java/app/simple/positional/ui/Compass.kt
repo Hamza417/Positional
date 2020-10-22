@@ -21,8 +21,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
-import app.simple.positional.menu.dial.Dial
-import app.simple.positional.menu.needle.Needle
+import app.simple.positional.menu.compass.dial.Dial
+import app.simple.positional.menu.compass.needle.Needle
 import app.simple.positional.parallax.ParallaxView
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.util.adjustAzimuthForDisplayRotation
@@ -464,10 +464,10 @@ class Compass : Fragment(), SensorEventListener {
     }
 
     private fun animate(imageView: ImageView, value: Float) {
-        val textViewAnimator = ObjectAnimator.ofFloat(imageView, "rotation", imageView.rotation, value)
-        textViewAnimator.duration = 1000
-        textViewAnimator.interpolator = DecelerateInterpolator()
-        textViewAnimator.addListener(object : Animator.AnimatorListener {
+        val animator = ObjectAnimator.ofFloat(imageView, "rotation", imageView.rotation, value)
+        animator.duration = 1000
+        animator.interpolator = DecelerateInterpolator()
+        animator.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {}
             override fun onAnimationEnd(animation: Animator?) {
                 register()
@@ -477,7 +477,7 @@ class Compass : Fragment(), SensorEventListener {
             override fun onAnimationRepeat(animation: Animator?) {}
 
         })
-        textViewAnimator.start()
+        animator.start()
     }
 
     private fun setSkins() {

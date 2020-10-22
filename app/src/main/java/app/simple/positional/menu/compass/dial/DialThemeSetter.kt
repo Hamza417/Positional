@@ -1,4 +1,4 @@
-package app.simple.positional.menu.dial
+package app.simple.positional.menu.compass.dial
 
 import android.content.Context
 import app.simple.positional.preference.CompassPreference

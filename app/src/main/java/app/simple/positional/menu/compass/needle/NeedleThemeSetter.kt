@@ -1,4 +1,4 @@
-package app.simple.positional.menu.needle
+package app.simple.positional.menu.compass.needle
 
 import android.content.Context
 import app.simple.positional.preference.CompassPreference

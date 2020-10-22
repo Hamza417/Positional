@@ -1,10 +1,10 @@
-package app.simple.positional.menu.needle
+package app.simple.positional.menu.compass.needle
 
 import android.content.Context
 import android.view.Gravity
-import com.github.zawadz88.materialpopupmenu.popupMenu
 import app.simple.positional.R
 import app.simple.positional.ui.Compass
+import com.github.zawadz88.materialpopupmenu.popupMenu
 import kotlinx.android.synthetic.main.frag_compass.*
 import kotlin.properties.Delegates
 

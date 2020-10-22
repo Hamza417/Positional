@@ -11,9 +11,11 @@
         <!-- Theme -->
         <item name="mainBackground">#F6F6F6</item>
         <item name="iconColor">#D63131</item>
-        <item name="textSecondary">#AAAAAA</item>
-        <item name="textPrimary">#676767</item>
+        <item name="textSecondary">#575757</item>
+        <item name="textPrimary">#1C1C1C</item>
         <item name="dividerColor">#E4E4E4</item>
+
+        <item name="alphaIcons">0.5</item>
     </style>
 
     <style name="popupMenu" parent="@style/Widget.MPM.Menu">

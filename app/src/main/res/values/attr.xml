@@ -9,6 +9,8 @@
     <attr name="mainBackground" format="color" />
     <attr name="dividerColor" format="color" />
 
+    <attr name="alphaIcons" format="float" />
+
     <declare-styleable name="ParallaxImageView">
         <attr name="intensity" format="float" />
         <attr name="tiltSensitivity" format="float" />

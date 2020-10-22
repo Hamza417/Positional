@@ -1,10 +1,10 @@
-package app.simple.positional.menu.dial
+package app.simple.positional.menu.compass.dial
 
 import android.content.Context
 import android.view.Gravity
 import app.simple.positional.R
-import com.github.zawadz88.materialpopupmenu.popupMenu
 import app.simple.positional.ui.Compass
+import com.github.zawadz88.materialpopupmenu.popupMenu
 import kotlinx.android.synthetic.main.frag_compass.*
 import kotlin.properties.Delegates
 

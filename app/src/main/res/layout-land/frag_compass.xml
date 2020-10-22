@@ -34,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.07"
@@ -42,13 +43,13 @@
 
         <app.simple.positional.parallax.ParallaxView
             android:id="@+id/dial"
-            android:layout_width="350dp"
-            android:layout_height="350dp" />
+            android:layout_width="300dp"
+            android:layout_height="300dp" />
 
         <app.simple.positional.parallax.ParallaxView
             android:id="@+id/compass_needle"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_gravity="center" />
 
     </FrameLayout>
