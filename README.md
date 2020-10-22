@@ -2,7 +2,7 @@
 
   A very flexible and customizable location related information app..
 
-  ![alt text](https://github.com/Hamza417/Positional/blob/master/poster.png?raw=false)
+  ![banner](https://github.com/Hamza417/Positional/blob/master/poster.png?raw=false)
 
 
 <br/>
@@ -10,8 +10,13 @@
 ## Stats
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Download](https://badgen.net/badge/Download/v1.0-beta/grey?icon=https://svgshare.com/i/Qk3.svg)](https://github.com/Hamza417/Positional/releases/tag/v1.0-beta)
+[![Download](https://badgen.net/badge/Download/v1.1-beta/grey?icon=https://svgshare.com/i/Qk3.svg)](https://github.com/Hamza417/Positional/releases/tag/v1.1-beta)
 ![Status](https://badgen.net/badge/Status/beta/orange?icon)
+
+<br/>
+
+## Screenshots
+<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="30%">
 
 <br/>
 
@@ -21,7 +26,7 @@
   * Minimal UI<br/>
   * Parallax effect<br/>
   * Customisable with various options to choose from<br/>
-  * Flexible, options for different elements can be choosen seprately or can be disabled entirely<br/>
+  * Flexible, options for different elements can be chosen separately or can be disabled entirely<br/>
   * Torch
 
 <br/>
@@ -29,18 +34,22 @@
 ## Features yet to be added
 
    #### Most Priority
-  - [ ] GPS information panel
+  - [x] ~~GPS information panel~~
   - [ ] Dark Mode - Providing options for skins made this part a bit complicated
-  - [ ] A separate fragment for torch
-  - [ ] Swipeable interface
+  - [ ] Speedometer
+  - [x] ~~A separate fragment for torch~~ <br/>
+        <sub>not feasible for a GPS app</sub>
+  - [x] ~~A unified integrated location provider library~~
+  - [x] ~~Swipe-able interface~~
 
    #### Least priority
-  - [ ] Simplifying interface by adding few indicators refering the currently visible screen
+  - [x] ~~Simplifying interface by adding few indicators referring the currently visible screen~~
   - [ ] Set of icons to choose from
 
 <br/>
 
 ## Known Issues (so far)
+  - [ ] Rotation causes view to move back to first panel
   - [ ] Parallax sensor values are wrong sometimes
   - [ ] Dialer rotating back to it's original state sometimes causes resource and input lock
   - [x] ~~Updating sensor values in the background **Handler Thread** to free up the UI load~~ <br/>
@@ -57,6 +66,8 @@ Please make sure to update tests as appropriate.
 
 ## Libraries Used
 * [Material Popup Menu](https://github.com/zawadz88/MaterialPopupMenu) by **Piotr Zawadzki**
+* [Material View Pager Dots Indicator](https://github.com/tommybuonomo/dotsindicator) by **Tommy Buonomo**
+* [commons-suncalc](https://github.com/shred/commons-suncalc) by **Richard Körber**
   
 <br/>
 
