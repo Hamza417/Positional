@@ -53,8 +53,7 @@
   - [ ] Trying to rotate compass dialer also moves the screen
   - [x] ~~Dialer rotating back to it's original state sometimes causes resource and input lock~~
   - [x] ~~Updating sensor values in the background **Handler Thread** to free up the UI load~~ <br/>
-      <sub>**(21 Oct, 2020)** - ~~Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI lag and communication delay~~<sub>
-      <sub>(24 Oct, 2020) - Sensor values are now updated in background thread
+      <sub>**(21 Oct, 2020)** - ~~Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI lag and communication delay~~ <br/> (24 Oct, 2020) - Sensor values are now updated in background thread<sub>
   
 <br/>
 
