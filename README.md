@@ -15,7 +15,7 @@
 <br/>
 
 ## Screenshots
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="30%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="30%">
+<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="20%">
 
 <br/>
 
@@ -52,7 +52,7 @@
   - [ ] Parallax sensor values are wrong sometimes
   - [x] ~~Dialer rotating back to it's original state sometimes causes resource and input lock~~
   - [x] ~~Updating sensor values in the background **Handler Thread** to free up the UI load~~ <br/>
-      <sub>**(21 Oct, 2020)** - ~~Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI lag and communication delay~~ <br/> (24 Oct, 2020) - Sensor values are now updated in background thread<sub>
+      <sub>**(21 Oct, 2020)** - ~~Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI lag and communication delay~~ <br/> **(24 Oct, 2020)** - Sensor values are now updated in background thread<sub>
   
 <br/>
 
