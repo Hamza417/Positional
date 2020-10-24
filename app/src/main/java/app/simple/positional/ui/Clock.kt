@@ -2,8 +2,12 @@ package app.simple.positional.ui
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.res.Configuration
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
@@ -13,14 +17,12 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
-import app.simple.positional.location.LocalLocationProvider
-import app.simple.positional.location.callbacks.LocationProviderListener
 import app.simple.positional.util.getHoursInDegrees
 import app.simple.positional.util.getMinutesInDegrees
 import app.simple.positional.util.getSecondsInDegrees
 import app.simple.positional.util.round
-import app.simple.positional.views.SquareImageView
 import com.elyeproj.loaderviewlibrary.LoaderTextView
 import org.shredzone.commons.suncalc.SunPosition
 import org.shredzone.commons.suncalc.SunTimes
@@ -31,8 +33,7 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-
-class Clock : Fragment(), LocationProviderListener {
+class Clock : Fragment() {
     private lateinit var sunsetTextView: LoaderTextView
     private lateinit var sunriseTextView: LoaderTextView
     private lateinit var digitalTime24: LoaderTextView
@@ -47,23 +48,22 @@ class Clock : Fragment(), LocationProviderListener {
     private lateinit var utcTime: LoaderTextView
     private lateinit var utcTimeZone: LoaderTextView
 
-    lateinit var calendar: Calendar
+    private lateinit var calendar: Calendar
 
-    lateinit var hour: SquareImageView
-    lateinit var minutes: SquareImageView
-    lateinit var seconds: SquareImageView
+    private lateinit var hour: ImageView
+    private lateinit var minutes: ImageView
+    private lateinit var seconds: ImageView
 
-    lateinit var handler: Handler
+    private lateinit var handler: Handler
 
-    lateinit var locationProvider: LocalLocationProvider
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        handler = Handler()
-        super.onCreate(savedInstanceState)
-    }
+    private var filter: IntentFilter = IntentFilter("location_update")
+    private lateinit var locationBroadcastReceiver: BroadcastReceiver
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
+
+        handler = Handler()
+
         hour = view.findViewById(R.id.hour)
         minutes = view.findViewById(R.id.minutes)
         seconds = view.findViewById(R.id.seconds)
@@ -81,9 +81,6 @@ class Clock : Fragment(), LocationProviderListener {
         utcTime = view.findViewById(R.id.time_UTC)
         utcDate = view.findViewById(R.id.date_UTC)
 
-        locationProvider = LocalLocationProvider()
-        locationProvider.init(requireActivity(), this)
-        locationProvider.delay = 5000
         return view
     }
 
@@ -97,6 +94,44 @@ class Clock : Fragment(), LocationProviderListener {
         animate(hour, getHoursInDegrees(calendar))
         animate(minutes, getMinutesInDegrees(calendar))
         animate(seconds, getSecondsInDegrees(calendar))
+
+        locationBroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent != null) {
+                    val location: Location? = intent.getParcelableExtra("location")
+                    if (location == null) return
+
+                    // Sunset and Sunrise
+                    run {
+                        val sunTimes = SunTimes.compute().at(location.latitude, location.longitude).execute()
+
+                        val sunSet: String
+                        val sunRise: String
+
+                        val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+                        sunSet = pattern.format(sunTimes.set)
+                        sunRise = pattern.format(sunTimes.rise)
+
+                        sunriseTextView.text = sunRise
+                        sunsetTextView.text = sunSet
+                    }
+
+                    run {
+                        // Twilight
+                        val pos: SunPosition = SunPosition.compute().today().at(location.latitude, location.longitude).execute()
+                        sunAzimuth.text = Html.fromHtml("<b>Azimuth:</b> ${round(pos.azimuth, 2)}°")
+                        sunAltitude.text = Html.fromHtml("<b>Altitude:</b> ${round(pos.trueAltitude, 2)}°")
+                        sunDistance.text = Html.fromHtml("<b>Distance:</b> ${String.format("%.3E", pos.distance)} km")
+                    }
+                }
+            }
+
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        println(newConfig)
+        super.onConfigurationChanged(newConfig)
     }
 
     private val clock: Runnable = object : Runnable {
@@ -148,61 +183,20 @@ class Clock : Fragment(), LocationProviderListener {
         animator.start()
     }
 
-    override fun onLocationChanged(location: Location) {
-        if (location.provider == LocationManager.GPS_PROVIDER) {
-
-            // Sunset and Sunrise
-            run {
-                val sunTimes = SunTimes.compute().at(location.latitude, location.longitude).execute()
-
-                val sunSet: String
-                val sunRise: String
-
-                val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-                sunSet = pattern.format(sunTimes.set)
-                sunRise = pattern.format(sunTimes.rise)
-
-                sunriseTextView.text = sunRise
-                sunsetTextView.text = sunSet
-            }
-
-            run {
-                // Twilight
-                val pos: SunPosition = SunPosition.compute().today().at(location.latitude, location.longitude).execute()
-                sunAzimuth.text = Html.fromHtml("<b>Azimuth:</b> ${round(pos.azimuth, 2)}°")
-                sunAltitude.text = Html.fromHtml("<b>Altitude:</b> ${round(pos.trueAltitude, 2)}°")
-                sunDistance.text = Html.fromHtml("<b>Distance:</b> ${String.format("%.3E", pos.distance)} km")
-            }
-
-        }
-    }
-
-    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-
-    }
-
-    override fun onProviderEnabled(provider: String?) {
-
-    }
-
-    override fun onProviderDisabled(provider: String?) {
-
-    }
-
     override fun onPause() {
         super.onPause()
-        locationProvider.removeLocationCallbacks()
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(clock)
     }
 
     override fun onResume() {
         super.onResume()
-        locationProvider.initLocationCallbacks()
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         handler.post(clock)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(clock)
+    override fun onStart() {
+        super.onStart()
+        handler.post(clock)
     }
 }

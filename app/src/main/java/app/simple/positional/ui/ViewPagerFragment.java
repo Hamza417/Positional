@@ -13,8 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import app.simple.positional.R;
 import app.simple.positional.adapters.ModelAdapter;
+import app.simple.positional.preference.ViewPagerPreference;
 
-public class ViewModel extends Fragment {
+public class ViewPagerFragment extends Fragment {
     private ViewPager model;
     private ModelAdapter modelAdapter;
     private WormDotsIndicator wormDotsIndicator;
@@ -34,14 +35,53 @@ public class ViewModel extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     
         modelAdapter = new ModelAdapter(getChildFragmentManager());
-        modelAdapter.addFrag(new Clock(), "Clock");
-        modelAdapter.addFrag(new Compass(), "Compass");
-        modelAdapter.addFrag(new GPS(), "GPS");
+    
+        Clock clock = (Clock) getChildFragmentManager().findFragmentByTag("Clock");
+        Compass compass = (Compass) getChildFragmentManager().findFragmentByTag("Compass");
+        GPS gps = (GPS) getChildFragmentManager().findFragmentByTag("GPS");
+    
+        if (clock == null) {
+            modelAdapter.addFrag(new Clock(), "Clock");
+        }
+        else {
+            modelAdapter.addFrag(clock, "Clock");
+        }
+    
+        if (compass == null) {
+            modelAdapter.addFrag(new Compass(), "Compass");
+        }
+        else {
+            modelAdapter.addFrag(compass, "Compass");
+        }
+    
+        if (compass == null) {
+            modelAdapter.addFrag(new GPS(), "GPS");
+        }
+        else {
+            modelAdapter.addFrag(gps, "Compass");
+        }
     
         model.setAdapter(modelAdapter);
         model.setOffscreenPageLimit(0);
-        model.setCurrentItem(1);
+        model.setCurrentItem(new ViewPagerPreference().getCurrentViewPager(requireContext()));
         wormDotsIndicator.setViewPager(model);
+    
+        model.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            
+            }
+        
+            @Override
+            public void onPageSelected(int position) {
+                new ViewPagerPreference().setCurrentPager(requireContext(), position);
+            }
+        
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            
+            }
+        });
     }
     
     @Override
@@ -49,7 +89,6 @@ public class ViewModel extends Fragment {
         super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
             model.setCurrentItem(savedInstanceState.getInt("current_visible_screen"));
-            System.out.println(savedInstanceState.getInt("current_visible_screen"));
         }
     }
     

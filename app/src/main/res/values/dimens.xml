@@ -16,4 +16,5 @@
     <dimen name="location_stat_row_gap_horizontal">16dp</dimen>
     <dimen name="location_stat_row_gap_vertical">24dp</dimen>
     <dimen name="location_stat_row_image_size">24dp</dimen>
+    <dimen name="clock_image_dimensions">300dp</dimen>
 </resources>

@@ -3,16 +3,14 @@ package app.simple.positional.ui
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
 import android.content.Context
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
+import android.content.Intent
+import android.content.IntentFilter
 import android.hardware.SensorManager
 import android.hardware.camera2.CameraManager
 import android.os.Bundle
 import android.os.Handler
-import android.os.HandlerThread
-import android.os.Vibrator
 import android.view.*
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -20,6 +18,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.menu.compass.dial.Dial
 import app.simple.positional.menu.compass.needle.Needle
@@ -32,59 +31,37 @@ import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.google.android.material.card.MaterialCardView
 import kotlin.math.abs
 
-class Compass : Fragment(), SensorEventListener {
+class Compass : Fragment() {
 
     private var startAngle: Double = 0.0
     private var mCurrAngle: Double = 0.0
     private var handler = Handler()
     private lateinit var detector: GestureDetector
-    private lateinit var vibrator: Vibrator
     private lateinit var needle: ParallaxView
     private lateinit var dial: ParallaxView
     private lateinit var degrees: TextView
     private lateinit var menu: MaterialCardView
     private lateinit var dialContainer: FrameLayout
-    private lateinit var sensorManager: SensorManager
-    private lateinit var sensorAccelerometer: Sensor
-    private lateinit var sensorMagneticField: Sensor
+
     lateinit var skins: IntArray
     private val width: Int = 500
     private val styleResId: Int = R.style.popupMenu
     private var sensorDelay = SensorManager.SENSOR_DELAY_GAME
-    private val twoPI = 2.0 * Math.PI
-    private val degreesPerRadian = 180 / Math.PI
-    private val readingsAlpha = 0.03f
     private var rotationAngle = 0f
-    private var y: Float = 0f
-    private var x: Float = 0f
-    private var _xDelta = 0
-    private var _yDelta = 0
-    private val accelerometerReadings = FloatArray(3)
-    private val magnetometerReadings = FloatArray(3)
-    private val orientation = FloatArray(3)
-    private val rotation = FloatArray(9)
-    private val inclination = FloatArray(9)
+
+    private var filter: IntentFilter = IntentFilter("compass_update")
+    private lateinit var compassBroadcastReceiver: BroadcastReceiver
+
     private var rotateWhich: Int = 1 // True for Needle, False for Dial
     private lateinit var cameraManager: CameraManager
     private lateinit var cameraId: String
     private var isTorchOn: Boolean = false
 
-    private lateinit var mSensorThread: HandlerThread
-    private lateinit var mSensorHandler: Handler
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        skins = CompassPreference().getSkins(context)
+        skins = CompassPreference().getSkins(requireContext())
         rotateWhich = CompassPreference().getRotatePreference(requireContext())
         sensorDelay = CompassPreference().getDelay(requireContext())
-        sensorManager = requireActivity().getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-
-        mSensorThread = HandlerThread("Sensor Thread", Thread.MAX_PRIORITY)
-        mSensorThread.start()
-        mSensorHandler = Handler(mSensorThread.looper) //Blocks until looper is prepared, which is fairly quick
 
         detector = GestureDetector(requireContext(), MyGestureDetector())
     }
@@ -116,10 +93,8 @@ class Compass : Fragment(), SensorEventListener {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        register()
 
         menu.setOnClickListener {
-            unregister()
             val popupMenu = popupMenu {
                 style = styleResId
                 dropdownGravity = Gravity.END
@@ -337,10 +312,57 @@ class Compass : Fragment(), SensorEventListener {
             }
 
             popupMenu.show(requireContext(), menu)
-            popupMenu.setOnDismissListener { register() }
         }
 
         dialContainer.setOnTouchListener(MyOnTouchListener())
+
+        compassBroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent != null) {
+
+                    rotationAngle = adjustAzimuthForDisplayRotation(intent.getFloatExtra("rotation", 0f), requireActivity().windowManager)
+
+                    when (rotateWhich) {
+                        1 -> needle.rotation = rotationAngle
+                        2 -> dial.rotation = rotationAngle
+                        3 -> {
+                            needle.rotation = rotationAngle
+                            dial.rotation = rotationAngle
+                        }
+                    }
+
+                    val azimuth = (rotationAngle * -1).toInt() //- ((dial.rotation + 360) % 360).toInt()
+
+                    var direction = "NW"
+                    if (azimuth >= 350 || azimuth <= 10) {
+                        direction = "N"
+                    }
+                    if (azimuth in 281..349) {
+                        direction = "NW"
+                    }
+                    if (azimuth in 261..280) {
+                        direction = "W"
+                    }
+                    if (azimuth in 191..260) {
+                        direction = "SW"
+                    }
+                    if (azimuth in 171..190) {
+                        direction = "S"
+                    }
+                    if (azimuth in 101..170) {
+                        direction = "SE"
+                    }
+                    if (azimuth in 81..100) {
+                        direction = "E"
+                    }
+                    if (azimuth in 11..80) {
+                        direction = "NE"
+                    }
+
+                    degrees.text = "$azimuth° $direction"
+                }
+            }
+        }
     }
 
     override fun onResume() {
@@ -353,96 +375,9 @@ class Compass : Fragment(), SensorEventListener {
         unregister()
     }
 
-    override fun onStop() {
-        super.onStop()
-        unregister()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unregister()
-    }
-
-    override fun onSensorChanged(event: SensorEvent) {
-        when (event.sensor.type) {
-            Sensor.TYPE_ACCELEROMETER -> smoothAndSetReadings(accelerometerReadings, event.values)
-            Sensor.TYPE_MAGNETIC_FIELD -> smoothAndSetReadings(magnetometerReadings, event.values)
-        }
-
-        val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(this.rotation, inclination, accelerometerReadings, magnetometerReadings)
-
-        if (successfullyCalculatedRotationMatrix) {
-            SensorManager.getOrientation(this.rotation, orientation)
-
-            rotationAngle = -(adjustAzimuthForDisplayRotation(((orientation[0] + twoPI) % twoPI * degreesPerRadian).toFloat(), requireActivity().windowManager) + 360) % 360
-
-            when (rotateWhich) {
-                1 -> needle.rotation = rotationAngle
-                2 -> dial.rotation = rotationAngle
-                3 -> {
-                    needle.rotation = rotationAngle
-                    dial.rotation = rotationAngle
-                }
-            }
-
-            val azimuth = (rotationAngle * -1).toInt() //- ((dial.rotation + 360) % 360).toInt()
-
-            /**
-            azimuth = if (dialAngle < 0) {
-            if ((needle.rotation.toInt() - dialAngle.toInt()) * -1 > 0) {
-            (needle.rotation.toInt() * -1) - (dialAngle.toInt() * -1)
-            } else (dialAngle.toInt() * -1) - (needle.rotation.toInt() * -1)
-            } else if (dialAngle > 0) {
-            if ((needle.rotation.toInt() + dialAngle.toInt()) * -1 > 0) {
-            (needle.rotation.toInt() * -1) + (dialAngle.toInt() * -1)
-            } else (dialAngle.toInt() * -1) + (needle.rotation.toInt() * -1)
-            } else {
-            (needle.rotation * -1).toInt()
-            }
-             **/
-
-            var direction = "NW"
-            if (azimuth >= 350 || azimuth <= 10) {
-                direction = "N"
-            }
-            if (azimuth in 281..349) {
-                direction = "NW"
-            }
-            if (azimuth in 261..280) {
-                direction = "W"
-            }
-            if (azimuth in 191..260) {
-                direction = "SW"
-            }
-            if (azimuth in 171..190) {
-                direction = "S"
-            }
-            if (azimuth in 101..170) {
-                direction = "SE"
-            }
-            if (azimuth in 81..100) {
-                direction = "E"
-            }
-            if (azimuth in 11..80) {
-                direction = "NE"
-            }
-
-            degrees.text = "$azimuth° $direction"
-        }
-    }
-
-    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
-
-    private fun smoothAndSetReadings(readings: FloatArray, newReadings: FloatArray) {
-        readings[0] = readingsAlpha * newReadings[0] + (1 - readingsAlpha) * readings[0]
-        readings[1] = readingsAlpha * newReadings[1] + (1 - readingsAlpha) * readings[1]
-        readings[2] = readingsAlpha * newReadings[2] + (1 - readingsAlpha) * readings[2]
-    }
-
     private fun register() {
         if (context == null) return
-        sensorManager.registerListener(this, sensorAccelerometer, sensorDelay)
-        sensorManager.registerListener(this, sensorMagneticField, sensorDelay)
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(compassBroadcastReceiver, filter)
         if (CompassPreference().getParallax(requireContext())) {
             parallax(true)
         }
@@ -450,8 +385,7 @@ class Compass : Fragment(), SensorEventListener {
 
     private fun unregister() {
         if (context == null) return
-        sensorManager.unregisterListener(this, sensorAccelerometer)
-        sensorManager.unregisterListener(this, sensorMagneticField)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(compassBroadcastReceiver)
         if (CompassPreference().getParallax(requireContext())) {
             parallax(false)
         }

@@ -1,7 +1,6 @@
 package app.simple.positional.location;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -9,6 +8,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+
+import java.lang.ref.WeakReference;
 
 import androidx.core.app.ActivityCompat;
 import app.simple.positional.location.callbacks.LocationProviderListener;
@@ -18,30 +19,36 @@ import app.simple.positional.location.callbacks.LocationProviderListener;
  */
 public class LocalLocationProvider implements LocationListener {
     
-    private LocationProviderListener locationProvider;
     private LocationManager locationManager;
-    private Activity activity;
+    WeakReference <LocationProviderListener> locationProviderWeakReference;
     private Handler handler = new Handler();
     private int delay = 2000; // Default
+    private Context context;
     private Runnable locationUpdater = new Runnable() {
         @Override
         public void run() {
             fireLocationSearch();
-            handler.postDelayed(this, 5000);
+            handler.postDelayed(this, delay);
         }
     };
     
-    public void init(Activity activity, LocationProviderListener locationProvider) {
-        this.activity = activity;
-        this.locationProvider = locationProvider;
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+    public void init(Context context, LocationProviderListener locationProvider) {
+        this.context = context;
+        locationProviderWeakReference = new WeakReference <>(locationProvider);
+        
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             
             if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                
                 if (location != null) {
                     onLocationChanged(location);
+                    handler.post(locationUpdater);
+                }
+                else {
+                    fireLocationSearch();
                 }
             }
         }
@@ -49,50 +56,68 @@ public class LocalLocationProvider implements LocationListener {
     
     // Spare me, I find this function quite satisfying :P
     public void fireLocationSearch() {
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+    
         if (locationManager != null) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, delay, 1f, this);
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, delay, 0f, this);
+            }
+            else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, delay, 0, this);
+            }
+            else {
+                locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, delay, 0, this);
+            }
         }
         else {
-            locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
             fireLocationSearch();
         }
     }
     
     @Override
     public void onLocationChanged(Location location) {
-        locationProvider.onLocationChanged(location);
+        if (locationProviderWeakReference.get() == null) {
+            return;
+        }
+        locationProviderWeakReference.get().onLocationChanged(location);
     }
     
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        locationProvider.onStatusChanged(provider, status, extras);
+        if (locationProviderWeakReference.get() == null) {
+            return;
+        }
+        locationProviderWeakReference.get().onStatusChanged(provider, status, extras);
     }
     
     @Override
     public void onProviderEnabled(String provider) {
-        locationProvider.onProviderEnabled(provider);
+        if (locationProviderWeakReference.get() == null) {
+            return;
+        }
+        locationProviderWeakReference.get().onProviderEnabled(provider);
     }
     
     @Override
     public void onProviderDisabled(String provider) {
-        locationProvider.onProviderDisabled(provider);
+        if (locationProviderWeakReference.get() == null) {
+            return;
+        }
+        locationProviderWeakReference.get().onProviderDisabled(provider);
     }
     
     public void removeLocationCallbacks() {
+        this.context = null;
+        locationProviderWeakReference.clear();
         handler.removeCallbacks(locationUpdater);
     }
     
-    public void initLocationCallbacks() {
+    public void initLocationCallbacks(LocationProviderListener locationProviderListener) {
+        locationProviderWeakReference = new WeakReference <>(locationProviderListener);
         handler.post(locationUpdater);
     }
     

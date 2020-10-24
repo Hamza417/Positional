@@ -1,4 +1,4 @@
-package app.simple.positional.views
+package app.simple.positional.behaviors
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,8 +8,14 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
+import com.google.android.material.appbar.AppBarLayout
 
-class OverScrollBehavior(context: Context, attributeSet: AttributeSet) : CoordinatorLayout.Behavior<View>() {
+/**
+ * Just like [AppBarLayout.ScrollingViewBehavior] but with a nice spring over scroll effect.
+ *
+ * Can be adjusted using attributes but not implemented
+ */
+class OverScrollBehavior(context: Context, attributeSet: AttributeSet) : AppBarLayout.ScrollingViewBehavior() {
 
     companion object {
         private const val OVER_SCROLL_AREA = 4
@@ -79,6 +85,10 @@ class OverScrollBehavior(context: Context, attributeSet: AttributeSet) : Coordin
         return true
     }
 
+    /**
+     * [SpringForce.DAMPING_RATIO_NO_BOUNCY] will remove the bouncy effect, bouncy effect is a short lived animation pleasure and not feasible for having to see a view bouncing all the time
+     * [SpringForce.STIFFNESS_LOW] will give smooth over-scroll restoration effect
+     */
     private fun moveToDefPosition(target: View) {
         val group = target as ViewGroup
         val count = group.childCount

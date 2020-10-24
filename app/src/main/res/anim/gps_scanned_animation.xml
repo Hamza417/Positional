@@ -2,7 +2,7 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="3000"
     android:fillAfter="true"
-    android:interpolator="@android:interpolator/linear_out_slow_in"
+    android:interpolator="@android:interpolator/decelerate_cubic"
     android:shareInterpolator="true">
 
     <scale
@@ -14,14 +14,7 @@
         android:toYScale="1.2" />
 
     <alpha
-        android:duration="500"
-        android:fromAlpha="0"
-        android:toAlpha="1" />
-
-    <alpha
-        android:duration="500"
         android:fromAlpha="1"
-        android:startOffset="500"
         android:toAlpha="0" />
 
 </set>

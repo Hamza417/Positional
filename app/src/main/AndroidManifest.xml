@@ -36,6 +36,14 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".services.LocationService"
+            android:enabled="true" />
+
+        <service
+            android:name=".services.CompassService"
+            android:enabled="true" />
+
     </application>
 
 </manifest>
