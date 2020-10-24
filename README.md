@@ -9,7 +9,7 @@
 ## Stats
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Download](https://badgen.net/badge/Download/v1.1-beta/grey?icon=https://svgshare.com/i/Qk3.svg)](https://github.com/Hamza417/Positional/releases/tag/v1.1-beta)
+[![Download](https://badgen.net/badge/Download/v1.3-beta/grey?icon=https://svgshare.com/i/Qk3.svg)](https://github.com/Hamza417/Positional/releases/download/1.3-beta/1.3-beta.apk) [![Changelogs](https://badgen.net/badge/Changelogs/v1.3-beta/green?list)](https://github.com/Hamza417/Positional/releases/tag/1.3-beta)
 ![Status](https://badgen.net/badge/Status/beta/orange?icon)
 
 <br/>
@@ -48,9 +48,8 @@
 <br/>
 
 ## Known Issues (so far)
-  - [ ] Rotation causes view to move back to first panel
+  - [x] ~~Rotation causes view to move back to first panel~~
   - [ ] Parallax sensor values are wrong sometimes
-  - [ ] Trying to rotate compass dialer also moves the screen
   - [x] ~~Dialer rotating back to it's original state sometimes causes resource and input lock~~
   - [x] ~~Updating sensor values in the background **Handler Thread** to free up the UI load~~ <br/>
       <sub>**(21 Oct, 2020)** - ~~Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI lag and communication delay~~ <br/> (24 Oct, 2020) - Sensor values are now updated in background thread<sub>
