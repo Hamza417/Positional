@@ -9,8 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!-- here we defined ACCESS_BACKGROUND_LOCATION for Android 10 device -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> -->
 
     <!-- Allows access to the flashlight -->
     <permission
@@ -28,7 +27,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/LightTheme">
 
-        <activity android:name="app.simple.positional.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

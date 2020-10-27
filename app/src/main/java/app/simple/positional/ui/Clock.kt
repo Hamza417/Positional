@@ -56,13 +56,17 @@ class Clock : Fragment() {
 
     private lateinit var handler: Handler
 
-    private var filter: IntentFilter = IntentFilter("location_update")
+    private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
 
         handler = Handler()
+
+        filter.addAction("location")
+        filter.addAction("status")
+        filter.addAction("enabled")
 
         hour = view.findViewById(R.id.hour)
         minutes = view.findViewById(R.id.minutes)
@@ -98,34 +102,44 @@ class Clock : Fragment() {
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
-                    val location: Location? = intent.getParcelableExtra("location")
-                    if (location == null) return
+                    when (intent.action) {
+                        "location" -> {
+                            val location: Location = intent.getParcelableExtra("location") ?: return
 
-                    // Sunset and Sunrise
-                    run {
-                        val sunTimes = SunTimes.compute().at(location.latitude, location.longitude).execute()
+                            // Sunset and Sunrise
+                            run {
+                                val sunTimes = SunTimes.compute().at(location.latitude, location.longitude).execute()
 
-                        val sunSet: String
-                        val sunRise: String
+                                val sunSet: String
+                                val sunRise: String
 
-                        val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-                        sunSet = pattern.format(sunTimes.set)
-                        sunRise = pattern.format(sunTimes.rise)
+                                val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+                                sunSet = pattern.format(sunTimes.set)
+                                sunRise = pattern.format(sunTimes.rise)
 
-                        sunriseTextView.text = sunRise
-                        sunsetTextView.text = sunSet
-                    }
+                                sunriseTextView.text = sunRise
+                                sunsetTextView.text = sunSet
+                            }
 
-                    run {
-                        // Twilight
-                        val pos: SunPosition = SunPosition.compute().today().at(location.latitude, location.longitude).execute()
-                        sunAzimuth.text = Html.fromHtml("<b>Azimuth:</b> ${round(pos.azimuth, 2)}°")
-                        sunAltitude.text = Html.fromHtml("<b>Altitude:</b> ${round(pos.trueAltitude, 2)}°")
-                        sunDistance.text = Html.fromHtml("<b>Distance:</b> ${String.format("%.3E", pos.distance)} km")
+                            run {
+                                // Twilight
+                                val pos: SunPosition = SunPosition.compute().today().at(location.latitude, location.longitude).execute()
+                                sunAzimuth.text = Html.fromHtml("<b>Azimuth:</b> ${round(pos.azimuth, 2)}°")
+                                sunAltitude.text = Html.fromHtml("<b>Altitude:</b> ${round(pos.trueAltitude, 2)}°")
+                                sunDistance.text = Html.fromHtml("<b>Distance:</b> ${String.format("%.3E", pos.distance)} km")
+                            }
+                        }
+
+                        "status" -> {
+                            // No reason to implement yet
+                        }
+
+                        "enabled" -> {
+                            // No reason to implement yet
+                        }
                     }
                 }
             }
-
         }
     }
 

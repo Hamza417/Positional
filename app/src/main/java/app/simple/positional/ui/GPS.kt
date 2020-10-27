@@ -28,7 +28,6 @@ import com.elyeproj.loaderviewlibrary.LoaderTextView
 import java.io.IOException
 import java.util.*
 
-
 class GPS : Fragment() {
 
     lateinit var range: ImageView
@@ -36,15 +35,16 @@ class GPS : Fragment() {
     lateinit var scanned: ImageView
 
     private lateinit var accuracy: LoaderTextView
-    lateinit var address: LoaderTextView
-    lateinit var latitude: LoaderTextView
-    lateinit var longitude: LoaderTextView
-    lateinit var provider: LoaderTextView
-    lateinit var altitude: LoaderTextView
-    lateinit var bearing: LoaderTextView
-    lateinit var speed: LoaderTextView
-    lateinit var handler: Handler
-    private var filter: IntentFilter = IntentFilter("location_update")
+    private lateinit var address: LoaderTextView
+    private lateinit var latitude: LoaderTextView
+    private lateinit var longitude: LoaderTextView
+    private lateinit var providerStatus: LoaderTextView
+    private lateinit var providerSource: LoaderTextView
+    private lateinit var altitude: LoaderTextView
+    private lateinit var bearing: LoaderTextView
+    private lateinit var speed: LoaderTextView
+    private lateinit var handler: Handler
+    private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,10 +60,15 @@ class GPS : Fragment() {
         speed = view.findViewById(R.id.gps_speed)
         altitude = view.findViewById(R.id.gps_altitude)
         bearing = view.findViewById(R.id.gps_bearing)
-        provider = view.findViewById(R.id.gps_provider)
+        providerSource = view.findViewById(R.id.provider_source)
+        providerStatus = view.findViewById(R.id.provider_status)
 
         handler = Handler()
         handler.post(repeatAnimation)
+
+        filter.addAction("location")
+        filter.addAction("status")
+        filter.addAction("enabled")
 
         return view
     }
@@ -74,29 +79,50 @@ class GPS : Fragment() {
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
-                    val location: Location? = intent.getParcelableExtra("location")
-                    if (location != null) {
-                        altitude.text = "${round(location.altitude, 2)} m"
-                        speed.text = "${location.speed}"
-                        bearing.text = "${location.bearing}"
-                        provider.text = location.provider.toUpperCase(Locale.getDefault())
-                        accuracy.text = "${round(location.accuracy.toDouble(), 2)} m"
+                    println(intent.action)
+                    when (intent.action) {
+                        "location" -> {
+                            val location: Location? = intent.getParcelableExtra("location")
+                            if (location != null) {
+                                altitude.text = "${round(location.altitude, 2)} m"
+                                speed.text = "${location.speed}"
+                                bearing.text = "${location.bearing}"
 
-                        //location.latitude = -28.425751
-                        //location.longitude = 134.239923
+                                // Bogus coding
+                                //providerSource.text = Html.fromHtml("<b>Source:</b> ${location.provider.toUpperCase(Locale.getDefault())}")
+                                //providerStatus.text = Html.fromHtml("<b>Status:</b> Enabled")
 
-                        getAddress(location.latitude, location.longitude)
+                                accuracy.text = "${round(location.accuracy.toDouble(), 2)} m"
 
-                        val scaled = 0.066f * location.accuracy
+                                //location.latitude = -28.425751
+                                //location.longitude = 134.239923
 
-                        if (scaled < 1.0f) {
-                            changeRangeSize(scaled)
-                        } else {
-                            changeRangeSize(1.0f)
+                                getAddress(location.latitude, location.longitude)
+
+                                val scaled = 0.066f * location.accuracy
+
+                                if (scaled < 1.0f) {
+                                    changeRangeSize(scaled)
+                                } else {
+                                    changeRangeSize(1.0f)
+                                }
+
+                                latitude.text = Html.fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location.latitude, 3)}")
+                                longitude.text = Html.fromHtml("<b>Longitude:</b> ${LocationConverter.latitudeAsDMS(location.longitude, 3)}°")
+                            }
                         }
+                        "status" -> {
+                            providerSource.text = Html.fromHtml("<b>Source:</b> ${intent.getStringExtra("provider")}")
+                        }
+                        "enabled" -> {
+                            if (intent.getBooleanExtra("isEnabled", false)) {
+                                providerStatus.text = Html.fromHtml("<b>Status:</b> Enabled")
+                            } else {
+                                providerStatus.text = Html.fromHtml("<b>Status:</b> Disabled")
+                            }
 
-                        latitude.text = Html.fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location.latitude, 3)}")
-                        longitude.text = Html.fromHtml("<b>Longitude:</b> ${LocationConverter.latitudeAsDMS(location.longitude, 3)}°")
+                            providerSource.text = Html.fromHtml("<b>Source:</b> ${intent.getStringExtra("provider").toUpperCase()}")
+                        }
                     }
                 }
             }

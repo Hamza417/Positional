@@ -14,11 +14,13 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import app.simple.positional.callbacks.PermissionCallbacks
+import app.simple.positional.dialogs.PermissionDialog
 import app.simple.positional.services.CompassService
 import app.simple.positional.services.LocationService
 import app.simple.positional.ui.ViewPagerFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PermissionCallbacks {
 
     private var locationIntent: Intent? = null
     private var compassIntent: Intent? = null
@@ -56,19 +58,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkRunTimePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), 10)
+            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                val permissionDialog = PermissionDialog(this)
+                permissionDialog.show(supportFragmentManager, "permission_info")
             } else {
-                baseContext.startService(Intent(this, LocationService::class.java))
+                runService()
             }
         }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 10) {
+        if (requestCode == DEFAULT_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                runApp()
+                runService()
                 baseContext.startService(Intent(this, LocationService::class.java))
             } else {
                 if (!ActivityCompat.shouldShowRequestPermissionRationale((applicationContext as Activity), Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -124,5 +127,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
             startActivity(intent)
         }
+    }
+
+    override fun onGrantRequest() {
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), DEFAULT_PERMISSION_REQUEST_CODE)
     }
 }

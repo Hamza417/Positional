@@ -20,7 +20,7 @@ import app.simple.positional.location.callbacks.LocationProviderListener;
 public class LocalLocationProvider implements LocationListener {
     
     private LocationManager locationManager;
-    WeakReference <LocationProviderListener> locationProviderWeakReference;
+    WeakReference <LocationProviderListener> locationProviderWeakReference; // Keeping strong reference of listener may cause memory leaks
     private Handler handler = new Handler();
     private int delay = 2000; // Default
     private Context context;
@@ -38,11 +38,24 @@ public class LocalLocationProvider implements LocationListener {
         
         if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            
+    
             locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            
-            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+    
+            if (locationManager != null) {
+                Location location = null;
+                if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    onProviderEnabled(LocationManager.GPS_PROVIDER);
+                }
+                else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    onProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                }
+                else if (locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)) {
+                    location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+                    onProviderEnabled(LocationManager.PASSIVE_PROVIDER);
+                }
+        
                 if (location != null) {
                     onLocationChanged(location);
                     handler.post(locationUpdater);
@@ -92,6 +105,7 @@ public class LocalLocationProvider implements LocationListener {
             return;
         }
         locationProviderWeakReference.get().onStatusChanged(provider, status, extras);
+        fireLocationSearch();
     }
     
     @Override
@@ -100,6 +114,7 @@ public class LocalLocationProvider implements LocationListener {
             return;
         }
         locationProviderWeakReference.get().onProviderEnabled(provider);
+        fireLocationSearch();
     }
     
     @Override
@@ -108,6 +123,7 @@ public class LocalLocationProvider implements LocationListener {
             return;
         }
         locationProviderWeakReference.get().onProviderDisabled(provider);
+        fireLocationSearch();
     }
     
     public void removeLocationCallbacks() {

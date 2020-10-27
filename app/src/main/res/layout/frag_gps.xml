@@ -88,21 +88,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginVertical="5dp"
                         android:fontFamily="sans-serif-medium"
                         android:text="Provider"
                         android:textColor="?attr/textPrimary"
                         android:textSize="6pt" />
 
                     <com.elyeproj.loaderviewlibrary.LoaderTextView
-                        android:id="@+id/gps_provider"
+                        android:id="@+id/provider_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:fontFamily="sans-serif-light"
                         android:maxLines="1"
                         android:textColor="?attr/textPrimary"
-                        android:textSize="22pt"
+                        android:textSize="8pt"
+                        app:corners="20"
+                        app:use_gradient="true" />
+
+                    <com.elyeproj.loaderviewlibrary.LoaderTextView
+                        android:id="@+id/provider_source"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:fontFamily="sans-serif-light"
+                        android:maxLines="1"
+                        android:textColor="?attr/textPrimary"
+                        android:textSize="8pt"
                         app:corners="20"
                         app:use_gradient="true" />
 

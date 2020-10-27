@@ -1,3 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" tools:override="true">Positional</string>
+    <string name="access_fine_location_info">It is required to run the GPS of the device and fetch the possibly accurate location details</string>
+    <string name="internet_perm_info">Used to fetch the address of the given location</string>
+    <string name="coarse_perm_info">Used to show a precise location data in case GPS is unavailable or until available</string>
+    <string name="wfi_perm_info">Used to check if WiFi connectivity is available</string>
+    <string name="network_perm_info">Used to check if network is available and is connected</string>
 </resources>
