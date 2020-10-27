@@ -6,7 +6,6 @@ import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
 import com.github.zawadz88.materialpopupmenu.popupMenu
-import kotlinx.android.synthetic.main.frag_compass.*
 
 class Dial {
     fun dialSkinsOptions(context: Context, compass: Compass, skins: Int) {
@@ -68,6 +67,6 @@ class Dial {
             }
         }
 
-        compassPopupMenu.show(context, compass.compass_menu)
+        compassPopupMenu.show(context, compass.actionView)
     }
 }

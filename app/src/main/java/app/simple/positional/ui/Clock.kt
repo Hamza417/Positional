@@ -15,7 +15,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
+import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
@@ -24,6 +27,7 @@ import app.simple.positional.util.getMinutesInDegrees
 import app.simple.positional.util.getSecondsInDegrees
 import app.simple.positional.util.round
 import com.elyeproj.loaderviewlibrary.LoaderTextView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.shredzone.commons.suncalc.SunPosition
 import org.shredzone.commons.suncalc.SunTimes
 import java.text.ParseException
@@ -48,11 +52,18 @@ class Clock : Fragment() {
     private lateinit var utcTime: LoaderTextView
     private lateinit var utcTimeZone: LoaderTextView
 
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
+
+    private lateinit var clockLayout: FrameLayout
+
     private lateinit var calendar: Calendar
 
     private lateinit var hour: ImageView
     private lateinit var minutes: ImageView
     private lateinit var seconds: ImageView
+    private lateinit var expandUp: ImageView
+
+    private lateinit var scrollView: NestedScrollView
 
     private lateinit var handler: Handler
 
@@ -84,6 +95,14 @@ class Clock : Fragment() {
         utcTimeZone = view.findViewById(R.id.time_zone_UTC)
         utcTime = view.findViewById(R.id.time_UTC)
         utcDate = view.findViewById(R.id.date_UTC)
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            clockLayout = view.findViewById(R.id.clock_layout)
+
+            scrollView = view.findViewById(R.id.clock_panel_scrollview)
+            expandUp = view.findViewById(R.id.expand_up_clock_sheet)
+            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
+        }
 
         return view
     }
@@ -138,6 +157,27 @@ class Clock : Fragment() {
                             // No reason to implement yet
                         }
                     }
+                }
+            }
+        }
+
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+
+                }
+
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                    scrollView.alpha = slideOffset
+                    expandUp.alpha = (1 - slideOffset)
+                    clockLayout.translationY = 150 * -slideOffset
+                    clockLayout.alpha = (1 - slideOffset)
+                }
+            })
+
+            expandUp.setOnClickListener {
+                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 }
             }
         }

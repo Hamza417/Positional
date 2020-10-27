@@ -28,7 +28,6 @@ import app.simple.positional.util.adjustAzimuthForDisplayRotation
 import app.simple.positional.util.getAngle
 import app.simple.positional.util.imageViewAnimatedChange
 import com.github.zawadz88.materialpopupmenu.popupMenu
-import com.google.android.material.card.MaterialCardView
 import kotlin.math.abs
 
 class Compass : Fragment() {
@@ -40,8 +39,8 @@ class Compass : Fragment() {
     private lateinit var needle: ParallaxView
     private lateinit var dial: ParallaxView
     private lateinit var degrees: TextView
-    private lateinit var menu: MaterialCardView
     private lateinit var dialContainer: FrameLayout
+    lateinit var actionView: View
 
     lateinit var skins: IntArray
     private val width: Int = 500
@@ -78,7 +77,6 @@ class Compass : Fragment() {
         needle.setTranslationMultiplier(4f)
 
         degrees = v.findViewById(R.id.degrees)
-        menu = v.findViewById(R.id.compass_menu)
 
         cameraManager = requireActivity().getSystemService(Context.CAMERA_SERVICE) as CameraManager
         cameraId = cameraManager.cameraIdList[0]
@@ -93,226 +91,6 @@ class Compass : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        menu.setOnClickListener {
-            val popupMenu = popupMenu {
-                style = styleResId
-                dropdownGravity = Gravity.END
-                section {
-                    title = "Appearance"
-                    item {
-                        icon = R.drawable.ic_navigation
-                        hasNestedItems = true
-                        label = "Needle"
-                        callback = {
-                            Needle().needleSkinsOptions(requireContext(), this@Compass, skins[0])
-                        }
-                    }
-                    item {
-                        icon = R.drawable.ic_compass
-                        hasNestedItems = true
-                        label = "Dial"
-                        callback = {
-                            Dial().dialSkinsOptions(requireContext(), this@Compass, skins[1])
-                        }
-                    }
-                }
-                section {
-                    title = "Configuration"
-                    item {
-                        label = "Parallax"
-                        icon = R.drawable.ic_parallax
-                        hasNestedItems = true
-                        callback = {
-                            val parallaxPopupMenu = popupMenu {
-                                style = styleResId
-                                fixedContentWidthInPx = width
-                                dropdownGravity = Gravity.END
-                                section {
-                                    val isParallaxEnabled = CompassPreference().getParallax(requireContext())
-                                    title = "Parallax"
-                                    item {
-                                        label = if (isParallaxEnabled) "Disable" else "Enable"
-                                        icon = if (isParallaxEnabled) R.drawable.ic_check_box_checked else R.drawable.ic_check_box_unchecked
-                                        callback = {
-                                            if (isParallaxEnabled) {
-                                                CompassPreference().setParallax(false, requireContext())
-                                                needle.resetTranslationValues()
-                                                dial.resetTranslationValues()
-                                            } else {
-                                                CompassPreference().setParallax(true, requireContext())
-                                                parallax(true)
-                                            }
-                                        }
-                                    }
-                                    item {
-                                        label = "Calibrate"
-                                        icon = R.drawable.ic_calibration
-                                        callback = {
-                                            needle.calibrate()
-                                            dial.calibrate()
-                                        }
-                                    }
-                                }
-                                section {
-                                    val sensitivity = CompassPreference().getParallaxSensitivity(requireContext())
-                                    title = "Sensitivity"
-                                    item {
-                                        label = "Very Low"
-                                        icon = if (sensitivity == 5) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
-                                        callback = {
-                                            setSensitivity(5)
-                                        }
-                                    }
-                                    item {
-                                        label = "Low"
-                                        icon = if (sensitivity == 10) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
-                                        callback = {
-                                            setSensitivity(10)
-                                        }
-                                    }
-                                    item {
-                                        label = "Medium"
-                                        icon = if (sensitivity == 15) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
-                                        callback = {
-                                            setSensitivity(15)
-                                        }
-                                    }
-                                    item {
-                                        label = "High"
-                                        icon = if (sensitivity == 20) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
-                                        callback = {
-                                            setSensitivity(20)
-                                        }
-                                    }
-                                }
-                            }
-
-                            parallaxPopupMenu.show(requireContext(), menu)
-                        }
-                    }
-                    item {
-                        label = "Sensor Speed"
-                        hasNestedItems = true
-                        icon = R.drawable.ic_speed_fast
-                        callback = {
-                            val sensorPopupMenu = popupMenu {
-                                style = R.style.popupMenu
-                                fixedContentWidthInPx = width
-                                dropdownGravity = Gravity.END
-                                section {
-                                    title = "Sensor Speed"
-                                    item {
-                                        label = "Fast"
-                                        icon = R.drawable.ic_speed_fast
-                                        callback = {
-                                            sensorDelay = SensorManager.SENSOR_DELAY_FASTEST
-                                            CompassPreference().setDelay(sensorDelay, requireContext())
-                                            unregister()
-                                            register()
-                                        }
-                                    }
-                                    item {
-                                        label = "Smooth"
-                                        icon = R.drawable.ic_speed_smooth
-                                        callback = {
-                                            sensorDelay = SensorManager.SENSOR_DELAY_GAME
-                                            CompassPreference().setDelay(sensorDelay, requireContext())
-                                            unregister()
-                                            register()
-                                        }
-                                    }
-                                }
-                            }
-                            sensorPopupMenu.show(requireContext(), menu)
-                        }
-                    }
-                    item {
-                        label = "Rotate"
-                        hasNestedItems = true
-                        icon = R.drawable.ic_rotate_which
-                        callback = {
-                            val rotateWhichMenu = popupMenu {
-                                style = styleResId
-                                dropdownGravity = Gravity.END
-                                section {
-                                    title = "Which to rotate ?"
-                                    item {
-                                        label = "Rotate Needle"
-                                        icon = if (rotateWhich == 1) {
-                                            R.drawable.ic_check_box_checked
-                                        } else {
-                                            R.drawable.ic_check_box_unchecked
-                                        }
-                                        callback = {
-                                            rotateWhich = 1
-                                            unregister()
-                                            animate(dial, 0f)
-                                            animate(needle, rotationAngle)
-                                            CompassPreference().setRotatePreference(requireContext(), rotateWhich)
-                                        }
-                                    }
-                                    item {
-                                        label = "Rotate Dial"
-                                        icon = if (rotateWhich == 2) {
-                                            R.drawable.ic_check_box_checked
-                                        } else {
-                                            R.drawable.ic_check_box_unchecked
-                                        }
-                                        callback = {
-                                            rotateWhich = 2
-                                            unregister()
-                                            animate(needle, 0f)
-                                            animate(dial, rotationAngle)
-                                            CompassPreference().setRotatePreference(requireContext(), rotateWhich)
-                                        }
-                                    }
-                                    item {
-                                        label = "Rotate Both"
-                                        icon = if (rotateWhich == 3) {
-                                            R.drawable.ic_check_box_checked
-                                        } else {
-                                            R.drawable.ic_check_box_unchecked
-                                        }
-                                        callback = {
-                                            rotateWhich = 3
-                                            unregister()
-                                            animate(needle, rotationAngle)
-                                            animate(dial, rotationAngle)
-                                            CompassPreference().setRotatePreference(requireContext(), rotateWhich)
-                                        }
-                                    }
-                                }
-                            }
-
-                            rotateWhichMenu.show(requireContext(), menu)
-                        }
-                    }
-                }
-                section {
-                    title = "Tools"
-                    item {
-                        label = "Torch"
-                        icon = if (isTorchOn) R.drawable.ic_flash_off else R.drawable.ic_flash_on
-                        callback = {
-                            isTorchOn = if (!isTorchOn) {
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                                    cameraManager.setTorchMode(cameraId, true)
-                                }
-                                true
-                            } else {
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                                    cameraManager.setTorchMode(cameraId, false)
-                                }
-                                false
-                            }
-                        }
-                    }
-                }
-            }
-
-            popupMenu.show(requireContext(), menu)
-        }
 
         dialContainer.setOnTouchListener(MyOnTouchListener())
 
@@ -508,5 +286,226 @@ class Compass : Fragment() {
 
     private fun rotateDial(degrees: Float) {
         dial.rotation = degrees
+    }
+
+    fun openCompassMenu(actionView: View) {
+        this.actionView = actionView
+        val popupMenu = popupMenu {
+            style = styleResId
+            dropdownGravity = Gravity.END
+            section {
+                title = "Appearance"
+                item {
+                    icon = R.drawable.ic_navigation
+                    hasNestedItems = true
+                    label = "Needle"
+                    callback = {
+                        Needle().needleSkinsOptions(requireContext(), this@Compass, skins[0])
+                    }
+                }
+                item {
+                    icon = R.drawable.ic_compass
+                    hasNestedItems = true
+                    label = "Dial"
+                    callback = {
+                        Dial().dialSkinsOptions(requireContext(), this@Compass, skins[1])
+                    }
+                }
+            }
+            section {
+                title = "Configuration"
+                item {
+                    label = "Parallax"
+                    icon = R.drawable.ic_parallax
+                    hasNestedItems = true
+                    callback = {
+                        val parallaxPopupMenu = popupMenu {
+                            style = styleResId
+                            fixedContentWidthInPx = width
+                            dropdownGravity = Gravity.END
+                            section {
+                                val isParallaxEnabled = CompassPreference().getParallax(requireContext())
+                                title = "Parallax"
+                                item {
+                                    label = if (isParallaxEnabled) "Disable" else "Enable"
+                                    icon = if (isParallaxEnabled) R.drawable.ic_check_box_checked else R.drawable.ic_check_box_unchecked
+                                    callback = {
+                                        if (isParallaxEnabled) {
+                                            CompassPreference().setParallax(false, requireContext())
+                                            needle.resetTranslationValues()
+                                            dial.resetTranslationValues()
+                                        } else {
+                                            CompassPreference().setParallax(true, requireContext())
+                                            parallax(true)
+                                        }
+                                    }
+                                }
+                                item {
+                                    label = "Calibrate"
+                                    icon = R.drawable.ic_calibration
+                                    callback = {
+                                        needle.calibrate()
+                                        dial.calibrate()
+                                    }
+                                }
+                            }
+                            section {
+                                val sensitivity = CompassPreference().getParallaxSensitivity(requireContext())
+                                title = "Sensitivity"
+                                item {
+                                    label = "Very Low"
+                                    icon = if (sensitivity == 5) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
+                                    callback = {
+                                        setSensitivity(5)
+                                    }
+                                }
+                                item {
+                                    label = "Low"
+                                    icon = if (sensitivity == 10) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
+                                    callback = {
+                                        setSensitivity(10)
+                                    }
+                                }
+                                item {
+                                    label = "Medium"
+                                    icon = if (sensitivity == 15) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
+                                    callback = {
+                                        setSensitivity(15)
+                                    }
+                                }
+                                item {
+                                    label = "High"
+                                    icon = if (sensitivity == 20) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
+                                    callback = {
+                                        setSensitivity(20)
+                                    }
+                                }
+                            }
+                        }
+
+                        parallaxPopupMenu.show(requireContext(), actionView)
+                    }
+                }
+                item {
+                    label = "Sensor Speed"
+                    hasNestedItems = true
+                    icon = R.drawable.ic_speed_fast
+                    callback = {
+                        val sensorPopupMenu = popupMenu {
+                            style = R.style.popupMenu
+                            fixedContentWidthInPx = width
+                            dropdownGravity = Gravity.END
+                            section {
+                                title = "Sensor Speed"
+                                item {
+                                    label = "Fast"
+                                    icon = R.drawable.ic_speed_fast
+                                    callback = {
+                                        sensorDelay = SensorManager.SENSOR_DELAY_FASTEST
+                                        CompassPreference().setDelay(sensorDelay, requireContext())
+                                        unregister()
+                                        register()
+                                    }
+                                }
+                                item {
+                                    label = "Smooth"
+                                    icon = R.drawable.ic_speed_smooth
+                                    callback = {
+                                        sensorDelay = SensorManager.SENSOR_DELAY_GAME
+                                        CompassPreference().setDelay(sensorDelay, requireContext())
+                                        unregister()
+                                        register()
+                                    }
+                                }
+                            }
+                        }
+                        sensorPopupMenu.show(requireContext(), actionView)
+                    }
+                }
+                item {
+                    label = "Rotate"
+                    hasNestedItems = true
+                    icon = R.drawable.ic_rotate_which
+                    callback = {
+                        val rotateWhichMenu = popupMenu {
+                            style = styleResId
+                            dropdownGravity = Gravity.END
+                            section {
+                                title = "Which to rotate ?"
+                                item {
+                                    label = "Rotate Needle"
+                                    icon = if (rotateWhich == 1) {
+                                        R.drawable.ic_radio_button_checked
+                                    } else {
+                                        R.drawable.ic_radio_button_unchecked
+                                    }
+                                    callback = {
+                                        rotateWhich = 1
+                                        unregister()
+                                        animate(dial, 0f)
+                                        animate(needle, rotationAngle)
+                                        CompassPreference().setRotatePreference(requireContext(), rotateWhich)
+                                    }
+                                }
+                                item {
+                                    label = "Rotate Dial"
+                                    icon = if (rotateWhich == 2) {
+                                        R.drawable.ic_radio_button_checked
+                                    } else {
+                                        R.drawable.ic_radio_button_unchecked
+                                    }
+                                    callback = {
+                                        rotateWhich = 2
+                                        unregister()
+                                        animate(needle, 0f)
+                                        animate(dial, rotationAngle)
+                                        CompassPreference().setRotatePreference(requireContext(), rotateWhich)
+                                    }
+                                }
+                                item {
+                                    label = "Rotate Both"
+                                    icon = if (rotateWhich == 3) {
+                                        R.drawable.ic_radio_button_checked
+                                    } else {
+                                        R.drawable.ic_radio_button_unchecked
+                                    }
+                                    callback = {
+                                        rotateWhich = 3
+                                        unregister()
+                                        animate(needle, rotationAngle)
+                                        animate(dial, rotationAngle)
+                                        CompassPreference().setRotatePreference(requireContext(), rotateWhich)
+                                    }
+                                }
+                            }
+                        }
+
+                        rotateWhichMenu.show(requireContext(), actionView)
+                    }
+                }
+            }
+            section {
+                title = "Tools"
+                item {
+                    label = "Torch"
+                    icon = if (isTorchOn) R.drawable.ic_flash_off else R.drawable.ic_flash_on
+                    callback = {
+                        isTorchOn = if (!isTorchOn) {
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                                cameraManager.setTorchMode(cameraId, true)
+                            }
+                            true
+                        } else {
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                                cameraManager.setTorchMode(cameraId, false)
+                            }
+                            false
+                        }
+                    }
+                }
+            }
+        }
+
+        popupMenu.show(requireContext(), actionView)
     }
 }

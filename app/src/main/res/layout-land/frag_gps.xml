@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="0.8"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="vertical">
@@ -53,11 +53,11 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:fadingEdge="vertical"
-            android:fadingEdgeLength="50dp"
+            android:fadingEdgeLength="30dp"
             android:overScrollMode="never"
             android:paddingHorizontal="25dp"
             android:requiresFadingEdge="vertical"
@@ -70,13 +70,13 @@
                 android:paddingVertical="25dp">
 
                 <com.google.android.material.card.MaterialCardView
+                    android:elevation="5dp"
+                    app:cardCornerRadius="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
-                    android:elevation="5dp"
-                    app:cardCornerRadius="10dp"
                     app:contentPadding="10dp">
 
                     <LinearLayout
@@ -89,22 +89,34 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="5dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_marginVertical="5dp"
                             android:fontFamily="sans-serif-medium"
                             android:text="Provider"
                             android:textColor="?attr/textPrimary"
                             android:textSize="6pt" />
 
                         <com.elyeproj.loaderviewlibrary.LoaderTextView
-                            android:id="@+id/gps_provider"
+                            android:id="@+id/provider_status"
+                            android:textSize="8pt"
+                            app:corners="20"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:fontFamily="sans-serif-light"
                             android:maxLines="1"
                             android:textColor="?attr/textPrimary"
-                            android:textSize="22pt"
+                            app:use_gradient="true" />
+
+                        <com.elyeproj.loaderviewlibrary.LoaderTextView
+                            android:id="@+id/provider_source"
                             app:corners="20"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:fontFamily="sans-serif-light"
+                            android:maxLines="1"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="8pt"
                             app:use_gradient="true" />
 
                     </LinearLayout>

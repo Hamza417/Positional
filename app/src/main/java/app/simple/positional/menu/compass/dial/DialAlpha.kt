@@ -6,7 +6,6 @@ import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
 import com.github.zawadz88.materialpopupmenu.popupMenu
-import kotlinx.android.synthetic.main.frag_compass.*
 
 class DialAlpha {
 
@@ -60,7 +59,7 @@ class DialAlpha {
             }
         }
 
-        compassPopupMenu.show(context, compass.compass_menu)
+        compassPopupMenu.show(context, compass.actionView)
 
         compassPopupMenu.setOnDismissListener {
             setDialAlpha(opacity, context, compass)

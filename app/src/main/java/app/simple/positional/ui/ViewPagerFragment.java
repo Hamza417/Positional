@@ -63,7 +63,7 @@ public class ViewPagerFragment extends Fragment {
     
         model.setAdapter(modelAdapter);
         model.setOffscreenPageLimit(0);
-        model.setCurrentItem(new ViewPagerPreference().getCurrentViewPager(requireContext()));
+        model.setCurrentItem(new ViewPagerPreference().getCurrentPage(requireContext()));
         wormDotsIndicator.setViewPager(model);
     
         model.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -74,7 +74,7 @@ public class ViewPagerFragment extends Fragment {
         
             @Override
             public void onPageSelected(int position) {
-                new ViewPagerPreference().setCurrentPager(requireContext(), position);
+                new ViewPagerPreference().setCurrentPage(requireContext(), position);
             }
         
             @Override

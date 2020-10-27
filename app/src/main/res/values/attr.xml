@@ -8,6 +8,8 @@
     <attr name="rippleColor" format="color" />
     <attr name="mainBackground" format="color" />
     <attr name="dividerColor" format="color" />
+    <attr name="navigationBackground" format="color" />
+    <attr name="toolbarBackground" format="color" />
 
     <attr name="alphaIcons" format="float" />
 
@@ -24,4 +26,5 @@
         <attr name="isTranslucent" format="boolean" />
         <attr name="forceClip" format="boolean" />
     </declare-styleable>
+
 </resources>

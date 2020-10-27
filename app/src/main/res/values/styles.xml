@@ -12,7 +12,9 @@
         <item name="textSecondary">@color/textSecondary</item>
         <item name="textPrimary">@color/textPrimary</item>
         <item name="dividerColor">@color/dividerColor</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="navigationBackground">@color/toolbarBackground</item>
+        <item name="toolbarBackground">@color/toolbarBackground</item>
+        <item name="android:statusBarColor">@color/toolbarBackground</item>
 
         <item name="alphaIcons">0.5</item>
     </style>

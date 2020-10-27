@@ -5,4 +5,15 @@
     <string name="coarse_perm_info">Used to show a precise location data in case GPS is unavailable or until available</string>
     <string name="wfi_perm_info">Used to check if WiFi connectivity is available</string>
     <string name="network_perm_info">Used to check if network is available and is connected</string>
+
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
+    <array name="menuOptions">
+        <item>Clock</item>
+        <item>Compass</item>
+        <item>GPS</item>
+        <item>Settings</item>
+        <item>About</item>
+    </array>
 </resources>

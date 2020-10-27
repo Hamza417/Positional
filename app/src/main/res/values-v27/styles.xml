@@ -1,22 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="Oreo" parent="@style/LightTheme">
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
-
-        <!-- Theme -->
-        <item name="mainBackground">@color/mainBackground</item>
-        <item name="iconColor">@color/iconColor</item>
-        <item name="textSecondary">@color/textSecondary</item>
-        <item name="textPrimary">@color/textPrimary</item>
-        <item name="dividerColor">@color/dividerColor</item>
-
-        <item name="alphaIcons">0.5</item>
     </style>
 
 </resources>
