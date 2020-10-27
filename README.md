@@ -9,13 +9,13 @@
 ## Stats
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Download](https://badgen.net/badge/Download/v1.3-beta/grey?icon=https://svgshare.com/i/Qk3.svg)](https://github.com/Hamza417/Positional/releases/download/1.3-beta/1.3-beta.apk) [![Changelogs](https://badgen.net/badge/Changelogs/v1.3-beta/green?list)](https://github.com/Hamza417/Positional/releases/tag/1.3-beta)
+[![Download](https://badgen.net/badge/Download/v1.6-beta/grey?icon=https://svgshare.com/i/Qk3.svg)](https://github.com/Hamza417/Positional/releases/download/1.6-beta/1.6-beta.apk) [![Changelogs](https://badgen.net/badge/Changelogs/v1.6-beta/green?list)](https://github.com/Hamza417/Positional/releases/tag/1.6-beta)
 ![Status](https://badgen.net/badge/Status/beta/orange?icon)
 
 <br/>
 
 ## Screenshots
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="20%">
+<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_06.png" width="20%">
 
 <br/>
 
