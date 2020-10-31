@@ -67,7 +67,7 @@ class CompassService : Service(), SensorEventListener {
     /**
      *
      */
-    override fun onSensorChanged(event: SensorEvent) {
+    override  fun onSensorChanged(event: SensorEvent) {
         when (event.sensor.type) {
             Sensor.TYPE_ACCELEROMETER -> smoothAndSetReadings(accelerometerReadings, event.values)
             Sensor.TYPE_MAGNETIC_FIELD -> smoothAndSetReadings(magnetometerReadings, event.values)
@@ -91,8 +91,8 @@ class CompassService : Service(), SensorEventListener {
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {}
 
     private fun register() {
-        sensorManager.registerListener(this, sensorAccelerometer, 1, mSensorHandler)
-        sensorManager.registerListener(this, sensorMagneticField, 1, mSensorHandler)
+        sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME, mSensorHandler)
+        sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME, mSensorHandler)
     }
 
     private fun unregister() {

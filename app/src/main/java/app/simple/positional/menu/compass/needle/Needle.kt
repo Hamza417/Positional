@@ -6,6 +6,7 @@ import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
 import com.github.zawadz88.materialpopupmenu.popupMenu
+import kotlinx.android.synthetic.main.frag_compass.*
 
 class Needle {
     fun needleSkinsOptions(context: Context, compass: Compass, skins: Int) {
@@ -49,6 +50,6 @@ class Needle {
             }
         }
 
-        compassPopupMenu.show(context, compass.actionView)
+        compassPopupMenu.show(context, compass.compass_menu)
     }
 }

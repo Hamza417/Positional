@@ -6,14 +6,9 @@
     <string name="wfi_perm_info">Used to check if WiFi connectivity is available</string>
     <string name="network_perm_info">Used to check if network is available and is connected</string>
 
-    <string name="nav_open">Open</string>
-    <string name="nav_close">Close</string>
-
-    <array name="menuOptions">
-        <item>Clock</item>
-        <item>Compass</item>
-        <item>GPS</item>
-        <item>Settings</item>
-        <item>About</item>
-    </array>
+    <string name="ellipsis">&#8230;</string>
+    <string name="clock">Clock</string>
+    <string name="compass">Compass</string>
+    <string name="gps">GPS</string>
+    <string name="settings">Settings</string>
 </resources>

@@ -15,10 +15,12 @@ import android.view.*
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.menu.compass.dial.Dial
 import app.simple.positional.menu.compass.needle.Needle
@@ -40,7 +42,7 @@ class Compass : Fragment() {
     private lateinit var dial: ParallaxView
     private lateinit var degrees: TextView
     private lateinit var dialContainer: FrameLayout
-    lateinit var actionView: View
+    private lateinit var menu: ImageButton
 
     lateinit var skins: IntArray
     private val width: Int = 500
@@ -82,6 +84,8 @@ class Compass : Fragment() {
         cameraId = cameraManager.cameraIdList[0]
 
         dialContainer = v.findViewById(R.id.dial_container)
+
+        menu = v.findViewById(R.id.compass_menu)
 
         setSkins()
 
@@ -140,6 +144,10 @@ class Compass : Fragment() {
                     degrees.text = "$azimuth° $direction"
                 }
             }
+        }
+
+        menu.setOnClickListener {
+            openCompassMenu(menu)
         }
     }
 
@@ -286,29 +294,31 @@ class Compass : Fragment() {
 
     private fun rotateDial(degrees: Float) {
         dial.rotation = degrees
+        println(degrees)
     }
 
-    fun openCompassMenu(actionView: View) {
-        this.actionView = actionView
+    private fun openCompassMenu(view: View) {
         val popupMenu = popupMenu {
             style = styleResId
             dropdownGravity = Gravity.END
-            section {
-                title = "Appearance"
-                item {
-                    icon = R.drawable.ic_navigation
-                    hasNestedItems = true
-                    label = "Needle"
-                    callback = {
-                        Needle().needleSkinsOptions(requireContext(), this@Compass, skins[0])
+            if (BuildConfig.FLAVOR == "full") {
+                section {
+                    title = "Appearance"
+                    item {
+                        icon = R.drawable.ic_navigation
+                        hasNestedItems = true
+                        label = "Needle"
+                        callback = {
+                            Needle().needleSkinsOptions(requireContext(), this@Compass, skins[0])
+                        }
                     }
-                }
-                item {
-                    icon = R.drawable.ic_compass
-                    hasNestedItems = true
-                    label = "Dial"
-                    callback = {
-                        Dial().dialSkinsOptions(requireContext(), this@Compass, skins[1])
+                    item {
+                        icon = R.drawable.ic_compass
+                        hasNestedItems = true
+                        label = "Dial"
+                        callback = {
+                            Dial().dialSkinsOptions(requireContext(), this@Compass, skins[1])
+                        }
                     }
                 }
             }
@@ -383,7 +393,7 @@ class Compass : Fragment() {
                             }
                         }
 
-                        parallaxPopupMenu.show(requireContext(), actionView)
+                        parallaxPopupMenu.show(requireContext(), view)
                     }
                 }
                 item {
@@ -419,7 +429,7 @@ class Compass : Fragment() {
                                 }
                             }
                         }
-                        sensorPopupMenu.show(requireContext(), actionView)
+                        sensorPopupMenu.show(requireContext(), view)
                     }
                 }
                 item {
@@ -480,7 +490,7 @@ class Compass : Fragment() {
                             }
                         }
 
-                        rotateWhichMenu.show(requireContext(), actionView)
+                        rotateWhichMenu.show(requireContext(), view)
                     }
                 }
             }
@@ -506,6 +516,6 @@ class Compass : Fragment() {
             }
         }
 
-        popupMenu.show(requireContext(), actionView)
+        popupMenu.show(requireContext(), view)
     }
 }

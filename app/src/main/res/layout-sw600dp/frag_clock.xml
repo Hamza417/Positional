@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/clock_appbar"
+            style="@style/Widget.MaterialComponents.Toolbar.Surface"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_toolbar"
+            android:elevation="@dimen/top_bar_elevation"
+            app:contentInsetEnd="10dp"
+            app:contentInsetStart="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:fontFamily="@font/medium"
+                android:text="Clock"
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/fragment_header_text_size" />
+
+            <ImageButton
+                android:id="@+id/clock_menu"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical|end"
+                android:background="@drawable/ripple"
+                android:src="@drawable/ic_more_horiz" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <FrameLayout
+            android:id="@+id/clock_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_collapseMode="parallax"
+            app:layout_collapseParallaxMultiplier="0.8"
+            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+
+            <ImageView
+                android:layout_width="@dimen/clock_image_dimensions"
+                android:layout_height="@dimen/clock_image_dimensions"
+                android:layout_gravity="center"
+                android:src="@drawable/clock_background" />
+
+            <ImageView
+                android:id="@+id/hour"
+                android:layout_width="@dimen/clock_image_dimensions"
+                android:layout_height="@dimen/clock_image_dimensions"
+                android:layout_gravity="center"
+                android:src="@drawable/clock_hour" />
+
+            <ImageView
+                android:id="@+id/minutes"
+                android:layout_width="@dimen/clock_image_dimensions"
+                android:layout_height="@dimen/clock_image_dimensions"
+                android:layout_gravity="center"
+                android:src="@drawable/clock_minute" />
+
+            <ImageView
+                android:id="@+id/seconds"
+                android:layout_width="@dimen/clock_image_dimensions"
+                android:layout_height="@dimen/clock_image_dimensions"
+                android:layout_gravity="center"
+                android:src="@drawable/clock_seconds" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <include layout="@layout/frag_clock_bottom_sheet" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

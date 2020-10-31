@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fragment_header_text_size">24pt</dimen>
+    <dimen name="clock_image_dimensions">600dp</dimen>
+    <dimen name="top_bar_elevation">2dp</dimen>
+    <dimen name="bottom_nav_height">70dp</dimen>
+    <dimen name="settings_primary_text_size">7pt</dimen>
+    <dimen name="all_corner_radius">20dp</dimen>
+</resources>

@@ -8,8 +8,11 @@
     <attr name="rippleColor" format="color" />
     <attr name="mainBackground" format="color" />
     <attr name="dividerColor" format="color" />
-    <attr name="navigationBackground" format="color" />
+    <attr name="popupBackground" format="color" />
     <attr name="toolbarBackground" format="color" />
+    <attr name="iconRegular" format="color" />
+    <attr name="indicator" format="color" />
+    <attr name="shadowColor" format="color" />
 
     <attr name="alphaIcons" format="float" />
 
@@ -20,11 +23,25 @@
         <attr name="scaledIntensity" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="ElevationImageView">
-        <attr name="compatElevation" format="dimension" />
-        <attr name="clipShadow" format="boolean" />
-        <attr name="isTranslucent" format="boolean" />
-        <attr name="forceClip" format="boolean" />
+    <declare-styleable name="SmoothBottomBar">
+        <attr name="menu" format="reference" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="indicatorColor" format="color" />
+        <attr name="indicatorRadius" format="dimension" />
+        <attr name="sideMargins" format="dimension" />
+        <attr name="itemPadding" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="itemFontFamily" format="reference" />
+        <attr name="textSize" format="dimension" />
+        <attr name="iconSize" format="dimension" />
+        <attr name="iconMargin" format="dimension" />
+        <attr name="iconTint" format="color" />
+        <attr name="iconTintActive" format="color" />
+        <attr name="cornerRadius" format="dimension" />
+        <attr name="activeItem" format="integer" />
+        <attr name="duration" format="integer" />
     </declare-styleable>
+
+    <attr name="SmoothBottomBarStyle" format="reference" />
 
 </resources>

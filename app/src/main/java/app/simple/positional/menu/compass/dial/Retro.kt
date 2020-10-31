@@ -5,6 +5,7 @@ import android.view.Gravity
 import app.simple.positional.R
 import app.simple.positional.ui.Compass
 import com.github.zawadz88.materialpopupmenu.popupMenu
+import kotlinx.android.synthetic.main.frag_compass.*
 import kotlin.properties.Delegates
 
 class Retro {
@@ -40,7 +41,7 @@ class Retro {
             }
         }
 
-        compassPopupMenu.show(context, compass.actionView)
+        compassPopupMenu.show(context, compass.compass_menu)
 
         compassPopupMenu.setOnDismissListener {
             setDialTheme(context, compass, skins)

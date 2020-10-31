@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settings_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                style="@style/Widget.MaterialComponents.Toolbar.Surface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_toolbar"
+                android:elevation="@dimen/top_bar_elevation"
+                app:contentInsetEnd="10dp"
+                app:contentInsetStart="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:fontFamily="@font/medium"
+                    android:text="Settings"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="14pt" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/medium"
+                android:text="Appearance"
+                android:textColor="?attr/textSecondary"
+                android:textSize="6pt" />
+
+            <LinearLayout
+                android:id="@+id/settings_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="Theme"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+                <TextView
+                    android:id="@+id/current_theme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:textColor="?attr/textSecondary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/settings_accent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="Accent"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="Grey"
+                    android:textColor="?attr/textSecondary" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/medium"
+                android:text="About"
+                android:textColor="?attr/textSecondary"
+                android:textSize="6pt" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="Legal Notes"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="App Version"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/versionName"
+                    android:textColor="?attr/textSecondary" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/medium"
+                android:text="Contribute"
+                android:textColor="?attr/textSecondary"
+                android:textSize="6pt" />
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/ripple"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/medium"
+                android:text="Github"
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/settings_primary_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="If you are a developer and want to contribute to development, you can get the repo here or you can raise an issue"
+                android:textColor="?attr/textSecondary" />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="Buy Full Version"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/regular"
+                    android:text="Support development by buying full version here"
+                    android:textColor="?attr/textSecondary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

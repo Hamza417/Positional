@@ -29,7 +29,9 @@ class LocationService : Service(), LocationProviderListener {
     }
 
     override fun onDestroy() {
-        locationProvider!!.removeLocationCallbacks()
+        if (locationProvider != null) {
+            locationProvider!!.removeLocationCallbacks()
+        }
         super.onDestroy()
     }
 

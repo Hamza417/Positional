@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="LightTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -12,9 +12,16 @@
         <item name="textSecondary">@color/textSecondary</item>
         <item name="textPrimary">@color/textPrimary</item>
         <item name="dividerColor">@color/dividerColor</item>
-        <item name="navigationBackground">@color/toolbarBackground</item>
+        <item name="popupBackground">@color/popupBackground</item>
         <item name="toolbarBackground">@color/toolbarBackground</item>
+        <item name="rippleColor">@color/rippleColor</item>
         <item name="android:statusBarColor">@color/toolbarBackground</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <item name="indicator">@color/indicator</item>
+        <item name="iconRegular">@color/iconRegular</item>
+        <item name="shadowColor">@color/shadowColor</item>
 
         <item name="alphaIcons">0.5</item>
     </style>

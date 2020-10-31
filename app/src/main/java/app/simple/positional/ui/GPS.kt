@@ -25,10 +25,12 @@ import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
+import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.util.LocationConverter
 import app.simple.positional.util.isNetworkAvailable
 import app.simple.positional.util.round
 import com.elyeproj.loaderviewlibrary.LoaderTextView
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.io.IOException
 import java.util.*
@@ -41,6 +43,9 @@ class GPS : Fragment() {
     private lateinit var expandUp: ImageView
 
     private lateinit var scrollView: NestedScrollView
+
+    private lateinit var toolbar: MaterialToolbar
+    private lateinit var bottomSheetSlide: BottomSheetSlide
 
     private lateinit var accuracy: LoaderTextView
     private lateinit var address: LoaderTextView
@@ -82,7 +87,10 @@ class GPS : Fragment() {
         filter.addAction("status")
         filter.addAction("enabled")
 
+        bottomSheetSlide = requireActivity() as BottomSheetSlide
+
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            toolbar = view.findViewById(R.id.gps_appbar)
             gpsLayout = view.findViewById(R.id.gps_layout)
 
             scrollView = view.findViewById(R.id.gps_list_scroll_view)
@@ -159,6 +167,8 @@ class GPS : Fragment() {
                     expandUp.alpha = (1 - slideOffset)
                     gpsLayout.translationY = 150 * -slideOffset
                     gpsLayout.alpha = (1 - slideOffset)
+                    bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                    toolbar.translationY = (toolbar.height * -slideOffset)
                 }
             })
 

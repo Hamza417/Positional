@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#000000</color>
+
+    <color name="mainBackground">#202020</color>
+    <color name="popupBackground">#454545</color>
+    <color name="iconColor">#F3F3F3</color>
+    <color name="textSecondary">#E4E4E4</color>
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="dividerColor">#BDBDBD</color>
+    <color name="toolbarBackground">#303030</color>
+    <color name="rippleColor">#5A5A5A</color>
+
+    <!-- Bottom Bar Color -->
+    <color name="iconRegular">#808080</color>
+    <color name="indicator">#3A3A3A</color>
+    <color name="shadowColor">#EDEDED</color>
+</resources>

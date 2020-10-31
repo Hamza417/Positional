@@ -1,15 +1,13 @@
-package app.simple.positional.preference;
+package app.simple.positional.preference
 
-import android.content.Context;
+import android.content.Context
 
-public class ViewPagerPreference {
-    protected String preferences = "Pager";
-    
-    public void setCurrentPage(Context context, int value) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt("current_pager", value).apply();
+class FragmentPreferences {
+    fun setCurrentPage(context: Context, value: Int) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(currentPage, value).apply()
     }
-    
-    public int getCurrentPage(Context context) {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt("current_pager", 1);
+
+    fun getCurrentPage(context: Context): Int {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(currentPage, 1)
     }
 }

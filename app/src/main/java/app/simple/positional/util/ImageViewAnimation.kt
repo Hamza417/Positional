@@ -32,7 +32,6 @@ fun imageViewAnimatedChange(v: ImageView, new_image: Int, context: Context) {
         }
 
         override fun onAnimationRepeat(animation: Animation?) {}
-
     })
     v.startAnimation(animOut)
 }

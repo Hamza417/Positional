@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_main_setting"
-        android:icon="@drawable/ic_more_horiz"
-        android:orderInCategory="100"
-        android:title="Options"
-        app:showAsAction="always" />
+        android:id="@+id/item0"
+        android:icon="@drawable/ic_clock"
+        android:title="@string/clock" />
+
+    <item
+        android:id="@+id/item1"
+        android:icon="@drawable/ic_compass"
+        android:title="@string/compass" />
+
+    <item
+        android:id="@+id/item2"
+        android:icon="@drawable/ic_calibration"
+        android:title="@string/gps" />
+
+    <item
+        android:id="@+id/item3"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/settings" />
 
 </menu>

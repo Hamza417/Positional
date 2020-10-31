@@ -5,94 +5,61 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.os.PowerManager
 import android.provider.Settings
-import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import app.simple.positional.adapters.MenuAdapter
+import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.dialogs.PermissionDialog
-import app.simple.positional.preference.ViewPagerPreference
+import app.simple.positional.preference.FragmentPreferences
+import app.simple.positional.preference.MainPreferences
 import app.simple.positional.services.CompassService
 import app.simple.positional.services.LocationService
+import app.simple.positional.smoothbottombar.SmoothBottomBar
+import app.simple.positional.ui.AppSettings
 import app.simple.positional.ui.Clock
 import app.simple.positional.ui.Compass
 import app.simple.positional.ui.GPS
-import com.google.android.material.appbar.MaterialToolbar
-import nl.psdcompany.duonavigationdrawer.views.DuoDrawerLayout
-import nl.psdcompany.duonavigationdrawer.views.DuoMenuView
-import nl.psdcompany.duonavigationdrawer.widgets.DuoDrawerToggle
 
-
-class MainActivity : AppCompatActivity(), PermissionCallbacks, DuoMenuView.OnMenuClickListener {
+class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide {
 
     private var locationIntent: Intent? = null
     private var compassIntent: Intent? = null
 
-    private lateinit var drawer: DuoDrawerLayout
-    private lateinit var toggle: DuoDrawerToggle
-    private lateinit var navMenu: DuoMenuView
-    private lateinit var toolbar: MaterialToolbar
-
-    private lateinit var menuAdapter: MenuAdapter
+    private lateinit var bottomBar: SmoothBottomBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        window.setFormat(PixelFormat.RGBA_8888)
 
-        val mTitles = resources.getStringArray(R.array.menuOptions).toList()
-
-        val title: ArrayList<String> = ArrayList()
-
-        for (i in mTitles.indices) {
-            title.add(mTitles[i])
-            println(mTitles[i])
+        // This will keep the screen on during test
+        if (BuildConfig.DEBUG) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
+        app.simple.positional.theme.setTheme(MainPreferences().getCurrentTheme(baseContext))
+
+        setContentView(R.layout.activity_main)
+
+        window.setFormat(PixelFormat.RGBA_8888)
+
+        bottomBar = findViewById(R.id.bottom_bar)
         locationIntent = Intent(applicationContext, LocationService::class.java)
         compassIntent = Intent(applicationContext, CompassService::class.java)
 
-        toolbar = findViewById(R.id.toolbar)
-        //setSupportActionBar(toolbar)
-        //toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_drag_handle)
-        toolbar.inflateMenu(R.menu.toolbar_items)
-
-        drawer = findViewById(R.id.drawer)
-        navMenu = drawer.menuView as DuoMenuView
-        menuAdapter = MenuAdapter(title)
-        navMenu.adapter = menuAdapter
-        navMenu.setOnMenuClickListener(this)
-        toggle = DuoDrawerToggle(this, drawer, toolbar, R.string.nav_open, R.string.nav_close)
-        drawer.setDrawerListener(toggle)
-        toggle.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeButtonEnabled(true)
         //checkBattery()
 
         runApp()
         checkRunTimePermission()
 
-        navMenu.setOnClickListener {
-            if (drawer.isDrawerOpen) {
-                drawer.closeDrawer()
-            }
-        }
-
-        toolbar.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.menu_main_setting) {
-                if (ViewPagerPreference().getCurrentPage(baseContext) == 1) {
-                    (supportFragmentManager.findFragmentByTag("compass") as Compass?)?.openCompassMenu(findViewById(R.id.menu_main_setting))
-                }
-            }
-            true
+        bottomBar.setOnItemSelectedListener {
+            setFragment(it)
+            FragmentPreferences().setCurrentPage(baseContext, it)
         }
     }
 
@@ -104,32 +71,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, DuoMenuView.OnMen
     override fun onPause() {
         super.onPause()
         stopService()
-    }
-
-    override fun onBackPressed() {
-        if (drawer.isDrawerOpen) {
-            drawer.closeDrawer()
-        } else {
-            return super.onBackPressed()
-        }
-    }
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        toggle.syncState()
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        toggle.onConfigurationChanged(newConfig)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (toggle.onOptionsItemSelected(item)) {
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
     }
 
     private fun checkRunTimePermission() {
@@ -158,7 +99,8 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, DuoMenuView.OnMen
     }
 
     private fun runApp() {
-        setFragment(ViewPagerPreference().getCurrentPage(this))
+        setFragment(FragmentPreferences().getCurrentPage(this))
+        bottomBar.itemActiveIndex = FragmentPreferences().getCurrentPage(this)
     }
 
     private fun runService() {
@@ -200,26 +142,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, DuoMenuView.OnMen
         ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), DEFAULT_PERMISSION_REQUEST_CODE)
     }
 
-    override fun onFooterClicked() {
-        finish()
-        println("callled")
-    }
-
-    override fun onHeaderClicked() {
-
-    }
-
-    override fun onOptionClicked(position: Int, objectClicked: Any?) {
-        Handler().postDelayed({
-            setFragment(position)
-        }, 200)
-
-        drawer.closeDrawer()
-        ViewPagerPreference().setCurrentPage(this, position)
-    }
-
     private fun setFragment(position: Int) {
-        menuAdapter.setViewSelected(position, true)
         when (position) {
             0 -> {
                 val clock = supportFragmentManager.findFragmentByTag("clock") as Clock?
@@ -235,8 +158,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, DuoMenuView.OnMen
                             .replace(R.id.containers, clock, "clock")
                             .commit()
                 }
-                toolbar.setLogo(R.drawable.ic_clock)
-                toolbar.title = "  Clock"
             }
             1 -> {
                 val compass = supportFragmentManager.findFragmentByTag("compass") as Compass?
@@ -252,8 +173,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, DuoMenuView.OnMen
                             .replace(R.id.containers, compass, "compass")
                             .commit()
                 }
-                toolbar.setLogo(R.drawable.ic_compass)
-                toolbar.title = "  Compass"
             }
             2 -> {
                 val gps = supportFragmentManager.findFragmentByTag("gps") as GPS?
@@ -269,15 +188,29 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, DuoMenuView.OnMen
                             .replace(R.id.containers, gps, "gps")
                             .commit()
                 }
-                toolbar.setLogo(R.drawable.ic_calibration)
-                toolbar.title = "  GPS"
             }
             3 -> {
+                val settings = supportFragmentManager.findFragmentByTag("settings") as AppSettings?
 
+                if (settings == null) {
+                    supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                            .replace(R.id.containers, AppSettings(), "settings")
+                            .commit()
+                } else {
+                    supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                            .replace(R.id.containers, settings, "settings")
+                            .commit()
+                }
             }
             4 -> {
 
             }
         }
+    }
+
+    override fun onBottomSheetSliding(slideOffset: Float) {
+        bottomBar.translationY = (bottomBar.height * slideOffset)
     }
 }

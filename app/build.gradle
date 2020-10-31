@@ -10,16 +10,33 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 6
-        versionName "v1.7-beta"
+        versionCode 7
+        versionName "v1.8-beta"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+        lite {
+            dimension "version"
+            applicationIdSuffix ".lite"
+            versionNameSuffix "-lite"
+        }
+        full {
+            dimension "version"
+            versionNameSuffix "-full"
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            applicationIdSuffix ".debug"
         }
     }
 
@@ -66,12 +83,10 @@ dependencies {
 
     implementation 'org.shredzone.commons:commons-suncalc:3.4'
 
-    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
-
-    implementation 'nl.psdcompany:duo-navigation-drawer:3.0.0'
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.1"
 
     // debugImplementation because LeakCanary should only run in debug builds.
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
 }
 
 repositories {

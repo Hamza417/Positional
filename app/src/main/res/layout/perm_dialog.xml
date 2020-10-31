@@ -37,7 +37,7 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior=".behaviors.OverScrollBehavior">
+                app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
                 <LinearLayout
                     android:layout_width="match_parent"
