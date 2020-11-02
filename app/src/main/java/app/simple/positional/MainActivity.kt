@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.WindowManager
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -47,6 +48,8 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         setContentView(R.layout.activity_main)
 
         window.setFormat(PixelFormat.RGBA_8888)
+
+        windowManager.defaultDisplay.refreshRate
 
         bottomBar = findViewById(R.id.bottom_bar)
         locationIntent = Intent(applicationContext, LocationService::class.java)
@@ -211,6 +214,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     }
 
     override fun onBottomSheetSliding(slideOffset: Float) {
-        bottomBar.translationY = (bottomBar.height * slideOffset)
+        //bottomBar.translationY = (bottomBar.height * slideOffset)
+        findViewById<FrameLayout>(R.id.bottom_bar_wrapper).translationY = (findViewById<FrameLayout>(R.id.bottom_bar_wrapper).height * slideOffset)
     }
 }

@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.location.Location
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
@@ -16,7 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.LinearInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -87,6 +88,7 @@ class Clock : Fragment() {
     private lateinit var bottomSheetSlide: BottomSheetSlide
 
     var isMovementTypeSmooth = false
+    var delay: Long = 1000
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
@@ -123,6 +125,7 @@ class Clock : Fragment() {
         scrollView = view.findViewById(R.id.clock_panel_scrollview)
 
         isMovementTypeSmooth = ClockPreferences().getMovementType(requireContext())
+        setMotionDelay()
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             toolbar = view.findViewById(R.id.clock_appbar)
@@ -146,9 +149,6 @@ class Clock : Fragment() {
         updateDigitalTime(calendar)
         val df = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
         date.text = df.format(calendar.time)
-        animate(hour, getHoursInDegrees(calendar))
-        animate(minutes, getMinutesInDegrees(calendar))
-        animate(seconds, getSecondsInDegrees(calendar))
 
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -256,19 +256,34 @@ class Clock : Fragment() {
         }
     }
 
+    private fun updateClock(calendar: Calendar) {
+        animate(hour, getHoursInDegrees(calendar))
+        animate(minutes, getMinutesInDegrees(calendar))
+        animate(seconds, getSecondsInDegrees(calendar))
+    }
+
     private val clock: Runnable = object : Runnable {
         override fun run() {
             calendar = Calendar.getInstance()
 
-            if (isMovementTypeSmooth) {
-                animate(hour, getHoursInDegrees(calendar))
-                animate(minutes, getMinutesInDegrees(calendar))
-                animate(seconds, getSecondsInDegrees(calendar))
+            hour.rotation = getHoursInDegrees(calendar)
+            minutes.rotation = getMinutesInDegrees(calendar)
+
+            seconds.rotation = if (isMovementTypeSmooth) {
+                getSecondsInDegreesWithDecimalPrecision(calendar)
             } else {
-                hour.rotation = getHoursInDegrees(calendar)
-                minutes.rotation = getMinutesInDegrees(calendar)
-                seconds.rotation = getSecondsInDegrees(calendar)
+                getSecondsInDegrees(calendar)
             }
+
+            println(delay)
+
+            handler.postDelayed(this, delay)
+        }
+    }
+
+    private val calender: Runnable = object : Runnable {
+        override fun run() {
+            calendar = Calendar.getInstance()
 
             updateDigitalTime(calendar)
 
@@ -277,35 +292,27 @@ class Clock : Fragment() {
     }
 
     fun updateDigitalTime(calendar: Calendar) {
-        timeZoneView.text = TimeZone.getTimeZone(TimeZone.getDefault().id).getDisplayName(false, TimeZone.SHORT)
-        digitalTime24.text = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time).toString()
-        digitalTime12.text = SimpleDateFormat("hh:mm:ss", Locale.getDefault()).format(calendar.time).toString()
-        digitalDaytime.text = SimpleDateFormat("a", Locale.getDefault()).format(calendar.time).toString().toUpperCase()
-        utcTimeZone.text = "GMT ${SimpleDateFormat("XXX", Locale.getDefault()).format(calendar.time)}"
-        try {
-            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
-            utcTime.text = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date)
-            utcDate.text = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)
-        } catch (e: ParseException) {
-            utcDate.resetLoader()
-            utcTime.resetLoader()
-        }
+        dateUpdater(calendar)
     }
 
     private fun animate(imageView: ImageView, value: Float) {
-        val animator = ObjectAnimator.ofFloat(imageView, "rotation", imageView.rotation, value)
-        animator.duration = 1000
-        animator.interpolator = LinearInterpolator()
+        val animator = ObjectAnimator.ofFloat(imageView, "rotation", 0f, value)
+        animator.duration = 500
+        animator.interpolator = DecelerateInterpolator()
         animator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {}
-
-            override fun onAnimationEnd(animation: Animator?) {
-                //handler.post(clock)
+            override fun onAnimationStart(animation: Animator?) {
+                handler.removeCallbacks(clock)
             }
 
-            override fun onAnimationCancel(animation: Animator?) {}
+            override fun onAnimationEnd(animation: Animator?) {
+                handler.post(clock)
+            }
 
-            override fun onAnimationRepeat(animation: Animator?) {}
+            override fun onAnimationCancel(animation: Animator?) {
+            }
+
+            override fun onAnimationRepeat(animation: Animator?) {
+            }
 
         })
         animator.start()
@@ -315,17 +322,14 @@ class Clock : Fragment() {
         super.onPause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(clock)
+        handler.removeCallbacks(calender)
     }
 
     override fun onResume() {
         super.onResume()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         handler.post(clock)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        handler.post(clock)
+        handler.post(calender)
     }
 
     private fun setSkins() {
@@ -348,5 +352,55 @@ class Clock : Fragment() {
 
     fun setFaceAlpha(value: Float) {
         dial.animate().alpha(value).setDuration(1500).setInterpolator(AccelerateDecelerateInterpolator()).start()
+    }
+
+    fun setMotionDelay() {
+        delay = if (isMovementTypeSmooth) {
+            (1000 / requireActivity().windowManager.defaultDisplay.refreshRate).toLong()
+        } else {
+            1000
+        }
+    }
+
+    private fun dateUpdater(calendar: Calendar) {
+        class GetData : AsyncTask<Void, Void, Array<String>>() {
+            override fun doInBackground(vararg params: Void?): Array<String>? {
+                return try {
+                    val timeZone = TimeZone.getTimeZone(TimeZone.getDefault().id).getDisplayName(false, TimeZone.SHORT)
+                    val digitalTime24 = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time).toString()
+                    val digitalTime12 = SimpleDateFormat("hh:mm:ss", Locale.getDefault()).format(calendar.time).toString()
+                    val digitalDaytime = SimpleDateFormat("a", Locale.getDefault()).format(calendar.time).toString().toUpperCase(Locale.getDefault())
+                    val utcTimeZone = "GMT ${SimpleDateFormat("XXX", Locale.getDefault()).format(calendar.time)}"
+                    val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
+                    val utcTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date!!)
+                    val utcDate = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)
+
+                    arrayOf(timeZone, digitalTime24, digitalTime12, digitalDaytime, utcTimeZone, utcTime, utcDate)
+                } catch (e: ParseException) {
+                    return null //arrayOf("error!!", "error!!", "error!!", "error!!", "error!!", "error!!", "error!!")
+                }
+            }
+
+            override fun onPostExecute(result: Array<String>?) {
+                super.onPostExecute(result)
+                if (result == null) return
+                timeZoneView.text = result[0]
+                digitalTime24.text = result[1]
+                digitalTime12.text = result[2]
+                digitalDaytime.text = result[3]
+                utcTimeZone.text = result[4]
+                utcTime.text = result[5]
+                utcDate.text = result[6]
+            }
+        }
+
+        val getData = GetData()
+        if (getData.status == AsyncTask.Status.RUNNING) {
+            if (getData.cancel(true)) {
+                getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+            }
+        } else {
+            getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
     }
 }

@@ -22,7 +22,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.navigation.NavController
 import app.simple.positional.R
-import app.simple.positional.util.resolveAttrColor
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -220,7 +219,7 @@ class SmoothBottomBar @JvmOverloads constructor(
 
     // Paints
     private val paintBackground = Paint().apply {
-        setShadowLayer(10f, 0f, 10f, context.resolveAttrColor(R.attr.shadowColor))
+        //setShadowLayer(10f, 0f, 10f, context.resolveAttrColor(R.attr.shadowColor))
         isAntiAlias = true
         style = Paint.Style.FILL
         setLayerType(LAYER_TYPE_HARDWARE, this)
@@ -381,6 +380,13 @@ class SmoothBottomBar @JvmOverloads constructor(
 
         // Draw background
         if (barCornerRadius > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // FIXME: 02-11-2020 - Issues with bottom left and right corners, using shadows makes the corners look weird in devices with sharp corners
+            /**
+             * [paintBackground]
+             * @param setShadowlayer is where shadows are set
+             *
+             * Currently I am wrapping the layout withing a framelayout in [activity_main.xml] and
+             */
             canvas.drawRoundRect(
                     0f, 10f,
                     width.toFloat(),

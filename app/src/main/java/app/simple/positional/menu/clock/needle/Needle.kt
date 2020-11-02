@@ -22,6 +22,14 @@ class Needle {
                         Minimal().setClockNeedle(context = context, clock = clock)
                     }
                 }
+                item {
+                    label = "Retro"
+                    hasNestedItems = true
+                    icon = R.drawable.ic_minimal
+                    callback = {
+                        Retro().setClockRetroNeedle(context = context, clock = clock)
+                    }
+                }
             }
         }
 

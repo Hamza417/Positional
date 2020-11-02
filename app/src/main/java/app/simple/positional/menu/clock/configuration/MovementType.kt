@@ -38,6 +38,7 @@ class MovementType {
 
         popupMenu.setOnDismissListener {
             clock.isMovementTypeSmooth = value
+            clock.setMotionDelay()
             ClockPreferences().setMovementType(value = value, context = context)
         }
     }

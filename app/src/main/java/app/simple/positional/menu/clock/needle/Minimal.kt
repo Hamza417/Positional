@@ -42,6 +42,13 @@ class Minimal {
                         value = 2
                     }
                 }
+                item {
+                    label = "Red Pointy"
+                    icon = if (value == 3) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
+                    callback = {
+                        value = 3
+                    }
+                }
             }
         }
 

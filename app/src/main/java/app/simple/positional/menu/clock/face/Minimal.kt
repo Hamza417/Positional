@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.frag_clock.*
 
 class Minimal {
 
-    var value = 0
+    var value = -1
 
     fun minimalSkins(context: Context, clock: Clock) {
 
@@ -31,30 +31,21 @@ class Minimal {
                     }
                 }
                 item {
-                    label = "Numbers"
-                    icon = if (value == 2) {
+                    label = "Simple"
+                    icon = if (value == 12) {
                         R.drawable.ic_radio_button_checked
                     } else R.drawable.ic_radio_button_unchecked
                     callback = {
-                        value = 2
+                        value = 12
                     }
                 }
                 item {
-                    label = "Roman"
-                    icon = if (value == 3) {
+                    label = "Rounded Hours"
+                    icon = if (value == 17) {
                         R.drawable.ic_radio_button_checked
                     } else R.drawable.ic_radio_button_unchecked
                     callback = {
-                        value = 3
-                    }
-                }
-                item {
-                    label = "Only Numbers"
-                    icon = if (value == 4) {
-                        R.drawable.ic_radio_button_checked
-                    } else R.drawable.ic_radio_button_unchecked
-                    callback = {
-                        value = 4
+                        value = 17
                     }
                 }
             }

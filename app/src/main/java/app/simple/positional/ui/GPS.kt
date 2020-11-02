@@ -8,6 +8,7 @@ import android.content.res.Configuration
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
@@ -26,7 +27,9 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.location.LocalLocationProvider
 import app.simple.positional.util.LocationConverter
+import app.simple.positional.util.buildSpannableString
 import app.simple.positional.util.isNetworkAvailable
 import app.simple.positional.util.round
 import com.elyeproj.loaderviewlibrary.LoaderTextView
@@ -35,6 +38,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.io.IOException
 import java.util.*
 
+// TODO - Add manual longitude adn latitude information checker
 class GPS : Fragment() {
 
     lateinit var range: ImageView
@@ -112,18 +116,41 @@ class GPS : Fragment() {
                         "location" -> {
                             val location: Location? = intent.getParcelableExtra("location")
                             if (location != null) {
-                                altitude.text = "${round(location.altitude, 2)} m"
-                                speed.text = "${location.speed}"
-                                bearing.text = "${location.bearing}"
+                                altitude.text = buildSpannableString("${round(location.altitude, 2)} m", 1)
+                                speed.text = buildSpannableString("${round(location.speed.toDouble(), 2)} m/s", 3)
+                                bearing.text = "${location.bearing} °"
 
                                 // Bogus coding
                                 //providerSource.text = Html.fromHtml("<b>Source:</b> ${location.provider.toUpperCase(Locale.getDefault())}")
                                 //providerStatus.text = Html.fromHtml("<b>Status:</b> Enabled")
 
-                                accuracy.text = "${round(location.accuracy.toDouble(), 2)} m"
+                                accuracy.text = buildSpannableString("${round(location.accuracy.toDouble(), 2)} m", 1)
 
-                                //location.latitude = -28.425751
-                                //location.longitude = 134.239923
+                                val locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                                var values = "N/A"
+                                when {
+                                    locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> {
+                                        values = "GPS"
+                                    }
+                                    locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> {
+                                        values = "NETWORK"
+                                    }
+                                    locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER) -> {
+                                        values = "Passive"
+                                    }
+                                }
+
+                                providerSource.text = Html.fromHtml("<b>Source:</b> ${values.toUpperCase(Locale.getDefault())}")
+
+                                if (LocalLocationProvider.isProviderEnabled) {
+                                    providerStatus.text = Html.fromHtml("<b>Status:</b> Enabled")
+                                } else {
+                                    providerStatus.text = Html.fromHtml("<b>Status:</b> Disabled")
+                                }
+
+                                // For screenshots
+                                // location.latitude = -28.425751
+                                // location.longitude = 134.239923
 
                                 getAddress(location.latitude, location.longitude)
 
@@ -136,20 +163,8 @@ class GPS : Fragment() {
                                 }
 
                                 latitude.text = Html.fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location.latitude, 3)}")
-                                longitude.text = Html.fromHtml("<b>Longitude:</b> ${LocationConverter.latitudeAsDMS(location.longitude, 3)}°")
+                                longitude.text = Html.fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(location.longitude, 3)}°")
                             }
-                        }
-                        "status" -> {
-                            providerSource.text = Html.fromHtml("<b>Source:</b> ${intent.getStringExtra("provider")}")
-                        }
-                        "enabled" -> {
-                            if (intent.getBooleanExtra("isEnabled", false)) {
-                                providerStatus.text = Html.fromHtml("<b>Status:</b> Enabled")
-                            } else {
-                                providerStatus.text = Html.fromHtml("<b>Status:</b> Disabled")
-                            }
-
-                            providerSource.text = Html.fromHtml("<b>Source:</b> ${intent.getStringExtra("provider").toUpperCase()}")
                         }
                     }
                 }
@@ -254,5 +269,9 @@ class GPS : Fragment() {
             scanned.startAnimation(animIn)
             handler.postDelayed(this, 4000)
         }
+    }
+
+    fun getTextSize(text: String, size: Int): String? {
+        return "<span style=\"size:$size\" >$text</span>"
     }
 }

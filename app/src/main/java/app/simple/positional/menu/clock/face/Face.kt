@@ -49,6 +49,22 @@ class Face {
                         Minimal().minimalSkins(context = context, clock = clock)
                     }
                 }
+                item {
+                    label = "Number"
+                    icon = R.drawable.ic_binary_code
+                    hasNestedItems = true
+                    callback = {
+                        Number().numberSkins(context = context, clock = clock)
+                    }
+                }
+                item {
+                    label = "Roman"
+                    icon = R.drawable.ic_roman
+                    hasNestedItems = true
+                    callback = {
+                        Roman().romanSkins(context = context, clock = clock)
+                    }
+                }
             }
             section {
                 item {

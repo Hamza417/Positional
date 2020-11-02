@@ -20,9 +20,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Compass"
-            android:fontFamily="@font/medium"
             android:layout_margin="15dp"
+            android:fontFamily="@font/medium"
+            android:text="Compass"
             android:textColor="?attr/textPrimary"
             android:textSize="14pt" />
 
@@ -32,8 +32,8 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple"
-            android:tint="?attr/iconColor"
-            android:src="@drawable/ic_more_horiz" />
+            android:src="@drawable/ic_more_horiz"
+            android:tint="?attr/iconColor" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 

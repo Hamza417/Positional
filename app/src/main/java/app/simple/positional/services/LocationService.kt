@@ -47,7 +47,6 @@ class LocationService : Service(), LocationProviderListener {
     }
 
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-        //println(provider)
         Intent().also { intent ->
             intent.action = "status"
             intent.putExtra("provider", provider)
@@ -56,7 +55,6 @@ class LocationService : Service(), LocationProviderListener {
     }
 
     override fun onProviderEnabled(provider: String) {
-        ///println(provider)
         Intent().also { intent ->
             intent.action = "enabled"
             intent.putExtra("isEnabled", true)
@@ -66,7 +64,6 @@ class LocationService : Service(), LocationProviderListener {
     }
 
     override fun onProviderDisabled(provider: String) {
-        //println(provider)
         Intent().also { intent ->
             intent.action = "enabled"
             intent.putExtra("isEnabled", false)

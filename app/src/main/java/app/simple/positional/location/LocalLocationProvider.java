@@ -24,6 +24,8 @@ public class LocalLocationProvider implements LocationListener {
     private Handler handler = new Handler();
     private int delay = 2000; // Default
     private Context context;
+    public static String providerSource = "Not Available";
+    public static boolean isProviderEnabled = false;
     private Runnable locationUpdater = new Runnable() {
         @Override
         public void run() {
@@ -99,11 +101,13 @@ public class LocalLocationProvider implements LocationListener {
         locationProviderWeakReference.get().onLocationChanged(location);
     }
     
+    // Only for API < 29
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         if (locationProviderWeakReference.get() == null) {
             return;
         }
+        providerSource = provider;
         locationProviderWeakReference.get().onStatusChanged(provider, status, extras);
         fireLocationSearch();
     }
@@ -113,6 +117,8 @@ public class LocalLocationProvider implements LocationListener {
         if (locationProviderWeakReference.get() == null) {
             return;
         }
+        isProviderEnabled = true;
+        providerSource = provider;
         locationProviderWeakReference.get().onProviderEnabled(provider);
         fireLocationSearch();
     }
@@ -122,6 +128,8 @@ public class LocalLocationProvider implements LocationListener {
         if (locationProviderWeakReference.get() == null) {
             return;
         }
+        providerSource = provider;
+        isProviderEnabled = false;
         locationProviderWeakReference.get().onProviderDisabled(provider);
         fireLocationSearch();
     }
