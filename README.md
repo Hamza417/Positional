@@ -1,12 +1,12 @@
-<a href="https://play.google.com/store/apps/details?id=app.simple.positional.lite"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_free_icon.png" width="40%"> </a> <a href="https://play.google.com/store/apps/details?id=app.simple.positional"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_full_icon.png" width="40%"> </a>
-<br/>
-
 # Positional
 
   A very flexible and customizable location related information app..
 
   ![banner](https://github.com/Hamza417/Positional/blob/master/poster.png?raw=false)
 
+<a href="https://play.google.com/store/apps/details?id=app.simple.positional.lite"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_free_icon.png" width="40%"> </a> <a href="https://play.google.com/store/apps/details?id=app.simple.positional"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_full_icon.png" width="40%"> </a>
+<br/>
+  
 <br/>
 
 ## What's This ?
@@ -38,33 +38,6 @@
   * Flexible, options for different elements can be chosen separately or can be disabled entirely<br/>
   * Torch
 
-<br/>
-
-## Features yet to be added
-
-   #### Most Priority
-  - [x] ~~GPS information panel~~
-  - [x] ~~Dark Mode - Providing options for skins made this part a bit complicated~~ <br/>
-        <sub>Removed some complex skins to improve both performance and compatibilty with dark mode<sub>
-  - [x] ~~Speedometer~~
-  - [x] ~~A separate fragment for torch~~ <br/>
-        <sub>not feasible for a GPS app</sub>
-  - [x] ~~A unified integrated location provider library~~
-  - [x] ~~Swipe-able interface~~
-
-   #### Least priority
-  - [x] ~~Simplifying interface by adding few indicators referring the currently visible screen~~
-  - [ ] Set of icons to choose from
-
-<br/>
-
-## Known Issues (so far)
-  - [x] ~~Rotation causes view to move back to first panel~~
-  - [ ] Parallax sensor values are wrong sometimes
-  - [x] ~~Dialer rotating back to it's original state sometimes causes resource and input lock~~
-  - [x] ~~Updating sensor values in the background **Handler Thread** to free up the UI load~~ <br/>
-      <sub>**(21 Oct, 2020)** - ~~Sensor values cannot be updated in the background thread as the updating UI from the background causes a significant UI lag and communication delay~~ <br/> **(24 Oct, 2020)** - Sensor values are now updated in background thread<sub>
-  
 <br/>
 
 ## Contribution
