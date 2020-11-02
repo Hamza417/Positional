@@ -1,3 +1,6 @@
+<a href="https://play.google.com/store/apps/details?id=app.simple.positional.lite"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_free_icon.png" width="20%"> </a> <a href="https://play.google.com/store/apps/details?id=app.simple.positional"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_full_icon.png" width="20%"> </a>
+<br/>
+
 # Positional
 
   A very flexible and customizable location related information app..
@@ -16,9 +19,8 @@
 ## Stats
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Download](https://badgen.net/badge/Download/v1.8-beta/grey?icon=https://svgshare.com/i/Qk3.svg)](https://github.com/Hamza417/Positional/releases/download/1.6-beta/1.6-beta.apk) [![Changelogs](https://badgen.net/badge/Changelogs/v1.8-beta/green?list)](https://github.com/Hamza417/Positional/releases/tag/1.8-beta)
+[![Changelogs](https://badgen.net/badge/Changelogs/v1.9-beta/green?list)](https://github.com/Hamza417/Positional/releases/tag/1.8-beta)
 ![Status](https://badgen.net/badge/Status/beta/orange?icon)
-
 <br/>
 
 ## Screenshots
@@ -82,3 +84,5 @@ Please make sure to update tests as appropriate.
 
 ## License
   <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+  
+  [1]: http://www.inf.ufrgs.br
