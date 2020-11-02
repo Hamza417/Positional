@@ -1,4 +1,4 @@
-<a href="https://play.google.com/store/apps/details?id=app.simple.positional.lite"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_free_icon.png" width="20%"> </a> <a href="https://play.google.com/store/apps/details?id=app.simple.positional"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_full_icon.png" width="20%"> </a>
+<a href="https://play.google.com/store/apps/details?id=app.simple.positional.lite"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_free_icon.png" width="40%"> </a> <a href="https://play.google.com/store/apps/details?id=app.simple.positional"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_full_icon.png" width="40%"> </a>
 <br/>
 
 # Positional
