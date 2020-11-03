@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId "app.simple.positional"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 29
-        versionCode 8
-        versionName "v1.9-beta"
+        versionCode 9
+        versionName "v2.0-beta"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

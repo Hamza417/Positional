@@ -2,75 +2,58 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/background_street_map"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:alpha=".3"
+        android:scaleType="centerCrop"
+        android:src="@drawable/map_random_street" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/gps_appbar"
-            style="@style/Widget.MaterialComponents.Toolbar.Surface"
-            android:layout_width="match_parent"
+    <include layout="@layout/generic_gps_range" />
+
+    <View
+        android:id="@+id/gps_dim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#7E000000" />
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/gps_appbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:layout_gravity="top"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="@dimen/top_bar_elevation"
+        app:contentInsetEnd="10dp"
+        app:contentInsetStart="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_toolbar"
-            android:elevation="@dimen/top_bar_elevation"
-            app:contentInsetEnd="10dp"
-            app:contentInsetStart="10dp">
+            android:layout_margin="15dp"
+            android:fontFamily="@font/medium"
+            android:text="GPS"
+            android:textColor="?attr/textPrimary"
+            android:textSize="14pt" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/medium"
-                android:text="GPS"
-                android:textColor="?attr/textPrimary"
-                android:textSize="14pt" />
+        <ImageButton
+            android:id="@+id/gps_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical|end"
+            android:background="@drawable/ripple"
+            android:src="@drawable/ic_more_horiz"
+            android:tint="?attr/iconColor" />
 
-            <ImageButton
-                android:id="@+id/gps_menu"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical|end"
-                android:background="@drawable/ripple"
-                android:src="@drawable/ic_more_horiz"
-                android:tint="?attr/iconColor" />
+    </com.google.android.material.appbar.MaterialToolbar>
 
-        </com.google.android.material.appbar.MaterialToolbar>
-
-        <FrameLayout
-            android:id="@+id/gps_layout"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            app:layout_collapseMode="parallax"
-            app:layout_collapseParallaxMultiplier="0.8"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
-
-            <ImageView
-                android:id="@+id/gps_range_indicator"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:src="@drawable/gps_range" />
-
-            <ImageView
-                android:id="@+id/gps_scanned_indicator"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:src="@drawable/gps_scanned" />
-
-            <ImageView
-                android:id="@+id/gps_dot"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_gravity="center"
-                android:src="@drawable/gps_location_dot" />
-
-        </FrameLayout>
-    </LinearLayout>
-
-    <include layout="@layout/frag_gps_list" />
+    <include layout="@layout/frag_gps_bottom_sheet" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

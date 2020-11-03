@@ -202,18 +202,13 @@ class Clock : Fragment() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     scrollView.alpha = slideOffset
                     expandUp.alpha = (1 - slideOffset)
-                    clockLayout.translationY = 150 * -slideOffset
-                    clockLayout.alpha = (1 - slideOffset)
+                    //clockLayout.translationY = 150 * -slideOffset
+                    //clockLayout.alpha = (1 - slideOffset)
+                    view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
                     bottomSheetSlide.onBottomSheetSliding(slideOffset)
                     toolbar.translationY = (toolbar.height * -slideOffset)
                 }
             })
-
-            expandUp.setOnClickListener {
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                }
-            }
         }
 
         menu.setOnClickListener {
@@ -274,8 +269,6 @@ class Clock : Fragment() {
             } else {
                 getSecondsInDegrees(calendar)
             }
-
-            println(delay)
 
             handler.postDelayed(this, delay)
         }

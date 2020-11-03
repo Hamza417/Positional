@@ -18,6 +18,7 @@
         <item name="rippleColor">@color/rippleColor</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
+        <item name="cardBackground">#515151</item>
 
         <item name="indicator">@color/indicator</item>
         <item name="iconRegular">@color/iconRegular</item>

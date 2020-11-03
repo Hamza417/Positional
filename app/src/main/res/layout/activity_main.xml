@@ -27,6 +27,7 @@
             app:cornerRadius="@dimen/all_corner_radius"
             app:duration="500"
             app:iconSize="20dp"
+            app:backgroundColor="@android:color/transparent"
             app:iconTint="?attr/iconRegular"
             app:iconTintActive="?attr/iconColor"
             app:indicatorColor="?attr/indicator"

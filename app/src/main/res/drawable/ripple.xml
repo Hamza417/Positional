@@ -3,7 +3,7 @@
     android:color="?attr/rippleColor">
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
-            <corners android:radius="10dp" />
+            <corners android:radius="@dimen/all_corner_radius" />
             <solid android:color="?attr/colorAccent" />
         </shape>
     </item>

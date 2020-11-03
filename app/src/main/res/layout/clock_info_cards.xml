@@ -3,11 +3,13 @@
     android:id="@+id/clock_panel_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_view"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:elevation="5dp"
     android:fadingEdge="vertical"
     android:fadingEdgeLength="50dp"
-    android:overScrollMode="never"
+    android:overScrollMode="always"
     android:paddingHorizontal="10dp"
     android:requiresFadingEdge="vertical">
 
@@ -17,15 +19,42 @@
         android:orientation="vertical"
         android:paddingVertical="10dp">
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/medium"
+                android:text="Clock Info"
+                android:textColor="?attr/textSecondary"
+                android:textSize="8pt" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="5dp"
+                android:layout_gravity="center_vertical"
+                android:alpha="?attr/alphaIcons"
+                android:background="@drawable/ic_pill_clock"
+                app:tint="?attr/iconColor" />
+
+        </LinearLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/bg_cards"
+            android:clickable="true"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:elevation="5dp"
-            app:cardCornerRadius="10dp"
-            app:contentPadding="10dp">
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="90dp"
@@ -95,288 +124,249 @@
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:elevation="5dp"
-            app:cardCornerRadius="10dp"
-            app:contentPadding="10dp">
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/bg_cards"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Local Date"
+                android:textColor="?attr/textPrimary"
+                android:textSize="6pt" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Local Date"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="6pt" />
-
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/today_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-light"
-                    android:maxLines="1"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="22pt"
-                    app:corners="20"
-                    app:use_gradient="true" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:elevation="5dp"
-            app:cardCornerRadius="10dp"
-            app:contentPadding="10dp">
-
-            <LinearLayout
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/today_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-light"
+                android:maxLines="1"
+                android:textColor="?attr/textPrimary"
+                android:textSize="22pt"
+                app:corners="20"
+                app:use_gradient="true" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Local Time Zone"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="6pt" />
+        </LinearLayout>
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/time_zone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="22pt"
-                    app:corners="20"
-                    app:use_gradient="true" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:elevation="5dp"
-            app:cardCornerRadius="10dp"
-            app:contentPadding="10dp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/bg_cards"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Local Time Zone"
+                android:textColor="?attr/textPrimary"
+                android:textSize="6pt" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Time Zone UTC"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="6pt" />
-
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/time_zone_UTC"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="22pt"
-                    app:corners="20"
-                    app:use_gradient="true" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:elevation="5dp"
-            app:cardCornerRadius="10dp"
-            app:contentPadding="10dp">
-
-            <LinearLayout
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/time_zone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="?attr/textPrimary"
+                android:textSize="22pt"
+                app:corners="20"
+                app:use_gradient="true" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="UTC Time"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="6pt" />
+        </LinearLayout>
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/time_UTC"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="22pt"
-                    app:corners="20"
-                    app:use_gradient="true" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:elevation="5dp"
-            app:cardCornerRadius="10dp"
-            app:contentPadding="10dp">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/bg_cards"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Time Zone UTC"
+                android:textColor="?attr/textPrimary"
+                android:textSize="6pt" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="UTC Date"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="6pt" />
-
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/date_UTC"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="22pt"
-                    app:corners="20"
-                    app:use_gradient="true" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:elevation="5dp"
-            app:cardCornerRadius="10dp"
-            app:contentPadding="10dp">
-
-            <LinearLayout
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/time_zone_UTC"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="?attr/textPrimary"
+                android:textSize="22pt"
+                app:corners="20"
+                app:use_gradient="true" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Sun Position"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="6pt" />
+        </LinearLayout>
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/sun_azimuth"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-light"
-                    android:maxLines="1"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
-                    app:corners="20"
-                    app:use_gradient="true" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/bg_cards"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/sun_distance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-light"
-                    android:maxLines="1"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
-                    app:corners="20"
-                    app:use_gradient="true" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="UTC Time"
+                android:textColor="?attr/textPrimary"
+                android:textSize="6pt" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/sun_altitude"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:fontFamily="sans-serif-light"
-                    android:maxLines="1"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
-                    app:corners="20"
-                    app:use_gradient="true" />
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/time_UTC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="?attr/textPrimary"
+                android:textSize="22pt"
+                app:corners="20"
+                app:use_gradient="true" />
 
-            </LinearLayout>
+        </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/bg_cards"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-        <com.google.android.material.card.MaterialCardView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="UTC Date"
+                android:textColor="?attr/textPrimary"
+                android:textSize="6pt" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/date_UTC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="?attr/textPrimary"
+                android:textSize="22pt"
+                app:corners="20"
+                app:use_gradient="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/bg_cards"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Sun Position"
+                android:textColor="?attr/textPrimary"
+                android:textSize="6pt" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/sun_azimuth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-light"
+                android:maxLines="1"
+                android:textColor="?attr/textPrimary"
+                android:textSize="8pt"
+                app:corners="20"
+                app:use_gradient="true" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/sun_distance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-light"
+                android:maxLines="1"
+                android:textColor="?attr/textPrimary"
+                android:textSize="8pt"
+                app:corners="20"
+                app:use_gradient="true" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/sun_altitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="sans-serif-light"
+                android:maxLines="1"
+                android:textColor="?attr/textPrimary"
+                android:textSize="8pt"
+                app:corners="20"
+                app:use_gradient="true" />
+
+        </LinearLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:elevation="5dp"
-            app:cardCornerRadius="10dp"
-            app:contentPadding="10dp">
+            android:layout_marginVertical="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/bg_cards"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="90dp"
@@ -415,17 +405,17 @@
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
 
-        <com.google.android.material.card.MaterialCardView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:elevation="5dp"
-            app:cardCornerRadius="10dp"
-            app:contentPadding="10dp">
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/bg_cards"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="@drawable/ripple"
+            android:padding="10dp">
 
             <ImageView
                 android:layout_width="90dp"
@@ -464,7 +454,7 @@
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </FrameLayout>
 
     </LinearLayout>
 

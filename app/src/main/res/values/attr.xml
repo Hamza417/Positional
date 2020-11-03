@@ -13,6 +13,7 @@
     <attr name="iconRegular" format="color" />
     <attr name="indicator" format="color" />
     <attr name="shadowColor" format="color" />
+    <attr name="cardBackground" format="color" />
 
     <attr name="alphaIcons" format="float" />
 

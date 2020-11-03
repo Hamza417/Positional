@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/bottom_nav_height"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:layout_marginBottom="@dimen/bottom_nav_height"
+    android:baselineAligned="false"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -16,34 +17,8 @@
         android:clipToPadding="false"
         android:orientation="vertical">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false">
+        <include layout="@layout/generic_gps_range" />
 
-            <ImageView
-                android:id="@+id/gps_range_indicator"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:src="@drawable/gps_range" />
-
-            <ImageView
-                android:id="@+id/gps_scanned_indicator"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:src="@drawable/gps_scanned" />
-
-            <ImageView
-                android:id="@+id/gps_dot"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_gravity="center"
-                android:src="@drawable/gps_location_dot" />
-
-        </FrameLayout>
     </LinearLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -100,13 +75,13 @@
                 </com.google.android.material.appbar.MaterialToolbar>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:elevation="5dp"
-                    app:cardCornerRadius="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:clipChildren="false"
                     android:clipToPadding="false"
+                    android:elevation="5dp"
+                    app:cardCornerRadius="10dp"
                     app:contentPadding="10dp">
 
                     <LinearLayout
@@ -127,19 +102,18 @@
 
                         <com.elyeproj.loaderviewlibrary.LoaderTextView
                             android:id="@+id/provider_status"
-                            android:textSize="8pt"
-                            app:corners="20"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
                             android:fontFamily="sans-serif-light"
                             android:maxLines="1"
                             android:textColor="?attr/textPrimary"
+                            android:textSize="8pt"
+                            app:corners="20"
                             app:use_gradient="true" />
 
                         <com.elyeproj.loaderviewlibrary.LoaderTextView
                             android:id="@+id/provider_source"
-                            app:corners="20"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="5dp"
@@ -147,6 +121,7 @@
                             android:maxLines="1"
                             android:textColor="?attr/textPrimary"
                             android:textSize="8pt"
+                            app:corners="20"
                             app:use_gradient="true" />
 
                     </LinearLayout>

@@ -1,0 +1,29 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="10dp"
+        android:end="20px">
+        <shape>
+            <gradient
+                android:angle="45"
+                android:endColor="#FF0000"
+                android:startColor="#650000"
+                android:type="linear" />
+
+            <corners android:radius="@dimen/all_corner_radius" />
+        </shape>
+    </item>
+
+    <item
+        android:width="40dp"
+        android:start="40px">
+        <shape>
+            <gradient
+                android:angle="45"
+                android:endColor="#FF0000"
+                android:startColor="#650000"
+                android:type="linear" />
+
+            <corners android:radius="@dimen/all_corner_radius" />
+        </shape>
+    </item>
+</layer-list>

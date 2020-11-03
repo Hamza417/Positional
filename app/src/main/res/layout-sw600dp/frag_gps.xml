@@ -39,38 +39,9 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
-        <FrameLayout
-            android:id="@+id/gps_layout"
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            app:layout_collapseMode="parallax"
-            app:layout_collapseParallaxMultiplier="0.8"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
-
-            <ImageView
-                android:id="@+id/gps_range_indicator"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:src="@drawable/gps_range" />
-
-            <ImageView
-                android:id="@+id/gps_scanned_indicator"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:src="@drawable/gps_scanned" />
-
-            <ImageView
-                android:id="@+id/gps_dot"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
-                android:layout_gravity="center"
-                android:src="@drawable/gps_location_dot" />
-
-        </FrameLayout>
+        <include layout="@layout/generic_gps_range" />
     </LinearLayout>
 
-    <include layout="@layout/frag_gps_list" />
+    <include layout="@layout/frag_gps_bottom_sheet" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

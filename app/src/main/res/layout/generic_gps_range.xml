@@ -1,0 +1,46 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/top_bar_height"
+    android:layout_marginBottom="@dimen/peek_height">
+
+    <FrameLayout
+        android:id="@+id/gps_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fadingEdge="vertical|horizontal"
+        android:fadingEdgeLength="100dp"
+        android:requiresFadingEdge="horizontal|vertical">
+
+        <ImageView
+            android:id="@+id/gps_range_indicator"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/gps_range" />
+
+        <ImageView
+            android:id="@+id/gps_scanned_indicator"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:src="@drawable/gps_scanned" />
+
+        <ImageView
+            android:id="@+id/gps_dot"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:src="@drawable/gps_location_dot" />
+
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/location_pin"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="60dp"
+        android:src="@drawable/ic_place" />
+</FrameLayout>

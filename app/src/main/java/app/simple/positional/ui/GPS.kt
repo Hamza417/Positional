@@ -12,12 +12,10 @@ import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -27,11 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.location.LocalLocationProvider
-import app.simple.positional.util.LocationConverter
-import app.simple.positional.util.buildSpannableString
-import app.simple.positional.util.isNetworkAvailable
-import app.simple.positional.util.round
+import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -41,10 +35,12 @@ import java.util.*
 // TODO - Add manual longitude adn latitude information checker
 class GPS : Fragment() {
 
-    lateinit var range: ImageView
-    lateinit var dot: ImageView
-    lateinit var scanned: ImageView
+    private lateinit var range: ImageView
+    private lateinit var dot: ImageView
+    private lateinit var scanned: ImageView
     private lateinit var expandUp: ImageView
+    private lateinit var locationPin: ImageView
+    private lateinit var streetMap: ImageView
 
     private lateinit var scrollView: NestedScrollView
 
@@ -68,11 +64,16 @@ class GPS : Fragment() {
 
     private lateinit var gpsLayout: FrameLayout
 
+    private var gpsEnabledAnimationCount = 1
+    private var gpsDisabledAnimationCount = 1
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_gps, container, false)
         range = view.findViewById(R.id.gps_range_indicator)
         dot = view.findViewById(R.id.gps_dot)
         scanned = view.findViewById(R.id.gps_scanned_indicator)
+        locationPin = view.findViewById(R.id.location_pin)
+        streetMap = view.findViewById(R.id.background_street_map)
 
         accuracy = view.findViewById(R.id.gps_accuracy)
         address = view.findViewById(R.id.gps_address)
@@ -85,17 +86,17 @@ class GPS : Fragment() {
         providerStatus = view.findViewById(R.id.provider_status)
 
         handler = Handler()
-        handler.post(repeatAnimation)
 
         filter.addAction("location")
-        filter.addAction("status")
-        filter.addAction("enabled")
+        filter.addAction("provider")
+
+        gpsLayout = view.findViewById(R.id.gps_layout)
+        //gpsLayout.rotationX = 40f
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             toolbar = view.findViewById(R.id.gps_appbar)
-            gpsLayout = view.findViewById(R.id.gps_layout)
 
             scrollView = view.findViewById(R.id.gps_list_scroll_view)
             expandUp = view.findViewById(R.id.expand_up_gps_sheet)
@@ -108,10 +109,11 @@ class GPS : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
+
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
-                    println(intent.action)
                     when (intent.action) {
                         "location" -> {
                             val location: Location? = intent.getParcelableExtra("location")
@@ -126,45 +128,26 @@ class GPS : Fragment() {
 
                                 accuracy.text = buildSpannableString("${round(location.accuracy.toDouble(), 2)} m", 1)
 
-                                val locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                                var values = "N/A"
-                                when {
-                                    locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> {
-                                        values = "GPS"
-                                    }
-                                    locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> {
-                                        values = "NETWORK"
-                                    }
-                                    locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER) -> {
-                                        values = "Passive"
-                                    }
-                                }
-
-                                providerSource.text = Html.fromHtml("<b>Source:</b> ${values.toUpperCase(Locale.getDefault())}")
-
-                                if (LocalLocationProvider.isProviderEnabled) {
-                                    providerStatus.text = Html.fromHtml("<b>Status:</b> Enabled")
-                                } else {
-                                    providerStatus.text = Html.fromHtml("<b>Status:</b> Disabled")
-                                }
-
                                 // For screenshots
                                 // location.latitude = -28.425751
                                 // location.longitude = 134.239923
 
                                 getAddress(location.latitude, location.longitude)
 
-                                val scaled = 0.066f * location.accuracy
+                                changeMapScale(25f / if (location.accuracy <= 25) location.accuracy else 25f)
 
-                                if (scaled < 1.0f) {
-                                    changeRangeSize(scaled)
-                                } else {
-                                    changeRangeSize(1.0f)
-                                }
+                                changeRangeSize(if (0.04f * location.accuracy <= 1f) 0.04f * location.accuracy else 1.0f)
 
-                                latitude.text = Html.fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location.latitude, 3)}")
-                                longitude.text = Html.fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(location.longitude, 3)}°")
+                                providerSource.text = fromHtml("<b>Source:</b> ${location.provider.toUpperCase(Locale.getDefault())}")
+                                providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
+
+                                latitude.text = fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location.latitude, 3)}")
+                                longitude.text = fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(location.longitude, 3)}°")
                             }
+                        }
+                        "provider" -> {
+                            providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
+                            providerSource.text = fromHtml("<b>Source:</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
                         }
                     }
                 }
@@ -180,18 +163,14 @@ class GPS : Fragment() {
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
                     scrollView.alpha = slideOffset
                     expandUp.alpha = (1 - slideOffset)
-                    gpsLayout.translationY = 150 * -slideOffset
-                    gpsLayout.alpha = (1 - slideOffset)
+                    expandUp.rotationX = (-180 * slideOffset)
+                    // gpsLayout.translationY = 150 * -slideOffset
+                    // gpsLayout.alpha = (1 - slideOffset)
+                    view.findViewById<View>(R.id.gps_dim).alpha = slideOffset
                     bottomSheetSlide.onBottomSheetSliding(slideOffset)
                     toolbar.translationY = (toolbar.height * -slideOffset)
                 }
             })
-
-            expandUp.setOnClickListener {
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                }
-            }
         }
     }
 
@@ -199,18 +178,25 @@ class GPS : Fragment() {
         super.onPause()
         scanned.clearAnimation()
         range.clearAnimation()
+        locationPin.clearAnimation()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
-        handler.removeCallbacks(repeatAnimation)
+        handler.removeCallbacks(gpsRangeAnimation)
+        handler.removeCallbacks(locationPinAnimation)
     }
 
     override fun onResume() {
         super.onResume()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
-        handler.post(repeatAnimation)
+        handler.post(gpsRangeAnimation)
+        handler.post(locationPinAnimation)
     }
 
     private fun changeRangeSize(value: Float) {
         range.animate().scaleX(value).scaleY(value).setDuration(1500).setInterpolator(AccelerateDecelerateInterpolator()).start()
+    }
+
+    private fun changeMapScale(value: Float) {
+        streetMap.animate().scaleX(value).scaleY(value).setDuration(3000).setInterpolator(AccelerateDecelerateInterpolator()).start()
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {
@@ -262,16 +248,43 @@ class GPS : Fragment() {
         }
     }
 
-    private val repeatAnimation: Runnable = object : Runnable {
+    private val gpsRangeAnimation: Runnable = object : Runnable {
         override fun run() {
             if (context == null) return
-            val animIn: Animation = AnimationUtils.loadAnimation(requireContext(), R.anim.gps_scanned_animation)
-            scanned.startAnimation(animIn)
+            this@GPS.scanned.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.gps_scanned_animation))
             handler.postDelayed(this, 4000)
         }
     }
 
-    fun getTextSize(text: String, size: Int): String? {
-        return "<span style=\"size:$size\" >$text</span>"
+    private val locationPinAnimation: Runnable = object : Runnable {
+        override fun run() {
+            if (context == null) return
+            if (getLocationStatus()) {
+                if (gpsEnabledAnimationCount != 0) {
+                    this@GPS.locationPin.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.gps_enabled))
+                    gpsEnabledAnimationCount = 0
+                    gpsDisabledAnimationCount = 1
+                } else {
+                    this@GPS.locationPin.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.location_pin_animation))
+                }
+            } else {
+                if (gpsDisabledAnimationCount != 0) {
+                    this@GPS.locationPin.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.gps_disabled))
+                    gpsDisabledAnimationCount = 0
+                    gpsEnabledAnimationCount = 1
+                }
+            }
+
+            handler.postDelayed(this, 3000)
+        }
+    }
+
+    private fun getLocationStatus(): Boolean {
+        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+            locationManager.isLocationEnabled
+        } else {
+            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        }
     }
 }

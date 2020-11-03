@@ -5,4 +5,8 @@
     <dimen name="settings_primary_text_size">7pt</dimen>
     <dimen name="all_corner_radius">20dp</dimen>
     <dimen name="fragment_header_text_size">14pt</dimen>
+    <dimen name="expand_up_image_size">30dp</dimen>
+    <dimen name="peek_height">150dp</dimen>
+    <dimen name="top_bar_height">70dp</dimen>
+    <dimen name="bottom_sheet_layout_height">600dp</dimen>
 </resources>

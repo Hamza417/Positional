@@ -7,27 +7,14 @@
     app:behavior_peekHeight="150dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/expand_up_clock_sheet"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_expand_up"
-            app:tint="@color/iconColor" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="sans-serif-light"
-            android:text="Swipe Up"
-            android:textColor="?attr/textSecondary" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/expand_up_clock_sheet"
+        android:layout_width="@dimen/expand_up_image_size"
+        android:layout_height="@dimen/expand_up_image_size"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_expand_up"
+        app:tint="@color/iconColor" />
 
     <include layout="@layout/clock_info_cards" />
 
