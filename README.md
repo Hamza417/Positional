@@ -22,17 +22,17 @@
 ## Stats
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Changelogs](https://badgen.net/badge/Changelogs/v1.9-beta/green?list)](https://github.com/Hamza417/Positional/releases/tag/1.8-beta)
+[![Changelogs](https://badgen.net/badge/Changelogs/v2.0-beta/green?list)](https://github.com/Hamza417/Positional/releases/tag/2.0-beta)
 ![Status](https://badgen.net/badge/Status/beta/orange?icon)
 <br/>
 
-## Screenshots
+## Screenshots (not updated)
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_06.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_07.png" width="20%">
 
 
 <br/>
 
-## Features
+## Features (not updated)
   * Easy to use<br/>
   * Smooth, with fluid animations<br/>
   * Minimal UI<br/>
