@@ -27,13 +27,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/LightTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activities.MainActivity" />
 
         <service
             android:name=".services.LocationService"

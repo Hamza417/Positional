@@ -15,7 +15,7 @@ import com.google.android.material.appbar.AppBarLayout
  *
  * Can be adjusted using attributes but not implemented
  */
-class OverScrollBehavior(context: Context, attributeSet: AttributeSet) : AppBarLayout.ScrollingViewBehavior() {
+class OverScrollBehavior(context: Context, attributeSet: AttributeSet) : CoordinatorLayout.Behavior<View>() {
 
     companion object {
         private const val OVER_SCROLL_AREA = 4

@@ -3,7 +3,6 @@
     android:id="@+id/gps_list_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0"
     android:background="@drawable/bg_view"
     android:clipChildren="false"
     android:clipToPadding="false"

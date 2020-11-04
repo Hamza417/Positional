@@ -1,4 +1,4 @@
-package app.simple.positional.menu.clock.needle
+package app.simple.positional.constants
 
 import app.simple.positional.R
 

@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -95,10 +96,14 @@ class GPS : Fragment() {
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
+        loadImageResources(R.drawable.map_random_street, streetMap, requireContext())
+
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             toolbar = view.findViewById(R.id.gps_appbar)
 
             scrollView = view.findViewById(R.id.gps_list_scroll_view)
+            scrollView.alpha = 0f
+
             expandUp = view.findViewById(R.id.expand_up_gps_sheet)
             bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
         }
@@ -134,9 +139,9 @@ class GPS : Fragment() {
 
                                 getAddress(location.latitude, location.longitude)
 
-                                changeMapScale(25f / if (location.accuracy <= 25) location.accuracy else 25f)
+                                changeMapScale(15f / if (location.accuracy <= 15f) location.accuracy else 15f)
 
-                                changeRangeSize(if (0.04f * location.accuracy <= 1f) 0.04f * location.accuracy else 1.0f)
+                                changeRangeSize(if (0.066f * location.accuracy <= 1f) 0.066f * location.accuracy else 1.0f)
 
                                 providerSource.text = fromHtml("<b>Source:</b> ${location.provider.toUpperCase(Locale.getDefault())}")
                                 providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
@@ -196,7 +201,8 @@ class GPS : Fragment() {
     }
 
     private fun changeMapScale(value: Float) {
-        streetMap.animate().scaleX(value).scaleY(value).setDuration(3000).setInterpolator(AccelerateDecelerateInterpolator()).start()
+        //if (streetMap.animation.hasEnded()) return
+        streetMap.animate().scaleX(value).scaleY(value).setDuration(3000).setInterpolator(DecelerateInterpolator()).start()
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {

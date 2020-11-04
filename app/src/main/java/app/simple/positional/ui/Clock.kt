@@ -27,11 +27,11 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.constants.faces
+import app.simple.positional.constants.needleSkins
 import app.simple.positional.menu.clock.configuration.MovementType
 import app.simple.positional.menu.clock.face.Face
-import app.simple.positional.menu.clock.face.faces
 import app.simple.positional.menu.clock.needle.Needle
-import app.simple.positional.menu.clock.needle.needleSkins
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView

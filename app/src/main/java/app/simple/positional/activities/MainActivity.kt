@@ -1,4 +1,4 @@
-package app.simple.positional
+package app.simple.positional.activities
 
 import android.Manifest
 import android.app.Activity
@@ -15,6 +15,8 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import app.simple.positional.BuildConfig
+import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.dialogs.PermissionDialog

@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_toolbar"
         android:elevation="@dimen/top_bar_elevation"
-        android:translationZ="5dp"
         app:contentInsetEnd="10dp"
         app:contentInsetStart="10dp">
 

@@ -3,9 +3,9 @@
 
     <solid android:color="?attr/toolbarBackground" />
     <corners
-        android:bottomLeftRadius="0dp"
+        android:bottomLeftRadius="@dimen/all_corner_radius"
         android:bottomRightRadius="0dp"
         android:topLeftRadius="@dimen/all_corner_radius"
-        android:topRightRadius="@dimen/all_corner_radius" />
+        android:topRightRadius="0dp" />
 
 </shape>

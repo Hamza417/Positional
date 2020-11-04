@@ -1,4 +1,4 @@
-package app.simple.positional.menu.clock.face
+package app.simple.positional.constants
 
 import app.simple.positional.R
 

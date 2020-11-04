@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha=".3"
-        android:scaleType="centerCrop"
-        android:src="@drawable/map_random_street" />
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop" />
 
     <include layout="@layout/generic_gps_range" />
 
