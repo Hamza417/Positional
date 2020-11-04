@@ -9,7 +9,7 @@ class ClockPreferences {
     }
 
     fun getClockFaceTheme(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockFace, 1)
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockFace, 12)
     }
 
     fun setClockNeedleTheme(value: Int, context: Context) {
@@ -17,7 +17,7 @@ class ClockPreferences {
     }
 
     fun getClockNeedleTheme(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockNeedle, 0)
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockNeedle, 1)
     }
 
     fun getSkins(context: Context): IntArray {

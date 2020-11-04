@@ -10,8 +10,8 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 10
-        versionName "v2.1-beta"
+        versionCode 11
+        versionName "v2.2-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -24,7 +24,6 @@ android {
         }
         full {
             dimension "version"
-            versionNameSuffix "-full"
         }
     }
 

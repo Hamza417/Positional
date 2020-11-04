@@ -1,0 +1,20 @@
+Index: app/full/release/output.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"version\": 1,\r\n  \"artifactType\": {\r\n    \"type\": \"APK\",\r\n    \"kind\": \"Directory\"\r\n  },\r\n  \"applicationId\": \"app.simple.positional\",\r\n  \"variantName\": \"fullRelease\",\r\n  \"elements\": [\r\n    {\r\n      \"type\": \"SINGLE\",\r\n      \"filters\": [],\r\n      \"properties\": [],\r\n      \"versionCode\": 7,\r\n      \"versionName\": \"7\",\r\n      \"enabled\": true,\r\n      \"outputFile\": \"app-full-release.apk\"\r\n    }\r\n  ]\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/full/release/output.json	(revision 8e072620cbd65a19fa324f074a8dd33cf70d017e)
++++ app/full/release/output.json	(date 1604462825338)
+@@ -11,8 +11,8 @@
+       "type": "SINGLE",
+       "filters": [],
+       "properties": [],
+-      "versionCode": 7,
+-      "versionName": "7",
++      "versionCode": 9,
++      "versionName": "9",
+       "enabled": true,
+       "outputFile": "app-full-release.apk"
+     }

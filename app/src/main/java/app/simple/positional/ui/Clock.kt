@@ -25,6 +25,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.faces
@@ -215,22 +216,24 @@ class Clock : Fragment() {
             val popupMenu = popupMenu {
                 style = R.style.popupMenu
                 dropdownGravity = Gravity.END
-                section {
-                    title = "Appearances"
-                    item {
-                        label = "Face"
-                        hasNestedItems = true
-                        icon = R.drawable.ic_minimal
-                        callback = {
-                            Face().faceSkinsOptions(context = requireContext(), clock = this@Clock)
+                if (BuildConfig.FLAVOR == "full") {
+                    section {
+                        title = "Appearances"
+                        item {
+                            label = "Face"
+                            hasNestedItems = true
+                            icon = R.drawable.ic_minimal
+                            callback = {
+                                Face().faceSkinsOptions(context = requireContext(), clock = this@Clock)
+                            }
                         }
-                    }
-                    item {
-                        label = "Needle"
-                        hasNestedItems = true
-                        icon = R.drawable.ic_clock_needle
-                        callback = {
-                            Needle().openNeedleMenu(context = requireContext(), clock = this@Clock)
+                        item {
+                            label = "Needle"
+                            hasNestedItems = true
+                            icon = R.drawable.ic_clock_needle
+                            callback = {
+                                Needle().openNeedleMenu(context = requireContext(), clock = this@Clock)
+                            }
                         }
                     }
                 }

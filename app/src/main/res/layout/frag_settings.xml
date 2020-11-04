@@ -88,6 +88,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/ripple"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:focusable="true"
                     android:orientation="vertical"
                     android:padding="15dp">
@@ -131,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/ripple"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:focusable="true"
                     android:orientation="vertical"
                     android:padding="15dp">
@@ -209,7 +211,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="If you are a developer and want to contribute to development, you can get the repo here or you can raise an issue"
+                        android:text="If you are a developer and want to contribute to development, you can fork the repo or you can raise/fix an issue"
                         android:textColor="?attr/textSecondary" />
 
                 </LinearLayout>

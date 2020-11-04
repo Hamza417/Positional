@@ -1,64 +1,114 @@
 package app.simple.positional.activities
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.*
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.view.MotionEvent
+import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.constants.vectorBackground
 import app.simple.positional.constants.vectorColors
-import kotlinx.android.synthetic.main.launcher_activity.*
+import app.simple.positional.util.addLinearGradient
+import app.simple.positional.util.addRadialGradient
+import app.simple.positional.util.getBitmapFromVectorDrawable
+import kotlinx.android.synthetic.main.activity_launcher.*
 
 
 class LauncherActivity : AppCompatActivity() {
 
     private var randomValue: Int = 0
+    private val handler = Handler()
+    private var x = 20f
+    private var y = 20f
+    private var width: Int = 0
+    private var height: Int = 0
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.launcher_activity)
+        setContentView(R.layout.activity_launcher)
 
-        randomValue = (vectorBackground.indices).random()
+        if (BuildConfig.FLAVOR == "full") {
+            randomValue = (vectorBackground.indices).random()
+        } else {
+            randomValue = 5
+        }
 
-        launcher_background.setImageResource(vectorBackground[randomValue])
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            launcher_background.setImageResource(vectorBackground[randomValue])
+        }
 
-        launcher_icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable()?.let { addGradient(it) })
+        touch_indicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = baseContext)?.let { addRadialGradient(it, vectorColors[randomValue][1]) })
+
+        launcher_icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = baseContext)?.let { addLinearGradient(it, intArrayOf(vectorColors[randomValue][0], vectorColors[randomValue][1])) })
 
         launcher_icon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.launcher_icon))
         launcher_text.startAnimation(AnimationUtils.loadAnimation(this, R.anim.image_in))
 
-        Handler().postDelayed({
-            val intent = Intent(this@LauncherActivity, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
-            this.finish()
-        }, 1500)
+        runPostDelayed(2000)
+
+        launcher_act.setOnTouchListener { _, event ->
+
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    touch_indicator.x = event.x - (touch_indicator.width / 2)
+                    touch_indicator.y = event.y - (touch_indicator.height / 2)
+
+                    touch_indicator.visibility = View.VISIBLE
+
+                    touch_indicator.animate().scaleX(1.2f).scaleY(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
+
+                    handler.removeCallbacksAndMessages(null)
+                }
+                MotionEvent.ACTION_MOVE -> {
+
+                    println("${touch_indicator.x} : ${event.x}")
+
+                    touch_indicator.x = event.x - (touch_indicator.width / 2f)
+                    touch_indicator.y = event.y - (touch_indicator.height / 2f)
+                }
+                MotionEvent.ACTION_UP -> {
+                    touch_indicator.animate().scaleX(0.5f).scaleY(0.5f).alpha(0f).start()
+                    runPostDelayed(1000)
+                }
+            }
+
+            true
+        }
     }
 
-    private fun addGradient(originalBitmap: Bitmap): Bitmap? {
-        val width = originalBitmap.width
-        val height = originalBitmap.height
-        val updatedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(updatedBitmap)
-        canvas.drawBitmap(originalBitmap, 0f, 0f, null)
-        val paint = Paint()
-        val shader = LinearGradient(0f, 0f, 0f, height.toFloat(), vectorColors[randomValue][0], vectorColors[randomValue][1], Shader.TileMode.CLAMP)
-        paint.shader = shader
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)
-        return updatedBitmap
+    private fun runPostDelayed(delay: Long) {
+        handler.postDelayed({
+            /**
+             * [isDestroyed] and [isFinishing] will check if the activity is alive or not
+             * It is possible that the app could have been launched by accident and user might want
+             * to close it immediately, in such cases leaving the [Handler.postDelayed] in queue will
+             * explicitly execute the action in the background even if the activity is closed
+             * and this will run the [MainActivity] and we don't want that
+             */
+            if (this.isDestroyed || this.isFinishing) return@postDelayed
+            runIntent()
+        }, delay)
     }
 
-    private fun Int.getBitmapFromVectorDrawable(): Bitmap? {
-        val drawable = ContextCompat.getDrawable(this@LauncherActivity, this)
-        val bitmap = Bitmap.createBitmap(400,
-                400, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        drawable?.setBounds(0, 0, canvas.width, canvas.height)
-        drawable?.draw(canvas)
-        return bitmap
+    private fun runIntent() {
+        val intent = Intent(this@LauncherActivity, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        this@LauncherActivity.finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Preventing memory leaks although insignificant but important for precaution
+        launcher_icon.clearAnimation()
+        launcher_text.clearAnimation()
+        handler.removeCallbacksAndMessages(null)
     }
 }
