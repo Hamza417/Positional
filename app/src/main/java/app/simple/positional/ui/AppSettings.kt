@@ -88,15 +88,6 @@ class AppSettings : Fragment() {
                             themeValue = 3
                         }
                     }
-                    item {
-                        label = "Day/Night"
-                        icon = if (themeValue == 4) {
-                            R.drawable.ic_radio_button_checked
-                        } else R.drawable.ic_radio_button_unchecked
-                        callback = {
-                            themeValue = 4
-                        }
-                    }
                 }
             }
 

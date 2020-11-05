@@ -21,7 +21,6 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.dialogs.PermissionDialog
 import app.simple.positional.preference.FragmentPreferences
-import app.simple.positional.preference.MainPreferences
 import app.simple.positional.services.CompassService
 import app.simple.positional.services.LocationService
 import app.simple.positional.smoothbottombar.SmoothBottomBar
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
-        app.simple.positional.theme.setTheme(MainPreferences().getCurrentTheme(baseContext))
+        //app.simple.positional.theme.setTheme(MainPreferences().getCurrentTheme(baseContext))
 
         setContentView(R.layout.activity_main)
 

@@ -3,6 +3,8 @@ package app.simple.positional.preference
 import android.content.Context
 import androidx.annotation.IntRange
 import androidx.annotation.NonNull
+import app.simple.positional.constants.currentTheme
+import app.simple.positional.constants.preferences
 
 class MainPreferences {
     /**

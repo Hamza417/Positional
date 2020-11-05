@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.constants.vectorBackground
+import app.simple.positional.constants.vectorBackgroundNight
 import app.simple.positional.constants.vectorColors
+import app.simple.positional.constants.vectorNightColors
 import app.simple.positional.util.addLinearGradient
 import app.simple.positional.util.addRadialGradient
 import app.simple.positional.util.getBitmapFromVectorDrawable
@@ -22,7 +24,10 @@ import kotlinx.android.synthetic.main.activity_launcher.*
 
 class LauncherActivity : AppCompatActivity() {
 
-    private var randomValue: Int = 0
+    private var randomDayValue: Int = 0
+    private var randomNightValue: Int = 0
+    private var colorOne: Int = 0x000000
+    private var colorTwo: Int = 0x000000
     private val handler = Handler()
     private var x = 20f
     private var y = 20f
@@ -35,23 +40,39 @@ class LauncherActivity : AppCompatActivity() {
         setContentView(R.layout.activity_launcher)
 
         if (BuildConfig.FLAVOR == "full") {
-            randomValue = (vectorBackground.indices).random()
+            randomDayValue = (vectorBackground.indices).random()
+            randomNightValue = (vectorBackgroundNight.indices).random()
         } else {
-            randomValue = 5
+            randomDayValue = 5
+            randomNightValue = 0
         }
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            launcher_background.setImageResource(vectorBackground[randomValue])
+        when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                colorOne = vectorNightColors[randomNightValue][0]
+                colorTwo = vectorNightColors[randomNightValue][1]
+                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    launcher_background.setImageResource(vectorBackgroundNight[randomNightValue])
+                }
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                colorOne = vectorColors[randomDayValue][0]
+                colorTwo = vectorColors[randomDayValue][1]
+                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    launcher_background.setImageResource(vectorBackground[randomDayValue])
+                }
+            }
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+
+            }
         }
 
-        touch_indicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = baseContext)?.let { addRadialGradient(it, vectorColors[randomValue][1]) })
+        touch_indicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = baseContext)?.let { addRadialGradient(it, colorTwo) })
 
-        launcher_icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = baseContext)?.let { addLinearGradient(it, intArrayOf(vectorColors[randomValue][0], vectorColors[randomValue][1])) })
+        launcher_icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = baseContext)?.let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
 
         launcher_icon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.launcher_icon))
         launcher_text.startAnimation(AnimationUtils.loadAnimation(this, R.anim.image_in))
-
-        runPostDelayed(2000)
 
         launcher_act.setOnTouchListener { _, event ->
 
@@ -102,6 +123,18 @@ class LauncherActivity : AppCompatActivity() {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
         this@LauncherActivity.finish()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        launcher_icon.clearAnimation()
+        launcher_text.clearAnimation()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        runPostDelayed(2000)
     }
 
     override fun onDestroy() {

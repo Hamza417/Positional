@@ -2,6 +2,7 @@ package app.simple.positional.preference
 
 import android.content.Context
 import app.simple.positional.R
+import app.simple.positional.constants.*
 
 class ClockPreferences {
     fun setClockFaceTheme(value: Int, context: Context) {

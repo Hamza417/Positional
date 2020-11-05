@@ -3,6 +3,7 @@ package app.simple.positional.preference
 import android.content.Context
 import android.hardware.SensorManager
 import app.simple.positional.R
+import app.simple.positional.constants.*
 
 class CompassPreference {
     // Parallax

@@ -1,4 +1,4 @@
-package app.simple.positional.preference
+package app.simple.positional.constants
 
 const val preferences = "Preferences"
 
