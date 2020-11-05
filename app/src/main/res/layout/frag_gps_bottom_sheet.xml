@@ -6,7 +6,7 @@
     android:layout_height="@dimen/bottom_sheet_layout_height"
     app:behavior_hideable="false"
     app:behavior_peekHeight="@dimen/peek_height"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    app:layout_behavior="app.simple.positional.behaviors.CustomBottomSheetBehavior">
 
     <include layout="@layout/gps_info_cards" />
 

@@ -39,33 +39,17 @@ class CompassPreference {
     }
 
     fun getNeedle(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(needle, R.drawable.compass_needle_classic)
-    }
-
-    fun setLastNeedle(dial: Int, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(lastNeedleTheme, dial).apply()
-    }
-
-    fun getLastNeedle(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(lastNeedleTheme, R.drawable.compass_dial_minimal)
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(needle, 1)
     }
 
     fun getDial(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(dial, R.drawable.compass_dial_minimal)
-    }
-
-    fun setLastDial(dial: Int, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(lastDialTheme, dial).apply()
-    }
-
-    fun getLastDial(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(lastDialTheme, R.drawable.compass_dial_minimal)
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(dial, 1)
     }
 
     fun getSkins(context: Context): IntArray {
         return intArrayOf(
-                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(needle, R.drawable.compass_needle_classic),
-                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(dial, R.drawable.compass_dial_minimal))
+                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(needle, R.drawable.compass_needle_01),
+                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(dial, R.drawable.compass_dial_03))
     }
 
     // Dial Opacity

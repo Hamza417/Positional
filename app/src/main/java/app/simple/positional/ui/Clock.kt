@@ -11,7 +11,6 @@ import android.location.Location
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
-import android.text.Html
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -28,19 +27,21 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.constants.faces
-import app.simple.positional.constants.needleSkins
+import app.simple.positional.constants.clockFaceSkins
+import app.simple.positional.constants.clockNeedleSkins
+import app.simple.positional.dialogs.ClockFace
+import app.simple.positional.dialogs.ClockNeedle
 import app.simple.positional.menu.clock.configuration.MovementType
-import app.simple.positional.menu.clock.face.Face
-import app.simple.positional.menu.clock.needle.Needle
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.frag_clock.*
 import org.shredzone.commons.suncalc.SunPosition
 import org.shredzone.commons.suncalc.SunTimes
+import java.lang.ref.WeakReference
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.OffsetDateTime
@@ -176,9 +177,9 @@ class Clock : Fragment() {
                             run {
                                 // Twilight
                                 val pos: SunPosition = SunPosition.compute().today().at(location.latitude, location.longitude).execute()
-                                sunAzimuth.text = Html.fromHtml("<b>Azimuth:</b> ${round(pos.azimuth, 2)}°")
-                                sunAltitude.text = Html.fromHtml("<b>Altitude:</b> ${round(pos.trueAltitude, 2)}°")
-                                sunDistance.text = Html.fromHtml("<b>Distance:</b> ${String.format("%.3E", pos.distance)} km")
+                                sunAzimuth.text = fromHtml("<b>Azimuth:</b> ${round(pos.azimuth, 2)}°")
+                                sunAltitude.text = fromHtml("<b>Altitude:</b> ${round(pos.trueAltitude, 2)}°")
+                                sunDistance.text = fromHtml("<b>Distance:</b> ${String.format("%.3E", pos.distance)} km")
                             }
                         }
 
@@ -195,6 +196,8 @@ class Clock : Fragment() {
         }
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            clock_main_layout.setProxyView(view)
+
             bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
 
@@ -224,7 +227,8 @@ class Clock : Fragment() {
                             hasNestedItems = true
                             icon = R.drawable.ic_minimal
                             callback = {
-                                Face().faceSkinsOptions(context = requireContext(), clock = this@Clock)
+                                val clockFaceTheme = WeakReference(ClockFace(this@Clock))
+                                clockFaceTheme.get()?.show(parentFragmentManager, "null")
                             }
                         }
                         item {
@@ -232,7 +236,8 @@ class Clock : Fragment() {
                             hasNestedItems = true
                             icon = R.drawable.ic_clock_needle
                             callback = {
-                                Needle().openNeedleMenu(context = requireContext(), clock = this@Clock)
+                                val clockNeedleSkins = WeakReference(ClockNeedle(this@Clock))
+                                clockNeedleSkins.get()?.show(parentFragmentManager, "null")
                             }
                         }
                     }
@@ -334,15 +339,15 @@ class Clock : Fragment() {
     }
 
     fun setNeedle(value: Int) {
-        loadImageResources(needleSkins[value][0], hour, requireContext())
-        loadImageResources(needleSkins[value][1], minutes, requireContext())
-        loadImageResources(needleSkins[value][2], seconds, requireContext())
+        loadImageResources(clockNeedleSkins[value][0], hour, requireContext())
+        loadImageResources(clockNeedleSkins[value][1], minutes, requireContext())
+        loadImageResources(clockNeedleSkins[value][2], seconds, requireContext())
     }
 
     fun setDial(value: Int) {
-        if (dial.tag != faces[value]) {
-            loadImageResources(faces[value], dial, requireContext())
-            dial.tag = faces[value]
+        if (dial.tag != clockFaceSkins[value]) {
+            loadImageResources(clockFaceSkins[value], dial, requireContext())
+            dial.tag = clockFaceSkins[value]
         }
     }
 

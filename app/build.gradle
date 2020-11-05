@@ -10,8 +10,8 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 12
-        versionName "v2.3-stable"
+        versionCode 13
+        versionName "v2.4-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -83,6 +83,8 @@ dependencies {
     implementation 'org.shredzone.commons:commons-suncalc:3.4'
 
     implementation "androidx.navigation:navigation-ui-ktx:2.3.1"
+
+    implementation 'com.afollestad:viewpagerdots:1.0.0'
 
     // debugImplementation because LeakCanary should only run in debug builds.
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'

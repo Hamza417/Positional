@@ -23,23 +23,33 @@ class MovementType {
                 title = "Movement Type"
                 item {
                     label = "Smooth"
+                    dismissOnSelect = false
                     icon = if (value) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
-                    callback = { value = true }
+                    callback = {
+                        this.icon = R.drawable.ic_radio_button_checked
+                        value = true
+                        setValue(clock)
+                    }
                 }
                 item {
                     label = "Tick"
+                    dismissOnSelect = false
                     icon = if (value) R.drawable.ic_radio_button_unchecked else R.drawable.ic_radio_button_checked
-                    callback = { value = false }
+                    callback = {
+                        this.icon = R.drawable.ic_radio_button_checked
+                        value = false
+                        setValue(clock)
+                    }
                 }
             }
         }
 
         popupMenu.show(context = context, anchor = clock.clock_menu)
+    }
 
-        popupMenu.setOnDismissListener {
-            clock.isMovementTypeSmooth = value
-            clock.setMotionDelay()
-            ClockPreferences().setMovementType(value = value, context = context)
-        }
+    private fun setValue(clock: Clock) {
+        clock.isMovementTypeSmooth = value
+        clock.setMotionDelay()
+        ClockPreferences().setMovementType(value = value, context = clock.requireContext())
     }
 }

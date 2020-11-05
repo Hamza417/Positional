@@ -17,7 +17,7 @@ class PermissionDialog(private var permissionCallbacks: PermissionCallbacks) : C
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.perm_dialog, container, false)
+        return inflater.inflate(R.layout.dialog_permission_info, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

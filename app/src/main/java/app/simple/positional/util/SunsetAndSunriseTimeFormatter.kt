@@ -8,6 +8,6 @@ import java.util.*
  * this function will trim it to extract the Time out of it
  */
 fun formatZonedTimeDate(string: String): String {
-    val date: Date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX").parse(string)
-    return SimpleDateFormat("H:mm:ss").format(date) // 9:00
+    val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault()).parse(string)
+    return SimpleDateFormat("H:mm:ss", Locale.getDefault()).format(date!!) // 9:00
 }

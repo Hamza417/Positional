@@ -6,7 +6,7 @@
     android:layout_height="@dimen/bottom_sheet_layout_height"
     app:behavior_hideable="false"
     app:behavior_peekHeight="150dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    app:layout_behavior="app.simple.positional.behaviors.CustomBottomSheetBehavior">
 
     <ImageView
         android:id="@+id/expand_up_gps_sheet"

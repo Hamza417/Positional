@@ -12,7 +12,6 @@ import android.hardware.camera2.CameraManager
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -22,14 +21,17 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.menu.compass.dial.Dial
-import app.simple.positional.menu.compass.needle.Needle
+import app.simple.positional.constants.compassDialSkins
+import app.simple.positional.constants.compassNeedleSkins
+import app.simple.positional.dialogs.CompassDial
+import app.simple.positional.dialogs.CompassNeedle
 import app.simple.positional.parallax.ParallaxView
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.util.adjustAzimuthForDisplayRotation
 import app.simple.positional.util.getAngle
-import app.simple.positional.util.imageViewAnimatedChange
+import app.simple.positional.util.loadImageResources
 import com.github.zawadz88.materialpopupmenu.popupMenu
+import java.lang.ref.WeakReference
 import kotlin.math.abs
 
 class Compass : Fragment() {
@@ -207,26 +209,20 @@ class Compass : Fragment() {
     }
 
     private fun setSkins() {
-        setNeedle()
-        setDial()
+        setNeedle(CompassPreference().getNeedle(requireContext()))
+        setDial(CompassPreference().getDial(requireContext()))
     }
 
-    fun setNeedle() {
-        if (needle.tag != skins[0]) {
-            imageViewAnimatedChange(needle, skins[0], requireContext())
-            needle.tag = skins[0]
-        }
+    fun setNeedle(value: Int) {
+        loadImageResources(compassNeedleSkins[value], needle, requireContext())
     }
 
-    fun setDial() {
-        if (dial.tag != skins[1]) {
-            imageViewAnimatedChange(dial, skins[1], requireContext())
-            dial.tag = skins[1]
-        }
+    fun setDial(value: Int) {
+        loadImageResources(compassDialSkins[value], dial, requireContext())
     }
 
-    fun setDialAlpha(value: Float) {
-        dial.animate().alpha(value).setDuration(1500).setInterpolator(AccelerateDecelerateInterpolator()).start()
+    fun setDialAlpha(value: Int) {
+        dial.alpha = value / 100f
     }
 
     private fun setSensitivity(value: Int) {
@@ -309,7 +305,8 @@ class Compass : Fragment() {
                         hasNestedItems = true
                         label = "Needle"
                         callback = {
-                            Needle().needleSkinsOptions(requireContext(), this@Compass, skins[0])
+                            val compassNeedle = WeakReference(CompassNeedle(WeakReference(this@Compass)))
+                            compassNeedle.get()?.show(parentFragmentManager, "null")
                         }
                     }
                     item {
@@ -317,7 +314,8 @@ class Compass : Fragment() {
                         hasNestedItems = true
                         label = "Dial"
                         callback = {
-                            Dial().dialSkinsOptions(requireContext(), this@Compass, skins[1])
+                            val compassDial = WeakReference(CompassDial(WeakReference(this@Compass)))
+                            compassDial.get()?.show(parentFragmentManager, "null")
                         }
                     }
                 }

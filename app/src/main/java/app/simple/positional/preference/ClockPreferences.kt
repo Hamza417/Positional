@@ -24,7 +24,7 @@ class ClockPreferences {
     fun getSkins(context: Context): IntArray {
         return intArrayOf(
                 context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockNeedle, R.drawable.clock_face_numbers),
-                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockFace, R.drawable.compass_dial_minimal))
+                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockFace, R.drawable.compass_dial_03))
     }
 
     fun setLastFace(dial: Int, context: Context) {

@@ -30,6 +30,7 @@ import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.frag_gps.*
 import java.io.IOException
 import java.util.*
 
@@ -160,6 +161,9 @@ class GPS : Fragment() {
         }
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+            gps_main_layout.setProxyView(view)
+
             bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
 
