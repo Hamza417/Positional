@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/gps_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <View
+        android:id="@+id/gps_dim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#7E000000" />
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/gps_appbar"
@@ -36,15 +51,6 @@
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <include layout="@layout/generic_gps_range" />
-
-    <View
-        android:id="@+id/gps_dim"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0"
-        android:background="#7E000000" />
-
     <include layout="@layout/frag_gps_bottom_sheet" />
 
-</app.simple.positional.views.CustomCoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

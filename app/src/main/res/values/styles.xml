@@ -35,11 +35,6 @@
         <item name="mpm_separatorColor">?attr/dividerColor</item>
     </style>
 
-    <style name="DialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/dialog_in</item>
-        <item name="android:windowExitAnimation">@anim/dialog_out</item>
-    </style>
-
     <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
@@ -53,5 +48,17 @@
         <item name="android:windowMinWidthMinor">100%</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:colorEdgeEffect">?attr/appAccent</item>
+        <item name="android:windowEnterAnimation">@anim/bottom_sheet_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_sheet_dialog_out</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out</item>
+    </style>
+
+    <style name="BottomDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/bottom_sheet_dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_sheet_dialog_out</item>
     </style>
 </resources>

@@ -15,10 +15,6 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AnimationUtils
-import android.view.animation.DecelerateInterpolator
-import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
@@ -26,23 +22,26 @@ import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.dialogs.gps.GPSMenu
+import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.*
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_gps.*
 import java.io.IOException
+import java.lang.ref.WeakReference
 import java.util.*
 
 // TODO - Add manual longitude adn latitude information checker
 class GPS : Fragment() {
 
-    private lateinit var range: ImageView
-    private lateinit var dot: ImageView
-    private lateinit var scanned: ImageView
     private lateinit var expandUp: ImageView
-    private lateinit var locationPin: ImageView
-    private lateinit var streetMap: ImageView
 
     private lateinit var scrollView: NestedScrollView
 
@@ -64,18 +63,15 @@ class GPS : Fragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
-    private lateinit var gpsLayout: FrameLayout
+    private lateinit var location: Location
 
-    private var gpsEnabledAnimationCount = 1
-    private var gpsDisabledAnimationCount = 1
+    private var isMapMoved: Boolean = false
+
+    private lateinit var mapFragment: SupportMapFragment
+    private lateinit var googleMap: GoogleMap
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_gps, container, false)
-        range = view.findViewById(R.id.gps_range_indicator)
-        dot = view.findViewById(R.id.gps_dot)
-        scanned = view.findViewById(R.id.gps_scanned_indicator)
-        locationPin = view.findViewById(R.id.location_pin)
-        streetMap = view.findViewById(R.id.background_street_map)
 
         accuracy = view.findViewById(R.id.gps_accuracy)
         address = view.findViewById(R.id.gps_address)
@@ -92,12 +88,13 @@ class GPS : Fragment() {
         filter.addAction("location")
         filter.addAction("provider")
 
-        gpsLayout = view.findViewById(R.id.gps_layout)
         //gpsLayout.rotationX = 40f
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
-        loadImageResources(R.drawable.map_random_street, streetMap, requireContext())
+        //loadImageResources(R.drawable.map_random_street, streetMap, requireContext())
+        mapFragment = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
+        mapFragment.getMapAsync(callback)
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             toolbar = view.findViewById(R.id.gps_appbar)
@@ -122,15 +119,13 @@ class GPS : Fragment() {
                 if (intent != null) {
                     when (intent.action) {
                         "location" -> {
-                            val location: Location? = intent.getParcelableExtra("location")
+
+                            location = intent.getParcelableExtra("location")!!
+
                             if (location != null) {
                                 altitude.text = buildSpannableString("${round(location.altitude, 2)} m", 1)
                                 speed.text = buildSpannableString("${round(location.speed.toDouble(), 2)} m/s", 3)
                                 bearing.text = "${location.bearing} °"
-
-                                // Bogus coding
-                                //providerSource.text = Html.fromHtml("<b>Source:</b> ${location.provider.toUpperCase(Locale.getDefault())}")
-                                //providerStatus.text = Html.fromHtml("<b>Status:</b> Enabled")
 
                                 accuracy.text = buildSpannableString("${round(location.accuracy.toDouble(), 2)} m", 1)
 
@@ -140,9 +135,7 @@ class GPS : Fragment() {
 
                                 getAddress(location.latitude, location.longitude)
 
-                                changeMapScale(15f / if (location.accuracy <= 15f) location.accuracy else 15f)
-
-                                changeRangeSize(if (0.066f * location.accuracy <= 1f) 0.066f * location.accuracy else 1.0f)
+                                moveMapCamera()
 
                                 providerSource.text = fromHtml("<b>Source:</b> ${location.provider.toUpperCase(Locale.getDefault())}")
                                 providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
@@ -162,8 +155,6 @@ class GPS : Fragment() {
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
 
-            gps_main_layout.setProxyView(view)
-
             bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
 
@@ -181,32 +172,54 @@ class GPS : Fragment() {
                 }
             })
         }
+
+        gps_menu.setOnClickListener {
+            val weakReference = WeakReference(GPSMenu(WeakReference(this@GPS)))
+            weakReference.get()?.show(parentFragmentManager, "gps_menu")
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        scanned.clearAnimation()
-        range.clearAnimation()
-        locationPin.clearAnimation()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
-        handler.removeCallbacks(gpsRangeAnimation)
-        handler.removeCallbacks(locationPinAnimation)
+        handler.removeCallbacks(mapMoved)
     }
 
     override fun onResume() {
         super.onResume()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
-        handler.post(gpsRangeAnimation)
-        handler.post(locationPinAnimation)
     }
 
-    private fun changeRangeSize(value: Float) {
-        range.animate().scaleX(value).scaleY(value).setDuration(1500).setInterpolator(AccelerateDecelerateInterpolator()).start()
+    private val callback = OnMapReadyCallback { googleMap ->
+        /**
+         * Manipulates the map once available.
+         * This callback is triggered when the map is ready to be used.
+         * This is where we can add markers or lines, add listeners or move the camera.
+         * If Google Play services is not installed on the device, the user will be prompted to
+         * install it inside the SupportMapFragment. This method will only be triggered once the
+         * user has installed Google Play services and returned to the app.
+         */
+
+        googleMap.uiSettings.isCompassEnabled = false
+        googleMap.uiSettings.isMapToolbarEnabled = false
+        googleMap.uiSettings.isMyLocationButtonEnabled = false
+        this.googleMap = googleMap
+
+        showLabel(GPSPreferences().isLabelOn(requireContext()))
+
+        this.googleMap.setOnCameraMoveListener {
+            isMapMoved = true
+            handler.removeCallbacks(mapMoved)
+        }
+
+        this.googleMap.setOnCameraIdleListener {
+            handler.postDelayed(mapMoved, 10000)
+        }
     }
 
     private fun changeMapScale(value: Float) {
         //if (streetMap.animation.hasEnded()) return
-        streetMap.animate().scaleX(value).scaleY(value).setDuration(3000).setInterpolator(DecelerateInterpolator()).start()
+        //streetMap.animate().scaleX(value).scaleY(value).setDuration(3000).setInterpolator(DecelerateInterpolator()).start()
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {
@@ -258,34 +271,10 @@ class GPS : Fragment() {
         }
     }
 
-    private val gpsRangeAnimation: Runnable = object : Runnable {
+    private val mapMoved: Runnable = object : Runnable {
         override fun run() {
             if (context == null) return
-            this@GPS.scanned.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.gps_scanned_animation))
-            handler.postDelayed(this, 4000)
-        }
-    }
-
-    private val locationPinAnimation: Runnable = object : Runnable {
-        override fun run() {
-            if (context == null) return
-            if (getLocationStatus()) {
-                if (gpsEnabledAnimationCount != 0) {
-                    this@GPS.locationPin.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.gps_enabled))
-                    gpsEnabledAnimationCount = 0
-                    gpsDisabledAnimationCount = 1
-                } else {
-                    this@GPS.locationPin.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.location_pin_animation))
-                }
-            } else {
-                if (gpsDisabledAnimationCount != 0) {
-                    this@GPS.locationPin.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.gps_disabled))
-                    gpsDisabledAnimationCount = 0
-                    gpsEnabledAnimationCount = 1
-                }
-            }
-
-            handler.postDelayed(this, 3000)
+            isMapMoved = false
         }
     }
 
@@ -296,5 +285,54 @@ class GPS : Fragment() {
         } else {
             locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         }
+    }
+
+    private fun moveMapCamera() {
+        if (isMapMoved) return
+
+        val latLong = LatLng(location.latitude, location.longitude)
+
+        val cameraPosition = CameraPosition.builder().target(latLong).tilt(googleMap.cameraPosition.tilt).zoom(18f).bearing(location.bearing).build()
+
+        clearMap()
+
+        val markerOptions = MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext())))
+        googleMap.addMarker(markerOptions)
+
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
+    }
+
+    private fun clearMap() {
+        googleMap.clear()
+    }
+
+    fun showLabel(value: Boolean) {
+        GPSPreferences().setLabelMode(requireContext(), value)
+
+        var mapRawStyle = 0
+
+        when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                mapRawStyle = if (value) {
+                    R.raw.maps_dark_labelled
+                } else {
+                    R.raw.maps_dark_no_label
+                }
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                mapRawStyle = if (value) {
+                    R.raw.maps_light_labelled
+                } else {
+                    R.raw.maps_no_label
+                }
+            }
+            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
+
+            }
+        }
+
+        val mapStyleOptions: MapStyleOptions = MapStyleOptions.loadRawResourceStyle(requireContext(), mapRawStyle)
+
+        googleMap.setMapStyle(mapStyleOptions)
     }
 }

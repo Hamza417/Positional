@@ -10,7 +10,6 @@ import android.hardware.SensorManager;
 import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatImageView;
-import app.simple.positional.preference.CompassPreference;
 
 public class ParallaxView extends AppCompatImageView implements SensorEventListener {
     
@@ -38,7 +37,7 @@ public class ParallaxView extends AppCompatImageView implements SensorEventListe
     private SensorManager mSensorManager;
     private Sensor mSensor;
     
-    private int sensitivity;
+    private final int sensitivity = 10;
     private float translationMultiplier;
     
     public enum SensorDelay {
@@ -63,7 +62,6 @@ public class ParallaxView extends AppCompatImageView implements SensorEventListe
     public void init() {
         mSensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
         setSensor();
-        sensitivity = new CompassPreference().getParallaxSensitivity(getContext());
     }
     
     private void setNewPosition() {
@@ -233,15 +231,6 @@ public class ParallaxView extends AppCompatImageView implements SensorEventListe
     
     public void setTranslationMultiplier(float translationMultiplier) {
         this.translationMultiplier = translationMultiplier;
-    }
-    
-    public int getSensitivity() {
-        return sensitivity;
-    }
-    
-    public void setSensitivity(int sensitivity) {
-        new CompassPreference().setParallaxSensitivity(getContext(), sensitivity);
-        this.sensitivity = sensitivity;
     }
     
     @Override

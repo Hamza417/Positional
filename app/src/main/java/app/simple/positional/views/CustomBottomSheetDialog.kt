@@ -7,6 +7,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 open class CustomBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
+        dialog?.window?.attributes?.windowAnimations = R.style.BottomDialogAnimation
+        dialog?.window?.setDimAmount(0.2f)
+        dialog?.window?.setElevation(5f)
     }
 }

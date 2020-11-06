@@ -77,15 +77,6 @@ class CompassPreference {
         return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(whichObjectToRotate, 1)
     }
 
-    // Parallax Sensitivity
-    fun setParallaxSensitivity(context: Context, value: Int) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(sensitivity, value).apply()
-    }
-
-    fun getParallaxSensitivity(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(sensitivity, 1)
-    }
-
     /**
      * @param value 1 for Accelerometer
      * 2 for Gyroscope

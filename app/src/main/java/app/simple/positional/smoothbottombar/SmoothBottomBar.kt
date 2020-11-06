@@ -10,7 +10,6 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.os.Build
 import android.util.AttributeSet
-import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -20,7 +19,6 @@ import androidx.annotation.FontRes
 import androidx.annotation.XmlRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.navigation.NavController
 import app.simple.positional.R
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -87,7 +85,7 @@ class SmoothBottomBar @JvmOverloads constructor(
     private var _itemActiveIndex: Int = 0
 
     // Core Attributes
-    var barBackgroundColor: Int
+    private var barBackgroundColor: Int
         @ColorInt get() = _barBackgroundColor
         set(@ColorInt value) {
             _barBackgroundColor = value
@@ -95,7 +93,7 @@ class SmoothBottomBar @JvmOverloads constructor(
             invalidate()
         }
 
-    var barIndicatorColor: Int
+    private var barIndicatorColor: Int
         @ColorInt get() = _barIndicatorColor
         set(@ColorInt value) {
             _barIndicatorColor = value
@@ -103,28 +101,28 @@ class SmoothBottomBar @JvmOverloads constructor(
             invalidate()
         }
 
-    var barIndicatorRadius: Float
+    private var barIndicatorRadius: Float
         @Dimension get() = _barIndicatorRadius
         set(@Dimension value) {
             _barIndicatorRadius = value
             invalidate()
         }
 
-    var barSideMargins: Float
+    private var barSideMargins: Float
         @Dimension get() = _barSideMargins
         set(@Dimension value) {
             _barSideMargins = value
             invalidate()
         }
 
-    var barCornerRadius: Float
+    private var barCornerRadius: Float
         @Dimension get() = _barCornerRadius
         set(@Dimension value) {
             _barCornerRadius = value
             invalidate()
         }
 
-    var itemTextSize: Float
+    private var itemTextSize: Float
         @Dimension get() = _itemTextSize
         set(@Dimension value) {
             _itemTextSize = value
@@ -132,7 +130,7 @@ class SmoothBottomBar @JvmOverloads constructor(
             invalidate()
         }
 
-    var itemTextColor: Int
+    private var itemTextColor: Int
         @ColorInt get() = _itemTextColor
         set(@ColorInt value) {
             _itemTextColor = value
@@ -140,48 +138,48 @@ class SmoothBottomBar @JvmOverloads constructor(
             invalidate()
         }
 
-    var itemPadding: Float
+    private var itemPadding: Float
         @Dimension get() = _itemPadding
         set(@Dimension value) {
             _itemPadding = value
             invalidate()
         }
 
-    var itemAnimDuration: Long
+    private var itemAnimDuration: Long
         get() = _itemAnimDuration
         set(value) {
             _itemAnimDuration = value
         }
 
-    var itemIconSize: Float
+    private var itemIconSize: Float
         @Dimension get() = _itemIconSize
         set(@Dimension value) {
             _itemIconSize = value
             invalidate()
         }
 
-    var itemIconMargin: Float
+    private var itemIconMargin: Float
         @Dimension get() = _itemIconMargin
         set(@Dimension value) {
             _itemIconMargin = value
             invalidate()
         }
 
-    var itemIconTint: Int
+    private var itemIconTint: Int
         @ColorInt get() = _itemIconTint
         set(@ColorInt value) {
             _itemIconTint = value
             invalidate()
         }
 
-    var itemIconTintActive: Int
-        @ColorInt get() = _itemIconTintActive
+    private var itemIconTintActive: Int
+        @ColorInt get() = _itemIconTintActive // intArrayOf(Color.parseColor("#DC1B1B"), Color.parseColor("#1B9EDC"), Color.parseColor("#FF8C55B3"), Color.parseColor("#f6f6f6"))
         set(@ColorInt value) {
             _itemIconTintActive = value
             invalidate()
         }
 
-    var itemFontFamily: Int
+    private var itemFontFamily: Int
         @FontRes get() = _itemFontFamily
         set(@FontRes value) {
             _itemFontFamily = value
@@ -191,7 +189,7 @@ class SmoothBottomBar @JvmOverloads constructor(
             }
         }
 
-    var itemMenuRes: Int
+    private var itemMenuRes: Int
         @XmlRes get() = _itemMenuRes
         set(@XmlRes value) {
             _itemMenuRes = value
@@ -211,11 +209,11 @@ class SmoothBottomBar @JvmOverloads constructor(
     // Listeners
     var onItemSelectedListener: OnItemSelectedListener? = null
 
-    var onItemReselectedListener: OnItemReselectedListener? = null
+    private var onItemReselectedListener: OnItemReselectedListener? = null
 
-    var onItemSelected: ((Int) -> Unit)? = null
+    private var onItemSelected: ((Int) -> Unit)? = null
 
-    var onItemReselected: ((Int) -> Unit)? = null
+    private var onItemReselected: ((Int) -> Unit)? = null
 
     // Paints
     private val paintBackground = Paint().apply {
@@ -380,12 +378,11 @@ class SmoothBottomBar @JvmOverloads constructor(
 
         // Draw background
         if (barCornerRadius > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // FIXME: 02-11-2020 - Issues with bottom left and right corners, using shadows makes the corners look weird in devices with sharp corners
             /**
-             * [paintBackground]
-             * @param setShadowlayer is where shadows are set
+             * [Paint.setShadowLayer] is where shadows are set
              *
-             * Currently I am wrapping the layout withing a framelayout in [activity_main.xml] and
+             * Currently I am wrapping the layout withing a FrameLayout in activity_main.xml and elevation
+             * to create shadows
              */
             canvas.drawRoundRect(
                     0f, 10f,
@@ -532,7 +529,7 @@ class SmoothBottomBar @JvmOverloads constructor(
                     .setDampingRatio(SpringForce.DAMPING_RATIO_NO_BOUNCY)
                     .setStiffness(SpringForce.STIFFNESS_LOW)
             springAnimation.start()
-             */
+            */
 
             ValueAnimator.ofObject(ArgbEvaluator(), itemIconTint, itemIconTintActive).apply {
                 duration = itemAnimDuration
@@ -556,10 +553,6 @@ class SmoothBottomBar @JvmOverloads constructor(
         }
     }
 
-    fun setupWithNavController(menu: Menu, navController: NavController) {
-        NavigationComponentHelper.setupWithNavController(menu, this, navController)
-    }
-
     /**
      * Created by Vladislav Perevedentsev on 29.07.2020.
      *
@@ -567,7 +560,7 @@ class SmoothBottomBar @JvmOverloads constructor(
      *
      * @sample
      * setOnItemSelectedListener { position ->
-     *     //TODO: Something
+     *     // Your Code
      * }
      */
     fun setOnItemSelectedListener(listener: (position: Int) -> Unit) {
@@ -575,24 +568,6 @@ class SmoothBottomBar @JvmOverloads constructor(
             override fun onItemSelect(pos: Int): Boolean {
                 listener.invoke(pos)
                 return true
-            }
-        }
-    }
-
-    /**
-     * Created by Vladislav Perevedentsev on 29.07.2020.
-     *
-     * Just call [SmoothBottomBar.setOnItemReselectedListener] to override [onItemReselectedListener]
-     *
-     * @sample
-     * setOnItemReselectedListener { position ->
-     *     //TODO: Something
-     * }
-     */
-    fun setOnItemReselectedListener(listener: (position: Int) -> Unit) {
-        onItemReselectedListener = object : OnItemReselectedListener {
-            override fun onItemReselect(pos: Int) {
-                listener.invoke(pos)
             }
         }
     }

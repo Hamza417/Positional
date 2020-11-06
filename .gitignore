@@ -9,6 +9,11 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
+/app/release
+/app/lite
+/app/debug
+/app/full
 /captures
 .externalNativeBuild
 .cxx
+sensitive_data.txt

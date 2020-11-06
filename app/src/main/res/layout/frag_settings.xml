@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
-                    android:foreground="@drawable/ripple"
+                    android:background="@drawable/ripple"
                     android:orientation="vertical"
                     android:padding="15dp">
 

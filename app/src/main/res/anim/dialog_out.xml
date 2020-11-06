@@ -4,9 +4,13 @@
     android:interpolator="@android:interpolator/decelerate_cubic"
     android:shareInterpolator="true">
 
-    <translate
-        android:fromYDelta="0"
-        android:toYDelta="200" />
+    <scale
+        android:fromXScale="1"
+        android:fromYScale="1"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale=".8"
+        android:toYScale=".8" />
 
     <alpha
         android:fromAlpha="1"

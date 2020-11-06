@@ -14,23 +14,21 @@ import android.os.Handler
 import android.view.*
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.constants.compassDialSkins
 import app.simple.positional.constants.compassNeedleSkins
-import app.simple.positional.dialogs.CompassDial
-import app.simple.positional.dialogs.CompassNeedle
+import app.simple.positional.dialogs.compass.CompassMenu
 import app.simple.positional.parallax.ParallaxView
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.util.adjustAzimuthForDisplayRotation
 import app.simple.positional.util.getAngle
 import app.simple.positional.util.loadImageResources
 import com.github.zawadz88.materialpopupmenu.popupMenu
+import kotlinx.android.synthetic.main.frag_compass.*
 import java.lang.ref.WeakReference
 import kotlin.math.abs
 
@@ -44,7 +42,6 @@ class Compass : Fragment() {
     private lateinit var dial: ParallaxView
     private lateinit var degrees: TextView
     private lateinit var dialContainer: FrameLayout
-    private lateinit var menu: ImageButton
 
     lateinit var skins: IntArray
     private val width: Int = 500
@@ -67,6 +64,8 @@ class Compass : Fragment() {
         sensorDelay = CompassPreference().getDelay(requireContext())
 
         detector = GestureDetector(requireContext(), MyGestureDetector())
+
+        retainInstance = true
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -86,8 +85,6 @@ class Compass : Fragment() {
         cameraId = cameraManager.cameraIdList[0]
 
         dialContainer = v.findViewById(R.id.dial_container)
-
-        menu = v.findViewById(R.id.compass_menu)
 
         setSkins()
 
@@ -148,8 +145,9 @@ class Compass : Fragment() {
             }
         }
 
-        menu.setOnClickListener {
-            openCompassMenu(menu)
+        compass_menu.setOnClickListener {
+            val weakReference = WeakReference(CompassMenu(WeakReference(this@Compass)))
+            weakReference.get()?.show(parentFragmentManager, "compass_menu")
         }
     }
 
@@ -225,15 +223,24 @@ class Compass : Fragment() {
         dial.alpha = value / 100f
     }
 
-    private fun setSensitivity(value: Int) {
-        needle.sensitivity = value
+    fun toggleParallax(value: Boolean) {
+        if (CompassPreference().getParallax(requireContext())) {
+            CompassPreference().setParallax(false, requireContext())
+            needle.resetTranslationValues()
+            dial.resetTranslationValues()
+        } else {
+            CompassPreference().setParallax(true, requireContext())
+            parallax(true)
+        }
+    }
+
+    fun calibrate() {
         needle.calibrate()
-        dial.sensitivity = value
         dial.calibrate()
     }
 
     /**
-     * Simple implementation of an [OnTouchListener] for registering the dialer's touch events.
+     * Simple implementation of an [View.OnTouchListener] for registering the dialer's touch events.
      */
     private inner class MyOnTouchListener : View.OnTouchListener {
         @SuppressLint("ClickableViewAccessibility")
@@ -290,146 +297,14 @@ class Compass : Fragment() {
 
     private fun rotateDial(degrees: Float) {
         dial.rotation = degrees
-        println(degrees)
     }
 
     private fun openCompassMenu(view: View) {
         val popupMenu = popupMenu {
             style = styleResId
             dropdownGravity = Gravity.END
-            if (BuildConfig.FLAVOR == "full") {
-                section {
-                    title = "Appearance"
-                    item {
-                        icon = R.drawable.ic_navigation
-                        hasNestedItems = true
-                        label = "Needle"
-                        callback = {
-                            val compassNeedle = WeakReference(CompassNeedle(WeakReference(this@Compass)))
-                            compassNeedle.get()?.show(parentFragmentManager, "null")
-                        }
-                    }
-                    item {
-                        icon = R.drawable.ic_compass
-                        hasNestedItems = true
-                        label = "Dial"
-                        callback = {
-                            val compassDial = WeakReference(CompassDial(WeakReference(this@Compass)))
-                            compassDial.get()?.show(parentFragmentManager, "null")
-                        }
-                    }
-                }
-            }
             section {
                 title = "Configuration"
-                item {
-                    label = "Parallax"
-                    icon = R.drawable.ic_parallax
-                    hasNestedItems = true
-                    callback = {
-                        val parallaxPopupMenu = popupMenu {
-                            style = styleResId
-                            fixedContentWidthInPx = width
-                            dropdownGravity = Gravity.END
-                            section {
-                                val isParallaxEnabled = CompassPreference().getParallax(requireContext())
-                                title = "Parallax"
-                                item {
-                                    label = if (isParallaxEnabled) "Disable" else "Enable"
-                                    icon = if (isParallaxEnabled) R.drawable.ic_check_box_checked else R.drawable.ic_check_box_unchecked
-                                    callback = {
-                                        if (isParallaxEnabled) {
-                                            CompassPreference().setParallax(false, requireContext())
-                                            needle.resetTranslationValues()
-                                            dial.resetTranslationValues()
-                                        } else {
-                                            CompassPreference().setParallax(true, requireContext())
-                                            parallax(true)
-                                        }
-                                    }
-                                }
-                                item {
-                                    label = "Calibrate"
-                                    icon = R.drawable.ic_calibration
-                                    callback = {
-                                        needle.calibrate()
-                                        dial.calibrate()
-                                    }
-                                }
-                            }
-                            section {
-                                val sensitivity = CompassPreference().getParallaxSensitivity(requireContext())
-                                title = "Sensitivity"
-                                item {
-                                    label = "Very Low"
-                                    icon = if (sensitivity == 5) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
-                                    callback = {
-                                        setSensitivity(5)
-                                    }
-                                }
-                                item {
-                                    label = "Low"
-                                    icon = if (sensitivity == 10) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
-                                    callback = {
-                                        setSensitivity(10)
-                                    }
-                                }
-                                item {
-                                    label = "Medium"
-                                    icon = if (sensitivity == 15) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
-                                    callback = {
-                                        setSensitivity(15)
-                                    }
-                                }
-                                item {
-                                    label = "High"
-                                    icon = if (sensitivity == 20) R.drawable.ic_radio_button_checked else R.drawable.ic_radio_button_unchecked
-                                    callback = {
-                                        setSensitivity(20)
-                                    }
-                                }
-                            }
-                        }
-
-                        parallaxPopupMenu.show(requireContext(), view)
-                    }
-                }
-                item {
-                    label = "Sensor Speed"
-                    hasNestedItems = true
-                    icon = R.drawable.ic_speed_fast
-                    callback = {
-                        val sensorPopupMenu = popupMenu {
-                            style = R.style.popupMenu
-                            fixedContentWidthInPx = width
-                            dropdownGravity = Gravity.END
-                            section {
-                                title = "Sensor Speed"
-                                item {
-                                    label = "Fast"
-                                    icon = R.drawable.ic_speed_fast
-                                    callback = {
-                                        sensorDelay = SensorManager.SENSOR_DELAY_FASTEST
-                                        CompassPreference().setDelay(sensorDelay, requireContext())
-                                        unregister()
-                                        register()
-                                    }
-                                }
-                                item {
-                                    label = "Smooth"
-                                    icon = R.drawable.ic_speed_smooth
-                                    callback = {
-                                        sensorDelay = SensorManager.SENSOR_DELAY_GAME
-                                        CompassPreference().setDelay(sensorDelay, requireContext())
-                                        unregister()
-                                        register()
-                                    }
-                                }
-                            }
-                        }
-                        sensorPopupMenu.show(requireContext(), view)
-                    }
-                }
                 item {
                     label = "Rotate"
                     hasNestedItems = true

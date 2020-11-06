@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_view"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:padding="20dp">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="60dp"
+                android:layout_height="5dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_cards"
+                android:foreground="@drawable/ripple" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:fontFamily="@font/medium"
+                android:text="Appearance"
+                android:textColor="?attr/textSecondary"
+                android:textSize="6pt" />
+
+            <LinearLayout
+                android:id="@+id/compass_dial_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/options_icon_size"
+                    android:layout_height="@dimen/options_icon_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_compass"
+                    app:tint="?attr/iconRegular" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:text="Dial"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/compass_needle_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/options_icon_size"
+                    android:layout_height="@dimen/options_icon_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_navigation"
+                    app:tint="?attr/iconRegular" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:text="Needle"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:fontFamily="@font/medium"
+                android:text="Configuration"
+                android:textColor="?attr/textSecondary"
+                android:textSize="6pt" />
+
+            <LinearLayout
+                android:id="@+id/compass_rotate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/ripple"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/options_icon_size"
+                    android:layout_height="@dimen/options_icon_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_rotate_which"
+                    app:tint="?attr/iconRegular" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:text="Rotate"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/compass_parallax"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/options_icon_size"
+                    android:layout_height="@dimen/options_icon_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_parallax"
+                    app:tint="?attr/iconRegular" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/options_text_margin_start"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/regular"
+                    android:text="Parallax"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+                <ImageButton
+                    android:id="@+id/calibrate_parallax"
+                    android:layout_width="@dimen/options_icon_size"
+                    android:layout_height="@dimen/options_icon_size"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/ripple"
+                    android:src="@drawable/ic_calibration"
+                    android:tint="?attr/iconColor" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/toggle_parallax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/compass_sensor_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="@drawable/ripple"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/options_icon_size"
+                    android:layout_height="@dimen/options_icon_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_speed_fast"
+                    app:tint="?attr/iconRegular" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:text="Sensor Speed"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

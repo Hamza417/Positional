@@ -11,4 +11,6 @@
     <string name="compass">Compass</string>
     <string name="gps">GPS</string>
     <string name="settings">Settings</string>
+
+    <string name="google_map_key">@string/googleMapAPIKey</string>
 </resources>

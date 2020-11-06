@@ -2,6 +2,33 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+// Begin of reading the sensitive data
+def noKeyFound = '"NO_KEY_FOUND"'
+def googleMapsAPIKey = noKeyFound
+
+def sensitiveDataFile = file('../sensitive_data.txt')
+Properties sensitiveData = new Properties()
+
+if (sensitiveDataFile.canRead()) {
+    // Read the sensitive data from file sensitive_data.txt
+    sensitiveData.load(new FileInputStream(sensitiveDataFile))
+
+    if (sensitiveData != null) {
+        if (sensitiveData.containsKey('googleMapsAPIKey')) {
+            googleMapsAPIKey = sensitiveData['googleMapsAPIKey']
+        }
+    }
+}
+
+// In this section a reviewer can insert directly his own
+// sensitive data by replacing the strings beginning with REVIEWERS_
+// Just double click on the string and paste you own data
+if (googleMapsAPIKey == noKeyFound) {
+    googleMapsAPIKey = '"REVIEWERS_THEMOVIEDB_API_KEY_GOES_HERE"'
+}
+// End of reading the sensitive data
+
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -10,9 +37,11 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 13
-        versionName "v2.4-stable"
+        versionCode 14
+        versionName "v2.5-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // add a Resource String for the same key-value pair
+        resValue "string", "googleMapAPIKey", googleMapsAPIKey
     }
 
     flavorDimensions "version"

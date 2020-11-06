@@ -9,4 +9,8 @@
     <dimen name="peek_height">150dp</dimen>
     <dimen name="top_bar_height">70dp</dimen>
     <dimen name="bottom_sheet_layout_height">600dp</dimen>
+    <dimen name="compass_dial">300dp</dimen>
+    <dimen name="compass_needle">250dp</dimen>
+    <dimen name="options_text_margin_start">20dp</dimen>
+    <dimen name="options_icon_size">25dp</dimen>
 </resources>

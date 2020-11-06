@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
@@ -23,23 +24,21 @@ import app.simple.positional.dialogs.PermissionDialog
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.services.CompassService
 import app.simple.positional.services.LocationService
-import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.AppSettings
 import app.simple.positional.ui.Clock
 import app.simple.positional.ui.Compass
 import app.simple.positional.ui.GPS
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide {
 
     private var locationIntent: Intent? = null
     private var compassIntent: Intent? = null
 
-    private lateinit var bottomBar: SmoothBottomBar
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // This will keep the screen on during test
+        // This will keep the screen on during for debug build
         if (BuildConfig.DEBUG) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
@@ -52,7 +51,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
         windowManager.defaultDisplay.refreshRate
 
-        bottomBar = findViewById(R.id.bottom_bar)
         locationIntent = Intent(applicationContext, LocationService::class.java)
         compassIntent = Intent(applicationContext, CompassService::class.java)
 
@@ -61,7 +59,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         runApp()
         checkRunTimePermission()
 
-        bottomBar.setOnItemSelectedListener {
+        bottom_bar.setOnItemSelectedListener {
             setFragment(it)
             FragmentPreferences().setCurrentPage(baseContext, it)
         }
@@ -104,7 +102,8 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     private fun runApp() {
         setFragment(FragmentPreferences().getCurrentPage(this))
-        bottomBar.itemActiveIndex = FragmentPreferences().getCurrentPage(this)
+        bottom_bar.itemActiveIndex = FragmentPreferences().getCurrentPage(this)
+
     }
 
     private fun runService() {
@@ -211,6 +210,16 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
             4 -> {
 
             }
+        }
+    }
+
+    // Setting different tint for every icon for bottom bar was a bad move, it looked tacky
+    private fun iconTintActive(value: Int): Int {
+        return when (value) {
+            0 -> Color.parseColor("#DC1B1B")
+            1 -> Color.parseColor("#1B9EDC")
+            2 -> Color.parseColor("#FF8C55B3")
+            else -> Color.parseColor("#f6f6f6")
         }
     }
 

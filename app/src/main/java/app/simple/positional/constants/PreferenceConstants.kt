@@ -14,12 +14,12 @@ const val parallax = "parallax"
 const val delay = "delay"
 const val needle = "needle"
 const val dial = "dial"
-const val lastNeedleTheme = "last_needle_theme"
-const val lastDialTheme = "last_dial_theme"
 const val dialAlpha = "dial_alpha"
 const val whichObjectToRotate = "rotate_needle_or_dial"
-const val sensitivity = "parallax_rotations_sensitivity"
 const val parallaxSensor = "parallax_sensor"
+
+// GPS
+const val GPSLabelMode = "gps_label_mode"
 
 // Fragments
 const val currentPage = "current_page"
