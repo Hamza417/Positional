@@ -1,4 +1,4 @@
-package app.simple.positional.dialogs
+package app.simple.positional.dialogs.clock
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +13,7 @@ import app.simple.positional.views.CustomBottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_clock_face_skins.*
 import java.lang.ref.WeakReference
 
-class ClockFace(clock: Clock) : CustomBottomSheetDialog() {
-
-    private val weakReference = WeakReference(clock)
+class ClockFace(private val clock: WeakReference<Clock>) : CustomBottomSheetDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +45,7 @@ class ClockFace(clock: Clock) : CustomBottomSheetDialog() {
             override fun onPageScrollStateChanged(state: Int) {
                 if (state == ViewPager.SCROLL_STATE_SETTLING) {
                     ClockPreferences().setClockFaceTheme(face_skin.currentItem, requireContext())
-                    weakReference.get()?.setDial(face_skin.currentItem)
+                    clock.get()?.setDial(face_skin.currentItem)
                 }
             }
         })
@@ -55,6 +53,6 @@ class ClockFace(clock: Clock) : CustomBottomSheetDialog() {
 
     override fun onDestroy() {
         super.onDestroy()
-        weakReference.clear()
+        clock.clear()
     }
 }

@@ -11,6 +11,7 @@ import app.simple.positional.views.CustomBottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_compass_menu.*
 import java.lang.ref.WeakReference
 
+
 class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,6 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
         super.onViewCreated(view, savedInstanceState)
 
         toggle_parallax.isChecked = CompassPreference().getParallax(requireContext())
-        calibrate_parallax.isClickable = CompassPreference().getParallax(requireContext())
 
         compass_dial_theme.setOnClickListener {
             val compassDial = WeakReference(CompassDial(weakReference))
@@ -39,18 +39,26 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
             compassNeedle.get()?.show(parentFragmentManager, "null")
         }
 
+        compass_rotate.setOnClickListener {
+            val compassRotate = WeakReference(CompassRotate(weakReference))
+            compassRotate.get()?.show(parentFragmentManager, "null")
+        }
+
         toggle_parallax.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                weakReference.get()?.toggleParallax(false)
-                calibrate_parallax.isClickable = false
+                weakReference.get()?.toggleParallax()
             } else {
-                weakReference.get()?.toggleParallax(true)
-                calibrate_parallax.isClickable = true
+                weakReference.get()?.toggleParallax()
             }
         }
 
         calibrate_parallax.setOnClickListener {
             weakReference.get()?.calibrate()
+        }
+
+        compass_sensor_speed.setOnClickListener {
+            val compassSensorSpeed = WeakReference(CompassSensorSpeed(weakReference))
+            compassSensorSpeed.get()?.show(parentFragmentManager, "null")
         }
     }
 }

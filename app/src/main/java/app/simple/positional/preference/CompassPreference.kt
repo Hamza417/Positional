@@ -24,12 +24,6 @@ class CompassPreference {
         context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(delay, value).apply()
     }
 
-    // Compass Skins
-    fun setSkins(needleSkinValue: Int, dialSkinValue: Int, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(needle, needleSkinValue).apply()
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(dial, dialSkinValue).apply()
-    }
-
     fun setNeedle(needleSkinValue: Int, context: Context) {
         context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(needle, needleSkinValue).apply()
     }

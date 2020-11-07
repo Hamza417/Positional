@@ -1,4 +1,4 @@
-package app.simple.positional.dialogs
+package app.simple.positional.dialogs.app
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,7 +1,5 @@
 package app.simple.positional.ui
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -11,12 +9,10 @@ import android.location.Location
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -24,18 +20,14 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.clockFaceSkins
 import app.simple.positional.constants.clockNeedleSkins
-import app.simple.positional.dialogs.ClockFace
-import app.simple.positional.dialogs.ClockNeedle
-import app.simple.positional.menu.clock.configuration.MovementType
+import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView
-import com.github.zawadz88.materialpopupmenu.popupMenu
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_clock.*
@@ -89,7 +81,6 @@ class Clock : Fragment() {
 
     private lateinit var bottomSheetSlide: BottomSheetSlide
 
-    var isMovementTypeSmooth = false
     var delay: Long = 1000
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -126,8 +117,7 @@ class Clock : Fragment() {
 
         scrollView = view.findViewById(R.id.clock_panel_scrollview)
 
-        isMovementTypeSmooth = ClockPreferences().getMovementType(requireContext())
-        setMotionDelay()
+        setMotionDelay(ClockPreferences().getMovementType(requireContext()))
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             toolbar = view.findViewById(R.id.clock_appbar)
@@ -216,53 +206,9 @@ class Clock : Fragment() {
         }
 
         menu.setOnClickListener {
-            val popupMenu = popupMenu {
-                style = R.style.popupMenu
-                dropdownGravity = Gravity.END
-                if (BuildConfig.FLAVOR == "full") {
-                    section {
-                        title = "Appearances"
-                        item {
-                            label = "Face"
-                            hasNestedItems = true
-                            icon = R.drawable.ic_minimal
-                            callback = {
-                                val clockFaceTheme = WeakReference(ClockFace(this@Clock))
-                                clockFaceTheme.get()?.show(parentFragmentManager, "null")
-                            }
-                        }
-                        item {
-                            label = "Needle"
-                            hasNestedItems = true
-                            icon = R.drawable.ic_clock_needle
-                            callback = {
-                                val clockNeedleSkins = WeakReference(ClockNeedle(this@Clock))
-                                clockNeedleSkins.get()?.show(parentFragmentManager, "null")
-                            }
-                        }
-                    }
-                }
-                section {
-                    title = "Configuration"
-                    item {
-                        label = "Motion Type"
-                        hasNestedItems = true
-                        icon = R.drawable.ic_motion_type
-                        callback = {
-                            MovementType().setMovementType(requireContext(), this@Clock)
-                        }
-                    }
-                }
-            }
-
-            popupMenu.show(context = requireContext(), anchor = menu)
+            val clockMenu = WeakReference(ClockMenu(WeakReference(this)))
+            clockMenu.get()?.show(parentFragmentManager, "null")
         }
-    }
-
-    private fun updateClock(calendar: Calendar) {
-        animate(hour, getHoursInDegrees(calendar))
-        animate(minutes, getMinutesInDegrees(calendar))
-        animate(seconds, getSecondsInDegrees(calendar))
     }
 
     private val clock: Runnable = object : Runnable {
@@ -272,7 +218,7 @@ class Clock : Fragment() {
             hour.rotation = getHoursInDegrees(calendar)
             minutes.rotation = getMinutesInDegrees(calendar)
 
-            seconds.rotation = if (isMovementTypeSmooth) {
+            seconds.rotation = if (delay < 1000) {
                 getSecondsInDegreesWithDecimalPrecision(calendar)
             } else {
                 getSecondsInDegrees(calendar)
@@ -294,29 +240,6 @@ class Clock : Fragment() {
 
     fun updateDigitalTime(calendar: Calendar) {
         dateUpdater(calendar)
-    }
-
-    private fun animate(imageView: ImageView, value: Float) {
-        val animator = ObjectAnimator.ofFloat(imageView, "rotation", 0f, value)
-        animator.duration = 500
-        animator.interpolator = DecelerateInterpolator()
-        animator.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {
-                handler.removeCallbacks(clock)
-            }
-
-            override fun onAnimationEnd(animation: Animator?) {
-                handler.post(clock)
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-            }
-
-            override fun onAnimationRepeat(animation: Animator?) {
-            }
-
-        })
-        animator.start()
     }
 
     override fun onPause() {
@@ -355,8 +278,8 @@ class Clock : Fragment() {
         dial.animate().alpha(value).setDuration(1500).setInterpolator(AccelerateDecelerateInterpolator()).start()
     }
 
-    fun setMotionDelay() {
-        delay = if (isMovementTypeSmooth) {
+    fun setMotionDelay(value: Boolean) {
+        delay = if (value) {
             (1000 / requireActivity().windowManager.defaultDisplay.refreshRate).toLong()
         } else {
             1000

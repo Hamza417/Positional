@@ -13,6 +13,10 @@ import android.os.IBinder
 import android.os.Process
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
+/**
+ * This service is not being used and only left here for revision and learning purpose
+ */
+@Suppress("unused") // Will disable the warning for unused variables unused
 class CompassService : Service(), SensorEventListener {
 
     private val accelerometerReadings = FloatArray(3)

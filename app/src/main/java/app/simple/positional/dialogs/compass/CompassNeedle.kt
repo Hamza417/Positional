@@ -13,9 +13,7 @@ import app.simple.positional.views.CustomBottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_compass_needle.*
 import java.lang.ref.WeakReference
 
-class CompassNeedle(compass: WeakReference<Compass>) : CustomBottomSheetDialog() {
-
-    val weakReference = compass
+class CompassNeedle(private val compass: WeakReference<Compass>) : CustomBottomSheetDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +45,7 @@ class CompassNeedle(compass: WeakReference<Compass>) : CustomBottomSheetDialog()
             override fun onPageScrollStateChanged(state: Int) {
                 if (state == ViewPager.SCROLL_STATE_SETTLING) {
                     CompassPreference().setNeedle(compass_needle_skin.currentItem, requireContext())
-                    weakReference.get()?.setNeedle(compass_needle_skin.currentItem)
+                    compass.get()?.setNeedle(compass_needle_skin.currentItem)
                 }
             }
         })

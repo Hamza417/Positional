@@ -17,4 +17,8 @@
     <color name="iconRegular">#808080</color>
     <color name="indicator">#3A3A3A</color>
     <color name="shadowColor">#EDEDED</color>
+
+    <color name="switcher_on_color">#2196F3</color>
+    <color name="switcher_off_color">#E3E3E3</color>
+    <color name="switcher_icon_color">@android:color/white</color>
 </resources>

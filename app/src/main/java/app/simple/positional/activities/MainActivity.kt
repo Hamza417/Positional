@@ -20,9 +20,8 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
-import app.simple.positional.dialogs.PermissionDialog
+import app.simple.positional.dialogs.app.PermissionDialog
 import app.simple.positional.preference.FragmentPreferences
-import app.simple.positional.services.CompassService
 import app.simple.positional.services.LocationService
 import app.simple.positional.ui.AppSettings
 import app.simple.positional.ui.Clock
@@ -33,7 +32,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide {
 
     private var locationIntent: Intent? = null
-    private var compassIntent: Intent? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +50,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         windowManager.defaultDisplay.refreshRate
 
         locationIntent = Intent(applicationContext, LocationService::class.java)
-        compassIntent = Intent(applicationContext, CompassService::class.java)
 
         //checkBattery()
 
@@ -108,12 +105,10 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     private fun runService() {
         applicationContext.startService(locationIntent)
-        applicationContext.startService(compassIntent)
     }
 
     private fun stopService() {
         applicationContext.stopService(locationIntent)
-        applicationContext.stopService(compassIntent)
     }
 
     companion object {

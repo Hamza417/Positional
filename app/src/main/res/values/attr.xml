@@ -45,4 +45,10 @@
 
     <attr name="SmoothBottomBarStyle" format="reference" />
 
+    <declare-styleable name="Switcher">
+        <attr name="switcher_on_color" format="color" />
+        <attr name="switcher_off_color" format="color" />
+        <attr name="switcher_icon_color" format="color" />
+    </declare-styleable>
+
 </resources>

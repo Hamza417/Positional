@@ -41,7 +41,7 @@ android {
         versionName "v2.5-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // add a Resource String for the same key-value pair
-        resValue "string", "googleMapAPIKey", googleMapsAPIKey
+        resValue "string", "googleMapsAPIKey", googleMapsAPIKey
     }
 
     flavorDimensions "version"

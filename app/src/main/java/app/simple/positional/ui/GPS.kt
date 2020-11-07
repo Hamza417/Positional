@@ -92,7 +92,6 @@ class GPS : Fragment() {
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
-        //loadImageResources(R.drawable.map_random_street, streetMap, requireContext())
         mapFragment = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
         mapFragment.getMapAsync(callback)
 

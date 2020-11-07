@@ -1,4 +1,4 @@
-package app.simple.positional.dialogs
+package app.simple.positional.dialogs.clock
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,9 +13,7 @@ import app.simple.positional.views.CustomBottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_clock_needle_skins.*
 import java.lang.ref.WeakReference
 
-class ClockNeedle(clock: Clock) : CustomBottomSheetDialog() {
-
-    private val weakReference: WeakReference<Clock> = WeakReference(clock)
+class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDialog() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,8 +22,7 @@ class ClockNeedle(clock: Clock) : CustomBottomSheetDialog() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.dialog_clock_needle_skins, container, false)
-        return view
+        return inflater.inflate(R.layout.dialog_clock_needle_skins, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,7 +44,7 @@ class ClockNeedle(clock: Clock) : CustomBottomSheetDialog() {
             override fun onPageScrollStateChanged(state: Int) {
                 if (state == ViewPager.SCROLL_STATE_SETTLING) {
                     ClockPreferences().setClockNeedleTheme(needle_skin.currentItem, requireContext())
-                    weakReference.get()?.setNeedle(needle_skin.currentItem)
+                    clock.get()?.setNeedle(needle_skin.currentItem)
                 }
             }
         })
@@ -55,6 +52,6 @@ class ClockNeedle(clock: Clock) : CustomBottomSheetDialog() {
 
     override fun onDestroy() {
         super.onDestroy()
-        weakReference.clear()
+        clock.clear()
     }
 }
