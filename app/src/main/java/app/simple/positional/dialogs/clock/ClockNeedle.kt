@@ -49,9 +49,4 @@ class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDi
             }
         })
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        clock.clear()
-    }
 }

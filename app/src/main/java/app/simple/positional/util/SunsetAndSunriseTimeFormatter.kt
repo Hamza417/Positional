@@ -11,3 +11,8 @@ fun formatZonedTimeDate(string: String): String {
     val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault()).parse(string)
     return SimpleDateFormat("H:mm:ss", Locale.getDefault()).format(date!!) // 9:00
 }
+
+fun formatMoonDate(string: String): String {
+    val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault()).parse(string)
+    return SimpleDateFormat("dd MMM, yyyy, H:mm:ss", Locale.getDefault()).format(date!!) // 12 Dec 2020, 9:00
+}

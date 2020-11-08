@@ -50,9 +50,4 @@ class ClockFace(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
             }
         })
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        clock.clear()
-    }
 }

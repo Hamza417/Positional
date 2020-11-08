@@ -26,20 +26,23 @@
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/gps_info_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
                 android:text="GPS Info"
                 android:textColor="?attr/textSecondary"
                 android:textSize="8pt" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="5dp"
+            <ImageButton
+                android:id="@+id/gps_copy"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:alpha="?attr/alphaIcons"
-                android:background="@drawable/ic_pill_gps"
+                android:background="@drawable/ripple_btn"
+                android:src="@drawable/ic_content_copy"
                 app:tint="?attr/iconColor" />
 
         </LinearLayout>
@@ -47,29 +50,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/bg_cards"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/ripple"
+            android:orientation="vertical"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="@drawable/ripple"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingHorizontal="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginVertical="5dp"
-                android:fontFamily="@font/medium"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/light"
                 android:text="Provider"
                 android:textColor="?attr/textPrimary"
-                android:textSize="6pt" />
+                android:textSize="18pt" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/provider_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
@@ -81,7 +83,8 @@
                 android:id="@+id/provider_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
@@ -95,137 +98,70 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
-            android:background="@drawable/bg_cards"
+            android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="@drawable/ripple"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/medium"
-                android:text="Accuracy"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/light"
+                android:text="GPS"
                 android:textColor="?attr/textPrimary"
-                android:textSize="6pt" />
+                android:textSize="18pt" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_accuracy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="22pt"
+                android:textSize="8pt"
                 app:corners="20"
                 app:use_gradient="true" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/bg_cards"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/ripple"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/medium"
-                android:text="Altitude"
-                android:textColor="?attr/textPrimary"
-                android:textSize="6pt" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_altitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="22pt"
+                android:textSize="8pt"
                 app:corners="20"
                 app:use_gradient="true" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/bg_cards"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/ripple"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/medium"
-                android:text="Bearing"
-                android:textColor="?attr/textPrimary"
-                android:textSize="6pt" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_bearing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="22pt"
+                android:textSize="8pt"
                 app:corners="20"
                 app:use_gradient="true" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/bg_cards"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="@drawable/ripple"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/medium"
-                android:text="Speed"
-                android:textColor="?attr/textPrimary"
-                android:textSize="6pt" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_speed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="22pt"
+                android:textSize="8pt"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -235,27 +171,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
-            android:background="@drawable/bg_cards"
+            android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="@drawable/ripple"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:fontFamily="@font/medium"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/light"
                 android:text="Coordinates"
                 android:textColor="?attr/textPrimary"
-                android:textSize="6pt" />
+                android:textSize="18pt" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
@@ -267,7 +203,8 @@
                 android:id="@+id/longitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
@@ -281,28 +218,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
-            android:background="@drawable/bg_cards"
+            android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="@drawable/ripple"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/medium"
-                android:text="Current Address"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/light"
+                android:text="Address"
                 android:textColor="?attr/textPrimary"
-                android:textSize="6pt" />
+                android:textSize="18pt" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:textColor="?attr/textPrimary"
                 android:textSize="10pt"

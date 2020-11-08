@@ -13,4 +13,6 @@
     <dimen name="compass_needle">250dp</dimen>
     <dimen name="options_text_margin_start">20dp</dimen>
     <dimen name="options_icon_size">25dp</dimen>
+    <dimen name="clock_item_margin_horizontal">0dp</dimen>
+    <dimen name="clock_item_margin_vertical">5dp</dimen>
 </resources>

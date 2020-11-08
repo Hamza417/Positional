@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import app.simple.positional.R
 
+@Suppress("deprecation")
 fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Context) {
     class GetData : AsyncTask<Void, Void, Drawable>() {
         override fun doInBackground(vararg params: Void?): Drawable? {
@@ -44,6 +45,30 @@ fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Contex
                 override fun onAnimationRepeat(animation: Animation?) {}
             })
             imageView.startAnimation(animOut)
+        }
+    }
+
+    val getData = GetData()
+
+    if (getData.status == AsyncTask.Status.RUNNING) {
+        if (getData.cancel(true)) {
+            getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+        }
+    } else {
+        getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    }
+}
+
+@Suppress("deprecation")
+fun loadImageResourcesWithoutAnimation(resourceValue: Int, imageView: ImageView, context: Context) {
+    class GetData : AsyncTask<Void, Void, Drawable>() {
+        override fun doInBackground(vararg params: Void?): Drawable? {
+            return if (resourceValue != 0) context.resources?.let { ResourcesCompat.getDrawable(it, resourceValue, null) }!! else null
+        }
+
+        override fun onPostExecute(result: Drawable?) {
+            super.onPostExecute(result)
+            imageView.setImageDrawable(result)
         }
     }
 

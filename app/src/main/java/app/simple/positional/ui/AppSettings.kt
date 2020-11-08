@@ -127,7 +127,7 @@ class AppSettings : Fragment() {
                 startActivity(goToMarket)
             } catch (e: ActivityNotFoundException) {
                 startActivity(Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://play.google.com/store/apps/details?id=app.simple.positional")))
+                        Uri.parse("https://play.google.com/store/apps/details?id=app.simple.positional")))
             }
         }
     }

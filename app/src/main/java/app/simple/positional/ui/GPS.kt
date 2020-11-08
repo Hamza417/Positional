@@ -1,9 +1,6 @@
 package app.simple.positional.ui
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.content.res.Configuration
 import android.location.Address
 import android.location.Geocoder
@@ -20,6 +17,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.dialogs.gps.GPSMenu
@@ -34,6 +32,7 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_gps.*
+import kotlinx.android.synthetic.main.gps_info_cards.*
 import java.io.IOException
 import java.lang.ref.WeakReference
 import java.util.*
@@ -122,11 +121,11 @@ class GPS : Fragment() {
                             location = intent.getParcelableExtra("location")!!
 
                             if (location != null) {
-                                altitude.text = buildSpannableString("${round(location.altitude, 2)} m", 1)
-                                speed.text = buildSpannableString("${round(location.speed.toDouble(), 2)} m/s", 3)
-                                bearing.text = "${location.bearing} °"
+                                altitude.text = fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location.altitude, 2)} m", 1)}")
+                                speed.text = fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location.speed.toDouble(), 2)} m", 1)}")
+                                bearing.text = fromHtml("<b>Bearing:</b> ${location.bearing}°")
 
-                                accuracy.text = buildSpannableString("${round(location.accuracy.toDouble(), 2)} m", 1)
+                                accuracy.text = fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location.accuracy.toDouble(), 2)} m", 1)}")
 
                                 // For screenshots
                                 // location.latitude = -28.425751
@@ -175,6 +174,45 @@ class GPS : Fragment() {
         gps_menu.setOnClickListener {
             val weakReference = WeakReference(GPSMenu(WeakReference(this@GPS)))
             weakReference.get()?.show(parentFragmentManager, "gps_menu")
+        }
+
+        gps_copy.setOnClickListener {
+            val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
+            if (gps_accuracy.text != "") {
+                val stringBuilder = StringBuilder()
+
+                stringBuilder.append("${provider_status.text}\n")
+                stringBuilder.append("${provider_source.text}\n")
+                stringBuilder.append("Accuracy: ${gps_accuracy.text}\n")
+                stringBuilder.append("Altitude: ${gps_altitude.text}\n")
+                stringBuilder.append("Speed: ${gps_speed.text}\n")
+                stringBuilder.append("${latitude.text}\n")
+                stringBuilder.append("${longitude.text}\n")
+                stringBuilder.append("Address: ${address.text}\n\n")
+
+                if (BuildConfig.FLAVOR == "lite") {
+                    stringBuilder.append("Information is copied using Positional\n")
+                    stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
+                }
+
+                val clip: ClipData = ClipData.newPlainText("GPS Data", stringBuilder)
+                clipboard.setPrimaryClip(clip)
+            }
+
+            if (clipboard.hasPrimaryClip()) {
+                gps_info_text.setTextAnimation(getString(R.string.info_copied), 300)
+
+                handler.postDelayed({
+                    gps_info_text.setTextAnimation("GPS Info", 300)
+                }, 3000)
+            } else {
+                gps_info_text.setTextAnimation(getString(R.string.info_error), 300)
+
+                handler.postDelayed({
+                    gps_info_text.setTextAnimation("GPS Info", 300)
+                }, 3000)
+            }
         }
     }
 

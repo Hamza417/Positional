@@ -61,4 +61,9 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
             compassSensorSpeed.get()?.show(parentFragmentManager, "null")
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        weakReference.clear()
+    }
 }

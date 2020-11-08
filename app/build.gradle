@@ -6,6 +6,14 @@ apply plugin: 'kotlin-android-extensions'
 def noKeyFound = '"NO_KEY_FOUND"'
 def googleMapsAPIKey = noKeyFound
 
+/*
+   If you have a Google Maps API Key, you can create sensitive_data.txt file in project's root directory
+   containing your API keys and this code will handle the changes.
+
+   The file should look like this in sensitive_data.txt without any quotes
+
+   googleMapsAPIKey YourKey
+ */
 def sensitiveDataFile = file('../sensitive_data.txt')
 Properties sensitiveData = new Properties()
 
@@ -21,25 +29,26 @@ if (sensitiveDataFile.canRead()) {
 }
 
 // In this section a reviewer can insert directly his own
-// sensitive data by replacing the strings beginning with REVIEWERS_
+// sensitive data by replacing the string "YOUR_API_KEY_GOES_HERE"
 // Just double click on the string and paste you own data
 if (googleMapsAPIKey == noKeyFound) {
-    googleMapsAPIKey = '"REVIEWERS_THEMOVIEDB_API_KEY_GOES_HERE"'
+    googleMapsAPIKey = '"YOUR_API_KEY_GOES_HERE"'
 }
 // End of reading the sensitive data
 
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "app.simple.positional"
         minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 14
-        versionName "v2.5-stable"
+        targetSdkVersion 30
+        versionCode 15
+        versionName "v2.6-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
         // add a Resource String for the same key-value pair
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
     }
@@ -89,7 +98,7 @@ dependencies {
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

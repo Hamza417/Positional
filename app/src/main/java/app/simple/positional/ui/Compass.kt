@@ -288,7 +288,14 @@ class Compass : Fragment(), SensorEventListener {
         if (successfullyCalculatedRotationMatrix) {
             SensorManager.getOrientation(this.rotation, orientation)
 
-            rotationAngle = adjustAzimuthForDisplayRotation(-(((((orientation[0] + twoPI) % twoPI * degreesPerRadian).toFloat())) + 360) % 360, requireActivity().windowManager)
+            try {
+                rotationAngle = adjustAzimuthForDisplayRotation(
+                        -(((((orientation[0] + twoPI) % twoPI * degreesPerRadian).toFloat())) + 360) % 360,
+                        requireActivity().windowManager
+                )
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
+            }
 
             /**
              * Still testing this, currently it partially works
@@ -310,8 +317,6 @@ class Compass : Fragment(), SensorEventListener {
                 180f
             }
 
-            println(accelerometerReadings[2])
-
             when (rotateWhich) {
                 1 -> needle.rotation = rotationAngle
                 2 -> dial.rotation = rotationAngle
@@ -321,35 +326,9 @@ class Compass : Fragment(), SensorEventListener {
                 }
             }
 
-            val azimuth = (rotationAngle * -1).toInt() //- ((dial.rotation + 360) % 360).toInt()
+            val azimuth = (rotationAngle * -1) //- ((dial.rotation + 360) % 360).toInt()
 
-            var direction = "NW"
-            if (azimuth >= 350 || azimuth <= 10) {
-                direction = "N"
-            }
-            if (azimuth in 281..349) {
-                direction = "NW"
-            }
-            if (azimuth in 261..280) {
-                direction = "W"
-            }
-            if (azimuth in 191..260) {
-                direction = "SW"
-            }
-            if (azimuth in 171..190) {
-                direction = "S"
-            }
-            if (azimuth in 101..170) {
-                direction = "SE"
-            }
-            if (azimuth in 81..100) {
-                direction = "E"
-            }
-            if (azimuth in 11..80) {
-                direction = "NE"
-            }
-
-            degrees.text = "$azimuth° $direction"
+            degrees.text = "${azimuth.toInt()}° ${getDirectionFromAzimuth(azimuth = azimuth.toDouble())}"
         }
     }
 

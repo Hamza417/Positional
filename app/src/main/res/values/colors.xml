@@ -11,7 +11,7 @@
     <color name="textPrimary">#212121</color>
     <color name="dividerColor">#BDBDBD</color>
     <color name="toolbarBackground">#FFFFFF</color>
-    <color name="rippleColor">#CDCDCD</color>
+    <color name="rippleColor">#B2EFEFEF</color>
     <color name="shadowColor">#4A4A4A</color>
 
     <!-- Bottom Bar Color -->

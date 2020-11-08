@@ -5,7 +5,7 @@
     android:height="16.00008dp"
     android:viewportWidth="1000"
     android:viewportHeight="666.67"
-    tools:ignore="VectorRaster,vectorPath">
+    tools:ignore="vectorPath">
     <group>
         <clip-path android:pathData="m720.09,203.68c0,62.89 50.98,113.87 113.86,113.87 62.89,-0 113.87,-50.98 113.87,-113.87 0,-62.89 -50.98,-113.86 -113.87,-113.86 -62.89,-0 -113.86,50.98 -113.86,113.86" />
         <group>
