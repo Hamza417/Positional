@@ -22,7 +22,7 @@
 ## Stats
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Changelogs](https://badgen.net/badge/Changelogs/v2.6-stable/green?list)](https://github.com/Hamza417/Positional/releases/tag/2.6-stable)
+[![Changelogs](https://badgen.net/badge/Changelogs/v2.6-stable/green?list)](https://github.com/Hamza417/Positional/releases/tag/v2.6-stable)
 ![Status](https://badgen.net/badge/Status/stable/orange?icon)
 <br/>
 
