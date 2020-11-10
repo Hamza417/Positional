@@ -22,24 +22,36 @@
 ## Stats
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Changelogs](https://badgen.net/badge/Changelogs/v2.6-stable/green?list)](https://github.com/Hamza417/Positional/releases/tag/v2.6-stable)
+[![Changelogs](https://badgen.net/badge/Changelogs/v2.7-stable/green?list)](https://github.com/Hamza417/Positional/releases/tag/v2.7-stable)
 ![Status](https://badgen.net/badge/Status/stable/orange?icon)
 <br/>
 
-## Screenshots (not updated)
+## Screenshots
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_06.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_07.png" width="20%">
 
 
 <br/>
 
-## Features (not updated)
-  * Easy to use<br/>
-  * Smooth, with fluid animations<br/>
-  * Minimal UI<br/>
-  * Parallax effect<br/>
-  * Customisable with various options to choose from<br/>
-  * Flexible, options for different elements can be chosen separately or can be disabled entirely<br/>
-  * Torch
+## Features
+  * Easy to use</br>
+  * Smooth, with fluid animations</br>
+  * Minimal UI</br>
+  * Customizable with various options to choose from</br>
+  * Magnetic Compass</br>
+  * Compass Sensor Speed</br>
+  * Minimal Map (with and without labels)</br>
+  * GPS information</br>
+  * Speedometer</br>
+  * Altitude</br>
+  * Clock</br>
+  * Clock motion types</br>
+  * Local Timezone</br>
+  * UTC Timezone</br>
+  * Sun Position, Time, Twilight etc</br>
+  * Moon Position, Time, Phases, Angles</br>
+  * Moon Illumination</br>
+  * Dark Mode</br>
+  * Completely Ad-Free</br>
 
 <br/>
 
