@@ -10,7 +10,7 @@ import androidx.core.content.res.ResourcesCompat
 import app.simple.positional.R
 
 @Suppress("deprecation")
-fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Context) {
+fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Context, delay: Int) {
     class GetData : AsyncTask<Void, Void, Drawable>() {
         override fun doInBackground(vararg params: Void?): Drawable? {
             return if (resourceValue != 0) context.resources?.let { ResourcesCompat.getDrawable(it, resourceValue, null) }!! else null
@@ -20,6 +20,10 @@ fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Contex
             super.onPostExecute(result)
             val animOut: Animation = AnimationUtils.loadAnimation(context, R.anim.image_out)
             val animIn: Animation = AnimationUtils.loadAnimation(context, R.anim.image_in)
+
+            animIn.startOffset = delay.toLong()
+            animOut.startOffset = delay.toLong()
+
             animOut.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {}
 

@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
 import app.simple.positional.views.CustomBottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_compass_menu.*
 import java.lang.ref.WeakReference
-
 
 class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialog() {
 
@@ -27,38 +28,25 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toggle_parallax.isChecked = CompassPreference().getParallax(requireContext())
-
-        compass_dial_theme.setOnClickListener {
-            val compassDial = WeakReference(CompassDial(weakReference))
-            compassDial.get()?.show(parentFragmentManager, "null")
+        if (BuildConfig.FLAVOR != "lite") {
+            toggle_flower.isChecked = CompassPreference().isFlowerBloom(requireContext())
+        } else {
+            compass_appearance_text_view.text = "${compass_appearance_text_view.text} (requires full version)"
         }
 
-        compass_needle_theme.setOnClickListener {
-            val compassNeedle = WeakReference(CompassNeedle(weakReference))
-            compassNeedle.get()?.show(parentFragmentManager, "null")
-        }
-
-        compass_rotate.setOnClickListener {
-            val compassRotate = WeakReference(CompassRotate(weakReference))
-            compassRotate.get()?.show(parentFragmentManager, "null")
-        }
-
-        toggle_parallax.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                weakReference.get()?.toggleParallax()
+        toggle_flower.setOnCheckedChangeListener { _, isChecked ->
+            if (BuildConfig.FLAVOR != "lite") {
+                weakReference.get()?.setFlower(isChecked)
+                CompassPreference().setFlowerBloom(isChecked, requireContext())
             } else {
-                weakReference.get()?.toggleParallax()
+                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+                toggle_flower.isChecked = false
             }
         }
 
-        calibrate_parallax.setOnClickListener {
-            weakReference.get()?.calibrate()
-        }
-
-        compass_sensor_speed.setOnClickListener {
-            val compassSensorSpeed = WeakReference(CompassSensorSpeed(weakReference))
-            compassSensorSpeed.get()?.show(parentFragmentManager, "null")
+        compass_speed.setOnClickListener {
+            val compassSpeed = WeakReference(CompassSpeed(weakReference))
+            compassSpeed.get()?.show(parentFragmentManager, "null")
         }
     }
 

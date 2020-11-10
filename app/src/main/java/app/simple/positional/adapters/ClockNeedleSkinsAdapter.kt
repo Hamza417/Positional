@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import app.simple.positional.R
-import app.simple.positional.constants.clockFaceSkins
 import app.simple.positional.constants.clockNeedleSkins
-import app.simple.positional.preference.ClockPreferences
 import kotlinx.android.synthetic.main.adapter_clock_needle.view.*
 
 class ClockNeedleAdapter(private val context: Context) : PagerAdapter() {
@@ -30,7 +28,7 @@ class ClockNeedleAdapter(private val context: Context) : PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val imageLayout: View = layoutInflater.inflate(R.layout.adapter_clock_needle, container, false)
 
-        imageLayout.adapter_needle_background.setImageResource(clockFaceSkins[ClockPreferences().getClockFaceTheme(context)])
+        imageLayout.adapter_needle_background.setImageResource(R.drawable.clock_face)
         imageLayout.adapter_needle_hour.setImageResource(clockNeedleSkins[position][0])
         imageLayout.adapter_needle_minute.setImageResource(clockNeedleSkins[position][1])
         imageLayout.adapter_needle_second.setImageResource(clockNeedleSkins[position][2])

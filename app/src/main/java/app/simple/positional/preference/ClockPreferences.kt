@@ -1,7 +1,6 @@
 package app.simple.positional.preference
 
 import android.content.Context
-import app.simple.positional.R
 import app.simple.positional.constants.*
 
 class ClockPreferences {
@@ -21,12 +20,6 @@ class ClockPreferences {
         return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockNeedle, 1)
     }
 
-    fun getSkins(context: Context): IntArray {
-        return intArrayOf(
-                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockNeedle, R.drawable.clock_face_numbers),
-                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(clockFace, R.drawable.compass_dial_03))
-    }
-
     fun setLastFace(dial: Int, context: Context) {
         context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(lastClockFace, dial).apply()
     }
@@ -40,7 +33,7 @@ class ClockPreferences {
     }
 
     fun getMovementType(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(clockNeedleMovementType, false)
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(clockNeedleMovementType, true)
     }
 
     // Dial Opacity

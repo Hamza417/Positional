@@ -19,6 +19,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="cardBackground">#fafafa</item>
+        <item name="clockDialColor">@color/clockDialColor</item>
 
         <item name="indicator">@color/indicator</item>
         <item name="iconRegular">@color/iconRegular</item>

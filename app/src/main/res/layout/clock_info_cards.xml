@@ -3,7 +3,7 @@
     android:id="@+id/clock_panel_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_view"
+    android:background="?attr/toolbarBackground"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:elevation="5dp"

@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
@@ -12,19 +13,60 @@
         android:clipChildren="false"
         android:clipToPadding="false">
 
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_arrow_drop_up"
+            app:tint="?attr/iconColor" />
+
         <app.simple.positional.parallax.ParallaxView
             android:id="@+id/dial"
             android:layout_width="@dimen/compass_dial"
             android:layout_height="@dimen/compass_dial"
-            android:tint="?attr/iconColor" />
+            android:src="@drawable/compass_dial" />
+
+        <ImageView
+            android:id="@+id/flower_one"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/compass_dial"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:padding="60dp" />
+
+        <ImageView
+            android:id="@+id/flower_two"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/compass_dial"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:padding="60dp" />
+
+        <ImageView
+            android:id="@+id/flower_three"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/compass_dial"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:padding="60dp" />
+
+        <ImageView
+            android:id="@+id/flower_four"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/compass_dial"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:padding="60dp" />
 
     </FrameLayout>
 
-    <app.simple.positional.parallax.ParallaxView
-        android:id="@+id/compass_needle"
+    <TextView
+        android:id="@+id/degrees"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/compass_needle"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter" />
+        android:fontFamily="@font/degrees"
+        android:textColor="#ffffff"
+        android:textSize="20pt" />
 </FrameLayout>

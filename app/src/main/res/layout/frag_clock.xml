@@ -1,82 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <app.simple.positional.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/clock_main_layout"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/clock_appbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:background="@drawable/bg_toolbar"
+        android:elevation="@dimen/top_bar_elevation"
+        app:contentInsetEnd="10dp"
+        app:contentInsetStart="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:fontFamily="@font/medium"
+            android:text="Clock"
+            android:textColor="?attr/textPrimary"
+            android:textSize="14pt" />
+
+        <ImageButton
+            android:id="@+id/clock_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical|end"
+            android:background="@drawable/ripple"
+            android:src="@drawable/ic_more_horiz"
+            android:tint="?attr/iconColor" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <LinearLayout
+        android:id="@+id/clock_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/top_bar_height"
+        android:layout_marginBottom="@dimen/peek_height"
         android:orientation="vertical">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/clock_appbar"
-            style="@style/Widget.MaterialComponents.Toolbar.Surface"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_toolbar"
-            android:elevation="@dimen/top_bar_elevation"
-            app:contentInsetEnd="10dp"
-            app:contentInsetStart="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/medium"
-                android:text="Clock"
-                android:textColor="?attr/textPrimary"
-                android:textSize="14pt" />
-
-            <ImageButton
-                android:id="@+id/clock_menu"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical|end"
-                android:background="@drawable/ripple"
-                android:src="@drawable/ic_more_horiz"
-                android:tint="?attr/iconColor" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
-
         <FrameLayout
-            android:id="@+id/clock_layout"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            app:layout_collapseMode="parallax"
-            app:layout_collapseParallaxMultiplier="0.8"
-            app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_clock_shadow" />
+
+            <ImageView
+                android:id="@+id/sweep_seconds"
+                android:layout_width="@dimen/clock_image_dimensions"
+                android:layout_height="@dimen/clock_image_dimensions"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:rotation="-90"
+                android:src="@drawable/ic_untitled_1" />
 
             <ImageView
                 android:id="@+id/clock_face"
                 android:layout_width="@dimen/clock_image_dimensions"
                 android:layout_height="@dimen/clock_image_dimensions"
                 android:layout_gravity="center"
-                app:tint="?attr/iconColor" />
+                android:src="@drawable/clock_face" />
+
+            <ImageView
+                android:id="@+id/day_night_indicator"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="75dp" />
 
             <ImageView
                 android:id="@+id/hour"
-                android:layout_width="@dimen/clock_image_dimensions"
-                android:layout_height="@dimen/clock_image_dimensions"
-                android:layout_gravity="center"
-                app:tint="?attr/iconColor" />
+                android:layout_width="@dimen/clock_needle_dimensions"
+                android:layout_height="@dimen/clock_needle_dimensions"
+                android:layout_gravity="center" />
 
             <ImageView
                 android:id="@+id/minutes"
-                android:layout_width="@dimen/clock_image_dimensions"
-                android:layout_height="@dimen/clock_image_dimensions"
-                android:layout_gravity="center"
-                app:tint="?attr/iconColor" />
+                android:layout_width="@dimen/clock_needle_dimensions"
+                android:layout_height="@dimen/clock_needle_dimensions"
+                android:layout_gravity="center" />
 
             <ImageView
                 android:id="@+id/seconds"
-                android:layout_width="@dimen/clock_image_dimensions"
-                android:layout_height="@dimen/clock_image_dimensions"
+                android:layout_width="@dimen/clock_needle_dimensions"
+                android:layout_height="@dimen/clock_needle_dimensions"
                 android:layout_gravity="center" />
 
         </FrameLayout>
+
+        <TextView
+            android:id="@+id/digital_time_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="25dp"
+            android:fontFamily="@font/light"
+            android:textColor="?attr/textPrimary"
+            android:textSize="16pt" />
+
     </LinearLayout>
+
+    <View
+        android:id="@+id/clock_dim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#7E000000" />
 
     <include layout="@layout/frag_clock_bottom_sheet" />
 

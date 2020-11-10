@@ -4,7 +4,9 @@
     android:viewportWidth="60"
     android:viewportHeight="1000">
     <path
-        android:fillColor="#FF000000"
+        android:fillColor="@color/clock_needle_fill_color"
         android:fillType="evenOdd"
-        android:pathData="M31,151l8,349H22Z" />
+        android:pathData="M31,151l8,349H22Z"
+        android:strokeWidth="2"
+        android:strokeColor="@color/clock_needle_stroke_color" />
 </vector>

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.ui.Clock
 import app.simple.positional.views.CustomBottomSheetDialog
@@ -23,14 +25,14 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        clock_face_theme.setOnClickListener {
-            val clockFaceTheme = WeakReference(ClockFace(clock = clock))
-            clockFaceTheme.get()?.show(parentFragmentManager, "null")
+        if (BuildConfig.FLAVOR == "lite") {
+            clock_appearance_text.text = "${clock_appearance_text.text} (requires full version)"
         }
 
         clock_needle_theme.setOnClickListener {
-            val clockNeedleSkins = WeakReference(ClockNeedle(clock))
-            clockNeedleSkins.get()?.show(parentFragmentManager, "null")
+            if (BuildConfig.FLAVOR == "lite") {
+                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+            }
         }
 
         clock_motion_type.setOnClickListener {

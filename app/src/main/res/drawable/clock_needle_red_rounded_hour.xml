@@ -1,4 +1,11 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="0.672dp"
-    android:height="24dp" android:viewportWidth="28" android:viewportHeight="1000">
-    <path android:fillColor="#fff" android:pathData="M14,220L14,220A9,9 0,0 1,23 229L23,491A9,9 0,0 1,14 500L14,500A9,9 0,0 1,5 491L5,229A9,9 0,0 1,14 220z"/>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="0.672dp"
+    android:height="24dp"
+    android:viewportWidth="28"
+    android:viewportHeight="1000">
+    <path
+        android:fillColor="@color/clock_needle_fill_color"
+        android:pathData="M14,220L14,220A9,9 0,0 1,23 229L23,491A9,9 0,0 1,14 500L14,500A9,9 0,0 1,5 491L5,229A9,9 0,0 1,14 220z"
+        android:strokeWidth="2"
+        android:strokeColor="@color/clock_needle_stroke_color" />
 </vector>

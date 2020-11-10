@@ -62,7 +62,7 @@ class GPS : Fragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
-    private lateinit var location: Location
+    private var location: Location? = null
 
     private var isMapMoved: Boolean = false
 
@@ -121,25 +121,25 @@ class GPS : Fragment() {
                             location = intent.getParcelableExtra("location")!!
 
                             if (location != null) {
-                                altitude.text = fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location.altitude, 2)} m", 1)}")
-                                speed.text = fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location.speed.toDouble(), 2)} m", 1)}")
-                                bearing.text = fromHtml("<b>Bearing:</b> ${location.bearing}°")
+                                altitude.text = fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude, 2)} m", 1)}")
+                                speed.text = fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble(), 2)} m", 1)}")
+                                bearing.text = fromHtml("<b>Bearing:</b> ${location!!.bearing}°")
 
-                                accuracy.text = fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location.accuracy.toDouble(), 2)} m", 1)}")
+                                accuracy.text = fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location!!.accuracy.toDouble(), 2)} m", 1)}")
 
                                 // For screenshots
-                                // location.latitude = -28.425751
-                                // location.longitude = 134.239923
+                                //location!!.latitude = 48.8584
+                                //location!!.longitude = 2.2945
 
-                                getAddress(location.latitude, location.longitude)
+                                getAddress(location!!.latitude, location!!.longitude)
 
-                                moveMapCamera()
+                                moveMapCamera(LatLng(location!!.latitude, location!!.longitude))
 
-                                providerSource.text = fromHtml("<b>Source:</b> ${location.provider.toUpperCase(Locale.getDefault())}")
+                                providerSource.text = fromHtml("<b>Source:</b> ${location!!.provider.toUpperCase(Locale.getDefault())}")
                                 providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
 
-                                latitude.text = fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location.latitude, 3)}")
-                                longitude.text = fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(location.longitude, 3)}°")
+                                latitude.text = fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location!!.latitude, 3)}")
+                                longitude.text = fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(location!!.longitude, 3)}°")
                             }
                         }
                         "provider" -> {
@@ -174,6 +174,12 @@ class GPS : Fragment() {
         gps_menu.setOnClickListener {
             val weakReference = WeakReference(GPSMenu(WeakReference(this@GPS)))
             weakReference.get()?.show(parentFragmentManager, "gps_menu")
+        }
+
+        gps_location_reset.setOnClickListener {
+            isMapMoved = false
+            moveMapCamera(LatLng(48.8584, 2.2945))
+            handler.removeCallbacks(mapMoved)
         }
 
         gps_copy.setOnClickListener {
@@ -237,6 +243,7 @@ class GPS : Fragment() {
          * user has installed Google Play services and returned to the app.
          */
 
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(LatLng(48.8584, 2.2945)).tilt(90f).zoom(18f).build()))
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
         googleMap.uiSettings.isMyLocationButtonEnabled = false
@@ -252,11 +259,6 @@ class GPS : Fragment() {
         this.googleMap.setOnCameraIdleListener {
             handler.postDelayed(mapMoved, 10000)
         }
-    }
-
-    private fun changeMapScale(value: Float) {
-        //if (streetMap.animation.hasEnded()) return
-        //streetMap.animate().scaleX(value).scaleY(value).setDuration(3000).setInterpolator(DecelerateInterpolator()).start()
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {
@@ -324,16 +326,14 @@ class GPS : Fragment() {
         }
     }
 
-    private fun moveMapCamera() {
+    private fun moveMapCamera(latLng: LatLng) {
         if (isMapMoved) return
 
-        val latLong = LatLng(location.latitude, location.longitude)
-
-        val cameraPosition = CameraPosition.builder().target(latLong).tilt(googleMap.cameraPosition.tilt).zoom(18f).bearing(location.bearing).build()
+        val cameraPosition = CameraPosition.builder().target(latLng).tilt(googleMap.cameraPosition.tilt).zoom(18f).bearing(location!!.bearing).build()
 
         clearMap()
 
-        val markerOptions = MarkerOptions().position(latLong).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext())))
+        val markerOptions = MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext())))
         googleMap.addMarker(markerOptions)
 
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)

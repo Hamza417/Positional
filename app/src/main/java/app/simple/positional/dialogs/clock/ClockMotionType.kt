@@ -40,5 +40,6 @@ class ClockMotionType(private val clock: WeakReference<Clock>) : CustomBottomShe
     private fun setButton(value: Boolean) {
         motion_smooth.isChecked = value
         motion_tick.isChecked = !value
+        ClockPreferences().setMovementType(value, requireContext())
     }
 }

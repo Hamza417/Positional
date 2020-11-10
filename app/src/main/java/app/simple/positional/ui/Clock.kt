@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -20,7 +19,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.constants.clockFaceSkins
 import app.simple.positional.constants.clockNeedleSkins
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.preference.ClockPreferences
@@ -50,8 +48,6 @@ class Clock : Fragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
-    private lateinit var clockLayout: FrameLayout
-
     private lateinit var calendar: Calendar
 
     private lateinit var hour: ImageView
@@ -74,6 +70,7 @@ class Clock : Fragment() {
     var delay: Long = 1000
 
     private var moonImageCountViolation = 1
+    private var dayNightIndicatorImageCountViolation = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
@@ -86,7 +83,6 @@ class Clock : Fragment() {
         minutes = view.findViewById(R.id.minutes)
         seconds = view.findViewById(R.id.seconds)
         dial = view.findViewById(R.id.clock_face)
-        dial.alpha = ClockPreferences().getFaceOpacity(requireContext())
         sunAzimuth = view.findViewById(R.id.sun_azimuth)
         sunDistance = view.findViewById(R.id.sun_distance)
         sunAltitude = view.findViewById(R.id.sun_altitude)
@@ -102,7 +98,6 @@ class Clock : Fragment() {
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             toolbar = view.findViewById(R.id.clock_appbar)
-            clockLayout = view.findViewById(R.id.clock_layout)
 
             scrollView.alpha = 0f
 
@@ -164,13 +159,13 @@ class Clock : Fragment() {
                                 // Position
                                 val sunPosition: SunPosition = SunPosition.compute().timezone(TimeZone.getDefault()).on(Instant.now()).at(location.latitude, location.longitude).execute()
 
-                                sunAzimuth.text = fromHtml("<b>Azimuth:</b> ${round(sunPosition.azimuth, 2)}° ${getDirectionFromAzimuth(sunPosition.azimuth)}")
+                                sunAzimuth.text = fromHtml("<b>Azimuth:</b> ${round(sunPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(sunPosition.azimuth)}")
                                 sunAltitude.text = fromHtml("<b>Altitude:</b> ${round(sunPosition.trueAltitude, 2)}°")
                                 sunDistance.text = fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance)} km")
 
                                 val moonPosition: MoonPosition = MoonPosition.compute().at(location.latitude, location.longitude).execute()
 
-                                moon_azimuth.text = fromHtml("<b>Azimuth:</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionFromAzimuth(moonPosition.azimuth)}")
+                                moon_azimuth.text = fromHtml("<b>Azimuth:</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(moonPosition.azimuth)}")
                                 moon_altitude.text = fromHtml("<b>Altitude:</b> ${round(moonPosition.altitude, 2)}°")
                                 moon_distance.text = fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance)} km")
                                 moon_parallactic_angle.text = fromHtml("<b>Parallactic Angle:</b> ${round(moonPosition.parallacticAngle, 2)}°")
@@ -307,6 +302,19 @@ class Clock : Fragment() {
                 getSecondsInDegrees(calendar)
             }
 
+            sweep_seconds.rotation = seconds.rotation - 90
+
+            if (dayNightIndicatorImageCountViolation != 0) {
+                if (calendar.get(Calendar.HOUR_OF_DAY) >= 6 || calendar.get(Calendar.HOUR_OF_DAY) <= 18) {
+                    day_night_indicator.setImageResource(R.drawable.ic_day)
+                } else {
+                    day_night_indicator.setImageResource(R.drawable.ic_night)
+                }
+
+                // Setting this to zero will prevent the image from applying again every second
+                dayNightIndicatorImageCountViolation = 0
+            }
+
             handler.postDelayed(this, delay)
         }
     }
@@ -341,20 +349,13 @@ class Clock : Fragment() {
 
     private fun setSkins() {
         setNeedle(ClockPreferences().getClockNeedleTheme(requireContext()))
-        setDial(ClockPreferences().getClockFaceTheme(requireContext()))
+        //setDial(ClockPreferences().getClockFaceTheme(requireContext()))
     }
 
     fun setNeedle(value: Int) {
-        loadImageResources(clockNeedleSkins[value][0], hour, requireContext())
-        loadImageResources(clockNeedleSkins[value][1], minutes, requireContext())
-        loadImageResources(clockNeedleSkins[value][2], seconds, requireContext())
-    }
-
-    fun setDial(value: Int) {
-        if (dial.tag != clockFaceSkins[value]) {
-            loadImageResources(clockFaceSkins[value], dial, requireContext())
-            dial.tag = clockFaceSkins[value]
-        }
+        loadImageResources(clockNeedleSkins[value][0], hour, requireContext(), 0)
+        loadImageResources(clockNeedleSkins[value][1], minutes, requireContext(), 100)
+        loadImageResources(clockNeedleSkins[value][2], seconds, requireContext(), 200)
     }
 
     fun setFaceAlpha(value: Float) {
@@ -390,13 +391,14 @@ class Clock : Fragment() {
                     val timeZone = TimeZone.getTimeZone(TimeZone.getDefault().id).getDisplayName(false, TimeZone.SHORT)
                     val digitalTime24 = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time).toString()
                     val digitalTime12 = SimpleDateFormat("hh:mm:ss a", Locale.getDefault()).format(calendar.time).toString()
+                    val digitalTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(calendar.time).toString()
                     val digitalDaytime = SimpleDateFormat("a", Locale.getDefault()).format(calendar.time).toString().toUpperCase(Locale.getDefault())
                     val utcTimeZone = "GMT ${SimpleDateFormat("XXX", Locale.getDefault()).format(calendar.time)}"
                     val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
                     val utcTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date!!)
                     val utcDate = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)
 
-                    arrayOf(timeZone, digitalTime24, digitalTime12, digitalDaytime, utcTimeZone, utcTime, utcDate)
+                    arrayOf(timeZone, digitalTime24, digitalTime12, digitalTime, digitalDaytime, utcTimeZone, utcTime, utcDate)
                 } catch (e: ParseException) {
                     return null //arrayOf("error!!", "error!!", "error!!", "error!!", "error!!", "error!!", "error!!")
                 }
@@ -408,6 +410,7 @@ class Clock : Fragment() {
                 local_timezone.text = fromHtml("<b>Time Zone: </b> ${result[0]}")
                 digital_time_24_hour.text = fromHtml("<b>Time 24Hr:</b> ${result[1]}")
                 digital_time_12_hour.text = fromHtml("<b>Time 12Hr:</b> ${result[2]}")
+                digital_time_main.text = buildSpannableString(result[3].toUpperCase(Locale.getDefault()), 2)
                 time_zone_utc.text = fromHtml("<b>Time Zone:</b> ${result[4]}")
                 time_utc.text = fromHtml("<b>Time:</b> ${result[5]}")
                 date_utc.text = fromHtml("<b>Date:</b> ${result[6]}")

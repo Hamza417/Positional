@@ -28,6 +28,7 @@
                 android:foreground="@drawable/ripple" />
 
             <TextView
+                android:id="@+id/clock_appearance_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
@@ -35,35 +36,6 @@
                 android:text="Appearance"
                 android:textColor="?attr/textSecondary"
                 android:textSize="6pt" />
-
-            <LinearLayout
-                android:id="@+id/clock_face_theme"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ripple"
-                android:clickable="true"
-                android:focusable="true"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <ImageView
-                    android:layout_width="@dimen/options_icon_size"
-                    android:layout_height="@dimen/options_icon_size"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_compass"
-                    app:tint="?attr/iconRegular" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/options_text_margin_start"
-                    android:fontFamily="@font/regular"
-                    android:text="Face"
-                    android:textColor="?attr/textPrimary"
-                    android:textSize="@dimen/settings_primary_text_size" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/clock_needle_theme"
@@ -83,6 +55,7 @@
                     app:tint="?attr/iconRegular" />
 
                 <TextView
+                    android:id="@+id/clock_needle_theme_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

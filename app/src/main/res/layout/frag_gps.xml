@@ -41,11 +41,21 @@
             android:textSize="14pt" />
 
         <ImageButton
+            android:id="@+id/gps_location_reset"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical|end"
+            android:background="@drawable/ripple_btn"
+            android:src="@drawable/ic_calibration"
+            android:tint="?attr/iconColor" />
+
+        <ImageButton
             android:id="@+id/gps_menu"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical|end"
-            android:background="@drawable/ripple"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/ripple_btn"
             android:src="@drawable/ic_more_horiz"
             android:tint="?attr/iconColor" />
 

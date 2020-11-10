@@ -48,6 +48,7 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -67,13 +68,28 @@
             app:tint="?attr/iconColor" />
 
         <TextView
-            android:id="@+id/degrees"
+            android:id="@+id/direction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:fontFamily="sans-serif-light"
+            android:fontFamily="@font/light"
             android:textColor="?attr/textPrimary"
-            android:textSize="14pt" />
+            android:textSize="16pt" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/compass_accuracy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/regular"
+        android:textAlignment="center"
+        android:textColor="?attr/textSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/include2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.82" />
 </androidx.constraintlayout.widget.ConstraintLayout>

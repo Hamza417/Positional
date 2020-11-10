@@ -13,12 +13,16 @@
     <color name="toolbarBackground">#FFFFFF</color>
     <color name="rippleColor">#B2EFEFEF</color>
     <color name="shadowColor">#4A4A4A</color>
+    <color name="clockDialColor">#000000</color>
 
     <!-- Bottom Bar Color -->
-    <color name="iconRegular">#808080</color>
+    <color name="iconRegular">#C1C1C1</color>
     <color name="indicator">#F3F3F3</color>
 
     <color name="switcher_on_color">#2196F3</color>
     <color name="switcher_off_color">#E3E3E3</color>
     <color name="switcher_icon_color">@android:color/white</color>
+
+    <color name="clock_needle_stroke_color">#FFFFFF</color>
+    <color name="clock_needle_fill_color">#202020</color>
 </resources>

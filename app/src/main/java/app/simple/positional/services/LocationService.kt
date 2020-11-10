@@ -10,12 +10,13 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 
 class LocationService : Service(), LocationListener {
-    private lateinit var locationManager: LocationManager
-    private var handler = Handler()
+    private var locationManager: LocationManager? = null
+    private var handler = Handler(Looper.getMainLooper())
     private var delay: Long = 1000
 
     override fun onBind(intent: Intent): IBinder? {
@@ -29,7 +30,9 @@ class LocationService : Service(), LocationListener {
     }
 
     override fun onTaskRemoved(rootIntent: Intent) {
-        locationManager.removeUpdates(this)
+        if (locationManager != null) {
+            locationManager?.removeUpdates(this)
+        }
         handler.removeCallbacks(locationUpdater)
         super.onTaskRemoved(rootIntent)
     }
@@ -95,14 +98,14 @@ class LocationService : Service(), LocationListener {
         var location: Location? = null
 
         when {
-            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> {
-                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER) -> {
+                location = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
             }
-            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> {
-                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> {
+                location = locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
             }
-            locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER) -> {
-                location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
+            locationManager!!.isProviderEnabled(LocationManager.PASSIVE_PROVIDER) -> {
+                location = locationManager?.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
             }
         }
 
@@ -118,14 +121,14 @@ class LocationService : Service(), LocationListener {
         if (checkPermission()) return
 
         when {
-            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, delay, 0f, this)
+            locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER) -> {
+                locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, delay, 0f, this)
             }
-            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, delay, 0f, this)
+            locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> {
+                locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, delay, 0f, this)
             }
             else -> {
-                locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, delay, 0f, this)
+                locationManager?.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, delay, 0f, this)
             }
         }
     }
@@ -136,7 +139,7 @@ class LocationService : Service(), LocationListener {
     }
 
     private fun removeCallbacks() {
-        locationManager.removeUpdates(this)
+        locationManager?.removeUpdates(this)
         handler.removeCallbacks(locationUpdater)
     }
 }

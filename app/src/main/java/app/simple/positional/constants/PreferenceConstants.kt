@@ -11,12 +11,8 @@ const val clockFaceAlpha = "clock_face_alpha"
 
 // Compass
 const val parallax = "parallax"
-const val delay = "delay"
-const val needle = "needle"
-const val dial = "dial"
-const val dialAlpha = "dial_alpha"
-const val whichObjectToRotate = "rotate_needle_or_dial"
-const val parallaxSensor = "parallax_sensor"
+const val flowerBloom = "flower"
+const val compassSpeed = "compass_speed"
 
 // GPS
 const val GPSLabelMode = "gps_label_mode"

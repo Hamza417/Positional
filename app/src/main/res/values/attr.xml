@@ -15,6 +15,8 @@
     <attr name="shadowColor" format="color" />
     <attr name="cardBackground" format="color" />
 
+    <attr name="clockDialColor" format="color" />
+
     <attr name="alphaIcons" format="float" />
 
     <declare-styleable name="ParallaxImageView">
@@ -49,6 +51,17 @@
         <attr name="switcher_on_color" format="color" />
         <attr name="switcher_off_color" format="color" />
         <attr name="switcher_icon_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="BounceBackViewPager">
+        <!--
+        determines the maximum amount of translation along the z-axis during the overscroll.
+        Default is 150.
+        -->
+        <attr name="overscroll_translation" format="dimension" />
+
+        <!-- Duration of animation when user releases the over scroll. Default is 400 ms. -->
+        <attr name="overscroll_animation_duration" format="integer" />
     </declare-styleable>
 
 </resources>

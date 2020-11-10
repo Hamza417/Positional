@@ -7,7 +7,6 @@
     app:behavior_peekHeight="150dp"
     app:layout_behavior="app.simple.positional.behaviors.CustomBottomSheetBehavior">
 
-
     <ImageView
         android:id="@+id/expand_up_clock_sheet"
         android:layout_width="@dimen/expand_up_image_size"

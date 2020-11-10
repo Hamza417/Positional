@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_view"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="Smooth"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <RadioButton
+            android:id="@+id/speed_smooth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="?attr/iconColor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="Normal"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <RadioButton
+            android:id="@+id/speed_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="?attr/iconColor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="Fast"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <RadioButton
+            android:id="@+id/speed_fast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="?attr/iconColor" />
+
+    </LinearLayout>
+
+</LinearLayout>

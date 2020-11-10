@@ -12,6 +12,7 @@
     <color name="dividerColor">#BDBDBD</color>
     <color name="toolbarBackground">#303030</color>
     <color name="rippleColor">#5A5A5A</color>
+    <color name="clockDialColor">#ECECEC</color>
 
     <!-- Bottom Bar Color -->
     <color name="iconRegular">#808080</color>
@@ -21,4 +22,7 @@
     <color name="switcher_on_color">#2196F3</color>
     <color name="switcher_off_color">#E3E3E3</color>
     <color name="switcher_icon_color">@android:color/white</color>
+
+    <color name="clock_needle_stroke_color">#292929</color>
+    <color name="clock_needle_fill_color">#f0f0f0</color>
 </resources>
