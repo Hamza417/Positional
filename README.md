@@ -7,7 +7,7 @@
 <br/>
 
 ## Download
-<a href="https://play.google.com/store/apps/details?id=app.simple.positional.lite"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_free_icon.png" width="40%"> </a> <a href="https://play.google.com/store/apps/details?id=app.simple.positional"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_full_icon.png" width="40%"> </a>
+<a href="https://play.google.com/store/apps/details?id=app.simple.positional.lite"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_free_icon.png" width="20%"> </a> <a href="https://play.google.com/store/apps/details?id=app.simple.positional"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_full_icon.png" width="20%"> </a>
 <br/>
   
 <br/>
@@ -66,8 +66,6 @@ Please make sure to update tests as appropriate.
 <br/>
 
 ## Libraries Used
-* [Material Popup Menu](https://github.com/zawadz88/MaterialPopupMenu) by **Piotr Zawadzki**
-* [Material View Pager Dots Indicator](https://github.com/tommybuonomo/dotsindicator) by **Tommy Buonomo**
 * [commons-suncalc](https://github.com/shred/commons-suncalc) by **Richard Körber**
 * [Loader View for Android](https://github.com/elye/loaderviewlibrary) by **Elye**
   
