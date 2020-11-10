@@ -19,12 +19,15 @@
   
   On top of all the core functionality Positional is a highly polished app and provides another layer of flexibility to customize the app as per liking includin skins for Clock and Compass faces, colors, and many other features that should have been there.
 
+</br>
+
 ## Stats
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
 [![Changelogs](https://badgen.net/badge/Changelogs/v2.7-stable/green?list)](https://github.com/Hamza417/Positional/releases/tag/v2.7-stable)
 ![Status](https://badgen.net/badge/Status/stable/orange?icon)
-<br/>
+
+</br>
 
 ## Screenshots
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_06.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_07.png" width="20%">
