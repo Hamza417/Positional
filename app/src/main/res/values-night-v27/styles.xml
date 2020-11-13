@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LightTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Theme -->
+        <item name="mainBackground">@color/mainBackground</item>
+        <item name="iconColor">@color/iconColor</item>
+        <item name="textSecondary">@color/textSecondary</item>
+        <item name="textPrimary">@color/textPrimary</item>
+        <item name="dividerColor">@color/dividerColor</item>
+        <item name="popupBackground">@color/popupBackground</item>
+        <item name="toolbarBackground">@color/toolbarBackground</item>
+        <item name="android:statusBarColor">@color/toolbarBackground</item>
+        <item name="android:navigationBarColor">@color/toolbarBackground</item>
+        <item name="rippleColor">@color/rippleColor</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="cardBackground">#515151</item>
+        <item name="clockDialColor">@color/clockDialColor</item>
+
+        <item name="indicator">@color/indicator</item>
+        <item name="iconRegular">@color/iconRegular</item>
+        <item name="shadowColor">@color/shadowColor</item>
+
+        <item name="alphaIcons">0.5</item>
+    </style>
+</resources>

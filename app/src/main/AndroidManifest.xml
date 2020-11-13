@@ -24,9 +24,9 @@
         android:configChanges="keyboardHidden|orientation|screenSize"
         android:fullBackupContent="true"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_01"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_01_round"
         android:theme="@style/LightTheme">
 
         <!--

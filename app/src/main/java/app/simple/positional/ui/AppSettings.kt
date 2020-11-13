@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.dialogs.app.Issue
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.theme.setTheme
 import com.github.zawadz88.materialpopupmenu.popupMenu
@@ -110,9 +111,8 @@ class AppSettings : Fragment() {
         }
 
         found_issues.setOnClickListener {
-            val uri: Uri = Uri.parse("https://github.com/Hamza417/Positional/issues/new")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(intent)
+            val issue = Issue().newInstance()
+            issue.show(parentFragmentManager, "null")
         }
 
         buy_full.setOnClickListener {

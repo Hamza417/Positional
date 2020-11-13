@@ -16,8 +16,8 @@
         <item name="toolbarBackground">@color/toolbarBackground</item>
         <item name="rippleColor">@color/rippleColor</item>
         <item name="android:statusBarColor">@color/toolbarBackground</item>
+        <item name="android:navigationBarColor">@color/toolbarBackground</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar">true</item>
         <item name="cardBackground">#fafafa</item>
         <item name="clockDialColor">@color/clockDialColor</item>
 
