@@ -392,13 +392,20 @@ class Clock : Fragment() {
                     val digitalTime24 = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time).toString()
                     val digitalTime12 = SimpleDateFormat("hh:mm:ss a", Locale.getDefault()).format(calendar.time).toString()
                     val digitalTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(calendar.time).toString()
-                    val digitalDaytime = SimpleDateFormat("a", Locale.getDefault()).format(calendar.time).toString().toUpperCase(Locale.getDefault())
                     val utcTimeZone = "GMT ${SimpleDateFormat("XXX", Locale.getDefault()).format(calendar.time)}"
                     val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
                     val utcTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date!!)
                     val utcDate = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)
 
-                    arrayOf(timeZone, digitalTime24, digitalTime12, digitalTime, digitalDaytime, utcTimeZone, utcTime, utcDate)
+                    arrayOf(
+                            timeZone,
+                            digitalTime24,
+                            digitalTime12,
+                            digitalTime,
+                            utcTimeZone,
+                            utcTime,
+                            utcDate
+                    )
                 } catch (e: ParseException) {
                     return null //arrayOf("error!!", "error!!", "error!!", "error!!", "error!!", "error!!", "error!!")
                 }

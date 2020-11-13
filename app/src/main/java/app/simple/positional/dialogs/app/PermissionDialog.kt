@@ -6,14 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import app.simple.positional.R
 import app.simple.positional.callbacks.PermissionCallbacks
-import app.simple.positional.views.CustomDialogFragment
+import app.simple.positional.views.CustomBottomSheetDialog
 import com.google.android.material.button.MaterialButton
 
-class PermissionDialog(private var permissionCallbacks: PermissionCallbacks) : CustomDialogFragment() {
+class PermissionDialog : CustomBottomSheetDialog() {
+
+    private var permissionCallbacks: PermissionCallbacks? = null
+
+    fun newInstance(): PermissionDialog {
+        return PermissionDialog()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+        try {
+            permissionCallbacks = requireActivity() as PermissionCallbacks
+        } catch (e: ClassCastException) {
+            permissionCallbacks = null
+        }
         retainInstance = true
     }
 
@@ -27,7 +38,11 @@ class PermissionDialog(private var permissionCallbacks: PermissionCallbacks) : C
         val close: MaterialButton = view.findViewById(R.id.close)
 
         grant.setOnClickListener {
-            permissionCallbacks.onGrantRequest()
+            if (permissionCallbacks != null) {
+                permissionCallbacks?.onGrantRequest()
+            } else {
+
+            }
             close()
         }
 

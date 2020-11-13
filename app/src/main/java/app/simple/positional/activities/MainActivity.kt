@@ -1,7 +1,6 @@
 package app.simple.positional.activities
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -47,8 +46,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
         window.setFormat(PixelFormat.RGBA_8888)
 
-        windowManager.defaultDisplay.refreshRate
-
         locationIntent = Intent(applicationContext, LocationService::class.java)
 
         //checkBattery()
@@ -75,7 +72,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     private fun checkRunTimePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                val permissionDialog = PermissionDialog(this)
+                val permissionDialog = PermissionDialog().newInstance()
                 permissionDialog.show(supportFragmentManager, "permission_info")
             } else {
                 runService()
@@ -90,8 +87,8 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
                 runService()
                 baseContext.startService(Intent(this, LocationService::class.java))
             } else {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale((applicationContext as Activity), Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    finish()
+                if (!ActivityCompat.shouldShowRequestPermissionRationale((this), Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    Toast.makeText(this, "Some features may not work without location permission", Toast.LENGTH_LONG).show()
                 }
             }
         }

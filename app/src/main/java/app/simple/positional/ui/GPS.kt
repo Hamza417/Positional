@@ -177,9 +177,11 @@ class GPS : Fragment() {
         }
 
         gps_location_reset.setOnClickListener {
-            isMapMoved = false
-            moveMapCamera(LatLng(48.8584, 2.2945))
-            handler.removeCallbacks(mapMoved)
+            if (location != null) {
+                isMapMoved = false
+                moveMapCamera(LatLng(location!!.latitude, location!!.longitude))
+                handler.removeCallbacks(mapMoved)
+            }
         }
 
         gps_copy.setOnClickListener {

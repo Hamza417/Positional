@@ -1,5 +1,6 @@
 package app.simple.positional.util
 
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -8,11 +9,19 @@ import java.util.*
  * this function will trim it to extract the Time out of it
  */
 fun formatZonedTimeDate(string: String): String {
-    val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault()).parse(string)
-    return SimpleDateFormat("H:mm:ss", Locale.getDefault()).format(date!!) // 9:00
+    return try {
+        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault()).parse(string)
+        SimpleDateFormat("H:mm:ss", Locale.getDefault()).format(date!!) // 9:00
+    } catch (e: ParseException) {
+        "N/A"
+    }
 }
 
 fun formatMoonDate(string: String): String {
-    val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault()).parse(string)
-    return SimpleDateFormat("dd MMM, yyyy, H:mm:ss", Locale.getDefault()).format(date!!) // 12 Dec 2020, 9:00
+    return try {
+        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault()).parse(string)
+        SimpleDateFormat("dd MMM, yyyy, H:mm:ss", Locale.getDefault()).format(date!!) // 12 Dec 2020, 9:00
+    } catch (e: ParseException) {
+        "N/A"
+    }
 }

@@ -32,6 +32,9 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
         clock_needle_theme.setOnClickListener {
             if (BuildConfig.FLAVOR == "lite") {
                 Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+            } else {
+                val clockNeedle = WeakReference(ClockNeedle(clock))
+                clockNeedle.get()?.show(parentFragmentManager, "null")
             }
         }
 

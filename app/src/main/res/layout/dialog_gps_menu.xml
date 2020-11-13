@@ -20,13 +20,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="60dp"
-                android:layout_height="5dp"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/bg_cards"
-                android:foreground="@drawable/ripple" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
