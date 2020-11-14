@@ -9,6 +9,7 @@ import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,10 +21,14 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.dialogs.app.PlayServiceIssue
 import app.simple.positional.dialogs.gps.GPSMenu
 import app.simple.positional.preference.GPSPreferences
+import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -37,7 +42,6 @@ import java.io.IOException
 import java.lang.ref.WeakReference
 import java.util.*
 
-// TODO - Add manual longitude adn latitude information checker
 class GPS : Fragment() {
 
     private lateinit var expandUp: ImageView
@@ -67,7 +71,7 @@ class GPS : Fragment() {
     private var isMapMoved: Boolean = false
 
     private lateinit var mapFragment: SupportMapFragment
-    private lateinit var googleMap: GoogleMap
+    private var googleMap: GoogleMap? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_gps, container, false)
@@ -82,7 +86,7 @@ class GPS : Fragment() {
         providerSource = view.findViewById(R.id.provider_source)
         providerStatus = view.findViewById(R.id.provider_status)
 
-        handler = Handler()
+        handler = Handler(Looper.getMainLooper())
 
         filter.addAction("location")
         filter.addAction("provider")
@@ -111,6 +115,8 @@ class GPS : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
+
+        checkGooglePlayServices()
 
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -236,15 +242,7 @@ class GPS : Fragment() {
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-
+        1
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(LatLng(48.8584, 2.2945)).tilt(90f).zoom(18f).build()))
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
@@ -253,16 +251,17 @@ class GPS : Fragment() {
 
         showLabel(GPSPreferences().isLabelOn(requireContext()))
 
-        this.googleMap.setOnCameraMoveListener {
+        this.googleMap?.setOnCameraMoveListener {
             isMapMoved = true
             handler.removeCallbacks(mapMoved)
         }
 
-        this.googleMap.setOnCameraIdleListener {
+        this.googleMap?.setOnCameraIdleListener {
             handler.postDelayed(mapMoved, 10000)
         }
     }
 
+    @Suppress("deprecation")
     private fun getAddress(latitude: Double, longitude: Double) {
         class GetAddress : AsyncTask<Void, Void, String>() {
             override fun doInBackground(vararg params: Void?): String? {
@@ -275,24 +274,16 @@ class GPS : Fragment() {
                     return "Internet connection not available"
                 }
 
-                try {
+                return try {
                     val addresses: List<Address>
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
 
                     addresses = geocoder.getFromLocation(latitude, longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
-                    val address: String = addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-
-                    val city: String = addresses[0].locality
-                    val state: String = addresses[0].adminArea
-                    val country: String = addresses[0].countryName
-                    val postalCode: String = addresses[0].postalCode
-                    val knownName: String = addresses[0].featureName // Only if available else return NULL
-
-                    return address //"$city, $state, $country, $postalCode, $knownName"
+                    addresses[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    return "${e.message}\n!Error Fetching Address"
+                    "${e.message}\n!Error Fetching Address"
                 }
             }
 
@@ -329,23 +320,26 @@ class GPS : Fragment() {
     }
 
     private fun moveMapCamera(latLng: LatLng) {
+        if (googleMap == null) return
         if (isMapMoved) return
 
-        val cameraPosition = CameraPosition.builder().target(latLng).tilt(googleMap.cameraPosition.tilt).zoom(18f).bearing(location!!.bearing).build()
+        val cameraPosition = googleMap?.cameraPosition?.tilt?.let { CameraPosition.builder().target(latLng).tilt(it).zoom(18f).bearing(location!!.bearing).build() }
 
         clearMap()
 
         val markerOptions = MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext())))
-        googleMap.addMarker(markerOptions)
+        googleMap?.addMarker(markerOptions)
 
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
+        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
     }
 
     private fun clearMap() {
-        googleMap.clear()
+        googleMap?.clear()
     }
 
     fun showLabel(value: Boolean) {
+        if (googleMap == null) return
+
         GPSPreferences().setLabelMode(requireContext(), value)
 
         var mapRawStyle = 0
@@ -372,6 +366,20 @@ class GPS : Fragment() {
 
         val mapStyleOptions: MapStyleOptions = MapStyleOptions.loadRawResourceStyle(requireContext(), mapRawStyle)
 
-        googleMap.setMapStyle(mapStyleOptions)
+        googleMap?.setMapStyle(mapStyleOptions)
+    }
+
+    // return value preserved, might be used later
+    private fun checkGooglePlayServices(): Boolean {
+        val availability = GoogleApiAvailability.getInstance()
+        val resultCode = availability.isGooglePlayServicesAvailable(requireContext())
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (MainPreferences().getShowPlayServiceDialog(requireContext())) {
+                val playServiceIssue = PlayServiceIssue().newInstance()
+                playServiceIssue.show(parentFragmentManager, "null")
+            }
+            return false
+        }
+        return true
     }
 }

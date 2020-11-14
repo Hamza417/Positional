@@ -61,7 +61,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/access_fine_location_info" />
+                            android:fontFamily="@font/light"
+                            android:text="@string/access_fine_location_info"
+                            android:textColor="?attr/textSecondary" />
 
                     </LinearLayout>
 
@@ -82,7 +84,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/coarse_perm_info" />
+                            android:fontFamily="@font/light"
+                            android:text="@string/coarse_perm_info"
+                            android:textColor="?attr/textSecondary" />
 
                     </LinearLayout>
 
@@ -103,7 +107,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/internet_perm_info" />
+                            android:fontFamily="@font/light"
+                            android:text="@string/internet_perm_info"
+                            android:textColor="?attr/textSecondary" />
 
                     </LinearLayout>
 
@@ -124,7 +130,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/wfi_perm_info" />
+                            android:fontFamily="@font/light"
+                            android:text="@string/wfi_perm_info"
+                            android:textColor="?attr/textSecondary" />
 
                     </LinearLayout>
 
@@ -145,7 +153,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/network_perm_info" />
+                            android:fontFamily="@font/light"
+                            android:text="@string/network_perm_info"
+                            android:textColor="?attr/textSecondary" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -159,11 +169,30 @@
             android:background="?attr/dividerColor" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/show_perm_dialog"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginHorizontal="10dp"
+                android:buttonTint="?attr/iconColor"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="Show Again"
+                android:textColor="?attr/textSecondary" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/close"

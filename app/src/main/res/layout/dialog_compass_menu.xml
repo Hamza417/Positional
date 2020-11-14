@@ -54,7 +54,7 @@
                     android:layout_marginStart="@dimen/options_text_margin_start"
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
-                    android:text="Pattern"
+                    android:text="Bloom"
                     android:textColor="?attr/textPrimary"
                     android:textSize="@dimen/settings_primary_text_size" />
 
@@ -64,6 +64,36 @@
                     android:layout_height="match_parent"
                     android:thumb="@drawable/switch_thumb"
                     app:track="@drawable/switch_track" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/compass_bloom_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/options_icon_size"
+                    android:layout_height="@dimen/options_icon_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_bloom_skin"
+                    app:tint="?attr/iconRegular" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/options_text_margin_start"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/regular"
+                    android:text="Bloom Skins"
+                    android:textColor="?attr/textPrimary"
+                    android:textSize="@dimen/settings_primary_text_size" />
 
             </LinearLayout>
 

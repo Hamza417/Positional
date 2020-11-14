@@ -10,7 +10,7 @@ import app.simple.positional.R
 import app.simple.positional.constants.clockNeedleSkins
 import kotlinx.android.synthetic.main.adapter_clock_needle.view.*
 
-class ClockNeedleAdapter(private val context: Context) : PagerAdapter() {
+class ClockNeedleSkinsAdapter(private val context: Context) : PagerAdapter() {
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {

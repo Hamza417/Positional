@@ -17,7 +17,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Found an issue?"
+            android:text="Uh Ohh !!"
             android:textColor="?attr/textPrimary"
             android:textSize="8pt" />
 
@@ -31,9 +31,9 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:fontFamily="@font/light"
-            android:textColor="?attr/textSecondary"
             android:padding="10dp"
-            android:text="@string/found_issue" />
+            android:text="@string/play_services_issue"
+            android:textColor="?attr/textSecondary" />
 
         <View
             android:layout_width="match_parent"
@@ -41,27 +41,38 @@
             android:background="?attr/dividerColor" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/email_me"
-                android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/play_services_issue_positive_reminder_checkbox"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginHorizontal="10dp"
+                android:buttonTint="?attr/iconColor"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ripple_btn"
-                android:text="Email Me"
-                android:textColor="?attr/textPrimary" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="Show Again"
+                android:textColor="?attr/textSecondary" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/issue_on_github"
+                android:id="@+id/play_services_issue_positive_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/ripple_btn"
-                android:text="Raise issue on github"
+                android:text="Ok"
                 android:textColor="?attr/textPrimary" />
 
         </LinearLayout>

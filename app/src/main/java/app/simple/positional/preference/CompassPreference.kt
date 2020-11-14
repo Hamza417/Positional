@@ -1,10 +1,7 @@
 package app.simple.positional.preference
 
 import android.content.Context
-import app.simple.positional.constants.compassSpeed
-import app.simple.positional.constants.flowerBloom
-import app.simple.positional.constants.parallax
-import app.simple.positional.constants.preferences
+import app.simple.positional.constants.*
 
 class CompassPreference {
     // Parallax
@@ -25,7 +22,16 @@ class CompassPreference {
         return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(flowerBloom, false)
     }
 
-    // Flower Bloom
+    // Flower Bloom Theme
+    fun setFlowerBloom(value: Int, context: Context) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(flowerBloomTheme, value).apply()
+    }
+
+    fun getFlowerBloomTheme(context: Context): Int {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(flowerBloomTheme, 0)
+    }
+
+    // Compass Sensor Speed
     fun setCompassSpeed(value: Float, context: Context) {
         context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putFloat(compassSpeed, value).apply()
     }

@@ -21,6 +21,7 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.dialogs.app.PermissionDialog
 import app.simple.positional.preference.FragmentPreferences
+import app.simple.positional.preference.MainPreferences
 import app.simple.positional.services.LocationService
 import app.simple.positional.ui.AppSettings
 import app.simple.positional.ui.Clock
@@ -72,8 +73,12 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     private fun checkRunTimePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                val permissionDialog = PermissionDialog().newInstance()
-                permissionDialog.show(supportFragmentManager, "permission_info")
+                if (MainPreferences().getShowPermissionDialog(this)) {
+                    val permissionDialog = PermissionDialog().newInstance()
+                    permissionDialog.show(supportFragmentManager, "permission_info")
+                } else {
+                    Toast.makeText(this, "Location Permission Denied!", Toast.LENGTH_LONG).show()
+                }
             } else {
                 runService()
             }

@@ -5,6 +5,8 @@ import androidx.annotation.IntRange
 import androidx.annotation.NonNull
 import app.simple.positional.constants.currentTheme
 import app.simple.positional.constants.preferences
+import app.simple.positional.constants.showAgain
+import app.simple.positional.constants.showPlayServicesAgain
 
 class MainPreferences {
     /**
@@ -20,5 +22,21 @@ class MainPreferences {
 
     fun getCurrentTheme(context: Context): Int {
         return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(currentTheme, 1)
+    }
+
+    fun setShowPermissionDialog(context: Context, value: Boolean) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(showAgain, value).apply()
+    }
+
+    fun getShowPermissionDialog(context: Context): Boolean {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(showAgain, true)
+    }
+
+    fun setShowPlayServiceDialog(context: Context, value: Boolean) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(showPlayServicesAgain, value).apply()
+    }
+
+    fun getShowPlayServiceDialog(context: Context): Boolean {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(showPlayServicesAgain, true)
     }
 }

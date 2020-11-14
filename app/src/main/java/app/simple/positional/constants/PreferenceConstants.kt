@@ -12,6 +12,7 @@ const val clockFaceAlpha = "clock_face_alpha"
 // Compass
 const val parallax = "parallax"
 const val flowerBloom = "flower"
+const val flowerBloomTheme = "flower_theme"
 const val compassSpeed = "compass_speed"
 
 // GPS
@@ -22,3 +23,5 @@ const val currentPage = "current_page"
 
 // Main Prefs
 const val currentTheme = "current_theme"
+const val showAgain = "show_permission_dialog_again"
+const val showPlayServicesAgain = "show_play_services_dialog_again"

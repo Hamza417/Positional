@@ -22,6 +22,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
+import app.simple.positional.constants.compassBloomRes
+import app.simple.positional.constants.compassBloomTextColor
 import app.simple.positional.dialogs.compass.CompassMenu
 import app.simple.positional.parallax.ParallaxView
 import app.simple.positional.preference.CompassPreference
@@ -73,6 +75,7 @@ class Compass : Fragment(), SensorEventListener {
     private lateinit var sensorMagneticField: Sensor
 
     private var isFLowerBlooming = false
+    private var flowerBloom = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +98,7 @@ class Compass : Fragment(), SensorEventListener {
         sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
 
         isFLowerBlooming = CompassPreference().isFlowerBloom(requireContext())
+        flowerBloom = CompassPreference().getFlowerBloomTheme(requireContext())
         setSpeed(CompassPreference().getCompassSpeed(requireContext()))
 
         return v
@@ -214,7 +218,7 @@ class Compass : Fragment(), SensorEventListener {
              *
              * the problem with the above algorithm is it only measures the direction correctly when device is facing up
              * This method approximately calculates if the device is facing up or down and that is by
-             * comparing the z value to the x and y values. If the z value dominates or > 0 than the device is facing up
+             * comparing the z value to the x and y values. If the z value dominates or > 0 then device is facing up
              *
              * If device is facing down, then value calculated gives a negative result
              *
@@ -234,14 +238,30 @@ class Compass : Fragment(), SensorEventListener {
             val azimuth = (rotationAngle * -1) //- ((dial.rotation + 360) % 360).toInt()
 
             if (isFLowerBlooming) {
-                flower_one.rotation = rotationAngle * 2
-                flower_two.rotation = azimuth * -3 + 45
-                flower_three.rotation = rotationAngle * 1 + 90
-                flower_four.rotation = azimuth * -4 + 135
+                when (flowerBloom) {
+                    0 -> {
+                        flower_one.rotation = rotationAngle * 2
+                        flower_two.rotation = azimuth * -3 + 45
+                        flower_three.rotation = rotationAngle * 1 + 90
+                        flower_four.rotation = azimuth * -4 + 135
+                    }
+                    1 -> {
+                        flower_one.rotation = rotationAngle * 2
+                        flower_two.rotation = azimuth * -3 + 22.5f
+                        flower_three.rotation = rotationAngle * 1 + 45f
+                        flower_four.rotation = azimuth * -4 + 67.5f
+                    }
+                    2 -> {
+                        flower_one.rotation = rotationAngle * 2
+                        flower_two.rotation = azimuth * -3 + 45
+                        flower_three.rotation = rotationAngle * 1 + 90
+                        flower_four.rotation = azimuth * -4 + 135
+                    }
+                }
             }
 
             degrees.text = "${azimuth.toInt()}°"
-            direction.text = getDirectionNameFromAzimuth(azimuth = azimuth.toDouble()).toUpperCase(Locale.getDefault())
+            direction.text = getDirectionCodeFromAzimuth(azimuth = azimuth.toDouble()).toUpperCase(Locale.getDefault())
         }
     }
 
@@ -277,18 +297,25 @@ class Compass : Fragment(), SensorEventListener {
 
     fun setFlower(value: Boolean) {
         isFLowerBlooming = value
+        val x = compassBloomRes[CompassPreference().getFlowerBloomTheme(requireContext())]
         if (value) {
-            loadImageResources(R.drawable.compass_flower_01, flower_one, requireContext(), 0)
-            loadImageResources(R.drawable.compass_flower_01, flower_two, requireContext(), 50)
-            loadImageResources(R.drawable.compass_flower_01, flower_three, requireContext(), 100)
-            loadImageResources(R.drawable.compass_flower_01, flower_four, requireContext(), 150)
-            animateColorChange(degrees, Color.parseColor("#f88806"), Color.parseColor("#ffffff"))
+            loadImageResources(x, flower_one, requireContext(), 0)
+            loadImageResources(x, flower_two, requireContext(), 50)
+            loadImageResources(x, flower_three, requireContext(), 100)
+            loadImageResources(x, flower_four, requireContext(), 150)
+            animateColorChange(degrees, compassBloomTextColor[CompassPreference().getFlowerBloomTheme(requireContext())], Color.parseColor("#ffffff"))
         } else {
             loadImageResources(0, flower_one, requireContext(), 150)
             loadImageResources(0, flower_two, requireContext(), 100)
             loadImageResources(0, flower_three, requireContext(), 50)
             loadImageResources(0, flower_four, requireContext(), 0)
-            animateColorChange(degrees, Color.parseColor("#ffffff"), Color.parseColor("#f88806"))
+            animateColorChange(degrees, degrees.currentTextColor, compassBloomTextColor[CompassPreference().getFlowerBloomTheme(requireContext())])
         }
+    }
+
+    fun setFlowerTheme(value: Int) {
+        CompassPreference().setFlowerBloom(value, requireContext())
+        setFlower(value = CompassPreference().isFlowerBloom(requireContext()))
+        flowerBloom = value
     }
 }

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import app.simple.positional.R
-import app.simple.positional.adapters.ClockNeedleAdapter
+import app.simple.positional.adapters.ClockNeedleSkinsAdapter
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.ui.Clock
 import app.simple.positional.views.CustomBottomSheetDialog
@@ -28,7 +28,7 @@ class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        needle_skin.adapter = ClockNeedleAdapter(requireContext())
+        needle_skin.adapter = ClockNeedleSkinsAdapter(requireContext())
         indicator.attachViewPager(needle_skin)
 
         needle_skin.currentItem = ClockPreferences().getClockNeedleTheme(requireContext())

@@ -19,15 +19,8 @@
         android:toXDelta="0"
         android:toYDelta="0" />
 
-    <rotate
-        android:fromDegrees="270"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:toDegrees="0" />
-
     <alpha
         android:fromAlpha="0"
-        android:interpolator="@android:interpolator/linear"
         android:toAlpha="1" />
 
 </set>

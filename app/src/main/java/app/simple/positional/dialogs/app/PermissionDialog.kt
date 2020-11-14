@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import app.simple.positional.R
 import app.simple.positional.callbacks.PermissionCallbacks
+import app.simple.positional.preference.MainPreferences
 import app.simple.positional.views.CustomBottomSheetDialog
 import com.google.android.material.button.MaterialButton
+import kotlinx.android.synthetic.main.dialog_permission_info.*
 
 class PermissionDialog : CustomBottomSheetDialog() {
 
@@ -20,10 +22,10 @@ class PermissionDialog : CustomBottomSheetDialog() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        try {
-            permissionCallbacks = requireActivity() as PermissionCallbacks
+        permissionCallbacks = try {
+            requireActivity() as PermissionCallbacks
         } catch (e: ClassCastException) {
-            permissionCallbacks = null
+            null
         }
         retainInstance = true
     }
@@ -40,14 +42,16 @@ class PermissionDialog : CustomBottomSheetDialog() {
         grant.setOnClickListener {
             if (permissionCallbacks != null) {
                 permissionCallbacks?.onGrantRequest()
-            } else {
-
             }
             close()
         }
 
         close.setOnClickListener {
             close()
+        }
+
+        show_perm_dialog.setOnCheckedChangeListener { _, isChecked ->
+            MainPreferences().setShowPermissionDialog(requireContext(), isChecked)
         }
     }
 

@@ -44,6 +44,16 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
             }
         }
 
+        compass_bloom_theme.setOnClickListener {
+            if (BuildConfig.FLAVOR != "lite") {
+                val compassBloom = CompassBloom(weakReference)
+                compassBloom.show(parentFragmentManager, "null")
+            } else {
+                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+                toggle_flower.isChecked = false
+            }
+        }
+
         compass_speed.setOnClickListener {
             val compassSpeed = WeakReference(CompassSpeed(weakReference))
             compassSpeed.get()?.show(parentFragmentManager, "null")
