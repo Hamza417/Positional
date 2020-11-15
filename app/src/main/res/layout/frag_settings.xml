@@ -172,6 +172,33 @@
                         android:textColor="?attr/textSecondary" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/change_logs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/medium"
+                        android:text="Change Logs"
+                        android:textColor="?attr/textPrimary"
+                        android:textSize="@dimen/settings_primary_text_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="See the detailed change log for this and all the previous releases till date or information about any upcoming updates in future"
+                        android:textColor="?attr/textSecondary" />
+
+                </LinearLayout>
             </LinearLayout>
 
             <TextView

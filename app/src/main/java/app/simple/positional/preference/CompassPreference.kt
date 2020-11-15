@@ -5,12 +5,12 @@ import app.simple.positional.constants.*
 
 class CompassPreference {
     // Parallax
-    fun setParallax(value: Boolean, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(parallax, value).apply()
+    fun setDirectionCode(value: Boolean, context: Context) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(direction_code, value).apply()
     }
 
-    fun getParallax(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(parallax, false)
+    fun getDirectionCode(context: Context): Boolean {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(direction_code, true)
     }
 
     // Flower Bloom

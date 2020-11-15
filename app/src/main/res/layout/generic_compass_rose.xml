@@ -21,7 +21,7 @@
             android:src="@drawable/ic_arrow_drop_up"
             app:tint="?attr/iconColor" />
 
-        <app.simple.positional.parallax.ParallaxView
+        <ImageView
             android:id="@+id/dial"
             android:layout_width="@dimen/compass_dial"
             android:layout_height="@dimen/compass_dial"

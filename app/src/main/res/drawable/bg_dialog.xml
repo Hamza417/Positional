@@ -3,8 +3,8 @@
 
     <solid android:color="?attr/toolbarBackground" />
     <corners
-        android:bottomLeftRadius="@dimen/all_corner_radius"
-        android:bottomRightRadius="@dimen/all_corner_radius"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp"
         android:topLeftRadius="@dimen/all_corner_radius"
         android:topRightRadius="@dimen/all_corner_radius" />
 

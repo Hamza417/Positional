@@ -10,7 +10,7 @@ const val clockNeedleMovementType = "clock_needle_movement_type"
 const val clockFaceAlpha = "clock_face_alpha"
 
 // Compass
-const val parallax = "parallax"
+const val direction_code = "direction_code"
 const val flowerBloom = "flower"
 const val flowerBloomTheme = "flower_theme"
 const val compassSpeed = "compass_speed"

@@ -16,7 +16,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:fontFamily="sans-serif-medium"
+            android:fontFamily="@font/medium"
             android:text="Uh Ohh !!"
             android:textColor="?attr/textPrimary"
             android:textSize="8pt" />

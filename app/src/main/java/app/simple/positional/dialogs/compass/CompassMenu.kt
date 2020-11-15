@@ -54,6 +54,11 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
             }
         }
 
+        toggle_code.setOnCheckedChangeListener { _, isChecked ->
+            weakReference.get()?.showDirectionCode = isChecked
+            CompassPreference().setDirectionCode(isChecked, requireContext())
+        }
+
         compass_speed.setOnClickListener {
             val compassSpeed = WeakReference(CompassSpeed(weakReference))
             compassSpeed.get()?.show(parentFragmentManager, "null")

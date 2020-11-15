@@ -24,8 +24,8 @@ import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.constants.compassBloomRes
 import app.simple.positional.constants.compassBloomTextColor
+import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
-import app.simple.positional.parallax.ParallaxView
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.util.*
 import kotlinx.android.synthetic.main.frag_compass.*
@@ -41,7 +41,6 @@ class Compass : Fragment(), SensorEventListener {
 
     private var handler = Handler(Looper.getMainLooper())
 
-    private lateinit var dial: ParallaxView
     private lateinit var degrees: TextView
     private lateinit var dialContainer: FrameLayout
 
@@ -51,6 +50,9 @@ class Compass : Fragment(), SensorEventListener {
     private val orientation = FloatArray(3)
     private val rotation = FloatArray(9)
     private val inclination = FloatArray(9)
+
+    var haveAccelerometerSensor = false
+    var haveMagnetometerSensor = false
 
     /**
      *  [readingsAlpha]
@@ -76,6 +78,7 @@ class Compass : Fragment(), SensorEventListener {
 
     private var isFLowerBlooming = false
     private var flowerBloom = 0
+    var showDirectionCode = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,16 +89,24 @@ class Compass : Fragment(), SensorEventListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.frag_compass, container, false)
 
-        dial = v.findViewById(R.id.dial)
-        dial.init()
+        showDirectionCode = CompassPreference().getDirectionCode(requireContext())
 
         degrees = v.findViewById(R.id.degrees)
 
         dialContainer = v.findViewById(R.id.dial_container)
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null && sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
+            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            haveMagnetometerSensor = true
+            haveAccelerometerSensor = true
+        } else {
+            haveAccelerometerSensor = false
+            haveMagnetometerSensor = false
+            compass_accuracy.text = "Your device does not have required sensors to make the compass work"
+        }
 
         isFLowerBlooming = CompassPreference().isFlowerBloom(requireContext())
         flowerBloom = CompassPreference().getFlowerBloomTheme(requireContext())
@@ -131,14 +142,18 @@ class Compass : Fragment(), SensorEventListener {
 
     private fun register() {
         if (context == null) return
-        sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
-        sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+        if (haveAccelerometerSensor && haveMagnetometerSensor) {
+            sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
+            sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+        }
     }
 
     private fun unregister() {
         if (context == null) return
-        sensorManager.unregisterListener(this, sensorAccelerometer)
-        sensorManager.unregisterListener(this, sensorMagneticField)
+        if (haveAccelerometerSensor && haveMagnetometerSensor) {
+            sensorManager.unregisterListener(this, sensorAccelerometer)
+            sensorManager.unregisterListener(this, sensorMagneticField)
+        }
     }
 
     private fun animate(imageView: ImageView, value: Float) {
@@ -261,19 +276,26 @@ class Compass : Fragment(), SensorEventListener {
             }
 
             degrees.text = "${azimuth.toInt()}°"
-            direction.text = getDirectionCodeFromAzimuth(azimuth = azimuth.toDouble()).toUpperCase(Locale.getDefault())
+            direction.text = if (showDirectionCode) {
+                getDirectionCodeFromAzimuth(azimuth = azimuth.toDouble()).toUpperCase(Locale.getDefault())
+            } else {
+                getDirectionNameFromAzimuth(azimuth = azimuth.toDouble()).toUpperCase(Locale.getDefault())
+            }
         }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        println(accuracy)
         if (sensor == sensorAccelerometer || sensor == sensorMagneticField) {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
                     compass_accuracy.text = fromHtml("Accuracy: <b>Unreliable, immediate calibration required</b>")
+                    val weakReference = WeakReference(CompassCalibration().newInstance())
+                    weakReference.get()?.show(parentFragmentManager, "null")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
                     compass_accuracy.text = fromHtml("Accuracy: <b>Low, calibration required</b>")
+                    val weakReference = WeakReference(CompassCalibration().newInstance())
+                    weakReference.get()?.show(parentFragmentManager, "null")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
                     compass_accuracy.text = fromHtml("Accuracy: <b>Medium</b>")

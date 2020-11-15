@@ -27,6 +27,10 @@
         <item name="iconRegular">@color/iconRegular</item>
         <item name="shadowColor">@color/shadowColor</item>
 
+        <item name="switcher_on_color">@color/switcher_on_color</item>
+        <item name="switcher_off_color">@color/switcher_off_color</item>
+        <item name="switcher_icon_color">@color/switcher_icon_color</item>
+
         <item name="alphaIcons">0.5</item>
     </style>
 </resources>

@@ -5,11 +5,13 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.constants.vectorBackground
@@ -28,15 +30,16 @@ class LauncherActivity : AppCompatActivity() {
     private var randomNightValue: Int = 0
     private var colorOne: Int = 0x000000
     private var colorTwo: Int = 0x000000
-    private val handler = Handler()
-    private var x = 20f
-    private var y = 20f
-    private var width: Int = 0
-    private var height: Int = 0
+    private val handler = Handler(Looper.getMainLooper())
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+
         setContentView(R.layout.activity_launcher)
 
         if (BuildConfig.FLAVOR == "full") {

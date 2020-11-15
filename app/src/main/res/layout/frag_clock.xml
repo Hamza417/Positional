@@ -64,7 +64,7 @@
                 android:layout_gravity="center"
                 android:padding="5dp"
                 android:rotation="-90"
-                android:src="@drawable/ic_untitled_1" />
+                android:src="@drawable/clock_trail" />
 
             <ImageView
                 android:id="@+id/clock_face"

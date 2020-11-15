@@ -24,15 +24,11 @@
         <item name="iconRegular">@color/iconRegular</item>
         <item name="shadowColor">@color/shadowColor</item>
 
-        <item name="alphaIcons">0.5</item>
-    </style>
+        <item name="switcher_on_color">@color/switcher_on_color</item>
+        <item name="switcher_off_color">@color/switcher_off_color</item>
+        <item name="switcher_icon_color">@color/switcher_icon_color</item>
 
-    <style name="popupMenu" parent="@style/Widget.MPM.Menu">
-        <item name="android:popupBackground">@drawable/bg_menu</item>
-        <item name="mpm_activeIconColor">?attr/iconColor</item>
-        <item name="mpm_primaryTextColor">?attr/textPrimary</item>
-        <item name="mpm_secondaryTextColor">?attr/textSecondary</item>
-        <item name="mpm_separatorColor">?attr/dividerColor</item>
+        <item name="alphaIcons">0.5</item>
     </style>
 
     <style name="DialogAnimation">

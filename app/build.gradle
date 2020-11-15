@@ -46,7 +46,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 21
-        versionName "v3.2-stable"
+        versionName "v3.3-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         // add a Resource String for the same key-value pair
@@ -111,8 +111,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.1.0'
 
     implementation 'com.google.android.material:material:1.2.1'
-
-    implementation 'com.github.zawadz88.materialpopupmenu:material-popup-menu:4.0.1'
 
     implementation 'com.elyeproj.libraries:loaderviewlibrary:2.0.0'
 
