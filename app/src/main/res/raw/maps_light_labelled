@@ -51,6 +51,27 @@
   },
   {
     "featureType": "poi",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "saturation": -25
+      },
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
     "elementType": "labels.text.fill",
     "stylers": [
       {
@@ -99,7 +120,7 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#dadada"
+        "color": "#f8dabc"
       }
     ]
   },
@@ -144,7 +165,7 @@
     "elementType": "geometry",
     "stylers": [
       {
-        "color": "#c9c9c9"
+        "color": "#88adec"
       }
     ]
   },

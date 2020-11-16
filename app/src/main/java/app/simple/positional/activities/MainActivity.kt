@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
@@ -27,6 +26,8 @@ import app.simple.positional.ui.AppSettings
 import app.simple.positional.ui.Clock
 import app.simple.positional.ui.Compass
 import app.simple.positional.ui.GPS
+import app.simple.positional.util.displayLocationSettingsRequest
+import app.simple.positional.util.getLocationStatus
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide {
@@ -48,8 +49,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         window.setFormat(PixelFormat.RGBA_8888)
 
         locationIntent = Intent(applicationContext, LocationService::class.java)
-
-        //checkBattery()
 
         runApp()
         checkRunTimePermission()
@@ -80,6 +79,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
                     Toast.makeText(this, "Location Permission Denied!", Toast.LENGTH_LONG).show()
                 }
             } else {
+                showPrompt()
                 runService()
             }
         }
@@ -89,6 +89,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == DEFAULT_PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                showPrompt()
                 runService()
                 baseContext.startService(Intent(this, LocationService::class.java))
             } else {
@@ -106,11 +107,23 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     }
 
     private fun runService() {
-        applicationContext.startService(locationIntent)
+        try {
+            applicationContext.startService(locationIntent)
+        } catch (e: IllegalStateException) {
+        }
     }
 
     private fun stopService() {
-        applicationContext.stopService(locationIntent)
+        try {
+            applicationContext.stopService(locationIntent)
+        } catch (e: IllegalStateException) {
+        }
+    }
+
+    private fun showPrompt() {
+        if (!getLocationStatus(this)) {
+            displayLocationSettingsRequest(this, this)
+        }
     }
 
     companion object {
@@ -207,16 +220,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
             4 -> {
 
             }
-        }
-    }
-
-    // Setting different tint for every icon for bottom bar was a bad move, it looked tacky
-    private fun iconTintActive(value: Int): Int {
-        return when (value) {
-            0 -> Color.parseColor("#DC1B1B")
-            1 -> Color.parseColor("#1B9EDC")
-            2 -> Color.parseColor("#FF8C55B3")
-            else -> Color.parseColor("#f6f6f6")
         }
     }
 

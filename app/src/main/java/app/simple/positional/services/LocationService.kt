@@ -23,18 +23,24 @@ class LocationService : Service(), LocationListener {
         return null
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onCreate() {
+        super.onCreate()
         locationManager = baseContext.getSystemService(LOCATION_SERVICE) as LocationManager
+    }
+
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         requestLastKnownLocation()
-        return START_STICKY
+        return START_REDELIVER_INTENT
     }
 
     override fun onTaskRemoved(rootIntent: Intent) {
+        super.onTaskRemoved(rootIntent)
+
         if (locationManager != null) {
             locationManager?.removeUpdates(this)
         }
         handler.removeCallbacks(locationUpdater)
-        super.onTaskRemoved(rootIntent)
+        stopSelf()
     }
 
     override fun onDestroy() {
@@ -63,7 +69,7 @@ class LocationService : Service(), LocationListener {
     }
 
     override fun onProviderEnabled(provider: String) {
-        fireLocationSearch()
+        requestLastKnownLocation()
         Intent().also { intent ->
             intent.action = "provider"
             intent.putExtra("location_provider", provider)
@@ -87,7 +93,6 @@ class LocationService : Service(), LocationListener {
         }
     }
 
-    // Spare me, I find this function quite satisfying :P
     fun fireLocationSearch() {
         requestLocation()
     }

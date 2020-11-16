@@ -5,7 +5,6 @@ import android.content.res.Configuration
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import android.location.LocationManager
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
@@ -72,7 +71,8 @@ class GPS : Fragment() {
 
     private var backPress: OnBackPressedDispatcher? = null
 
-    private var isMapMoved: Boolean = false
+    private var isMapMoved = false
+    private var isMetric = true
 
     private lateinit var mapFragment: SupportMapFragment
     private var googleMap: GoogleMap? = null
@@ -95,7 +95,7 @@ class GPS : Fragment() {
         filter.addAction("location")
         filter.addAction("provider")
 
-        //gpsLayout.rotationX = 40f
+        isMetric = MainPreferences().getUnit(requireContext())
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
@@ -120,8 +120,9 @@ class GPS : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
+        providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
 
+        locationIconStatusUpdates()
         checkGooglePlayServices()
 
         locationBroadcastReceiver = object : BroadcastReceiver() {
@@ -133,30 +134,49 @@ class GPS : Fragment() {
                             location = intent.getParcelableExtra("location")!!
 
                             if (location != null) {
-                                altitude.text = fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude, 2)} m", 1)}")
-                                speed.text = fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble(), 2)} m", 1)}")
+
+                                gps_location_indicator.setImageResource(R.drawable.ic_gps_fixed)
+                                gps_location_indicator.isClickable = true
+
+                                altitude.text = if (isMetric) {
+                                    fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude, 2)} m", 1)}")
+                                } else {
+                                    fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude.toFeet(), 2)} ft", 1)}")
+                                }
+
+                                speed.text = if (isMetric) {
+                                    fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)} km/h", 1)}")
+                                } else {
+                                    fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} mph", 1)}")
+                                }
+
                                 bearing.text = fromHtml("<b>Bearing:</b> ${location!!.bearing}°")
 
-                                accuracy.text = fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location!!.accuracy.toDouble(), 2)} m", 1)}")
+                                accuracy.text = if (isMetric) {
+                                    fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location!!.accuracy.toDouble(), 2)} m", 1)}")
+                                } else {
+                                    fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location!!.accuracy.toDouble().toFeet(), 2)} ft", 1)}")
+                                }
 
                                 // For screenshots
-                                //location!!.latitude = 48.8584
-                                //location!!.longitude = 2.2945
+                                // location!!.latitude = 27.1751
+                                // location!!.longitude = 78.0421
 
                                 getAddress(location!!.latitude, location!!.longitude)
 
                                 moveMapCamera(LatLng(location!!.latitude, location!!.longitude))
 
                                 providerSource.text = fromHtml("<b>Source:</b> ${location!!.provider.toUpperCase(Locale.getDefault())}")
-                                providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
+                                providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
 
                                 latitude.text = fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location!!.latitude, 3)}")
-                                longitude.text = fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(location!!.longitude, 3)}°")
+                                longitude.text = fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(location!!.longitude, 3)}")
                             }
                         }
                         "provider" -> {
-                            providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus()) "Enabled" else "Disabled"}")
+                            providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
                             providerSource.text = fromHtml("<b>Source:</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
+                            locationIconStatusUpdates()
                         }
                     }
                 }
@@ -207,7 +227,7 @@ class GPS : Fragment() {
             weakReference.get()?.show(parentFragmentManager, "gps_menu")
         }
 
-        gps_location_reset.setOnClickListener {
+        gps_location_indicator.setOnClickListener {
             if (location != null) {
                 isMapMoved = false
                 moveMapCamera(LatLng(location!!.latitude, location!!.longitude))
@@ -242,23 +262,23 @@ class GPS : Fragment() {
             if (clipboard.hasPrimaryClip()) {
                 gps_info_text.setTextAnimation(getString(R.string.info_copied), 300)
 
-                handler.postDelayed({
-                    gps_info_text.setTextAnimation("GPS Info", 300)
-                }, 3000)
+                handler.postDelayed(textAnimationRunnable, 3000)
             } else {
                 gps_info_text.setTextAnimation(getString(R.string.info_error), 300)
 
-                handler.postDelayed({
-                    gps_info_text.setTextAnimation("GPS Info", 300)
-                }, 3000)
+                handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
     }
+
+    private val textAnimationRunnable: Runnable = Runnable { gps_info_text.setTextAnimation("GPS Info", 300) }
 
     override fun onPause() {
         super.onPause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(mapMoved)
+        handler.removeCallbacks(textAnimationRunnable)
+        gps_info_text.clearAnimation()
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
         }
@@ -277,6 +297,7 @@ class GPS : Fragment() {
         this.googleMap = googleMap
 
         showLabel(GPSPreferences().isLabelOn(requireContext()))
+        setSatellite(GPSPreferences().isSatelliteOn(requireContext()))
 
         this.googleMap?.setOnCameraMoveListener {
             isMapMoved = true
@@ -292,23 +313,29 @@ class GPS : Fragment() {
     private fun getAddress(latitude: Double, longitude: Double) {
         class GetAddress : AsyncTask<Void, Void, String>() {
             override fun doInBackground(vararg params: Void?): String? {
-
-                if (context == null) {
-                    return ""
-                }
-
-                if (!isNetworkAvailable(requireContext())) {
-                    return "Internet connection not available"
-                }
-
                 return try {
+                    if (context == null) {
+                        return "N/A"
+                    }
+
+                    if (!isNetworkAvailable(requireContext())) {
+                        return "Internet connection not available"
+                    }
+
                     val addresses: List<Address>
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
 
                     addresses = geocoder.getFromLocation(latitude, longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
-                    addresses[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
+                    if (addresses != null && addresses.isNotEmpty()) {
+                        addresses[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
+                    } else {
+                        return "N/A"
+                    }
                 } catch (e: IOException) {
+                    e.printStackTrace()
+                    "${e.message}\n!Error Fetching Address"
+                } catch (e: NullPointerException) {
                     e.printStackTrace()
                     "${e.message}\n!Error Fetching Address"
                 }
@@ -316,7 +343,7 @@ class GPS : Fragment() {
 
             override fun onPostExecute(result: String?) {
                 super.onPostExecute(result)
-                address.text = result
+                address.text = result ?: "N/A"
             }
         }
 
@@ -337,12 +364,12 @@ class GPS : Fragment() {
         }
     }
 
-    private fun getLocationStatus(): Boolean {
-        val locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            locationManager.isLocationEnabled
+    private fun locationIconStatusUpdates() {
+        if (getLocationStatus(requireContext())) {
+            gps_location_indicator.setImageResource(R.drawable.ic_gps_not_fixed)
         } else {
-            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            gps_location_indicator.setImageResource(R.drawable.ic_gps_off)
+            gps_location_indicator.isClickable = false
         }
     }
 
@@ -354,7 +381,7 @@ class GPS : Fragment() {
 
         clearMap()
 
-        val markerOptions = MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext())))
+        val markerOptions = MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext(), 400)))
         googleMap?.addMarker(markerOptions)
 
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
@@ -394,6 +421,16 @@ class GPS : Fragment() {
         val mapStyleOptions: MapStyleOptions = MapStyleOptions.loadRawResourceStyle(requireContext(), mapRawStyle)
 
         googleMap?.setMapStyle(mapStyleOptions)
+    }
+
+    fun setSatellite(value: Boolean) {
+        if (googleMap == null) return
+
+        if (value) {
+            googleMap?.mapType = GoogleMap.MAP_TYPE_SATELLITE
+        } else {
+            googleMap?.mapType = GoogleMap.MAP_TYPE_NORMAL
+        }
     }
 
     // return value preserved, might be used later

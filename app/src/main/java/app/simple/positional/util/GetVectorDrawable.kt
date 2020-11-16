@@ -5,9 +5,9 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import androidx.core.content.ContextCompat
 
-fun Int.getBitmapFromVectorDrawable(context: Context): Bitmap? {
+fun Int.getBitmapFromVectorDrawable(context: Context, size: Int): Bitmap? {
     val drawable = ContextCompat.getDrawable(context, this)
-    val bitmap = Bitmap.createBitmap(400, 400, Bitmap.Config.ARGB_8888)
+    val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
     drawable?.setBounds(0, 0, canvas.width, canvas.height)
     drawable?.draw(canvas)

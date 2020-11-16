@@ -14,6 +14,8 @@
 /app/debug
 /app/full
 /captures
+/play-licensing
 .externalNativeBuild
 .cxx
 sensitive_data.txt
+/play-licensing/lvl_library/

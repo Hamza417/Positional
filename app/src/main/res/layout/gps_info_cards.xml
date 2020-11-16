@@ -241,7 +241,7 @@
                 android:layout_marginVertical="@dimen/clock_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:textColor="?attr/textPrimary"
-                android:textSize="10pt"
+                android:textSize="8pt"
                 app:corners="20"
                 app:use_gradient="true" />
 

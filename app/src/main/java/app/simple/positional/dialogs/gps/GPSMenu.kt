@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import app.simple.positional.R
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.ui.GPS
@@ -28,15 +27,16 @@ class GPSMenu(private val weakReference: WeakReference<GPS>) : CustomBottomSheet
         super.onViewCreated(view, savedInstanceState)
 
         toggle_label.isChecked = GPSPreferences().isLabelOn(requireContext())
+        toggle_satellite.isChecked = GPSPreferences().isSatelliteOn(requireContext())
 
-        toggle_label.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-            override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-                if (isChecked) {
-                    weakReference.get()?.showLabel(true)
-                } else {
-                    weakReference.get()?.showLabel(false)
-                }
-            }
-        })
+        toggle_label.setOnCheckedChangeListener { _, isChecked ->
+            weakReference.get()?.showLabel(isChecked)
+        }
+
+        toggle_satellite.setOnCheckedChangeListener { _, isChecked ->
+            GPSPreferences().setSatelliteMode(requireContext(), isChecked)
+            weakReference.get()?.setSatellite(isChecked)
+            toggle_label.isClickable = !isChecked
+        }
     }
 }

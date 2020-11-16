@@ -7,14 +7,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.dialogs.app.Issue
 import app.simple.positional.dialogs.app.Theme
+import app.simple.positional.dialogs.app.Units
 import app.simple.positional.preference.MainPreferences
 import kotlinx.android.synthetic.main.frag_settings.*
 import kotlinx.android.synthetic.main.frag_settings.view.*
@@ -22,25 +21,12 @@ import java.lang.ref.WeakReference
 
 class AppSettings : Fragment() {
 
-    private lateinit var theme: LinearLayout
-    private lateinit var legalNotes: LinearLayout
-    private lateinit var fullVersion: LinearLayout
-
-    private lateinit var currentTheme: TextView
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
-
-        theme = view.findViewById(R.id.settings_theme)
-        currentTheme = view.findViewById(R.id.current_theme)
-        legalNotes = view.findViewById(R.id.legal_notes)
-        fullVersion = view.findViewById(R.id.buy_full)
 
         if (BuildConfig.FLAVOR == "lite") {
             view.buy_full.visibility = View.VISIBLE
         }
-
-        setCurrentThemeValue(MainPreferences().getCurrentTheme(requireContext()))
 
         return view
     }
@@ -49,10 +35,16 @@ class AppSettings : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setCurrentThemeValue(AppCompatDelegate.getDefaultNightMode())
+        setCurrentUnit(MainPreferences().getUnit(requireContext()))
 
-        theme.setOnClickListener {
+        settings_theme.setOnClickListener {
             val theme = Theme(WeakReference(this))
             theme.show(parentFragmentManager, "null")
+        }
+
+        settings_units.setOnClickListener {
+            val units = WeakReference(Units(WeakReference(this)))
+            units.get()?.show(parentFragmentManager, "null")
         }
 
         change_logs.setOnClickListener {
@@ -90,12 +82,20 @@ class AppSettings : Fragment() {
     }
 
     fun setCurrentThemeValue(themeValue: Int) {
-        currentTheme.text = when (themeValue) {
-            AppCompatDelegate.MODE_NIGHT_NO -> "Light"
-            AppCompatDelegate.MODE_NIGHT_YES -> "Dark"
-            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> "Follow System"
-            4 -> "Day/Night Auto"
-            else -> "Unknown Theme Selected!!"
+        try {
+            current_theme.text = when (themeValue) {
+                AppCompatDelegate.MODE_NIGHT_NO -> "Light"
+                AppCompatDelegate.MODE_NIGHT_YES -> "Dark"
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> "Follow System"
+                4 -> "Day/Night Auto"
+                else -> "Unknown Theme Selected!!"
+            }
+        } catch (e: NullPointerException) {
+            e.printStackTrace()
         }
+    }
+
+    fun setCurrentUnit(value: Boolean) {
+        current_unit.text = if (value) "Metric" else "Imperial"
     }
 }

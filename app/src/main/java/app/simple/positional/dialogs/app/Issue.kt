@@ -34,7 +34,7 @@ class Issue : CustomBottomSheetDialog() {
             email.type = "plain/text"
             email.putExtra(Intent.EXTRA_EMAIL, arrayOf("hamzarizwan243@gmail.com"))
             email.putExtra(Intent.EXTRA_SUBJECT, "Issue in Positional app")
-            email.putExtra(Intent.EXTRA_TEXT, "Dear Sir,\n\nI think I found a problem in Positional app\n\n(Describe You Issue Here, Remember every suggestion is good :))")
+            email.putExtra(Intent.EXTRA_TEXT, "Dear Sir,\n\nI think I found a problem in Positional app\n\n(Describe Your Issue Here, Remember every suggestion is good :))")
             startActivity(Intent.createChooser(email, "Send issue"))
         }
 

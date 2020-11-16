@@ -44,4 +44,12 @@ class MainPreferences {
     fun getLicenceStatus(context: Context): Boolean {
         return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(licenseStatus, false)
     }
+
+    fun setUnit(@NonNull context: Context, @NonNull value: Boolean) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(unit, value).apply()
+    }
+
+    fun getUnit(context: Context): Boolean {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(unit, true)
+    }
 }

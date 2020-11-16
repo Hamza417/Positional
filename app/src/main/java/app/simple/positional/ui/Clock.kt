@@ -25,6 +25,7 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.clockNeedleSkins
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.preference.ClockPreferences
+import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView
 import com.google.android.material.appbar.MaterialToolbar
@@ -77,6 +78,8 @@ class Clock : Fragment() {
     private var moonImageCountViolation = 1
     private var dayNightIndicatorImageCountViolation = 1
 
+    private var isMetric = true
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
 
@@ -100,6 +103,7 @@ class Clock : Fragment() {
         scrollView = view.findViewById(R.id.clock_panel_scrollview)
 
         setMotionDelay(ClockPreferences().getMovementType(requireContext()))
+        isMetric = MainPreferences().getUnit(requireContext())
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             toolbar = view.findViewById(R.id.clock_appbar)
@@ -168,13 +172,21 @@ class Clock : Fragment() {
 
                                 sunAzimuth.text = fromHtml("<b>Azimuth:</b> ${round(sunPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(sunPosition.azimuth)}")
                                 sunAltitude.text = fromHtml("<b>Altitude:</b> ${round(sunPosition.trueAltitude, 2)}°")
-                                sunDistance.text = fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance)} km")
+                                sunDistance.text = if (isMetric) {
+                                    fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance)} km")
+                                } else {
+                                    fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance.toMiles())} miles")
+                                }
 
                                 val moonPosition: MoonPosition = MoonPosition.compute().at(location.latitude, location.longitude).execute()
 
                                 moon_azimuth.text = fromHtml("<b>Azimuth:</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(moonPosition.azimuth)}")
                                 moon_altitude.text = fromHtml("<b>Altitude:</b> ${round(moonPosition.altitude, 2)}°")
-                                moon_distance.text = fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance)} km")
+                                moon_distance.text = if (isMetric) {
+                                    fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance)} km")
+                                } else {
+                                    fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance.toMiles())} miles")
+                                }
                                 moon_parallactic_angle.text = fromHtml("<b>Parallactic Angle:</b> ${round(moonPosition.parallacticAngle, 2)}°")
 
                                 val moonIllumination = MoonIllumination.compute().on(Instant.now()).execute()
@@ -309,12 +321,12 @@ class Clock : Fragment() {
             if (clipboard.hasPrimaryClip()) {
                 clock_info_text.setTextAnimation(getString(R.string.info_copied), 300)
 
-                handler.postDelayed({
-                    clock_info_text.setTextAnimation("Time Info", 300)
-                }, 3000)
+                handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
     }
+
+    private val textAnimationRunnable: Runnable = Runnable { clock_info_text.setTextAnimation("Time Info", 300) }
 
     private val clock: Runnable = object : Runnable {
         override fun run() {
@@ -365,6 +377,8 @@ class Clock : Fragment() {
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(clock)
         handler.removeCallbacks(calender)
+        handler.removeCallbacks(textAnimationRunnable)
+        clock_info_text.clearAnimation()
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
         }

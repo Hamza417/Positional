@@ -73,9 +73,9 @@ class Launcher : Fragment() {
             }
         }
 
-        touch_indicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = requireContext())?.let { addRadialGradient(it, colorTwo) })
+        touch_indicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = requireContext(), 400)?.let { addRadialGradient(it, colorTwo) })
 
-        launcher_icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = requireContext())?.let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
+        launcher_icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = requireContext(), 400)?.let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
 
         launcher_icon.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.launcher_icon))
         launcher_text.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.image_in))

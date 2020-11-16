@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/item2"
-        android:icon="@drawable/ic_calibration"
+        android:icon="@drawable/ic_gps_fixed"
         android:title="@string/gps" />
 
     <item

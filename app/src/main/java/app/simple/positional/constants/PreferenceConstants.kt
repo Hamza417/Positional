@@ -17,6 +17,7 @@ const val compassSpeed = "compass_speed"
 
 // GPS
 const val GPSLabelMode = "gps_label_mode"
+const val GPSSatellite = "gps_satellite_mode"
 
 // Fragments
 const val currentPage = "current_page"
@@ -26,3 +27,4 @@ const val currentTheme = "current_theme"
 const val showAgain = "show_permission_dialog_again"
 const val showPlayServicesAgain = "show_play_services_dialog_again"
 const val licenseStatus = "license_status"
+const val unit = "all_measurement_unit"
