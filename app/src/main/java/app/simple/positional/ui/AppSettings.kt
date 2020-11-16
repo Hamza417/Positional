@@ -20,11 +20,9 @@ import kotlinx.android.synthetic.main.frag_settings.*
 import kotlinx.android.synthetic.main.frag_settings.view.*
 import java.lang.ref.WeakReference
 
-
 class AppSettings : Fragment() {
 
     private lateinit var theme: LinearLayout
-    private lateinit var accent: LinearLayout
     private lateinit var legalNotes: LinearLayout
     private lateinit var fullVersion: LinearLayout
 
@@ -34,7 +32,6 @@ class AppSettings : Fragment() {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
 
         theme = view.findViewById(R.id.settings_theme)
-        accent = view.findViewById(R.id.settings_accent)
         currentTheme = view.findViewById(R.id.current_theme)
         legalNotes = view.findViewById(R.id.legal_notes)
         fullVersion = view.findViewById(R.id.buy_full)

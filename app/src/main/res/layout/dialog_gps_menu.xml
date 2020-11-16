@@ -59,7 +59,10 @@
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/toggle_label"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp" />
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track" />
 
             </LinearLayout>
 

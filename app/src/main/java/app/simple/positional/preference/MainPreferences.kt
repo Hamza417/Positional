@@ -3,10 +3,7 @@ package app.simple.positional.preference
 import android.content.Context
 import androidx.annotation.IntRange
 import androidx.annotation.NonNull
-import app.simple.positional.constants.currentTheme
-import app.simple.positional.constants.preferences
-import app.simple.positional.constants.showAgain
-import app.simple.positional.constants.showPlayServicesAgain
+import app.simple.positional.constants.*
 
 class MainPreferences {
     /**
@@ -38,5 +35,13 @@ class MainPreferences {
 
     fun getShowPlayServiceDialog(context: Context): Boolean {
         return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(showPlayServicesAgain, true)
+    }
+
+    fun setLicenseStatus(context: Context, value: Boolean) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(licenseStatus, value).apply()
+    }
+
+    fun getLicenceStatus(context: Context): Boolean {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(licenseStatus, false)
     }
 }

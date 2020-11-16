@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/licence_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/light"
+            android:text="Verifying License"
+            android:textColor="?attr/textPrimary"
+            android:textSize="14pt" />
+
+        <ImageView
+            android:id="@+id/licence_loader"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/ic_loader" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/invalid_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="If you have downloaded the app from somewhere else, try downloading this app from Play Store or if you think this is a mistake please contact developer to resolve this issue"
+        android:textAlignment="center"
+        android:visibility="gone" />
+</FrameLayout>

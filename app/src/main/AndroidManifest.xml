@@ -11,7 +11,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- here we defined ACCESS_BACKGROUND_LOCATION for Android 10 device -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+
+    <!-- here we defined ACCESS_BACKGROUND_LOCATION for Android 10 device -->
     <!-- <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> -->
     <!-- Allows access to the flashlight -->
     <permission
@@ -56,9 +59,6 @@
 
         <service
             android:name=".services.LocationService"
-            android:enabled="true" />
-        <service
-            android:name=".services.CompassService"
             android:enabled="true" />
     </application>
 

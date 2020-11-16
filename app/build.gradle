@@ -5,6 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 // Begin of reading the sensitive data
 def noKeyFound = '"NO_KEY_FOUND"'
 def googleMapsAPIKey = noKeyFound
+def thisAppLicensingKey = noKeyFound
 
 /*
    If you have a Google Maps API Key, you can create sensitive_data.txt file in project's root directory
@@ -25,6 +26,10 @@ if (sensitiveDataFile.canRead()) {
         if (sensitiveData.containsKey('googleMapsAPIKey')) {
             googleMapsAPIKey = sensitiveData['googleMapsAPIKey']
         }
+
+        if(sensitiveData.containsKey('thisAppLicensingKey')) {
+            thisAppLicensingKey = sensitiveData['thisAppLicensingKey']
+        }
     }
 }
 
@@ -38,6 +43,7 @@ if (googleMapsAPIKey == noKeyFound) {
 
 
 android {
+
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
@@ -45,12 +51,13 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 21
-        versionName "v3.3-stable"
+        versionCode 22
+        versionName "v3.4-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         // add a Resource String for the same key-value pair
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
+        resValue "string", "thisAppLicensingKey", thisAppLicensingKey
     }
 
     flavorDimensions "version"
@@ -95,6 +102,8 @@ android {
 
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.0'
+
+    implementation project(path: ':lvl_library')
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'

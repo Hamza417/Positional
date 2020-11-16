@@ -14,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -68,6 +70,8 @@ class GPS : Fragment() {
 
     private var location: Location? = null
 
+    private var backPress: OnBackPressedDispatcher? = null
+
     private var isMapMoved: Boolean = false
 
     private lateinit var mapFragment: SupportMapFragment
@@ -94,6 +98,8 @@ class GPS : Fragment() {
         //gpsLayout.rotationX = 40f
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
+
+        backPress = requireActivity().onBackPressedDispatcher
 
         mapFragment = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
         mapFragment.getMapAsync(callback)
@@ -161,7 +167,26 @@ class GPS : Fragment() {
 
             bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-
+                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                        backPressed(true)
+                    } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                        backPressed(false)
+                        if (backPress!!.hasEnabledCallbacks()) {
+                            /**
+                             * This is a workaround and not a full fledged method to
+                             * remove any existing callbacks
+                             *
+                             * The [bottomSheetBehavior] adds a new callback every time it is expanded
+                             * and it is a feasible approach to remove any existing callbacks
+                             * as soon as it is collapsed, the callback number will always remain
+                             * one
+                             *
+                             * What makes this approach a slightly less reliable is because so
+                             * many presumption has been taken here
+                             */
+                            backPress?.onBackPressed()
+                        }
+                    }
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -234,6 +259,9 @@ class GPS : Fragment() {
         super.onPause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(mapMoved)
+        if (backPress!!.hasEnabledCallbacks()) {
+            backPressed(false)
+        }
     }
 
     override fun onResume() {
@@ -242,7 +270,6 @@ class GPS : Fragment() {
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
-        1
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(LatLng(48.8584, 2.2945)).tilt(90f).zoom(18f).build()))
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
@@ -381,5 +408,18 @@ class GPS : Fragment() {
             return false
         }
         return true
+    }
+
+    private fun backPressed(value: Boolean) {
+        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
+            override fun handleOnBackPressed() {
+                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+
+                // Remove this callback
+                remove()
+            }
+        })
     }
 }

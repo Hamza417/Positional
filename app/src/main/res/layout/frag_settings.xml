@@ -82,14 +82,30 @@
 
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:fontFamily="@font/medium"
+                android:text="Configuration"
+                android:textColor="?attr/textSecondary"
+                android:textSize="6pt" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_cards"
+                android:orientation="vertical">
+
                 <LinearLayout
-                    android:id="@+id/settings_accent"
+                    android:id="@+id/settings_units"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ripple"
                     android:clickable="true"
-                    android:visibility="gone"
                     android:focusable="true"
+                    android:background="@drawable/ripple"
                     android:orientation="vertical"
                     android:padding="15dp">
 
@@ -97,18 +113,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="Accent"
+                        android:text="Units"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
                     <TextView
+                        android:id="@+id/current_unit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="Grey"
                         android:textColor="?attr/textSecondary" />
 
                 </LinearLayout>
+
             </LinearLayout>
 
             <TextView

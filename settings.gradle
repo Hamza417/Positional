@@ -1,2 +1,4 @@
+include ':lvl_library'
 include ':app'
+project(':lvl_library').projectDir = new File(rootDir, 'play-licensing/lvl_library/')
 rootProject.name = "Positional"

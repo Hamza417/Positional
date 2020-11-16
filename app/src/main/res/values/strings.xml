@@ -1,4 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="licensing_key">@string/thisAppLicensingKey</string>
+
     <string name="app_name" tools:override="true">Positional</string>
     <string name="access_fine_location_info">It is required to run the GPS of the device and fetch the possibly accurate location details</string>
     <string name="internet_perm_info">Used to fetch the address of the given location</string>

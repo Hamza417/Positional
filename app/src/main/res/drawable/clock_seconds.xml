@@ -1,39 +1,19 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="24dp"
     android:height="24dp"
     android:viewportWidth="1000"
     android:viewportHeight="1000">
     <path
-        android:fillColor="#ed1c24"
+        android:fillColor="#2ac4d4"
         android:pathData="M493,528L507,528A2,2 0,0 1,509 530L509,596A2,2 0,0 1,507 598L493,598A2,2 0,0 1,491 596L491,530A2,2 0,0 1,493 528z" />
     <path
-        android:fillColor="#ed1c24"
+        android:fillColor="#2ac4d4"
         android:pathData="M500,202L500,202A4,4 0,0 1,504 206L504,528A4,4 0,0 1,500 532L500,532A4,4 0,0 1,496 528L496,206A4,4 0,0 1,500 202z" />
-    <path android:pathData="M500.5,500.5m-22.5,0a22.5,22.5 0,1 1,45 0a22.5,22.5 0,1 1,-45 0">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:centerX="500.5"
-                android:centerY="500.5"
-                android:gradientRadius="22.5"
-                android:type="radial">
-                <item
-                    android:color="#FF000000"
-                    android:offset="0.562" />
-                <item
-                    android:color="#FF000000"
-                    android:offset="0.628" />
-                <item
-                    android:color="#00000000"
-                    android:offset="1" />
-            </gradient>
-        </aapt:attr>
-    </path>
     <path
         android:fillColor="#fff"
         android:pathData="M500,500m-19,0a19,19 0,1 1,38 0a19,19 0,1 1,-38 0"
         android:strokeWidth="1.68"
-        android:strokeColor="#acacac"
+        android:strokeColor="@color/clock_needle_stroke_color"
         android:strokeLineCap="round"
         android:strokeLineJoin="round" />
 </vector>

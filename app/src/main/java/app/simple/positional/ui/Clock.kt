@@ -6,12 +6,15 @@ import android.location.Location
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -62,6 +65,8 @@ class Clock : Fragment() {
 
     private lateinit var handler: Handler
 
+    private var backPress: OnBackPressedDispatcher? = null
+
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
 
@@ -75,7 +80,7 @@ class Clock : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
 
-        handler = Handler()
+        handler = Handler(Looper.getMainLooper())
 
         filter.addAction("location")
 
@@ -106,6 +111,8 @@ class Clock : Fragment() {
         }
 
         setSkins()
+
+        backPress = requireActivity().onBackPressedDispatcher
 
         return view
     }
@@ -202,7 +209,26 @@ class Clock : Fragment() {
 
             bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-
+                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                        backPressed(true)
+                    } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                        backPressed(false)
+                        if (backPress!!.hasEnabledCallbacks()) {
+                            /**
+                             * This is a workaround and not a full fledged method to
+                             * remove any existing callbacks
+                             *
+                             * The [bottomSheetBehavior] adds a new callback every time it is expanded
+                             * and it is a feasible approach to remove any existing callbacks
+                             * as soon as it is collapsed, the callback number will always remain
+                             * one
+                             *
+                             * What makes this approach a slightly less reliable is because so
+                             * many presumption has been taken here
+                             */
+                            backPress?.onBackPressed()
+                        }
+                    }
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -268,10 +294,11 @@ class Clock : Fragment() {
                 stringBuilder.append("${moon_angle_state.text}\n")
                 stringBuilder.append("${moon_phase.text}\n")
                 stringBuilder.append("${moon_phase_angle.text}\n")
-                stringBuilder.append("${next_full_moon.text}\n\n")
+                stringBuilder.append("${next_full_moon.text}\n")
             }
 
             if (BuildConfig.FLAVOR == "lite") {
+                stringBuilder.append("\n\n")
                 stringBuilder.append("Information is copied using Positional\n")
                 stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
             }
@@ -338,6 +365,9 @@ class Clock : Fragment() {
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(clock)
         handler.removeCallbacks(calender)
+        if (backPress!!.hasEnabledCallbacks()) {
+            backPressed(false)
+        }
     }
 
     override fun onResume() {
@@ -432,5 +462,17 @@ class Clock : Fragment() {
         } else {
             getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
+    }
+
+    private fun backPressed(value: Boolean) {
+        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
+            override fun handleOnBackPressed() {
+                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+
+                remove()
+            }
+        })
     }
 }

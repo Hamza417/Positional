@@ -94,8 +94,10 @@
 
             <ImageView
                 android:id="@+id/seconds"
-                android:layout_width="@dimen/clock_needle_dimensions"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/clock_needle_dimensions"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 android:layout_gravity="center" />
 
         </FrameLayout>
