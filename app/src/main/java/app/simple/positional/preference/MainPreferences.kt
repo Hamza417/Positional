@@ -52,4 +52,12 @@ class MainPreferences {
     fun getUnit(context: Context): Boolean {
         return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(unit, true)
     }
+
+    fun setNotifications(@NonNull context: Context, @NonNull value: Boolean) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(notifications, value).apply()
+    }
+
+    fun isNotificationOn(context: Context): Boolean {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(notifications, true)
+    }
 }

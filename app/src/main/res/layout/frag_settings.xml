@@ -59,9 +59,9 @@
                     android:id="@+id/settings_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/ripple"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="@drawable/ripple"
                     android:orientation="vertical"
                     android:padding="15dp">
 
@@ -103,9 +103,9 @@
                     android:id="@+id/settings_units"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/ripple"
                     android:clickable="true"
                     android:focusable="true"
-                    android:background="@drawable/ripple"
                     android:orientation="vertical"
                     android:padding="15dp">
 
@@ -123,6 +123,49 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
                         android:textColor="?attr/textSecondary" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/setting_notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
+                            android:text="Push Notification"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="@dimen/settings_primary_text_size" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="Receive notifications about changes in upcoming updates"
+                            android:textColor="?attr/textSecondary" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/toggle_notifications"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:thumb="@drawable/switch_thumb"
+                        app:track="@drawable/switch_track" />
 
                 </LinearLayout>
 
@@ -149,10 +192,10 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/ripple"
                     android:clickable="true"
-                    android:visibility="gone"
                     android:focusable="true"
                     android:orientation="vertical"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

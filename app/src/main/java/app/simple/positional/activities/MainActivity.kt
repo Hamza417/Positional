@@ -19,6 +19,7 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.dialogs.app.PermissionDialog
+import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.services.LocationService
@@ -49,6 +50,8 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         window.setFormat(PixelFormat.RGBA_8888)
 
         locationIntent = Intent(applicationContext, LocationService::class.java)
+
+        startService(Intent(applicationContext, MessagingService::class.java))
 
         runApp()
         checkRunTimePermission()

@@ -58,7 +58,7 @@
                     android:textColor="?attr/textPrimary"
                     android:textSize="@dimen/settings_primary_text_size" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/toggle_flower"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -133,7 +133,7 @@
                     android:textColor="?attr/textPrimary"
                     android:textSize="@dimen/settings_primary_text_size" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/toggle_code"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

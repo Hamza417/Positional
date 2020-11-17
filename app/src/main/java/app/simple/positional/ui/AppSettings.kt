@@ -37,6 +37,8 @@ class AppSettings : Fragment() {
         setCurrentThemeValue(AppCompatDelegate.getDefaultNightMode())
         setCurrentUnit(MainPreferences().getUnit(requireContext()))
 
+        toggle_notifications.isChecked = MainPreferences().isNotificationOn(requireContext())
+
         settings_theme.setOnClickListener {
             val theme = Theme(WeakReference(this))
             theme.show(parentFragmentManager, "null")
@@ -45,6 +47,14 @@ class AppSettings : Fragment() {
         settings_units.setOnClickListener {
             val units = WeakReference(Units(WeakReference(this)))
             units.get()?.show(parentFragmentManager, "null")
+        }
+
+        setting_notification.setOnClickListener {
+            toggle_notifications.isChecked = !toggle_notifications.isChecked
+        }
+
+        toggle_notifications.setOnCheckedChangeListener { _, isChecked ->
+            MainPreferences().setNotifications(requireContext(), isChecked)
         }
 
         change_logs.setOnClickListener {

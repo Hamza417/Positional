@@ -1,3 +1,5 @@
 /build
 /release/app-release.apk
 /release/output.json
+/src/full/google-services.json
+/src/lite/google-services.json

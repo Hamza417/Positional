@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 // Begin of reading the sensitive data
 def noKeyFound = '"NO_KEY_FOUND"'
@@ -51,8 +52,8 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 23
-        versionName "v3.5-stable"
+        versionCode 24
+        versionName "v3.6-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         // add a Resource String for the same key-value pair
@@ -77,10 +78,6 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-
-        debug {
-            applicationIdSuffix ".debug"
         }
     }
 
@@ -129,6 +126,12 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.3.1"
 
     implementation 'com.afollestad:viewpagerdots:1.0.0'
+
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging:21.0.0'
+
+    implementation 'com.google.android.gms:play-services-basement:17.5.0'
 
     // debugImplementation because LeakCanary should only run in debug builds.
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
