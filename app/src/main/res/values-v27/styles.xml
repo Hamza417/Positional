@@ -20,6 +20,7 @@
         <item name="android:navigationBarColor">@color/toolbarBackground</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:colorEdgeEffect">@color/edgeEffect</item>
         <item name="cardBackground">#fafafa</item>
         <item name="clockDialColor">@color/clockDialColor</item>
 

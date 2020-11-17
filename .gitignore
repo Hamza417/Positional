@@ -24,3 +24,8 @@
 .externalNativeBuild
 .cxx
 sensitive_data.txt
+/play-licensing/lvl_library/build/.transforms/e10a87f37a226c67ba13ef03b92d4634/classes/classes.dex
+/play-licensing/lvl_library/build/.transforms/e10a87f37a226c67ba13ef03b92d4634.bin
+/play-licensing/lvl_library/build/generated/aidl_source_output_dir/release/out/com/android/vending/licensing/ILicenseResultListener.java
+/play-licensing/lvl_library/build/generated/aidl_source_output_dir/release/out/com/android/vending/licensing/ILicensingService.java
+/play-licensing/lvl_library/build/intermediates/aar_metadata/release/aar-metadata.properties

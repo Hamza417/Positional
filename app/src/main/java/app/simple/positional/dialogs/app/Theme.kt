@@ -6,7 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
-import app.simple.positional.theme.setTheme
+import app.simple.positional.preference.MainPreferences
+import app.simple.positional.theme.setAppTheme
 import app.simple.positional.ui.AppSettings
 import app.simple.positional.views.CustomBottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_app_theme.*
@@ -26,29 +27,40 @@ class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBotto
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setButtons(AppCompatDelegate.getDefaultNightMode())
+        if (MainPreferences().isDayNightOn(requireContext())) {
+            setButtons(4)
+        } else {
+            setButtons(AppCompatDelegate.getDefaultNightMode())
+        }
 
         light.setOnClickListener {
-            setTheme(AppCompatDelegate.MODE_NIGHT_NO)
             setButtons(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
         dark.setOnClickListener {
-            setTheme(AppCompatDelegate.MODE_NIGHT_YES)
             setButtons(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
         follow_system.setOnClickListener {
-            setTheme(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             setButtons(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+
+        day_night.setOnClickListener {
+            setButtons(4)
         }
     }
 
     private fun setButtons(value: Int) {
+
+        MainPreferences().setDayNight(requireContext(), value == 4)
+
         light.isChecked = value == AppCompatDelegate.MODE_NIGHT_NO
         dark.isChecked = value == AppCompatDelegate.MODE_NIGHT_YES
         follow_system.isChecked = value == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        day_night.isChecked = value == 4
 
         weakReference.get()?.setCurrentThemeValue(value)
+
+        setAppTheme(value)
     }
 }

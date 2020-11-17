@@ -4,20 +4,24 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.dialogs.app.Issue
+import app.simple.positional.dialogs.app.LegalNotes
 import app.simple.positional.dialogs.app.Theme
 import app.simple.positional.dialogs.app.Units
 import app.simple.positional.preference.MainPreferences
 import kotlinx.android.synthetic.main.frag_settings.*
 import kotlinx.android.synthetic.main.frag_settings.view.*
 import java.lang.ref.WeakReference
+
 
 class AppSettings : Fragment() {
 
@@ -34,7 +38,12 @@ class AppSettings : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setCurrentThemeValue(AppCompatDelegate.getDefaultNightMode())
+        if (MainPreferences().isDayNightOn(requireContext())) {
+            setCurrentThemeValue(4)
+        } else {
+            setCurrentThemeValue(AppCompatDelegate.getDefaultNightMode())
+        }
+
         setCurrentUnit(MainPreferences().getUnit(requireContext()))
 
         toggle_notifications.isChecked = MainPreferences().isNotificationOn(requireContext())
@@ -55,6 +64,21 @@ class AppSettings : Fragment() {
 
         toggle_notifications.setOnCheckedChangeListener { _, isChecked ->
             MainPreferences().setNotifications(requireContext(), isChecked)
+        }
+
+        legal_notes.setOnClickListener {
+            val popup = PopupMenu(requireContext(), legal_notes)
+            popup.menuInflater.inflate(R.menu.legal_notes, popup.menu)
+            popup.gravity = Gravity.END
+
+            popup.setOnMenuItemClickListener { item ->
+                val legalNotes = LegalNotes().newInstance(item.title.toString())
+                legalNotes.show(parentFragmentManager, "legal_notes")
+                true
+            }
+
+            popup.show()
+
         }
 
         change_logs.setOnClickListener {
@@ -97,7 +121,7 @@ class AppSettings : Fragment() {
                 AppCompatDelegate.MODE_NIGHT_NO -> "Light"
                 AppCompatDelegate.MODE_NIGHT_YES -> "Dark"
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> "Follow System"
-                4 -> "Day/Night Auto"
+                4 -> "Auto (Day/Night)"
                 else -> "Unknown Theme Selected!!"
             }
         } catch (e: NullPointerException) {

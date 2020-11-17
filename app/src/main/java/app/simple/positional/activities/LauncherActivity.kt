@@ -7,6 +7,7 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.theme.setAppTheme
 import app.simple.positional.ui.Launcher
 import app.simple.positional.ui.License
 
@@ -15,8 +16,12 @@ class LauncherActivity : AppCompatActivity(), LicenceStatusCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        if (MainPreferences().isDayNightOn(this)) {
+            setAppTheme(4)
+        } else {
+            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
         }
 
         setContentView(R.layout.activity_launcher)

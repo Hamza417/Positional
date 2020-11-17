@@ -23,7 +23,7 @@ const val GPSSatellite = "gps_satellite_mode"
 const val currentPage = "current_page"
 
 // Main Prefs
-const val currentTheme = "current_theme"
+const val dayNightMode = "is_day_night_mode"
 const val showAgain = "show_permission_dialog_again"
 const val showPlayServicesAgain = "show_play_services_dialog_again"
 const val licenseStatus = "license_status"

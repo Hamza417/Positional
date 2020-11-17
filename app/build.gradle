@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'
 
 // Begin of reading the sensitive data
@@ -53,7 +54,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 24
-        versionName "v3.6-stable"
+        versionName "v3.7-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         // add a Resource String for the same key-value pair
@@ -66,7 +67,7 @@ android {
         lite {
             dimension "version"
             applicationIdSuffix ".lite"
-            versionNameSuffix "-lite"
+            versionNameSuffix "_lite"
         }
         full {
             dimension "version"
@@ -98,7 +99,7 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
 
     implementation project(path: ':lvl_library')
 
@@ -129,9 +130,12 @@ dependencies {
 
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-messaging:21.0.0'
 
     implementation 'com.google.android.gms:play-services-basement:17.5.0'
+
+    implementation 'androidx.webkit:webkit:1.3.0'
 
     // debugImplementation because LeakCanary should only run in debug builds.
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'

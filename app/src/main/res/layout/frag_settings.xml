@@ -32,7 +32,7 @@
         android:clipToPadding="false"
         android:paddingHorizontal="15dp"
         android:paddingTop="@dimen/top_bar_height"
-        android:paddingBottom="@dimen/bottom_nav_height"
+        android:paddingBottom="90dp"
         app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
         <LinearLayout
@@ -194,8 +194,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:orientation="vertical"
-                    android:padding="15dp"
-                    android:visibility="gone">
+                    android:padding="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -204,6 +203,13 @@
                         android:text="Legal Notes"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="Click to read app's Desclaimer, Privacy Policy and Terms and Conditions of use"
+                        android:textColor="?attr/textSecondary" />
 
                 </LinearLayout>
 

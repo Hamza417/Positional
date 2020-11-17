@@ -13,6 +13,7 @@
     <color name="toolbarBackground">#303030</color>
     <color name="rippleColor">#5A5A5A</color>
     <color name="clockDialColor">#ECECEC</color>
+    <color name="edgeEffect">#EAEAEA</color>
 
     <!-- Bottom Bar Color -->
     <color name="iconRegular">#808080</color>

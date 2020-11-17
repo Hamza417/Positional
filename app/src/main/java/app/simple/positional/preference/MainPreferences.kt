@@ -1,7 +1,6 @@
 package app.simple.positional.preference
 
 import android.content.Context
-import androidx.annotation.IntRange
 import androidx.annotation.NonNull
 import app.simple.positional.constants.*
 
@@ -13,12 +12,12 @@ class MainPreferences {
      * 3 - System
      * 4 - Day/Night
      */
-    fun setCurrentTheme(@NonNull context: Context, @NonNull @IntRange(from = 1, to = 4) value: Int) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(currentTheme, value).apply()
+    fun setDayNight(@NonNull context: Context, @NonNull value: Boolean) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(dayNightMode, value).apply()
     }
 
-    fun getCurrentTheme(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(currentTheme, 1)
+    fun isDayNightOn(context: Context): Boolean {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(dayNightMode, false)
     }
 
     fun setShowPermissionDialog(context: Context, value: Boolean) {

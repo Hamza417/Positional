@@ -18,6 +18,7 @@
         <item name="android:statusBarColor">@color/toolbarBackground</item>
         <item name="android:navigationBarColor">@color/toolbarBackground</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:colorEdgeEffect">@color/edgeEffect</item>
         <item name="cardBackground">#fafafa</item>
         <item name="clockDialColor">@color/clockDialColor</item>
 
@@ -28,6 +29,8 @@
         <item name="switcher_on_color">@color/switcher_on_color</item>
         <item name="switcher_off_color">@color/switcher_off_color</item>
         <item name="switcher_icon_color">@color/switcher_icon_color</item>
+
+        <item name="android:popupBackground">@style/PopupMenu</item>
 
         <item name="alphaIcons">0.5</item>
     </style>
@@ -58,4 +61,9 @@
         <item name="android:windowEnterAnimation">@anim/bottom_sheet_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/bottom_sheet_dialog_out</item>
     </style>
+
+    <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/bg_popup</item>
+    </style>
+
 </resources>

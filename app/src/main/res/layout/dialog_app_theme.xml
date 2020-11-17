@@ -81,4 +81,29 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="Auto (Day/Night)"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <RadioButton
+            android:id="@+id/day_night"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="?attr/iconColor" />
+
+    </LinearLayout>
+
 </LinearLayout>

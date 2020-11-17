@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         if (BuildConfig.DEBUG) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
-
         //app.simple.positional.theme.setTheme(MainPreferences().getCurrentTheme(baseContext))
 
         setContentView(R.layout.activity_main)
@@ -96,7 +95,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
                 runService()
                 baseContext.startService(Intent(this, LocationService::class.java))
             } else {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale((this), Manifest.permission.ACCESS_FINE_LOCATION)) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     Toast.makeText(this, "Some features may not work without location permission", Toast.LENGTH_LONG).show()
                 }
             }
@@ -227,7 +226,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     }
 
     override fun onBottomSheetSliding(slideOffset: Float) {
-        //bottomBar.translationY = (bottomBar.height * slideOffset)
         findViewById<FrameLayout>(R.id.bottom_bar_wrapper).translationY = (findViewById<FrameLayout>(R.id.bottom_bar_wrapper).height * slideOffset)
     }
 }
