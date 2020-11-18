@@ -53,6 +53,11 @@ class Launcher : Fragment() {
             randomNightValue = 0
         }
 
+        if (BuildConfig.DEBUG) {
+            randomDayValue = 21
+            randomNightValue = 3
+        }
+
         when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 colorOne = vectorNightColors[randomNightValue][0]

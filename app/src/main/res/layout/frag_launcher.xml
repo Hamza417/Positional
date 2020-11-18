@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/logo"
-        android:text="Positional"
+        android:text="@string/app_name"
         android:textSize="14pt"
         app:layout_constraintBottom_toTopOf="@+id/launcher_icon"
         app:layout_constraintEnd_toEndOf="parent"
