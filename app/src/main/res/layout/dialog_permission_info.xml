@@ -4,23 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="@dimen/dialog_height"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:fontFamily="sans-serif-medium"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/medium"
             android:text="Required Permissions"
             android:textColor="?attr/textPrimary"
-            android:textSize="8pt" />
+            android:textSize="@dimen/options_header_text_size" />
 
         <View
             android:layout_width="match_parent"
@@ -45,6 +44,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/permission_acknowledgement"
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/description_text_size" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -54,16 +62,18 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
                             android:text="• ACCESS_FINE_LOCATION"
                             android:textColor="?attr/textPrimary"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/permission_tag_text_size" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/light"
+                            android:fontFamily="@font/regular"
                             android:text="@string/access_fine_location_info"
-                            android:textColor="?attr/textSecondary" />
+                            android:textColor="?attr/textSecondary"
+                            android:textSize="@dimen/description_text_size" />
 
                     </LinearLayout>
 
@@ -77,14 +87,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
                             android:text="• ACCESS_COARSE_LOCATION"
                             android:textColor="?attr/textPrimary"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/permission_tag_text_size" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/light"
+                            android:fontFamily="@font/regular"
+                            android:textSize="@dimen/description_text_size"
                             android:text="@string/coarse_perm_info"
                             android:textColor="?attr/textSecondary" />
 
@@ -100,14 +112,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
                             android:text="• INTERNET"
                             android:textColor="?attr/textPrimary"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/permission_tag_text_size" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/light"
+                            android:fontFamily="@font/regular"
+                            android:textSize="@dimen/description_text_size"
                             android:text="@string/internet_perm_info"
                             android:textColor="?attr/textSecondary" />
 
@@ -123,14 +137,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
                             android:text="• ACCESS_WIFI_STATE"
                             android:textColor="?attr/textPrimary"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/permission_tag_text_size" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/light"
+                            android:fontFamily="@font/regular"
+                            android:textSize="@dimen/description_text_size"
                             android:text="@string/wfi_perm_info"
                             android:textColor="?attr/textSecondary" />
 
@@ -141,19 +157,22 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="• ACCESS_NETWORK_STATE"
+                            android:fontFamily="@font/medium"
                             android:textColor="?attr/textPrimary"
-                            android:textStyle="bold" />
+                            android:text="• ACCESS_NETWORK_STATE"
+                            android:textSize="@dimen/permission_tag_text_size" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/light"
+                            android:fontFamily="@font/regular"
+                            android:textSize="@dimen/description_text_size"
                             android:text="@string/network_perm_info"
                             android:textColor="?attr/textSecondary" />
 
@@ -170,9 +189,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="end"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
             android:orientation="horizontal">
 
             <CheckBox
@@ -191,6 +209,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
+                android:textSize="@dimen/options_item_text_size"
                 android:text="Show Again"
                 android:textColor="?attr/textSecondary" />
 
@@ -199,6 +218,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_btn"
+                android:fontFamily="@font/medium"
                 android:text="Close"
                 android:textColor="?attr/textPrimary" />
 
@@ -208,6 +228,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/ripple_btn"
+                android:fontFamily="@font/medium"
                 android:text="Grant"
                 android:textColor="?attr/textPrimary" />
 

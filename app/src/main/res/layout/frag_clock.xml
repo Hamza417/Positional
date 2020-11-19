@@ -24,12 +24,12 @@
             android:fontFamily="@font/medium"
             android:text="Clock"
             android:textColor="?attr/textPrimary"
-            android:textSize="14pt" />
+            android:textSize="@dimen/top_bar_text_size" />
 
         <ImageButton
             android:id="@+id/clock_menu"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/top_bar_button_size"
+            android:layout_height="@dimen/top_bar_button_size"
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple"
             android:src="@drawable/ic_more_horiz"
@@ -46,14 +46,14 @@
         android:orientation="vertical">
 
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1">
 
             <ImageView
-                android:layout_width="350dp"
-                android:layout_height="350dp"
+                android:layout_width="@dimen/clock_image_shadow_size"
+                android:layout_height="@dimen/clock_image_shadow_size"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_clock_shadow" />
 
@@ -75,10 +75,10 @@
 
             <ImageView
                 android:id="@+id/day_night_indicator"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="@dimen/clock_day_night_indicator"
+                android:layout_height="@dimen/clock_day_night_indicator"
                 android:layout_gravity="center"
-                android:layout_marginBottom="75dp" />
+                android:layout_marginBottom="60dp" />
 
             <ImageView
                 android:id="@+id/hour"

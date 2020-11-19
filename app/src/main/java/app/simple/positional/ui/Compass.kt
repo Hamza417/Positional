@@ -26,6 +26,7 @@ import app.simple.positional.constants.compassBloomRes
 import app.simple.positional.constants.compassBloomTextColor
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
+import app.simple.positional.dialogs.compass.NoSensorAlert
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.util.*
 import kotlinx.android.synthetic.main.frag_compass.*
@@ -97,15 +98,24 @@ class Compass : Fragment(), SensorEventListener {
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null && sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
-            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-            haveMagnetometerSensor = true
-            haveAccelerometerSensor = true
-        } else {
+        try {
+            if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null && sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
+                sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+                sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+                haveMagnetometerSensor = true
+                haveAccelerometerSensor = true
+            } else {
+                haveAccelerometerSensor = false
+                haveMagnetometerSensor = false
+
+                if (CompassPreference().isNoSensorAlertON(requireContext())) {
+                    val noSensorAlert = NoSensorAlert().newInstance()
+                    noSensorAlert.show(parentFragmentManager, "no_sensor_alert")
+                }
+            }
+        } catch (e: NullPointerException) {
             haveAccelerometerSensor = false
             haveMagnetometerSensor = false
-            compass_accuracy.text = "Your device does not have required sensors to make the compass work"
         }
 
         isFLowerBlooming = CompassPreference().isFlowerBloom(requireContext())

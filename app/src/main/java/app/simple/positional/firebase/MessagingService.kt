@@ -75,7 +75,7 @@ class MessagingService : FirebaseMessagingService() {
         val channelId = "notification_channel_id_for_positional"
 
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.ic_place)
+                .setSmallIcon(R.drawable.ic_place_notification)
                 .setColor(Color.parseColor("#1B9CFF"))
                 .setSubText("Upcoming Changes")
                 .setContentTitle(title)

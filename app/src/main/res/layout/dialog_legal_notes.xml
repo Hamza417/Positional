@@ -7,7 +7,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="@dimen/dialog_height"
         android:clipToPadding="false"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="25dp"

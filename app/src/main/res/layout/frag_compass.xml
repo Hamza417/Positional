@@ -28,15 +28,18 @@
             android:fontFamily="@font/medium"
             android:text="Compass"
             android:textColor="?attr/textPrimary"
-            android:textSize="14pt" />
+            android:textSize="@dimen/top_bar_text_size" />
 
         <ImageButton
             android:id="@+id/compass_menu"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/top_bar_button_size"
+            android:layout_height="@dimen/top_bar_button_size"
+            android:contentDescription="@string/compass_menu_button"
+            android:padding="10dp"
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple"
             android:src="@drawable/ic_more_horiz"
+            android:scaleType="fitCenter"
             android:tint="?attr/iconColor" />
 
     </com.google.android.material.appbar.MaterialToolbar>
@@ -74,7 +77,7 @@
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/light"
             android:textColor="?attr/textPrimary"
-            android:textSize="16pt" />
+            android:textSize="@dimen/compass_direction_text_size" />
 
     </LinearLayout>
 

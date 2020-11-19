@@ -38,7 +38,7 @@ import com.google.android.gms.maps.model.*
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_gps.*
-import kotlinx.android.synthetic.main.gps_info_cards.*
+import kotlinx.android.synthetic.main.info_panel_gps.*
 import java.io.IOException
 import java.lang.ref.WeakReference
 import java.util.*

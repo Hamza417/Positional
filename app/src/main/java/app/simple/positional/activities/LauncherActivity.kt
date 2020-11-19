@@ -11,7 +11,6 @@ import app.simple.positional.theme.setAppTheme
 import app.simple.positional.ui.Launcher
 import app.simple.positional.ui.License
 
-
 class LauncherActivity : AppCompatActivity(), LicenceStatusCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +25,13 @@ class LauncherActivity : AppCompatActivity(), LicenceStatusCallback {
 
         setContentView(R.layout.activity_launcher)
 
-        if (!BuildConfig.DEBUG) {
-            if (MainPreferences().getLicenceStatus(this) || BuildConfig.FLAVOR == "lite") {
-                onLicenseCheckCompletion()
-            } else {
-                supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                        .replace(R.id.launcher_act, License().newInstance(), "license")
-                        .commit()
-            }
-        } else {
+        if (MainPreferences().getLicenceStatus(this) || BuildConfig.FLAVOR == "lite") {
             onLicenseCheckCompletion()
+        } else {
+            supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                    .replace(R.id.launcher_act, License().newInstance(), "license")
+                    .commit()
         }
     }
 

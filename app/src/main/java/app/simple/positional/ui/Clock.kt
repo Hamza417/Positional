@@ -30,8 +30,8 @@ import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.clock_info_cards.*
 import kotlinx.android.synthetic.main.frag_clock.*
+import kotlinx.android.synthetic.main.info_panel_clock.*
 import org.shredzone.commons.suncalc.*
 import java.lang.ref.WeakReference
 import java.text.ParseException

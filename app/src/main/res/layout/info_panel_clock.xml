@@ -34,15 +34,17 @@
                 android:fontFamily="@font/medium"
                 android:text="Clock Info"
                 android:textColor="?attr/textSecondary"
-                android:textSize="8pt" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
             <ImageButton
                 android:id="@+id/clock_copy"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/copy_button_dimensions"
+                android:layout_height="@dimen/copy_button_dimensions"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ripple_btn"
                 android:src="@drawable/ic_content_copy"
+                android:padding="@dimen/copy_button_padding"
+                android:scaleType="fitCenter"
                 app:tint="?attr/iconColor" />
 
         </LinearLayout>
@@ -59,8 +61,8 @@
             android:paddingHorizontal="10dp">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/info_graphics_dimension"
+                android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
                 android:src="@drawable/ic_access_time" />
 
@@ -77,18 +79,18 @@
                     android:fontFamily="@font/light"
                     android:text="Local Time"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="18pt" />
+                    android:textSize="@dimen/info_text_primary_size" />
 
                 <com.elyeproj.loaderviewlibrary.LoaderTextView
                     android:id="@+id/local_timezone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -96,12 +98,12 @@
                     android:id="@+id/digital_time_24_hour"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -109,12 +111,12 @@
                     android:id="@+id/digital_time_12_hour"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -122,12 +124,12 @@
                     android:id="@+id/local_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -153,18 +155,18 @@
                 android:fontFamily="@font/light"
                 android:text="UTC Time"
                 android:textColor="?attr/textPrimary"
-                android:textSize="18pt" />
+                android:textSize="@dimen/info_text_primary_size" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/time_zone_utc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -172,12 +174,12 @@
                 android:id="@+id/time_utc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -185,12 +187,12 @@
                 android:id="@+id/date_utc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -213,18 +215,18 @@
                 android:fontFamily="@font/light"
                 android:text="Sun Position"
                 android:textColor="?attr/textPrimary"
-                android:textSize="18pt" />
+                android:textSize="@dimen/info_text_primary_size" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/sun_azimuth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -232,12 +234,12 @@
                 android:id="@+id/sun_distance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -245,12 +247,12 @@
                 android:id="@+id/sun_altitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
         </LinearLayout>
@@ -265,8 +267,8 @@
             android:paddingHorizontal="10dp">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/info_graphics_dimension"
+                android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
                 android:src="@drawable/ic_sunrise" />
 
@@ -283,18 +285,18 @@
                     android:fontFamily="@font/light"
                     android:text="Sun Time"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="18pt" />
+                    android:textSize="@dimen/info_text_primary_size" />
 
                 <com.elyeproj.loaderviewlibrary.LoaderTextView
                     android:id="@+id/sunrise_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -302,12 +304,12 @@
                     android:id="@+id/sunset_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -315,12 +317,12 @@
                     android:id="@+id/sun_noon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -328,12 +330,12 @@
                     android:id="@+id/sun_nadir"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -351,8 +353,8 @@
             android:paddingHorizontal="10dp">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/info_graphics_dimension"
+                android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
                 android:src="@drawable/ic_twilight" />
 
@@ -369,18 +371,18 @@
                     android:fontFamily="@font/light"
                     android:text="Twilight"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="18pt" />
+                    android:textSize="@dimen/info_text_primary_size" />
 
                 <com.elyeproj.loaderviewlibrary.LoaderTextView
                     android:id="@+id/astronomical_dawm_twilight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -388,12 +390,12 @@
                     android:id="@+id/astronomical_dusk_twilight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -401,12 +403,12 @@
                     android:id="@+id/nautical_dawn_twilight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -414,12 +416,12 @@
                     android:id="@+id/nautical_dusk_twilight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -427,12 +429,12 @@
                     android:id="@+id/civil_dawn_twilight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -440,12 +442,12 @@
                     android:id="@+id/civil_dusk_twilight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -470,18 +472,18 @@
                 android:fontFamily="@font/light"
                 android:text="Moon Position"
                 android:textColor="?attr/textPrimary"
-                android:textSize="18pt" />
+                android:textSize="@dimen/info_text_primary_size" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/moon_azimuth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -489,12 +491,12 @@
                 android:id="@+id/moon_distance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -502,12 +504,12 @@
                 android:id="@+id/moon_altitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -515,12 +517,12 @@
                 android:id="@+id/moon_parallactic_angle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
         </LinearLayout>
@@ -535,8 +537,8 @@
             android:paddingHorizontal="10dp">
 
             <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/info_graphics_dimension"
+                android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
                 android:src="@drawable/ic_moon_phase" />
 
@@ -553,18 +555,18 @@
                     android:fontFamily="@font/light"
                     android:text="Moon Time"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="18pt" />
+                    android:textSize="@dimen/info_text_primary_size" />
 
                 <com.elyeproj.loaderviewlibrary.LoaderTextView
                     android:id="@+id/moonrise_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -572,12 +574,12 @@
                     android:id="@+id/moon_set_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -598,8 +600,8 @@
 
             <ImageView
                 android:id="@+id/moon_phase_graphics"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="@dimen/info_graphics_dimension"
+                android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
                 android:padding="10dp"
                 android:src="@drawable/moon_phase_02" />
@@ -616,18 +618,18 @@
                     android:fontFamily="@font/light"
                     android:text="Moon Illumination"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="18pt" />
+                    android:textSize="@dimen/info_text_primary_size" />
 
                 <com.elyeproj.loaderviewlibrary.LoaderTextView
                     android:id="@+id/moon_fraction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -635,12 +637,12 @@
                     android:id="@+id/moon_angle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -648,12 +650,12 @@
                     android:id="@+id/moon_angle_state"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -661,12 +663,12 @@
                     android:id="@+id/moon_phase"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -674,12 +676,12 @@
                     android:id="@+id/moon_phase_angle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
 
@@ -687,12 +689,12 @@
                     android:id="@+id/next_full_moon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:fontFamily="@font/light"
                     android:maxLines="1"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="8pt"
+                    android:textSize="@dimen/info_text_secondary_size"
                     app:corners="20"
                     app:use_gradient="true" />
             </LinearLayout>

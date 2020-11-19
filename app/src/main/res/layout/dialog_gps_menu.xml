@@ -5,14 +5,14 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_view"
     android:clipChildren="false"
-    android:clipToPadding="false"
-    android:padding="20dp">
+    android:clipToPadding="false">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:padding="@dimen/options_container_padding"
         app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
         <LinearLayout
@@ -27,7 +27,7 @@
                 android:fontFamily="@font/medium"
                 android:text="Appearance"
                 android:textColor="?attr/textSecondary"
-                android:textSize="6pt" />
+                android:textSize="@dimen/options_category_text_size" />
 
             <LinearLayout
                 android:id="@+id/map_label"
@@ -36,7 +36,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="@dimen/options_item_padding">
 
                 <ImageView
                     android:layout_width="@dimen/options_icon_size"
@@ -54,12 +54,12 @@
                     android:fontFamily="@font/regular"
                     android:text="Show Label"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="@dimen/settings_primary_text_size" />
+                    android:textSize="@dimen/options_item_text_size" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/toggle_label"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:checked="true"
                     android:thumb="@drawable/switch_thumb"
                     app:track="@drawable/switch_track" />
@@ -72,7 +72,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:padding="@dimen/options_item_padding">
 
                 <ImageView
                     android:layout_width="@dimen/options_icon_size"
@@ -90,13 +90,12 @@
                     android:fontFamily="@font/regular"
                     android:text="Satellite Map"
                     android:textColor="?attr/textPrimary"
-                    android:textSize="@dimen/settings_primary_text_size" />
+                    android:textSize="@dimen/options_item_text_size" />
 
                 <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/toggle_satellite"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:checked="true"
+                    android:layout_height="wrap_content"
                     android:thumb="@drawable/switch_thumb"
                     app:track="@drawable/switch_track" />
 

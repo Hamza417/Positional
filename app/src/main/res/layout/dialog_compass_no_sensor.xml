@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog"
-    android:padding="@dimen/options_container_padding">
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginVertical="10dp"
             android:fontFamily="@font/medium"
-            android:text="Uh Ohh !!"
+            android:text="Uh Ohh!!"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_header_text_size" />
 
@@ -31,10 +32,10 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:padding="10dp"
-            android:textSize="@dimen/description_text_size"
-            android:text="@string/play_services_issue"
-            android:textColor="?attr/textSecondary" />
+            android:padding="@dimen/options_item_padding"
+            android:text="@string/no_sensor_alert"
+            android:textColor="?attr/textSecondary"
+            android:textSize="@dimen/description_text_size" />
 
         <View
             android:layout_width="match_parent"
@@ -49,7 +50,7 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/play_services_issue_positive_reminder_checkbox"
+                android:id="@+id/compass_no_sensor_no_show"
                 style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -65,19 +66,17 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="Show Again"
-                android:textSize="@dimen/options_item_text_size"
-                android:textColor="?attr/textSecondary" />
+                android:textColor="?attr/textSecondary"
+                android:textSize="@dimen/options_item_text_size" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/play_services_issue_positive_button"
+                android:id="@+id/compass_no_sensor_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:background="@drawable/ripple_btn"
                 android:text="Ok"
-                android:fontFamily="@font/medium"
-                android:textSize="@dimen/options_item_text_size"
-                android:textColor="?attr/textPrimary" />
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
 
         </LinearLayout>
 

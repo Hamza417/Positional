@@ -11,12 +11,14 @@
     android:fadingEdgeLength="50dp"
     android:overScrollMode="always"
     android:paddingHorizontal="10dp"
+    android:animateLayoutChanges="true"
     android:requiresFadingEdge="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:animateLayoutChanges="true"
         android:paddingVertical="10dp">
 
         <LinearLayout
@@ -34,15 +36,17 @@
                 android:fontFamily="@font/medium"
                 android:text="GPS Info"
                 android:textColor="?attr/textSecondary"
-                android:textSize="8pt" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
             <ImageButton
                 android:id="@+id/gps_copy"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/copy_button_dimensions"
+                android:layout_height="@dimen/copy_button_dimensions"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ripple_btn"
                 android:src="@drawable/ic_content_copy"
+                android:padding="@dimen/copy_button_padding"
+                android:scaleType="fitCenter"
                 app:tint="?attr/iconColor" />
 
         </LinearLayout>
@@ -64,18 +68,18 @@
                 android:fontFamily="@font/light"
                 android:text="Provider"
                 android:textColor="?attr/textPrimary"
-                android:textSize="18pt" />
+                android:textSize="@dimen/info_text_primary_size" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/provider_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -83,12 +87,12 @@
                 android:id="@+id/provider_source"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -111,18 +115,18 @@
                 android:fontFamily="@font/light"
                 android:text="GPS"
                 android:textColor="?attr/textPrimary"
-                android:textSize="18pt" />
+                android:textSize="@dimen/info_text_primary_size" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_accuracy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -130,12 +134,12 @@
                 android:id="@+id/gps_altitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -143,12 +147,12 @@
                 android:id="@+id/gps_bearing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -156,12 +160,12 @@
                 android:id="@+id/gps_speed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -184,18 +188,18 @@
                 android:fontFamily="@font/light"
                 android:text="Coordinates"
                 android:textColor="?attr/textPrimary"
-                android:textSize="18pt" />
+                android:textSize="@dimen/info_text_primary_size" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -203,12 +207,12 @@
                 android:id="@+id/longitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:maxLines="1"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 
@@ -231,17 +235,17 @@
                 android:fontFamily="@font/light"
                 android:text="Address"
                 android:textColor="?attr/textPrimary"
-                android:textSize="18pt" />
+                android:textSize="@dimen/info_text_primary_size" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/clock_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/clock_item_margin_vertical"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:fontFamily="@font/light"
                 android:textColor="?attr/textPrimary"
-                android:textSize="8pt"
+                android:textSize="@dimen/info_text_secondary_size"
                 app:corners="20"
                 app:use_gradient="true" />
 

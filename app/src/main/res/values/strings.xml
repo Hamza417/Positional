@@ -18,4 +18,8 @@
     <string name="info_error">Info couldn\'t be copied!!</string>
     <string name="found_issue">It is hard to make an app and even harder to make everything working flawlessly. In such situations it is always nice to have some support, if you found an issue please file an issue on Github expressing your problems or email me, it is quick and easy and it will only make the app better</string>
     <string name="play_services_issue">Looks your device does not support Google Play Services, it could be because of faulty implementation or your device manufacturer did not installed it, either way it is going to break some of the apps\' functionality</string>
+    <string name="no_sensor_alert">Your device does not seem to have the required sensors available to make the Compass work :(\n\nIf you think this is a mistake please contact developer to resolve this issue as soon as possible</string>
+    <string name="permission_acknowledgement">This app uses location information to calculate all the information shown in this app, this app does not collect any user data and does not sell any information of the user to any third party.\nThese are the permissions the app uses to show the meaningful information to the user</string>
+    <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your device in figure eight direction to calibrate</string>
+    <string name="compass_menu_button">Compass Menu Button</string>
 </resources>

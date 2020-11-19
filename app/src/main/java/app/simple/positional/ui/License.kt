@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.util.fromHtml
 import app.simple.positional.util.setTextAnimation
 import com.google.android.vending.licensing.AESObfuscator
 import com.google.android.vending.licensing.LicenseChecker
@@ -34,6 +35,12 @@ class License : Fragment(), LicenseCheckerCallback {
 
     private var mLicenseCheckerCallback: LicenseCheckerCallback? = null
     private var mChecker: LicenseChecker? = null
+
+    private val invalidInfo = "" +
+            "  <b><h3>Few things you can do:</h3></b><br>" +
+            "  • Check if your internet is working, it is required for verification<br>" +
+            "  • If you've downloaded this app from somewhere else, download it from Play Store<br>" +
+            "  • If you've purchased this app and still got this issue, please contact developer to resolve this immediately"
 
     // Generate your own 20 random bytes, and put them here.
     private val salt = byteArrayOf(-46, 65, 30, -128, -103, -57, 74, -64, 51, 88, -95, -45, 77, -117, -36, -113, -11, 32, -64, 89)
@@ -79,6 +86,7 @@ class License : Fragment(), LicenseCheckerCallback {
             try {
                 licence_status.setTextAnimation("License Validation Failed", 500)
                 licence_loader.visibility = View.GONE
+                invalid_info.text = fromHtml(invalidInfo)
                 invalid_info.visibility = View.VISIBLE
             } catch (e: NullPointerException) {
             }

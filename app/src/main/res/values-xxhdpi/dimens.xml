@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!--    These are generic dimension values that are optimized for 1080p 440 dp (xxHDPI) displays -->
-
-    <!--    For other displays please check their respective values folder and modify it according to the display requirement -->
-
-    <!--    If any new value is added prior to release/production,
-            please update the respective values here as well and in other resources as well -->
-
-    <!--    All the dimension values have been header tagged to the category and layout they
-            specifically belong to, please edit them accordingly -->
-
     <!-- Clock -->
     <dimen name="clock_needle_dimensions">220dp</dimen>
     <dimen name="clock_image_dimensions">260dp</dimen>
@@ -37,6 +26,9 @@
     <dimen name="options_category_text_size">6pt</dimen>
     <dimen name="options_sub_item_padding">10dp</dimen>
     <dimen name="options_header_text_size">8pt</dimen>
+    <dimen name="dialog_height">400dp</dimen>
+    <dimen name="description_text_size">6pt</dimen>
+    <dimen name="permission_tag_text_size">7pt</dimen>
 
     <!-- Top Bar -->
     <dimen name="top_bar_elevation">2dp</dimen>
@@ -50,6 +42,7 @@
     <dimen name="degree_indicator_margin_top">40dp</dimen>
     <dimen name="degrees_indicator_dimension">40dp</dimen>
     <dimen name="compass_bloom_dimension">180dp</dimen>
+    <dimen name="compass_direction_text_size">16pt</dimen>
 
     <!-- Settings -->
     <dimen name="settings_primary_text_size">7pt</dimen>
@@ -63,8 +56,5 @@
     <dimen name="touch_indicator_size">100dp</dimen>
     <dimen name="license_text_size">14pt</dimen>
     <dimen name="license_check_indicator_dimen">50dp</dimen>
-    <dimen name="dialog_height">400dp</dimen>
-    <dimen name="description_text_size">10pt</dimen>
-    <dimen name="permission_tag_text_size">10pt</dimen>
-    <dimen name="compass_direction_text_size">16pt</dimen>
+
 </resources>

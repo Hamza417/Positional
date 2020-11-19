@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog"
@@ -12,7 +13,8 @@
         android:layout_marginHorizontal="30dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:src="@drawable/compass_calibrate" />
+        android:src="@drawable/compass_calibrate"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -20,9 +22,10 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/medium"
+        android:fontFamily="@font/regular"
         android:gravity="center"
-        android:text="Your device compass sensor accuracy is low, move your device in figure eight direction to calibrate"
+        android:text="@string/compass_calibration_notice"
+        android:textSize="@dimen/description_text_size"
         android:textAlignment="center"
         android:textColor="?attr/textSecondary" />
 
@@ -34,6 +37,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/medium"
         android:gravity="center"
+        android:textSize="@dimen/description_text_size"
         android:textAlignment="center"
         android:textColor="?attr/textPrimary" />
 

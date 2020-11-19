@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="150dp"
+    app:behavior_peekHeight="@dimen/peek_height"
     app:layout_behavior="app.simple.positional.behaviors.CustomBottomSheetBehavior">
 
     <ImageView
@@ -15,6 +15,6 @@
         android:src="@drawable/ic_expand_up"
         app:tint="@color/iconColor" />
 
-    <include layout="@layout/clock_info_cards" />
+    <include layout="@layout/info_panel_clock" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

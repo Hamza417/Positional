@@ -14,10 +14,10 @@
         android:clipToPadding="false">
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/degrees_indicator_dimension"
+            android:layout_height="@dimen/degrees_indicator_dimension"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="@dimen/degree_indicator_margin_top"
             android:src="@drawable/ic_arrow_drop_up"
             app:tint="?attr/iconColor" />
 
@@ -30,34 +30,30 @@
         <ImageView
             android:id="@+id/flower_one"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/compass_dial"
+            android:layout_height="@dimen/compass_bloom_dimension"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:padding="60dp" />
+            android:adjustViewBounds="true" />
 
         <ImageView
             android:id="@+id/flower_two"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/compass_dial"
+            android:layout_height="@dimen/compass_bloom_dimension"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:padding="60dp" />
+            android:adjustViewBounds="true" />
 
         <ImageView
             android:id="@+id/flower_three"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/compass_dial"
+            android:layout_height="@dimen/compass_bloom_dimension"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:padding="60dp" />
+            android:adjustViewBounds="true" />
 
         <ImageView
             android:id="@+id/flower_four"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/compass_dial"
+            android:layout_height="@dimen/compass_bloom_dimension"
             android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:padding="60dp" />
+            android:adjustViewBounds="true" />
 
     </FrameLayout>
 
@@ -67,6 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/degrees"
-        android:textColor="#ffffff"
-        android:textSize="20pt" />
+        android:textColor="@color/indicator"
+        android:textSize="@dimen/compass_degrees_text_size" />
 </FrameLayout>

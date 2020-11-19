@@ -21,7 +21,7 @@
             android:fontFamily="@font/medium"
             android:text="Settings"
             android:textColor="?attr/textPrimary"
-            android:textSize="14pt" />
+            android:textSize="@dimen/top_bar_text_size" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -47,7 +47,7 @@
                 android:fontFamily="@font/medium"
                 android:text="Appearance"
                 android:textColor="?attr/textSecondary"
-                android:textSize="6pt" />
+                android:textSize="@dimen/settings_secondary_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,6 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
+                        android:textSize="@dimen/settings_secondary_text_size"
                         android:textColor="?attr/textSecondary" />
 
                 </LinearLayout>
@@ -91,7 +92,7 @@
                 android:fontFamily="@font/medium"
                 android:text="Configuration"
                 android:textColor="?attr/textSecondary"
-                android:textSize="6pt" />
+                android:textSize="@dimen/settings_secondary_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,6 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
+                        android:textSize="@dimen/settings_secondary_text_size"
                         android:textColor="?attr/textSecondary" />
 
                 </LinearLayout>
@@ -155,7 +157,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/regular"
-                            android:text="Receive notifications about changes in upcoming updates"
+                            android:text="Receive non intrusive notifications about changes in upcoming updates"
+                            android:textSize="@dimen/settings_secondary_text_size"
                             android:textColor="?attr/textSecondary" />
                     </LinearLayout>
 
@@ -178,7 +181,7 @@
                 android:fontFamily="@font/medium"
                 android:text="About"
                 android:textColor="?attr/textSecondary"
-                android:textSize="6pt" />
+                android:textSize="@dimen/settings_secondary_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -208,8 +211,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="Click to read app's Desclaimer, Privacy Policy and Terms and Conditions of use"
-                        android:textColor="?attr/textSecondary" />
+                        android:text="Click to read app's Disclaimer, Privacy Policy and Terms and Conditions of use"
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/settings_secondary_text_size" />
 
                 </LinearLayout>
 
@@ -235,6 +239,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
                         android:text="@string/versionName"
+                        android:textSize="@dimen/settings_secondary_text_size"
                         android:textColor="?attr/textSecondary" />
 
                 </LinearLayout>
@@ -261,6 +266,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
+                        android:textSize="@dimen/settings_secondary_text_size"
                         android:text="See the detailed change log for this and all the previous releases till date or information about any upcoming updates in future"
                         android:textColor="?attr/textSecondary" />
 
@@ -274,7 +280,7 @@
                 android:fontFamily="@font/medium"
                 android:text="Contribute"
                 android:textColor="?attr/textSecondary"
-                android:textSize="6pt" />
+                android:textSize="@dimen/settings_secondary_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -304,6 +310,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
+                        android:textSize="@dimen/settings_secondary_text_size"
                         android:text="If you are a developer and want to contribute to development, you can fork the repo or raise/fix an issue"
                         android:textColor="?attr/textSecondary" />
 
@@ -331,6 +338,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
+                        android:textSize="@dimen/settings_secondary_text_size"
                         android:text="If you think there is a problem or something can be better"
                         android:textColor="?attr/textSecondary" />
 

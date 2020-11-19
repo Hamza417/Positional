@@ -38,12 +38,12 @@
             android:fontFamily="@font/medium"
             android:text="GPS"
             android:textColor="?attr/textPrimary"
-            android:textSize="14pt" />
+            android:textSize="@dimen/top_bar_text_size" />
 
         <ImageButton
             android:id="@+id/gps_location_indicator"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/top_bar_button_size"
+            android:layout_height="@dimen/top_bar_button_size"
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple_btn"
             android:src="@drawable/ic_gps_fixed"
@@ -51,8 +51,8 @@
 
         <ImageButton
             android:id="@+id/gps_menu"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/top_bar_button_size"
+            android:layout_height="@dimen/top_bar_button_size"
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ripple_btn"
