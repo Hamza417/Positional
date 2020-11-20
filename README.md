@@ -26,6 +26,7 @@
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
 [![Changelogs](https://badgen.net/badge/Changelogs/Latest%20Release/green?list)](https://github.com/Hamza417/Positional/releases)
 ![Status](https://badgen.net/badge/Status/stable/orange?icon)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE)
 
 </br>
 
@@ -73,6 +74,7 @@ Please make sure to update tests as appropriate.
 <br/>
 
 ## License
-  <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
+  **Positional** is released as open source software under the [GPL v3](https://opensource.org/licenses/gpl-3.0.html) 
+license, see the [LICENSE](./LICENSE) file in the project root for the full license text.
   
   [1]: http://www.inf.ufrgs.br
