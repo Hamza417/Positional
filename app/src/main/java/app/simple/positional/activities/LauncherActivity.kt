@@ -18,8 +18,10 @@ class LauncherActivity : AppCompatActivity(), LicenceStatusCallback {
         if (MainPreferences().isDayNightOn(this)) {
             setAppTheme(4)
         } else {
-            if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            val value = MainPreferences().getTheme(this)
+
+            if (value != AppCompatDelegate.getDefaultNightMode()) {
+                AppCompatDelegate.setDefaultNightMode(value)
             }
         }
 

@@ -1,23 +1,24 @@
 package app.simple.positional.util
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.os.AsyncTask
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import app.simple.positional.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-@Suppress("deprecation")
 fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Context, delay: Int) {
-    class GetData : AsyncTask<Void, Void, Drawable>() {
-        override fun doInBackground(vararg params: Void?): Drawable? {
-            return if (resourceValue != 0) context.resources?.let { ResourcesCompat.getDrawable(it, resourceValue, null) }!! else null
-        }
 
-        override fun onPostExecute(result: Drawable?) {
-            super.onPostExecute(result)
+    CoroutineScope(Dispatchers.Default).launch {
+        val drawable = if (resourceValue != 0) context.resources?.let {
+            ResourcesCompat.getDrawable(it, resourceValue, null)
+        }!! else null
+
+        withContext(Dispatchers.Main) {
             val animOut: Animation = AnimationUtils.loadAnimation(context, R.anim.image_out)
             val animIn: Animation = AnimationUtils.loadAnimation(context, R.anim.image_in)
 
@@ -28,7 +29,7 @@ fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Contex
                 override fun onAnimationStart(animation: Animation?) {}
 
                 override fun onAnimationEnd(animation: Animation?) {
-                    imageView.setImageDrawable(result)
+                    imageView.setImageDrawable(drawable)
                     animIn.setAnimationListener(object : Animation.AnimationListener {
                         override fun onAnimationStart(animation: Animation?) {
 
@@ -49,40 +50,23 @@ fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Contex
                 override fun onAnimationRepeat(animation: Animation?) {}
             })
             imageView.startAnimation(animOut)
-        }
-    }
 
-    val getData = GetData()
-
-    if (getData.status == AsyncTask.Status.RUNNING) {
-        if (getData.cancel(true)) {
-            getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
-    } else {
-        getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 }
 
-@Suppress("deprecation")
+
 fun loadImageResourcesWithoutAnimation(resourceValue: Int, imageView: ImageView, context: Context) {
-    class GetData : AsyncTask<Void, Void, Drawable>() {
-        override fun doInBackground(vararg params: Void?): Drawable? {
-            return if (resourceValue != 0) context.resources?.let { ResourcesCompat.getDrawable(it, resourceValue, null) }!! else null
-        }
+    CoroutineScope(Dispatchers.Default).launch {
+        val drawable = if (resourceValue != 0) context.resources?.let {
+            ResourcesCompat.getDrawable(it, resourceValue, null)
+        }!! else null
 
-        override fun onPostExecute(result: Drawable?) {
-            super.onPostExecute(result)
-            imageView.setImageDrawable(result)
+        withContext(Dispatchers.Main) {
+            try {
+                imageView.setImageDrawable(drawable)
+            } catch (e: NullPointerException) {
+            }
         }
-    }
-
-    val getData = GetData()
-
-    if (getData.status == AsyncTask.Status.RUNNING) {
-        if (getData.cancel(true)) {
-            getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-        }
-    } else {
-        getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
     }
 }

@@ -2,10 +2,10 @@ package app.simple.positional.ui
 
 import android.content.*
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -39,6 +39,10 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_gps.*
 import kotlinx.android.synthetic.main.info_panel_gps.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.lang.ref.WeakReference
 import java.util.*
@@ -65,6 +69,8 @@ class GPS : Fragment() {
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
 
+    private var marker: Bitmap? = null
+
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
     private var location: Location? = null
@@ -73,6 +79,12 @@ class GPS : Fragment() {
 
     private var isMapMoved = false
     private var isMetric = true
+    private var isCustomCoordinate = false
+
+    private var customLatitude = 0.0
+    private var customLongitude = 0.0
+    private var lastLatitude = 0.0
+    private var lastLongitude = 0.0
 
     private lateinit var mapFragment: SupportMapFragment
     private var googleMap: GoogleMap? = null
@@ -82,7 +94,7 @@ class GPS : Fragment() {
 
         accuracy = view.findViewById(R.id.gps_accuracy)
         address = view.findViewById(R.id.gps_address)
-        latitude = view.findViewById(R.id.latitude)
+        latitude = view.findViewById(R.id.latitude_input)
         longitude = view.findViewById(R.id.longitude)
         speed = view.findViewById(R.id.gps_speed)
         altitude = view.findViewById(R.id.gps_altitude)
@@ -96,6 +108,15 @@ class GPS : Fragment() {
         filter.addAction("provider")
 
         isMetric = MainPreferences().getUnit(requireContext())
+        isCustomCoordinate = MainPreferences().isCustomCoordinate(requireContext())
+
+        if (isCustomCoordinate) {
+            customLatitude = MainPreferences().getCoordinates(requireContext())[0].toDouble()
+            customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
+        }
+
+        lastLatitude = GPSPreferences().getLastCoordinates(requireContext())[0].toDouble()
+        lastLongitude = GPSPreferences().getLastCoordinates(requireContext())[1].toDouble()
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
@@ -120,6 +141,15 @@ class GPS : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (isCustomCoordinate) {
+            specified_location_notice_gps.visibility = View.VISIBLE
+            gps_divider.visibility = View.VISIBLE
+
+            marker = R.drawable.ic_place_custom.getBitmapFromVectorDrawable(requireContext(), 400)
+        } else {
+            marker = R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext(), 400)
+        }
+
         providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
 
         locationIconStatusUpdates()
@@ -137,6 +167,9 @@ class GPS : Fragment() {
 
                                 gps_location_indicator.setImageResource(R.drawable.ic_gps_fixed)
                                 gps_location_indicator.isClickable = true
+
+                                GPSPreferences().setLastLatitude(requireContext(), location!!.latitude.toFloat())
+                                GPSPreferences().setLastLongitude(requireContext(), location!!.longitude.toFloat())
 
                                 altitude.text = if (isMetric) {
                                     fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude, 2)} m", 1)}")
@@ -158,19 +191,11 @@ class GPS : Fragment() {
                                     fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location!!.accuracy.toDouble().toFeet(), 2)} ft", 1)}")
                                 }
 
-                                // For screenshots
-                                // location!!.latitude = 27.1751
-                                // location!!.longitude = 78.0421
-
-                                getAddress(location!!.latitude, location!!.longitude)
-
-                                moveMapCamera(LatLng(location!!.latitude, location!!.longitude))
-
                                 providerSource.text = fromHtml("<b>Source:</b> ${location!!.provider.toUpperCase(Locale.getDefault())}")
                                 providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
 
-                                latitude.text = fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(location!!.latitude, 3)}")
-                                longitude.text = fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(location!!.longitude, 3)}")
+                                if (isCustomCoordinate) return
+                                updateViews(location!!.latitude, location!!.longitude, location!!.bearing)
                             }
                         }
                         "provider" -> {
@@ -228,11 +253,14 @@ class GPS : Fragment() {
         }
 
         gps_location_indicator.setOnClickListener {
-            if (location != null) {
-                isMapMoved = false
-                moveMapCamera(LatLng(location!!.latitude, location!!.longitude))
-                handler.removeCallbacks(mapMoved)
-            }
+            if (isCustomCoordinate) {
+                updateViews(customLatitude, customLongitude, 0f)
+            } else
+                if (location != null) {
+                    isMapMoved = false
+                    moveMapCamera(LatLng(location!!.latitude, location!!.longitude), location!!.bearing)
+                    handler.removeCallbacks(mapMoved)
+                }
         }
 
         gps_copy.setOnClickListener {
@@ -278,6 +306,7 @@ class GPS : Fragment() {
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(mapMoved)
         handler.removeCallbacks(textAnimationRunnable)
+        handler.removeCallbacks(customDataUpdater)
         gps_info_text.clearAnimation()
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
@@ -286,11 +315,33 @@ class GPS : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        if (isCustomCoordinate) {
+            handler.post(customDataUpdater)
+        }
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
     }
 
+    private val customDataUpdater: Runnable = object : Runnable {
+        override fun run() {
+            updateViews(customLatitude, customLongitude, 0f)
+            handler.postDelayed(this, 1000)
+        }
+    }
+
+    private fun updateViews(latitude_: Double, longitude_: Double, bearing: Float) {
+        getAddress(latitude_, longitude_)
+
+        moveMapCamera(LatLng(latitude_, longitude_), bearing)
+
+        latitude.text = fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(latitude_, 3)}")
+        longitude.text = fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(longitude_, 3)}")
+    }
+
     private val callback = OnMapReadyCallback { googleMap ->
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(LatLng(48.8584, 2.2945)).tilt(90f).zoom(18f).build()))
+
+        val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(lastLatitude, lastLongitude)
+
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(latLng).tilt(90f).zoom(18f).build()))
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
         googleMap.uiSettings.isMyLocationButtonEnabled = false
@@ -309,51 +360,43 @@ class GPS : Fragment() {
         }
     }
 
-    @Suppress("deprecation")
     private fun getAddress(latitude: Double, longitude: Double) {
-        class GetAddress : AsyncTask<Void, Void, String>() {
-            override fun doInBackground(vararg params: Void?): String? {
-                return try {
-                    if (context == null) {
-                        return "N/A"
-                    }
 
-                    if (!isNetworkAvailable(requireContext())) {
-                        return "Internet connection not available"
-                    }
+        CoroutineScope(Dispatchers.IO).launch {
+            val address: String
 
+            address = try {
+                if (context == null) {
+                    "!Error Fetching Address "
+                } else if (!isNetworkAvailable(requireContext())) {
+                    "Internet connection not available"
+                } else {
                     val addresses: List<Address>
-                    val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                    val geocoder = Geocoder(context, Locale.getDefault())
 
-                    addresses = geocoder.getFromLocation(latitude, longitude, 1) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1)
 
                     if (addresses != null && addresses.isNotEmpty()) {
                         addresses[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
                     } else {
-                        return "N/A"
+                        "N/A"
                     }
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                    "${e.message}\n!Error Fetching Address"
-                } catch (e: NullPointerException) {
-                    e.printStackTrace()
-                    "${e.message}\n!Error Fetching Address"
+                }
+            } catch (e: IOException) {
+                "${e.message}\n!Error Fetching Address"
+            } catch (e: NullPointerException) {
+                "${e.message}\n!Error Fetching Address"
+            } catch (e: IllegalArgumentException) {
+                "Invalid Coordinates Supplied"
+            }
+
+            withContext(Dispatchers.Main) {
+                try {
+                    gps_address.text = address
+                } catch (e: java.lang.NullPointerException) {
+                } catch (e: UninitializedPropertyAccessException) {
                 }
             }
-
-            override fun onPostExecute(result: String?) {
-                super.onPostExecute(result)
-                address.text = result ?: "N/A"
-            }
-        }
-
-        val getAddress = GetAddress()
-        if (getAddress.status == AsyncTask.Status.RUNNING) {
-            if (getAddress.cancel(true)) {
-                getAddress.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
-            }
-        } else {
-            getAddress.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
         }
     }
 
@@ -373,15 +416,15 @@ class GPS : Fragment() {
         }
     }
 
-    private fun moveMapCamera(latLng: LatLng) {
+    private fun moveMapCamera(latLng: LatLng, bearing: Float) {
         if (googleMap == null) return
         if (isMapMoved) return
 
-        val cameraPosition = googleMap?.cameraPosition?.tilt?.let { CameraPosition.builder().target(latLng).tilt(it).zoom(18f).bearing(location!!.bearing).build() }
+        val cameraPosition = googleMap?.cameraPosition?.tilt?.let { CameraPosition.builder().target(latLng).tilt(it).zoom(18f).bearing(bearing).build() }
 
         clearMap()
 
-        val markerOptions = MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext(), 400)))
+        val markerOptions = MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker))
         googleMap?.addMarker(markerOptions)
 
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)

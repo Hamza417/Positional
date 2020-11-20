@@ -33,8 +33,6 @@ import kotlinx.android.synthetic.main.frag_compass.*
 import kotlinx.android.synthetic.main.generic_compass_rose.*
 import java.lang.ref.WeakReference
 import java.util.*
-import kotlin.math.pow
-import kotlin.math.sqrt
 
 class Compass : Fragment(), SensorEventListener {
 
@@ -252,11 +250,11 @@ class Compass : Fragment(), SensorEventListener {
              *
              * Value 1.0e-6 is there to prevent accidentally dividing by zero when device is exactly perpendicular to the gravity
              */
-            rotationAngle += if (accelerometerReadings[2] / sqrt(accelerometerReadings[0].pow(2) + accelerometerReadings[1].pow(2) + accelerometerReadings[2].pow(2) + 1.0e-6) > 0) {
-                0f
-            } else {
-                180f
-            }
+            // rotationAngle += if (accelerometerReadings[2] / sqrt(accelerometerReadings[0].pow(2) + accelerometerReadings[1].pow(2) + accelerometerReadings[2].pow(2) + 1.0e-6) > 0) {
+            //    0f
+            // } else {
+            //    180f
+            // }
 
             dial.rotation = rotationAngle
 

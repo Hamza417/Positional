@@ -54,6 +54,10 @@ class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBotto
 
         MainPreferences().setDayNight(requireContext(), value == 4)
 
+        if (value != 4) {
+            MainPreferences().setTheme(requireContext(), value = value)
+        }
+
         light.isChecked = value == AppCompatDelegate.MODE_NIGHT_NO
         dark.isChecked = value == AppCompatDelegate.MODE_NIGHT_YES
         follow_system.isChecked = value == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM

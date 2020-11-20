@@ -32,11 +32,53 @@
     ]
   },
   {
+    "featureType": "administrative.country",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#757575"
+      },
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
     "featureType": "administrative.land_parcel",
     "elementType": "labels.text.fill",
     "stylers": [
       {
         "color": "#bdbdbd"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.locality",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.neighborhood",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#757575"
+      },
+      {
+        "visibility": "on"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.province",
+    "elementType": "geometry.stroke",
+    "stylers": [
+      {
+        "color": "#757575"
       }
     ]
   },
@@ -76,6 +118,14 @@
     "stylers": [
       {
         "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.attraction",
+    "stylers": [
+      {
+        "visibility": "on"
       }
     ]
   },

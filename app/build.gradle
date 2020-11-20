@@ -53,8 +53,8 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 26
-        versionName "v3.9-stable"
+        versionCode 27
+        versionName "v4.0-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         // add a Resource String for the same key-value pair
@@ -125,6 +125,8 @@ dependencies {
     implementation 'org.shredzone.commons:commons-suncalc:3.4'
 
     implementation "androidx.navigation:navigation-ui-ktx:2.3.1"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 
     implementation 'com.afollestad:viewpagerdots:1.0.0'
 

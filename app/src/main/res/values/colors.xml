@@ -7,8 +7,8 @@
     <color name="mainBackground">#FFFFFF</color>
     <color name="popupBackground">#FFFFFF</color>
     <color name="iconColor">#4C4C4C</color>
-    <color name="textSecondary">#757575</color>
-    <color name="textPrimary">#212121</color>
+    <color name="textSecondary">#404040</color>
+    <color name="textPrimary">#292929</color>
     <color name="dividerColor">#BDBDBD</color>
     <color name="toolbarBackground">#FFFFFF</color>
     <color name="rippleColor">#B2EFEFEF</color>
@@ -25,6 +25,8 @@
     <color name="switcher_icon_color">@android:color/white</color>
 
     <color name="notification_icon_color">#D60044</color>
+    <color name="valid_input">#10D609</color>
+    <color name="invalid_input">#B60000</color>
 
     <color name="clock_needle_stroke_color">#FFFFFF</color>
     <color name="clock_needle_fill_color">#202020</color>

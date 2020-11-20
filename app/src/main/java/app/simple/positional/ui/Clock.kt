@@ -3,14 +3,14 @@ package app.simple.positional.ui
 import android.content.*
 import android.content.res.Configuration
 import android.location.Location
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.SpannableString
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
@@ -27,11 +27,14 @@ import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
-import com.elyeproj.loaderviewlibrary.LoaderTextView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_clock.*
 import kotlinx.android.synthetic.main.info_panel_clock.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shredzone.commons.suncalc.*
 import java.lang.ref.WeakReference
 import java.text.ParseException
@@ -43,10 +46,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Clock : Fragment() {
-    private lateinit var sunAzimuth: LoaderTextView
-    private lateinit var sunDistance: LoaderTextView
-    private lateinit var sunAltitude: LoaderTextView
-    private lateinit var date: LoaderTextView
 
     private lateinit var toolbar: MaterialToolbar
 
@@ -79,6 +78,10 @@ class Clock : Fragment() {
     private var dayNightIndicatorImageCountViolation = 1
 
     private var isMetric = true
+    private var isCustomCoordinate = false
+
+    private var customLatitude = 0.0
+    private var customLongitude = 0.0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
@@ -91,10 +94,6 @@ class Clock : Fragment() {
         minutes = view.findViewById(R.id.minutes)
         seconds = view.findViewById(R.id.seconds)
         dial = view.findViewById(R.id.clock_face)
-        sunAzimuth = view.findViewById(R.id.sun_azimuth)
-        sunDistance = view.findViewById(R.id.sun_distance)
-        sunAltitude = view.findViewById(R.id.sun_altitude)
-        date = view.findViewById(R.id.local_date)
 
         menu = view.findViewById(R.id.clock_menu)
 
@@ -104,6 +103,12 @@ class Clock : Fragment() {
 
         setMotionDelay(ClockPreferences().getMovementType(requireContext()))
         isMetric = MainPreferences().getUnit(requireContext())
+        isCustomCoordinate = MainPreferences().isCustomCoordinate(requireContext())
+
+        if (isCustomCoordinate) {
+            customLatitude = MainPreferences().getCoordinates(requireContext())[0].toDouble()
+            customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
+        }
 
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             toolbar = view.findViewById(R.id.clock_appbar)
@@ -124,10 +129,15 @@ class Clock : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (isCustomCoordinate) {
+            specified_location_notice_clock.visibility = View.VISIBLE
+            clock_divider.visibility = View.VISIBLE
+        }
+
         calendar = Calendar.getInstance()
         updateDigitalTime(calendar)
         val df = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
-        date.text = fromHtml("<b>Date:</b> ${df.format(calendar.time)}")
+        local_date.text = fromHtml("<b>Date:</b> ${df.format(calendar.time)}")
 
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -137,79 +147,9 @@ class Clock : Fragment() {
                         // TODO - Move all heavy time formatting into an asynchronous thread
 
                         "location" -> {
+                            if (isCustomCoordinate) return
                             val location: Location = intent.getParcelableExtra("location") ?: return
-
-                            // Set and Rise
-                            run {
-                                val sunTimes = SunTimes.compute().at(location.latitude, location.longitude).execute()
-
-                                val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-
-                                sunrise_time.text = fromHtml("<b>Sunrise:</b> ${pattern.format(sunTimes.rise)}")
-                                sunset_time.text = fromHtml("<b>Sunset:</b> ${pattern.format(sunTimes.set)}")
-                                sun_noon.text = fromHtml("<b>Noon:</b> ${pattern.format(sunTimes.noon)}")
-                                sun_nadir.text = fromHtml("<b>Nadir:</b> ${pattern.format(sunTimes.nadir)}")
-
-                                val moonTimes = MoonTimes.compute().on(Instant.now()).latitude(location.latitude).longitude(location.longitude).execute()
-
-                                moonrise_time.text = fromHtml("<b>Moonrise:</b> ${pattern.format(moonTimes.rise)}")
-                                moon_set_time.text = fromHtml("<b>Moonset:</b> ${pattern.format(moonTimes.set)}")
-                            }
-
-                            run {
-                                val sunTimes = SunTimes.compute().on(Instant.now()).latitude(location.latitude).longitude(location.longitude)
-                                astronomical_dawm_twilight.text = fromHtml("<b>Astronomical Dawn:</b> ${formatZonedTimeDate(sunTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise.toString())}")
-                                astronomical_dusk_twilight.text = fromHtml("<b>Astronomical Dusk:</b> ${formatZonedTimeDate(sunTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set.toString())}")
-                                nautical_dawn_twilight.text = fromHtml("<b>Nautical Dawn:</b> ${formatZonedTimeDate(sunTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().rise.toString())}")
-                                nautical_dusk_twilight.text = fromHtml("<b>Nautical Dusk:</b> ${formatZonedTimeDate(sunTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().set.toString())}")
-                                civil_dawn_twilight.text = fromHtml("<b>Civil Dawn:</b> ${formatZonedTimeDate(sunTimes.twilight(SunTimes.Twilight.CIVIL).execute().rise.toString())}")
-                                civil_dusk_twilight.text = fromHtml("<b>Civil Dusk:</b> ${formatZonedTimeDate(sunTimes.twilight(SunTimes.Twilight.CIVIL).execute().set.toString())}")
-                            }
-
-                            run {
-                                // Position
-                                val sunPosition: SunPosition = SunPosition.compute().timezone(TimeZone.getDefault()).on(Instant.now()).at(location.latitude, location.longitude).execute()
-
-                                sunAzimuth.text = fromHtml("<b>Azimuth:</b> ${round(sunPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(sunPosition.azimuth)}")
-                                sunAltitude.text = fromHtml("<b>Altitude:</b> ${round(sunPosition.trueAltitude, 2)}°")
-                                sunDistance.text = if (isMetric) {
-                                    fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance)} km")
-                                } else {
-                                    fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance.toMiles())} miles")
-                                }
-
-                                val moonPosition: MoonPosition = MoonPosition.compute().at(location.latitude, location.longitude).execute()
-
-                                moon_azimuth.text = fromHtml("<b>Azimuth:</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(moonPosition.azimuth)}")
-                                moon_altitude.text = fromHtml("<b>Altitude:</b> ${round(moonPosition.altitude, 2)}°")
-                                moon_distance.text = if (isMetric) {
-                                    fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance)} km")
-                                } else {
-                                    fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance.toMiles())} miles")
-                                }
-                                moon_parallactic_angle.text = fromHtml("<b>Parallactic Angle:</b> ${round(moonPosition.parallacticAngle, 2)}°")
-
-                                val moonIllumination = MoonIllumination.compute().on(Instant.now()).execute()
-
-                                moon_fraction.text = fromHtml("<b>Fraction: </b> ${round(moonIllumination.fraction, 2)}")
-                                moon_angle.text = fromHtml("<b>Angle:</b> ${round(moonIllumination.angle, 2)}°")
-                                moon_angle_state.text = fromHtml("<b>Angle State:</b> ${if (moonIllumination.angle < 0) "Waxing" else "Waning"}")
-                                moon_phase.text = fromHtml("<b>Phase:</b> ${getMoonPhase(moonIllumination.phase)}")
-                                moon_phase_angle.text = fromHtml("<b>Phase Angle:</b> ${round(moonIllumination.phase, 2)}°")
-
-                                if (moonImageCountViolation != 0) {
-                                    /**
-                                     * [moonImageCountViolation] will prevent the moon image loading every time location updates
-                                     *
-                                     * Since the range of change is so small, its approximation/accuracy won't be affected in this tiny time frame
-                                     * The value of the calculation is being trimmed to 2 decimal places anyway
-                                     */
-                                    loadImageResourcesWithoutAnimation(getMoonPhaseGraphics(round(moonIllumination.phase, 2)), moon_phase_graphics, requireContext())
-                                    moonImageCountViolation = 0
-                                }
-
-                                next_full_moon.text = fromHtml("<b>Next Full Moon:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time.toString())}")
-                            }
+                            calculateAndUpdateData(location.latitude, location.longitude)
                         }
                     }
                 }
@@ -368,6 +308,13 @@ class Clock : Fragment() {
         }
     }
 
+    private val customDataUpdater: Runnable = object : Runnable {
+        override fun run() {
+            calculateAndUpdateData(customLatitude, customLongitude)
+            handler.postDelayed(this, 2500)
+        }
+    }
+
     fun updateDigitalTime(calendar: Calendar) {
         dateUpdater(calendar)
     }
@@ -378,6 +325,7 @@ class Clock : Fragment() {
         handler.removeCallbacks(clock)
         handler.removeCallbacks(calender)
         handler.removeCallbacks(textAnimationRunnable)
+        handler.removeCallbacks(customDataUpdater)
         clock_info_text.clearAnimation()
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
@@ -389,21 +337,19 @@ class Clock : Fragment() {
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         handler.post(clock)
         handler.post(calender)
+        if (isCustomCoordinate) {
+            handler.post(customDataUpdater)
+        }
     }
 
     private fun setSkins() {
         setNeedle(ClockPreferences().getClockNeedleTheme(requireContext()))
-        //setDial(ClockPreferences().getClockFaceTheme(requireContext()))
     }
 
     fun setNeedle(value: Int) {
         loadImageResources(clockNeedleSkins[value][0], hour, requireContext(), 0)
         loadImageResources(clockNeedleSkins[value][1], minutes, requireContext(), 100)
         loadImageResources(clockNeedleSkins[value][2], seconds, requireContext(), 200)
-    }
-
-    fun setFaceAlpha(value: Float) {
-        dial.animate().alpha(value).setDuration(1500).setInterpolator(AccelerateDecelerateInterpolator()).start()
     }
 
     fun setMotionDelay(value: Boolean) {
@@ -414,67 +360,152 @@ class Clock : Fragment() {
         }
     }
 
-    @Suppress("deprecation")
-    private fun dateUpdater(calendar: Calendar) {
-        /**
-         * TODO - Research more on this part
-         * Since AsyncTask is deprecated from Android 11/API 30
-         *
-         * I am kind of curious and found out a lot of problems regarding
-         * how [AsyncTask] can cause various problems
-         *
-         * Here the use case is pretty straight forward and I am only using it
-         * for formatting my strings, it won't cause any such problems like
-         * memory leaks or some serious exceptions so I am going to use it currently
-         *
-         */
+    private fun calculateAndUpdateData(latitude: Double, longitude: Double) {
+        CoroutineScope(Dispatchers.IO).launch {
+            // Set and Rise
+            val sunTimes = SunTimes.compute().at(latitude, longitude).execute()
 
-        class GetData : AsyncTask<Void, Void, Array<String>>() {
-            override fun doInBackground(vararg params: Void?): Array<String>? {
-                return try {
-                    val timeZone = TimeZone.getTimeZone(TimeZone.getDefault().id).getDisplayName(false, TimeZone.SHORT)
-                    val digitalTime24 = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time).toString()
-                    val digitalTime12 = SimpleDateFormat("hh:mm:ss a", Locale.getDefault()).format(calendar.time).toString()
-                    val digitalTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(calendar.time).toString()
-                    val utcTimeZone = "GMT ${SimpleDateFormat("XXX", Locale.getDefault()).format(calendar.time)}"
-                    val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
-                    val utcTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date!!)
-                    val utcDate = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)
+            val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
 
-                    arrayOf(
-                            timeZone,
-                            digitalTime24,
-                            digitalTime12,
-                            digitalTime,
-                            utcTimeZone,
-                            utcTime,
-                            utcDate
-                    )
-                } catch (e: ParseException) {
-                    return null //arrayOf("error!!", "error!!", "error!!", "error!!", "error!!", "error!!", "error!!")
+            val sunrise = fromHtml("<b>Sunrise:</b> ${pattern.format(sunTimes.rise)}")
+            val sunset = fromHtml("<b>Sunset:</b> ${pattern.format(sunTimes.set)}")
+            val sunNoon = fromHtml("<b>Noon:</b> ${pattern.format(sunTimes.noon)}")
+            val sunNadir = fromHtml("<b>Nadir:</b> ${pattern.format(sunTimes.nadir)}")
+
+            val moonTimes = MoonTimes.compute().on(Instant.now()).latitude(latitude).longitude(longitude).execute()
+
+            val moonrise = fromHtml("<b>Moonrise:</b> ${pattern.format(moonTimes.rise)}")
+            val moonset = fromHtml("<b>Moonset:</b> ${pattern.format(moonTimes.set)}")
+
+
+            val twilightTimes = SunTimes.compute().on(Instant.now()).latitude(latitude).longitude(longitude)
+            val astronomicalDawn = fromHtml("<b>Astronomical Dawn:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise.toString())}")
+            val astronomicalDusk = fromHtml("<b>Astronomical Dusk:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set.toString())}")
+            val nauticalDawn = fromHtml("<b>Nautical Dawn:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().rise.toString())}")
+            val nauticalDusk = fromHtml("<b>Nautical Dusk:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().set.toString())}")
+            val civilDawn = fromHtml("<b>Civil Dawn:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().rise.toString())}")
+            val civilDusk = fromHtml("<b>Civil Dusk:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().set.toString())}")
+
+            // Position
+            val sunPosition: SunPosition = SunPosition.compute().timezone(TimeZone.getDefault()).on(Instant.now()).at(latitude, longitude).execute()
+
+            val sunAzimuth = fromHtml("<b>Azimuth:</b> ${round(sunPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(sunPosition.azimuth)}")
+            val sunAltitude = fromHtml("<b>Altitude:</b> ${round(sunPosition.trueAltitude, 2)}°")
+            val sunDistance = if (isMetric) {
+                fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance)} km")
+            } else {
+                fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance.toMiles())} miles")
+            }
+
+            val moonPosition: MoonPosition = MoonPosition.compute().at(latitude, longitude).execute()
+
+            val moonAzimuth = fromHtml("<b>Azimuth:</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(moonPosition.azimuth)}")
+            val moonAltitude = fromHtml("<b>Altitude:</b> ${round(moonPosition.altitude, 2)}°")
+            val moonDistance = if (isMetric) {
+                fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance)} km")
+            } else {
+                fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance.toMiles())} miles")
+            }
+            val moonParallacticAngle = fromHtml("<b>Parallactic Angle:</b> ${round(moonPosition.parallacticAngle, 2)}°")
+
+            val moonIllumination = MoonIllumination.compute().on(Instant.now()).execute()
+
+            val moonFraction = fromHtml("<b>Fraction: </b> ${round(moonIllumination.fraction, 2)}")
+            val moonAngle = fromHtml("<b>Angle:</b> ${round(moonIllumination.angle, 2)}°")
+            val moonAngleState = fromHtml("<b>Angle State:</b> ${if (moonIllumination.angle < 0) "Waxing" else "Waning"}")
+            val moonPhase = fromHtml("<b>Phase:</b> ${getMoonPhase(moonIllumination.phase)}")
+            val moonPhaseAngle = fromHtml("<b>Phase Angle:</b> ${round(moonIllumination.phase, 2)}°")
+
+            if (moonImageCountViolation != 0) {
+                /**
+                 * [moonImageCountViolation] will prevent the moon image loading every time location updates
+                 *
+                 * Since the range of change is so small, its approximation/accuracy won't be affected in this tiny time frame
+                 * The value of the calculation is being trimmed to 2 decimal places anyway
+                 */
+                loadImageResourcesWithoutAnimation(getMoonPhaseGraphics(round(moonIllumination.phase, 2)), moon_phase_graphics, requireContext())
+                moonImageCountViolation = 0
+            }
+
+            val nextFullMoon = fromHtml("<b>Next Full Moon:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time.toString())}")
+
+            withContext(Dispatchers.Main) {
+                try {
+                    sunrise_time.text = sunrise
+                    sunset_time.text = sunset
+                    sun_noon.text = sunNoon
+                    sun_nadir.text = sunNadir
+
+                    moonrise_time.text = moonrise
+                    moon_set_time.text = moonset
+
+                    astronomical_dawm_twilight.text = astronomicalDawn
+                    astronomical_dusk_twilight.text = astronomicalDusk
+                    nautical_dawn_twilight.text = nauticalDawn
+                    nautical_dusk_twilight.text = nauticalDusk
+                    civil_dawn_twilight.text = civilDawn
+                    civil_dusk_twilight.text = civilDusk
+
+                    sun_azimuth.text = sunAzimuth
+                    sun_altitude.text = sunAltitude
+                    sun_distance.text = sunDistance
+
+                    moon_azimuth.text = moonAzimuth
+                    moon_altitude.text = moonAltitude
+                    moon_distance.text = moonDistance
+                    moon_parallactic_angle.text = moonParallacticAngle
+
+                    moon_fraction.text = moonFraction
+                    moon_angle.text = moonAngle
+                    moon_angle_state.text = moonAngleState
+                    moon_phase.text = moonPhase
+                    moon_phase_angle.text = moonPhaseAngle
+                    next_full_moon.text = nextFullMoon
+                } catch (e: NullPointerException) {
+                } catch (e: UninitializedPropertyAccessException) {
                 }
             }
-
-            override fun onPostExecute(result: Array<String>?) {
-                super.onPostExecute(result)
-                if (result == null) return
-                local_timezone.text = fromHtml("<b>Time Zone: </b> ${result[0]}")
-                digital_time_24_hour.text = fromHtml("<b>Time 24Hr:</b> ${result[1]}")
-                digital_time_12_hour.text = fromHtml("<b>Time 12Hr:</b> ${result[2]}")
-                digital_time_main.text = buildSpannableString(result[3].toUpperCase(Locale.getDefault()), 2)
-                time_zone_utc.text = fromHtml("<b>Time Zone:</b> ${result[4]}")
-                time_utc.text = fromHtml("<b>Time:</b> ${result[5]}")
-                date_utc.text = fromHtml("<b>Date:</b> ${result[6]}")
-            }
         }
+    }
 
-        val getData = GetData()
-        if (getData.status == AsyncTask.Status.RUNNING) {
-            if (getData.cancel(true)) {
-                getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+    private fun dateUpdater(calendar: Calendar) {
+        CoroutineScope(Dispatchers.IO).launch {
+            var localTimeZone: Spanned? = null
+            var digitalTime24: Spanned? = null
+            var digitalTime12: Spanned? = null
+            var digitalTime: SpannableString? = null
+            var utcTimeZone: Spanned? = null
+            var utcTime: Spanned? = null
+            var utcDate: Spanned? = null
+
+            try {
+                localTimeZone = fromHtml("<b>Time Zone: </b> ${TimeZone.getTimeZone(TimeZone.getDefault().id).getDisplayName(false, TimeZone.SHORT)}")
+                digitalTime24 = fromHtml("<b>Time 24Hr:</b> ${SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time)}")
+                digitalTime12 = fromHtml("<b>Time 12Hr:</b> ${SimpleDateFormat("hh:mm:ss a", Locale.getDefault()).format(calendar.time)}")
+                digitalTime = buildSpannableString(SimpleDateFormat("hh:mm a", Locale.getDefault()).format(calendar.time).toString().toUpperCase(Locale.getDefault()), 2)
+                utcTimeZone = fromHtml("<b>Time Zone:</b> ${"GMT ${SimpleDateFormat("XXX", Locale.getDefault()).format(calendar.time)}"}")
+                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
+                utcTime = fromHtml("<b>Time:</b> ${SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date!!)}")
+                utcDate = fromHtml("<b>Date:</b> ${SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)}")
+            } catch (e: ParseException) {
+                /* no-op */
             }
-        } else {
-            getData.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR)
+
+            withContext(Dispatchers.Main) {
+                try {
+                    local_timezone.text = localTimeZone
+                    digital_time_24_hour.text = digitalTime24
+                    digital_time_12_hour.text = digitalTime12
+                    digital_time_main.text = digitalTime
+                    time_zone_utc.text = utcTimeZone
+                    date_utc.text = utcDate
+                    time_utc.text = utcTime
+                } catch (e: NullPointerException) {
+                    /* no-op */
+                } catch (e: UninitializedPropertyAccessException) {
+                    /* no-op */
+                }
+            }
         }
     }
 

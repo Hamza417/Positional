@@ -43,7 +43,7 @@
         android:layout_gravity="bottom"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:src="@drawable/launcher_background_day_06"
+        android:src="@drawable/launcher_day_06"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 

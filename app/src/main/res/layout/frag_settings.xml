@@ -78,8 +78,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:textSize="@dimen/settings_secondary_text_size"
-                        android:textColor="?attr/textSecondary" />
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/settings_secondary_text_size" />
 
                 </LinearLayout>
 
@@ -123,8 +123,52 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:textSize="@dimen/settings_secondary_text_size"
-                        android:textColor="?attr/textSecondary" />
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/settings_secondary_text_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/setting_custom_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
+                            android:text="Use Specified Coordinates"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="@dimen/settings_primary_text_size" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="Specify custom Latitude and Longitude and use it to fetch location data instead of using the device's GPS\n\nSpeed and Time will remain unaffected"
+                            android:textColor="?attr/textSecondary"
+                            android:textSize="@dimen/settings_secondary_text_size" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/toggle_custom_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:thumb="@drawable/switch_thumb"
+                        app:track="@drawable/switch_track" />
 
                 </LinearLayout>
 
@@ -157,9 +201,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/regular"
-                            android:text="Receive non intrusive notifications about changes in upcoming updates"
-                            android:textSize="@dimen/settings_secondary_text_size"
-                            android:textColor="?attr/textSecondary" />
+                            android:text="@string/push_notifications"
+                            android:textColor="?attr/textSecondary"
+                            android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
 
                     <androidx.appcompat.widget.SwitchCompat
@@ -239,8 +283,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
                         android:text="@string/versionName"
-                        android:textSize="@dimen/settings_secondary_text_size"
-                        android:textColor="?attr/textSecondary" />
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/settings_secondary_text_size" />
 
                 </LinearLayout>
 
@@ -266,9 +310,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:textSize="@dimen/settings_secondary_text_size"
                         android:text="See the detailed change log for this and all the previous releases till date or information about any upcoming updates in future"
-                        android:textColor="?attr/textSecondary" />
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/settings_secondary_text_size" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -310,9 +354,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:textSize="@dimen/settings_secondary_text_size"
                         android:text="If you are a developer and want to contribute to development, you can fork the repo or raise/fix an issue"
-                        android:textColor="?attr/textSecondary" />
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/settings_secondary_text_size" />
 
                 </LinearLayout>
 
@@ -338,9 +382,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:textSize="@dimen/settings_secondary_text_size"
                         android:text="If you think there is a problem or something can be better"
-                        android:textColor="?attr/textSecondary" />
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/settings_secondary_text_size" />
 
                 </LinearLayout>
 

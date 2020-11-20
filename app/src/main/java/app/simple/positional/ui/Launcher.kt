@@ -94,9 +94,6 @@ class Launcher : Fragment() {
                     handler.removeCallbacksAndMessages(null)
                 }
                 MotionEvent.ACTION_MOVE -> {
-
-                    println("${touch_indicator.x} : ${event.x}")
-
                     touch_indicator.x = event.x - (touch_indicator.width / 2f)
                     touch_indicator.y = event.y - (touch_indicator.height / 2f)
                 }

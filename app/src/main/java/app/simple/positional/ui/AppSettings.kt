@@ -8,22 +8,25 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.dialogs.app.Issue
-import app.simple.positional.dialogs.app.LegalNotes
-import app.simple.positional.dialogs.app.Theme
-import app.simple.positional.dialogs.app.Units
+import app.simple.positional.callbacks.CoordinatesCallback
+import app.simple.positional.dialogs.app.*
 import app.simple.positional.preference.MainPreferences
 import kotlinx.android.synthetic.main.frag_settings.*
 import kotlinx.android.synthetic.main.frag_settings.view.*
 import java.lang.ref.WeakReference
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 
 
-class AppSettings : Fragment() {
+class AppSettings : Fragment(), CoordinatesCallback {
+
+    private val isBeingProgrammaticallySet = ReentrantLock()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
@@ -47,6 +50,7 @@ class AppSettings : Fragment() {
         setCurrentUnit(MainPreferences().getUnit(requireContext()))
 
         toggle_notifications.isChecked = MainPreferences().isNotificationOn(requireContext())
+        onCancel() // toggle coordinate switch
 
         settings_theme.setOnClickListener {
             val theme = Theme(WeakReference(this))
@@ -56,6 +60,33 @@ class AppSettings : Fragment() {
         settings_units.setOnClickListener {
             val units = WeakReference(Units(WeakReference(this)))
             units.get()?.show(parentFragmentManager, "null")
+        }
+
+        setting_custom_location.setOnClickListener {
+            if (BuildConfig.FLAVOR == "full") {
+                val coordinates = Coordinates().newInstance()
+                coordinates.coordinatesCallback = this
+                coordinates.show(childFragmentManager, "coordinates")
+            } else {
+                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        toggle_custom_location.setOnCheckedChangeListener { _, isChecked ->
+            if (BuildConfig.FLAVOR == "full") {
+                if (toggle_custom_location.isPressed) {
+                    if (isChecked) {
+                        val coordinates = Coordinates().newInstance()
+                        coordinates.coordinatesCallback = this
+                        coordinates.show(childFragmentManager, "coordinates")
+                    } else {
+                        MainPreferences().setCustomCoordinates(requireContext(), isChecked)
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+                toggle_custom_location.isChecked = false
+            }
         }
 
         setting_notification.setOnClickListener {
@@ -73,7 +104,7 @@ class AppSettings : Fragment() {
 
             popup.setOnMenuItemClickListener { item ->
                 val legalNotes = LegalNotes().newInstance(item.title.toString())
-                legalNotes.show(parentFragmentManager, "legal_notes")
+                legalNotes.show(childFragmentManager, "legal_notes")
                 true
             }
 
@@ -95,7 +126,7 @@ class AppSettings : Fragment() {
 
         found_issues.setOnClickListener {
             val issue = Issue().newInstance()
-            issue.show(parentFragmentManager, "null")
+            issue.show(childFragmentManager, "null")
         }
 
         buy_full.setOnClickListener {
@@ -131,5 +162,15 @@ class AppSettings : Fragment() {
 
     fun setCurrentUnit(value: Boolean) {
         current_unit.text = if (value) "Metric" else "Imperial"
+    }
+
+    override fun onCancel() {
+        isBeingProgrammaticallySet.withLock {
+            toggle_custom_location.isChecked = MainPreferences().isCustomCoordinate(requireContext())
+        }
+    }
+
+    override fun onCoordinatesSet(boolean: Boolean) {
+        toggle_custom_location.isChecked = boolean
     }
 }

@@ -19,6 +19,8 @@ const val noSensorAlert = "no_sensor_alert_dialog_show"
 // GPS
 const val GPSLabelMode = "gps_label_mode"
 const val GPSSatellite = "gps_satellite_mode"
+const val lastLatitude = "last_latitude"
+const val lastLongitude = "last_longitude"
 
 // Fragments
 const val currentPage = "current_page"
@@ -29,4 +31,8 @@ const val showAgain = "show_permission_dialog_again"
 const val showPlayServicesAgain = "show_play_services_dialog_again"
 const val licenseStatus = "license_status"
 const val unit = "all_measurement_unit"
+const val theme = "current_theme"
 const val notifications = "is_push_notifications_on"
+const val isCustomCoordinate = "is_custom_coordinate_set"
+const val latitude = "custom_latitude"
+const val longitude = "custom_longitude"

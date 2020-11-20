@@ -66,4 +66,14 @@
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
+    <style name="SecondaryTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/light</item>
+        <item name="android:textColor">?attr/textSecondary</item>
+    </style>
+
+    <style name="PrimaryTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/light</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+
 </resources>

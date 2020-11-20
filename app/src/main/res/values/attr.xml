@@ -19,13 +19,6 @@
 
     <attr name="alphaIcons" format="float" />
 
-    <declare-styleable name="ParallaxImageView">
-        <attr name="intensity" format="float" />
-        <attr name="tiltSensitivity" format="float" />
-        <attr name="forwardTiltOffset" format="float" />
-        <attr name="scaledIntensity" format="boolean" />
-    </declare-styleable>
-
     <declare-styleable name="SmoothBottomBar">
         <attr name="menu" format="reference" />
         <attr name="backgroundColor" format="color" />
@@ -53,15 +46,5 @@
         <attr name="switcher_icon_color" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="BounceBackViewPager">
-        <!--
-        determines the maximum amount of translation along the z-axis during the overscroll.
-        Default is 150.
-        -->
-        <attr name="overscroll_translation" format="dimension" />
-
-        <!-- Duration of animation when user releases the over scroll. Default is 400 ms. -->
-        <attr name="overscroll_animation_duration" format="integer" />
-    </declare-styleable>
 
 </resources>

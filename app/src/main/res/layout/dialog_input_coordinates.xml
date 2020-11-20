@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/input_lyrics_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_popup">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:padding="@dimen/options_container_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="Enter Coordinates"
+            android:textColor="?attr/textPrimary"
+            android:textSize="8pt" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/latitude_container"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:animateLayoutChanges="true"
+            android:hint="Latitude"
+            app:boxStrokeColor="?attr/iconColor"
+            app:boxStrokeWidth="1px"
+            app:boxStrokeWidthFocused="2px"
+            app:endIconMode="clear_text"
+            app:endIconTint="?attr/iconColor"
+            app:errorEnabled="false"
+            app:errorIconTint="@android:color/holo_red_dark"
+            app:errorTextColor="@android:color/holo_red_dark"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:hintTextColor="?attr/textSecondary"
+            tools:ignore="PxUsage">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/latitude_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="?attr/textSecondary" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/longitude_container"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:animateLayoutChanges="true"
+            android:hint="Longitude"
+            app:boxStrokeColor="?attr/iconColor"
+            app:boxStrokeWidth="1px"
+            app:boxStrokeWidthFocused="2px"
+            app:endIconMode="clear_text"
+            app:endIconTint="?attr/iconColor"
+            app:errorEnabled="false"
+            app:errorIconTint="@android:color/holo_red_dark"
+            app:errorTextColor="@android:color/holo_red_dark"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:hintTextColor="?attr/textSecondary"
+            tools:ignore="PxUsage">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/longitude_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="?attr/textSecondary" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:animateLayoutChanges="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_coordinate_input"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/ripple_btn"
+                android:text="Cancel"
+                android:textColor="?attr/textPrimary" />
+
+            <Button
+                android:id="@+id/set_coordinates"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/ripple_btn"
+                android:text="Set"
+                android:textColor="?attr/textPrimary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

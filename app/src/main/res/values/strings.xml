@@ -22,4 +22,5 @@
     <string name="permission_acknowledgement">This app uses location information to calculate all the information shown in this app, this app does not collect any user data and does not sell any information of the user to any third party.\nThese are the permissions the app uses to show the meaningful information to the user</string>
     <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your device in figure eight direction to calibrate</string>
     <string name="compass_menu_button">Compass Menu Button</string>
+    <string name="push_notifications">Receive non intrusive notifications about changes in upcoming updates</string>
 </resources>
