@@ -74,7 +74,9 @@ Please make sure to update tests as appropriate.
 <br/>
 
 ## License
-  **Positional** is released as open source software under the [GPL v3](https://opensource.org/licenses/gpl-3.0.html) 
+**Positional** Copyright © 2020 - Hamza Rizwan
+
+**Positional** is released as open source software under the [GPL v3](https://opensource.org/licenses/gpl-3.0.html) 
 license, see the [LICENSE](./LICENSE) file in the project root for the full license text.
   
   [1]: http://www.inf.ufrgs.br
