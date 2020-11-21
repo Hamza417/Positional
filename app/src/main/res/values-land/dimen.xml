@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <dimen name="peek_height">0dp</dimen>
-    <dimen name="top_bar_height">0dp</dimen>
-    <dimen name="compass_dial">250dp</dimen>
-    <dimen name="compass_needle">200dp</dimen>
-
-</resources>

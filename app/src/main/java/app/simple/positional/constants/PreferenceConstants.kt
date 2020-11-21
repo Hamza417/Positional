@@ -26,6 +26,7 @@ const val lastLongitude = "last_longitude"
 const val currentPage = "current_page"
 
 // Main Prefs
+const val launchCount = "launch_count"
 const val dayNightMode = "is_day_night_mode"
 const val showAgain = "show_permission_dialog_again"
 const val showPlayServicesAgain = "show_play_services_dialog_again"

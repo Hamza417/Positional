@@ -53,8 +53,8 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 28
-        versionName "v4.1-stable"
+        versionCode 29
+        versionName "v4.2-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         // add a Resource String for the same key-value pair
@@ -115,6 +115,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'com.google.android.gms:play-services-location:17.1.0'
+
+    implementation 'com.google.android.play:core-ktx:1.8.1'
 
     implementation 'com.google.android.material:material:1.2.1'
 

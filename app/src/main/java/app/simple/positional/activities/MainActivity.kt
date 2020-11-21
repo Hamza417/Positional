@@ -29,11 +29,14 @@ import app.simple.positional.ui.Compass
 import app.simple.positional.ui.GPS
 import app.simple.positional.util.displayLocationSettingsRequest
 import app.simple.positional.util.getLocationStatus
+import com.google.android.play.core.review.ReviewInfo
+import com.google.android.play.core.review.ReviewManagerFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide {
 
     private var locationIntent: Intent? = null
+    private var reviewInfo: ReviewInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +61,32 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         bottom_bar.setOnItemSelectedListener {
             setFragment(it)
             FragmentPreferences().setCurrentPage(baseContext, it)
+        }
+
+        showReviewPromptToUser()
+    }
+
+    private fun showReviewPromptToUser() {
+
+        if (MainPreferences().getLaunchCount(this) < 5) {
+            MainPreferences().setLaunchCount(this, MainPreferences().getLaunchCount(this) + 1)
+            return
+        }
+
+        val manager = ReviewManagerFactory.create(this)
+
+        val request = manager.requestReviewFlow()
+        request.addOnCompleteListener { request_ ->
+            if (request_.isSuccessful) {
+                reviewInfo = request_.result
+
+                reviewInfo?.let {
+                    val flow = manager.launchReviewFlow(this@MainActivity, it)
+                    flow.addOnCompleteListener {
+                        /* no-op */
+                    }
+                }
+            }
         }
     }
 

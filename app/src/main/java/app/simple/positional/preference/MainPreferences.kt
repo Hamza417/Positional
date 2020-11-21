@@ -6,6 +6,15 @@ import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.constants.*
 
 class MainPreferences {
+
+    fun setLaunchCount(context: Context, value: Int) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(launchCount, value).apply()
+    }
+
+    fun getLaunchCount(context: Context): Int {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(launchCount, 0)
+    }
+
     /**
      * @param value for storing theme preferences
      * 1 - Light
