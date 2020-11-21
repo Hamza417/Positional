@@ -216,6 +216,11 @@ class Clock : Fragment() {
             stringBuilder.append("${time_utc.text}\n")
             stringBuilder.append("${date_utc.text}\n\n")
 
+            if (isCustomCoordinate) {
+                stringBuilder.append(specified_location_notice_clock.text)
+                stringBuilder.append("\n")
+            }
+
             if (sun_azimuth.text != "") {
                 stringBuilder.append("Sun Position\n")
                 stringBuilder.append("${sun_azimuth.text}\n")

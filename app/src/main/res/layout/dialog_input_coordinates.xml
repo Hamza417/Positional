@@ -14,13 +14,70 @@
         android:orientation="vertical"
         android:padding="@dimen/options_container_padding">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/medium"
-            android:text="Enter Coordinates"
-            android:textColor="?attr/textPrimary"
-            android:textSize="8pt" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/medium"
+                android:text="Enter Location Data"
+                android:textColor="?attr/textPrimary"
+                android:textSize="8pt" />
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/address_indicator"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:indeterminateBehavior="repeat"
+                android:indeterminateDuration="100"
+                android:indeterminateOnly="true"
+                android:indeterminateTint="?attr/iconColor" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/address_container"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:animateLayoutChanges="true"
+            android:hint="Address"
+            app:boxStrokeColor="?attr/iconColor"
+            app:boxStrokeWidth="1px"
+            app:boxStrokeWidthFocused="2px"
+            app:endIconMode="clear_text"
+            app:endIconTint="?attr/iconColor"
+            app:errorEnabled="false"
+            app:errorIconTint="@android:color/holo_red_dark"
+            app:errorTextColor="@android:color/holo_red_dark"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:hintTextColor="?attr/textSecondary"
+            tools:ignore="PxUsage">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/address_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="4"
+                android:textColor="?attr/textSecondary" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="--- or ---"
+            android:textAlignment="center"
+            android:textColor="?attr/textSecondary" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/latitude_container"
@@ -47,6 +104,7 @@
                 android:id="@+id/latitude_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
                 android:textColor="?attr/textSecondary" />
 
         </com.google.android.material.textfield.TextInputLayout>

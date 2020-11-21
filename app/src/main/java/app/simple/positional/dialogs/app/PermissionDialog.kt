@@ -13,11 +13,11 @@ import kotlinx.android.synthetic.main.dialog_permission_info.*
 
 class PermissionDialog : CustomBottomSheetDialog() {
 
-    private var permissionCallbacks: PermissionCallbacks? = null
-
     fun newInstance(): PermissionDialog {
         return PermissionDialog()
     }
+
+    private var permissionCallbacks: PermissionCallbacks? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

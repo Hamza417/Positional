@@ -1,6 +1,5 @@
 package app.simple.positional.ui
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -20,13 +19,9 @@ import app.simple.positional.preference.MainPreferences
 import kotlinx.android.synthetic.main.frag_settings.*
 import kotlinx.android.synthetic.main.frag_settings.view.*
 import java.lang.ref.WeakReference
-import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
 
 
 class AppSettings : Fragment(), CoordinatesCallback {
-
-    private val isBeingProgrammaticallySet = ReentrantLock()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
@@ -50,7 +45,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         setCurrentUnit(MainPreferences().getUnit(requireContext()))
 
         toggle_notifications.isChecked = MainPreferences().isNotificationOn(requireContext())
-        onCancel() // toggle coordinate switch
+        isCoordinatesSet(MainPreferences().isCustomCoordinate(requireContext())) // toggle coordinate switch
 
         settings_theme.setOnClickListener {
             val theme = Theme(WeakReference(this))
@@ -64,6 +59,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
 
         setting_custom_location.setOnClickListener {
             if (BuildConfig.FLAVOR == "full") {
+                toggle_custom_location.isChecked = true
                 val coordinates = Coordinates().newInstance()
                 coordinates.coordinatesCallback = this
                 coordinates.show(childFragmentManager, "coordinates")
@@ -130,19 +126,8 @@ class AppSettings : Fragment(), CoordinatesCallback {
         }
 
         buy_full.setOnClickListener {
-            val uri: Uri = Uri.parse("market://details?id=app.simple.positional")
-            val goToMarket = Intent(Intent.ACTION_VIEW, uri)
-            // To count with Play market back stack, After pressing back button,
-            // to taken back to our application, we need to add following flags to intent.
-            goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
-                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
-                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
-            try {
-                startActivity(goToMarket)
-            } catch (e: ActivityNotFoundException) {
-                startActivity(Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://play.google.com/store/apps/details?id=app.simple.positional")))
-            }
+            val buyFull = BuyFull().newInstance()
+            buyFull.show(childFragmentManager, "buy_full")
         }
     }
 
@@ -164,13 +149,11 @@ class AppSettings : Fragment(), CoordinatesCallback {
         current_unit.text = if (value) "Metric" else "Imperial"
     }
 
-    override fun onCancel() {
-        isBeingProgrammaticallySet.withLock {
-            toggle_custom_location.isChecked = MainPreferences().isCustomCoordinate(requireContext())
+    override fun isCoordinatesSet(boolean: Boolean) {
+        try {
+            toggle_custom_location.isChecked = boolean
+        } catch (e: java.lang.NullPointerException) {
+        } catch (e: UninitializedPropertyAccessException) {
         }
-    }
-
-    override fun onCoordinatesSet(boolean: Boolean) {
-        toggle_custom_location.isChecked = boolean
     }
 }

@@ -14,9 +14,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
 
-    <!-- here we defined ACCESS_BACKGROUND_LOCATION for Android 10 device -->
-    <!-- <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> -->
-
     <application
         android:allowBackup="true"
         android:configChanges="keyboardHidden|orientation|screenSize"

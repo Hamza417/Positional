@@ -274,6 +274,12 @@ class GPS : Fragment() {
                 stringBuilder.append("Accuracy: ${gps_accuracy.text}\n")
                 stringBuilder.append("Altitude: ${gps_altitude.text}\n")
                 stringBuilder.append("Speed: ${gps_speed.text}\n")
+
+                if (isCustomCoordinate) {
+                    stringBuilder.append(specified_location_notice_gps.text)
+                    stringBuilder.append("\n")
+                }
+
                 stringBuilder.append("${latitude.text}\n")
                 stringBuilder.append("${longitude.text}\n")
                 stringBuilder.append("Address: ${address.text}\n\n")
