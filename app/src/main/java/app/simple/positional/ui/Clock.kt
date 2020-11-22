@@ -143,9 +143,6 @@ class Clock : Fragment() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
                     when (intent.action) {
-
-                        // TODO - Move all heavy time formatting into an asynchronous thread
-
                         "location" -> {
                             if (isCustomCoordinate) return
                             val location: Location = intent.getParcelableExtra("location") ?: return
@@ -488,7 +485,7 @@ class Clock : Fragment() {
                 localTimeZone = fromHtml("<b>Time Zone: </b> ${TimeZone.getTimeZone(TimeZone.getDefault().id).getDisplayName(false, TimeZone.SHORT)}")
                 digitalTime24 = fromHtml("<b>Time 24Hr:</b> ${SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time)}")
                 digitalTime12 = fromHtml("<b>Time 12Hr:</b> ${SimpleDateFormat("hh:mm:ss a", Locale.getDefault()).format(calendar.time)}")
-                digitalTime = buildSpannableString(SimpleDateFormat("hh:mm a", Locale.getDefault()).format(calendar.time).toString().toUpperCase(Locale.getDefault()), 2)
+                digitalTime = getTime(requireContext(), calendar)
                 utcTimeZone = fromHtml("<b>Time Zone:</b> ${"GMT ${SimpleDateFormat("XXX", Locale.getDefault()).format(calendar.time)}"}")
                 val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
                 utcTime = fromHtml("<b>Time:</b> ${SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date!!)}")

@@ -13,6 +13,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.dialogs.compass.NoSensorAlert
@@ -100,14 +101,14 @@ class Level : Fragment(), SensorEventListener {
                             .scaleX(1f)
                             .scaleY(1f)
                             .setDuration(1000)
-                            .setInterpolator(AccelerateDecelerateInterpolator())
+                            .setInterpolator(DecelerateInterpolator())
                             .start()
 
                     level_dot.animate()
                             .scaleX(1f)
                             .scaleY(1f)
                             .setDuration(1000)
-                            .setInterpolator(AccelerateDecelerateInterpolator())
+                            .setInterpolator(DecelerateInterpolator())
                             .start()
                 }
             }
