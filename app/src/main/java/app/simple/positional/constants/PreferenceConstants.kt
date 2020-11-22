@@ -14,7 +14,10 @@ const val direction_code = "direction_code"
 const val flowerBloom = "flower"
 const val flowerBloomTheme = "flower_theme"
 const val compassSpeed = "compass_speed"
-const val noSensorAlert = "no_sensor_alert_dialog_show"
+const val noSensorAlertCompass = "no_sensor_alert_compass_dialog_show"
+
+// Level
+const val noSensorAlertLevel = "no_sensor_alert_level_dialog_show"
 
 // GPS
 const val GPSLabelMode = "gps_label_mode"

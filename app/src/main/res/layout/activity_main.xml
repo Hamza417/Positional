@@ -31,7 +31,7 @@
             app:iconTint="?attr/iconRegular"
             app:iconTintActive="?attr/iconColor"
             app:indicatorColor="?attr/indicator"
-            app:indicatorRadius="10dp"
+            app:indicatorRadius="@dimen/all_corner_radius"
             app:itemFontFamily="@font/light"
             app:menu="@menu/toolbar_items"
             app:textColor="?attr/textSecondary"

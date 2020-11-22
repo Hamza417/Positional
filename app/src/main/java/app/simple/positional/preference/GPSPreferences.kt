@@ -6,7 +6,7 @@ import app.simple.positional.constants.*
 
 class GPSPreferences {
     fun isLabelOn(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(GPSLabelMode, false)
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(GPSLabelMode, true)
     }
 
     fun setLabelMode(context: Context, value: Boolean) {

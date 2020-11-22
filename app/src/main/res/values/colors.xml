@@ -11,7 +11,7 @@
     <color name="textPrimary">#292929</color>
     <color name="dividerColor">#BDBDBD</color>
     <color name="toolbarBackground">#FFFFFF</color>
-    <color name="rippleColor">#B2EFEFEF</color>
+    <color name="rippleColor">#9FBCBCBC</color>
     <color name="shadowColor">#4A4A4A</color>
     <color name="clockDialColor">#000000</color>
     <color name="edgeEffect">#717171</color>

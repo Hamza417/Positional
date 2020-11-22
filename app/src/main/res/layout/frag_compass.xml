@@ -34,12 +34,9 @@
             android:id="@+id/compass_menu"
             android:layout_width="@dimen/top_bar_button_size"
             android:layout_height="@dimen/top_bar_button_size"
-            android:contentDescription="@string/compass_menu_button"
-            android:padding="10dp"
             android:layout_gravity="center_vertical|end"
-            android:background="@drawable/ripple"
+            android:background="@drawable/ripple_btn"
             android:src="@drawable/ic_more_horiz"
-            android:scaleType="fitCenter"
             android:tint="?attr/iconColor" />
 
     </com.google.android.material.appbar.MaterialToolbar>

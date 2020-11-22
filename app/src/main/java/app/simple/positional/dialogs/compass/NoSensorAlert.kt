@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
+import app.simple.positional.preference.LevelPreferences
 import app.simple.positional.views.CustomBottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_compass_no_sensor.*
 
@@ -13,6 +14,14 @@ class NoSensorAlert : CustomBottomSheetDialog() {
 
     fun newInstance(): NoSensorAlert {
         return NoSensorAlert()
+    }
+
+    fun newInstance(string: String): NoSensorAlert {
+        val args = Bundle()
+        val fragment = NoSensorAlert()
+        args.putString("which", string)
+        fragment.arguments = args
+        return fragment
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +37,26 @@ class NoSensorAlert : CustomBottomSheetDialog() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        compass_no_sensor_no_show.isChecked = when (this.arguments?.getString("which")) {
+            "compass" -> {
+                CompassPreference().isNoSensorAlertON(context = requireContext())
+            }
+            "level" -> {
+                LevelPreferences().isNoSensorAlertON(context = requireContext())
+            }
+            else -> {
+                true
+            }
+        }
+
         compass_no_sensor_no_show.setOnCheckedChangeListener { _, isChecked ->
-            CompassPreference().setNoSensorAlert(value = isChecked, context = requireContext())
+            if (compass_no_sensor_no_show.isPressed) {
+                if (this.arguments?.getString("which") == "compass") {
+                    CompassPreference().setNoSensorAlert(value = isChecked, context = requireContext())
+                } else if (this.arguments?.getString("which") == "level") {
+                    LevelPreferences().setNoSensorAlert(value = isChecked, context = requireContext())
+                }
+            }
         }
 
         compass_no_sensor_ok.setOnClickListener {

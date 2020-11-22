@@ -160,42 +160,50 @@ class GPS : Fragment() {
                 if (intent != null) {
                     when (intent.action) {
                         "location" -> {
-
-                            location = intent.getParcelableExtra("location")!!
-
-                            if (location != null) {
-
-                                gps_location_indicator.setImageResource(R.drawable.ic_gps_fixed)
-                                gps_location_indicator.isClickable = true
+                            CoroutineScope(Dispatchers.IO).launch {
+                                location = intent.getParcelableExtra("location")!!
+                                if (location == null) return@launch
 
                                 GPSPreferences().setLastLatitude(requireContext(), location!!.latitude.toFloat())
                                 GPSPreferences().setLastLongitude(requireContext(), location!!.longitude.toFloat())
 
-                                altitude.text = if (isMetric) {
-                                    fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude, 2)} m", 1)}")
-                                } else {
-                                    fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude.toFeet(), 2)} ft", 1)}")
-                                }
+                                val providerSource = fromHtml("<b>Source:</b> ${location!!.provider.toUpperCase(Locale.getDefault())}")
+                                val providerStatus = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
 
-                                speed.text = if (isMetric) {
-                                    fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)} km/h", 1)}")
-                                } else {
-                                    fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} mph", 1)}")
-                                }
-
-                                bearing.text = fromHtml("<b>Bearing:</b> ${location!!.bearing}°")
-
-                                accuracy.text = if (isMetric) {
+                                val accuracy = if (isMetric) {
                                     fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location!!.accuracy.toDouble(), 2)} m", 1)}")
                                 } else {
                                     fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location!!.accuracy.toDouble().toFeet(), 2)} ft", 1)}")
                                 }
 
-                                providerSource.text = fromHtml("<b>Source:</b> ${location!!.provider.toUpperCase(Locale.getDefault())}")
-                                providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
+                                val altitude = if (isMetric) {
+                                    fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude, 2)} m", 1)}")
+                                } else {
+                                    fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude.toFeet(), 2)} ft", 1)}")
+                                }
 
-                                if (isCustomCoordinate) return
-                                updateViews(location!!.latitude, location!!.longitude, location!!.bearing)
+                                val speed = if (isMetric) {
+                                    fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)} km/h", 1)}")
+                                } else {
+                                    fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} mph", 1)}")
+                                }
+
+                                val bearing = fromHtml("<b>Bearing:</b> ${location!!.bearing}°")
+
+                                withContext(Dispatchers.Main) {
+                                    gps_location_indicator.setImageResource(R.drawable.ic_gps_fixed)
+                                    gps_location_indicator.isClickable = true
+                                    this@GPS.providerSource.text = providerSource
+                                    this@GPS.providerStatus.text = providerStatus
+                                    this@GPS.altitude.text = altitude
+                                    this@GPS.speed.text = speed
+                                    this@GPS.bearing.text = bearing
+                                    this@GPS.accuracy.text = accuracy
+
+                                    if (!isCustomCoordinate) {
+                                        updateViews(location!!.latitude, location!!.longitude, location!!.bearing)
+                                    }
+                                }
                             }
                         }
                         "provider" -> {

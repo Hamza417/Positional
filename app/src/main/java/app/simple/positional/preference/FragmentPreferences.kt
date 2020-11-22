@@ -10,6 +10,6 @@ class FragmentPreferences {
     }
 
     fun getCurrentPage(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(currentPage, 1)
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(currentPage, 2)
     }
 }

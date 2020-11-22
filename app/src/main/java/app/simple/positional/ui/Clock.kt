@@ -289,12 +289,13 @@ class Clock : Fragment() {
             sweep_seconds.rotation = seconds.rotation - 90
 
             if (dayNightIndicatorImageCountViolation != 0) {
-                if (calendar.get(Calendar.HOUR_OF_DAY) >= 6 || calendar.get(Calendar.HOUR_OF_DAY) <= 18) {
-                    day_night_indicator.setImageResource(R.drawable.ic_day)
-                } else {
+                val calendar = calendar.get(Calendar.HOUR_OF_DAY)
+                println(calendar)
+                if (calendar < 7 || calendar > 18) {
                     day_night_indicator.setImageResource(R.drawable.ic_night)
+                } else if (calendar < 18 || calendar > 6) {
+                    day_night_indicator.setImageResource(R.drawable.ic_day)
                 }
-
                 // Setting this to zero will prevent the image from applying again every second
                 dayNightIndicatorImageCountViolation = 0
             }

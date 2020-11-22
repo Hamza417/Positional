@@ -31,7 +31,7 @@
             android:layout_width="@dimen/top_bar_button_size"
             android:layout_height="@dimen/top_bar_button_size"
             android:layout_gravity="center_vertical|end"
-            android:background="@drawable/ripple"
+            android:background="@drawable/ripple_btn"
             android:src="@drawable/ic_more_horiz"
             android:tint="?attr/iconColor" />
 

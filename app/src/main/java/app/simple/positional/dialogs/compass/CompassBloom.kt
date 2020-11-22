@@ -28,19 +28,25 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
         setButtons(CompassPreference().getFlowerBloomTheme(requireContext()))
 
         bloom_orange.setOnClickListener {
-            weakReference.get()?.setFlowerTheme(0)
-            setButtons(0)
+            setValue(0)
         }
 
         bloom_purple.setOnClickListener {
-            weakReference.get()?.setFlowerTheme(1)
-            setButtons(1)
+            setValue(1)
         }
 
         bloom_flower.setOnClickListener {
-            weakReference.get()?.setFlowerTheme(2)
-            setButtons(2)
+            setValue(2)
         }
+
+        bloom_petals.setOnClickListener {
+            setValue(3)
+        }
+    }
+
+    private fun setValue(value: Int) {
+        weakReference.get()?.setFlowerTheme(value)
+        setButtons(value)
     }
 
     private fun setButtons(value: Int) {
@@ -49,5 +55,6 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
         bloom_orange.isChecked = value == 0
         bloom_purple.isChecked = value == 1
         bloom_flower.isChecked = value == 2
+        bloom_petals.isChecked = value == 3
     }
 }

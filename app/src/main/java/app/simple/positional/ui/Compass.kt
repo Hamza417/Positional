@@ -107,7 +107,7 @@ class Compass : Fragment(), SensorEventListener {
                 haveMagnetometerSensor = false
 
                 if (CompassPreference().isNoSensorAlertON(requireContext())) {
-                    val noSensorAlert = NoSensorAlert().newInstance()
+                    val noSensorAlert = NoSensorAlert().newInstance("compass")
                     noSensorAlert.show(parentFragmentManager, "no_sensor_alert")
                 }
             }
@@ -275,6 +275,12 @@ class Compass : Fragment(), SensorEventListener {
                         flower_four.rotation = azimuth * -4 + 67.5f
                     }
                     2 -> {
+                        flower_one.rotation = rotationAngle * 2
+                        flower_two.rotation = azimuth * -3 + 45
+                        flower_three.rotation = rotationAngle * 1 + 90
+                        flower_four.rotation = azimuth * -4 + 135
+                    }
+                    3 -> {
                         flower_one.rotation = rotationAngle * 2
                         flower_two.rotation = azimuth * -3 + 45
                         flower_three.rotation = rotationAngle * 1 + 90

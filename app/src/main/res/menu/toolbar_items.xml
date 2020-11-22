@@ -4,21 +4,26 @@
     <item
         android:id="@+id/item0"
         android:icon="@drawable/ic_clock"
-        android:title="@string/clock" />
+        android:title="" />
 
     <item
         android:id="@+id/item1"
         android:icon="@drawable/ic_compass"
-        android:title="@string/compass" />
+        android:title="" />
 
     <item
         android:id="@+id/item2"
-        android:icon="@drawable/ic_gps_fixed"
-        android:title="@string/gps" />
+        android:icon="@drawable/ic_place_notification"
+        android:title="" />
 
     <item
         android:id="@+id/item3"
+        android:icon="@drawable/ic_adjust"
+        android:title="" />
+
+    <item
+        android:id="@+id/item4"
         android:icon="@drawable/ic_settings"
-        android:title="@string/settings" />
+        android:title="" />
 
 </menu>

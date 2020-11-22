@@ -41,10 +41,10 @@ class CompassPreference {
     }
 
     fun isNoSensorAlertON(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(noSensorAlert, true)
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(noSensorAlertCompass, true)
     }
 
     fun setNoSensorAlert(value: Boolean, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(noSensorAlert, value).apply()
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(noSensorAlertCompass, value).apply()
     }
 }

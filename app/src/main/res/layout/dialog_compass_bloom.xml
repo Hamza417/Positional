@@ -69,12 +69,37 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Red Flower"
+            android:text="Red Circles"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
         <RadioButton
             android:id="@+id/bloom_flower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="?attr/iconColor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/options_item_padding">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="Dark Petals"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/options_item_text_size" />
+
+        <RadioButton
+            android:id="@+id/bloom_petals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="?attr/iconColor" />

@@ -23,10 +23,7 @@ import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.services.LocationService
-import app.simple.positional.ui.AppSettings
-import app.simple.positional.ui.Clock
-import app.simple.positional.ui.Compass
-import app.simple.positional.ui.GPS
+import app.simple.positional.ui.*
 import app.simple.positional.util.displayLocationSettingsRequest
 import app.simple.positional.util.getLocationStatus
 import com.google.android.play.core.review.ReviewInfo
@@ -234,6 +231,21 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
                 }
             }
             3 -> {
+                val level = supportFragmentManager.findFragmentByTag("level") as Level?
+
+                if (level == null) {
+                    supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                            .replace(R.id.containers, Level(), "level")
+                            .commit()
+                } else {
+                    supportFragmentManager.beginTransaction()
+                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                            .replace(R.id.containers, level, "level")
+                            .commit()
+                }
+            }
+            4 -> {
                 val settings = supportFragmentManager.findFragmentByTag("settings") as AppSettings?
 
                 if (settings == null) {
@@ -247,9 +259,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
                             .replace(R.id.containers, settings, "settings")
                             .commit()
                 }
-            }
-            4 -> {
-
             }
         }
     }
