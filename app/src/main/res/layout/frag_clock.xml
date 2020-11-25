@@ -121,7 +121,7 @@
         android:alpha="0"
         android:background="#7E000000" />
 
-    <include layout="@layout/frag_clock_bottom_sheet" />
+    <include layout="@layout/bottom_sheet_clock" />
 
 </app.simple.positional.views.CustomCoordinatorLayout>
 

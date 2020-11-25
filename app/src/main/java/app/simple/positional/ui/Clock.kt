@@ -1,7 +1,6 @@
 package app.simple.positional.ui
 
 import android.content.*
-import android.content.res.Configuration
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -110,14 +109,12 @@ class Clock : Fragment() {
             customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
         }
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            toolbar = view.findViewById(R.id.clock_appbar)
+        toolbar = view.findViewById(R.id.clock_appbar)
 
-            scrollView.alpha = 0f
+        scrollView.alpha = 0f
 
-            expandUp = view.findViewById(R.id.expand_up_clock_sheet)
-            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
-        }
+        expandUp = view.findViewById(R.id.expand_up_clock_sheet)
+        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
 
         setSkins()
 
@@ -133,6 +130,8 @@ class Clock : Fragment() {
             specified_location_notice_clock.visibility = View.VISIBLE
             clock_divider.visibility = View.VISIBLE
         }
+
+        clock_main_layout.setProxyView(view)
 
         calendar = Calendar.getInstance()
         updateDigitalTime(calendar)
@@ -153,44 +152,40 @@ class Clock : Fragment() {
             }
         }
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            clock_main_layout.setProxyView(view)
-
-            bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                        backPressed(true)
-                    } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                        backPressed(false)
-                        if (backPress!!.hasEnabledCallbacks()) {
-                            /**
-                             * This is a workaround and not a full fledged method to
-                             * remove any existing callbacks
-                             *
-                             * The [bottomSheetBehavior] adds a new callback every time it is expanded
-                             * and it is a feasible approach to remove any existing callbacks
-                             * as soon as it is collapsed, the callback number will always remain
-                             * one
-                             *
-                             * What makes this approach a slightly less reliable is because so
-                             * many presumption has been taken here
-                             */
-                            backPress?.onBackPressed()
-                        }
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    backPressed(true)
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    backPressed(false)
+                    if (backPress!!.hasEnabledCallbacks()) {
+                        /**
+                         * This is a workaround and not a full fledged method to
+                         * remove any existing callbacks
+                         *
+                         * The [bottomSheetBehavior] adds a new callback every time it is expanded
+                         * and it is a feasible approach to remove any existing callbacks
+                         * as soon as it is collapsed, the callback number will always remain
+                         * one
+                         *
+                         * What makes this approach a slightly less reliable is because so
+                         * many presumption has been taken here
+                         */
+                        backPress?.onBackPressed()
                     }
                 }
+            }
 
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    scrollView.alpha = slideOffset
-                    expandUp.alpha = (1 - slideOffset)
-                    //clockLayout.translationY = 150 * -slideOffset
-                    //clockLayout.alpha = (1 - slideOffset)
-                    view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
-                    bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                    toolbar.translationY = (toolbar.height * -slideOffset)
-                }
-            })
-        }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                scrollView.alpha = slideOffset
+                expandUp.alpha = (1 - slideOffset)
+                //clockLayout.translationY = 150 * -slideOffset
+                //clockLayout.alpha = (1 - slideOffset)
+                view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
+                bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                toolbar.translationY = (toolbar.height * -slideOffset)
+            }
+        })
 
         menu.setOnClickListener {
             val clockMenu = WeakReference(ClockMenu(WeakReference(this)))
@@ -253,8 +248,8 @@ class Clock : Fragment() {
 
             if (BuildConfig.FLAVOR == "lite") {
                 stringBuilder.append("\n\n")
-                stringBuilder.append("Information is copied using Positional\n")
-                stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
+                stringBuilder.append("Information is copied using Positional Lite\n")
+                stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
             }
 
             val clip: ClipData = ClipData.newPlainText("Time Data", stringBuilder)

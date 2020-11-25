@@ -27,3 +27,7 @@ fun Double.toMilesPerHour(): Double {
 fun Double.toFeet(): Double {
     return this * 3.28084
 }
+
+fun Double.toTesla(): Double {
+    return this * 0.0000000001
+}

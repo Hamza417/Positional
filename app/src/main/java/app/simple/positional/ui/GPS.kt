@@ -293,8 +293,8 @@ class GPS : Fragment() {
                 stringBuilder.append("Address: ${address.text}\n\n")
 
                 if (BuildConfig.FLAVOR == "lite") {
-                    stringBuilder.append("Information is copied using Positional\n")
-                    stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
+                    stringBuilder.append("Information is copied using Positional Lite\n")
+                    stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
                 }
 
                 val clip: ClipData = ClipData.newPlainText("GPS Data", stringBuilder)

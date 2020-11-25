@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="false"
-    android:clipChildren="false"
-    android:focusable="false"
-    android:orientation="vertical">
+    android:id="@+id/compass_main_layout"
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/materialToolbar"
+        android:id="@+id/compass_appbar"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
+        android:layout_gravity="top"
         android:background="@drawable/bg_toolbar"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
-        app:contentInsetStart="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:contentInsetStart="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,28 +32,21 @@
             android:layout_height="@dimen/top_bar_button_size"
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple_btn"
+            android:contentDescription="Compass Button"
             android:src="@drawable/ic_more_horiz"
             android:tint="?attr/iconColor" />
 
     </com.google.android.material.appbar.MaterialToolbar>
-
-    <include
-        android:id="@+id/include2"
-        layout="@layout/generic_compass_rose"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/include2"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar"
-        app:layout_constraintVertical_bias="0.050000012">
+        android:padding="10dp"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="20dp"
@@ -65,7 +54,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_navigation"
-            app:tint="?attr/iconColor" />
+            app:tint="?attr/iconColor"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/direction"
@@ -78,18 +68,19 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/compass_accuracy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
-        android:fontFamily="@font/regular"
-        android:textAlignment="center"
-        android:textColor="?attr/textSecondary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/include2"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.82" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        android:id="@+id/include2"
+        layout="@layout/generic_compass_rose"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+    <View
+        android:id="@+id/compass_dim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#7E000000" />
+
+    <include layout="@layout/bottom_sheet_compass" />
+</app.simple.positional.views.CustomCoordinatorLayout>

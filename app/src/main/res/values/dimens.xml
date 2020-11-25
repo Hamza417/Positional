@@ -27,6 +27,7 @@
     <dimen name="copy_button_dimensions">40dp</dimen>
     <dimen name="copy_button_padding">10dp</dimen>
     <dimen name="info_graphics_dimension">120dp</dimen>
+    <dimen name="dialog_height">400dp</dimen>
 
     <!-- Dialog Menus -->
     <dimen name="options_text_margin_start">10dp</dimen>
@@ -37,6 +38,8 @@
     <dimen name="options_category_text_size">6pt</dimen>
     <dimen name="options_sub_item_padding">10dp</dimen>
     <dimen name="options_header_text_size">8pt</dimen>
+    <dimen name="description_text_size">7pt</dimen>
+    <dimen name="permission_tag_text_size">8pt</dimen>
 
     <!-- Top Bar -->
     <dimen name="top_bar_elevation">2dp</dimen>
@@ -69,7 +72,4 @@
     <dimen name="touch_indicator_size">100dp</dimen>
     <dimen name="license_text_size">14pt</dimen>
     <dimen name="license_check_indicator_dimen">50dp</dimen>
-    <dimen name="dialog_height">400dp</dimen>
-    <dimen name="description_text_size">7pt</dimen>
-    <dimen name="permission_tag_text_size">8pt</dimen>
 </resources>

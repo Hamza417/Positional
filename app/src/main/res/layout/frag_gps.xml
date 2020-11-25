@@ -61,6 +61,6 @@
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <include layout="@layout/frag_gps_bottom_sheet" />
+    <include layout="@layout/bottom_sheet_gps" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

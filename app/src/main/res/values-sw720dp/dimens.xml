@@ -63,5 +63,4 @@
     <dimen name="touch_indicator_size">100dp</dimen>
     <dimen name="license_text_size">26pt</dimen>
     <dimen name="license_check_indicator_dimen">100dp</dimen>
-
 </resources>
