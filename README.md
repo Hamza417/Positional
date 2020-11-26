@@ -31,7 +31,7 @@
 </br>
 
 ## Screenshots
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_06.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_07.png" width="20%">
+<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_01.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_02.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_03.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_04.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_05.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_06.png" width="20%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/scrsht_07.png" width="20%">
 
 
 <br/>
@@ -56,6 +56,7 @@
   * Twilight (Astronomical, Nautical and Civil)
   * Moon Illumination</br>
   * Dark Mode</br>
+  * Level </br>
   * Completely Ad-Free</br>
 
 <br/>
