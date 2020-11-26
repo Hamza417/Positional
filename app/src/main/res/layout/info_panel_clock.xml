@@ -592,6 +592,7 @@
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
                 android:padding="10dp"
+                android:layout_marginTop="20dp"
                 android:src="@drawable/moon_phase_02" />
 
             <LinearLayout
@@ -667,20 +668,78 @@
                     app:corners="20"
                     app:use_gradient="true" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/next_full_moon"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
             </LinearLayout>
 
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="20dp"
+            android:background="@drawable/ripple"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
+
+            <TextView
+                style="@style/PrimaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Moon Dates"
+                android:textSize="@dimen/info_text_primary_size" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/next_full_moon"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:corners="20"
+                app:use_gradient="true" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/next_new_moon"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:corners="20"
+                app:use_gradient="true" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/next_first_quarter"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:corners="20"
+                app:use_gradient="true" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/next_last_quarter"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:corners="20"
+                app:use_gradient="true" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

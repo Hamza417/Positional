@@ -399,7 +399,7 @@ class GPS : Fragment() {
             } catch (e: IOException) {
                 "${e.message}\n!Error Fetching Address"
             } catch (e: NullPointerException) {
-                "${e.message}\n!Error Fetching Address"
+                "${e.message}\n!No Address Found"
             } catch (e: IllegalArgumentException) {
                 "Invalid Coordinates Supplied"
             }

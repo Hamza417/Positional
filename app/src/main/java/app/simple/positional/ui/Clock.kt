@@ -375,7 +375,6 @@ class Clock : Fragment() {
             val moonrise = fromHtml("<b>Moonrise:</b> ${pattern.format(moonTimes.rise)}")
             val moonset = fromHtml("<b>Moonset:</b> ${pattern.format(moonTimes.set)}")
 
-
             val twilightTimes = SunTimes.compute().on(Instant.now()).latitude(latitude).longitude(longitude)
             val astronomicalDawn = fromHtml("<b>Astronomical Dawn:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise.toString())}")
             val astronomicalDusk = fromHtml("<b>Astronomical Dusk:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set.toString())}")
@@ -425,7 +424,10 @@ class Clock : Fragment() {
                 moonImageCountViolation = 0
             }
 
-            val nextFullMoon = fromHtml("<b>Next Full Moon:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time.toString())}")
+            val nextFullMoon = fromHtml("<b>Full Moon:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time.toString())}")
+            val nextNewMoon = fromHtml("<b>New Moon:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.NEW_MOON).execute().time.toString())}")
+            val nextFirstQuarter = fromHtml("<b>First Quarter:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.FIRST_QUARTER).execute().time.toString())}")
+            val nextLastQuarter = fromHtml("<b>Last Quarter:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.LAST_QUARTER).execute().time.toString())}")
 
             withContext(Dispatchers.Main) {
                 try {
@@ -459,6 +461,9 @@ class Clock : Fragment() {
                     moon_phase.text = moonPhase
                     moon_phase_angle.text = moonPhaseAngle
                     next_full_moon.text = nextFullMoon
+                    next_new_moon.text = nextNewMoon
+                    next_first_quarter.text = nextFirstQuarter
+                    next_last_quarter.text = nextLastQuarter
                 } catch (e: NullPointerException) {
                 } catch (e: UninitializedPropertyAccessException) {
                 }

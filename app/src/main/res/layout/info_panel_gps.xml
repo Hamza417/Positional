@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="GPS"
+                android:text="Location"
                 android:textSize="@dimen/info_text_primary_size" />
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
