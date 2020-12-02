@@ -149,6 +149,63 @@
                 app:corners="20"
                 app:use_gradient="true" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gps_movement_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/ripple"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/PrimaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Movement"
+                android:textSize="@dimen/info_text_primary_size" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/gps_distance"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:corners="20"
+                app:use_gradient="true" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/gps_displacement"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:corners="20"
+                app:use_gradient="true" />
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/gps_direction"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:corners="20"
+                app:use_gradient="true" />
+
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_speed"
                 style="@style/SecondaryTextView"

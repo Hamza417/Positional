@@ -1,5 +1,6 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clock_panel_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -57,14 +58,15 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:focusable="true"
-            android:foreground="@drawable/ripple"
+            android:background="@drawable/ripple"
             android:paddingHorizontal="10dp">
 
             <ImageView
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_access_time" />
+                android:src="@drawable/ic_access_time"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"

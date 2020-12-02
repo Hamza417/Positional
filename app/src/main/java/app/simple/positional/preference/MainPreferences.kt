@@ -15,6 +15,14 @@ class MainPreferences {
         return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(launchCount, 0)
     }
 
+    fun setScreenOn(context: Context, value: Boolean) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(screenOn, value).apply()
+    }
+
+    fun isScreenOn(context: Context): Boolean {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(screenOn, false)
+    }
+
     /**
      * @param value for storing theme preferences
      * 1 - Light

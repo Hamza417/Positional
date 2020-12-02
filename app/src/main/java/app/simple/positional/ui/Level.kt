@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
@@ -85,14 +84,14 @@ class Level : Fragment(), SensorEventListener {
                             .scaleX(1.3f)
                             .scaleY(1.3f)
                             .setDuration(1000)
-                            .setInterpolator(AccelerateDecelerateInterpolator())
+                            .setInterpolator(DecelerateInterpolator())
                             .start()
 
                     level_dot.animate()
                             .scaleX(1.3f)
                             .scaleY(1.3f)
                             .setDuration(1000)
-                            .setInterpolator(AccelerateDecelerateInterpolator())
+                            .setInterpolator(DecelerateInterpolator())
                             .start()
                 }
                 MotionEvent.ACTION_UP -> {

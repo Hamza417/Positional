@@ -14,7 +14,6 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         super.onCreate(savedInstanceState)
 
         // This will keep the screen on during for debug build
-        if (BuildConfig.DEBUG) {
+        if (MainPreferences().isScreenOn(this)) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
         //app.simple.positional.theme.setTheme(MainPreferences().getCurrentTheme(baseContext))

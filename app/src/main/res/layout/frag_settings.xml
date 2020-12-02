@@ -193,6 +193,50 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/medium"
+                            android:text="Keep Screen On"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="@dimen/settings_primary_text_size" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="Keep the screen on while the app is running"
+                            android:textColor="?attr/textSecondary"
+                            android:textSize="@dimen/settings_secondary_text_size" />
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/toggle_screen_on"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:thumb="@drawable/switch_thumb"
+                        app:track="@drawable/switch_track" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/setting_notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
                             android:text="Push Notification"
                             android:textColor="?attr/textPrimary"
                             android:textSize="@dimen/settings_primary_text_size" />

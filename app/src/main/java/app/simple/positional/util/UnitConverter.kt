@@ -15,6 +15,21 @@ fun Double.toKiloMetersPerHour(): Double {
 }
 
 /**
+ * Converts float value of meters to kilometers
+ */
+fun Float.toKilometers(): Float {
+    return this / 1000f
+}
+
+/**
+ * Converts float value in meters to miles
+ */
+
+fun Float.toMiles(): Float {
+    return this / 1609
+}
+
+/**
  * Converts double value in km/h to miles/hour
  */
 fun Double.toMilesPerHour(): Double {

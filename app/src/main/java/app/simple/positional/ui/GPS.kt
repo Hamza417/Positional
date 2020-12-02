@@ -9,10 +9,12 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -26,6 +28,7 @@ import app.simple.positional.dialogs.app.PlayServiceIssue
 import app.simple.positional.dialogs.gps.GPSMenu
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
 import com.elyeproj.loaderviewlibrary.LoaderTextView
 import com.google.android.gms.common.ConnectionResult
@@ -86,6 +89,8 @@ class GPS : Fragment() {
     private var lastLatitude = 0.0
     private var lastLongitude = 0.0
 
+    private var distanceSingleton = DistanceSingleton
+
     private lateinit var mapFragment: SupportMapFragment
     private var googleMap: GoogleMap? = null
 
@@ -125,6 +130,8 @@ class GPS : Fragment() {
         mapFragment = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
         mapFragment.getMapAsync(callback)
 
+        distanceSingleton.isMapPanelVisible = true
+
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             toolbar = view.findViewById(R.id.gps_appbar)
 
@@ -155,6 +162,18 @@ class GPS : Fragment() {
         locationIconStatusUpdates()
         checkGooglePlayServices()
 
+        gps_movement_layout.setOnLongClickListener {
+            distanceSingleton.totalDistance = 0f
+            if (location != null) {
+                distanceSingleton.initialPointCoordinates = LatLng(location!!.latitude, location!!.longitude)
+            } else {
+                distanceSingleton.isInitialLocationSet = false
+            }
+
+            Toast.makeText(requireContext(), "Reset Complete", Toast.LENGTH_SHORT).show()
+            true
+        }
+
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
@@ -163,6 +182,12 @@ class GPS : Fragment() {
                             CoroutineScope(Dispatchers.IO).launch {
                                 location = intent.getParcelableExtra("location")!!
                                 if (location == null) return@launch
+
+                                if (!distanceSingleton.isInitialLocationSet!!) {
+                                    distanceSingleton.initialPointCoordinates = LatLng(location!!.latitude, location!!.longitude)
+                                    distanceSingleton.distanceCoordinates = LatLng(location!!.latitude, location!!.longitude)
+                                    distanceSingleton.isInitialLocationSet = true
+                                }
 
                                 GPSPreferences().setLastLatitude(requireContext(), location!!.latitude.toFloat())
                                 GPSPreferences().setLastLongitude(requireContext(), location!!.longitude.toFloat())
@@ -190,6 +215,69 @@ class GPS : Fragment() {
 
                                 val bearing = fromHtml("<b>Bearing:</b> ${location!!.bearing}°")
 
+                                val displacement: Spanned?
+                                val direction: Spanned?
+
+                                val displacementValue = FloatArray(1)
+                                val distanceValue = FloatArray(1)
+                                Location.distanceBetween(
+                                        distanceSingleton.initialPointCoordinates!!.latitude,
+                                        distanceSingleton.initialPointCoordinates!!.longitude,
+                                        location!!.latitude,
+                                        location!!.longitude,
+                                        displacementValue
+                                )
+
+                                Location.distanceBetween(
+                                        distanceSingleton.initialPointCoordinates!!.latitude,
+                                        distanceSingleton.initialPointCoordinates!!.longitude,
+                                        location!!.latitude,
+                                        location!!.longitude,
+                                        distanceValue
+                                )
+
+                                if (location!!.speed > 0f) {
+                                    distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(distanceValue[0])
+                                    val dir = getDirection(
+                                            distanceSingleton.distanceCoordinates!!.latitude,
+                                            distanceSingleton.distanceCoordinates!!.longitude,
+                                            location!!.latitude,
+                                            location!!.longitude
+                                    )
+                                    distanceSingleton.distanceCoordinates = LatLng(location!!.latitude, location!!.longitude)
+                                    direction = fromHtml("<b>Direction:</b> ${round(dir, 2)}° ${getDirectionCodeFromAzimuth(dir)}")
+                                } else {
+                                    direction = fromHtml("<b>Direction:</b> N/A")
+                                }
+
+                                displacement = if (displacementValue[0] < 1000) {
+                                    if (isMetric) {
+                                        fromHtml("<b>Displacement:</b> ${round(displacementValue[0].toDouble(), 2)} m")
+                                    } else {
+                                        fromHtml("<b>Displacement:</b> ${round(displacementValue[0].toDouble().toFeet(), 2)} ft")
+                                    }
+                                } else {
+                                    if (isMetric) {
+                                        fromHtml("<b>Displacement:</b> ${round(displacementValue[0].toKilometers().toDouble(), 2)} km")
+                                    } else {
+                                        fromHtml("<b>Displacement:</b> ${round(displacementValue[0].toMiles().toDouble().toFeet(), 2)} miles")
+                                    }
+                                }
+
+                                val distance: Spanned? = if (distanceSingleton.totalDistance!! < 1000) {
+                                    if (isMetric) {
+                                        fromHtml("<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble(), 2)} m")
+                                    } else {
+                                        fromHtml("<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble().toFeet(), 2)} ft")
+                                    }
+                                } else {
+                                    if (isMetric) {
+                                        fromHtml("<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toKilometers().toDouble(), 2)} km")
+                                    } else {
+                                        fromHtml("<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toMiles().toDouble().toFeet(), 2)} miles")
+                                    }
+                                }
+
                                 withContext(Dispatchers.Main) {
                                     gps_location_indicator.setImageResource(R.drawable.ic_gps_fixed)
                                     gps_location_indicator.isClickable = true
@@ -199,6 +287,9 @@ class GPS : Fragment() {
                                     this@GPS.speed.text = speed
                                     this@GPS.bearing.text = bearing
                                     this@GPS.accuracy.text = accuracy
+                                    gps_displacement.text = displacement
+                                    gps_distance.text = distance
+                                    gps_direction.text = direction
 
                                     if (!isCustomCoordinate) {
                                         updateViews(location!!.latitude, location!!.longitude, location!!.bearing)
@@ -325,6 +416,11 @@ class GPS : Fragment() {
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        distanceSingleton.isMapPanelVisible = false
     }
 
     override fun onResume() {

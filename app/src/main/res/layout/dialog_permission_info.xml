@@ -1,233 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dialog_height"
-    android:background="@drawable/bg_dialog"
-    android:orientation="vertical">
+    android:layout_height="@dimen/dialog_height">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="10dp"
-        android:fontFamily="@font/medium"
-        android:text="Required Permissions"
-        android:textColor="?attr/textPrimary"
-        android:textSize="@dimen/options_header_text_size" />
-
-    <View
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="?attr/dividerColor" />
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:padding="10dp">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/regular"
-                    android:text="@string/permission_acknowledgement"
-                    android:textColor="?attr/textSecondary"
-                    android:textSize="@dimen/description_text_size" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/medium"
-                        android:text="• ACCESS_FINE_LOCATION"
-                        android:textColor="?attr/textPrimary"
-                        android:textSize="@dimen/permission_tag_text_size" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/access_fine_location_info"
-                        android:textColor="?attr/textSecondary"
-                        android:textSize="@dimen/description_text_size" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/medium"
-                        android:text="• ACCESS_COARSE_LOCATION"
-                        android:textColor="?attr/textPrimary"
-                        android:textSize="@dimen/permission_tag_text_size" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/coarse_perm_info"
-                        android:textColor="?attr/textSecondary"
-                        android:textSize="@dimen/description_text_size" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/medium"
-                        android:text="• INTERNET"
-                        android:textColor="?attr/textPrimary"
-                        android:textSize="@dimen/permission_tag_text_size" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/internet_perm_info"
-                        android:textColor="?attr/textSecondary"
-                        android:textSize="@dimen/description_text_size" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/medium"
-                        android:text="• ACCESS_WIFI_STATE"
-                        android:textColor="?attr/textPrimary"
-                        android:textSize="@dimen/permission_tag_text_size" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/wfi_perm_info"
-                        android:textColor="?attr/textSecondary"
-                        android:textSize="@dimen/description_text_size" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/medium"
-                        android:text="• ACCESS_NETWORK_STATE"
-                        android:textColor="?attr/textPrimary"
-                        android:textSize="@dimen/permission_tag_text_size" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
-                        android:text="@string/network_perm_info"
-                        android:textColor="?attr/textSecondary"
-                        android:textSize="@dimen/description_text_size" />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="?attr/dividerColor" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/show_perm_dialog"
-            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginHorizontal="10dp"
-            android:buttonTint="?attr/iconColor"
-            android:checked="true" />
+        android:layout_height="@dimen/dialog_height"
+        android:background="@drawable/bg_dialog"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/medium"
+            android:text="Required Permissions"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/options_header_text_size" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="?attr/dividerColor" />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:fontFamily="@font/regular"
-            android:text="Show Again"
-            android:textColor="?attr/textSecondary"
-            android:textSize="@dimen/options_item_text_size" />
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="10dp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/ripple_btn"
-            android:fontFamily="@font/medium"
-            android:text="Close"
-            android:textColor="?attr/textPrimary" />
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/grant"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/ripple_btn"
-            android:fontFamily="@font/medium"
-            android:text="Grant"
-            android:textColor="?attr/textPrimary" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/permission_acknowledgement"
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/description_text_size" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
+                            android:text="• ACCESS_FINE_LOCATION"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="@dimen/permission_tag_text_size" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/access_fine_location_info"
+                            android:textColor="?attr/textSecondary"
+                            android:textSize="@dimen/description_text_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
+                            android:text="• ACCESS_COARSE_LOCATION"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="@dimen/permission_tag_text_size" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/coarse_perm_info"
+                            android:textColor="?attr/textSecondary"
+                            android:textSize="@dimen/description_text_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
+                            android:text="• INTERNET"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="@dimen/permission_tag_text_size" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/internet_perm_info"
+                            android:textColor="?attr/textSecondary"
+                            android:textSize="@dimen/description_text_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
+                            android:text="• ACCESS_WIFI_STATE"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="@dimen/permission_tag_text_size" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/wfi_perm_info"
+                            android:textColor="?attr/textSecondary"
+                            android:textSize="@dimen/description_text_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/medium"
+                            android:text="• ACCESS_NETWORK_STATE"
+                            android:textColor="?attr/textPrimary"
+                            android:textSize="@dimen/permission_tag_text_size" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/regular"
+                            android:text="@string/network_perm_info"
+                            android:textColor="?attr/textSecondary"
+                            android:textSize="@dimen/description_text_size" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="?attr/dividerColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/show_perm_dialog"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginHorizontal="10dp"
+                android:buttonTint="?attr/iconColor"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="Show Again"
+                android:textColor="?attr/textSecondary"
+                android:textSize="@dimen/options_item_text_size" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/ripple_btn"
+                android:fontFamily="@font/medium"
+                android:text="Close"
+                android:textColor="?attr/textPrimary" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/grant"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ripple_btn"
+                android:fontFamily="@font/medium"
+                android:text="Grant"
+                android:textColor="?attr/textPrimary" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</FrameLayout>
 

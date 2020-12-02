@@ -13,8 +13,11 @@ import android.os.IBinder
 import android.os.Looper
 import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import app.simple.positional.singleton.DistanceSingleton
+import com.google.android.gms.maps.model.LatLng
 
 class LocationService : Service(), LocationListener {
+    private val distanceSingleton = DistanceSingleton
     private var locationManager: LocationManager? = null
     private var handler = Handler(Looper.getMainLooper())
     private var delay: Long = 1000
@@ -54,6 +57,8 @@ class LocationService : Service(), LocationListener {
             intent.putExtra("location", location)
             LocalBroadcastManager.getInstance(baseContext).sendBroadcast(intent)
         }
+
+        measureDistance(location)
         // Instead send parcelable, it will be done in just single line
         // intent.putExtra("latitude", location.getLatitude());
         // intent.putExtra("longitude", location.getLongitude());
@@ -146,5 +151,22 @@ class LocationService : Service(), LocationListener {
     private fun removeCallbacks() {
         locationManager?.removeUpdates(this)
         handler.removeCallbacks(locationUpdater)
+    }
+
+    private fun measureDistance(location: Location) {
+        if (location.speed > 0f) {
+            if (!distanceSingleton.isMapPanelVisible!!) {
+                if (distanceSingleton.isInitialLocationSet!!) {
+                    val result = FloatArray(1)
+                    Location.distanceBetween(distanceSingleton.distanceCoordinates!!.latitude, distanceSingleton.distanceCoordinates!!.longitude, location.latitude, location.longitude, result)
+                    distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(result[0])
+                    distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
+                } else {
+                    distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
+                    distanceSingleton.initialPointCoordinates = LatLng(location.latitude, location.longitude)
+                    distanceSingleton.isInitialLocationSet = true
+                }
+            }
+        }
     }
 }

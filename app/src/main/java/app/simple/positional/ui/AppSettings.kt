@@ -3,10 +3,7 @@ package app.simple.positional.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
@@ -45,6 +42,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         setCurrentUnit(MainPreferences().getUnit(requireContext()))
 
         toggle_notifications.isChecked = MainPreferences().isNotificationOn(requireContext())
+        toggle_screen_on.isChecked = MainPreferences().isScreenOn(requireContext())
         isCoordinatesSet(MainPreferences().isCustomCoordinate(requireContext())) // toggle coordinate switch
 
         settings_theme.setOnClickListener {
@@ -82,6 +80,18 @@ class AppSettings : Fragment(), CoordinatesCallback {
             } else {
                 Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
                 toggle_custom_location.isChecked = false
+            }
+        }
+
+        toggle_screen_on.setOnCheckedChangeListener { _, isChecked ->
+            if (toggle_screen_on.isPressed) {
+                MainPreferences().setScreenOn(requireContext(), isChecked)
+
+                if (isChecked) {
+                    requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                } else {
+                    requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                }
             }
         }
 
