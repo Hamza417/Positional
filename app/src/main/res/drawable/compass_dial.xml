@@ -2,7 +2,9 @@
     android:width="24dp"
     android:height="24dp"
     android:viewportWidth="1000"
-    android:viewportHeight="1000">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:viewportHeight="1000"
+    tools:ignore="vectorRaster,vectorPath">
     <path
         android:fillColor="#b7b7b7"
         android:fillType="evenOdd"

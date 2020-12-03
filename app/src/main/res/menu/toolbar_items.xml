@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/item3"
-        android:icon="@drawable/ic_adjust"
+        android:icon="@drawable/ic_level"
         android:title="" />
 
     <item

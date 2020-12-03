@@ -20,6 +20,7 @@ import app.simple.positional.constants.vectorBackground
 import app.simple.positional.constants.vectorBackgroundNight
 import app.simple.positional.constants.vectorColors
 import app.simple.positional.constants.vectorNightColors
+import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.util.addLinearGradient
 import app.simple.positional.util.addRadialGradient
 import app.simple.positional.util.getBitmapFromVectorDrawable
@@ -30,6 +31,8 @@ class Launcher : Fragment() {
     fun newInstance(): Launcher {
         return Launcher()
     }
+
+    private lateinit var intent: Intent
 
     private var randomDayValue: Int = 0
     private var randomNightValue: Int = 0
@@ -44,6 +47,10 @@ class Launcher : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        intent = requireActivity().intent
+
+        setShortcutScreen()
 
         if (BuildConfig.FLAVOR == "full") {
             randomDayValue = (vectorBackground.indices).random()
@@ -105,6 +112,28 @@ class Launcher : Fragment() {
 
             true
         }
+    }
+
+    private fun setShortcutScreen() {
+        if (intent.action == null) return
+        when (intent.action) {
+            "open_clock" -> {
+                setScreenValue(0)
+            }
+            "open_compass" -> {
+                setScreenValue(1)
+            }
+            "open_gps" -> {
+                setScreenValue(2)
+            }
+            "open_level" -> {
+                setScreenValue(3)
+            }
+        }
+    }
+
+    private fun setScreenValue(value: Int) {
+        FragmentPreferences().setCurrentPage(requireContext(), value)
     }
 
     private fun runPostDelayed(delay: Long) {

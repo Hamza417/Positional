@@ -12,7 +12,8 @@
     <string name="ellipsis">&#8230;</string>
     <string name="clock">Clock</string>
     <string name="compass">Compass</string>
-    <string name="gps">GPS</string>
+    <string name="gps">Location</string>
+    <string name="level">Level</string>
     <string name="settings">Settings</string>
     <string name="info_copied">Copied to Clipboard</string>
     <string name="info_error">Info couldn\'t be copied!!</string>
