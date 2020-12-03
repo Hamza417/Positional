@@ -15,6 +15,7 @@ class ClockMotionType(private val clock: WeakReference<Clock>) : CustomBottomShe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+        retainInstance = true
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

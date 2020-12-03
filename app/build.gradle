@@ -55,8 +55,8 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 34
-        versionName "v4.7-stable"
+        versionCode 35
+        versionName "v4.8-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         // add a Resource String for the same key-value pair

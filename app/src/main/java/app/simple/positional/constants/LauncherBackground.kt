@@ -38,7 +38,8 @@ val vectorBackground = arrayOf(
         R.drawable.launcher_day_32,
         R.drawable.launcher_day_33,
         R.drawable.launcher_day_34,
-        R.drawable.launcher_day_35
+        R.drawable.launcher_day_35,
+        R.drawable.launcher_day_36
 )
 
 val vectorBackgroundNight = arrayOf(
@@ -55,7 +56,8 @@ val vectorBackgroundNight = arrayOf(
         R.drawable.launcher_night_11,
         R.drawable.launcher_night_12,
         R.drawable.launcher_night_13,
-        R.drawable.launcher_night_14
+        R.drawable.launcher_night_14,
+        R.drawable.launcher_night_15
 )
 
 val vectorColors: Array<Array<Int>> = arrayOf(
@@ -94,6 +96,7 @@ val vectorColors: Array<Array<Int>> = arrayOf(
         arrayOf(parseColor("#FFBC8E6F"), parseColor("#FFE9C49E")),
         arrayOf(parseColor("#FFa14118"), parseColor("#FFdb6532")),
         arrayOf(parseColor("#FF1B72A7"), parseColor("#FF1BA0D1")),
+        arrayOf(parseColor("#FFa12c34"), parseColor("#FFF87136")),
 )
 
 val vectorNightColors: Array<Array<Int>> = arrayOf(
@@ -110,7 +113,8 @@ val vectorNightColors: Array<Array<Int>> = arrayOf(
         arrayOf(parseColor("#FF554686"), parseColor("#FF6e51c9")),
         arrayOf(parseColor("#FFf0a87f"), parseColor("#FF415262")),
         arrayOf(parseColor("#FFFFEC84"), parseColor("#FFFF8B88")),
-        arrayOf(parseColor("#FF225664"), parseColor("#FF65CBBF"))
+        arrayOf(parseColor("#FF225664"), parseColor("#FF65CBBF")),
+        arrayOf(parseColor("#FF304f8c"), parseColor("#FF272152"))
 )
 
 fun parseColor(value: String): Int {
