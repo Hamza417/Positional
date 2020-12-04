@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -273,22 +272,12 @@ class Compass : Fragment(), SensorEventListener {
 
     private val textAnimationRunnable: Runnable = Runnable { compass_info_text.setTextAnimation("Compass Info", 300) }
 
-    /**
-     * Simple implementation of an [View.OnTouchListener] for registering the dialer's touch events.
-     */
     private inner class MyOnTouchListener : View.OnTouchListener {
         @SuppressLint("ClickableViewAccessibility")
         override fun onTouch(v: View?, event: MotionEvent): Boolean {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     isUserRotatingDial = true
-                    dial.animate()
-                            .scaleX(1.2f)
-                            .scaleY(1.2f)
-                            .setDuration(1000)
-                            .setInterpolator(DecelerateInterpolator())
-                            .start()
-                    //startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dial.width.toFloat(), dial.height.toFloat())
                     return true
                 }
                 MotionEvent.ACTION_MOVE -> {
@@ -298,12 +287,6 @@ class Compass : Fragment(), SensorEventListener {
                 }
                 MotionEvent.ACTION_UP -> {
                     isUserRotatingDial = false
-                    dial.animate()
-                            .scaleX(1f)
-                            .scaleY(1f)
-                            .setDuration(1000)
-                            .setInterpolator(DecelerateInterpolator())
-                            .start()
                     return true
                 }
             }
@@ -313,6 +296,7 @@ class Compass : Fragment(), SensorEventListener {
 
     private fun rotateDial(degrees: Float) {
         dial.rotation = degrees
+        viewRotation((degrees - 360.0f) * -1)
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -324,8 +308,6 @@ class Compass : Fragment(), SensorEventListener {
             Sensor.TYPE_MAGNETIC_FIELD -> smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
         }
 
-        var azimuth = 0f
-
         val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(this.rotation, inclination, accelerometerReadings, magnetometerReadings)
 
         if (successfullyCalculatedRotationMatrix) {
@@ -333,75 +315,37 @@ class Compass : Fragment(), SensorEventListener {
 
             try {
                 if (isUserRotatingDial) {
-                    rotationAngle = dial.rotation
-                    azimuth = (rotationAngle - 360.0f) * -1
+                    /* no-op */
                 } else {
                     rotationAngle = adjustAzimuthForDisplayRotation(
                             -(((((orientation[0] + twoPI) % twoPI * degreesPerRadian).toFloat())) + 360) % 360,
                             requireActivity().windowManager
                     )
 
-                    dial.rotation = rotationAngle
-                    azimuth = (rotationAngle * -1) //- ((dial.rotation + 360) % 360).toInt()
+                    viewRotation(rotationAngle * -1)
+
+                    /**
+                     * Still testing this, currently it partially works
+                     *
+                     * the problem with the above algorithm is it only measures the direction correctly when device is facing up
+                     * This method approximately calculates if the device is facing up or down and that is by
+                     * comparing the z value to the x and y values. If the z value dominates or > 0 then device is facing up
+                     *
+                     * If device is facing down, then value calculated gives a negative result
+                     *
+                     * Alternative method would be to simple check [accelerometerReadings] z value and if it is positive device is facing up
+                     * if negative then device is facing down
+                     *
+                     * Value 1.0e-6 is there to prevent accidentally dividing by zero when device is exactly perpendicular to the gravity
+                     */
+                    // rotationAngle += if (accelerometerReadings[2] / sqrt(accelerometerReadings[0].pow(2) + accelerometerReadings[1].pow(2) + accelerometerReadings[2].pow(2) + 1.0e-6) > 0) {
+                    //    0f
+                    // } else {
+                    //    180f
+                    // }
                 }
             } catch (e: IllegalStateException) {
                 e.printStackTrace()
-            }
-
-            /**
-             * Still testing this, currently it partially works
-             *
-             * the problem with the above algorithm is it only measures the direction correctly when device is facing up
-             * This method approximately calculates if the device is facing up or down and that is by
-             * comparing the z value to the x and y values. If the z value dominates or > 0 then device is facing up
-             *
-             * If device is facing down, then value calculated gives a negative result
-             *
-             * Alternative method would be to simple check [accelerometerReadings] z value and if it is positive device is facing up
-             * if negative then device is facing down
-             *
-             * Value 1.0e-6 is there to prevent accidentally dividing by zero when device is exactly perpendicular to the gravity
-             */
-            // rotationAngle += if (accelerometerReadings[2] / sqrt(accelerometerReadings[0].pow(2) + accelerometerReadings[1].pow(2) + accelerometerReadings[2].pow(2) + 1.0e-6) > 0) {
-            //    0f
-            // } else {
-            //    180f
-            // }
-
-            if (isFLowerBlooming) {
-                when (flowerBloom) {
-                    0 -> {
-                        flower_one.rotation = rotationAngle * 2
-                        flower_two.rotation = azimuth * -3 + 45
-                        flower_three.rotation = rotationAngle * 1 + 90
-                        flower_four.rotation = azimuth * -4 + 135
-                    }
-                    1 -> {
-                        flower_one.rotation = rotationAngle * 2
-                        flower_two.rotation = azimuth * -3 + 22.5f
-                        flower_three.rotation = rotationAngle * 1 + 45f
-                        flower_four.rotation = azimuth * -4 + 67.5f
-                    }
-                    2 -> {
-                        flower_one.rotation = rotationAngle * 2
-                        flower_two.rotation = azimuth * -3 + 45
-                        flower_three.rotation = rotationAngle * 1 + 90
-                        flower_four.rotation = azimuth * -4 + 135
-                    }
-                    3 -> {
-                        flower_one.rotation = rotationAngle * 2
-                        flower_two.rotation = azimuth * -3 + 45
-                        flower_three.rotation = rotationAngle * 1 + 90
-                        flower_four.rotation = azimuth * -4 + 135
-                    }
-                }
-            }
-
-            degrees.text = StringBuilder().append(azimuth.toInt()).append("°")
-            direction.text = if (showDirectionCode) {
-                getDirectionCodeFromAzimuth(azimuth = azimuth.toDouble()).toUpperCase(Locale.getDefault())
-            } else {
-                getDirectionNameFromAzimuth(azimuth = azimuth.toDouble()).toUpperCase(Locale.getDefault())
             }
         }
     }
@@ -447,6 +391,47 @@ class Compass : Fragment(), SensorEventListener {
                     compass_accuracy_accelerometer.text = fromHtml("<b>Accelerometer</b>: High")
                 }
             }
+        }
+    }
+
+    private fun viewRotation(rotationAngle: Float) {
+        dial.rotation = rotationAngle * -1
+
+        if (isFLowerBlooming) {
+            when (flowerBloom) {
+                0 -> {
+                    flower_one.rotation = rotationAngle * 2
+                    flower_two.rotation = rotationAngle * -3 + 45
+                    flower_three.rotation = rotationAngle * 1 + 90
+                    flower_four.rotation = rotationAngle * -4 + 135
+                }
+                1 -> {
+                    flower_one.rotation = rotationAngle * 2
+                    flower_two.rotation = rotationAngle * -3 + 22.5f
+                    flower_three.rotation = rotationAngle * 1 + 45f
+                    flower_four.rotation = rotationAngle * -4 + 67.5f
+                }
+                2 -> {
+                    flower_one.rotation = rotationAngle * 2
+                    flower_two.rotation = rotationAngle * -3 + 45
+                    flower_three.rotation = rotationAngle * 1 + 90
+                    flower_four.rotation = rotationAngle * -4 + 135
+                }
+                3 -> {
+                    flower_one.rotation = rotationAngle * 2
+                    flower_two.rotation = rotationAngle * -3 + 45
+                    flower_three.rotation = rotationAngle * 1 + 90
+                    flower_four.rotation = rotationAngle * -4 + 135
+                }
+            }
+        }
+
+        degrees.text = StringBuilder().append(rotationAngle.toInt()).append("°")
+
+        direction.text = if (showDirectionCode) {
+            getDirectionCodeFromAzimuth(azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
+        } else {
+            getDirectionNameFromAzimuth(azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
         }
     }
 

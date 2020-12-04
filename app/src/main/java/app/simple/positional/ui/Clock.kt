@@ -71,6 +71,11 @@ class Clock : Fragment() {
     private var customLatitude = 0.0
     private var customLongitude = 0.0
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
 

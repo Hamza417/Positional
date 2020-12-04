@@ -94,6 +94,11 @@ class GPS : Fragment() {
     private lateinit var mapFragment: SupportMapFragment
     private var googleMap: GoogleMap? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.frag_gps, container, false)
 
@@ -363,28 +368,39 @@ class GPS : Fragment() {
         }
 
         gps_copy.setOnClickListener {
+            handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             if (gps_accuracy.text != "") {
                 val stringBuilder = StringBuilder()
 
+                stringBuilder.append("Provider\n")
                 stringBuilder.append("${provider_status.text}\n")
-                stringBuilder.append("${provider_source.text}\n")
-                stringBuilder.append("Accuracy: ${gps_accuracy.text}\n")
-                stringBuilder.append("Altitude: ${gps_altitude.text}\n")
-                stringBuilder.append("Speed: ${gps_speed.text}\n")
+                stringBuilder.append("${provider_source.text}\n\n")
+
+                stringBuilder.append("Location\n")
+                stringBuilder.append("${gps_accuracy.text}\n")
+                stringBuilder.append("${gps_altitude.text}\n")
+                stringBuilder.append("${gps_bearing.text}\n\n")
+
+                stringBuilder.append("Movement\n")
+                stringBuilder.append("${gps_distance.text}\n")
+                stringBuilder.append("${gps_displacement.text}\n")
+                stringBuilder.append("${gps_direction.text}\n")
+                stringBuilder.append("${gps_speed.text}\n")
 
                 if (isCustomCoordinate) {
-                    stringBuilder.append(specified_location_notice_gps.text)
-                    stringBuilder.append("\n")
+                    stringBuilder.append("\n${specified_location_notice_gps.text}\n")
                 }
 
+                stringBuilder.append("\nCoordinates\n")
                 stringBuilder.append("${latitude.text}\n")
-                stringBuilder.append("${longitude.text}\n")
-                stringBuilder.append("Address: ${address.text}\n\n")
+                stringBuilder.append("${longitude.text}\n\n")
+
+                stringBuilder.append("Address: ${address.text}")
 
                 if (BuildConfig.FLAVOR == "lite") {
-                    stringBuilder.append("Information is copied using Positional Lite\n")
+                    stringBuilder.append("\n\nInformation is copied using Positional Lite\n")
                     stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
                 }
 
@@ -394,11 +410,9 @@ class GPS : Fragment() {
 
             if (clipboard.hasPrimaryClip()) {
                 gps_info_text.setTextAnimation(getString(R.string.info_copied), 300)
-
                 handler.postDelayed(textAnimationRunnable, 3000)
             } else {
                 gps_info_text.setTextAnimation(getString(R.string.info_error), 300)
-
                 handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
