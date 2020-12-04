@@ -13,7 +13,6 @@ fun setAppTheme(@IntRange(from = -1, to = 4) value: Int) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
         AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
-            println("Called")
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
         AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY -> {

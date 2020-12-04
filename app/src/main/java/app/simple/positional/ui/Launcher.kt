@@ -138,8 +138,8 @@ class Launcher : Fragment() {
 
     private fun runPostDelayed(delay: Long) {
         handler.postDelayed({
-            /**
-             * [isDestroyed] and [isFinishing] will check if the activity is alive or not
+            /*
+             * isDestroyed and isFinishing will check if the activity is alive or not
              * It is possible that the app could have been launched by accident and user might want
              * to close it immediately, in such cases leaving the [Handler.postDelayed] in queue will
              * explicitly execute the action in the background even if the activity is closed

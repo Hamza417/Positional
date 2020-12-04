@@ -1,14 +1,11 @@
 package app.simple.positional.activities
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
-import android.os.PowerManager
-import android.provider.Settings
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -37,11 +34,9 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // This will keep the screen on during for debug build
         if (MainPreferences().isScreenOn(this)) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
-        //app.simple.positional.theme.setTheme(MainPreferences().getCurrentTheme(baseContext))
 
         setContentView(R.layout.activity_main)
 
@@ -155,27 +150,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     companion object {
         var DEFAULT_PERMISSION_REQUEST_CODE = 123
-    }
-
-    /**
-     * return true if in App's Battery settings "Not optimized" and false if "Optimizing battery use"
-     */
-    private fun isIgnoringBatteryOptimizations(): Boolean {
-        val powerManager = baseContext.applicationContext.getSystemService(Context.POWER_SERVICE) as PowerManager
-        val name = baseContext.applicationContext.packageName
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return powerManager.isIgnoringBatteryOptimizations(name)
-        }
-        return true
-    }
-
-    private fun checkBattery() {
-        if (!isIgnoringBatteryOptimizations() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val name = resources.getString(R.string.app_name)
-            Toast.makeText(applicationContext, "Battery optimization -> All apps -> $name -> Don't optimize", Toast.LENGTH_LONG).show()
-            val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
-            startActivity(intent)
-        }
     }
 
     override fun onGrantRequest() {

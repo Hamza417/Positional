@@ -12,13 +12,10 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.animation.DecelerateInterpolator
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
@@ -31,7 +28,6 @@ import app.simple.positional.dialogs.compass.CompassMenu
 import app.simple.positional.dialogs.compass.NoSensorAlert
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.util.*
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.bottom_sheet_compass.*
 import kotlinx.android.synthetic.main.frag_compass.*
@@ -42,30 +38,22 @@ import java.util.*
 
 class Compass : Fragment(), SensorEventListener {
 
-    private var startAngle: Double = 0.0
-
     private var handler = Handler(Looper.getMainLooper())
-
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var bottomSheetSlide: BottomSheetSlide
-    private lateinit var scrollView: NestedScrollView
-    private lateinit var toolbar: MaterialToolbar
-    private lateinit var expandUp: ImageView
-
     private var backPress: OnBackPressedDispatcher? = null
-
-    private lateinit var degrees: TextView
-    private lateinit var dialContainer: FrameLayout
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
-
     private val orientation = FloatArray(3)
     private val rotation = FloatArray(9)
     private val inclination = FloatArray(9)
 
-    var haveAccelerometerSensor = false
-    var haveMagnetometerSensor = false
+    private var haveAccelerometerSensor = false
+    private var haveMagnetometerSensor = false
+    private var isFLowerBlooming = false
+    var showDirectionCode = true
+    private var isUserRotatingDial = false
 
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
@@ -78,27 +66,22 @@ class Compass : Fragment(), SensorEventListener {
      *  while the lower values will make filter the noise but also acts as a decelerate interpolator
      *  and make the movement smoother and pleasant
      *
-     *  0.03F is the default value, 0.05f is smoother, 0.15 is smoother and faster
+     *  0.03F is the somewhat default value, 0.05f is smoother, 0.15 is faster
      *
      *  see [smoothAndSetReadings] for its implementation
      */
     private var readingsAlpha = 0.06f
-
     private val twoPI = 2.0 * Math.PI
     private val degreesPerRadian = 180 / Math.PI
     private var rotationAngle = 0f
+    private var flowerBloom = 0
 
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
     private lateinit var sensorMagneticField: Sensor
 
-    private var isFLowerBlooming = false
-    private var flowerBloom = 0
-    var showDirectionCode = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         retainInstance = true
     }
 
@@ -106,19 +89,10 @@ class Compass : Fragment(), SensorEventListener {
         val v = inflater.inflate(R.layout.frag_compass, container, false)
 
         filter.addAction("location")
-
         showDirectionCode = CompassPreference().getDirectionCode(requireContext())
-
-        degrees = v.findViewById(R.id.degrees)
-
-        dialContainer = v.findViewById(R.id.dial_container)
-
         bottomSheetSlide = requireActivity() as BottomSheetSlide
-
         backPress = requireActivity().onBackPressedDispatcher
-
         bottomSheetBehavior = BottomSheetBehavior.from(v.findViewById(R.id.compass_info_bottom_sheet))
-
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         try {
@@ -158,7 +132,7 @@ class Compass : Fragment(), SensorEventListener {
 
         loadImageResources(R.drawable.compass_dial, dial, requireContext(), 0)
 
-        dialContainer.setOnTouchListener(MyOnTouchListener())
+        dial_container.setOnTouchListener(MyOnTouchListener())
 
         compass_menu.setOnClickListener {
             val weakReference = WeakReference(CompassMenu(WeakReference(this@Compass)))
@@ -166,6 +140,7 @@ class Compass : Fragment(), SensorEventListener {
         }
 
         compass_copy.setOnClickListener {
+            handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             val stringBuilder = StringBuilder()
@@ -189,7 +164,6 @@ class Compass : Fragment(), SensorEventListener {
 
             if (clipboard.hasPrimaryClip()) {
                 compass_info_text.setTextAnimation(getString(R.string.info_copied), 300)
-
                 handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
@@ -307,18 +281,29 @@ class Compass : Fragment(), SensorEventListener {
         override fun onTouch(v: View?, event: MotionEvent): Boolean {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    handler.removeCallbacksAndMessages(null)
-                    startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dial.width.toFloat(), dial.height.toFloat())
+                    isUserRotatingDial = true
+                    dial.animate()
+                            .scaleX(1.2f)
+                            .scaleY(1.2f)
+                            .setDuration(1000)
+                            .setInterpolator(DecelerateInterpolator())
+                            .start()
+                    //startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dial.width.toFloat(), dial.height.toFloat())
                     return true
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val currentAngle: Double = getAngle(event.x.toDouble(), event.y.toDouble(), dial.width.toFloat(), dial.height.toFloat())
-                    rotateDial((startAngle - currentAngle).toFloat())
-
-                    //startAngle = currentAngle
+                    val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dial.width.toFloat(), dial.height.toFloat())
+                    rotateDial((360.0f - currentAngle).toFloat())
                     return true
                 }
                 MotionEvent.ACTION_UP -> {
+                    isUserRotatingDial = false
+                    dial.animate()
+                            .scaleX(1f)
+                            .scaleY(1f)
+                            .setDuration(1000)
+                            .setInterpolator(DecelerateInterpolator())
+                            .start()
                     return true
                 }
             }
@@ -335,9 +320,11 @@ class Compass : Fragment(), SensorEventListener {
         if (event == null) return
 
         when (event.sensor.type) {
-            Sensor.TYPE_ACCELEROMETER -> smoothAndSetReadings(accelerometerReadings, event.values)
-            Sensor.TYPE_MAGNETIC_FIELD -> smoothAndSetReadings(magnetometerReadings, event.values)
+            Sensor.TYPE_ACCELEROMETER -> smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
+            Sensor.TYPE_MAGNETIC_FIELD -> smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
         }
+
+        var azimuth = 0f
 
         val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(this.rotation, inclination, accelerometerReadings, magnetometerReadings)
 
@@ -345,10 +332,18 @@ class Compass : Fragment(), SensorEventListener {
             SensorManager.getOrientation(this.rotation, orientation)
 
             try {
-                rotationAngle = adjustAzimuthForDisplayRotation(
-                        -(((((orientation[0] + twoPI) % twoPI * degreesPerRadian).toFloat())) + 360) % 360,
-                        requireActivity().windowManager
-                )
+                if (isUserRotatingDial) {
+                    rotationAngle = dial.rotation
+                    azimuth = (rotationAngle - 360.0f) * -1
+                } else {
+                    rotationAngle = adjustAzimuthForDisplayRotation(
+                            -(((((orientation[0] + twoPI) % twoPI * degreesPerRadian).toFloat())) + 360) % 360,
+                            requireActivity().windowManager
+                    )
+
+                    dial.rotation = rotationAngle
+                    azimuth = (rotationAngle * -1) //- ((dial.rotation + 360) % 360).toInt()
+                }
             } catch (e: IllegalStateException) {
                 e.printStackTrace()
             }
@@ -372,10 +367,6 @@ class Compass : Fragment(), SensorEventListener {
             // } else {
             //    180f
             // }
-
-            dial.rotation = rotationAngle
-
-            val azimuth = (rotationAngle * -1) //- ((dial.rotation + 360) % 360).toInt()
 
             if (isFLowerBlooming) {
                 when (flowerBloom) {
@@ -406,7 +397,7 @@ class Compass : Fragment(), SensorEventListener {
                 }
             }
 
-            degrees.text = "${azimuth.toInt()}°"
+            degrees.text = StringBuilder().append(azimuth.toInt()).append("°")
             direction.text = if (showDirectionCode) {
                 getDirectionCodeFromAzimuth(azimuth = azimuth.toDouble()).toUpperCase(Locale.getDefault())
             } else {
@@ -457,12 +448,6 @@ class Compass : Fragment(), SensorEventListener {
                 }
             }
         }
-    }
-
-    private fun smoothAndSetReadings(readings: FloatArray, newReadings: FloatArray) {
-        readings[0] = readingsAlpha * newReadings[0] + (1 - readingsAlpha) * readings[0] // x
-        readings[1] = readingsAlpha * newReadings[1] + (1 - readingsAlpha) * readings[1] // y
-        readings[2] = readingsAlpha * newReadings[2] + (1 - readingsAlpha) * readings[2] // z
     }
 
     fun setSpeed(value: Float) {

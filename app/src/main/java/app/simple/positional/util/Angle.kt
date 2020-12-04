@@ -6,7 +6,7 @@ import kotlin.math.hypot
 /**
  * @return The angle of the unit circle with the image view's center
  */
-public fun getAngle(xTouch: Double, yTouch: Double, dialerWidth: Float, dialerHeight: Float): Double {
+fun getAngle(xTouch: Double, yTouch: Double, dialerWidth: Float, dialerHeight: Float): Double {
     val x: Double = xTouch - dialerWidth / 2.0
     val y: Double = dialerHeight - yTouch - dialerHeight / 2.0
     return when (getQuadrant(x, y)) {

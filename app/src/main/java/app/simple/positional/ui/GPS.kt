@@ -471,7 +471,6 @@ class GPS : Fragment() {
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {
-
         CoroutineScope(Dispatchers.IO).launch {
             val address: String
 
@@ -484,6 +483,10 @@ class GPS : Fragment() {
                     val addresses: List<Address>
                     val geocoder = Geocoder(context, Locale.getDefault())
 
+                    @Suppress("BlockingMethodInNonBlockingContext")
+                    /**
+                     * [Dispatchers.IO] can withstand blocking calls
+                     */
                     addresses = geocoder.getFromLocation(latitude, longitude, 1)
 
                     if (addresses != null && addresses.isNotEmpty()) {

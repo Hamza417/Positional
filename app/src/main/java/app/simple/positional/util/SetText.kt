@@ -3,12 +3,10 @@ package app.simple.positional.util
 import android.view.View
 import android.widget.TextView
 
-// TextViewExtensions
-
 fun TextView.setTextAnimation(text: String, duration: Long = 300, completion: (() -> Unit)? = null) {
-    fadOutAnimation(duration) {
+    fadeOutAnimation(duration) {
         this.text = text
-        fadInAnimation(duration) {
+        fadeInAnimation(duration) {
             completion?.let {
                 it()
             }
@@ -16,9 +14,7 @@ fun TextView.setTextAnimation(text: String, duration: Long = 300, completion: ((
     }
 }
 
-// ViewExtensions
-
-fun View.fadOutAnimation(duration: Long = 300, visibility: Int = View.INVISIBLE, completion: (() -> Unit)? = null) {
+fun View.fadeOutAnimation(duration: Long = 300, visibility: Int = View.INVISIBLE, completion: (() -> Unit)? = null) {
     animate()
             .alpha(0f)
             .setDuration(duration)
@@ -30,7 +26,7 @@ fun View.fadOutAnimation(duration: Long = 300, visibility: Int = View.INVISIBLE,
             }
 }
 
-fun View.fadInAnimation(duration: Long = 300, completion: (() -> Unit)? = null) {
+fun View.fadeInAnimation(duration: Long = 300, completion: (() -> Unit)? = null) {
     alpha = 0f
     visibility = View.VISIBLE
     animate()

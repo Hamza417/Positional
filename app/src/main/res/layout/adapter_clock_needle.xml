@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -7,7 +8,8 @@
         android:id="@+id/adapter_needle_background"
         android:layout_width="@dimen/clock_image_dimensions"
         android:layout_height="match_parent"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/adapter_needle_hour"
@@ -15,7 +17,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/adapter_needle_minute"
@@ -23,7 +26,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:rotation="90" />
+        android:rotation="90"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/adapter_needle_second"
@@ -31,6 +35,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:rotation="245" />
+        android:rotation="245"
+        tools:ignore="ContentDescription" />
 
 </FrameLayout>

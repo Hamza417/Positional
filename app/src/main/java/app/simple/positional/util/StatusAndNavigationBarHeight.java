@@ -16,12 +16,11 @@ public class StatusAndNavigationBarHeight {
     }
     
     public static int getStatusBarHeight(Resources resources) {
-        int result = 0;
         int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = resources.getDimensionPixelSize(resourceId);
+            return resources.getDimensionPixelSize(resourceId);
         }
-        return result;
+        return 0;
     }
     
     public static int getNavigationBarHeight(Resources resources) {
@@ -33,13 +32,11 @@ public class StatusAndNavigationBarHeight {
     }
     
     public static int getToolBarHeight(Context context, Resources resources) {
-        // Calculate ActionBar height
-        int i = 0;
         TypedValue tv = new TypedValue();
         if (context.getTheme().resolveAttribute(R.attr.actionBarSize, tv, true)) {
-            i = TypedValue.complexToDimensionPixelSize(tv.data, resources.getDisplayMetrics());
+            return TypedValue.complexToDimensionPixelSize(tv.data, resources.getDisplayMetrics());
         }
-        
-        return i;
+    
+        return 0;
     }
 }

@@ -6,8 +6,8 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 
 fun buildSpannableString(s: String, endLength: Int): SpannableString {
-    val ss1 = SpannableString(s)
-    ss1.setSpan(RelativeSizeSpan(0.5f), s.length - endLength, s.length, 0) // set size
-    ss1.setSpan(ForegroundColorSpan(Color.GRAY), s.length - endLength, s.length, 0) // set color
-    return ss1
+    val spannableString = SpannableString(s)
+    spannableString.setSpan(RelativeSizeSpan(0.5f), s.length - endLength, s.length, 0) // set size
+    spannableString.setSpan(ForegroundColorSpan(Color.GRAY), s.length - endLength, s.length, 0) // set color
+    return spannableString
 }

@@ -3,7 +3,8 @@ package app.simple.positional.util
 import android.view.Surface
 import android.view.WindowManager
 
-public fun adjustAzimuthForDisplayRotation(azimuth: Float, windowManager: WindowManager): Float {
+@Suppress("deprecation")
+fun adjustAzimuthForDisplayRotation(azimuth: Float, windowManager: WindowManager): Float {
     return when (val displayRotation = windowManager.defaultDisplay.rotation) {
         Surface.ROTATION_0 -> azimuth
         Surface.ROTATION_90 -> azimuth - 270f

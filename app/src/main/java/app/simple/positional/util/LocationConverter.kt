@@ -4,7 +4,6 @@ import android.location.Location
 import kotlin.math.absoluteValue
 
 object LocationConverter {
-
     fun latitudeAsDMS(latitude: Double, decimalPlace: Int): String {
         val direction = if (latitude > 0) "N" else "S"
         var strLatitude = Location.convert(latitude.absoluteValue, Location.FORMAT_SECONDS)

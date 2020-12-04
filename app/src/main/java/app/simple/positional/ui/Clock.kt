@@ -47,38 +47,27 @@ import java.util.*
 class Clock : Fragment() {
 
     private lateinit var toolbar: MaterialToolbar
-
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
-
     private lateinit var calendar: Calendar
-
     private lateinit var hour: ImageView
     private lateinit var minutes: ImageView
     private lateinit var seconds: ImageView
     private lateinit var dial: ImageView
     private lateinit var expandUp: ImageView
-
     private lateinit var menu: ImageButton
-
     private lateinit var scrollView: NestedScrollView
 
     private lateinit var handler: Handler
-
     private var backPress: OnBackPressedDispatcher? = null
-
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
-
     private lateinit var bottomSheetSlide: BottomSheetSlide
 
     var delay: Long = 1000
-
     private var moonImageCountViolation = 1
     private var dayNightIndicatorImageCountViolation = 1
-
     private var isMetric = true
     private var isCustomCoordinate = false
-
     private var customLatitude = 0.0
     private var customLongitude = 0.0
 
@@ -86,21 +75,23 @@ class Clock : Fragment() {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
 
         handler = Handler(Looper.getMainLooper())
-
         filter.addAction("location")
-
         hour = view.findViewById(R.id.hour)
         minutes = view.findViewById(R.id.minutes)
         seconds = view.findViewById(R.id.seconds)
         dial = view.findViewById(R.id.clock_face)
-
         menu = view.findViewById(R.id.clock_menu)
-
         bottomSheetSlide = requireActivity() as BottomSheetSlide
-
         scrollView = view.findViewById(R.id.clock_panel_scrollview)
+        scrollView.alpha = 0f
+        toolbar = view.findViewById(R.id.clock_appbar)
+        expandUp = view.findViewById(R.id.expand_up_clock_sheet)
+        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
+
+        backPress = requireActivity().onBackPressedDispatcher
 
         setMotionDelay(ClockPreferences().getMovementType(requireContext()))
+
         isMetric = MainPreferences().getUnit(requireContext())
         isCustomCoordinate = MainPreferences().isCustomCoordinate(requireContext())
 
@@ -109,16 +100,7 @@ class Clock : Fragment() {
             customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
         }
 
-        toolbar = view.findViewById(R.id.clock_appbar)
-
-        scrollView.alpha = 0f
-
-        expandUp = view.findViewById(R.id.expand_up_clock_sheet)
-        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
-
         setSkins()
-
-        backPress = requireActivity().onBackPressedDispatcher
 
         return view
     }
@@ -193,6 +175,7 @@ class Clock : Fragment() {
         }
 
         clock_copy.setOnClickListener {
+            handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             val stringBuilder = StringBuilder()
@@ -243,7 +226,12 @@ class Clock : Fragment() {
                 stringBuilder.append("${moon_angle_state.text}\n")
                 stringBuilder.append("${moon_phase.text}\n")
                 stringBuilder.append("${moon_phase_angle.text}\n")
+
+                stringBuilder.append("Moon Dates\n")
+                stringBuilder.append("${next_new_moon.text}\n")
                 stringBuilder.append("${next_full_moon.text}\n")
+                stringBuilder.append("${next_first_quarter.text}\n")
+                stringBuilder.append("${next_last_quarter.text}\n")
             }
 
             if (BuildConfig.FLAVOR == "lite") {
@@ -257,7 +245,6 @@ class Clock : Fragment() {
 
             if (clipboard.hasPrimaryClip()) {
                 clock_info_text.setTextAnimation(getString(R.string.info_copied), 300)
-
                 handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
@@ -268,7 +255,6 @@ class Clock : Fragment() {
     private val clock: Runnable = object : Runnable {
         override fun run() {
             calendar = Calendar.getInstance()
-
             hour.rotation = getHoursInDegrees(calendar)
             minutes.rotation = getMinutesInDegrees(calendar)
 
@@ -277,12 +263,10 @@ class Clock : Fragment() {
             } else {
                 getSecondsInDegrees(calendar)
             }
-
             sweep_seconds.rotation = seconds.rotation - 90
 
             if (dayNightIndicatorImageCountViolation != 0) {
                 val calendar = calendar.get(Calendar.HOUR_OF_DAY)
-                println(calendar)
                 if (calendar < 7 || calendar > 18) {
                     day_night_indicator.setImageResource(R.drawable.ic_night)
                 } else if (calendar < 18 || calendar > 6) {
@@ -299,9 +283,7 @@ class Clock : Fragment() {
     private val calender: Runnable = object : Runnable {
         override fun run() {
             calendar = Calendar.getInstance()
-
             updateDigitalTime(calendar)
-
             handler.postDelayed(this, 1000)
         }
     }
@@ -359,7 +341,7 @@ class Clock : Fragment() {
     }
 
     private fun calculateAndUpdateData(latitude: Double, longitude: Double) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             // Set and Rise
             val sunTimes = SunTimes.compute().at(latitude, longitude).execute()
 
@@ -371,7 +353,6 @@ class Clock : Fragment() {
             val sunNadir = fromHtml("<b>Nadir:</b> ${pattern.format(sunTimes.nadir)}")
 
             val moonTimes = MoonTimes.compute().on(Instant.now()).latitude(latitude).longitude(longitude).execute()
-
             val moonrise = fromHtml("<b>Moonrise:</b> ${pattern.format(moonTimes.rise)}")
             val moonset = fromHtml("<b>Moonset:</b> ${pattern.format(moonTimes.set)}")
 
@@ -406,7 +387,6 @@ class Clock : Fragment() {
             val moonParallacticAngle = fromHtml("<b>Parallactic Angle:</b> ${round(moonPosition.parallacticAngle, 2)}°")
 
             val moonIllumination = MoonIllumination.compute().on(Instant.now()).execute()
-
             val moonFraction = fromHtml("<b>Fraction: </b> ${round(moonIllumination.fraction, 2)}")
             val moonAngle = fromHtml("<b>Angle:</b> ${round(moonIllumination.angle, 2)}°")
             val moonAngleState = fromHtml("<b>Angle State:</b> ${if (moonIllumination.angle < 0) "Waxing" else "Waning"}")
@@ -472,7 +452,7 @@ class Clock : Fragment() {
     }
 
     private fun dateUpdater(calendar: Calendar) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             var localTimeZone: Spanned? = null
             var digitalTime24: Spanned? = null
             var digitalTime12: Spanned? = null
@@ -491,7 +471,6 @@ class Clock : Fragment() {
                 utcTime = fromHtml("<b>Time:</b> ${SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date!!)}")
                 utcDate = fromHtml("<b>Date:</b> ${SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)}")
             } catch (e: ParseException) {
-                /* no-op */
             }
 
             withContext(Dispatchers.Main) {
@@ -504,9 +483,7 @@ class Clock : Fragment() {
                     date_utc.text = utcDate
                     time_utc.text = utcTime
                 } catch (e: NullPointerException) {
-                    /* no-op */
                 } catch (e: UninitializedPropertyAccessException) {
-                    /* no-op */
                 }
             }
         }
