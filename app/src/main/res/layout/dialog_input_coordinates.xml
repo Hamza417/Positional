@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/input_lyrics_container"
+    android:id="@+id/input_location_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_popup">
@@ -137,6 +137,53 @@
                 android:textColor="?attr/textSecondary" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/timezone_container"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:animateLayoutChanges="true"
+                android:hint="Timezone"
+                app:boxStrokeColor="?attr/iconColor"
+                app:boxStrokeWidth="1px"
+                app:boxStrokeWidthFocused="2px"
+                app:endIconMode="clear_text"
+                app:endIconTint="?attr/iconColor"
+                app:errorEnabled="false"
+                app:errorIconTint="@android:color/holo_red_dark"
+                app:errorTextColor="@android:color/holo_red_dark"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:hintTextColor="?attr/textSecondary"
+                tools:ignore="PxUsage">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/timezone_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="?attr/textSecondary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/timezone_list"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ripple_btn"
+                android:src="@drawable/ic_folder"
+                android:tint="?attr/iconColor"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"

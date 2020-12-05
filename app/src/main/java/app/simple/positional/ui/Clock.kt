@@ -352,7 +352,17 @@ class Clock : Fragment() {
     private fun calculateAndUpdateData(latitude: Double, longitude: Double) {
         CoroutineScope(Dispatchers.Default).launch {
             // Set and Rise
-            val sunTimes = SunTimes.compute().at(latitude, longitude).execute()
+            val timezone = if (isCustomCoordinate) {
+                if (MainPreferences().getTimeZone(requireContext()) != "") {
+                    MainPreferences().getTimeZone(requireContext())
+                } else {
+                    Calendar.getInstance().timeZone.id
+                }
+            } else {
+                Calendar.getInstance().timeZone.id
+            }
+
+            val sunTimes = SunTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude).execute()
 
             val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
 
@@ -361,11 +371,11 @@ class Clock : Fragment() {
             val sunNoon = fromHtml("<b>Noon:</b> ${pattern.format(sunTimes.noon)}")
             val sunNadir = fromHtml("<b>Nadir:</b> ${pattern.format(sunTimes.nadir)}")
 
-            val moonTimes = MoonTimes.compute().on(Instant.now()).latitude(latitude).longitude(longitude).execute()
+            val moonTimes = MoonTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude).execute()
             val moonrise = fromHtml("<b>Moonrise:</b> ${pattern.format(moonTimes.rise)}")
             val moonset = fromHtml("<b>Moonset:</b> ${pattern.format(moonTimes.set)}")
 
-            val twilightTimes = SunTimes.compute().on(Instant.now()).latitude(latitude).longitude(longitude)
+            val twilightTimes = SunTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude)
             val astronomicalDawn = fromHtml("<b>Astronomical Dawn:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise.toString())}")
             val astronomicalDusk = fromHtml("<b>Astronomical Dusk:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set.toString())}")
             val nauticalDawn = fromHtml("<b>Nautical Dawn:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().rise.toString())}")
@@ -374,7 +384,7 @@ class Clock : Fragment() {
             val civilDusk = fromHtml("<b>Civil Dusk:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().set.toString())}")
 
             // Position
-            val sunPosition: SunPosition = SunPosition.compute().timezone(TimeZone.getDefault()).on(Instant.now()).at(latitude, longitude).execute()
+            val sunPosition: SunPosition = SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).execute()
 
             val sunAzimuth = fromHtml("<b>Azimuth:</b> ${round(sunPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(sunPosition.azimuth)}")
             val sunAltitude = fromHtml("<b>Altitude:</b> ${round(sunPosition.trueAltitude, 2)}°")
@@ -384,7 +394,7 @@ class Clock : Fragment() {
                 fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance.toMiles())} miles")
             }
 
-            val moonPosition: MoonPosition = MoonPosition.compute().at(latitude, longitude).execute()
+            val moonPosition: MoonPosition = MoonPosition.compute().timezone(timezone).at(latitude, longitude).execute()
 
             val moonAzimuth = fromHtml("<b>Azimuth:</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(moonPosition.azimuth)}")
             val moonAltitude = fromHtml("<b>Altitude:</b> ${round(moonPosition.altitude, 2)}°")
@@ -395,7 +405,7 @@ class Clock : Fragment() {
             }
             val moonParallacticAngle = fromHtml("<b>Parallactic Angle:</b> ${round(moonPosition.parallacticAngle, 2)}°")
 
-            val moonIllumination = MoonIllumination.compute().on(Instant.now()).execute()
+            val moonIllumination = MoonIllumination.compute().on(Instant.now()).timezone(timezone).execute()
             val moonFraction = fromHtml("<b>Fraction: </b> ${round(moonIllumination.fraction, 2)}")
             val moonAngle = fromHtml("<b>Angle:</b> ${round(moonIllumination.angle, 2)}°")
             val moonAngleState = fromHtml("<b>Angle State:</b> ${if (moonIllumination.angle < 0) "Waxing" else "Waning"}")

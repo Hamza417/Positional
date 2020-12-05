@@ -72,4 +72,19 @@
     <dimen name="touch_indicator_size">100dp</dimen>
     <dimen name="license_text_size">14pt</dimen>
     <dimen name="license_check_indicator_dimen">50dp</dimen>
+
+    <!-- Fast Scroller -->
+    <dimen name="afs_min_touch_target_size">48dp</dimen>
+
+    <dimen name="afs_popup_min_size">88dp</dimen>
+    <dimen name="afs_popup_margin_end">16dp</dimen>
+    <dimen name="afs_popup_text_size">45dp</dimen>
+
+    <dimen name="afs_md2_popup_min_width">78dp</dimen>
+    <dimen name="afs_md2_popup_min_height">64dp</dimen>
+    <dimen name="afs_md2_popup_margin_end">14dp</dimen>
+    <dimen name="afs_md2_popup_padding_start">16dp</dimen>
+    <dimen name="afs_md2_popup_padding_end">29dp</dimen>
+    <dimen name="afs_md2_popup_elevation">3dp</dimen>
+    <dimen name="afs_md2_popup_text_size">34dp</dimen>
 </resources>

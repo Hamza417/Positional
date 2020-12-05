@@ -19,3 +19,14 @@ fun getMinutesInDegrees(calendar: Calendar): Float {
 fun getHoursInDegrees(calendar: Calendar): Float {
     return 0.5f * (60f * calendar.get(Calendar.HOUR) + calendar.get(Calendar.MINUTE))
 }
+
+fun isValidTimeZone(timezone: String): Boolean {
+    val validIDs = TimeZone.getAvailableIDs()
+    for (str in validIDs) {
+        if (str != null && str == timezone) {
+            return true
+        }
+    }
+
+    return false
+}

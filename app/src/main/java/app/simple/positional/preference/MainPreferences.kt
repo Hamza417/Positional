@@ -110,4 +110,20 @@ class MainPreferences {
                 context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getFloat(longitude, 0f)
         )
     }
+
+    fun setTimeZone(@NonNull context: Context, value: String) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putString(timezone, value).apply()
+    }
+
+    fun getTimeZone(@NonNull context: Context): String? {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getString(timezone, "")
+    }
+
+    fun setAddress(@NonNull context: Context, value: String) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putString(address, value).apply()
+    }
+
+    fun getAddress(@NonNull context: Context): String? {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getString(address, "")
+    }
 }
