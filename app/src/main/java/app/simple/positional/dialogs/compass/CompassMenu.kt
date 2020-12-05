@@ -1,5 +1,6 @@
 package app.simple.positional.dialogs.compass
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -31,7 +32,8 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
         if (BuildConfig.FLAVOR != "lite") {
             toggle_flower.isChecked = CompassPreference().isFlowerBloom(requireContext())
         } else {
-            compass_appearance_text_view.text = "${compass_appearance_text_view.text} (requires full version)"
+            compass_bloom_text.setTextColor(Color.GRAY)
+            compass_bloom_skins_text.setTextColor(Color.GRAY)
         }
 
         toggle_flower.setOnCheckedChangeListener { _, isChecked ->

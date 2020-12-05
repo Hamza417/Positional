@@ -20,7 +20,8 @@
     <color name="indicator">#3A3A3A</color>
     <color name="shadowColor">#EDEDED</color>
 
-    <color name="switcher_on_color">#2196F3</color>
+    <color name="switcher_on_start_color">#2196F3</color>
+    <color name="switcher_on_end_color">#00DCDC</color>
     <color name="switcher_off_color">#474747</color>
     <color name="switcher_icon_color">@android:color/white</color>
 

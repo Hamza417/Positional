@@ -76,7 +76,7 @@ class Clock : Fragment() {
         retainInstance = true
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
 
         handler = Handler(Looper.getMainLooper())
@@ -120,10 +120,11 @@ class Clock : Fragment() {
 
         clock_main_layout.setProxyView(view)
 
+        loadImageResourcesWithoutAnimation(R.drawable.clock_face, clock_face, requireContext())
+        loadImageResourcesWithoutAnimation(R.drawable.clock_trail, sweep_seconds, requireContext())
+
         calendar = Calendar.getInstance()
         updateDigitalTime(calendar)
-        val df = SimpleDateFormat("dd MMM, yyyy", Locale.getDefault())
-        local_date.text = fromHtml("<b>Date:</b> ${df.format(calendar.time)}")
 
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -189,7 +190,10 @@ class Clock : Fragment() {
             stringBuilder.append("${local_timezone.text}\n")
             stringBuilder.append("${digital_time_24_hour.text}\n")
             stringBuilder.append("${digital_time_12_hour.text}\n")
-            stringBuilder.append("${local_date.text}\n\n")
+            stringBuilder.append("${local_day.text}\n")
+            stringBuilder.append("${local_date.text}\n")
+            stringBuilder.append("${local_day_of_the_year.text}\n")
+            stringBuilder.append("${local_week_of_the_year.text}\n\n")
 
             stringBuilder.append("UTC Time\n")
             stringBuilder.append("${time_zone_utc.text}\n")
@@ -462,6 +466,10 @@ class Clock : Fragment() {
             var digitalTime24: Spanned? = null
             var digitalTime12: Spanned? = null
             var digitalTime: SpannableString? = null
+            var localDate: Spanned? = null
+            var dayOfTheYear: Spanned? = null
+            var weekOfTheYear: Spanned? = null
+            var localDay: Spanned? = null
             var utcTimeZone: Spanned? = null
             var utcTime: Spanned? = null
             var utcDate: Spanned? = null
@@ -472,6 +480,11 @@ class Clock : Fragment() {
                 digitalTime12 = fromHtml("<b>Time 12Hr:</b> ${SimpleDateFormat("hh:mm:ss a", Locale.getDefault()).format(calendar.time)}")
                 digitalTime = getTime(requireContext(), calendar)
                 utcTimeZone = fromHtml("<b>Time Zone:</b> ${"GMT ${SimpleDateFormat("XXX", Locale.getDefault()).format(calendar.time)}"}")
+                val df = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
+                localDate = fromHtml("<b>Date:</b> ${df.format(calendar.time)}")
+                localDay = fromHtml("<b>Day:</b> ${SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)}")
+                dayOfTheYear = fromHtml("<b>Day of Year:</b> ${calendar.get(Calendar.DAY_OF_YEAR).getOrdinal()}")
+                weekOfTheYear = fromHtml("<b>Week of Year:</b> ${calendar.get(Calendar.WEEK_OF_YEAR).getOrdinal()}")
                 val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
                 utcTime = fromHtml("<b>Time:</b> ${SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date!!)}")
                 utcDate = fromHtml("<b>Date:</b> ${SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)}")
@@ -484,6 +497,10 @@ class Clock : Fragment() {
                     digital_time_24_hour.text = digitalTime24
                     digital_time_12_hour.text = digitalTime12
                     digital_time_main.text = digitalTime
+                    local_day.text = localDay
+                    local_date.text = localDate
+                    local_day_of_the_year.text = dayOfTheYear
+                    local_week_of_the_year.text = weekOfTheYear
                     time_zone_utc.text = utcTimeZone
                     date_utc.text = utcDate
                     time_utc.text = utcTime

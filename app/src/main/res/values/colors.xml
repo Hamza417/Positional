@@ -17,10 +17,11 @@
     <color name="edgeEffect">#717171</color>
 
     <!-- Bottom Bar Color -->
-    <color name="iconRegular">#C1C1C1</color>
+    <color name="iconRegular">#9A9A9A</color>
     <color name="indicator">#F3F3F3</color>
 
-    <color name="switcher_on_color">#2196F3</color>
+    <color name="switcher_on_start_color">#2196F3</color>
+    <color name="switcher_on_end_color">#00DCDC</color>
     <color name="switcher_off_color">#E3E3E3</color>
     <color name="switcher_icon_color">@android:color/white</color>
 

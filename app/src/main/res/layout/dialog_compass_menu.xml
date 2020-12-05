@@ -20,16 +20,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/compass_appearance_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:fontFamily="@font/medium"
-                android:text="Appearance"
-                android:textColor="?attr/textSecondary"
-                android:textSize="@dimen/options_category_text_size" />
-
             <LinearLayout
                 android:id="@+id/compass_dial_theme"
                 android:layout_width="match_parent"
@@ -48,6 +38,7 @@
                     app:tint="?attr/iconRegular" />
 
                 <TextView
+                    android:id="@+id/compass_bloom_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -85,6 +76,7 @@
                     app:tint="?attr/iconRegular" />
 
                 <TextView
+                    android:id="@+id/compass_bloom_skins_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -96,15 +88,6 @@
                     android:textSize="@dimen/options_item_text_size" />
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:fontFamily="@font/medium"
-                android:text="Configuration"
-                android:textColor="?attr/textSecondary"
-                android:textSize="@dimen/options_category_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -167,7 +150,7 @@
                     android:layout_marginStart="@dimen/options_text_margin_start"
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
-                    android:text="Speed"
+                    android:text="Sensor Speed"
                     android:textColor="?attr/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 

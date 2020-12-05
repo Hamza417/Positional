@@ -10,7 +10,10 @@
 
     <item android:state_checked="true">
         <shape android:shape="rectangle">
-            <solid android:color="?attr/switcher_on_color" />
+            <gradient
+                android:angle="45"
+                android:endColor="?attr/switcher_on_end_color"
+                android:startColor="?attr/switcher_on_start_color" />
             <corners android:radius="100sp" />
         </shape>
     </item>

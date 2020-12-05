@@ -24,11 +24,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/regular"
-                android:text="If you like this app then here is what you will get in full version"
+                android:fontFamily="@font/medium"
+                android:text="If you like this app then please consider buying the full version :)\n\nHere is what you will get in full version"
                 android:textColor="?attr/textPrimary"
-                android:textSize="7pt"
-                android:textStyle="bold" />
+                android:textSize="7pt" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -90,11 +89,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
                 android:background="@drawable/ripple_btn"
-                android:fontFamily="@font/regular"
+                android:fontFamily="@font/medium"
                 android:text="Buy Full Version"
-                android:textColor="?attr/textPrimary" />
+                android:textColor="?attr/switcher_on_start_color" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

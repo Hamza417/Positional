@@ -146,6 +146,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/specified_location_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/medium"

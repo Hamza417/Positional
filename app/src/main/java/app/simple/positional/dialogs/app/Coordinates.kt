@@ -5,6 +5,8 @@ import android.content.res.ColorStateList
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -24,11 +26,15 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 
 class Coordinates : CustomDialogFragment() {
+
+    private val handler = Handler(Looper.getMainLooper())
+
     fun newInstance(): Coordinates {
         return Coordinates()
     }
 
     var coordinatesCallback: CoordinatesCallback? = null
+    private var address = ""
     private var isCoordinateSet = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +59,9 @@ class Coordinates : CustomDialogFragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                getCoordinatesFromAddress(s.toString())
+                handler.removeCallbacks(geoCoderRunnable)
+                address = s.toString()
+                handler.postDelayed(geoCoderRunnable, 500)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -136,6 +144,8 @@ class Coordinates : CustomDialogFragment() {
         }
     }
 
+    private val geoCoderRunnable: Runnable = Runnable { getCoordinatesFromAddress(address) }
+
     private fun isValidLongitude(longitude: Double): Boolean {
         return (longitude >= -180 && longitude <= 180)
     }
@@ -151,17 +161,20 @@ class Coordinates : CustomDialogFragment() {
             }
 
             val geocoder = Geocoder(requireContext())
-            var addresses: MutableList<Address>? = null
+            val addresses: MutableList<Address>?
             var latitude: Double? = null
             var longitude: Double? = null
 
             try {
+                @Suppress("BlockingMethodInNonBlockingContext")
+                /**
+                 * [Dispatchers.IO] can withstand blocking calls
+                 */
                 addresses = geocoder.getFromLocationName(address, 1)
                 if (addresses != null && addresses.isNotEmpty()) {
                     latitude = addresses[0].latitude
                     longitude = addresses[0].longitude
                 }
-
             } catch (e: IOException) {
             } catch (e: NullPointerException) {
             }

@@ -207,7 +207,7 @@ class SmoothBottomBar @JvmOverloads constructor(
         }
 
     // Listeners
-    var onItemSelectedListener: OnItemSelectedListener? = null
+    private var onItemSelectedListener: OnItemSelectedListener? = null
 
     private var onItemReselectedListener: OnItemReselectedListener? = null
 

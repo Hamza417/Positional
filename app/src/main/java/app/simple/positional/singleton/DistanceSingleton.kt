@@ -3,9 +3,6 @@ package app.simple.positional.singleton
 import com.google.android.gms.maps.model.LatLng
 
 object DistanceSingleton {
-
-    private var distanceSingleton: DistanceSingleton? = null
-
     var totalDistance: Float? = null
     var initialPointCoordinates: LatLng? = null
     var distanceCoordinates: LatLng? = null

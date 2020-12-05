@@ -63,15 +63,13 @@
                 android:layout_height="@dimen/clock_image_dimensions"
                 android:layout_gravity="center"
                 android:padding="5dp"
-                android:rotation="-90"
-                android:src="@drawable/clock_trail" />
+                android:rotation="-90" />
 
             <ImageView
                 android:id="@+id/clock_face"
                 android:layout_width="@dimen/clock_image_dimensions"
                 android:layout_height="@dimen/clock_image_dimensions"
-                android:layout_gravity="center"
-                android:src="@drawable/clock_face" />
+                android:layout_gravity="center" />
 
             <ImageView
                 android:id="@+id/day_night_indicator"

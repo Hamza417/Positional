@@ -11,9 +11,11 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
+import app.simple.positional.dialogs.app.BuyFull
 import app.simple.positional.dialogs.app.PermissionDialog
 import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
@@ -55,12 +57,12 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         }
 
         showReviewPromptToUser()
+        showPurchaseDialog(MainPreferences().getLaunchCount(this))
     }
 
     private fun showReviewPromptToUser() {
 
         if (MainPreferences().getLaunchCount(this) < 5) {
-            MainPreferences().setLaunchCount(this, MainPreferences().getLaunchCount(this) + 1)
             return
         }
 
@@ -238,5 +240,16 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     override fun onBottomSheetSliding(slideOffset: Float) {
         findViewById<FrameLayout>(R.id.bottom_bar_wrapper).translationY = (findViewById<FrameLayout>(R.id.bottom_bar_wrapper).height * slideOffset)
+    }
+
+    private fun showPurchaseDialog(value: Int) {
+        if (BuildConfig.FLAVOR == "lite") {
+            if (value == 5 || value == 10 || value == 15 || value == 20) {
+                val purchaseDialog = BuyFull().newInstance()
+                purchaseDialog.show(supportFragmentManager, "buy_full")
+            }
+        }
+
+        MainPreferences().setLaunchCount(this, MainPreferences().getLaunchCount(this) + 1)
     }
 }

@@ -1,6 +1,7 @@
 package app.simple.positional.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -20,11 +21,17 @@ import java.lang.ref.WeakReference
 
 class AppSettings : Fragment(), CoordinatesCallback {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
 
         if (BuildConfig.FLAVOR == "lite") {
             view.buy_full.visibility = View.VISIBLE
+            view.specified_location_text.setTextColor(Color.GRAY)
         }
 
         return view

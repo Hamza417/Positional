@@ -1,5 +1,6 @@
 package app.simple.positional.dialogs.clock
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,7 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
         super.onViewCreated(view, savedInstanceState)
 
         if (BuildConfig.FLAVOR == "lite") {
-            clock_appearance_text.text = "${clock_appearance_text.text} (requires full version)"
+            clock_needle_theme_text.setTextColor(Color.GRAY)
         }
 
         clock_needle_theme.setOnClickListener {
