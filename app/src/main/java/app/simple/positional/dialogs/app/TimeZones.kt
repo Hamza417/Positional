@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.EdgeEffect
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,6 +51,9 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // This will prevent the underlying dialog from dimming preventing a flashy animation that can cause some issues to some users
+        this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
         timeZoneAdapter = TimeZoneAdapter(timeZones, this as TimeZonesCallback, "")
         timezones_rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

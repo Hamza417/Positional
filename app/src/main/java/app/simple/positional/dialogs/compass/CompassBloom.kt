@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
@@ -24,6 +25,9 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // This will prevent the underlying dialog from dimming preventing a flashy animation that can cause some issues to some users
+        this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
         setButtons(CompassPreference().getFlowerBloomTheme(requireContext()))
 

@@ -7,11 +7,11 @@ import android.widget.FrameLayout
 import androidx.fragment.app.DialogFragment
 import app.simple.positional.R
 
+@Suppress("deprecation")
 open class CustomDialogFragment : DialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val window = dialog!!.window ?: return
-
         window.attributes.windowAnimations = R.style.DialogAnimation
         window.attributes.width = FrameLayout.LayoutParams.MATCH_PARENT
         val displayMetrics = DisplayMetrics()

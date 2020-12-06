@@ -70,6 +70,7 @@ class Clock : Fragment() {
     private var isCustomCoordinate = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
+    private var timezone: String? = "Asia/Tokyo"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,6 +104,16 @@ class Clock : Fragment() {
         if (isCustomCoordinate) {
             customLatitude = MainPreferences().getCoordinates(requireContext())[0].toDouble()
             customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
+        }
+
+        timezone = if (isCustomCoordinate) {
+            if (MainPreferences().getTimeZone(requireContext()) != "") {
+                MainPreferences().getTimeZone(requireContext())
+            } else {
+                Calendar.getInstance().timeZone.id
+            }
+        } else {
+            Calendar.getInstance().timeZone.id
         }
 
         setSkins()
@@ -351,18 +362,9 @@ class Clock : Fragment() {
 
     private fun calculateAndUpdateData(latitude: Double, longitude: Double) {
         CoroutineScope(Dispatchers.Default).launch {
-            // Set and Rise
-            val timezone = if (isCustomCoordinate) {
-                if (MainPreferences().getTimeZone(requireContext()) != "") {
-                    MainPreferences().getTimeZone(requireContext())
-                } else {
-                    Calendar.getInstance().timeZone.id
-                }
-            } else {
-                Calendar.getInstance().timeZone.id
-            }
 
-            val sunTimes = SunTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude).execute()
+            // Set and Rise
+            val sunTimes = SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()
 
             val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
 
@@ -375,13 +377,13 @@ class Clock : Fragment() {
             val moonrise = fromHtml("<b>Moonrise:</b> ${pattern.format(moonTimes.rise)}")
             val moonset = fromHtml("<b>Moonset:</b> ${pattern.format(moonTimes.set)}")
 
-            val twilightTimes = SunTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude)
-            val astronomicalDawn = fromHtml("<b>Astronomical Dawn:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise.toString())}")
-            val astronomicalDusk = fromHtml("<b>Astronomical Dusk:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set.toString())}")
-            val nauticalDawn = fromHtml("<b>Nautical Dawn:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().rise.toString())}")
-            val nauticalDusk = fromHtml("<b>Nautical Dusk:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().set.toString())}")
-            val civilDawn = fromHtml("<b>Civil Dawn:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().rise.toString())}")
-            val civilDusk = fromHtml("<b>Civil Dusk:</b> ${formatZonedTimeDate(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().set.toString())}")
+            val twilightTimes = SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude)
+            val astronomicalDawn = fromHtml("<b>Astronomical Dawn:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise)}")
+            val astronomicalDusk = fromHtml("<b>Astronomical Dusk:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set)}")
+            val nauticalDawn = fromHtml("<b>Nautical Dawn:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().rise)}")
+            val nauticalDusk = fromHtml("<b>Nautical Dusk:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().set)}")
+            val civilDawn = fromHtml("<b>Civil Dawn:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().rise)}")
+            val civilDusk = fromHtml("<b>Civil Dusk:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().set)}")
 
             // Position
             val sunPosition: SunPosition = SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).execute()
@@ -394,7 +396,7 @@ class Clock : Fragment() {
                 fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance.toMiles())} miles")
             }
 
-            val moonPosition: MoonPosition = MoonPosition.compute().timezone(timezone).at(latitude, longitude).execute()
+            val moonPosition: MoonPosition = MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()
 
             val moonAzimuth = fromHtml("<b>Azimuth:</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(moonPosition.azimuth)}")
             val moonAltitude = fromHtml("<b>Altitude:</b> ${round(moonPosition.altitude, 2)}°")
@@ -405,7 +407,7 @@ class Clock : Fragment() {
             }
             val moonParallacticAngle = fromHtml("<b>Parallactic Angle:</b> ${round(moonPosition.parallacticAngle, 2)}°")
 
-            val moonIllumination = MoonIllumination.compute().on(Instant.now()).timezone(timezone).execute()
+            val moonIllumination = MoonIllumination.compute().timezone(timezone).on(Instant.now()).execute()
             val moonFraction = fromHtml("<b>Fraction: </b> ${round(moonIllumination.fraction, 2)}")
             val moonAngle = fromHtml("<b>Angle:</b> ${round(moonIllumination.angle, 2)}°")
             val moonAngleState = fromHtml("<b>Angle State:</b> ${if (moonIllumination.angle < 0) "Waxing" else "Waning"}")
@@ -423,10 +425,10 @@ class Clock : Fragment() {
                 moonImageCountViolation = 0
             }
 
-            val nextFullMoon = fromHtml("<b>Full Moon:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time.toString())}")
-            val nextNewMoon = fromHtml("<b>New Moon:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.NEW_MOON).execute().time.toString())}")
-            val nextFirstQuarter = fromHtml("<b>First Quarter:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.FIRST_QUARTER).execute().time.toString())}")
-            val nextLastQuarter = fromHtml("<b>Last Quarter:</b> ${formatMoonDate(MoonPhase.compute().on(Instant.now()).phase(MoonPhase.Phase.LAST_QUARTER).execute().time.toString())}")
+            val nextFullMoon = fromHtml("<b>Full Moon:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time.toString(), timezone!!)}")
+            val nextNewMoon = fromHtml("<b>New Moon:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.NEW_MOON).execute().time.toString(), timezone!!)}")
+            val nextFirstQuarter = fromHtml("<b>First Quarter:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FIRST_QUARTER).execute().time.toString(), timezone!!)}")
+            val nextLastQuarter = fromHtml("<b>Last Quarter:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.LAST_QUARTER).execute().time.toString(), timezone!!)}")
 
             withContext(Dispatchers.Main) {
                 try {
@@ -489,15 +491,23 @@ class Clock : Fragment() {
                 digitalTime24 = fromHtml("<b>Time 24Hr:</b> ${SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time)}")
                 digitalTime12 = fromHtml("<b>Time 12Hr:</b> ${SimpleDateFormat("hh:mm:ss a", Locale.getDefault()).format(calendar.time)}")
                 digitalTime = getTime(requireContext(), calendar)
-                utcTimeZone = fromHtml("<b>Time Zone:</b> ${"GMT ${SimpleDateFormat("XXX", Locale.getDefault()).format(calendar.time)}"}")
-                val df = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
-                localDate = fromHtml("<b>Date:</b> ${df.format(calendar.time)}")
+                localDate = fromHtml("<b>Date:</b> ${SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault()).format(calendar.time)}")
                 localDay = fromHtml("<b>Day:</b> ${SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)}")
                 dayOfTheYear = fromHtml("<b>Day of Year:</b> ${calendar.get(Calendar.DAY_OF_YEAR).getOrdinal()}")
                 weekOfTheYear = fromHtml("<b>Week of Year:</b> ${calendar.get(Calendar.WEEK_OF_YEAR).getOrdinal()}")
+
                 val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
-                utcTime = fromHtml("<b>Time:</b> ${SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(date!!)}")
-                utcDate = fromHtml("<b>Date:</b> ${SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)}")
+
+                val simpleDateFormat = SimpleDateFormat("XXX", Locale.ROOT)
+                val simpleDateFormat0 = SimpleDateFormat("HH:mm:ss", Locale.ROOT)
+                val simpleDateFormat1 = SimpleDateFormat("dd MMMM, yyyy", Locale.ROOT)
+                // simpleDateFormat.timeZone = TimeZone.getTimeZone(timezone)
+                // simpleDateFormat0.timeZone = TimeZone.getTimeZone(timezone)
+                // simpleDateFormat1.timeZone = TimeZone.getTimeZone(timezone)
+
+                utcTimeZone = fromHtml("<b>Time Zone:</b> ${"GMT ${simpleDateFormat.format(date!!)}"}")
+                utcTime = fromHtml("<b>Time:</b> ${simpleDateFormat0.format(date)}")
+                utcDate = fromHtml("<b>Date:</b> ${simpleDateFormat1.format(date)}")
             } catch (e: ParseException) {
             }
 

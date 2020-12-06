@@ -58,11 +58,13 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected {
         setButton()
 
         if (MainPreferences().isCustomCoordinate(requireContext())) {
-            timezone_input.setText(Calendar.getInstance().timeZone.id)
+            timezone_input.setText(MainPreferences().getTimeZone(requireContext()))
             isValidTimeZone = isValidTimeZone(timezone_input.text.toString())
             address_input.setText(MainPreferences().getAddress(requireContext()))
             address = address_input.text.toString()
-            handler.postDelayed(geoCoderRunnable, 1000)
+            handler.postDelayed(geoCoderRunnable, 250)
+        } else {
+            timezone_input.setText(Calendar.getInstance().timeZone.id)
         }
 
         timezone_list.setOnClickListener {
@@ -263,6 +265,11 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected {
         MainPreferences().setCustomCoordinates(requireContext(), isCoordinateSet)
         MainPreferences().setTimeZone(requireContext(), timezone_input.text.toString())
         coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(geoCoderRunnable)
     }
 
     override fun onTimeZoneSelected(p0: String) {
