@@ -24,6 +24,7 @@ const val GPSLabelMode = "gps_label_mode"
 const val GPSSatellite = "gps_satellite_mode"
 const val lastLatitude = "last_latitude"
 const val lastLongitude = "last_longitude"
+const val movementNotification = "movement_notification"
 
 // Fragments
 const val currentPage = "current_page"

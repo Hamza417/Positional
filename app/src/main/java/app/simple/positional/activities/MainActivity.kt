@@ -1,7 +1,10 @@
 package app.simple.positional.activities
 
 import android.Manifest
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.PixelFormat
 import android.os.Build
@@ -11,6 +14,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
@@ -32,9 +36,13 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     private var locationIntent: Intent? = null
     private var reviewInfo: ReviewInfo? = null
+    private var filter: IntentFilter = IntentFilter()
+    private lateinit var localBroadcastReceiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        filter.addAction("finish")
 
         if (MainPreferences().isScreenOn(this)) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -58,6 +66,16 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
         showReviewPromptToUser()
         showPurchaseDialog(MainPreferences().getLaunchCount(this))
+
+        localBroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action != null) {
+                    if (intent.action == "finish") {
+                        this@MainActivity.finish()
+                    }
+                }
+            }
+        }
     }
 
     private fun showReviewPromptToUser() {
@@ -85,17 +103,35 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     override fun onResume() {
         super.onResume()
+        LocalBroadcastManager.getInstance(this).registerReceiver(localBroadcastReceiver, filter)
         runService()
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
+        println("Destroy")
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(localBroadcastReceiver)
         stopService()
     }
 
     private fun checkRunTimePermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (MainPreferences().getShowPermissionDialog(this)) {
+                    val permissionDialog = PermissionDialog().newInstance()
+                    permissionDialog.show(supportFragmentManager, "permission_info")
+                } else {
+                    Toast.makeText(this, "Location Permission Denied!", Toast.LENGTH_LONG).show()
+                }
+            } else {
+                showPrompt()
+                runService()
+            }
+        } else {
+            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 if (MainPreferences().getShowPermissionDialog(this)) {
                     val permissionDialog = PermissionDialog().newInstance()
                     permissionDialog.show(supportFragmentManager, "permission_info")
@@ -117,7 +153,8 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
                 runService()
                 baseContext.startService(Intent(this, LocationService::class.java))
             } else {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) &&
+                        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
                     Toast.makeText(this, "Some features may not work without location permission", Toast.LENGTH_LONG).show()
                 }
             }
@@ -155,7 +192,12 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     }
 
     override fun onGrantRequest() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), DEFAULT_PERMISSION_REQUEST_CODE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION), DEFAULT_PERMISSION_REQUEST_CODE)
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), DEFAULT_PERMISSION_REQUEST_CODE)
+
+        }
     }
 
     private fun setFragment(position: Int) {

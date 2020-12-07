@@ -162,13 +162,31 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <TextView
-                style="@style/PrimaryTextView"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="Movement"
-                android:textSize="@dimen/info_text_primary_size" />
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/PrimaryTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:text="Movement"
+                    android:textSize="@dimen/info_text_primary_size" />
+
+                <ImageButton
+                    android:id="@+id/movement_notification"
+                    android:layout_width="@dimen/copy_button_dimensions"
+                    android:layout_height="@dimen/copy_button_dimensions"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/ripple_btn"
+                    android:padding="@dimen/notification_button_padding"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_notifications"
+                    app:tint="?attr/iconColor" />
+            </LinearLayout>
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_distance"

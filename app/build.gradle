@@ -8,6 +8,7 @@ apply plugin: 'com.google.gms.google-services'
 def noKeyFound = '"NO_KEY_FOUND"'
 def googleMapsAPIKey = noKeyFound
 def thisAppLicensingKey = noKeyFound
+def dogBinAPIKey = noKeyFound
 
 /*
    Can be used for any API Key
@@ -34,6 +35,10 @@ if (sensitiveDataFile.canRead()) {
         if (sensitiveData.containsKey('thisAppLicensingKey')) {
             thisAppLicensingKey = sensitiveData['thisAppLicensingKey']
         }
+
+        if (sensitiveData.containsKey('dogbinAPIKey')) {
+            dogBinAPIKey = sensitiveData['dogbinAPIKey']
+        }
     }
 }
 
@@ -55,13 +60,14 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 40
-        versionName "v5.3-stable"
+        versionCode 41
+        versionName "v5.4-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
         resValue "string", "thisAppLicensingKey", thisAppLicensingKey
+        resValue "string", "dogBinAPIKey", dogBinAPIKey
     }
 
     flavorDimensions "version"

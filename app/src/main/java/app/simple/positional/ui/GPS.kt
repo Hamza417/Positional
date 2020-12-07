@@ -42,6 +42,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.frag_gps.*
 import kotlinx.android.synthetic.main.info_panel_gps.*
+import kotlinx.android.synthetic.main.info_panel_gps.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -125,6 +126,14 @@ class GPS : Fragment() {
             customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
         }
 
+        distanceSingleton.isNotificationAllowed = if (GPSPreferences().isNotificationOn(requireContext())) {
+            view.movement_notification.setImageResource(R.drawable.ic_notifications)
+            true
+        } else {
+            view.movement_notification.setImageResource(R.drawable.ic_notifications_off)
+            false
+        }
+
         lastLatitude = GPSPreferences().getLastCoordinates(requireContext())[0].toDouble()
         lastLongitude = GPSPreferences().getLastCoordinates(requireContext())[1].toDouble()
 
@@ -177,6 +186,18 @@ class GPS : Fragment() {
 
             Toast.makeText(requireContext(), "Reset Complete", Toast.LENGTH_SHORT).show()
             true
+        }
+
+        movement_notification.setOnClickListener {
+            if (distanceSingleton.isNotificationAllowed == true) {
+                loadImageResources(R.drawable.ic_notifications_off, movement_notification, requireContext(), 0)
+                distanceSingleton.isNotificationAllowed = false
+                GPSPreferences().setNotificationMode(requireContext(), false)
+            } else {
+                loadImageResources(R.drawable.ic_notifications, movement_notification, requireContext(), 0)
+                distanceSingleton.isNotificationAllowed = true
+                GPSPreferences().setNotificationMode(requireContext(), true)
+            }
         }
 
         locationBroadcastReceiver = object : BroadcastReceiver() {

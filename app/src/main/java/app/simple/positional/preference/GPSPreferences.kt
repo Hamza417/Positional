@@ -13,6 +13,14 @@ class GPSPreferences {
         context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(GPSLabelMode, value).apply()
     }
 
+    fun isNotificationOn(context: Context): Boolean {
+        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(movementNotification, false)
+    }
+
+    fun setNotificationMode(context: Context, value: Boolean) {
+        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(movementNotification, value).apply()
+    }
+
     fun isSatelliteOn(context: Context): Boolean {
         return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(GPSSatellite, false)
     }

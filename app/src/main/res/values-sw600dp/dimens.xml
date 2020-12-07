@@ -18,6 +18,7 @@
     <dimen name="info_text_secondary_size">12pt</dimen>
     <dimen name="copy_button_dimensions">60dp</dimen>
     <dimen name="copy_button_padding">15dp</dimen>
+    <dimen name="notification_button_padding">8dp</dimen>
     <dimen name="info_graphics_dimension">160dp</dimen>
 
     <!-- Dialog Menus -->
