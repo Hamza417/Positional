@@ -177,6 +177,18 @@
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <ImageButton
+                    android:id="@+id/movement_reset"
+                    android:layout_width="@dimen/copy_button_dimensions"
+                    android:layout_height="@dimen/copy_button_dimensions"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/ripple_btn"
+                    android:padding="@dimen/notification_button_padding"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_reset"
+                    app:tint="?attr/iconColor" />
+
+                <ImageButton
                     android:id="@+id/movement_notification"
                     android:layout_width="@dimen/copy_button_dimensions"
                     android:layout_height="@dimen/copy_button_dimensions"

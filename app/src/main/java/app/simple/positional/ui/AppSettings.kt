@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.frag_settings.*
 import kotlinx.android.synthetic.main.frag_settings.view.*
 import java.lang.ref.WeakReference
 
-
 class AppSettings : Fragment(), CoordinatesCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {

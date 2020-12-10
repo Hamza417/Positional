@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.PixelFormat
-import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.FrameLayout
@@ -115,33 +114,17 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     }
 
     private fun checkRunTimePermission() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                if (MainPreferences().getShowPermissionDialog(this)) {
-                    val permissionDialog = PermissionDialog().newInstance()
-                    permissionDialog.show(supportFragmentManager, "permission_info")
-                } else {
-                    Toast.makeText(this, "Location Permission Denied!", Toast.LENGTH_LONG).show()
-                }
+        if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (MainPreferences().getShowPermissionDialog(this)) {
+                val permissionDialog = PermissionDialog().newInstance()
+                permissionDialog.show(supportFragmentManager, "permission_info")
             } else {
-                showPrompt()
-                runService()
+                Toast.makeText(this, "Location Permission Denied!", Toast.LENGTH_LONG).show()
             }
         } else {
-            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                if (MainPreferences().getShowPermissionDialog(this)) {
-                    val permissionDialog = PermissionDialog().newInstance()
-                    permissionDialog.show(supportFragmentManager, "permission_info")
-                } else {
-                    Toast.makeText(this, "Location Permission Denied!", Toast.LENGTH_LONG).show()
-                }
-            } else {
-                showPrompt()
-                runService()
-            }
+            showPrompt()
+            runService()
         }
     }
 
@@ -154,7 +137,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
                 baseContext.startService(Intent(this, LocationService::class.java))
             } else {
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) &&
-                        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+                        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                     Toast.makeText(this, "Some features may not work without location permission", Toast.LENGTH_LONG).show()
                 }
             }
@@ -192,12 +175,10 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     }
 
     override fun onGrantRequest() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION), DEFAULT_PERMISSION_REQUEST_CODE)
-        } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), DEFAULT_PERMISSION_REQUEST_CODE)
-
-        }
+        ActivityCompat.requestPermissions(this, arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        ), DEFAULT_PERMISSION_REQUEST_CODE)
     }
 
     private fun setFragment(position: Int) {

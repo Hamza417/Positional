@@ -13,6 +13,7 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -176,7 +177,8 @@ class GPS : Fragment() {
         locationIconStatusUpdates()
         checkGooglePlayServices()
 
-        gps_movement_layout.setOnLongClickListener {
+        movement_reset.setOnClickListener {
+            it.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.button_pressed_scale))
             distanceSingleton.totalDistance = 0f
             if (location != null) {
                 distanceSingleton.initialPointCoordinates = LatLng(location!!.latitude, location!!.longitude)
@@ -185,7 +187,6 @@ class GPS : Fragment() {
             }
 
             Toast.makeText(requireContext(), "Reset Complete", Toast.LENGTH_SHORT).show()
-            true
         }
 
         movement_notification.setOnClickListener {

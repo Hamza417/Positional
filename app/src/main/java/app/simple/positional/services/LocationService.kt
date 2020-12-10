@@ -35,9 +35,11 @@ class LocationService : Service(), LocationListener {
     private var delay: Long = 1000
     private val requestCode = 2
     private val notificationID = 2486
+    private val actionReset = "ACTION_RESET"
     private val actionClose = "ACTION_CLOSE"
     private var isDestroying = false
     private var notificationManager: NotificationManager? = null
+    private var location: Location? = null
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -61,6 +63,13 @@ class LocationService : Service(), LocationListener {
                 intent.action = "finish"
                 LocalBroadcastManager.getInstance(baseContext).sendBroadcast(intent)
             }
+        } else if (intent_.action == actionReset) {
+            distanceSingleton.totalDistance = 0f
+            if (location != null) {
+                distanceSingleton.initialPointCoordinates = LatLng(location!!.latitude, location!!.longitude)
+            } else {
+                distanceSingleton.isInitialLocationSet = false
+            }
         }
     }
 
@@ -82,6 +91,7 @@ class LocationService : Service(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
+        this.location = location
         Intent().also { intent ->
             intent.action = "location"
             intent.putExtra("location", location)
@@ -174,17 +184,14 @@ class LocationService : Service(), LocationListener {
     }
 
     private fun checkPermission(): Boolean {
-        return if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-            !(ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        } else {
-            if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                false
-            } else !(ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-        }
+        return !(ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
+                        applicationContext,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED)
     }
 
     private fun removeCallbacks() {
@@ -193,96 +200,95 @@ class LocationService : Service(), LocationListener {
     }
 
     private fun measureDistance(location: Location) {
-        if (location.speed == 0f) {
-            if (!distanceSingleton.isMapPanelVisible!!) {
-                if (distanceSingleton.isInitialLocationSet!!) {
-                    val result = FloatArray(1)
-                    Location.distanceBetween(distanceSingleton.distanceCoordinates!!.latitude, distanceSingleton.distanceCoordinates!!.longitude, location.latitude, location.longitude, result)
-                    distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(result[0])
-                    distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
+        if (!distanceSingleton.isMapPanelVisible!!) {
+            if (distanceSingleton.isInitialLocationSet!!) {
+                val result = FloatArray(1)
+                Location.distanceBetween(distanceSingleton.distanceCoordinates!!.latitude, distanceSingleton.distanceCoordinates!!.longitude, location.latitude, location.longitude, result)
+                distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(result[0])
+                distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
+            } else {
+                distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
+                distanceSingleton.initialPointCoordinates = LatLng(location.latitude, location.longitude)
+                distanceSingleton.isInitialLocationSet = true
+            }
+        }
+
+        CoroutineScope(Dispatchers.Default).launch {
+            if (!GPSPreferences().isNotificationOn(this@LocationService)) {
+                notificationManager?.cancel(notificationID)
+                return@launch
+            }
+
+            val isMetric = MainPreferences().getUnit(context = baseContext)
+
+            val displacementValue = FloatArray(1)
+            val distanceValue = FloatArray(1)
+            Location.distanceBetween(
+                    distanceSingleton.initialPointCoordinates!!.latitude,
+                    distanceSingleton.initialPointCoordinates!!.longitude,
+                    location.latitude,
+                    location.longitude,
+                    displacementValue
+            )
+
+            Location.distanceBetween(
+                    distanceSingleton.initialPointCoordinates!!.latitude,
+                    distanceSingleton.initialPointCoordinates!!.longitude,
+                    location.latitude,
+                    location.longitude,
+                    distanceValue
+            )
+
+            val direction: String
+            val speed = if (isMetric) "<b>Speed:</b> ${round(location.speed.toDouble().toKiloMetersPerHour(), 2)} km/h<br>" else "<b>Speed:</b> ${round(location.speed.toDouble().toMilesPerHour(), 2)} mph/h<br>"
+
+            if (location.speed > 0f) {
+                distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(distanceValue[0])
+                val dir = getDirection(
+                        distanceSingleton.distanceCoordinates!!.latitude,
+                        distanceSingleton.distanceCoordinates!!.longitude,
+                        location.latitude,
+                        location.longitude
+                )
+                distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
+                direction = "<b>Direction:</b> ${round(dir, 2)}° ${getDirectionCodeFromAzimuth(dir)}"
+            } else {
+                direction = "<b>Direction:</b> N/A"
+            }
+
+            val displacement = if (displacementValue[0] < 1000) {
+                if (isMetric) {
+                    "<b>Displacement:</b> ${round(displacementValue[0].toDouble(), 2)} m<br>"
                 } else {
-                    distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
-                    distanceSingleton.initialPointCoordinates = LatLng(location.latitude, location.longitude)
-                    distanceSingleton.isInitialLocationSet = true
+                    "<b>Displacement:</b> ${round(displacementValue[0].toDouble().toFeet(), 2)} ft<br>"
+                }
+            } else {
+                if (isMetric) {
+                    "<b>Displacement:</b> ${round(displacementValue[0].toKilometers().toDouble(), 2)} km<br>"
+                } else {
+                    "<b>Displacement:</b> ${round(displacementValue[0].toMiles().toDouble(), 2)} miles<br>"
                 }
             }
 
-            CoroutineScope(Dispatchers.Default).launch {
-                if (!GPSPreferences().isNotificationOn(this@LocationService)) {
-                    notificationManager?.cancel(notificationID)
-                    return@launch
-                }
-
-                val isMetric = MainPreferences().getUnit(context = baseContext)
-
-                val displacementValue = FloatArray(1)
-                val distanceValue = FloatArray(1)
-                Location.distanceBetween(
-                        distanceSingleton.initialPointCoordinates!!.latitude,
-                        distanceSingleton.initialPointCoordinates!!.longitude,
-                        location.latitude,
-                        location.longitude,
-                        displacementValue
-                )
-
-                Location.distanceBetween(
-                        distanceSingleton.initialPointCoordinates!!.latitude,
-                        distanceSingleton.initialPointCoordinates!!.longitude,
-                        location.latitude,
-                        location.longitude,
-                        distanceValue
-                )
-
-                val displacement = if (displacementValue[0] < 1000) {
-                    if (isMetric) {
-                        "<b>Displacement:</b> ${round(displacementValue[0].toDouble(), 2)} m<br>"
-                    } else {
-                        "<b>Displacement:</b> ${round(displacementValue[0].toDouble().toFeet(), 2)} ft<br>"
-                    }
+            val distance = if (distanceValue[0] < 1000) {
+                if (isMetric) {
+                    "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble(), 2)} m<br>"
                 } else {
-                    if (isMetric) {
-                        "<b>Displacement:</b> ${round(displacementValue[0].toKilometers().toDouble(), 2)} km<br>"
-                    } else {
-                        "<b>Displacement:</b> ${round(displacementValue[0].toMiles().toDouble().toFeet(), 2)} miles<br>"
-                    }
+                    "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble().toFeet(), 2)} ft<br>"
                 }
-
-                val distance = if (displacementValue[0] < 1000) {
-                    if (isMetric) {
-                        "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble(), 2)} m<br>"
-                    } else {
-                        "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble().toFeet(), 2)} ft<br>"
-                    }
+            } else {
+                if (isMetric) {
+                    "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toKilometers().toDouble(), 2)} km<br>"
                 } else {
-                    if (isMetric) {
-                        "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toKilometers().toDouble(), 2)} km<br>"
-                    } else {
-                        "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toMiles().toDouble().toFeet(), 2)} miles<br>"
-                    }
+                    "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toMiles().toDouble(), 2)} miles<br>"
                 }
-                val direction: String
-                val speed = if (isMetric) "<b>Speed:</b> ${round(location.speed.toDouble().toKiloMetersPerHour(), 2)} km/h<br>" else "<b>Speed:</b> ${round(location.speed.toDouble().toMilesPerHour(), 2)} mph/h<br>"
+            }
 
-                if (location.speed > 0f) {
-                    distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(distanceValue[0])
-                    val dir = getDirection(
-                            distanceSingleton.distanceCoordinates!!.latitude,
-                            distanceSingleton.distanceCoordinates!!.longitude,
-                            location.latitude,
-                            location.longitude
-                    )
-                    distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
-                    direction = "<b>Direction:</b> ${round(dir, 2)}° ${getDirectionCodeFromAzimuth(dir)}"
-                } else {
-                    direction = "<b>Direction:</b> N/A"
-                }
+            val finalSpanned = fromHtml("$speed $distance $displacement $direction")
 
-                val finalSpanned = fromHtml("$speed $distance $displacement $direction")
-
-                withContext(Dispatchers.Main) {
-                    if (!isDestroying) {
-                        showNotification(finalSpanned)
-                    }
+            withContext(Dispatchers.Main) {
+                if (!isDestroying) {
+                    showNotification(finalSpanned)
                 }
             }
         }
@@ -291,7 +297,12 @@ class LocationService : Service(), LocationListener {
     private fun showNotification(messageBody: Spanned?) {
         val activityIntent = Intent(this, LocationService::class.java)
         activityIntent.action = actionClose
+
+        val resetIntent = Intent(this, LocationService::class.java)
+        resetIntent.action = actionReset
+
         val contentIntent = PendingIntent.getService(this, requestCode, activityIntent, PendingIntent.FLAG_ONE_SHOT)
+        val contentResetIntent = PendingIntent.getService(this, requestCode, resetIntent, PendingIntent.FLAG_ONE_SHOT)
         //val broadcastIntent = Intent(this, NotificationReceiver::class.java)
 
         val channelId = "notification_channel_id_for_positional"
@@ -305,6 +316,7 @@ class LocationService : Service(), LocationListener {
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 //.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .addAction(0, "Reset", contentResetIntent)
                 .addAction(0, "Close App", contentIntent)
                 .setOngoing(true)
                 .setContentIntent(contentIntent)
