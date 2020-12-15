@@ -87,7 +87,6 @@ license, see the [LICENSE](./LICENSE) file in the project root for the full lice
 
 ## Find Me
 * on [Twitter](https://twitter.com/HamzaRizwan243)
-* on [Facebook](https://fb.me/HamzaRizwan243)
 * on [Telegram](https://t.me/Hamza417)
 
   [1]: http://www.inf.ufrgs.br
