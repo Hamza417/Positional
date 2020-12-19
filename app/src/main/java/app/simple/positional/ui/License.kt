@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
@@ -19,7 +21,6 @@ import com.google.android.vending.licensing.AESObfuscator
 import com.google.android.vending.licensing.LicenseChecker
 import com.google.android.vending.licensing.LicenseCheckerCallback
 import com.google.android.vending.licensing.ServerManagedPolicy
-import kotlinx.android.synthetic.main.frag_license.*
 
 class License : Fragment(), LicenseCheckerCallback {
 
@@ -27,12 +28,14 @@ class License : Fragment(), LicenseCheckerCallback {
         return License()
     }
 
-    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var licenseLoader: ImageView
+    private lateinit var licenseStatus: TextView
+    private lateinit var invalidInfoTextView: TextView
 
+    private val handler = Handler(Looper.getMainLooper())
     private lateinit var licenceStatusCallback: LicenceStatusCallback
 
     private var base64PublicKey = ""
-
     private var mLicenseCheckerCallback: LicenseCheckerCallback? = null
     private var mChecker: LicenseChecker? = null
 
@@ -46,7 +49,13 @@ class License : Fragment(), LicenseCheckerCallback {
     private val salt = byteArrayOf(-46, 65, 30, -128, -103, -57, 74, -64, 51, 88, -95, -45, 77, -117, -36, -113, -11, 32, -64, 89)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.frag_license, container, false)
+        val view = inflater.inflate(R.layout.frag_license, container, false)
+
+        licenseLoader = view.findViewById(R.id.licence_loader)
+        licenseStatus = view.findViewById(R.id.licence_status)
+        invalidInfoTextView = view.findViewById(R.id.invalid_info)
+
+        return view
     }
 
     @SuppressLint("HardwareIds")
@@ -54,11 +63,8 @@ class License : Fragment(), LicenseCheckerCallback {
         super.onViewCreated(view, savedInstanceState)
 
         licenceStatusCallback = requireActivity() as LicenceStatusCallback
-
-        licence_loader.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_infinte))
-
+        licenseLoader.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_infinte))
         base64PublicKey = getString(R.string.licensing_key)
-
         val deviceId: String = Settings.Secure.getString(requireActivity().contentResolver, Settings.Secure.ANDROID_ID)
 
         mLicenseCheckerCallback = this
@@ -74,7 +80,7 @@ class License : Fragment(), LicenseCheckerCallback {
     override fun allow(reason: Int) {
         handler.post {
             try {
-                licence_status.setTextAnimation("Successful :)", 500)
+                licenseStatus.setTextAnimation("Successful :)", 500)
                 runHandler(true)
             } catch (e: NullPointerException) {
             }
@@ -84,10 +90,10 @@ class License : Fragment(), LicenseCheckerCallback {
     override fun dontAllow(reason: Int) {
         handler.post {
             try {
-                licence_status.setTextAnimation("License Validation Failed", 500)
-                licence_loader.visibility = View.GONE
-                invalid_info.text = fromHtml(invalidInfo)
-                invalid_info.visibility = View.VISIBLE
+                licenseStatus.setTextAnimation("License Validation Failed", 500)
+                licenseLoader.visibility = View.GONE
+                invalidInfoTextView.text = fromHtml(invalidInfo)
+                invalidInfoTextView.visibility = View.VISIBLE
             } catch (e: NullPointerException) {
             }
         }
@@ -96,7 +102,7 @@ class License : Fragment(), LicenseCheckerCallback {
     override fun applicationError(errorCode: Int) {
         handler.post {
             try {
-                licence_status.setTextAnimation("Error!!", 500)
+                licenseStatus.setTextAnimation("Error!!", 500)
                 runHandler(false)
             } catch (e: NullPointerException) {
             }

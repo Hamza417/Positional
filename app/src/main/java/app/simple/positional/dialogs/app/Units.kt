@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.ui.AppSettings
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_unit_menu.*
 import java.lang.ref.WeakReference
 
 class Units(private val weakReference: WeakReference<AppSettings>) : CustomBottomSheetDialog() {
@@ -19,8 +19,16 @@ class Units(private val weakReference: WeakReference<AppSettings>) : CustomBotto
         retainInstance = true
     }
 
+    private lateinit var metric: RadioButton
+    private lateinit var imperial: RadioButton
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_unit_menu, container, false)
+        val view = inflater.inflate(R.layout.dialog_unit_menu, container, false)
+
+        metric = view.findViewById(R.id.unit_metric)
+        imperial = view.findViewById(R.id.unit_imperial)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,12 +36,12 @@ class Units(private val weakReference: WeakReference<AppSettings>) : CustomBotto
 
         setButtons(MainPreferences().getUnit(requireContext()))
 
-        unit_metric.setOnCheckedChangeListener { _, isChecked ->
+        metric.setOnCheckedChangeListener { _, isChecked ->
             setButtons(isChecked)
             weakReference.get()?.setCurrentUnit(isChecked)
         }
 
-        unit_imperial.setOnCheckedChangeListener { _, isChecked ->
+        imperial.setOnCheckedChangeListener { _, isChecked ->
             setButtons(!isChecked)
             weakReference.get()?.setCurrentUnit(!isChecked)
         }
@@ -42,7 +50,7 @@ class Units(private val weakReference: WeakReference<AppSettings>) : CustomBotto
     private fun setButtons(value: Boolean) {
         MainPreferences().setUnit(requireContext(), value)
 
-        unit_metric.isChecked = value
-        unit_imperial.isChecked = !value
+        metric.isChecked = value
+        imperial.isChecked = !value
     }
 }

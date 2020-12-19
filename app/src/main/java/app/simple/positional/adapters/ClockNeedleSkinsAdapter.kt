@@ -5,12 +5,13 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import app.simple.positional.R
 import app.simple.positional.constants.clockNeedleSkins
-import kotlinx.android.synthetic.main.adapter_clock_needle.view.*
 
-class ClockNeedleSkinsAdapter(private val context: Context) : PagerAdapter() {
+class ClockNeedleSkinsAdapter(context: Context) : PagerAdapter() {
+
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 
     override fun getCount(): Int {
@@ -28,10 +29,10 @@ class ClockNeedleSkinsAdapter(private val context: Context) : PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val imageLayout: View = layoutInflater.inflate(R.layout.adapter_clock_needle, container, false)
 
-        imageLayout.adapter_needle_background.setImageResource(R.drawable.clock_face)
-        imageLayout.adapter_needle_hour.setImageResource(clockNeedleSkins[position][0])
-        imageLayout.adapter_needle_minute.setImageResource(clockNeedleSkins[position][1])
-        imageLayout.adapter_needle_second.setImageResource(clockNeedleSkins[position][2])
+        imageLayout.findViewById<ImageView>(R.id.adapter_needle_background).setImageResource(R.drawable.clock_face)
+        imageLayout.findViewById<ImageView>(R.id.adapter_needle_hour).setImageResource(clockNeedleSkins[position][0])
+        imageLayout.findViewById<ImageView>(R.id.adapter_needle_minute).setImageResource(clockNeedleSkins[position][1])
+        imageLayout.findViewById<ImageView>(R.id.adapter_needle_second).setImageResource(clockNeedleSkins[position][2])
 
         container.addView(imageLayout, 0)
         return imageLayout

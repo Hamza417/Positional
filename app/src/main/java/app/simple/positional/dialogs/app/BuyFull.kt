@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import app.simple.positional.R
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_buy_full.*
 
 class BuyFull : CustomBottomSheetDialog() {
     fun newInstance(): BuyFull {
@@ -29,7 +29,7 @@ class BuyFull : CustomBottomSheetDialog() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buy_full_button.setOnClickListener {
+        view.findViewById<Button>(R.id.buy_full_button).setOnClickListener {
             val uri: Uri = Uri.parse("market://details?id=app.simple.positional")
             val market = Intent(Intent.ACTION_VIEW, uri)
             market.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or

@@ -12,6 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
@@ -24,13 +27,18 @@ import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.util.addLinearGradient
 import app.simple.positional.util.addRadialGradient
 import app.simple.positional.util.getBitmapFromVectorDrawable
-import kotlinx.android.synthetic.main.frag_launcher.*
 
 class Launcher : Fragment() {
 
     fun newInstance(): Launcher {
         return Launcher()
     }
+
+    private lateinit var launcherBackground: ImageView
+    private lateinit var touchIndicator: ImageView
+    private lateinit var icon: ImageView
+    private lateinit var text: TextView
+    private lateinit var launcherContainer: ConstraintLayout
 
     private lateinit var intent: Intent
 
@@ -41,7 +49,15 @@ class Launcher : Fragment() {
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.frag_launcher, container, false)
+        val view = inflater.inflate(R.layout.frag_launcher, container, false)
+
+        launcherBackground = view.findViewById(R.id.launcher_background)
+        touchIndicator = view.findViewById(R.id.touch_indicator)
+        icon = view.findViewById(R.id.launcher_icon)
+        text = view.findViewById(R.id.launcher_text)
+        launcherContainer = view.findViewById(R.id.launcher_act)
+
+        return view
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -65,14 +81,14 @@ class Launcher : Fragment() {
                 colorOne = vectorNightColors[randomNightValue][0]
                 colorTwo = vectorNightColors[randomNightValue][1]
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    launcher_background.setImageResource(vectorBackgroundNight[randomNightValue])
+                    launcherBackground.setImageResource(vectorBackgroundNight[randomNightValue])
                 }
             }
             Configuration.UI_MODE_NIGHT_NO -> {
                 colorOne = vectorColors[randomDayValue][0]
                 colorTwo = vectorColors[randomDayValue][1]
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    launcher_background.setImageResource(vectorBackground[randomDayValue])
+                    launcherBackground.setImageResource(vectorBackground[randomDayValue])
                 }
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
@@ -80,32 +96,29 @@ class Launcher : Fragment() {
             }
         }
 
-        touch_indicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = requireContext(), 400)?.let { addRadialGradient(it, colorTwo) })
+        touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = requireContext(), 400)?.let { addRadialGradient(it, colorTwo) })
 
-        launcher_icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = requireContext(), 400)?.let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
+        icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = requireContext(), 400)?.let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
+        icon.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.launcher_icon))
+        text.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.image_in))
 
-        launcher_icon.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.launcher_icon))
-        launcher_text.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.image_in))
-
-        launcher_act.setOnTouchListener { _, event ->
+        launcherContainer.setOnTouchListener { _, event ->
 
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    touch_indicator.x = event.x - (touch_indicator.width / 2)
-                    touch_indicator.y = event.y - (touch_indicator.height / 2)
-
-                    touch_indicator.visibility = View.VISIBLE
-
-                    touch_indicator.animate().scaleX(1.2f).scaleY(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
+                    touchIndicator.x = event.x - (touchIndicator.width / 2)
+                    touchIndicator.y = event.y - (touchIndicator.height / 2)
+                    touchIndicator.visibility = View.VISIBLE
+                    touchIndicator.animate().scaleX(1.2f).scaleY(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
 
                     handler.removeCallbacksAndMessages(null)
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    touch_indicator.x = event.x - (touch_indicator.width / 2f)
-                    touch_indicator.y = event.y - (touch_indicator.height / 2f)
+                    touchIndicator.x = event.x - (touchIndicator.width / 2f)
+                    touchIndicator.y = event.y - (touchIndicator.height / 2f)
                 }
                 MotionEvent.ACTION_UP -> {
-                    touch_indicator.animate().scaleX(0.5f).scaleY(0.5f).alpha(0f).start()
+                    touchIndicator.animate().scaleX(0.5f).scaleY(0.5f).alpha(0f).start()
                     runPostDelayed(1000)
                 }
             }
@@ -159,8 +172,8 @@ class Launcher : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        launcher_icon.clearAnimation()
-        launcher_text.clearAnimation()
+        icon.clearAnimation()
+        text.clearAnimation()
         handler.removeCallbacksAndMessages(null)
     }
 

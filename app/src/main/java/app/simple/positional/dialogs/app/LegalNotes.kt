@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import app.simple.positional.R
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_legal_notes.*
 
 class LegalNotes : CustomBottomSheetDialog() {
     fun newInstance(string: String): LegalNotes {
@@ -20,6 +20,8 @@ class LegalNotes : CustomBottomSheetDialog() {
         fragment.arguments = args
         return fragment
     }
+
+    private lateinit var webView: WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +36,13 @@ class LegalNotes : CustomBottomSheetDialog() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        web_view.setBackgroundColor(0)
+        webView = view.findViewById(R.id.web_view)
+        webView.setBackgroundColor(0)
 
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
             if (requireContext().resources.configuration.uiMode and
                     Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-                WebSettingsCompat.setForceDark(web_view.settings, WebSettingsCompat.FORCE_DARK_ON)
+                WebSettingsCompat.setForceDark(webView.settings, WebSettingsCompat.FORCE_DARK_ON)
             }
         } else {
             Toast.makeText(requireContext(), "If you are having trouble viewing this make sure you are using the latest WebView", Toast.LENGTH_LONG).show()
@@ -61,6 +64,6 @@ class LegalNotes : CustomBottomSheetDialog() {
     }
 
     private fun loadWebView(url: String) {
-        web_view.loadUrl(url)
+        webView.loadUrl(url)
     }
 }

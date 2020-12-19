@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.EdgeEffect
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
@@ -20,7 +23,6 @@ import app.simple.positional.util.forEachVisibleHolder
 import app.simple.positional.util.overscrollRotationMagnitude
 import app.simple.positional.util.overscrollTranslationMagnitude
 import app.simple.positional.views.CustomDialogFragment
-import kotlinx.android.synthetic.main.dialog_timezone_list.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +41,11 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
         return this
     }
 
+    private lateinit var timezonesRecyclerView: RecyclerView
+    private lateinit var searchEditText: EditText
+    private lateinit var nothingFound: ImageView
+    private lateinit var currentItemSubstring: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
@@ -46,7 +53,14 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_timezone_list, container, false)
+        val view = inflater.inflate(R.layout.dialog_timezone_list, container, false)
+
+        timezonesRecyclerView = view.findViewById(R.id.timezones_rv)
+        searchEditText = view.findViewById(R.id.search_timezone)
+        currentItemSubstring = view.findViewById(R.id.current_item_substring)
+        nothingFound = view.findViewById(R.id.nothing_found)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,10 +70,10 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
         this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
         timeZoneAdapter = TimeZoneAdapter(timeZones, this as TimeZonesCallback, "")
-        timezones_rv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        timezones_rv.adapter = timeZoneAdapter
+        timezonesRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        timezonesRecyclerView.adapter = timeZoneAdapter
 
-        search_timezone.addTextChangedListener(object : TextWatcher {
+        searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -88,13 +102,13 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
                     withContext(Dispatchers.Main) {
                         if (filtered.size == 0) {
                             if (animateCount == 1) {
-                                nothing_found.animate().scaleY(1.2f).scaleX(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
+                                nothingFound.animate().scaleY(1.2f).scaleX(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
                                 animateCount = 0
                             }
                         } else {
                             if (animateCount == 0) {
                                 animateCount = 1
-                                nothing_found.animate().scaleY(1.0f).scaleX(1.0f).alpha(0f).setInterpolator(DecelerateInterpolator()).start()
+                                nothingFound.animate().scaleY(1.0f).scaleX(1.0f).alpha(0f).setInterpolator(DecelerateInterpolator()).start()
                             }
                         }
                         timeZoneAdapter.timeZones = filtered
@@ -110,7 +124,7 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
 
         })
 
-        timezones_rv.edgeEffectFactory = object : RecyclerView.EdgeEffectFactory() {
+        timezonesRecyclerView.edgeEffectFactory = object : RecyclerView.EdgeEffectFactory() {
             override fun createEdgeEffect(recyclerView: RecyclerView, direction: Int): EdgeEffect {
                 return object : EdgeEffect(recyclerView.context) {
 
@@ -172,7 +186,7 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
     }
 
     override fun itemSubstring(p0: String) {
-        current_item_substring.text = p0
+        currentItemSubstring.text = p0
     }
 
     override fun itemClicked(p1: String) {
@@ -182,6 +196,6 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
 
     override fun onPause() {
         super.onPause()
-        nothing_found.clearAnimation()
+        nothingFound.clearAnimation()
     }
 }

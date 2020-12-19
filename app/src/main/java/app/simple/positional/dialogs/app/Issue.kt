@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import app.simple.positional.R
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_issue.*
 
 class Issue : CustomBottomSheetDialog() {
 
@@ -29,16 +29,16 @@ class Issue : CustomBottomSheetDialog() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        email_me.setOnClickListener {
+        view.findViewById<Button>(R.id.email_me).setOnClickListener {
             val email = Intent(Intent.ACTION_SEND)
             email.type = "plain/text"
             email.putExtra(Intent.EXTRA_EMAIL, arrayOf("hamzarizwan243@gmail.com"))
             email.putExtra(Intent.EXTRA_SUBJECT, "Issue in Positional app")
-            email.putExtra(Intent.EXTRA_TEXT, "Dear Sir,\n\nI think I found a problem in Positional app\n\n(Describe Your Issue Here, Remember every suggestion is good :))")
-            startActivity(Intent.createChooser(email, "Send issue"))
+            email.putExtra(Intent.EXTRA_TEXT, "I think I found a problem in Positional app\n\n(Describe Your Issue Here, Remember every suggestion is good :))")
+            startActivity(Intent.createChooser(email, "Send Issue"))
         }
 
-        issue_on_github.setOnClickListener {
+        view.findViewById<Button>(R.id.issue_on_github).setOnClickListener {
             val uri: Uri = Uri.parse("https://github.com/Hamza417/Positional/issues/new")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)

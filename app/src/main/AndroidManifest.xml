@@ -64,7 +64,6 @@
 
         <service
             android:name=".services.LocationService"
-            android:foregroundServiceType="location"
             android:enabled="true" />
 
         <service

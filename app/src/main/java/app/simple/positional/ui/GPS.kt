@@ -14,7 +14,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -41,9 +43,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.frag_gps.*
-import kotlinx.android.synthetic.main.info_panel_gps.*
-import kotlinx.android.synthetic.main.info_panel_gps.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,9 +56,14 @@ class GPS : Fragment() {
     private lateinit var expandUp: ImageView
 
     private lateinit var scrollView: NestedScrollView
-
     private lateinit var toolbar: MaterialToolbar
     private lateinit var bottomSheetSlide: BottomSheetSlide
+    private lateinit var divider: View
+    private lateinit var locationIndicator: ImageButton
+    private lateinit var menu: ImageButton
+    private lateinit var copy: ImageButton
+    private lateinit var movementNotification: ImageButton
+    private lateinit var movementReset: ImageButton
 
     private lateinit var accuracy: LoaderTextView
     private lateinit var address: LoaderTextView
@@ -69,17 +73,19 @@ class GPS : Fragment() {
     private lateinit var providerSource: LoaderTextView
     private lateinit var altitude: LoaderTextView
     private lateinit var bearing: LoaderTextView
+    private lateinit var distance: LoaderTextView
+    private lateinit var displacement: LoaderTextView
+    private lateinit var direction: LoaderTextView
     private lateinit var speed: LoaderTextView
+    private lateinit var specifiedLocationTextView: TextView
+    private lateinit var infoText: TextView
+
     private lateinit var handler: Handler
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
-
     private var marker: Bitmap? = null
-
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
-
     private var location: Location? = null
-
     private var backPress: OnBackPressedDispatcher? = null
 
     private var isMapMoved = false
@@ -92,7 +98,6 @@ class GPS : Fragment() {
     private var lastLongitude = 0.0
 
     private var distanceSingleton = DistanceSingleton
-
     private lateinit var mapFragment: SupportMapFragment
     private var googleMap: GoogleMap? = null
 
@@ -104,15 +109,32 @@ class GPS : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.frag_gps, container, false)
 
+        toolbar = view.findViewById(R.id.gps_appbar)
+        scrollView = view.findViewById(R.id.gps_list_scroll_view)
+        scrollView.alpha = 0f
+        divider = view.findViewById(R.id.gps_divider)
+        locationIndicator = view.findViewById(R.id.gps_location_indicator)
+        menu = view.findViewById(R.id.gps_menu)
+        copy = view.findViewById(R.id.gps_copy)
+        movementNotification = view.findViewById(R.id.movement_notification)
+        movementReset = view.findViewById(R.id.movement_reset)
+        expandUp = view.findViewById(R.id.expand_up_gps_sheet)
+        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
+
         accuracy = view.findViewById(R.id.gps_accuracy)
         address = view.findViewById(R.id.gps_address)
         latitude = view.findViewById(R.id.latitude_input)
         longitude = view.findViewById(R.id.longitude)
-        speed = view.findViewById(R.id.gps_speed)
-        altitude = view.findViewById(R.id.gps_altitude)
-        bearing = view.findViewById(R.id.gps_bearing)
         providerSource = view.findViewById(R.id.provider_source)
         providerStatus = view.findViewById(R.id.provider_status)
+        altitude = view.findViewById(R.id.gps_altitude)
+        bearing = view.findViewById(R.id.gps_bearing)
+        distance = view.findViewById(R.id.gps_distance)
+        displacement = view.findViewById(R.id.gps_displacement)
+        direction = view.findViewById(R.id.gps_direction)
+        speed = view.findViewById(R.id.gps_speed)
+        specifiedLocationTextView = view.findViewById(R.id.specified_location_notice_gps)
+        infoText = view.findViewById(R.id.gps_info_text)
 
         handler = Handler(Looper.getMainLooper())
 
@@ -120,42 +142,29 @@ class GPS : Fragment() {
         filter.addAction("provider")
 
         isMetric = MainPreferences().getUnit(requireContext())
-        isCustomCoordinate = MainPreferences().isCustomCoordinate(requireContext())
 
-        if (isCustomCoordinate) {
+        if (MainPreferences().isCustomCoordinate(requireContext())) {
+            isCustomCoordinate = true
             customLatitude = MainPreferences().getCoordinates(requireContext())[0].toDouble()
             customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
         }
 
         distanceSingleton.isNotificationAllowed = if (GPSPreferences().isNotificationOn(requireContext())) {
-            view.movement_notification.setImageResource(R.drawable.ic_notifications)
+            movementNotification.setImageResource(R.drawable.ic_notifications)
             true
         } else {
-            view.movement_notification.setImageResource(R.drawable.ic_notifications_off)
+            movementNotification.setImageResource(R.drawable.ic_notifications_off)
             false
         }
+        distanceSingleton.isMapPanelVisible = true
 
         lastLatitude = GPSPreferences().getLastCoordinates(requireContext())[0].toDouble()
         lastLongitude = GPSPreferences().getLastCoordinates(requireContext())[1].toDouble()
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
-
         backPress = requireActivity().onBackPressedDispatcher
-
         mapFragment = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
         mapFragment.getMapAsync(callback)
-
-        distanceSingleton.isMapPanelVisible = true
-
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            toolbar = view.findViewById(R.id.gps_appbar)
-
-            scrollView = view.findViewById(R.id.gps_list_scroll_view)
-            scrollView.alpha = 0f
-
-            expandUp = view.findViewById(R.id.expand_up_gps_sheet)
-            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
-        }
 
         return view
     }
@@ -164,8 +173,8 @@ class GPS : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (isCustomCoordinate) {
-            specified_location_notice_gps.visibility = View.VISIBLE
-            gps_divider.visibility = View.VISIBLE
+            specifiedLocationTextView.visibility = View.VISIBLE
+            divider.visibility = View.VISIBLE
 
             marker = R.drawable.ic_place_custom.getBitmapFromVectorDrawable(requireContext(), 400)
         } else {
@@ -177,7 +186,7 @@ class GPS : Fragment() {
         locationIconStatusUpdates()
         checkGooglePlayServices()
 
-        movement_reset.setOnClickListener {
+        movementReset.setOnClickListener {
             it.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.button_pressed_scale))
             distanceSingleton.totalDistance = 0f
             if (location != null) {
@@ -189,13 +198,13 @@ class GPS : Fragment() {
             Toast.makeText(requireContext(), "Reset Complete", Toast.LENGTH_SHORT).show()
         }
 
-        movement_notification.setOnClickListener {
+        movementNotification.setOnClickListener {
             if (distanceSingleton.isNotificationAllowed == true) {
-                loadImageResources(R.drawable.ic_notifications_off, movement_notification, requireContext(), 0)
+                loadImageResources(R.drawable.ic_notifications_off, movementNotification, requireContext(), 0)
                 distanceSingleton.isNotificationAllowed = false
                 GPSPreferences().setNotificationMode(requireContext(), false)
             } else {
-                loadImageResources(R.drawable.ic_notifications, movement_notification, requireContext(), 0)
+                loadImageResources(R.drawable.ic_notifications, movementNotification, requireContext(), 0)
                 distanceSingleton.isNotificationAllowed = true
                 GPSPreferences().setNotificationMode(requireContext(), true)
             }
@@ -306,17 +315,17 @@ class GPS : Fragment() {
                                 }
 
                                 withContext(Dispatchers.Main) {
-                                    gps_location_indicator.setImageResource(R.drawable.ic_gps_fixed)
-                                    gps_location_indicator.isClickable = true
+                                    this@GPS.locationIndicator.setImageResource(R.drawable.ic_gps_fixed)
+                                    this@GPS.locationIndicator.isClickable = true
                                     this@GPS.providerSource.text = providerSource
                                     this@GPS.providerStatus.text = providerStatus
                                     this@GPS.altitude.text = altitude
                                     this@GPS.speed.text = speed
                                     this@GPS.bearing.text = bearing
                                     this@GPS.accuracy.text = accuracy
-                                    gps_displacement.text = displacement
-                                    gps_distance.text = distance
-                                    gps_direction.text = direction
+                                    this@GPS.displacement.text = displacement
+                                    this@GPS.distance.text = distance
+                                    this@GPS.direction.text = direction
 
                                     if (!isCustomCoordinate) {
                                         updateViews(location!!.latitude, location!!.longitude, location!!.bearing)
@@ -373,12 +382,12 @@ class GPS : Fragment() {
             })
         }
 
-        gps_menu.setOnClickListener {
+        menu.setOnClickListener {
             val weakReference = WeakReference(GPSMenu(WeakReference(this@GPS)))
             weakReference.get()?.show(parentFragmentManager, "gps_menu")
         }
 
-        gps_location_indicator.setOnClickListener {
+        locationIndicator.setOnClickListener {
             if (isCustomCoordinate) {
                 updateViews(customLatitude, customLongitude, 0f)
             } else
@@ -389,30 +398,30 @@ class GPS : Fragment() {
                 }
         }
 
-        gps_copy.setOnClickListener {
+        copy.setOnClickListener {
             handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
-            if (gps_accuracy.text != "") {
+            if (accuracy.text != "") {
                 val stringBuilder = StringBuilder()
 
                 stringBuilder.append("Provider\n")
-                stringBuilder.append("${provider_status.text}\n")
-                stringBuilder.append("${provider_source.text}\n\n")
+                stringBuilder.append("${providerStatus.text}\n")
+                stringBuilder.append("${providerSource.text}\n\n")
 
                 stringBuilder.append("Location\n")
-                stringBuilder.append("${gps_accuracy.text}\n")
-                stringBuilder.append("${gps_altitude.text}\n")
-                stringBuilder.append("${gps_bearing.text}\n\n")
+                stringBuilder.append("${accuracy.text}\n")
+                stringBuilder.append("${altitude.text}\n")
+                stringBuilder.append("${bearing.text}\n\n")
 
                 stringBuilder.append("Movement\n")
-                stringBuilder.append("${gps_distance.text}\n")
-                stringBuilder.append("${gps_displacement.text}\n")
-                stringBuilder.append("${gps_direction.text}\n")
-                stringBuilder.append("${gps_speed.text}\n")
+                stringBuilder.append("${distance.text}\n")
+                stringBuilder.append("${displacement.text}\n")
+                stringBuilder.append("${direction.text}\n")
+                stringBuilder.append("${speed.text}\n")
 
                 if (isCustomCoordinate) {
-                    stringBuilder.append("\n${specified_location_notice_gps.text}\n")
+                    stringBuilder.append("\n${specifiedLocationTextView.text}\n")
                 }
 
                 stringBuilder.append("\nCoordinates\n")
@@ -431,16 +440,16 @@ class GPS : Fragment() {
             }
 
             if (clipboard.hasPrimaryClip()) {
-                gps_info_text.setTextAnimation(getString(R.string.info_copied), 300)
+                infoText.setTextAnimation(getString(R.string.info_copied), 300)
                 handler.postDelayed(textAnimationRunnable, 3000)
             } else {
-                gps_info_text.setTextAnimation(getString(R.string.info_error), 300)
+                infoText.setTextAnimation(getString(R.string.info_error), 300)
                 handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
     }
 
-    private val textAnimationRunnable: Runnable = Runnable { gps_info_text.setTextAnimation("GPS Info", 300) }
+    private val textAnimationRunnable: Runnable = Runnable { infoText.setTextAnimation("GPS Info", 300) }
 
     override fun onPause() {
         super.onPause()
@@ -448,7 +457,7 @@ class GPS : Fragment() {
         handler.removeCallbacks(mapMoved)
         handler.removeCallbacks(textAnimationRunnable)
         handler.removeCallbacks(customDataUpdater)
-        gps_info_text.clearAnimation()
+        infoText.clearAnimation()
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
         }
@@ -541,7 +550,7 @@ class GPS : Fragment() {
 
             withContext(Dispatchers.Main) {
                 try {
-                    gps_address.text = address
+                    this@GPS.address.text = address
                 } catch (e: java.lang.NullPointerException) {
                 } catch (e: UninitializedPropertyAccessException) {
                 }
@@ -558,10 +567,10 @@ class GPS : Fragment() {
 
     private fun locationIconStatusUpdates() {
         if (getLocationStatus(requireContext())) {
-            gps_location_indicator.setImageResource(R.drawable.ic_gps_not_fixed)
+            locationIndicator.setImageResource(R.drawable.ic_gps_not_fixed)
         } else {
-            gps_location_indicator.setImageResource(R.drawable.ic_gps_off)
-            gps_location_indicator.isClickable = false
+            locationIndicator.setImageResource(R.drawable.ic_gps_off)
+            locationIndicator.isClickable = false
         }
     }
 

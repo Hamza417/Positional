@@ -11,23 +11,23 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import app.simple.positional.R
 import app.simple.positional.util.fromHtml
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_compass_calibration.*
 
 class CompassCalibration : CustomBottomSheetDialog(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
     private lateinit var sensorMagneticField: Sensor
+    private val handlerThread = Handler(Looper.getMainLooper())
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
-
-    private val handlerThread = Handler(Looper.getMainLooper())
-
     private var someValue = 1
+
+    private lateinit var calibrateAccuracy: TextView
 
     fun newInstance(): CompassCalibration {
         return CompassCalibration()
@@ -41,6 +41,7 @@ class CompassCalibration : CustomBottomSheetDialog(), SensorEventListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.dialog_compass_calibration, container, false)
+        calibrateAccuracy = v.findViewById(R.id.calibrate_accuracy)
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -75,18 +76,18 @@ class CompassCalibration : CustomBottomSheetDialog(), SensorEventListener {
         if (sensor == sensorAccelerometer || sensor == sensorMagneticField) {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
-                    calibrate_accuracy.text = fromHtml("Accuracy: <b>Unreliable, immediate calibration required</b>")
+                    calibrateAccuracy.text = fromHtml("Accuracy: <b>Unreliable, immediate calibration required</b>")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
-                    calibrate_accuracy.text = fromHtml("Accuracy: <b>Low, calibration required</b>")
+                    calibrateAccuracy.text = fromHtml("Accuracy: <b>Low, calibration required</b>")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
-                    calibrate_accuracy.text = fromHtml("Accuracy: <b>Medium</b>")
+                    calibrateAccuracy.text = fromHtml("Accuracy: <b>Medium</b>")
                     handlerThread.removeCallbacks(runnable)
                     handlerThread.post(runnable)
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
-                    calibrate_accuracy.text = fromHtml("Accuracy: <b>High</b>")
+                    calibrateAccuracy.text = fromHtml("Accuracy: <b>High</b>")
                     handlerThread.removeCallbacks(runnable)
                     handlerThread.post(runnable)
                 }

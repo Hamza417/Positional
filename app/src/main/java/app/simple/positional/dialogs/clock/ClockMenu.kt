@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.ui.Clock
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_clock_menu.*
 import java.lang.ref.WeakReference
 
 class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDialog() {
@@ -28,10 +29,10 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
         super.onViewCreated(view, savedInstanceState)
 
         if (BuildConfig.FLAVOR == "lite") {
-            clock_needle_theme_text.setTextColor(Color.GRAY)
+            view.findViewById<TextView>(R.id.clock_needle_theme_text).setTextColor(Color.GRAY)
         }
 
-        clock_needle_theme.setOnClickListener {
+        view.findViewById<LinearLayout>(R.id.clock_needle_theme).setOnClickListener {
             if (BuildConfig.FLAVOR == "lite") {
                 Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
             } else {
@@ -40,7 +41,7 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
             }
         }
 
-        clock_motion_type.setOnClickListener {
+        view.findViewById<LinearLayout>(R.id.clock_motion_type).setOnClickListener {
             val clockMotionType = WeakReference(ClockMotionType(clock))
             clockMotionType.get()?.show(parentFragmentManager, "null")
         }

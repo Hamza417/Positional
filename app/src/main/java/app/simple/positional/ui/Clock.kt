@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -26,10 +27,9 @@ import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
+import app.simple.positional.views.CustomCoordinatorLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.frag_clock.*
-import kotlinx.android.synthetic.main.info_panel_clock.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -49,13 +49,64 @@ class Clock : Fragment() {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var calendar: Calendar
+
     private lateinit var hour: ImageView
     private lateinit var minutes: ImageView
     private lateinit var seconds: ImageView
-    private lateinit var dial: ImageView
+    private lateinit var face: ImageView
     private lateinit var expandUp: ImageView
+    private lateinit var sweepSeconds: ImageView
+    private lateinit var dayNightIndicator: ImageView
+    private lateinit var moonPhaseGraphics: ImageView
+
     private lateinit var menu: ImageButton
+    private lateinit var copyButton: ImageButton
+    private lateinit var divider: View
+    private lateinit var clockMainLayout: CustomCoordinatorLayout
     private lateinit var scrollView: NestedScrollView
+
+    private lateinit var clockInfoText: TextView
+    private lateinit var localTimeZone: TextView
+    private lateinit var digitalTime24: TextView
+    private lateinit var digitalTime12: TextView
+    private lateinit var digitalTimeMain: TextView
+    private lateinit var localDay: TextView
+    private lateinit var localDate: TextView
+    private lateinit var localDayOfTheYear: TextView
+    private lateinit var localWeekOfTheYear: TextView
+    private lateinit var utcTimeZone: TextView
+    private lateinit var utcTime: TextView
+    private lateinit var utcDate: TextView
+    private lateinit var specifiedLocationNotice: TextView
+    private lateinit var sunAzimuth: TextView
+    private lateinit var sunDistance: TextView
+    private lateinit var sunAltitude: TextView
+    private lateinit var sunriseTime: TextView
+    private lateinit var sunsetTime: TextView
+    private lateinit var sunNadir: TextView
+    private lateinit var sunZenith: TextView
+    private lateinit var sunNoon: TextView
+    private lateinit var astronomicalDawnTwilight: TextView
+    private lateinit var astronomicalDuskTwilight: TextView
+    private lateinit var nauticalDawnTwilight: TextView
+    private lateinit var nauticalDuskTwilight: TextView
+    private lateinit var civilDawnTwilight: TextView
+    private lateinit var civilDuskTwilight: TextView
+    private lateinit var moonAzimuth: TextView
+    private lateinit var moonDistance: TextView
+    private lateinit var moonAltitude: TextView
+    private lateinit var moonParallacticAngle: TextView
+    private lateinit var moonriseTime: TextView
+    private lateinit var moonsetTime: TextView
+    private lateinit var moonFraction: TextView
+    private lateinit var moonAngle: TextView
+    private lateinit var moonAngleState: TextView
+    private lateinit var moonPhase: TextView
+    private lateinit var moonPhaseAngle: TextView
+    private lateinit var nextNewMoon: TextView
+    private lateinit var nextFullMoon: TextView
+    private lateinit var nextFirstQuarter: TextView
+    private lateinit var nextLastQuarter: TextView
 
     private lateinit var handler: Handler
     private var backPress: OnBackPressedDispatcher? = null
@@ -85,23 +136,70 @@ class Clock : Fragment() {
         hour = view.findViewById(R.id.hour)
         minutes = view.findViewById(R.id.minutes)
         seconds = view.findViewById(R.id.seconds)
-        dial = view.findViewById(R.id.clock_face)
+        face = view.findViewById(R.id.clock_face)
+        sweepSeconds = view.findViewById(R.id.sweep_seconds)
+        dayNightIndicator = view.findViewById(R.id.day_night_indicator)
+        moonPhaseGraphics = view.findViewById(R.id.moon_phase_graphics)
+
         menu = view.findViewById(R.id.clock_menu)
+        copyButton = view.findViewById(R.id.clock_copy)
+        divider = view.findViewById(R.id.clock_divider)
+        clockMainLayout = view.findViewById(R.id.clock_main_layout)
+
+        clockInfoText = view.findViewById(R.id.clock_info_text)
+        localTimeZone = view.findViewById(R.id.local_timezone)
+        digitalTime24 = view.findViewById(R.id.digital_time_24_hour)
+        digitalTime12 = view.findViewById(R.id.digital_time_12_hour)
+        digitalTimeMain = view.findViewById(R.id.digital_time_main)
+        localDay = view.findViewById(R.id.local_day)
+        localDate = view.findViewById(R.id.local_date)
+        localDayOfTheYear = view.findViewById(R.id.local_day_of_the_year)
+        localWeekOfTheYear = view.findViewById(R.id.local_week_of_the_year)
+        utcTimeZone = view.findViewById(R.id.time_zone_utc)
+        utcTime = view.findViewById(R.id.time_utc)
+        utcDate = view.findViewById(R.id.date_utc)
+        specifiedLocationNotice = view.findViewById(R.id.specified_location_notice_clock)
+        sunAzimuth = view.findViewById(R.id.sun_azimuth)
+        sunDistance = view.findViewById(R.id.sun_distance)
+        sunAltitude = view.findViewById(R.id.sun_altitude)
+        sunriseTime = view.findViewById(R.id.sunrise_time)
+        sunsetTime = view.findViewById(R.id.sunset_time)
+        sunNadir = view.findViewById(R.id.sun_nadir)
+        sunNoon = view.findViewById(R.id.sun_noon)
+        astronomicalDawnTwilight = view.findViewById(R.id.astronomical_dawm_twilight)
+        astronomicalDuskTwilight = view.findViewById(R.id.astronomical_dusk_twilight)
+        nauticalDawnTwilight = view.findViewById(R.id.nautical_dawn_twilight)
+        nauticalDuskTwilight = view.findViewById(R.id.nautical_dusk_twilight)
+        civilDawnTwilight = view.findViewById(R.id.civil_dawn_twilight)
+        civilDuskTwilight = view.findViewById(R.id.civil_dusk_twilight)
+        moonAzimuth = view.findViewById(R.id.moon_azimuth)
+        moonDistance = view.findViewById(R.id.moon_distance)
+        moonAltitude = view.findViewById(R.id.moon_altitude)
+        moonParallacticAngle = view.findViewById(R.id.moon_parallactic_angle)
+        moonriseTime = view.findViewById(R.id.moonrise_time)
+        moonsetTime = view.findViewById(R.id.moon_set_time)
+        moonFraction = view.findViewById(R.id.moon_fraction)
+        moonAngle = view.findViewById(R.id.moon_angle)
+        moonAngleState = view.findViewById(R.id.moon_angle_state)
+        moonPhase = view.findViewById(R.id.moon_phase)
+        moonPhaseAngle = view.findViewById(R.id.moon_phase_angle)
+        nextNewMoon = view.findViewById(R.id.next_new_moon)
+        nextFullMoon = view.findViewById(R.id.next_full_moon)
+        nextFirstQuarter = view.findViewById(R.id.next_first_quarter)
+        nextLastQuarter = view.findViewById(R.id.next_last_quarter)
+
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         scrollView = view.findViewById(R.id.clock_panel_scrollview)
         scrollView.alpha = 0f
         toolbar = view.findViewById(R.id.clock_appbar)
         expandUp = view.findViewById(R.id.expand_up_clock_sheet)
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
-
         backPress = requireActivity().onBackPressedDispatcher
 
         setMotionDelay(ClockPreferences().getMovementType(requireContext()))
-
         isMetric = MainPreferences().getUnit(requireContext())
-        isCustomCoordinate = MainPreferences().isCustomCoordinate(requireContext())
-
-        if (isCustomCoordinate) {
+        if (MainPreferences().isCustomCoordinate(requireContext())) {
+            isCustomCoordinate = true
             customLatitude = MainPreferences().getCoordinates(requireContext())[0].toDouble()
             customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
         }
@@ -125,14 +223,14 @@ class Clock : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (isCustomCoordinate) {
-            specified_location_notice_clock.visibility = View.VISIBLE
-            clock_divider.visibility = View.VISIBLE
+            specifiedLocationNotice.visibility = View.VISIBLE
+            divider.visibility = View.VISIBLE
         }
 
-        clock_main_layout.setProxyView(view)
+        clockMainLayout.setProxyView(view)
 
-        loadImageResourcesWithoutAnimation(R.drawable.clock_face, clock_face, requireContext())
-        loadImageResourcesWithoutAnimation(R.drawable.clock_trail, sweep_seconds, requireContext())
+        loadImageResourcesWithoutAnimation(R.drawable.clock_face, face, requireContext())
+        loadImageResourcesWithoutAnimation(R.drawable.clock_trail, sweepSeconds, requireContext())
 
         calendar = Calendar.getInstance()
         updateDigitalTime(calendar)
@@ -191,67 +289,67 @@ class Clock : Fragment() {
             clockMenu.get()?.show(parentFragmentManager, "null")
         }
 
-        clock_copy.setOnClickListener {
+        copyButton.setOnClickListener {
             handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             val stringBuilder = StringBuilder()
 
             stringBuilder.append("Local Time\n")
-            stringBuilder.append("${local_timezone.text}\n")
-            stringBuilder.append("${digital_time_24_hour.text}\n")
-            stringBuilder.append("${digital_time_12_hour.text}\n")
-            stringBuilder.append("${local_day.text}\n")
-            stringBuilder.append("${local_date.text}\n")
-            stringBuilder.append("${local_day_of_the_year.text}\n")
-            stringBuilder.append("${local_week_of_the_year.text}\n\n")
+            stringBuilder.append("${localTimeZone.text}\n")
+            stringBuilder.append("${digitalTime24.text}\n")
+            stringBuilder.append("${digitalTime12.text}\n")
+            stringBuilder.append("${localDay.text}\n")
+            stringBuilder.append("${localDate.text}\n")
+            stringBuilder.append("${localDayOfTheYear.text}\n")
+            stringBuilder.append("${localWeekOfTheYear.text}\n\n")
 
             stringBuilder.append("UTC Time\n")
-            stringBuilder.append("${time_zone_utc.text}\n")
-            stringBuilder.append("${time_utc.text}\n")
-            stringBuilder.append("${date_utc.text}\n\n")
+            stringBuilder.append("${utcTimeZone.text}\n")
+            stringBuilder.append("${utcTime.text}\n")
+            stringBuilder.append("${utcDate.text}\n\n")
 
             if (isCustomCoordinate) {
-                stringBuilder.append(specified_location_notice_clock.text)
+                stringBuilder.append(specifiedLocationNotice.text)
                 stringBuilder.append("\n")
             }
 
-            if (sun_azimuth.text != "") {
+            if (sunAzimuth.text != "") {
                 stringBuilder.append("Sun Position\n")
-                stringBuilder.append("${sun_azimuth.text}\n")
-                stringBuilder.append("${sun_distance.text}\n")
-                stringBuilder.append("${sun_altitude.text}\n")
-                stringBuilder.append("${sunrise_time.text}\n")
-                stringBuilder.append("${sunset_time.text}\n")
-                stringBuilder.append("${sun_nadir.text}\n")
-                stringBuilder.append("${sun_noon.text}\n\n")
+                stringBuilder.append("${sunAzimuth.text}\n")
+                stringBuilder.append("${sunDistance.text}\n")
+                stringBuilder.append("${sunAltitude.text}\n")
+                stringBuilder.append("${sunriseTime.text}\n")
+                stringBuilder.append("${sunsetTime.text}\n")
+                stringBuilder.append("${sunNadir.text}\n")
+                stringBuilder.append("${sunNoon.text}\n\n")
 
                 stringBuilder.append("Twilight\n")
-                stringBuilder.append("${astronomical_dawm_twilight.text}\n")
-                stringBuilder.append("${astronomical_dusk_twilight.text}\n")
-                stringBuilder.append("${nautical_dawn_twilight.text}\n")
-                stringBuilder.append("${nautical_dusk_twilight.text}\n")
-                stringBuilder.append("${civil_dusk_twilight.text}\n")
-                stringBuilder.append("${civil_dawn_twilight.text}\n\n")
+                stringBuilder.append("${astronomicalDawnTwilight.text}\n")
+                stringBuilder.append("${astronomicalDuskTwilight.text}\n")
+                stringBuilder.append("${nauticalDawnTwilight.text}\n")
+                stringBuilder.append("${nauticalDuskTwilight.text}\n")
+                stringBuilder.append("${civilDawnTwilight.text}\n")
+                stringBuilder.append("${civilDuskTwilight.text}\n\n")
 
                 stringBuilder.append("Moon Position\n")
-                stringBuilder.append("${moon_azimuth.text}\n")
-                stringBuilder.append("${moon_distance.text}\n")
-                stringBuilder.append("${moon_altitude.text}\n")
-                stringBuilder.append("${moon_parallactic_angle.text}\n")
-                stringBuilder.append("${moonrise_time.text}\n")
-                stringBuilder.append("${moon_set_time.text}\n")
-                stringBuilder.append("${moon_fraction.text}\n")
-                stringBuilder.append("${moon_angle.text}\n")
-                stringBuilder.append("${moon_angle_state.text}\n")
-                stringBuilder.append("${moon_phase.text}\n")
-                stringBuilder.append("${moon_phase_angle.text}\n")
+                stringBuilder.append("${moonAzimuth.text}\n")
+                stringBuilder.append("${moonDistance.text}\n")
+                stringBuilder.append("${moonAltitude.text}\n")
+                stringBuilder.append("${moonParallacticAngle.text}\n")
+                stringBuilder.append("${moonriseTime.text}\n")
+                stringBuilder.append("${moonsetTime.text}\n")
+                stringBuilder.append("${moonFraction.text}\n")
+                stringBuilder.append("${moonAngle.text}\n")
+                stringBuilder.append("${moonAngleState.text}\n")
+                stringBuilder.append("${moonPhase.text}\n")
+                stringBuilder.append("${moonPhaseAngle.text}\n")
 
                 stringBuilder.append("Moon Dates\n")
-                stringBuilder.append("${next_new_moon.text}\n")
-                stringBuilder.append("${next_full_moon.text}\n")
-                stringBuilder.append("${next_first_quarter.text}\n")
-                stringBuilder.append("${next_last_quarter.text}\n")
+                stringBuilder.append("${nextNewMoon.text}\n")
+                stringBuilder.append("${nextFullMoon.text}\n")
+                stringBuilder.append("${nextFirstQuarter.text}\n")
+                stringBuilder.append("${nextLastQuarter.text}\n")
             }
 
             if (BuildConfig.FLAVOR == "lite") {
@@ -264,13 +362,13 @@ class Clock : Fragment() {
             clipboard.setPrimaryClip(clip)
 
             if (clipboard.hasPrimaryClip()) {
-                clock_info_text.setTextAnimation(getString(R.string.info_copied), 300)
+                clockInfoText.setTextAnimation(getString(R.string.info_copied), 300)
                 handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
     }
 
-    private val textAnimationRunnable: Runnable = Runnable { clock_info_text.setTextAnimation("Time Info", 300) }
+    private val textAnimationRunnable: Runnable = Runnable { clockInfoText.setTextAnimation("Time Info", 300) }
 
     private val clock: Runnable = object : Runnable {
         override fun run() {
@@ -283,14 +381,14 @@ class Clock : Fragment() {
             } else {
                 getSecondsInDegrees(calendar)
             }
-            sweep_seconds.rotation = seconds.rotation - 90
+            sweepSeconds.rotation = seconds.rotation - 90
 
             if (dayNightIndicatorImageCountViolation != 0) {
                 val calendar = calendar.get(Calendar.HOUR_OF_DAY)
                 if (calendar < 7 || calendar > 18) {
-                    day_night_indicator.setImageResource(R.drawable.ic_night)
+                    dayNightIndicator.setImageResource(R.drawable.ic_night)
                 } else if (calendar < 18 || calendar > 6) {
-                    day_night_indicator.setImageResource(R.drawable.ic_day)
+                    dayNightIndicator.setImageResource(R.drawable.ic_day)
                 }
                 // Setting this to zero will prevent the image from applying again every second
                 dayNightIndicatorImageCountViolation = 0
@@ -326,7 +424,7 @@ class Clock : Fragment() {
         handler.removeCallbacks(calender)
         handler.removeCallbacks(textAnimationRunnable)
         handler.removeCallbacks(customDataUpdater)
-        clock_info_text.clearAnimation()
+        clockInfoText.clearAnimation()
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
         }
@@ -387,7 +485,6 @@ class Clock : Fragment() {
 
             // Position
             val sunPosition: SunPosition = SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).execute()
-
             val sunAzimuth = fromHtml("<b>Azimuth:</b> ${round(sunPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(sunPosition.azimuth)}")
             val sunAltitude = fromHtml("<b>Altitude:</b> ${round(sunPosition.trueAltitude, 2)}°")
             val sunDistance = if (isMetric) {
@@ -397,7 +494,6 @@ class Clock : Fragment() {
             }
 
             val moonPosition: MoonPosition = MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()
-
             val moonAzimuth = fromHtml("<b>Azimuth:</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(moonPosition.azimuth)}")
             val moonAltitude = fromHtml("<b>Altitude:</b> ${round(moonPosition.altitude, 2)}°")
             val moonDistance = if (isMetric) {
@@ -421,7 +517,7 @@ class Clock : Fragment() {
                  * Since the range of change is so small, its approximation/accuracy won't be affected in this tiny time frame
                  * The value of the calculation is being trimmed to 2 decimal places anyway
                  */
-                loadImageResourcesWithoutAnimation(getMoonPhaseGraphics(round(moonIllumination.phase, 2)), moon_phase_graphics, requireContext())
+                loadImageResourcesWithoutAnimation(getMoonPhaseGraphics(round(moonIllumination.phase, 2)), moonPhaseGraphics, requireContext())
                 moonImageCountViolation = 0
             }
 
@@ -432,39 +528,38 @@ class Clock : Fragment() {
 
             withContext(Dispatchers.Main) {
                 try {
-                    sunrise_time.text = sunrise
-                    sunset_time.text = sunset
-                    sun_noon.text = sunNoon
-                    sun_nadir.text = sunNadir
+                    this@Clock.sunriseTime.text = sunrise
+                    this@Clock.sunsetTime.text = sunset
+                    this@Clock.sunNoon.text = sunNoon
+                    this@Clock.sunNadir.text = sunNadir
 
-                    moonrise_time.text = moonrise
-                    moon_set_time.text = moonset
+                    this@Clock.moonriseTime.text = moonrise
+                    this@Clock.moonsetTime.text = moonset
 
-                    astronomical_dawm_twilight.text = astronomicalDawn
-                    astronomical_dusk_twilight.text = astronomicalDusk
-                    nautical_dawn_twilight.text = nauticalDawn
-                    nautical_dusk_twilight.text = nauticalDusk
-                    civil_dawn_twilight.text = civilDawn
-                    civil_dusk_twilight.text = civilDusk
+                    this@Clock.astronomicalDawnTwilight.text = astronomicalDawn
+                    this@Clock.astronomicalDuskTwilight.text = astronomicalDusk
+                    this@Clock.nauticalDawnTwilight.text = nauticalDawn
+                    this@Clock.nauticalDuskTwilight.text = nauticalDusk
+                    this@Clock.civilDawnTwilight.text = civilDawn
+                    this@Clock.civilDuskTwilight.text = civilDusk
 
-                    sun_azimuth.text = sunAzimuth
-                    sun_altitude.text = sunAltitude
-                    sun_distance.text = sunDistance
+                    this@Clock.sunAzimuth.text = sunAzimuth
+                    this@Clock.sunAltitude.text = sunAltitude
+                    this@Clock.sunDistance.text = sunDistance
 
-                    moon_azimuth.text = moonAzimuth
-                    moon_altitude.text = moonAltitude
-                    moon_distance.text = moonDistance
-                    moon_parallactic_angle.text = moonParallacticAngle
-
-                    moon_fraction.text = moonFraction
-                    moon_angle.text = moonAngle
-                    moon_angle_state.text = moonAngleState
-                    moon_phase.text = moonPhase
-                    moon_phase_angle.text = moonPhaseAngle
-                    next_full_moon.text = nextFullMoon
-                    next_new_moon.text = nextNewMoon
-                    next_first_quarter.text = nextFirstQuarter
-                    next_last_quarter.text = nextLastQuarter
+                    this@Clock.moonAzimuth.text = moonAzimuth
+                    this@Clock.moonAltitude.text = moonAltitude
+                    this@Clock.moonDistance.text = moonDistance
+                    this@Clock.moonParallacticAngle.text = moonParallacticAngle
+                    this@Clock.moonFraction.text = moonFraction
+                    this@Clock.moonAngle.text = moonAngle
+                    this@Clock.moonAngleState.text = moonAngleState
+                    this@Clock.moonPhase.text = moonPhase
+                    this@Clock.moonPhaseAngle.text = moonPhaseAngle
+                    this@Clock.nextFullMoon.text = nextFullMoon
+                    this@Clock.nextNewMoon.text = nextNewMoon
+                    this@Clock.nextFirstQuarter.text = nextFirstQuarter
+                    this@Clock.nextLastQuarter.text = nextLastQuarter
                 } catch (e: NullPointerException) {
                 } catch (e: UninitializedPropertyAccessException) {
                 }
@@ -513,17 +608,17 @@ class Clock : Fragment() {
 
             withContext(Dispatchers.Main) {
                 try {
-                    local_timezone.text = localTimeZone
-                    digital_time_24_hour.text = digitalTime24
-                    digital_time_12_hour.text = digitalTime12
-                    digital_time_main.text = digitalTime
-                    local_day.text = localDay
-                    local_date.text = localDate
-                    local_day_of_the_year.text = dayOfTheYear
-                    local_week_of_the_year.text = weekOfTheYear
-                    time_zone_utc.text = utcTimeZone
-                    date_utc.text = utcDate
-                    time_utc.text = utcTime
+                    this@Clock.localTimeZone.text = localTimeZone
+                    this@Clock.digitalTime24.text = digitalTime24
+                    this@Clock.digitalTime12.text = digitalTime12
+                    this@Clock.digitalTimeMain.text = digitalTime
+                    this@Clock.localDay.text = localDay
+                    this@Clock.localDate.text = localDate
+                    this@Clock.localDayOfTheYear.text = dayOfTheYear
+                    this@Clock.localWeekOfTheYear.text = weekOfTheYear
+                    this@Clock.utcTimeZone.text = utcTimeZone
+                    this@Clock.utcDate.text = utcDate
+                    this@Clock.utcTime.text = utcTime
                 } catch (e: NullPointerException) {
                 } catch (e: UninitializedPropertyAccessException) {
                 }

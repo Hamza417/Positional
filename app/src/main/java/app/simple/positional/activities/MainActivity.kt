@@ -24,12 +24,12 @@ import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.services.LocationService
+import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.*
 import app.simple.positional.util.displayLocationSettingsRequest
 import app.simple.positional.util.getLocationStatus
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide {
 
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     private var reviewInfo: ReviewInfo? = null
     private var filter: IntentFilter = IntentFilter()
     private lateinit var localBroadcastReceiver: BroadcastReceiver
+    private lateinit var bottomBar: SmoothBottomBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,17 +49,16 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         }
 
         setContentView(R.layout.activity_main)
-
         window.setFormat(PixelFormat.RGBA_8888)
 
+        bottomBar = findViewById(R.id.bottom_bar)
         locationIntent = Intent(applicationContext, LocationService::class.java)
-
         startService(Intent(applicationContext, MessagingService::class.java))
 
         runApp()
         checkRunTimePermission()
 
-        bottom_bar.setOnItemSelectedListener {
+        bottomBar.setOnItemSelectedListener {
             setFragment(it)
             FragmentPreferences().setCurrentPage(baseContext, it)
         }
@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     private fun runApp() {
         setFragment(FragmentPreferences().getCurrentPage(this))
-        bottom_bar.itemActiveIndex = FragmentPreferences().getCurrentPage(this)
+        bottomBar.itemActiveIndex = FragmentPreferences().getCurrentPage(this)
 
     }
 

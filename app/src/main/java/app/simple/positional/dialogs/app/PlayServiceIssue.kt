@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
 import app.simple.positional.R
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_play_services_error.*
 
 class PlayServiceIssue : CustomBottomSheetDialog() {
 
@@ -28,11 +29,11 @@ class PlayServiceIssue : CustomBottomSheetDialog() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        play_services_issue_positive_button.setOnClickListener {
+        view.findViewById<Button>(R.id.play_services_issue_positive_button).setOnClickListener {
             this.dialog?.dismiss()
         }
 
-        play_services_issue_positive_reminder_checkbox.setOnCheckedChangeListener { _, isChecked ->
+        view.findViewById<CheckBox>(R.id.play_services_issue_positive_reminder_checkbox).setOnCheckedChangeListener { _, isChecked ->
             MainPreferences().setShowPlayServiceDialog(requireContext(), isChecked)
         }
     }

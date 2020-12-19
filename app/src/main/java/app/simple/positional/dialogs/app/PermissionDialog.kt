@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import app.simple.positional.R
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.views.CustomBottomSheetDialog
 import com.google.android.material.button.MaterialButton
-import kotlinx.android.synthetic.main.dialog_permission_info.*
 
 class PermissionDialog : CustomBottomSheetDialog() {
 
@@ -50,7 +50,7 @@ class PermissionDialog : CustomBottomSheetDialog() {
             close()
         }
 
-        show_perm_dialog.setOnCheckedChangeListener { _, isChecked ->
+        view.findViewById<CheckBox>(R.id.show_perm_dialog).setOnCheckedChangeListener { _, isChecked ->
             MainPreferences().setShowPermissionDialog(requireContext(), isChecked)
         }
     }

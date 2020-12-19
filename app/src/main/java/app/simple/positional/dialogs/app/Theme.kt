@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.theme.setAppTheme
 import app.simple.positional.ui.AppSettings
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_app_theme.*
 import java.lang.ref.WeakReference
 
 class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBottomSheetDialog() {
@@ -20,8 +20,20 @@ class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBotto
         retainInstance = true
     }
 
+    private lateinit var light: RadioButton
+    private lateinit var dark: RadioButton
+    private lateinit var followSystem: RadioButton
+    private lateinit var dayNight: RadioButton
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_app_theme, container, false)
+        val view = inflater.inflate(R.layout.dialog_app_theme, container, false)
+
+        light = view.findViewById(R.id.light)
+        dark = view.findViewById(R.id.dark)
+        followSystem = view.findViewById(R.id.follow_system)
+        dayNight = view.findViewById(R.id.day_night)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,11 +53,11 @@ class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBotto
             setButtons(AppCompatDelegate.MODE_NIGHT_YES)
         }
 
-        follow_system.setOnClickListener {
+        followSystem.setOnClickListener {
             setButtons(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
 
-        day_night.setOnClickListener {
+        dayNight.setOnClickListener {
             setButtons(4)
         }
     }
@@ -60,8 +72,8 @@ class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBotto
 
         light.isChecked = value == AppCompatDelegate.MODE_NIGHT_NO
         dark.isChecked = value == AppCompatDelegate.MODE_NIGHT_YES
-        follow_system.isChecked = value == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-        day_night.isChecked = value == 4
+        followSystem.isChecked = value == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        dayNight.isChecked = value == 4
 
         weakReference.get()?.setCurrentThemeValue(value)
 

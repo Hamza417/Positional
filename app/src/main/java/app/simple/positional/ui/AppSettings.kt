@@ -5,20 +5,40 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.dialogs.app.*
 import app.simple.positional.preference.MainPreferences
-import kotlinx.android.synthetic.main.frag_settings.*
-import kotlinx.android.synthetic.main.frag_settings.view.*
 import java.lang.ref.WeakReference
 
 class AppSettings : Fragment(), CoordinatesCallback {
+
+    private lateinit var buyFull: LinearLayout
+    private lateinit var unit: LinearLayout
+    private lateinit var theme: LinearLayout
+    private lateinit var customLocation: LinearLayout
+    private lateinit var pushNotification: LinearLayout
+    private lateinit var legalNotes: LinearLayout
+    private lateinit var changeLogs: LinearLayout
+    private lateinit var github: LinearLayout
+    private lateinit var foundIssues: LinearLayout
+    private lateinit var keepScreenOn: LinearLayout
+
+    private lateinit var toggleNotification: SwitchCompat
+    private lateinit var toggleKeepScreenOn: SwitchCompat
+    private lateinit var toggleCustomLocation: SwitchCompat
+
+    private lateinit var specifiedLocationText: TextView
+    private lateinit var currentTheme: TextView
+    private lateinit var currentUnit: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,16 +48,35 @@ class AppSettings : Fragment(), CoordinatesCallback {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
 
-        if (BuildConfig.FLAVOR == "lite") {
-            view.buy_full.visibility = View.VISIBLE
-            view.specified_location_text.setTextColor(Color.GRAY)
-        }
+        buyFull = view.findViewById(R.id.buy_full)
+        unit = view.findViewById(R.id.settings_units)
+        theme = view.findViewById(R.id.settings_theme)
+        customLocation = view.findViewById(R.id.setting_custom_location)
+        pushNotification = view.findViewById(R.id.setting_notification)
+        legalNotes = view.findViewById(R.id.legal_notes)
+        changeLogs = view.findViewById(R.id.change_logs)
+        github = view.findViewById(R.id.github)
+        foundIssues = view.findViewById(R.id.found_issues)
+        keepScreenOn = view.findViewById(R.id.setting_keep_screen_on)
+
+        toggleNotification = view.findViewById(R.id.toggle_notifications)
+        toggleKeepScreenOn = view.findViewById(R.id.toggle_screen_on)
+        toggleCustomLocation = view.findViewById(R.id.toggle_custom_location)
+
+        specifiedLocationText = view.findViewById(R.id.specified_location_text)
+        currentTheme = view.findViewById(R.id.current_theme)
+        currentUnit = view.findViewById(R.id.current_unit)
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (BuildConfig.FLAVOR == "lite") {
+            buyFull.visibility = View.VISIBLE
+            specifiedLocationText.setTextColor(Color.GRAY)
+        }
 
         if (MainPreferences().isDayNightOn(requireContext())) {
             setCurrentThemeValue(4)
@@ -47,23 +86,23 @@ class AppSettings : Fragment(), CoordinatesCallback {
 
         setCurrentUnit(MainPreferences().getUnit(requireContext()))
 
-        toggle_notifications.isChecked = MainPreferences().isNotificationOn(requireContext())
-        toggle_screen_on.isChecked = MainPreferences().isScreenOn(requireContext())
+        toggleNotification.isChecked = MainPreferences().isNotificationOn(requireContext())
+        toggleKeepScreenOn.isChecked = MainPreferences().isScreenOn(requireContext())
         isCoordinatesSet(MainPreferences().isCustomCoordinate(requireContext())) // toggle coordinate switch
 
-        settings_theme.setOnClickListener {
+        theme.setOnClickListener {
             val theme = Theme(WeakReference(this))
             theme.show(parentFragmentManager, "null")
         }
 
-        settings_units.setOnClickListener {
+        unit.setOnClickListener {
             val units = WeakReference(Units(WeakReference(this)))
             units.get()?.show(parentFragmentManager, "null")
         }
 
-        setting_custom_location.setOnClickListener {
+        customLocation.setOnClickListener {
             if (BuildConfig.FLAVOR == "full") {
-                toggle_custom_location.isChecked = true
+                toggleCustomLocation.isChecked = true
                 val coordinates = Coordinates().newInstance()
                 coordinates.coordinatesCallback = this
                 coordinates.show(childFragmentManager, "coordinates")
@@ -72,9 +111,9 @@ class AppSettings : Fragment(), CoordinatesCallback {
             }
         }
 
-        toggle_custom_location.setOnCheckedChangeListener { _, isChecked ->
+        toggleCustomLocation.setOnCheckedChangeListener { _, isChecked ->
             if (BuildConfig.FLAVOR == "full") {
-                if (toggle_custom_location.isPressed) {
+                if (toggleCustomLocation.isPressed) {
                     if (isChecked) {
                         val coordinates = Coordinates().newInstance()
                         coordinates.coordinatesCallback = this
@@ -85,32 +124,34 @@ class AppSettings : Fragment(), CoordinatesCallback {
                 }
             } else {
                 Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
-                toggle_custom_location.isChecked = false
+                toggleCustomLocation.isChecked = false
             }
         }
 
-        toggle_screen_on.setOnCheckedChangeListener { _, isChecked ->
-            if (toggle_screen_on.isPressed) {
-                MainPreferences().setScreenOn(requireContext(), isChecked)
+        keepScreenOn.setOnClickListener {
+            toggleKeepScreenOn.isChecked = !toggleKeepScreenOn.isChecked
+        }
 
-                if (isChecked) {
-                    requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-                } else {
-                    requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-                }
+        toggleKeepScreenOn.setOnCheckedChangeListener { _, isChecked ->
+            MainPreferences().setScreenOn(requireContext(), isChecked)
+
+            if (isChecked) {
+                requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            } else {
+                requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             }
         }
 
-        setting_notification.setOnClickListener {
-            toggle_notifications.isChecked = !toggle_notifications.isChecked
+        pushNotification.setOnClickListener {
+            toggleNotification.isChecked = !toggleNotification.isChecked
         }
 
-        toggle_notifications.setOnCheckedChangeListener { _, isChecked ->
+        toggleNotification.setOnCheckedChangeListener { _, isChecked ->
             MainPreferences().setNotifications(requireContext(), isChecked)
         }
 
-        legal_notes.setOnClickListener {
-            val popup = PopupMenu(requireContext(), legal_notes)
+        legalNotes.setOnClickListener {
+            val popup = PopupMenu(requireContext(), legalNotes)
             popup.menuInflater.inflate(R.menu.legal_notes, popup.menu)
             popup.gravity = Gravity.END
 
@@ -124,7 +165,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
 
         }
 
-        change_logs.setOnClickListener {
+        changeLogs.setOnClickListener {
             val uri: Uri = Uri.parse("https://github.com/Hamza417/Positional/releases")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
@@ -136,12 +177,12 @@ class AppSettings : Fragment(), CoordinatesCallback {
             startActivity(intent)
         }
 
-        found_issues.setOnClickListener {
+        foundIssues.setOnClickListener {
             val issue = Issue().newInstance()
             issue.show(childFragmentManager, "null")
         }
 
-        buy_full.setOnClickListener {
+        buyFull.setOnClickListener {
             val buyFull = BuyFull().newInstance()
             buyFull.show(childFragmentManager, "buy_full")
         }
@@ -149,7 +190,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
 
     fun setCurrentThemeValue(themeValue: Int) {
         try {
-            current_theme.text = when (themeValue) {
+            currentTheme.text = when (themeValue) {
                 AppCompatDelegate.MODE_NIGHT_NO -> "Light"
                 AppCompatDelegate.MODE_NIGHT_YES -> "Dark"
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> "Follow System"
@@ -162,12 +203,12 @@ class AppSettings : Fragment(), CoordinatesCallback {
     }
 
     fun setCurrentUnit(value: Boolean) {
-        current_unit.text = if (value) "Metric" else "Imperial"
+        currentUnit.text = if (value) "Metric" else "Imperial"
     }
 
     override fun isCoordinatesSet(boolean: Boolean) {
         try {
-            toggle_custom_location.isChecked = boolean
+            toggleCustomLocation.isChecked = boolean
         } catch (e: java.lang.NullPointerException) {
         } catch (e: UninitializedPropertyAccessException) {
         }

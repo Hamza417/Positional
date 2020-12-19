@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_compass_bloom.*
 import java.lang.ref.WeakReference
 
 class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialog() {
@@ -19,8 +19,20 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
         retainInstance = true
     }
 
+    private lateinit var orange: RadioButton
+    private lateinit var purple: RadioButton
+    private lateinit var flower: RadioButton
+    private lateinit var petals: RadioButton
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_compass_bloom, container, false)
+        val view = inflater.inflate(R.layout.dialog_compass_bloom, container, false)
+
+        orange = view.findViewById(R.id.bloom_orange)
+        purple = view.findViewById(R.id.bloom_purple)
+        flower = view.findViewById(R.id.bloom_flower)
+        petals = view.findViewById(R.id.bloom_petals)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,19 +43,19 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
 
         setButtons(CompassPreference().getFlowerBloomTheme(requireContext()))
 
-        bloom_orange.setOnClickListener {
+        orange.setOnClickListener {
             setValue(0)
         }
 
-        bloom_purple.setOnClickListener {
+        purple.setOnClickListener {
             setValue(1)
         }
 
-        bloom_flower.setOnClickListener {
+        flower.setOnClickListener {
             setValue(2)
         }
 
-        bloom_petals.setOnClickListener {
+        petals.setOnClickListener {
             setValue(3)
         }
     }
@@ -56,9 +68,9 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
     private fun setButtons(value: Int) {
         CompassPreference().setFlowerBloom(value, requireContext())
 
-        bloom_orange.isChecked = value == 0
-        bloom_purple.isChecked = value == 1
-        bloom_flower.isChecked = value == 2
-        bloom_petals.isChecked = value == 3
+        orange.isChecked = value == 0
+        purple.isChecked = value == 1
+        flower.isChecked = value == 2
+        petals.isChecked = value == 3
     }
 }

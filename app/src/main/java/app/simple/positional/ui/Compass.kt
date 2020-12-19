@@ -12,9 +12,14 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
@@ -27,11 +32,9 @@ import app.simple.positional.dialogs.compass.CompassMenu
 import app.simple.positional.dialogs.compass.NoSensorAlert
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.util.*
+import app.simple.positional.views.CustomCoordinatorLayout
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.bottom_sheet_compass.*
-import kotlinx.android.synthetic.main.frag_compass.*
-import kotlinx.android.synthetic.main.generic_compass_rose.*
-import kotlinx.android.synthetic.main.info_panel_compass.*
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -79,19 +82,67 @@ class Compass : Fragment(), SensorEventListener {
     private lateinit var sensorAccelerometer: Sensor
     private lateinit var sensorMagneticField: Sensor
 
+    private lateinit var accuracyAccelerometer: TextView
+    private lateinit var accuracyMagnetometer: TextView
+    private lateinit var inclinationTextView: TextView
+    private lateinit var declination: TextView
+    private lateinit var fieldStrength: TextView
+    private lateinit var compassInfoText: TextView
+    private lateinit var degrees: TextView
+    private lateinit var direction: TextView
+
+    private lateinit var expandUp: ImageView
+    private lateinit var dial: ImageView
+    private lateinit var flowerOne: ImageView
+    private lateinit var flowerTwo: ImageView
+    private lateinit var flowerThree: ImageView
+    private lateinit var flowerFour: ImageView
+
+    private lateinit var copy: ImageButton
+    private lateinit var menu: ImageButton
+    private lateinit var dialContainer: FrameLayout
+    private lateinit var compassMainLayout: CustomCoordinatorLayout
+    private lateinit var compassListScrollView: NestedScrollView
+    private lateinit var dim: View
+    private lateinit var toolbar: MaterialToolbar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.frag_compass, container, false)
+        val view = inflater.inflate(R.layout.frag_compass, container, false)
+
+        accuracyAccelerometer = view.findViewById(R.id.compass_accuracy_accelerometer)
+        accuracyMagnetometer = view.findViewById(R.id.compass_accuracy_magnetometer)
+        inclinationTextView = view.findViewById(R.id.compass_inclination)
+        declination = view.findViewById(R.id.compass_declination)
+        fieldStrength = view.findViewById(R.id.compass_field_strength)
+        compassInfoText = view.findViewById(R.id.compass_info_text)
+        degrees = view.findViewById(R.id.degrees)
+        direction = view.findViewById(R.id.direction)
+
+        expandUp = view.findViewById(R.id.expand_up_compass_sheet)
+        dial = view.findViewById(R.id.dial)
+        flowerOne = view.findViewById(R.id.flower_one)
+        flowerTwo = view.findViewById(R.id.flower_two)
+        flowerThree = view.findViewById(R.id.flower_three)
+        flowerFour = view.findViewById(R.id.flower_four)
+
+        copy = view.findViewById(R.id.compass_copy)
+        menu = view.findViewById(R.id.compass_menu)
+        dialContainer = view.findViewById(R.id.dial_container)
+        compassMainLayout = view.findViewById(R.id.compass_main_layout)
+        compassListScrollView = view.findViewById(R.id.compass_list_scroll_view)
+        dim = view.findViewById(R.id.compass_dim)
+        toolbar = view.findViewById(R.id.compass_appbar)
 
         filter.addAction("location")
         showDirectionCode = CompassPreference().getDirectionCode(requireContext())
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
-        bottomSheetBehavior = BottomSheetBehavior.from(v.findViewById(R.id.compass_info_bottom_sheet))
+        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         try {
@@ -118,39 +169,39 @@ class Compass : Fragment(), SensorEventListener {
         flowerBloom = CompassPreference().getFlowerBloomTheme(requireContext())
         setSpeed(CompassPreference().getCompassSpeed(requireContext()))
 
-        return v
+        return view
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        compass_main_layout.setProxyView(view)
+        compassMainLayout.setProxyView(view)
 
         setFlower(isFLowerBlooming)
 
         loadImageResources(R.drawable.compass_dial, dial, requireContext(), 0)
 
-        dial_container.setOnTouchListener(MyOnTouchListener())
+        dialContainer.setOnTouchListener(MyOnTouchListener())
 
-        compass_menu.setOnClickListener {
+        menu.setOnClickListener {
             val weakReference = WeakReference(CompassMenu(WeakReference(this@Compass)))
             weakReference.get()?.show(parentFragmentManager, "compass_menu")
         }
 
-        compass_copy.setOnClickListener {
+        copy.setOnClickListener {
             handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             val stringBuilder = StringBuilder()
 
             stringBuilder.append("Compass Info\n\nAccuracy\n")
-            stringBuilder.append("${compass_accuracy_accelerometer.text}\n")
-            stringBuilder.append("${compass_accuracy_magnetometer.text}\n")
+            stringBuilder.append("${accuracyAccelerometer.text}\n")
+            stringBuilder.append("${accuracyMagnetometer.text}\n")
             stringBuilder.append("\nMagnetic Field\n")
-            stringBuilder.append("${compass_inclination.text}\n")
-            stringBuilder.append("${compass_declination.text}\n")
-            stringBuilder.append("${compass_field_strength.text}\n\n")
+            stringBuilder.append("${inclinationTextView.text}\n")
+            stringBuilder.append("${declination.text}\n")
+            stringBuilder.append("${fieldStrength.text}\n\n")
 
             if (BuildConfig.FLAVOR == "lite") {
                 stringBuilder.append("\n\n")
@@ -162,7 +213,7 @@ class Compass : Fragment(), SensorEventListener {
             clipboard.setPrimaryClip(clip)
 
             if (clipboard.hasPrimaryClip()) {
-                compass_info_text.setTextAnimation(getString(R.string.info_copied), 300)
+                compassInfoText.setTextAnimation(getString(R.string.info_copied), 300)
                 handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
@@ -192,11 +243,11 @@ class Compass : Fragment(), SensorEventListener {
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                compass_list_scroll_view.alpha = slideOffset
-                expand_up_compass_sheet.alpha = (1 - slideOffset)
-                compass_dim.alpha = slideOffset
+                compassListScrollView.alpha = slideOffset
+                expandUp.alpha = (1 - slideOffset)
+                dim.alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                compass_appbar.translationY = (compass_appbar.height * -slideOffset)
+                toolbar.translationY = (toolbar.height * -slideOffset)
             }
         })
 
@@ -213,21 +264,21 @@ class Compass : Fragment(), SensorEventListener {
                                     location.time
                             )
 
-                            compass_declination.text = fromHtml("<b>Declination:</b> ${
+                            declination.text = fromHtml("<b>Declination:</b> ${
                                 round(
                                         geomagneticField.declination.toDouble(),
                                         2
                                 )
                             }°")
 
-                            compass_inclination.text = fromHtml("<b>Inclination:</b> ${
+                            inclinationTextView.text = fromHtml("<b>Inclination:</b> ${
                                 round(
                                         geomagneticField.inclination.toDouble(),
                                         2
                                 )
                             }°")
 
-                            compass_field_strength.text = fromHtml("<b>Field Strength:</b> ${
+                            fieldStrength.text = fromHtml("<b>Field Strength:</b> ${
                                 round(
                                         geomagneticField.fieldStrength.toDouble(),
                                         2
@@ -247,7 +298,7 @@ class Compass : Fragment(), SensorEventListener {
 
     override fun onPause() {
         super.onPause()
-        compass_info_text.clearAnimation()
+        compassInfoText.clearAnimation()
         handler.removeCallbacksAndMessages(null)
         unregister()
     }
@@ -270,7 +321,7 @@ class Compass : Fragment(), SensorEventListener {
         }
     }
 
-    private val textAnimationRunnable: Runnable = Runnable { compass_info_text.setTextAnimation("Compass Info", 300) }
+    private val textAnimationRunnable: Runnable = Runnable { compassInfoText.setTextAnimation("Compass Info", 300) }
 
     private inner class MyOnTouchListener : View.OnTouchListener {
         @SuppressLint("ClickableViewAccessibility")
@@ -354,20 +405,20 @@ class Compass : Fragment(), SensorEventListener {
         if (sensor == sensorAccelerometer) {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
-                    compass_accuracy_magnetometer.text = fromHtml("<b>Magnetic Field</b>: Unreliable")
+                    accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: Unreliable")
                     val weakReference = WeakReference(CompassCalibration().newInstance())
                     weakReference.get()?.show(parentFragmentManager, "null")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
-                    compass_accuracy_magnetometer.text = fromHtml("<b>Magnetic Field</b>: Low")
+                    accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: Low")
                     val weakReference = WeakReference(CompassCalibration().newInstance())
                     weakReference.get()?.show(parentFragmentManager, "null")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
-                    compass_accuracy_magnetometer.text = fromHtml("<b>Magnetic Field</b>: Medium")
+                    accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: Medium")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
-                    compass_accuracy_magnetometer.text = fromHtml("<b>Magnetic Field</b>: High")
+                    accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: High")
                 }
             }
         }
@@ -375,20 +426,20 @@ class Compass : Fragment(), SensorEventListener {
         if (sensor == sensorAccelerometer) {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
-                    compass_accuracy_accelerometer.text = fromHtml("<b>Accelerometer</b>: Unreliable")
+                    accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: Unreliable")
                     val weakReference = WeakReference(CompassCalibration().newInstance())
                     weakReference.get()?.show(parentFragmentManager, "null")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
-                    compass_accuracy_accelerometer.text = fromHtml("<b>Accelerometer</b>: Low")
+                    accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: Low")
                     val weakReference = WeakReference(CompassCalibration().newInstance())
                     weakReference.get()?.show(parentFragmentManager, "null")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
-                    compass_accuracy_accelerometer.text = fromHtml("<b>Accelerometer</b>: Medium")
+                    accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: Medium")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
-                    compass_accuracy_accelerometer.text = fromHtml("<b>Accelerometer</b>: High")
+                    accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: High")
                 }
             }
         }
@@ -400,28 +451,28 @@ class Compass : Fragment(), SensorEventListener {
         if (isFLowerBlooming) {
             when (flowerBloom) {
                 0 -> {
-                    flower_one.rotation = rotationAngle * 2
-                    flower_two.rotation = rotationAngle * -3 + 45
-                    flower_three.rotation = rotationAngle * 1 + 90
-                    flower_four.rotation = rotationAngle * -4 + 135
+                    flowerOne.rotation = rotationAngle * 2
+                    flowerTwo.rotation = rotationAngle * -3 + 45
+                    flowerThree.rotation = rotationAngle * 1 + 90
+                    flowerFour.rotation = rotationAngle * -4 + 135
                 }
                 1 -> {
-                    flower_one.rotation = rotationAngle * 2
-                    flower_two.rotation = rotationAngle * -3 + 22.5f
-                    flower_three.rotation = rotationAngle * 1 + 45f
-                    flower_four.rotation = rotationAngle * -4 + 67.5f
+                    flowerOne.rotation = rotationAngle * 2
+                    flowerTwo.rotation = rotationAngle * -3 + 22.5f
+                    flowerThree.rotation = rotationAngle * 1 + 45f
+                    flowerFour.rotation = rotationAngle * -4 + 67.5f
                 }
                 2 -> {
-                    flower_one.rotation = rotationAngle * 2
-                    flower_two.rotation = rotationAngle * -3 + 45
-                    flower_three.rotation = rotationAngle * 1 + 90
-                    flower_four.rotation = rotationAngle * -4 + 135
+                    flowerOne.rotation = rotationAngle * 2
+                    flowerTwo.rotation = rotationAngle * -3 + 45
+                    flowerThree.rotation = rotationAngle * 1 + 90
+                    flowerFour.rotation = rotationAngle * -4 + 135
                 }
                 3 -> {
-                    flower_one.rotation = rotationAngle * 2
-                    flower_two.rotation = rotationAngle * -3 + 45
-                    flower_three.rotation = rotationAngle * 1 + 90
-                    flower_four.rotation = rotationAngle * -4 + 135
+                    flowerOne.rotation = rotationAngle * 2
+                    flowerTwo.rotation = rotationAngle * -3 + 45
+                    flowerThree.rotation = rotationAngle * 1 + 90
+                    flowerFour.rotation = rotationAngle * -4 + 135
                 }
             }
         }
@@ -443,16 +494,16 @@ class Compass : Fragment(), SensorEventListener {
         isFLowerBlooming = value
         val x = compassBloomRes[CompassPreference().getFlowerBloomTheme(requireContext())]
         if (value) {
-            loadImageResources(x, flower_one, requireContext(), 0)
-            loadImageResources(x, flower_two, requireContext(), 50)
-            loadImageResources(x, flower_three, requireContext(), 100)
-            loadImageResources(x, flower_four, requireContext(), 150)
+            loadImageResources(x, flowerOne, requireContext(), 0)
+            loadImageResources(x, flowerTwo, requireContext(), 50)
+            loadImageResources(x, flowerThree, requireContext(), 100)
+            loadImageResources(x, flowerFour, requireContext(), 150)
             animateColorChange(degrees, compassBloomTextColor[CompassPreference().getFlowerBloomTheme(requireContext())], Color.parseColor("#ffffff"))
         } else {
-            loadImageResources(0, flower_one, requireContext(), 150)
-            loadImageResources(0, flower_two, requireContext(), 100)
-            loadImageResources(0, flower_three, requireContext(), 50)
-            loadImageResources(0, flower_four, requireContext(), 0)
+            loadImageResources(0, flowerOne, requireContext(), 150)
+            loadImageResources(0, flowerTwo, requireContext(), 100)
+            loadImageResources(0, flowerThree, requireContext(), 50)
+            loadImageResources(0, flowerFour, requireContext(), 0)
             animateColorChange(degrees, degrees.currentTextColor, compassBloomTextColor[CompassPreference().getFlowerBloomTheme(requireContext())])
         }
     }

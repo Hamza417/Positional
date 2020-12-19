@@ -1,20 +1,19 @@
 package app.simple.positional.util
 
 import android.location.Location
-import kotlin.math.absoluteValue
 
 object LocationConverter {
     fun latitudeAsDMS(latitude: Double, decimalPlace: Int): String {
         val direction = if (latitude > 0) "N" else "S"
-        var strLatitude = Location.convert(latitude.absoluteValue, Location.FORMAT_SECONDS)
+        var strLatitude = Location.convert(latitude, Location.FORMAT_SECONDS)
         strLatitude = replaceDelimiters(strLatitude, decimalPlace)
         strLatitude += " $direction"
         return strLatitude
     }
 
     fun longitudeAsDMS(longitude: Double, decimalPlace: Int): String {
-        val direction = if (longitude > 0) "W" else "E"
-        var strLongitude = Location.convert(longitude.absoluteValue, Location.FORMAT_SECONDS)
+        val direction = if (longitude < 0) "W" else "E"
+        var strLongitude = Location.convert(longitude, Location.FORMAT_SECONDS)
         strLongitude = replaceDelimiters(strLongitude, decimalPlace)
         strLongitude += " $direction"
         return strLongitude

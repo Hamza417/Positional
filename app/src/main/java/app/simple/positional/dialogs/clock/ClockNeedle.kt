@@ -11,10 +11,13 @@ import app.simple.positional.adapters.ClockNeedleSkinsAdapter
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.ui.Clock
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.android.synthetic.main.dialog_clock_needle_skins.*
+import com.afollestad.viewpagerdots.DotsIndicator
 import java.lang.ref.WeakReference
 
 class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDialog() {
+
+    private lateinit var needleSkin: ViewPager
+    private lateinit var indicator: DotsIndicator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +26,12 @@ class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDi
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_clock_needle_skins, container, false)
+        val view = inflater.inflate(R.layout.dialog_clock_needle_skins, container, false)
+
+        needleSkin = view.findViewById(R.id.needle_skin)
+        indicator = view.findViewById(R.id.indicator)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,12 +40,12 @@ class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDi
         // This will prevent the underlying dialog from dimming preventing a flashy animation that can cause some issues to some users
         this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
-        needle_skin.adapter = ClockNeedleSkinsAdapter(requireContext())
-        indicator.attachViewPager(needle_skin)
+        needleSkin.adapter = ClockNeedleSkinsAdapter(requireContext())
+        indicator.attachViewPager(needleSkin)
 
-        needle_skin.currentItem = ClockPreferences().getClockNeedleTheme(requireContext())
+        needleSkin.currentItem = ClockPreferences().getClockNeedleTheme(requireContext())
 
-        needle_skin.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        needleSkin.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
             }
 
@@ -47,8 +55,8 @@ class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDi
 
             override fun onPageScrollStateChanged(state: Int) {
                 if (state == ViewPager.SCROLL_STATE_SETTLING) {
-                    ClockPreferences().setClockNeedleTheme(needle_skin.currentItem, requireContext())
-                    clock.get()?.setNeedle(needle_skin.currentItem)
+                    ClockPreferences().setClockNeedleTheme(needleSkin.currentItem, requireContext())
+                    clock.get()?.setNeedle(needleSkin.currentItem)
                 }
             }
         })

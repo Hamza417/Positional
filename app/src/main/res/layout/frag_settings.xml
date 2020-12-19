@@ -174,7 +174,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/setting_notification"
+                    android:id="@+id/setting_keep_screen_on"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ripple"
