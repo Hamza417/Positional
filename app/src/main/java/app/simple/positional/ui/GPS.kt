@@ -389,6 +389,7 @@ class GPS : Fragment() {
 
         locationIndicator.setOnClickListener {
             if (isCustomCoordinate) {
+                isMapMoved = false
                 updateViews(customLatitude, customLongitude, 0f)
             } else
                 if (location != null) {
