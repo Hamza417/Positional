@@ -59,8 +59,8 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 45
-        versionName "v5.8-stable"
+        versionCode 46
+        versionName "v5.9-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -148,7 +148,7 @@ dependencies {
     implementation 'com.afollestad:viewpagerdots:1.0.0'
 
     // Leak Canary -- debugImplementation because LeakCanary should only run in debug builds.
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
 }
 
 repositories {

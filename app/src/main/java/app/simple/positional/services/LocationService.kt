@@ -203,11 +203,8 @@ class LocationService : Service(), LocationListener {
         if (!distanceSingleton.isMapPanelVisible!!) {
             if (distanceSingleton.isInitialLocationSet!!) {
                 val result = FloatArray(1)
-                Location.distanceBetween(distanceSingleton.distanceCoordinates!!.latitude, distanceSingleton.distanceCoordinates!!.longitude, location.latitude, location.longitude, result)
                 distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(result[0])
-                distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
             } else {
-                distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
                 distanceSingleton.initialPointCoordinates = LatLng(location.latitude, location.longitude)
                 distanceSingleton.isInitialLocationSet = true
             }
@@ -222,7 +219,7 @@ class LocationService : Service(), LocationListener {
             val isMetric = MainPreferences().getUnit(context = baseContext)
 
             val displacementValue = FloatArray(1)
-            val distanceValue = FloatArray(1)
+
             Location.distanceBetween(
                     distanceSingleton.initialPointCoordinates!!.latitude,
                     distanceSingleton.initialPointCoordinates!!.longitude,
@@ -231,19 +228,10 @@ class LocationService : Service(), LocationListener {
                     displacementValue
             )
 
-            Location.distanceBetween(
-                    distanceSingleton.initialPointCoordinates!!.latitude,
-                    distanceSingleton.initialPointCoordinates!!.longitude,
-                    location.latitude,
-                    location.longitude,
-                    distanceValue
-            )
-
             val direction: String
             val speed = if (isMetric) "<b>Speed:</b> ${round(location.speed.toDouble().toKiloMetersPerHour(), 2)} km/h<br>" else "<b>Speed:</b> ${round(location.speed.toDouble().toMilesPerHour(), 2)} mph/h<br>"
 
             if (location.speed > 0f) {
-                distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(distanceValue[0])
                 val dir = getDirection(
                         distanceSingleton.distanceCoordinates!!.latitude,
                         distanceSingleton.distanceCoordinates!!.longitude,
@@ -270,21 +258,7 @@ class LocationService : Service(), LocationListener {
                 }
             }
 
-            val distance = if (distanceValue[0] < 1000) {
-                if (isMetric) {
-                    "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble(), 2)} m<br>"
-                } else {
-                    "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble().toFeet(), 2)} ft<br>"
-                }
-            } else {
-                if (isMetric) {
-                    "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toKilometers().toDouble(), 2)} km<br>"
-                } else {
-                    "<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toMiles().toDouble(), 2)} miles<br>"
-                }
-            }
-
-            val finalSpanned = fromHtml("$speed $distance $displacement $direction")
+            val finalSpanned = fromHtml("$speed $displacement $direction")
 
             withContext(Dispatchers.Main) {
                 if (!isDestroying) {

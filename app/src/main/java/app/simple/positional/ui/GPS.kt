@@ -73,7 +73,6 @@ class GPS : Fragment() {
     private lateinit var providerSource: LoaderTextView
     private lateinit var altitude: LoaderTextView
     private lateinit var bearing: LoaderTextView
-    private lateinit var distance: LoaderTextView
     private lateinit var displacement: LoaderTextView
     private lateinit var direction: LoaderTextView
     private lateinit var speed: LoaderTextView
@@ -129,7 +128,6 @@ class GPS : Fragment() {
         providerStatus = view.findViewById(R.id.provider_status)
         altitude = view.findViewById(R.id.gps_altitude)
         bearing = view.findViewById(R.id.gps_bearing)
-        distance = view.findViewById(R.id.gps_distance)
         displacement = view.findViewById(R.id.gps_displacement)
         direction = view.findViewById(R.id.gps_direction)
         speed = view.findViewById(R.id.gps_speed)
@@ -300,20 +298,6 @@ class GPS : Fragment() {
                                     }
                                 }
 
-                                val distance: Spanned? = if (distanceSingleton.totalDistance!! < 1000) {
-                                    if (isMetric) {
-                                        fromHtml("<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble(), 2)} m")
-                                    } else {
-                                        fromHtml("<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toDouble().toFeet(), 2)} ft")
-                                    }
-                                } else {
-                                    if (isMetric) {
-                                        fromHtml("<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toKilometers().toDouble(), 2)} km")
-                                    } else {
-                                        fromHtml("<b>Distance:</b> ${round(distanceSingleton.totalDistance!!.toMiles().toDouble().toFeet(), 2)} miles")
-                                    }
-                                }
-
                                 withContext(Dispatchers.Main) {
                                     this@GPS.locationIndicator.setImageResource(R.drawable.ic_gps_fixed)
                                     this@GPS.locationIndicator.isClickable = true
@@ -324,7 +308,6 @@ class GPS : Fragment() {
                                     this@GPS.bearing.text = bearing
                                     this@GPS.accuracy.text = accuracy
                                     this@GPS.displacement.text = displacement
-                                    this@GPS.distance.text = distance
                                     this@GPS.direction.text = direction
 
                                     if (!isCustomCoordinate) {
@@ -416,7 +399,6 @@ class GPS : Fragment() {
                 stringBuilder.append("${bearing.text}\n\n")
 
                 stringBuilder.append("Movement\n")
-                stringBuilder.append("${distance.text}\n")
                 stringBuilder.append("${displacement.text}\n")
                 stringBuilder.append("${direction.text}\n")
                 stringBuilder.append("${speed.text}\n")

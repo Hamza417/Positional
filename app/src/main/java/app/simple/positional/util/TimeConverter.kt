@@ -1,27 +1,27 @@
 package app.simple.positional.util
 
-import java.util.*
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 
-fun getSecondsInDegreesWithDecimalPrecision(calendar: Calendar): Float {
-    val value = calendar.get(Calendar.MILLISECOND) / 1000f
-    return (calendar.get(Calendar.SECOND) + value) * 6f
+fun getSecondsInDegreesWithDecimalPrecision(calendar: ZonedDateTime): Float {
+    return (calendar.second + (calendar.nano / 1000000000f)) * 6f
 }
 
-fun getSecondsInDegrees(calendar: Calendar): Float {
-    return calendar.get(Calendar.SECOND) * 6f
+fun getSecondsInDegrees(zonedDateTime: ZonedDateTime): Float {
+    return zonedDateTime.second * 6f
 }
 
-fun getMinutesInDegrees(calendar: Calendar): Float {
-    val value = ((calendar.get(Calendar.SECOND) / 60f) * 100f) / 100f
-    return (calendar.get(Calendar.MINUTE) + value) * 6f
+fun getMinutesInDegrees(zonedDateTime: ZonedDateTime): Float {
+    val value = ((zonedDateTime.second / 60f) * 100f) / 100f
+    return (zonedDateTime.minute + value) * 6f
 }
 
-fun getHoursInDegrees(calendar: Calendar): Float {
-    return 0.5f * (60f * calendar.get(Calendar.HOUR) + calendar.get(Calendar.MINUTE))
+fun getHoursInDegrees(zonedDateTime: ZonedDateTime): Float {
+    return 0.5f * (60f * zonedDateTime.hour + zonedDateTime.minute)
 }
 
 fun isValidTimeZone(timezone: String): Boolean {
-    val validIDs = TimeZone.getAvailableIDs()
+    val validIDs = ZoneOffset.getAvailableZoneIds()
     for (str in validIDs) {
         if (str != null && str == timezone) {
             return true

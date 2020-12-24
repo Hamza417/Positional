@@ -43,6 +43,9 @@ fun Double.toFeet(): Double {
     return this * 3.28084
 }
 
+/**
+ * Converts nT to Tesla
+ */
 fun Double.toTesla(): Double {
     return this * 0.0000000001
 }

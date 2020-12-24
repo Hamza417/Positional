@@ -50,6 +50,29 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/clock_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="10dp"
+            android:background="?attr/dividerColor"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/specified_location_notice_clock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/light"
+            android:gravity="center"
+            android:text="Information shown below are being updated for specified location coordinates"
+            android:textAlignment="center"
+            android:textColor="?attr/textSecondary"
+            android:visibility="gone" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -226,27 +249,6 @@
                 app:use_gradient="true" />
 
         </LinearLayout>
-
-        <View
-            android:id="@+id/clock_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginHorizontal="20dp"
-            android:background="?attr/dividerColor"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/specified_location_notice_clock"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/light"
-            android:gravity="center"
-            android:text="Information shown below are being updated for specified location coordinates"
-            android:textAlignment="center"
-            android:textColor="?attr/textSecondary"
-            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"

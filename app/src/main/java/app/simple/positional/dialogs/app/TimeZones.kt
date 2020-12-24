@@ -27,13 +27,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.ZoneOffset
 import java.util.*
 
 class TimeZones : CustomDialogFragment(), TimeZonesCallback {
 
     lateinit var timeZoneSelected: TimeZoneSelected
     lateinit var timeZoneAdapter: TimeZoneAdapter
-    private var timeZones: MutableList<String> = TimeZone.getAvailableIDs().toList() as MutableList<String>
+    private var timeZones: MutableList<String> = ZoneOffset.getAvailableZoneIds().toList() as MutableList<String>
 
     private var animateCount = 1
 

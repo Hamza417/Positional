@@ -37,18 +37,15 @@ import kotlinx.coroutines.withContext
 import org.shredzone.commons.suncalc.*
 import java.lang.ref.WeakReference
 import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.OffsetDateTime
-import java.time.ZoneOffset
+import java.time.*
 import java.time.format.DateTimeFormatter
+import java.time.temporal.IsoFields
 import java.util.*
 
 class Clock : Fragment() {
 
     private lateinit var toolbar: MaterialToolbar
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
-    private lateinit var calendar: Calendar
 
     private lateinit var hour: ImageView
     private lateinit var minutes: ImageView
@@ -232,9 +229,6 @@ class Clock : Fragment() {
         loadImageResourcesWithoutAnimation(R.drawable.clock_face, face, requireContext())
         loadImageResourcesWithoutAnimation(R.drawable.clock_trail, sweepSeconds, requireContext())
 
-        calendar = Calendar.getInstance()
-        updateDigitalTime(calendar)
-
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
@@ -276,8 +270,6 @@ class Clock : Fragment() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 scrollView.alpha = slideOffset
                 expandUp.alpha = (1 - slideOffset)
-                //clockLayout.translationY = 150 * -slideOffset
-                //clockLayout.alpha = (1 - slideOffset)
                 view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
                 toolbar.translationY = (toolbar.height * -slideOffset)
@@ -372,19 +364,18 @@ class Clock : Fragment() {
 
     private val clock: Runnable = object : Runnable {
         override fun run() {
-            calendar = Calendar.getInstance()
-            hour.rotation = getHoursInDegrees(calendar)
-            minutes.rotation = getMinutesInDegrees(calendar)
+            hour.rotation = getHoursInDegrees(getCurrentTimeData())
+            minutes.rotation = getMinutesInDegrees(getCurrentTimeData())
 
             seconds.rotation = if (delay < 1000) {
-                getSecondsInDegreesWithDecimalPrecision(calendar)
+                getSecondsInDegreesWithDecimalPrecision(getCurrentTimeData())
             } else {
-                getSecondsInDegrees(calendar)
+                getSecondsInDegrees(getCurrentTimeData())
             }
             sweepSeconds.rotation = seconds.rotation - 90
 
             if (dayNightIndicatorImageCountViolation != 0) {
-                val calendar = calendar.get(Calendar.HOUR_OF_DAY)
+                val calendar = getCurrentTimeData().hour
                 if (calendar < 7 || calendar > 18) {
                     dayNightIndicator.setImageResource(R.drawable.ic_night)
                 } else if (calendar < 18 || calendar > 6) {
@@ -400,8 +391,7 @@ class Clock : Fragment() {
 
     private val calender: Runnable = object : Runnable {
         override fun run() {
-            calendar = Calendar.getInstance()
-            updateDigitalTime(calendar)
+            updateTimeData()
             handler.postDelayed(this, 1000)
         }
     }
@@ -411,10 +401,6 @@ class Clock : Fragment() {
             calculateAndUpdateData(customLatitude, customLongitude)
             handler.postDelayed(this, 2500)
         }
-    }
-
-    fun updateDigitalTime(calendar: Calendar) {
-        dateUpdater(calendar)
     }
 
     override fun onPause() {
@@ -521,10 +507,10 @@ class Clock : Fragment() {
                 moonImageCountViolation = 0
             }
 
-            val nextFullMoon = fromHtml("<b>Full Moon:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time.toString(), timezone!!)}")
-            val nextNewMoon = fromHtml("<b>New Moon:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.NEW_MOON).execute().time.toString(), timezone!!)}")
-            val nextFirstQuarter = fromHtml("<b>First Quarter:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FIRST_QUARTER).execute().time.toString(), timezone!!)}")
-            val nextLastQuarter = fromHtml("<b>Last Quarter:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.LAST_QUARTER).execute().time.toString(), timezone!!)}")
+            val nextFullMoon = fromHtml("<b>Full Moon:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time)}")
+            val nextNewMoon = fromHtml("<b>New Moon:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.NEW_MOON).execute().time)}")
+            val nextFirstQuarter = fromHtml("<b>First Quarter:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FIRST_QUARTER).execute().time)}")
+            val nextLastQuarter = fromHtml("<b>Last Quarter:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.LAST_QUARTER).execute().time)}")
 
             withContext(Dispatchers.Main) {
                 try {
@@ -567,7 +553,7 @@ class Clock : Fragment() {
         }
     }
 
-    private fun dateUpdater(calendar: Calendar) {
+    private fun updateTimeData() {
         CoroutineScope(Dispatchers.Default).launch {
             var localTimeZone: Spanned? = null
             var digitalTime24: Spanned? = null
@@ -582,28 +568,23 @@ class Clock : Fragment() {
             var utcDate: Spanned? = null
 
             try {
-                localTimeZone = fromHtml("<b>Time Zone: </b> ${TimeZone.getTimeZone(TimeZone.getDefault().id).getDisplayName(false, TimeZone.SHORT)}")
-                digitalTime24 = fromHtml("<b>Time 24Hr:</b> ${SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(calendar.time)}")
-                digitalTime12 = fromHtml("<b>Time 12Hr:</b> ${SimpleDateFormat("hh:mm:ss a", Locale.getDefault()).format(calendar.time)}")
-                digitalTime = getTime(requireContext(), calendar)
-                localDate = fromHtml("<b>Date:</b> ${SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault()).format(calendar.time)}")
-                localDay = fromHtml("<b>Day:</b> ${SimpleDateFormat("EEEE", Locale.getDefault()).format(calendar.time)}")
-                dayOfTheYear = fromHtml("<b>Day of Year:</b> ${calendar.get(Calendar.DAY_OF_YEAR).getOrdinal()}")
-                weekOfTheYear = fromHtml("<b>Week of Year:</b> ${calendar.get(Calendar.WEEK_OF_YEAR).getOrdinal()}")
+                val zoneId = ZoneId.of(timezone)
+                val zonedDateTime: ZonedDateTime = Instant.now().atZone(zoneId)
 
-                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(OffsetDateTime.now(ZoneOffset.UTC).toString())
+                localTimeZone = fromHtml("<b>Time Zone: </b> ${zonedDateTime.zone}")
+                digitalTime24 = fromHtml("<b>Time 24Hr:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))}")
+                digitalTime12 = fromHtml("<b>Time 12Hr:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a", Locale.getDefault()))}")
+                digitalTime = getTime(requireContext(), zonedDateTime)
+                localDate = fromHtml("<b>Date:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
+                localDay = fromHtml("<b>Day:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("EEEE"))}")
+                dayOfTheYear = fromHtml("<b>Day of Year:</b> ${LocalDate.now().dayOfYear.getOrdinal()}")
+                weekOfTheYear = fromHtml("<b>Week of Year:</b> ${zonedDateTime.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).getOrdinal()}")
 
-                val simpleDateFormat = SimpleDateFormat("XXX", Locale.ROOT)
-                val simpleDateFormat0 = SimpleDateFormat("HH:mm:ss", Locale.ROOT)
-                val simpleDateFormat1 = SimpleDateFormat("dd MMMM, yyyy", Locale.ROOT)
-                // simpleDateFormat.timeZone = TimeZone.getTimeZone(timezone)
-                // simpleDateFormat0.timeZone = TimeZone.getTimeZone(timezone)
-                // simpleDateFormat1.timeZone = TimeZone.getTimeZone(timezone)
-
-                utcTimeZone = fromHtml("<b>Time Zone:</b> ${"GMT ${simpleDateFormat.format(date!!)}"}")
-                utcTime = fromHtml("<b>Time:</b> ${simpleDateFormat0.format(date)}")
-                utcDate = fromHtml("<b>Date:</b> ${simpleDateFormat1.format(date)}")
+                utcTimeZone = fromHtml("<b>Local Time Offset:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("XXX"))}")
+                utcTime = fromHtml("<b>Time:</b> ${ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())).format(DateTimeFormatter.ofPattern("HH:mm:ss"))}")
+                utcDate = fromHtml("<b>Date:</b> ${ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())).format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
             } catch (e: ParseException) {
+                e.printStackTrace()
             }
 
             withContext(Dispatchers.Main) {
@@ -624,6 +605,11 @@ class Clock : Fragment() {
                 }
             }
         }
+    }
+
+    private fun getCurrentTimeData(): ZonedDateTime {
+        val zoneId = ZoneId.of(timezone)
+        return Instant.now().atZone(zoneId)
     }
 
     private fun backPressed(value: Boolean) {

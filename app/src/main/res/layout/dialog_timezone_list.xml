@@ -74,9 +74,6 @@
             android:paddingBottom="@dimen/all_corner_radius"
             android:scrollIndicators="right"
             android:scrollbarDefaultDelayBeforeFade="1500"
-            android:scrollbarSize="10dp"
-            android:scrollbarStyle="insideInset"
-            android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
             android:scrollbars="vertical" />
     </LinearLayout>
 

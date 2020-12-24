@@ -9,7 +9,6 @@ import android.os.Build
 fun isNetworkAvailable(context: Context): Boolean {
     val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    // For 29 api or above
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
                 ?: return false

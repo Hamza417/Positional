@@ -158,7 +158,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/regular"
-                            android:text="Specify custom Latitude and Longitude and use it to fetch location data instead of using the device's GPS\n\nGPS and Local Time will remain unaffected"
+                            android:text="Specify custom Latitude, Longitude and Timezone and use it to fetch location data instead of using the device's GPS\n\nGPS data will remain unaffected"
                             android:textColor="?attr/textSecondary"
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>

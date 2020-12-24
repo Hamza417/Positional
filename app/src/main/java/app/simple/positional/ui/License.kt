@@ -17,10 +17,7 @@ import app.simple.positional.callbacks.LicenceStatusCallback
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.fromHtml
 import app.simple.positional.util.setTextAnimation
-import com.google.android.vending.licensing.AESObfuscator
-import com.google.android.vending.licensing.LicenseChecker
-import com.google.android.vending.licensing.LicenseCheckerCallback
-import com.google.android.vending.licensing.ServerManagedPolicy
+import com.google.android.vending.licensing.*
 
 class License : Fragment(), LicenseCheckerCallback {
 
@@ -39,6 +36,9 @@ class License : Fragment(), LicenseCheckerCallback {
     private var mLicenseCheckerCallback: LicenseCheckerCallback? = null
     private var mChecker: LicenseChecker? = null
 
+    private val invalidLicenseServicePackageItemInfo = "com.android.vending.licensing.ILicensingService"
+    private val lpLicenseServiceFound = "<b>Invalid license server detected</b><br><br>" +
+            "Please uninstall <b>$invalidLicenseServicePackageItemInfo</b> and open the app again"
     private val invalidInfo = "" +
             "  <b><h3>Few things you can do:</h3></b><br>" +
             "  • Check if your internet is working, it is required for verification<br>" +
@@ -87,12 +87,26 @@ class License : Fragment(), LicenseCheckerCallback {
         }
     }
 
-    override fun dontAllow(reason: Int) {
+    override fun doNotAllow(reason: Int) {
+        when (reason) {
+            Policy.NOT_LICENSED -> {
+                showDoNotAllowScreen("License Validation Failed", invalidInfo)
+            }
+            1337 -> {
+                showDoNotAllowScreen("Invalid License Server", lpLicenseServiceFound)
+            }
+            else -> {
+                /* no-op */
+            }
+        }
+    }
+
+    private fun showDoNotAllowScreen(error: String, errorInfoInHtml: String) {
         handler.post {
             try {
-                licenseStatus.setTextAnimation("License Validation Failed", 500)
+                licenseStatus.setTextAnimation(error, 500)
                 licenseLoader.visibility = View.GONE
-                invalidInfoTextView.text = fromHtml(invalidInfo)
+                invalidInfoTextView.text = fromHtml(errorInfoInHtml)
                 invalidInfoTextView.visibility = View.VISIBLE
             } catch (e: NullPointerException) {
             }

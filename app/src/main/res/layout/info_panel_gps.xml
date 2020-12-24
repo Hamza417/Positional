@@ -201,18 +201,6 @@
             </LinearLayout>
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
-                android:id="@+id/gps_distance"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
-
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/gps_displacement"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"

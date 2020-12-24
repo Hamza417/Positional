@@ -33,8 +33,6 @@ fun displayLocationSettingsRequest(context: Context, activity: Activity) {
             LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
                 Log.i(TAG, "Location settings are not satisfied. Show the user a dialog to upgrade location settings ")
                 try {
-                    // Show the dialog by calling startResolutionForResult(), and check the result
-                    // in onActivityResult().
                     status.startResolutionForResult(activity, 2)
                 } catch (e: IntentSender.SendIntentException) {
                     Log.i(TAG, "PendingIntent unable to execute request.")

@@ -1,28 +1,25 @@
 package app.simple.positional.util
 
 import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 /**
- * @param string here is passed a time like this 2020-10-22T06:00:05.447+05:30[Asia/Kolkata] and
+ * @param zonedDateTime here is passed a time like this 2020-10-22T06:00:05.447+05:30[Asia/Kolkata] and
  * this function will trim it to extract the 24 Hr formatted Time out of it
  */
-fun formatZonedTimeDate(string: String): String {
+fun formatZonedTimeDate(zonedDateTime: ZonedDateTime): String {
     return try {
-        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.getDefault()).parse(string)
-        SimpleDateFormat("H:mm:ss", Locale.getDefault()).format(date!!) // 9:00
+        zonedDateTime.format(DateTimeFormatter.ofPattern("H:mm:ss"))
     } catch (e: ParseException) {
         "N/A"
     }
 }
 
-fun formatMoonDate(string: String, timeZone: String): String {
+fun formatMoonDate(zonedDateTime: ZonedDateTime): String {
     return try {
-        val date: Date? = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX", Locale.ROOT).parse(string)
-        val simpleDateFormat = SimpleDateFormat("dd MMM, yyyy, H:mm:ss", Locale.ROOT)
-        simpleDateFormat.timeZone = TimeZone.getTimeZone(timeZone)
-        simpleDateFormat.format(date!!) // 12 Dec 2020, 9:00
+        val date = DateTimeFormatter.ofPattern("dd MMM, yyyy, H:mm:ss")
+        zonedDateTime.format(date)
     } catch (e: ParseException) {
         "N/A"
     }

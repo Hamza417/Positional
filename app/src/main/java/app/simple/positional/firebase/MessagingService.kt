@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.MainActivity
 import app.simple.positional.constants.preferences
@@ -36,12 +37,9 @@ class MessagingService : FirebaseMessagingService() {
                 return@OnCompleteListener
             }
 
-            // Get new FCM registration token
-            val token = task.result
-
-            // Log and toast
-            Log.d("TAG", token)
-            // Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+            if (BuildConfig.DEBUG) {
+                Log.d("TAG", task.result)
+            }
         })
     }
 
@@ -55,22 +53,21 @@ class MessagingService : FirebaseMessagingService() {
 
                 sendNotification(title!!, body!!)
             } catch (e: NullPointerException) {
-
             }
         }
     }
 
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
-
-        baseContext.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putString("token", p0).apply()
+        if (BuildConfig.DEBUG) {
+            baseContext.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putString("token", p0).apply()
+        }
     }
 
     private fun sendNotification(title: String, messageBody: String) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(this, requestCode /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_ONE_SHOT)
 
         val channelId = "notification_channel_id_for_positional"
 
@@ -95,6 +92,6 @@ class MessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(notificationID /* ID of notification */, notificationBuilder.build())
+        notificationManager.notify(notificationID, notificationBuilder.build())
     }
 }

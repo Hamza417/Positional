@@ -5,17 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.appcompat.widget.SwitchCompat
+import android.widget.CheckBox
 import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.preference.LevelPreferences
 import app.simple.positional.views.CustomBottomSheetDialog
 
 class NoSensorAlert : CustomBottomSheetDialog() {
-
-    fun newInstance(): NoSensorAlert {
-        return NoSensorAlert()
-    }
 
     fun newInstance(string: String): NoSensorAlert {
         val args = Bundle()
@@ -38,7 +34,7 @@ class NoSensorAlert : CustomBottomSheetDialog() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<SwitchCompat>(R.id.compass_no_sensor_no_show).isChecked = when (this.arguments?.getString("which")) {
+        view.findViewById<CheckBox>(R.id.compass_no_sensor_no_show).isChecked = when (this.arguments?.getString("which")) {
             "compass" -> {
                 CompassPreference().isNoSensorAlertON(context = requireContext())
             }
@@ -50,7 +46,7 @@ class NoSensorAlert : CustomBottomSheetDialog() {
             }
         }
 
-        view.findViewById<SwitchCompat>(R.id.compass_no_sensor_no_show).setOnCheckedChangeListener { button, isChecked ->
+        view.findViewById<CheckBox>(R.id.compass_no_sensor_no_show).setOnCheckedChangeListener { button, isChecked ->
             if (button.isPressed) {
                 if (this.arguments?.getString("which") == "compass") {
                     CompassPreference().setNoSensorAlert(value = isChecked, context = requireContext())
