@@ -31,7 +31,7 @@
 </br>
 
 ## Screenshots
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/01.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/02.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/03.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/04.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/05.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/06.png" width="40%">
+<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/01.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/02.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/03.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/06.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/05.png" width="40%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/04.png" width="40%">
 
 
 <br/>
