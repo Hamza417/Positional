@@ -1,4 +1,4 @@
-package app.simple.positional.dialogs.app
+package app.simple.positional.dialogs.settings
 
 import android.content.Intent
 import android.net.Uri

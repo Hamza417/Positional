@@ -1,6 +1,5 @@
-package app.simple.positional.dialogs.app
+package app.simple.positional.dialogs.settings
 
-import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.location.Address
 import android.location.Geocoder
@@ -16,9 +15,13 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ContentLoadingProgressBar
+import androidx.room.Room
 import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
+import app.simple.positional.callbacks.LocationAdapterCallback
 import app.simple.positional.callbacks.TimeZoneSelected
+import app.simple.positional.database.LocationDatabase
+import app.simple.positional.model.Locations
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.isValidTimeZone
 import app.simple.positional.util.resolveAttrColor
@@ -32,7 +35,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.*
 
-class Coordinates : CustomDialogFragment(), TimeZoneSelected {
+class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCallback {
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -42,7 +45,8 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected {
 
     private lateinit var addressIndicator: ContentLoadingProgressBar
     private lateinit var timezoneList: ImageButton
-    private lateinit var setCoordinates: Button
+    private lateinit var savedLocations: ImageButton
+    private lateinit var setCoordinatesButton: Button
     private lateinit var cancel: Button
     private lateinit var addressInputEditText: TextInputEditText
     private lateinit var latitudeInputEditText: TextInputEditText
@@ -68,7 +72,8 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected {
 
         addressIndicator = view.findViewById(R.id.address_indicator)
         timezoneList = view.findViewById(R.id.timezone_list)
-        setCoordinates = view.findViewById(R.id.set_coordinates)
+        savedLocations = view.findViewById(R.id.open_saved_locations)
+        setCoordinatesButton = view.findViewById(R.id.set_coordinates)
         cancel = view.findViewById(R.id.cancel_coordinate_input)
         addressInputEditText = view.findViewById(R.id.address_input)
         latitudeInputEditText = view.findViewById(R.id.latitude_input)
@@ -194,7 +199,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected {
             }
         })
 
-        setCoordinates.setOnClickListener {
+        setCoordinatesButton.setOnClickListener {
             try {
                 MainPreferences().setLatitude(requireContext(), latitudeInputEditText.text.toString().toFloat())
                 MainPreferences().setLongitude(requireContext(), longitudeInputEditText.text.toString().toFloat())
@@ -207,11 +212,18 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected {
                 this.dialog?.dismiss()
             }
             coordinatesCallback?.isCoordinatesSet(true)
-            this.dialog?.dismiss()
+            finish()
+        }
+
+        savedLocations.setOnClickListener {
+            val savedLocations = SavedLocations().newInstance()
+            savedLocations.locationAdapterCallback = this
+            savedLocations.show(requireParentFragment().childFragmentManager, "saved_locations")
         }
 
         cancel.setOnClickListener {
             isCoordinateSet = MainPreferences().isCustomCoordinate(requireContext())
+            coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
             this.dialog?.dismiss()
         }
     }
@@ -271,32 +283,23 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected {
 
     private fun setButton() {
         try {
-            setCoordinates.isClickable =
+            setCoordinatesButton.isClickable =
                     (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) &&
                             isValidLongitude(longitudeInputEditText.text.toString().toDouble()) &&
                             isValidTimeZone)
 
-            if (setCoordinates.isClickable) {
-                setCoordinates.setTextColor(requireContext().resolveAttrColor(R.attr.textPrimary))
+            if (setCoordinatesButton.isClickable) {
+                setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.textPrimary))
             } else {
-                setCoordinates.setTextColor(requireContext().resolveAttrColor(R.attr.indicator))
+                setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.indicator))
             }
         } catch (e: NumberFormatException) {
-            setCoordinates.setTextColor(requireContext().resolveAttrColor(R.attr.indicator))
-            setCoordinates.isClickable = false
+            setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.indicator))
+            setCoordinatesButton.isClickable = false
         } catch (e: NullPointerException) {
-            setCoordinates.setTextColor(requireContext().resolveAttrColor(R.attr.indicator))
-            setCoordinates.isClickable = false
+            setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.indicator))
+            setCoordinatesButton.isClickable = false
         }
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-        MainPreferences().setCustomCoordinates(requireContext(), isCoordinateSet)
-        if (isCoordinateSet && isValidTimeZone) {
-            MainPreferences().setTimeZone(requireContext(), timezoneInputEditText.text.toString())
-        }
-        coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
     }
 
     override fun onDestroy() {
@@ -306,5 +309,44 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected {
 
     override fun onTimeZoneSelected(p0: String) {
         timezoneInputEditText.setText(p0)
+    }
+
+    override fun onLocationItemClicked(locations: Locations) {
+        addressInputEditText.setText(locations.address)
+        latitudeInputEditText.setText(locations.latitude.toString())
+        longitudeInputEditText.setText(locations.longitude.toString())
+        timezoneInputEditText.setText(locations.timeZone)
+    }
+
+    private fun finish() {
+        CoroutineScope(Dispatchers.Default).launch {
+            MainPreferences().setCustomCoordinates(requireContext(), isCoordinateSet)
+            if (isCoordinateSet && isValidTimeZone) {
+                MainPreferences().setTimeZone(requireContext(), timezoneInputEditText.text.toString())
+
+                if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty() || timezoneInputEditText.text.toString().isNotEmpty()) {
+                    val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").build()
+                    val locations = Locations()
+
+                    try {
+                        locations.address = addressInputEditText.text.toString()
+                        locations.latitude = latitudeInputEditText.text.toString().toDouble()
+                        locations.longitude = longitudeInputEditText.text.toString().toDouble()
+                        locations.timeZone = timezoneInputEditText.text.toString()
+                        locations.date = System.currentTimeMillis()
+                        db.locationDao()?.insetLocation(location = locations)
+                    } catch (e: NumberFormatException) {
+                        e.printStackTrace()
+                    } finally {
+                        db.close()
+                    }
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
+                dialog?.dismiss()
+            }
+        }
     }
 }

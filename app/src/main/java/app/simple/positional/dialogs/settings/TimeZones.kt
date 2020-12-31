@@ -1,4 +1,4 @@
-package app.simple.positional.dialogs.app
+package app.simple.positional.dialogs.settings
 
 import android.os.Bundle
 import android.text.Editable

@@ -25,7 +25,8 @@
     <dimen name="options_icon_size">25dp</dimen>
     <dimen name="options_item_padding">20dp</dimen>
     <dimen name="options_item_text_size">10pt</dimen>
-    <dimen name="options_container_padding">15dp</dimen>
+    <dimen name="options_container_horizontal_padding">15dp</dimen>
+    <dimen name="options_container_vertical_padding">10dp</dimen>
     <dimen name="options_category_text_size">7pt</dimen>
     <dimen name="options_sub_item_padding">10dp</dimen>
     <dimen name="options_header_text_size">12pt</dimen>

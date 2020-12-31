@@ -15,7 +15,8 @@ import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
-import app.simple.positional.dialogs.app.*
+import app.simple.positional.dialogs.app.BuyFull
+import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
 import java.lang.ref.WeakReference
 

@@ -11,11 +11,14 @@ import app.simple.positional.R
 open class CustomDialogFragment : DialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         val window = dialog!!.window ?: return
+        val displayMetrics = DisplayMetrics()
+
         window.attributes.windowAnimations = R.style.DialogAnimation
         window.attributes.width = FrameLayout.LayoutParams.MATCH_PARENT
-        val displayMetrics = DisplayMetrics()
         window.windowManager.defaultDisplay.getMetrics(displayMetrics)
+        window.setDimAmount(0.75f)
         window.attributes.gravity = Gravity.CENTER
         window.attributes.width = (displayMetrics.widthPixels * 1f / 100f * 85f).toInt()
     }

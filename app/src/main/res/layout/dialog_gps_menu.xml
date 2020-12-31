@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:padding="@dimen/options_container_padding"
+        android:padding="@dimen/options_container_horizontal_padding"
         app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
         <LinearLayout

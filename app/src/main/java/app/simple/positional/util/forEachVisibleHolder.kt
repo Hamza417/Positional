@@ -3,9 +3,10 @@ package app.simple.positional.util
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.recyclerview.widget.RecyclerView
 
-const val flingTranslationMagnitude = 0.5f
-const val overscrollRotationMagnitude = 0.5f
-const val overscrollTranslationMagnitude = 0.5f
+const val value = 0.75f
+const val flingTranslationMagnitude = value
+const val overscrollRotationMagnitude = value
+const val overscrollTranslationMagnitude = value
 
 const val bouncyValue = SpringForce.DAMPING_RATIO_NO_BOUNCY
 const val stiffnessValue = SpringForce.STIFFNESS_LOW
