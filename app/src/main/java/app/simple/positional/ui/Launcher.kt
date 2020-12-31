@@ -108,7 +108,6 @@ class Launcher : Fragment() {
                 MotionEvent.ACTION_DOWN -> {
                     touchIndicator.x = event.x - (touchIndicator.width / 2)
                     touchIndicator.y = event.y - (touchIndicator.height / 2)
-                    touchIndicator.visibility = View.VISIBLE
                     touchIndicator.animate().scaleX(1.2f).scaleY(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
 
                     handler.removeCallbacksAndMessages(null)

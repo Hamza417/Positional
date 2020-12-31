@@ -52,7 +52,8 @@
         android:layout_width="@dimen/touch_indicator_size"
         android:layout_height="@dimen/touch_indicator_size"
         android:src="@drawable/ic_touch_indicator"
-        android:visibility="gone"
+        android:scaleX="0"
+        android:scaleY="0"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
