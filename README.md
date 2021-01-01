@@ -74,6 +74,15 @@ Please make sure to update tests as appropriate.
 ## Libraries Used
 * [commons-suncalc](https://github.com/shred/commons-suncalc) by **Richard Körber**
 * [Loader View for Android](https://github.com/elye/loaderviewlibrary) by **Elye**
+
+<br/>
+
+## Services Used
+* **Google Maps** for showing map in the app
+* **Firebase Crashlytics** for logging crash reports of the app
+* **Firebase Analytics** for logging app behavior in various devices and countries
+
+Read the [Privacy Policy](./PRIVACY.md) of the app for more info
   
 <br/>
 
