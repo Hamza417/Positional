@@ -23,7 +23,7 @@
 
 ## Stats
 
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visited&edge_flat=false)](https://hits.seeyoufarm.com)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visits&edge_flat=false)](https://hits.seeyoufarm.com)
 [![Changelogs](https://badgen.net/badge/Changelogs/Latest%20Release/green?list)](https://github.com/Hamza417/Positional/releases)
 ![Status](https://badgen.net/badge/Status/stable/orange?icon)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Legacy](https://badgen.net/badge/Try%20Legacy%20Version/Download/grey)](https://github.com/Hamza417/Positional/releases/download/1.7-beta/1.7-beta.apk)
