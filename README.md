@@ -1,6 +1,6 @@
 # Positional
 
-  A very flexible and customizable location related information app..
+  A very flexible and customizable location related information app I wanted to make...
 
   ![banner](https://github.com/Hamza417/Positional/blob/master/screenshots/poster.png?raw=false)
 
