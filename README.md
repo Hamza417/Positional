@@ -73,7 +73,6 @@ Please make sure to update tests as appropriate.
 
 ## Libraries Used
 * [commons-suncalc](https://github.com/shred/commons-suncalc) by **Richard Körber**
-* [Loader View for Android](https://github.com/elye/loaderviewlibrary) by **Elye**
 
 <br/>
 
