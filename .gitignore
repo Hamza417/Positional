@@ -8,7 +8,6 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-/.idea
 .DS_Store
 /build
 /app/release
@@ -33,3 +32,7 @@ sensitive_data.txt
 /play-licensing/lvl_library/build/.transforms/bb9d39057821a921ebd799a1b401f6ac/classes/classes.dex
 /play-licensing/lvl_library/build/.transforms/bb9d39057821a921ebd799a1b401f6ac.bin
 /play-licensing/lvl_library/build/.transforms/c00921203adb3503df0bfc6cff25fd63.bin
+/play-licensing/lvl_library/
+/play-licensing/lvl_library/src/main/java/com/google/android/vending/licensing/LicenseChecker.java
+/play-licensing/lvl_library/src/main/java/com/google/android/vending/licensing/LicenseCheckerCallback.java
+/play-licensing/lvl_library/src/main/java/com/google/android/vending/licensing/LicenseValidator.java
