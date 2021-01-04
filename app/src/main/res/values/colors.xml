@@ -21,7 +21,7 @@
     <color name="indicator">#F3F3F3</color>
 
     <color name="switcher_on_start_color">#2196F3</color>
-    <color name="switcher_on_end_color">#00DCDC</color>
+    <color name="switcher_on_end_color">@color/switcher_on_start_color</color>
     <color name="switcher_off_color">#E3E3E3</color>
     <color name="switcher_icon_color">@android:color/white</color>
 

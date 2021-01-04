@@ -34,7 +34,7 @@ class PlayServiceIssue : CustomBottomSheetDialog() {
         }
 
         view.findViewById<CheckBox>(R.id.play_services_issue_positive_reminder_checkbox).setOnCheckedChangeListener { _, isChecked ->
-            MainPreferences().setShowPlayServiceDialog(requireContext(), isChecked)
+            MainPreferences.setShowPlayServiceDialog(isChecked)
         }
     }
 }

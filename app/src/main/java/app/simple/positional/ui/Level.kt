@@ -19,7 +19,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.dialogs.compass.NoSensorAlert
-import app.simple.positional.preference.LevelPreferences
+import app.simple.positional.preference.LevelPreferences.isNoSensorAlertON
 import app.simple.positional.util.fromHtml
 import app.simple.positional.util.loadImageResourcesWithoutAnimation
 import app.simple.positional.util.round
@@ -63,7 +63,7 @@ class Level : Fragment(), SensorEventListener {
             hasGravitySensor = true
         } else {
             hasGravitySensor = false
-            if (LevelPreferences().isNoSensorAlertON(requireContext())) {
+            if (isNoSensorAlertON()) {
                 val noSensorAlert = NoSensorAlert().newInstance("level")
                 noSensorAlert.show(parentFragmentManager, "no_sensor_alert")
             }

@@ -92,10 +92,10 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
         addressIndicator.hide()
         setButton()
 
-        if (MainPreferences().isCustomCoordinate(requireContext())) {
-            timezoneInputEditText.setText(MainPreferences().getTimeZone(requireContext()))
+        if (MainPreferences.isCustomCoordinate()) {
+            timezoneInputEditText.setText(MainPreferences.getTimeZone())
             isValidTimeZone = isValidTimeZone(timezoneInputEditText.text.toString())
-            addressInputEditText.setText(MainPreferences().getAddress(requireContext()))
+            addressInputEditText.setText(MainPreferences.getAddress())
             address = addressInputEditText.text.toString()
             handler.postDelayed(geoCoderRunnable, 250)
         } else {
@@ -201,8 +201,8 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
 
         setCoordinatesButton.setOnClickListener {
             try {
-                MainPreferences().setLatitude(requireContext(), latitudeInputEditText.text.toString().toFloat())
-                MainPreferences().setLongitude(requireContext(), longitudeInputEditText.text.toString().toFloat())
+                MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
+                MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
                 isCoordinateSet = true
             } catch (e: java.lang.NumberFormatException) {
                 isCoordinateSet = false
@@ -222,7 +222,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
         }
 
         cancel.setOnClickListener {
-            isCoordinateSet = MainPreferences().isCustomCoordinate(requireContext())
+            isCoordinateSet = MainPreferences.isCustomCoordinate()
             coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
             this.dialog?.dismiss()
         }
@@ -249,7 +249,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
             var latitude: Double? = null
             var longitude: Double? = null
 
-            MainPreferences().setAddress(requireContext(), address)
+            MainPreferences.setAddress(address)
 
             try {
                 @Suppress("BlockingMethodInNonBlockingContext")
@@ -320,9 +320,9 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
 
     private fun finish() {
         CoroutineScope(Dispatchers.Default).launch {
-            MainPreferences().setCustomCoordinates(requireContext(), isCoordinateSet)
+            MainPreferences.setCustomCoordinates(isCoordinateSet)
             if (isCoordinateSet && isValidTimeZone) {
-                MainPreferences().setTimeZone(requireContext(), timezoneInputEditText.text.toString())
+                MainPreferences.setTimeZone(timezoneInputEditText.text.toString())
 
                 if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty() || timezoneInputEditText.text.toString().isNotEmpty()) {
                     val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").build()

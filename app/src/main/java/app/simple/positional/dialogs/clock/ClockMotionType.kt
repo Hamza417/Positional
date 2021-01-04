@@ -7,7 +7,8 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.RadioButton
 import app.simple.positional.R
-import app.simple.positional.preference.ClockPreferences
+import app.simple.positional.preference.ClockPreferences.getMovementType
+import app.simple.positional.preference.ClockPreferences.setMovementType
 import app.simple.positional.ui.Clock
 import app.simple.positional.views.CustomBottomSheetDialog
 import java.lang.ref.WeakReference
@@ -37,7 +38,7 @@ class ClockMotionType(private val clock: WeakReference<Clock>) : CustomBottomShe
         // This will prevent the underlying dialog from dimming preventing a flashy animation that can cause some issues to some users
         this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
-        setButton(ClockPreferences().getMovementType(requireContext()))
+        setButton(getMovementType())
 
         smooth.setOnClickListener {
             setButton(true)
@@ -53,6 +54,6 @@ class ClockMotionType(private val clock: WeakReference<Clock>) : CustomBottomShe
     private fun setButton(value: Boolean) {
         smooth.isChecked = value
         tick.isChecked = !value
-        ClockPreferences().setMovementType(value, requireContext())
+        setMovementType(value)
     }
 }

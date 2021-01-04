@@ -39,7 +39,7 @@ class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBotto
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (MainPreferences().isDayNightOn(requireContext())) {
+        if (MainPreferences.isDayNightOn()) {
             setButtons(4)
         } else {
             setButtons(AppCompatDelegate.getDefaultNightMode())
@@ -64,10 +64,10 @@ class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBotto
 
     private fun setButtons(value: Int) {
 
-        MainPreferences().setDayNight(requireContext(), value == 4)
+        MainPreferences.setDayNight(value == 4)
 
         if (value != 4) {
-            MainPreferences().setTheme(requireContext(), value = value)
+            MainPreferences.setTheme(value = value)
         }
 
         light.isChecked = value == AppCompatDelegate.MODE_NIGHT_NO

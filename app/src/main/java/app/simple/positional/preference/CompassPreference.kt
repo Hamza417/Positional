@@ -1,50 +1,57 @@
 package app.simple.positional.preference
 
-import android.content.Context
-import app.simple.positional.constants.*
+import app.simple.positional.preference.SharedPreferences.getSharedPreferences
+import org.jetbrains.annotations.NotNull
 
-class CompassPreference {
+object CompassPreference {
+
+    private const val direction_code = "direction_code"
+    private const val flowerBloom = "flower"
+    private const val flowerBloomTheme = "flower_theme"
+    private const val compassSpeed = "compass_speed"
+    private const val noSensorAlertCompass = "no_sensor_alert_compass_dialog_show"
+
     // Parallax
-    fun setDirectionCode(value: Boolean, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(direction_code, value).apply()
+    fun setDirectionCode(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(direction_code, value).apply()
     }
 
-    fun getDirectionCode(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(direction_code, true)
+    fun getDirectionCode(): Boolean {
+        return getSharedPreferences().getBoolean(direction_code, true)
     }
 
     // Flower Bloom
-    fun setFlowerBloom(value: Boolean, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(flowerBloom, value).apply()
+    fun setFlowerBloom(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(flowerBloom, value).apply()
     }
 
-    fun isFlowerBloom(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(flowerBloom, false)
+    fun isFlowerBloom(): Boolean {
+        return getSharedPreferences().getBoolean(flowerBloom, false)
     }
 
     // Flower Bloom Theme
-    fun setFlowerBloom(value: Int, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(flowerBloomTheme, value).apply()
+    fun setFlowerBloom(@NotNull value: Int) {
+        getSharedPreferences().edit().putInt(flowerBloomTheme, value).apply()
     }
 
-    fun getFlowerBloomTheme(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(flowerBloomTheme, 0)
+    fun getFlowerBloomTheme(): Int {
+        return getSharedPreferences().getInt(flowerBloomTheme, 0)
     }
 
     // Compass Sensor Speed
-    fun setCompassSpeed(value: Float, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putFloat(compassSpeed, value).apply()
+    fun setCompassSpeed(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(compassSpeed, value).apply()
     }
 
-    fun getCompassSpeed(context: Context): Float {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getFloat(compassSpeed, 0.06f)
+    fun getCompassSpeed(): Float {
+        return getSharedPreferences().getFloat(compassSpeed, 0.06f)
     }
 
-    fun isNoSensorAlertON(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(noSensorAlertCompass, true)
+    fun isNoSensorAlertON(): Boolean {
+        return getSharedPreferences().getBoolean(noSensorAlertCompass, true)
     }
 
-    fun setNoSensorAlert(value: Boolean, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(noSensorAlertCompass, value).apply()
+    fun setNoSensorAlert(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(noSensorAlertCompass, value).apply()
     }
 }

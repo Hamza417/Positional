@@ -39,7 +39,7 @@ class CompassSpeed(private val weakReference: WeakReference<Compass>) : CustomBo
         // This will prevent the underlying dialog from dimming preventing a flashy animation that can cause some issues to some users
         this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
-        setButtons(CompassPreference().getCompassSpeed(requireContext()))
+        setButtons(CompassPreference.getCompassSpeed())
 
         smooth.setOnClickListener {
             setButtons(0.03f)
@@ -58,7 +58,7 @@ class CompassSpeed(private val weakReference: WeakReference<Compass>) : CustomBo
     }
 
     private fun setButtons(value: Float) {
-        CompassPreference().setCompassSpeed(value, requireContext())
+        CompassPreference.setCompassSpeed(value)
 
         smooth.isChecked = value == 0.03f
         normal.isChecked = value == 0.06f

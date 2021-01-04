@@ -12,7 +12,6 @@ import androidx.core.app.NotificationCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.MainActivity
-import app.simple.positional.constants.preferences
 import app.simple.positional.preference.MainPreferences
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
@@ -46,7 +45,7 @@ class MessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
 
-        if (MainPreferences().isNotificationOn(baseContext)) {
+        if (MainPreferences.isNotificationOn()) {
             try {
                 val title = p0.notification?.title
                 val body = p0.notification?.body
@@ -60,7 +59,7 @@ class MessagingService : FirebaseMessagingService() {
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
         if (BuildConfig.DEBUG) {
-            baseContext.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putString("token", p0).apply()
+            baseContext.getSharedPreferences("Preferences", Context.MODE_PRIVATE).edit().putString("token", p0).apply()
         }
     }
 

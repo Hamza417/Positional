@@ -14,7 +14,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preference.MainPreferences.setLicenseStatus
 import app.simple.positional.util.fromHtml
 import app.simple.positional.util.setTextAnimation
 import com.google.android.vending.licensing.*
@@ -125,7 +125,7 @@ class License : Fragment(), LicenseCheckerCallback {
 
     private fun runHandler(value: Boolean) {
         handler.postDelayed({
-            MainPreferences().setLicenseStatus(requireContext(), value)
+            setLicenseStatus(value)
             licenceStatusCallback.onLicenseCheckCompletion()
         }, 2000)
     }

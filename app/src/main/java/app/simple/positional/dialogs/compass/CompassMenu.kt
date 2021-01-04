@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.preference.CompassPreference
+import app.simple.positional.preference.CompassPreference.isFlowerBloom
+import app.simple.positional.preference.CompassPreference.setDirectionCode
+import app.simple.positional.preference.CompassPreference.setFlowerBloom
 import app.simple.positional.ui.Compass
 import app.simple.positional.views.CustomBottomSheetDialog
 import java.lang.ref.WeakReference
@@ -48,7 +50,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
         super.onViewCreated(view, savedInstanceState)
 
         if (BuildConfig.FLAVOR != "lite") {
-            toggleFlower.isChecked = CompassPreference().isFlowerBloom(requireContext())
+            toggleFlower.isChecked = isFlowerBloom()
         } else {
             bloomText.setTextColor(Color.GRAY)
             bloomSkinsText.setTextColor(Color.GRAY)
@@ -57,7 +59,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
         toggleFlower.setOnCheckedChangeListener { _, isChecked ->
             if (BuildConfig.FLAVOR != "lite") {
                 weakReference.get()?.setFlower(isChecked)
-                CompassPreference().setFlowerBloom(isChecked, requireContext())
+                setFlowerBloom(isChecked)
             } else {
                 Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
                 toggleFlower.isChecked = false
@@ -76,7 +78,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
 
         toggleCode.setOnCheckedChangeListener { _, isChecked ->
             weakReference.get()?.showDirectionCode = isChecked
-            CompassPreference().setDirectionCode(isChecked, requireContext())
+            setDirectionCode(isChecked)
         }
 
         speed.setOnClickListener {

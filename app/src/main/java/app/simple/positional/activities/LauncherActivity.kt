@@ -1,12 +1,17 @@
 package app.simple.positional.activities
 
 import android.os.Bundle
+import android.text.format.DateFormat
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
+import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preference.MainPreferences.getLicenceStatus
+import app.simple.positional.preference.MainPreferences.isDayNightOn
+import app.simple.positional.preference.SharedPreferences
 import app.simple.positional.theme.setAppTheme
 import app.simple.positional.ui.Launcher
 import app.simple.positional.ui.License
@@ -15,19 +20,28 @@ class LauncherActivity : AppCompatActivity(), LicenceStatusCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (MainPreferences().isDayNightOn(this)) {
+        // Global Shared Preferences
+        SharedPreferences.init(context = this)
+
+        if (isDayNightOn()) {
             setAppTheme(4)
         } else {
-            val value = MainPreferences().getTheme(this)
+            val value = MainPreferences.getTheme()
 
             if (value != AppCompatDelegate.getDefaultNightMode()) {
                 AppCompatDelegate.setDefaultNightMode(value)
             }
         }
 
+        if (MainPreferences.getLaunchCount() == 0) {
+            if (DateFormat.is24HourFormat(this)) {
+                ClockPreferences.setDefaultClockTime(false)
+            }
+        }
+
         setContentView(R.layout.activity_launcher)
 
-        if (MainPreferences().getLicenceStatus(this) || BuildConfig.FLAVOR == "lite") {
+        if (getLicenceStatus() || BuildConfig.FLAVOR == "lite") {
             onLicenseCheckCompletion()
         } else {
             supportFragmentManager.beginTransaction()

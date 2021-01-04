@@ -1,26 +1,40 @@
 package app.simple.positional.preference
 
-import android.content.Context
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatDelegate
-import app.simple.positional.constants.*
+import app.simple.positional.preference.SharedPreferences.getSharedPreferences
+import org.jetbrains.annotations.NotNull
 
-class MainPreferences {
+object MainPreferences {
 
-    fun setLaunchCount(context: Context, value: Int) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(launchCount, value).apply()
+    private const val launchCount = "launch_count"
+    private const val dayNightMode = "is_day_night_mode"
+    private const val showAgain = "show_permission_dialog_again"
+    private const val showPlayServicesAgain = "show_play_services_dialog_again"
+    private const val licenseStatus = "license_status"
+    private const val unit = "all_measurement_unit"
+    private const val theme = "current_theme"
+    private const val notifications = "is_push_notifications_on"
+    private const val isCustomCoordinate = "is_custom_coordinate_set"
+    private const val latitude = "custom_latitude"
+    private const val longitude = "custom_longitude"
+    private const val timezone = "custom_timezone"
+    private const val address = "specified_address"
+    private const val screenOn = "keep_the_screen_on"
+
+    fun setLaunchCount(value: Int) {
+        getSharedPreferences().edit().putInt(launchCount, value).apply()
     }
 
-    fun getLaunchCount(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(launchCount, 0)
+    fun getLaunchCount(): Int {
+        return getSharedPreferences().getInt(launchCount, 0)
     }
 
-    fun setScreenOn(context: Context, value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(screenOn, value).apply()
+    fun setScreenOn(value: Boolean) {
+        getSharedPreferences().edit().putBoolean(screenOn, value).apply()
     }
 
-    fun isScreenOn(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(screenOn, false)
+    fun isScreenOn(): Boolean {
+        return getSharedPreferences().getBoolean(screenOn, false)
     }
 
     /**
@@ -30,100 +44,100 @@ class MainPreferences {
      * 3 - System
      * 4 - Day/Night
      */
-    fun setTheme(@NonNull context: Context, value: Int) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(theme, value).apply()
+    fun setTheme(value: Int) {
+        getSharedPreferences().edit().putInt(theme, value).apply()
     }
 
-    fun getTheme(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(theme, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+    fun getTheme(): Int {
+        return getSharedPreferences().getInt(theme, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 
     // Day/Night Auto
-    fun setDayNight(@NonNull context: Context, @NonNull value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(dayNightMode, value).apply()
+    fun setDayNight(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(dayNightMode, value).apply()
     }
 
-    fun isDayNightOn(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(dayNightMode, false)
+    fun isDayNightOn(): Boolean {
+        return getSharedPreferences().getBoolean(dayNightMode, false)
     }
 
-    fun setShowPermissionDialog(context: Context, value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(showAgain, value).apply()
+    fun setShowPermissionDialog(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(showAgain, value).apply()
     }
 
-    fun getShowPermissionDialog(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(showAgain, true)
+    fun getShowPermissionDialog(): Boolean {
+        return getSharedPreferences().getBoolean(showAgain, true)
     }
 
-    fun setShowPlayServiceDialog(context: Context, value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(showPlayServicesAgain, value).apply()
+    fun setShowPlayServiceDialog(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(showPlayServicesAgain, value).apply()
     }
 
-    fun getShowPlayServiceDialog(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(showPlayServicesAgain, true)
+    fun getShowPlayServiceDialog(): Boolean {
+        return getSharedPreferences().getBoolean(showPlayServicesAgain, true)
     }
 
-    fun setLicenseStatus(context: Context, value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(licenseStatus, value).apply()
+    fun setLicenseStatus(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(licenseStatus, value).apply()
     }
 
-    fun getLicenceStatus(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(licenseStatus, false)
+    fun getLicenceStatus(): Boolean {
+        return getSharedPreferences().getBoolean(licenseStatus, false)
     }
 
-    fun setUnit(@NonNull context: Context, @NonNull value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(unit, value).apply()
+    fun setUnit(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(unit, value).apply()
     }
 
-    fun getUnit(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(unit, true)
+    fun getUnit(): Boolean {
+        return getSharedPreferences().getBoolean(unit, true)
     }
 
-    fun setNotifications(@NonNull context: Context, @NonNull value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(notifications, value).apply()
+    fun setNotifications(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(notifications, value).apply()
     }
 
-    fun isNotificationOn(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(notifications, true)
+    fun isNotificationOn(): Boolean {
+        return getSharedPreferences().getBoolean(notifications, true)
     }
 
     // Coordinates
-    fun setCustomCoordinates(context: Context, value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(isCustomCoordinate, value).apply()
+    fun setCustomCoordinates(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(isCustomCoordinate, value).apply()
     }
 
-    fun isCustomCoordinate(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(isCustomCoordinate, false)
+    fun isCustomCoordinate(): Boolean {
+        return getSharedPreferences().getBoolean(isCustomCoordinate, false)
     }
 
-    fun setLatitude(@NonNull context: Context, value: Float) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putFloat(latitude, value).apply()
+    fun setLatitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(latitude, value).apply()
     }
 
-    fun setLongitude(@NonNull context: Context, value: Float) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putFloat(longitude, value).apply()
+    fun setLongitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(longitude, value).apply()
     }
 
-    fun getCoordinates(context: Context): Array<Float> {
+    fun getCoordinates(): Array<Float> {
         return arrayOf(
-                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getFloat(latitude, 0f),
-                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getFloat(longitude, 0f)
+                getSharedPreferences().getFloat(latitude, 0f),
+                getSharedPreferences().getFloat(longitude, 0f)
         )
     }
 
-    fun setTimeZone(@NonNull context: Context, value: String) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putString(timezone, value).apply()
+    fun setTimeZone(@NotNull value: String) {
+        getSharedPreferences().edit().putString(timezone, value).apply()
     }
 
-    fun getTimeZone(@NonNull context: Context): String? {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getString(timezone, "")
+    fun getTimeZone(): String? {
+        return getSharedPreferences().getString(timezone, "")
     }
 
-    fun setAddress(@NonNull context: Context, value: String) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putString(address, value).apply()
+    fun setAddress(@NotNull value: String) {
+        getSharedPreferences().edit().putString(address, value).apply()
     }
 
-    fun getAddress(@NonNull context: Context): String? {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getString(address, "")
+    fun getAddress(): String? {
+        return getSharedPreferences().getString(address, "")
     }
 }

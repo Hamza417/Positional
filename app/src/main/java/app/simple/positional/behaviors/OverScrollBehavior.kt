@@ -15,13 +15,28 @@ import com.google.android.material.appbar.AppBarLayout
  *
  * Can be adjusted using attributes but not implemented
  */
-class OverScrollBehavior(context: Context, attributeSet: AttributeSet) : CoordinatorLayout.Behavior<View>() {
+@Suppress("unused")
+class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
 
     companion object {
         private const val OVER_SCROLL_AREA = 3
     }
 
     private var overScrollY = 0
+
+    constructor(context: Context, attributeSet: AttributeSet) : this() {
+        unused(context, attributeSet)
+    }
+
+    /**
+     * This is an useless method only here is to suppress
+     * the lint warning of variable not used
+     *
+     * Removing them will cause the app to crash
+     */
+    private fun unused(context: Context, attributeSet: AttributeSet): Boolean {
+        return (context == attributeSet)
+    }
 
     override fun onStartNestedScroll(
             coordinatorLayout: CoordinatorLayout,

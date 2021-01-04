@@ -43,7 +43,7 @@ class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDi
         needleSkin.adapter = ClockNeedleSkinsAdapter(requireContext())
         indicator.attachViewPager(needleSkin)
 
-        needleSkin.currentItem = ClockPreferences().getClockNeedleTheme(requireContext())
+        needleSkin.currentItem = ClockPreferences.getClockNeedleTheme()
 
         needleSkin.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
@@ -55,7 +55,7 @@ class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDi
 
             override fun onPageScrollStateChanged(state: Int) {
                 if (state == ViewPager.SCROLL_STATE_SETTLING) {
-                    ClockPreferences().setClockNeedleTheme(needleSkin.currentItem, requireContext())
+                    ClockPreferences.setClockNeedleTheme(needleSkin.currentItem)
                     clock.get()?.setNeedle(needleSkin.currentItem)
                 }
             }

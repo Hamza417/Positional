@@ -1,15 +1,17 @@
 package app.simple.positional.preference
 
-import android.content.Context
-import app.simple.positional.constants.noSensorAlertLevel
-import app.simple.positional.constants.preferences
+import app.simple.positional.preference.SharedPreferences.getSharedPreferences
+import org.jetbrains.annotations.NotNull
 
-class LevelPreferences {
-    fun isNoSensorAlertON(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(noSensorAlertLevel, true)
+object LevelPreferences {
+
+    private const val noSensorAlertLevel = "no_sensor_alert_level_dialog_show"
+
+    fun isNoSensorAlertON(): Boolean {
+        return getSharedPreferences().getBoolean(noSensorAlertLevel, true)
     }
 
-    fun setNoSensorAlert(value: Boolean, context: Context) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(noSensorAlertLevel, value).apply()
+    fun setNoSensorAlert(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(noSensorAlertLevel, value).apply()
     }
 }

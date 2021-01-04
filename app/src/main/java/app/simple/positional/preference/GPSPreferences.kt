@@ -1,47 +1,44 @@
 package app.simple.positional.preference
 
-import android.content.Context
-import androidx.annotation.NonNull
-import app.simple.positional.constants.*
+import app.simple.positional.preference.SharedPreferences.getSharedPreferences
+import org.jetbrains.annotations.NotNull
 
-class GPSPreferences {
-    fun isLabelOn(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(GPSLabelMode, true)
+object GPSPreferences {
+
+    private const val GPSLabelMode = "gps_label_mode"
+    private const val GPSSatellite = "gps_satellite_mode"
+    private const val lastLatitude = "last_latitude"
+    private const val lastLongitude = "last_longitude"
+
+    fun isLabelOn(): Boolean {
+        return getSharedPreferences().getBoolean(GPSLabelMode, true)
     }
 
-    fun setLabelMode(context: Context, value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(GPSLabelMode, value).apply()
+    fun setLabelMode(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(GPSLabelMode, value).apply()
     }
 
-    fun isNotificationOn(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(movementNotification, false)
+    fun isSatelliteOn(): Boolean {
+        return getSharedPreferences().getBoolean(GPSSatellite, false)
     }
 
-    fun setNotificationMode(context: Context, value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(movementNotification, value).apply()
-    }
-
-    fun isSatelliteOn(context: Context): Boolean {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getBoolean(GPSSatellite, false)
-    }
-
-    fun setSatelliteMode(context: Context, value: Boolean) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putBoolean(GPSSatellite, value).apply()
+    fun setSatelliteMode(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(GPSSatellite, value).apply()
     }
 
     // Last Session Coordinates
-    fun setLastLatitude(@NonNull context: Context, value: Float) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putFloat(lastLatitude, value).apply()
+    fun setLastLatitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(lastLatitude, value).apply()
     }
 
-    fun setLastLongitude(@NonNull context: Context, value: Float) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putFloat(lastLongitude, value).apply()
+    fun setLastLongitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(lastLongitude, value).apply()
     }
 
-    fun getLastCoordinates(context: Context): Array<Float> {
+    fun getLastCoordinates(): Array<Float> {
         return arrayOf(
-                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getFloat(lastLatitude, 48.8584f),
-                context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getFloat(lastLongitude, 2.2945f)
+                getSharedPreferences().getFloat(lastLatitude, 48.8584f),
+                getSharedPreferences().getFloat(lastLongitude, 2.2945f)
         )
     }
 }

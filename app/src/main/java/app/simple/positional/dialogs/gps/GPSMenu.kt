@@ -34,15 +34,15 @@ class GPSMenu(private val weakReference: WeakReference<GPS>) : CustomBottomSheet
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toggleLabel.isChecked = GPSPreferences().isLabelOn(requireContext())
-        toggleSatellite.isChecked = GPSPreferences().isSatelliteOn(requireContext())
+        toggleLabel.isChecked = GPSPreferences.isLabelOn()
+        toggleSatellite.isChecked = GPSPreferences.isSatelliteOn()
 
         toggleLabel.setOnCheckedChangeListener { _, isChecked ->
             weakReference.get()?.showLabel(isChecked)
         }
 
         toggleSatellite.setOnCheckedChangeListener { _, isChecked ->
-            GPSPreferences().setSatelliteMode(requireContext(), isChecked)
+            GPSPreferences.setSatelliteMode(isChecked)
             weakReference.get()?.setSatellite(isChecked)
             toggleLabel.isClickable = !isChecked
         }

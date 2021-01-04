@@ -21,8 +21,12 @@ import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.dialogs.app.BuyFull
 import app.simple.positional.dialogs.app.PermissionDialog
 import app.simple.positional.firebase.MessagingService
-import app.simple.positional.preference.FragmentPreferences
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preference.FragmentPreferences.getCurrentPage
+import app.simple.positional.preference.FragmentPreferences.setCurrentPage
+import app.simple.positional.preference.MainPreferences.getLaunchCount
+import app.simple.positional.preference.MainPreferences.getShowPermissionDialog
+import app.simple.positional.preference.MainPreferences.isScreenOn
+import app.simple.positional.preference.MainPreferences.setLaunchCount
 import app.simple.positional.services.LocationService
 import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.*
@@ -44,7 +48,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
         filter.addAction("finish")
 
-        if (MainPreferences().isScreenOn(this)) {
+        if (isScreenOn()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
@@ -60,11 +64,11 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
         bottomBar.setOnItemSelectedListener {
             setFragment(it)
-            FragmentPreferences().setCurrentPage(baseContext, it)
+            setCurrentPage(it)
         }
 
         showReviewPromptToUser()
-        showPurchaseDialog(MainPreferences().getLaunchCount(this))
+        showPurchaseDialog(getLaunchCount())
 
         localBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -79,7 +83,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     private fun showReviewPromptToUser() {
 
-        if (MainPreferences().getLaunchCount(this) < 5) {
+        if (getLaunchCount() < 5) {
             return
         }
 
@@ -116,7 +120,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     private fun checkRunTimePermission() {
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (MainPreferences().getShowPermissionDialog(this)) {
+            if (getShowPermissionDialog()) {
                 val permissionDialog = PermissionDialog().newInstance()
                 permissionDialog.show(supportFragmentManager, "permission_info")
             } else {
@@ -145,8 +149,8 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     }
 
     private fun runApp() {
-        setFragment(FragmentPreferences().getCurrentPage(this))
-        bottomBar.itemActiveIndex = FragmentPreferences().getCurrentPage(this)
+        setFragment(getCurrentPage())
+        bottomBar.itemActiveIndex = getCurrentPage()
 
     }
 
@@ -273,6 +277,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
             }
         }
 
-        MainPreferences().setLaunchCount(this, MainPreferences().getLaunchCount(this) + 1)
+        setLaunchCount(getLaunchCount() + 1)
     }
 }

@@ -33,7 +33,6 @@ import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
-import com.elyeproj.loaderviewlibrary.LoaderTextView
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -62,20 +61,19 @@ class GPS : Fragment() {
     private lateinit var locationIndicator: ImageButton
     private lateinit var menu: ImageButton
     private lateinit var copy: ImageButton
-    private lateinit var movementNotification: ImageButton
     private lateinit var movementReset: ImageButton
 
-    private lateinit var accuracy: LoaderTextView
-    private lateinit var address: LoaderTextView
-    private lateinit var latitude: LoaderTextView
-    private lateinit var longitude: LoaderTextView
-    private lateinit var providerStatus: LoaderTextView
-    private lateinit var providerSource: LoaderTextView
-    private lateinit var altitude: LoaderTextView
-    private lateinit var bearing: LoaderTextView
-    private lateinit var displacement: LoaderTextView
-    private lateinit var direction: LoaderTextView
-    private lateinit var speed: LoaderTextView
+    private lateinit var accuracy: TextView
+    private lateinit var address: TextView
+    private lateinit var latitude: TextView
+    private lateinit var longitude: TextView
+    private lateinit var providerStatus: TextView
+    private lateinit var providerSource: TextView
+    private lateinit var altitude: TextView
+    private lateinit var bearing: TextView
+    private lateinit var displacement: TextView
+    private lateinit var direction: TextView
+    private lateinit var speed: TextView
     private lateinit var specifiedLocationTextView: TextView
     private lateinit var infoText: TextView
 
@@ -115,7 +113,6 @@ class GPS : Fragment() {
         locationIndicator = view.findViewById(R.id.gps_location_indicator)
         menu = view.findViewById(R.id.gps_menu)
         copy = view.findViewById(R.id.gps_copy)
-        movementNotification = view.findViewById(R.id.movement_notification)
         movementReset = view.findViewById(R.id.movement_reset)
         expandUp = view.findViewById(R.id.expand_up_gps_sheet)
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
@@ -139,25 +136,18 @@ class GPS : Fragment() {
         filter.addAction("location")
         filter.addAction("provider")
 
-        isMetric = MainPreferences().getUnit(requireContext())
+        isMetric = MainPreferences.getUnit()
 
-        if (MainPreferences().isCustomCoordinate(requireContext())) {
+        if (MainPreferences.isCustomCoordinate()) {
             isCustomCoordinate = true
-            customLatitude = MainPreferences().getCoordinates(requireContext())[0].toDouble()
-            customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
+            customLatitude = MainPreferences.getCoordinates()[0].toDouble()
+            customLongitude = MainPreferences.getCoordinates()[1].toDouble()
         }
 
-        distanceSingleton.isNotificationAllowed = if (GPSPreferences().isNotificationOn(requireContext())) {
-            movementNotification.setImageResource(R.drawable.ic_notifications)
-            true
-        } else {
-            movementNotification.setImageResource(R.drawable.ic_notifications_off)
-            false
-        }
         distanceSingleton.isMapPanelVisible = true
 
-        lastLatitude = GPSPreferences().getLastCoordinates(requireContext())[0].toDouble()
-        lastLongitude = GPSPreferences().getLastCoordinates(requireContext())[1].toDouble()
+        lastLatitude = GPSPreferences.getLastCoordinates()[0].toDouble()
+        lastLongitude = GPSPreferences.getLastCoordinates()[1].toDouble()
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
@@ -196,18 +186,6 @@ class GPS : Fragment() {
             Toast.makeText(requireContext(), "Reset Complete", Toast.LENGTH_SHORT).show()
         }
 
-        movementNotification.setOnClickListener {
-            if (distanceSingleton.isNotificationAllowed == true) {
-                loadImageResources(R.drawable.ic_notifications_off, movementNotification, requireContext(), 0)
-                distanceSingleton.isNotificationAllowed = false
-                GPSPreferences().setNotificationMode(requireContext(), false)
-            } else {
-                loadImageResources(R.drawable.ic_notifications, movementNotification, requireContext(), 0)
-                distanceSingleton.isNotificationAllowed = true
-                GPSPreferences().setNotificationMode(requireContext(), true)
-            }
-        }
-
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent != null) {
@@ -223,8 +201,8 @@ class GPS : Fragment() {
                                     distanceSingleton.isInitialLocationSet = true
                                 }
 
-                                GPSPreferences().setLastLatitude(requireContext(), location!!.latitude.toFloat())
-                                GPSPreferences().setLastLongitude(requireContext(), location!!.longitude.toFloat())
+                                GPSPreferences.setLastLatitude(location!!.latitude.toFloat())
+                                GPSPreferences.setLastLongitude(location!!.longitude.toFloat())
 
                                 val providerSource = fromHtml("<b>Source:</b> ${location!!.provider.toUpperCase(Locale.getDefault())}")
                                 val providerStatus = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
@@ -485,8 +463,8 @@ class GPS : Fragment() {
         googleMap.uiSettings.isMyLocationButtonEnabled = false
         this.googleMap = googleMap
 
-        showLabel(GPSPreferences().isLabelOn(requireContext()))
-        setSatellite(GPSPreferences().isSatelliteOn(requireContext()))
+        showLabel(GPSPreferences.isLabelOn())
+        setSatellite(GPSPreferences.isSatelliteOn())
 
         this.googleMap?.setOnCameraMoveListener {
             isMapMoved = true
@@ -578,7 +556,7 @@ class GPS : Fragment() {
     fun showLabel(value: Boolean) {
         if (googleMap == null) return
 
-        GPSPreferences().setLabelMode(requireContext(), value)
+        GPSPreferences.setLabelMode(value)
 
         var mapRawStyle = 0
 
@@ -617,12 +595,11 @@ class GPS : Fragment() {
         }
     }
 
-    // return value preserved, might be used later
     private fun checkGooglePlayServices(): Boolean {
         val availability = GoogleApiAvailability.getInstance()
         val resultCode = availability.isGooglePlayServicesAvailable(requireContext())
         if (resultCode != ConnectionResult.SUCCESS) {
-            if (MainPreferences().getShowPlayServiceDialog(requireContext())) {
+            if (MainPreferences.getShowPlayServiceDialog()) {
                 val playServiceIssue = PlayServiceIssue().newInstance()
                 playServiceIssue.show(parentFragmentManager, "null")
             }

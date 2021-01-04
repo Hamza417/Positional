@@ -8,13 +8,19 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.ui.Clock
 import app.simple.positional.views.CustomBottomSheetDialog
 import java.lang.ref.WeakReference
 
 class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDialog() {
+
+    private lateinit var defaultTimeFormatContainer: LinearLayout
+    private lateinit var defaultTimeFormatSwitch: SwitchCompat
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
@@ -22,14 +28,29 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_clock_menu, container, false)
+        val view = inflater.inflate(R.layout.dialog_clock_menu, container, false)
+
+        defaultTimeFormatContainer = view.findViewById(R.id.clock_menu_default_time_format)
+        defaultTimeFormatSwitch = view.findViewById(R.id.toggle_default_time_format)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        defaultTimeFormatSwitch.isChecked = ClockPreferences.getDefaultClockTime()
+
         if (BuildConfig.FLAVOR == "lite") {
             view.findViewById<TextView>(R.id.clock_needle_theme_text).setTextColor(Color.GRAY)
+        }
+
+        defaultTimeFormatContainer.setOnClickListener {
+            defaultTimeFormatSwitch.isChecked = !defaultTimeFormatSwitch.isChecked
+        }
+
+        defaultTimeFormatSwitch.setOnCheckedChangeListener { _, isChecked ->
+            ClockPreferences.setDefaultClockTime(isChecked)
         }
 
         view.findViewById<LinearLayout>(R.id.clock_needle_theme).setOnClickListener {

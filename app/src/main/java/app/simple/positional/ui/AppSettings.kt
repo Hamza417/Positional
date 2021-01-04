@@ -17,7 +17,17 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.dialogs.app.BuyFull
 import app.simple.positional.dialogs.settings.*
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preference.MainPreferences.getUnit
+import app.simple.positional.preference.MainPreferences.isCustomCoordinate
+import app.simple.positional.preference.MainPreferences.isDayNightOn
+import app.simple.positional.preference.MainPreferences.isNotificationOn
+import app.simple.positional.preference.MainPreferences.isScreenOn
+import app.simple.positional.preference.MainPreferences.setCustomCoordinates
+import app.simple.positional.preference.MainPreferences.setNotifications
+import app.simple.positional.preference.MainPreferences.setScreenOn
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import java.lang.ref.WeakReference
 
 class AppSettings : Fragment(), CoordinatesCallback {
@@ -27,6 +37,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var theme: LinearLayout
     private lateinit var customLocation: LinearLayout
     private lateinit var pushNotification: LinearLayout
+    private lateinit var appVersion: LinearLayout
     private lateinit var legalNotes: LinearLayout
     private lateinit var changeLogs: LinearLayout
     private lateinit var github: LinearLayout
@@ -54,6 +65,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         theme = view.findViewById(R.id.settings_theme)
         customLocation = view.findViewById(R.id.setting_custom_location)
         pushNotification = view.findViewById(R.id.setting_notification)
+        appVersion = view.findViewById(R.id.current_app_version)
         legalNotes = view.findViewById(R.id.legal_notes)
         changeLogs = view.findViewById(R.id.change_logs)
         github = view.findViewById(R.id.github)
@@ -79,17 +91,17 @@ class AppSettings : Fragment(), CoordinatesCallback {
             specifiedLocationText.setTextColor(Color.GRAY)
         }
 
-        if (MainPreferences().isDayNightOn(requireContext())) {
+        if (isDayNightOn()) {
             setCurrentThemeValue(4)
         } else {
             setCurrentThemeValue(AppCompatDelegate.getDefaultNightMode())
         }
 
-        setCurrentUnit(MainPreferences().getUnit(requireContext()))
+        setCurrentUnit(getUnit())
 
-        toggleNotification.isChecked = MainPreferences().isNotificationOn(requireContext())
-        toggleKeepScreenOn.isChecked = MainPreferences().isScreenOn(requireContext())
-        isCoordinatesSet(MainPreferences().isCustomCoordinate(requireContext())) // toggle coordinate switch
+        toggleNotification.isChecked = isNotificationOn()
+        toggleKeepScreenOn.isChecked = isScreenOn()
+        isCoordinatesSet(isCustomCoordinate()) // toggle coordinate switch
 
         theme.setOnClickListener {
             val theme = Theme(WeakReference(this))
@@ -120,7 +132,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
                         coordinates.coordinatesCallback = this
                         coordinates.show(childFragmentManager, "coordinates")
                     } else {
-                        MainPreferences().setCustomCoordinates(requireContext(), isChecked)
+                        setCustomCoordinates(isChecked)
                     }
                 }
             } else {
@@ -134,7 +146,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         }
 
         toggleKeepScreenOn.setOnCheckedChangeListener { _, isChecked ->
-            MainPreferences().setScreenOn(requireContext(), isChecked)
+            setScreenOn(isChecked)
 
             if (isChecked) {
                 requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -148,7 +160,22 @@ class AppSettings : Fragment(), CoordinatesCallback {
         }
 
         toggleNotification.setOnCheckedChangeListener { _, isChecked ->
-            MainPreferences().setNotifications(requireContext(), isChecked)
+            setNotifications(isChecked)
+        }
+
+        appVersion.setOnClickListener {
+            val appUpdateManager = AppUpdateManagerFactory.create(requireContext())
+            val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+            appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                    appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE, requireActivity(), 1337)
+                }
+            }
+
+            appUpdateInfoTask.addOnFailureListener {
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+            }
         }
 
         legalNotes.setOnClickListener {

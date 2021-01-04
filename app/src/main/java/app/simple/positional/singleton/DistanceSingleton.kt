@@ -21,7 +21,6 @@ object DistanceSingleton {
      *  the application lifecycle
      */
     var isInitialLocationSet: Boolean? = null
-    var isNotificationAllowed: Boolean? = null
 
     init {
         totalDistance = 0f
@@ -29,6 +28,5 @@ object DistanceSingleton {
         distanceCoordinates = LatLng(0.0, 0.0)
         isMapPanelVisible = false
         isInitialLocationSet = false
-        isNotificationAllowed = false
     }
 }

@@ -77,11 +77,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="20dp"
+            android:background="@drawable/ripple"
             android:clickable="true"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:focusable="true"
-            android:background="@drawable/ripple"
             android:paddingHorizontal="10dp">
 
             <ImageView
@@ -105,7 +105,7 @@
                     android:text="Local Time"
                     android:textSize="@dimen/info_text_primary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/local_timezone"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -113,11 +113,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/digital_time_24_hour"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -125,11 +123,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/digital_time_12_hour"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -137,11 +133,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/local_day"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -149,11 +143,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/local_date"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -161,11 +153,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/local_day_of_the_year"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -173,11 +163,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/local_week_of_the_year"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -185,9 +173,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
 
@@ -212,7 +198,7 @@
                 android:text="UTC Time"
                 android:textSize="@dimen/info_text_primary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/time_zone_utc"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -220,11 +206,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/time_utc"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -232,11 +216,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/date_utc"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -244,9 +226,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
 
@@ -268,7 +248,7 @@
                 android:text="Sun Position"
                 android:textSize="@dimen/info_text_primary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/sun_azimuth"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -276,11 +256,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/sun_distance"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -288,11 +266,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/sun_altitude"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -300,9 +276,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
         </LinearLayout>
 
         <FrameLayout
@@ -334,7 +308,7 @@
                     android:text="Sun Time"
                     android:textSize="@dimen/info_text_primary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/sunrise_time"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -342,23 +316,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/sunset_time"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
-
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/sun_noon"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -366,11 +326,19 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
+                    android:id="@+id/sunset_time"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                    android:maxLines="1"
+                    android:textSize="@dimen/info_text_secondary_size" />
+
+                <TextView
                     android:id="@+id/sun_nadir"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -378,9 +346,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
 
@@ -415,31 +381,17 @@
                     android:text="Twilight"
                     android:textSize="@dimen/info_text_primary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/astronomical_dawm_twilight"
+                <TextView
+                    android:id="@+id/astronomical_dawn_twilight"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/astronomical_dusk_twilight"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
-
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/nautical_dawn_twilight"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -447,23 +399,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
-                    android:id="@+id/nautical_dusk_twilight"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
-
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/civil_dawn_twilight"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -471,11 +409,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/civil_dusk_twilight"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -483,9 +419,27 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
+
+                <TextView
+                    android:id="@+id/nautical_dusk_twilight"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                    android:maxLines="1"
+                    android:textSize="@dimen/info_text_secondary_size" />
+
+                <TextView
+                    android:id="@+id/astronomical_dusk_twilight"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                    android:maxLines="1"
+                    android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
 
@@ -509,7 +463,7 @@
                 android:text="Moon Position"
                 android:textSize="@dimen/info_text_primary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/moon_azimuth"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -517,11 +471,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/moon_distance"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -529,11 +481,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/moon_altitude"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -541,11 +491,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/moon_parallactic_angle"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -553,9 +501,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
         </LinearLayout>
 
         <FrameLayout
@@ -587,7 +533,7 @@
                     android:text="Moon Time"
                     android:textSize="@dimen/info_text_primary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/moonrise_time"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -595,11 +541,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/moon_set_time"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -607,9 +551,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
 
@@ -619,11 +561,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginVertical="20dp"
+            android:background="@drawable/ripple"
             android:clickable="true"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:focusable="true"
-            android:background="@drawable/ripple"
             android:paddingHorizontal="10dp">
 
             <ImageView
@@ -631,8 +573,8 @@
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
-                android:padding="10dp"
                 android:layout_marginTop="20dp"
+                android:padding="10dp"
                 android:src="@drawable/moon_phase_02" />
 
             <LinearLayout
@@ -648,7 +590,7 @@
                     android:text="Moon Illumination"
                     android:textSize="@dimen/info_text_primary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/moon_fraction"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -656,11 +598,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/moon_angle"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -668,11 +608,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/moon_angle_state"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -680,11 +618,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/moon_phase"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -692,11 +628,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/moon_phase_angle"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -704,9 +638,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
 
@@ -731,7 +663,7 @@
                 android:text="Moon Dates"
                 android:textSize="@dimen/info_text_primary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/next_full_moon"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -739,11 +671,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/next_new_moon"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -751,11 +681,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/next_first_quarter"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -763,11 +691,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/next_last_quarter"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -775,9 +701,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
 

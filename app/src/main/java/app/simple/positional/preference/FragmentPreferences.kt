@@ -1,15 +1,16 @@
 package app.simple.positional.preference
 
-import android.content.Context
-import app.simple.positional.constants.currentPage
-import app.simple.positional.constants.preferences
+import app.simple.positional.preference.SharedPreferences.getSharedPreferences
 
-class FragmentPreferences {
-    fun setCurrentPage(context: Context, value: Int) {
-        context.getSharedPreferences(preferences, Context.MODE_PRIVATE).edit().putInt(currentPage, value).apply()
+object FragmentPreferences {
+
+    private const val currentPage = "current_page"
+
+    fun setCurrentPage(value: Int) {
+        getSharedPreferences().edit().putInt(currentPage, value).apply()
     }
 
-    fun getCurrentPage(context: Context): Int {
-        return context.getSharedPreferences(preferences, Context.MODE_PRIVATE).getInt(currentPage, 2)
+    fun getCurrentPage(): Int {
+        return getSharedPreferences().getInt(currentPage, 2)
     }
 }

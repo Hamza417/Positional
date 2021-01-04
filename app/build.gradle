@@ -62,8 +62,8 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 48
-        versionName "v6.1-stable"
+        versionCode 49
+        versionName "v6.2-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -144,7 +144,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     // Third Party Implementations
-    implementation 'com.elyeproj.libraries:loaderviewlibrary:2.0.0'
     implementation 'org.shredzone.commons:commons-suncalc:3.4'
     implementation 'com.afollestad:viewpagerdots:1.0.0'
 

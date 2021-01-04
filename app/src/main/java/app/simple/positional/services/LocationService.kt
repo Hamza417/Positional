@@ -1,31 +1,20 @@
 package app.simple.positional.services
 
 import android.Manifest
-import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.*
-import android.text.Spanned
+import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import app.simple.positional.R
-import app.simple.positional.preference.GPSPreferences
-import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
-import app.simple.positional.util.*
-import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class LocationService : Service(), LocationListener {
@@ -33,10 +22,6 @@ class LocationService : Service(), LocationListener {
     private var locationManager: LocationManager? = null
     private var handler = Handler(Looper.getMainLooper())
     private var delay: Long = 1000
-    private val requestCode = 2
-    private val notificationID = 2486
-    private val actionReset = "ACTION_RESET"
-    private val actionClose = "ACTION_CLOSE"
     private var isDestroying = false
     private var notificationManager: NotificationManager? = null
     private var location: Location? = null
@@ -52,25 +37,7 @@ class LocationService : Service(), LocationListener {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         requestLastKnownLocation()
-        handleIntent(intent)
-        notificationManager = getSystemService(android.content.Context.NOTIFICATION_SERVICE) as NotificationManager
         return START_REDELIVER_INTENT
-    }
-
-    private fun handleIntent(intent_: Intent) {
-        if (intent_.action == actionClose) {
-            Intent().also { intent ->
-                intent.action = "finish"
-                LocalBroadcastManager.getInstance(baseContext).sendBroadcast(intent)
-            }
-        } else if (intent_.action == actionReset) {
-            distanceSingleton.totalDistance = 0f
-            if (location != null) {
-                distanceSingleton.initialPointCoordinates = LatLng(location!!.latitude, location!!.longitude)
-            } else {
-                distanceSingleton.isInitialLocationSet = false
-            }
-        }
     }
 
     override fun onTaskRemoved(rootIntent: Intent) {
@@ -86,7 +53,6 @@ class LocationService : Service(), LocationListener {
     override fun onDestroy() {
         removeCallbacks()
         isDestroying = true
-        notificationManager?.cancel(notificationID)
         super.onDestroy()
     }
 
@@ -97,11 +63,6 @@ class LocationService : Service(), LocationListener {
             intent.putExtra("location", location)
             LocalBroadcastManager.getInstance(baseContext).sendBroadcast(intent)
         }
-
-        measureDistance(location)
-        // Instead send parcelable, it will be done in just single line
-        // intent.putExtra("latitude", location.getLatitude());
-        // intent.putExtra("longitude", location.getLongitude());
     }
 
     // only for API < 29
@@ -138,7 +99,7 @@ class LocationService : Service(), LocationListener {
         }
     }
 
-    fun fireLocationSearch() {
+    private fun fireLocationSearch() {
         requestLocation()
     }
 
@@ -197,111 +158,5 @@ class LocationService : Service(), LocationListener {
     private fun removeCallbacks() {
         locationManager?.removeUpdates(this)
         handler.removeCallbacks(locationUpdater)
-    }
-
-    private fun measureDistance(location: Location) {
-        if (!distanceSingleton.isMapPanelVisible!!) {
-            if (distanceSingleton.isInitialLocationSet!!) {
-                val result = FloatArray(1)
-                distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(result[0])
-            } else {
-                distanceSingleton.initialPointCoordinates = LatLng(location.latitude, location.longitude)
-                distanceSingleton.isInitialLocationSet = true
-            }
-        }
-
-        CoroutineScope(Dispatchers.Default).launch {
-            if (!GPSPreferences().isNotificationOn(this@LocationService)) {
-                notificationManager?.cancel(notificationID)
-                return@launch
-            }
-
-            val isMetric = MainPreferences().getUnit(context = baseContext)
-
-            val displacementValue = FloatArray(1)
-
-            Location.distanceBetween(
-                    distanceSingleton.initialPointCoordinates!!.latitude,
-                    distanceSingleton.initialPointCoordinates!!.longitude,
-                    location.latitude,
-                    location.longitude,
-                    displacementValue
-            )
-
-            val direction: String
-            val speed = if (isMetric) "<b>Speed:</b> ${round(location.speed.toDouble().toKiloMetersPerHour(), 2)} km/h<br>" else "<b>Speed:</b> ${round(location.speed.toDouble().toMilesPerHour(), 2)} mph/h<br>"
-
-            if (location.speed > 0f) {
-                val dir = getDirection(
-                        distanceSingleton.distanceCoordinates!!.latitude,
-                        distanceSingleton.distanceCoordinates!!.longitude,
-                        location.latitude,
-                        location.longitude
-                )
-                distanceSingleton.distanceCoordinates = LatLng(location.latitude, location.longitude)
-                direction = "<b>Direction:</b> ${round(dir, 2)}° ${getDirectionCodeFromAzimuth(dir)}"
-            } else {
-                direction = "<b>Direction:</b> N/A"
-            }
-
-            val displacement = if (displacementValue[0] < 1000) {
-                if (isMetric) {
-                    "<b>Displacement:</b> ${round(displacementValue[0].toDouble(), 2)} m<br>"
-                } else {
-                    "<b>Displacement:</b> ${round(displacementValue[0].toDouble().toFeet(), 2)} ft<br>"
-                }
-            } else {
-                if (isMetric) {
-                    "<b>Displacement:</b> ${round(displacementValue[0].toKilometers().toDouble(), 2)} km<br>"
-                } else {
-                    "<b>Displacement:</b> ${round(displacementValue[0].toMiles().toDouble(), 2)} miles<br>"
-                }
-            }
-
-            val finalSpanned = fromHtml("$speed $displacement $direction")
-
-            withContext(Dispatchers.Main) {
-                if (!isDestroying) {
-                    showNotification(finalSpanned)
-                }
-            }
-        }
-    }
-
-    private fun showNotification(messageBody: Spanned?) {
-        val activityIntent = Intent(this, LocationService::class.java)
-        activityIntent.action = actionClose
-
-        val resetIntent = Intent(this, LocationService::class.java)
-        resetIntent.action = actionReset
-
-        val contentIntent = PendingIntent.getService(this, requestCode, activityIntent, PendingIntent.FLAG_ONE_SHOT)
-        val contentResetIntent = PendingIntent.getService(this, requestCode, resetIntent, PendingIntent.FLAG_ONE_SHOT)
-        //val broadcastIntent = Intent(this, NotificationReceiver::class.java)
-
-        val channelId = "notification_channel_id_for_positional"
-
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.ic_place)
-                .setColor(Color.parseColor("#1B9CFF"))
-                .setSubText("Movement Updates")
-                //.setContentTitle(title)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(messageBody))
-                .setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
-                //.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .addAction(0, "Reset", contentResetIntent)
-                .addAction(0, "Close App", contentIntent)
-                .setOngoing(true)
-                .setContentIntent(contentIntent)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId,
-                    "Movement Update",
-                    NotificationManager.IMPORTANCE_LOW)
-            notificationManager?.createNotificationChannel(channel)
-        }
-
-        notificationManager?.notify(notificationID, notificationBuilder.build())
     }
 }

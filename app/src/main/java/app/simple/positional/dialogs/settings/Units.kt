@@ -34,7 +34,7 @@ class Units(private val weakReference: WeakReference<AppSettings>) : CustomBotto
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setButtons(MainPreferences().getUnit(requireContext()))
+        setButtons(MainPreferences.getUnit())
 
         metric.setOnCheckedChangeListener { _, isChecked ->
             setButtons(isChecked)
@@ -48,7 +48,7 @@ class Units(private val weakReference: WeakReference<AppSettings>) : CustomBotto
     }
 
     private fun setButtons(value: Boolean) {
-        MainPreferences().setUnit(requireContext(), value)
+        MainPreferences.setUnit(value)
 
         metric.isChecked = value
         imperial.isChecked = !value

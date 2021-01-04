@@ -30,7 +30,12 @@ import app.simple.positional.constants.compassBloomTextColor
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
 import app.simple.positional.dialogs.compass.NoSensorAlert
-import app.simple.positional.preference.CompassPreference
+import app.simple.positional.preference.CompassPreference.getCompassSpeed
+import app.simple.positional.preference.CompassPreference.getDirectionCode
+import app.simple.positional.preference.CompassPreference.getFlowerBloomTheme
+import app.simple.positional.preference.CompassPreference.isFlowerBloom
+import app.simple.positional.preference.CompassPreference.isNoSensorAlertON
+import app.simple.positional.preference.CompassPreference.setFlowerBloom
 import app.simple.positional.util.*
 import app.simple.positional.views.CustomCoordinatorLayout
 import com.google.android.material.appbar.MaterialToolbar
@@ -139,7 +144,7 @@ class Compass : Fragment(), SensorEventListener {
         toolbar = view.findViewById(R.id.compass_appbar)
 
         filter.addAction("location")
-        showDirectionCode = CompassPreference().getDirectionCode(requireContext())
+        showDirectionCode = getDirectionCode()
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))
@@ -155,7 +160,7 @@ class Compass : Fragment(), SensorEventListener {
                 haveAccelerometerSensor = false
                 haveMagnetometerSensor = false
 
-                if (CompassPreference().isNoSensorAlertON(requireContext())) {
+                if (isNoSensorAlertON()) {
                     val noSensorAlert = NoSensorAlert().newInstance("compass")
                     noSensorAlert.show(parentFragmentManager, "no_sensor_alert")
                 }
@@ -165,9 +170,9 @@ class Compass : Fragment(), SensorEventListener {
             haveMagnetometerSensor = false
         }
 
-        isFLowerBlooming = CompassPreference().isFlowerBloom(requireContext())
-        flowerBloom = CompassPreference().getFlowerBloomTheme(requireContext())
-        setSpeed(CompassPreference().getCompassSpeed(requireContext()))
+        isFLowerBlooming = isFlowerBloom()
+        flowerBloom = getFlowerBloomTheme()
+        setSpeed(getCompassSpeed())
 
         return view
     }
@@ -492,25 +497,25 @@ class Compass : Fragment(), SensorEventListener {
 
     fun setFlower(value: Boolean) {
         isFLowerBlooming = value
-        val x = compassBloomRes[CompassPreference().getFlowerBloomTheme(requireContext())]
+        val x = compassBloomRes[getFlowerBloomTheme()]
         if (value) {
             loadImageResources(x, flowerOne, requireContext(), 0)
             loadImageResources(x, flowerTwo, requireContext(), 50)
             loadImageResources(x, flowerThree, requireContext(), 100)
             loadImageResources(x, flowerFour, requireContext(), 150)
-            animateColorChange(degrees, compassBloomTextColor[CompassPreference().getFlowerBloomTheme(requireContext())], Color.parseColor("#ffffff"))
+            animateColorChange(degrees, compassBloomTextColor[getFlowerBloomTheme()], Color.parseColor("#ffffff"))
         } else {
             loadImageResources(0, flowerOne, requireContext(), 150)
             loadImageResources(0, flowerTwo, requireContext(), 100)
             loadImageResources(0, flowerThree, requireContext(), 50)
             loadImageResources(0, flowerFour, requireContext(), 0)
-            animateColorChange(degrees, degrees.currentTextColor, compassBloomTextColor[CompassPreference().getFlowerBloomTheme(requireContext())])
+            animateColorChange(degrees, degrees.currentTextColor, compassBloomTextColor[getFlowerBloomTheme()])
         }
     }
 
     fun setFlowerTheme(value: Int) {
-        CompassPreference().setFlowerBloom(value, requireContext())
-        setFlower(value = CompassPreference().isFlowerBloom(requireContext()))
+        setFlowerBloom(value)
+        setFlower(value = isFlowerBloom())
         flowerBloom = value
     }
 

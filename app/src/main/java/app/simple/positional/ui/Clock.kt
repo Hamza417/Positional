@@ -27,6 +27,7 @@ import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
+import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.views.CustomCoordinatorLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -81,7 +82,6 @@ class Clock : Fragment() {
     private lateinit var sunriseTime: TextView
     private lateinit var sunsetTime: TextView
     private lateinit var sunNadir: TextView
-    private lateinit var sunZenith: TextView
     private lateinit var sunNoon: TextView
     private lateinit var astronomicalDawnTwilight: TextView
     private lateinit var astronomicalDuskTwilight: TextView
@@ -163,7 +163,7 @@ class Clock : Fragment() {
         sunsetTime = view.findViewById(R.id.sunset_time)
         sunNadir = view.findViewById(R.id.sun_nadir)
         sunNoon = view.findViewById(R.id.sun_noon)
-        astronomicalDawnTwilight = view.findViewById(R.id.astronomical_dawm_twilight)
+        astronomicalDawnTwilight = view.findViewById(R.id.astronomical_dawn_twilight)
         astronomicalDuskTwilight = view.findViewById(R.id.astronomical_dusk_twilight)
         nauticalDawnTwilight = view.findViewById(R.id.nautical_dawn_twilight)
         nauticalDuskTwilight = view.findViewById(R.id.nautical_dusk_twilight)
@@ -193,17 +193,17 @@ class Clock : Fragment() {
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
         backPress = requireActivity().onBackPressedDispatcher
 
-        setMotionDelay(ClockPreferences().getMovementType(requireContext()))
-        isMetric = MainPreferences().getUnit(requireContext())
-        if (MainPreferences().isCustomCoordinate(requireContext())) {
+        setMotionDelay(ClockPreferences.getMovementType())
+        isMetric = MainPreferences.getUnit()
+        if (MainPreferences.isCustomCoordinate()) {
             isCustomCoordinate = true
-            customLatitude = MainPreferences().getCoordinates(requireContext())[0].toDouble()
-            customLongitude = MainPreferences().getCoordinates(requireContext())[1].toDouble()
+            customLatitude = MainPreferences.getCoordinates()[0].toDouble()
+            customLongitude = MainPreferences.getCoordinates()[1].toDouble()
         }
 
         timezone = if (isCustomCoordinate) {
-            if (MainPreferences().getTimeZone(requireContext()) != "") {
-                MainPreferences().getTimeZone(requireContext())
+            if (MainPreferences.getTimeZone() != "") {
+                MainPreferences.getTimeZone()
             } else {
                 Calendar.getInstance().timeZone.id
             }
@@ -318,11 +318,11 @@ class Clock : Fragment() {
 
                 stringBuilder.append("Twilight\n")
                 stringBuilder.append("${astronomicalDawnTwilight.text}\n")
-                stringBuilder.append("${astronomicalDuskTwilight.text}\n")
                 stringBuilder.append("${nauticalDawnTwilight.text}\n")
-                stringBuilder.append("${nauticalDuskTwilight.text}\n")
                 stringBuilder.append("${civilDawnTwilight.text}\n")
                 stringBuilder.append("${civilDuskTwilight.text}\n\n")
+                stringBuilder.append("${nauticalDuskTwilight.text}\n")
+                stringBuilder.append("${astronomicalDuskTwilight.text}\n")
 
                 stringBuilder.append("Moon Position\n")
                 stringBuilder.append("${moonAzimuth.text}\n")
@@ -427,7 +427,7 @@ class Clock : Fragment() {
     }
 
     private fun setSkins() {
-        setNeedle(ClockPreferences().getClockNeedleTheme(requireContext()))
+        setNeedle(ClockPreferences.getClockNeedleTheme())
     }
 
     fun setNeedle(value: Int) {
@@ -450,7 +450,11 @@ class Clock : Fragment() {
             // Set and Rise
             val sunTimes = SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()
 
-            val pattern: DateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+            val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTime()) {
+                DateTimeFormatter.ofPattern("hh:mm:ss a")
+            } else {
+                DateTimeFormatter.ofPattern("HH:mm:ss")
+            }
 
             val sunrise = fromHtml("<b>Sunrise:</b> ${pattern.format(sunTimes.rise)}")
             val sunset = fromHtml("<b>Sunset:</b> ${pattern.format(sunTimes.set)}")
@@ -574,7 +578,7 @@ class Clock : Fragment() {
                 localTimeZone = fromHtml("<b>Time Zone: </b> ${zonedDateTime.zone}")
                 digitalTime24 = fromHtml("<b>Time 24Hr:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))}")
                 digitalTime12 = fromHtml("<b>Time 12Hr:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a", Locale.getDefault()))}")
-                digitalTime = getTime(requireContext(), zonedDateTime)
+                digitalTime = getTime(zonedDateTime)
                 localDate = fromHtml("<b>Date:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
                 localDay = fromHtml("<b>Day:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("EEEE"))}")
                 dayOfTheYear = fromHtml("<b>Day of Year:</b> ${LocalDate.now().dayOfYear.getOrdinal()}")

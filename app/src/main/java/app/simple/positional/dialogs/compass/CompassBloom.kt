@@ -41,7 +41,7 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
         // This will prevent the underlying dialog from dimming preventing a flashy animation that can cause some issues to some users
         this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
-        setButtons(CompassPreference().getFlowerBloomTheme(requireContext()))
+        setButtons(CompassPreference.getFlowerBloomTheme())
 
         orange.setOnClickListener {
             setValue(0)
@@ -66,7 +66,7 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
     }
 
     private fun setButtons(value: Int) {
-        CompassPreference().setFlowerBloom(value, requireContext())
+        CompassPreference.setFlowerBloom(value)
 
         orange.isChecked = value == 0
         purple.isChecked = value == 1

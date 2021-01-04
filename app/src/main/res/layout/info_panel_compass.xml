@@ -67,7 +67,7 @@
                 android:text="Accuracy"
                 android:textSize="@dimen/info_text_primary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/compass_accuracy_accelerometer"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -75,11 +75,9 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
+            <TextView
                 android:id="@+id/compass_accuracy_magnetometer"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -87,9 +85,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
-                android:textSize="@dimen/info_text_secondary_size"
-                app:corners="20"
-                app:use_gradient="true" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
 
@@ -144,7 +140,7 @@
                     android:text="Magnetic Field"
                     android:textSize="@dimen/info_text_primary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/compass_inclination"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -152,11 +148,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/compass_declination"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -164,11 +158,9 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                <TextView
                     android:id="@+id/compass_field_strength"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
@@ -176,9 +168,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/info_text_secondary_size"
-                    app:corners="20"
-                    app:use_gradient="true" />
+                    android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
         </FrameLayout>

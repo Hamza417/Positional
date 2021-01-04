@@ -19,11 +19,8 @@ import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.MainActivity
-import app.simple.positional.constants.vectorBackground
-import app.simple.positional.constants.vectorBackgroundNight
-import app.simple.positional.constants.vectorColors
-import app.simple.positional.constants.vectorNightColors
-import app.simple.positional.preference.FragmentPreferences
+import app.simple.positional.constants.*
+import app.simple.positional.preference.FragmentPreferences.setCurrentPage
 import app.simple.positional.util.addLinearGradient
 import app.simple.positional.util.addRadialGradient
 import app.simple.positional.util.getBitmapFromVectorDrawable
@@ -69,8 +66,8 @@ class Launcher : Fragment() {
         setShortcutScreen()
 
         if (BuildConfig.FLAVOR == "full") {
-            randomDayValue = (vectorBackground.indices).random()
-            randomNightValue = (vectorBackgroundNight.indices).random()
+            randomDayValue = (LauncherBackground.vectorBackground.indices).random()
+            randomNightValue = (LauncherBackground.vectorBackgroundNight.indices).random()
         } else {
             randomDayValue = 5
             randomNightValue = 0
@@ -78,17 +75,17 @@ class Launcher : Fragment() {
 
         when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
-                colorOne = vectorNightColors[randomNightValue][0]
-                colorTwo = vectorNightColors[randomNightValue][1]
+                colorOne = LauncherBackground.vectorNightColors[randomNightValue][0]
+                colorTwo = LauncherBackground.vectorNightColors[randomNightValue][1]
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    launcherBackground.setImageResource(vectorBackgroundNight[randomNightValue])
+                    launcherBackground.setImageResource(LauncherBackground.vectorBackgroundNight[randomNightValue])
                 }
             }
             Configuration.UI_MODE_NIGHT_NO -> {
-                colorOne = vectorColors[randomDayValue][0]
-                colorTwo = vectorColors[randomDayValue][1]
+                colorOne = LauncherBackground.vectorColors[randomDayValue][0]
+                colorTwo = LauncherBackground.vectorColors[randomDayValue][1]
                 if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    launcherBackground.setImageResource(vectorBackground[randomDayValue])
+                    launcherBackground.setImageResource(LauncherBackground.vectorBackground[randomDayValue])
                 }
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
@@ -145,7 +142,7 @@ class Launcher : Fragment() {
     }
 
     private fun setScreenValue(value: Int) {
-        FragmentPreferences().setCurrentPage(requireContext(), value)
+        setCurrentPage(value)
     }
 
     private fun runPostDelayed(delay: Long) {

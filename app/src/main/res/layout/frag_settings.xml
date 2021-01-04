@@ -188,6 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="15dp"
                         android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
                         <TextView
@@ -307,6 +308,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/current_app_version"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/ripple"
@@ -461,6 +463,7 @@
                         android:textColor="?attr/textSecondary" />
 
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

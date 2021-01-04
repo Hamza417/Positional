@@ -36,10 +36,10 @@ class NoSensorAlert : CustomBottomSheetDialog() {
 
         view.findViewById<CheckBox>(R.id.compass_no_sensor_no_show).isChecked = when (this.arguments?.getString("which")) {
             "compass" -> {
-                CompassPreference().isNoSensorAlertON(context = requireContext())
+                CompassPreference.isNoSensorAlertON()
             }
             "level" -> {
-                LevelPreferences().isNoSensorAlertON(context = requireContext())
+                LevelPreferences.isNoSensorAlertON()
             }
             else -> {
                 true
@@ -49,9 +49,9 @@ class NoSensorAlert : CustomBottomSheetDialog() {
         view.findViewById<CheckBox>(R.id.compass_no_sensor_no_show).setOnCheckedChangeListener { button, isChecked ->
             if (button.isPressed) {
                 if (this.arguments?.getString("which") == "compass") {
-                    CompassPreference().setNoSensorAlert(value = isChecked, context = requireContext())
+                    CompassPreference.setNoSensorAlert(value = isChecked)
                 } else if (this.arguments?.getString("which") == "level") {
-                    LevelPreferences().setNoSensorAlert(value = isChecked, context = requireContext())
+                    LevelPreferences.setNoSensorAlert(value = isChecked)
                 }
             }
         }
