@@ -47,5 +47,4 @@
         <attr name="switcher_icon_color" format="color" />
     </declare-styleable>
 
-
 </resources>

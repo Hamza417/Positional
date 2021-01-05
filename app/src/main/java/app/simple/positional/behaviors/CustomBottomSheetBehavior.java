@@ -11,9 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import kotlin.Suppress;
 
-@Suppress (names = "unused")
 public class CustomBottomSheetBehavior <V extends View> extends BottomSheetBehavior <V> {
     
     // we'll use the device's touch slop value to find out when a tap
@@ -82,7 +80,5 @@ public class CustomBottomSheetBehavior <V extends View> extends BottomSheetBehav
         }
         
         return super.onInterceptTouchEvent(parent, child, event);
-        
     }
-    
 }

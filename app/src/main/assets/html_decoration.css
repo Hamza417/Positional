@@ -4,7 +4,7 @@
 }
 
 :root {
-    --main_heading_color: rgb(109, 76, 65);
+    --main_heading_color: rgb(14, 102, 85);
 }
 
 body {
@@ -30,6 +30,10 @@ h3 {
 	color: rgb(16, 16, 16);
 }
 
+h4 {
+	color: rgb(16, 16, 16);
+}
+
 li::marker {
 	color: var(--main_heading_color);
 }
@@ -41,5 +45,4 @@ li {
 a:link {
 	color: rgb(96, 125, 139);
 	background-color: transparent;
-	text-decoration: none;
 }

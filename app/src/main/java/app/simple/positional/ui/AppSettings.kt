@@ -17,13 +17,13 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.dialogs.app.BuyFull
 import app.simple.positional.dialogs.settings.*
+import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getUnit
 import app.simple.positional.preference.MainPreferences.isCustomCoordinate
 import app.simple.positional.preference.MainPreferences.isDayNightOn
 import app.simple.positional.preference.MainPreferences.isNotificationOn
 import app.simple.positional.preference.MainPreferences.isScreenOn
 import app.simple.positional.preference.MainPreferences.setCustomCoordinates
-import app.simple.positional.preference.MainPreferences.setNotifications
 import app.simple.positional.preference.MainPreferences.setScreenOn
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -160,7 +160,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         }
 
         toggleNotification.setOnCheckedChangeListener { _, isChecked ->
-            setNotifications(isChecked)
+            MainPreferences.setNotifications(isChecked)
         }
 
         appVersion.setOnClickListener {

@@ -62,8 +62,8 @@ android {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 50
-        versionName "v6.3-stable"
+        versionCode 51
+        versionName "v6.4-stable"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -115,6 +115,7 @@ dependencies {
 
     implementation project(path: ':lvl_library')
     implementation fileTree(dir: "libs", include: ["*.jar"])
+
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

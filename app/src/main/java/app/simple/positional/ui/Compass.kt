@@ -37,6 +37,7 @@ import app.simple.positional.preference.CompassPreference.isFlowerBloom
 import app.simple.positional.preference.CompassPreference.isNoSensorAlertON
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
 import app.simple.positional.util.*
+import app.simple.positional.util.ColorAnimator.animateColorChange
 import app.simple.positional.views.CustomCoordinatorLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior

@@ -8,21 +8,14 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
-import com.google.android.material.appbar.AppBarLayout
 
-/**
- * Just like [AppBarLayout.ScrollingViewBehavior] but with a nice spring over scroll effect.
- *
- * Can be adjusted using attributes but not implemented
- */
 @Suppress("unused")
 class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
 
     companion object {
-        private const val OVER_SCROLL_AREA = 3
+        private const val OVER_SCROLL_AREA = 2
+        private var overScrollY = 0
     }
-
-    private var overScrollY = 0
 
     constructor(context: Context, attributeSet: AttributeSet) : this() {
         unused(context, attributeSet)
@@ -61,9 +54,6 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
             type: Int,
             consumed: IntArray
     ) {
-        if (dyUnconsumed == 0) {
-            return
-        }
 
         overScrollY -= (dyUnconsumed / OVER_SCROLL_AREA)
         val group = target as ViewGroup
@@ -101,7 +91,10 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
     }
 
     /**
-     * [SpringForce.DAMPING_RATIO_NO_BOUNCY] will remove the bouncy effect, bouncy effect is a short lived animation pleasure and not feasible for having to see a view bouncing all the time
+     * [SpringForce.DAMPING_RATIO_NO_BOUNCY] will remove the bouncy effect, bouncy effect
+     * is a short lived animation pleasure and not feasible for having to see a view
+     * bouncing all the time
+     *
      * [SpringForce.STIFFNESS_LOW] will give smooth over-scroll restoration effect
      */
     private fun moveToDefPosition(target: View) {
@@ -109,11 +102,13 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
         val count = group.childCount
         for (i in 0 until count) {
             val view = group.getChildAt(i)
+
             val springAnimation = SpringAnimation(view, DynamicAnimation.TRANSLATION_Y)
             springAnimation.spring = SpringForce()
                     .setFinalPosition(0f)
                     .setDampingRatio(SpringForce.DAMPING_RATIO_NO_BOUNCY)
                     .setStiffness(SpringForce.STIFFNESS_LOW)
+
             springAnimation.start()
         }
     }
