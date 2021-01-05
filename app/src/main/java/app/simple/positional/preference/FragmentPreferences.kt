@@ -1,6 +1,6 @@
 package app.simple.positional.preference
 
-import app.simple.positional.preference.SharedPreferences.getSharedPreferences
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 
 object FragmentPreferences {
 

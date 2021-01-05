@@ -1,6 +1,6 @@
 package app.simple.positional.preference
 
-import app.simple.positional.preference.SharedPreferences.getSharedPreferences
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import org.jetbrains.annotations.NotNull
 
 object GPSPreferences {

@@ -12,16 +12,17 @@ import androidx.webkit.WebViewFeature
 import app.simple.positional.R
 import app.simple.positional.views.CustomBottomSheetDialog
 
-class LegalNotes : CustomBottomSheetDialog() {
-    fun newInstance(string: String): LegalNotes {
+class HtmlViewer : CustomBottomSheetDialog() {
+
+    private lateinit var webView: WebView
+
+    fun newInstance(string: String): HtmlViewer {
         val args = Bundle()
-        args.putString("legal", string)
-        val fragment = LegalNotes()
+        args.putString("source", string)
+        val fragment = HtmlViewer()
         fragment.arguments = args
         return fragment
     }
-
-    private lateinit var webView: WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +50,7 @@ class LegalNotes : CustomBottomSheetDialog() {
         }
 
         if (this.arguments != null) {
-            when (this.requireArguments().get("legal")) {
+            when (this.requireArguments().get("source")) {
                 "Privacy Policy" -> {
                     loadWebView("file:///android_asset/privacy_policy.html")
                 }
@@ -58,6 +59,9 @@ class LegalNotes : CustomBottomSheetDialog() {
                 }
                 "Terms of Use" -> {
                     loadWebView("file:///android_asset/terms_and_conditions.html")
+                }
+                "Custom Coordinates Help" -> {
+                    loadWebView("file:///android_asset/custom_coordinates_help.html")
                 }
             }
         }

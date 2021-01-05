@@ -184,7 +184,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
             popup.gravity = Gravity.END
 
             popup.setOnMenuItemClickListener { item ->
-                val legalNotes = LegalNotes().newInstance(item.title.toString())
+                val legalNotes = HtmlViewer().newInstance(item.title.toString())
                 legalNotes.show(childFragmentManager, "legal_notes")
                 true
             }

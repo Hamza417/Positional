@@ -27,6 +27,8 @@ import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
+import app.simple.positional.util.DigitalTimeFormatter.getTime
+import app.simple.positional.util.DigitalTimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.views.CustomCoordinatorLayout
 import com.google.android.material.appbar.MaterialToolbar
@@ -585,7 +587,7 @@ class Clock : Fragment() {
                 weekOfTheYear = fromHtml("<b>Week of Year:</b> ${zonedDateTime.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).getOrdinal()}")
 
                 utcTimeZone = fromHtml("<b>Local Time Offset:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("XXX"))}")
-                utcTime = fromHtml("<b>Time:</b> ${ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())).format(DateTimeFormatter.ofPattern("HH:mm:ss"))}")
+                utcTime = fromHtml("<b>Time:</b> ${getTimeWithSeconds(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())))}")
                 utcDate = fromHtml("<b>Date:</b> ${ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())).format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
             } catch (e: ParseException) {
                 e.printStackTrace()

@@ -1,6 +1,7 @@
 package app.simple.positional.dialogs.settings
 
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -46,6 +47,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
     private lateinit var addressIndicator: ContentLoadingProgressBar
     private lateinit var timezoneList: ImageButton
     private lateinit var savedLocations: ImageButton
+    private lateinit var help: ImageButton
     private lateinit var setCoordinatesButton: Button
     private lateinit var cancel: Button
     private lateinit var addressInputEditText: TextInputEditText
@@ -73,6 +75,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
         addressIndicator = view.findViewById(R.id.address_indicator)
         timezoneList = view.findViewById(R.id.timezone_list)
         savedLocations = view.findViewById(R.id.open_saved_locations)
+        help = view.findViewById(R.id.help_custom_coordinates)
         setCoordinatesButton = view.findViewById(R.id.set_coordinates)
         cancel = view.findViewById(R.id.cancel_coordinate_input)
         addressInputEditText = view.findViewById(R.id.address_input)
@@ -106,6 +109,10 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
             val timeZones = TimeZones().newInstance()
             timeZones.timeZoneSelected = this
             timeZones.show(childFragmentManager, "time_zones")
+        }
+
+        help.setOnClickListener {
+            HtmlViewer().newInstance("Custom Coordinates Help").show(childFragmentManager, "help")
         }
 
         addressInputEditText.addTextChangedListener(object : TextWatcher {
@@ -291,13 +298,13 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
             if (setCoordinatesButton.isClickable) {
                 setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.textPrimary))
             } else {
-                setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.indicator))
+                setCoordinatesButton.setTextColor(Color.DKGRAY)
             }
         } catch (e: NumberFormatException) {
-            setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.indicator))
+            setCoordinatesButton.setTextColor(Color.DKGRAY)
             setCoordinatesButton.isClickable = false
         } catch (e: NullPointerException) {
-            setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.indicator))
+            setCoordinatesButton.setTextColor(Color.DKGRAY)
             setCoordinatesButton.isClickable = false
         }
     }

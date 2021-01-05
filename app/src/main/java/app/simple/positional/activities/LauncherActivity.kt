@@ -11,7 +11,7 @@ import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getLicenceStatus
 import app.simple.positional.preference.MainPreferences.isDayNightOn
-import app.simple.positional.preference.SharedPreferences
+import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.theme.setAppTheme
 import app.simple.positional.ui.Launcher
 import app.simple.positional.ui.License

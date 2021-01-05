@@ -5,15 +5,16 @@
     android:id="@+id/input_location_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_popup">
+    android:background="@drawable/bg_popup"
+    android:paddingHorizontal="@dimen/options_container_horizontal_padding"
+    android:paddingVertical="@dimen/options_container_vertical_padding">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/options_container_horizontal_padding"
-        android:paddingVertical="@dimen/options_container_vertical_padding">
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,7 +37,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginHorizontal="5dp"
                 android:indeterminateBehavior="repeat"
                 android:indeterminateDuration="100"
                 android:indeterminateOnly="true"
@@ -46,8 +47,16 @@
                 android:id="@+id/open_saved_locations"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginHorizontal="5dp"
                 android:background="@drawable/ripple_btn"
                 android:src="@drawable/ic_list" />
+
+            <ImageButton
+                android:id="@+id/help_custom_coordinates"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ripple_btn"
+                android:src="@drawable/ic_help" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -181,7 +190,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="end"
             android:animateLayoutChanges="true"
             android:orientation="horizontal">

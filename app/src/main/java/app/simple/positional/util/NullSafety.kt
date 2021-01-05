@@ -1,5 +1,6 @@
 package app.simple.positional.util
 
+@Suppress("unused")
 object NullSafety {
     /**
      * Quickly performs a null safety check
@@ -13,10 +14,6 @@ object NullSafety {
      * @return [Any]
      */
     fun Any?.asNotNull(): Any {
-        if (this != null) {
-            return this
-        } else {
-            throw UninitializedPropertyAccessException()
-        }
+        return this ?: throw UninitializedPropertyAccessException()
     }
 }
