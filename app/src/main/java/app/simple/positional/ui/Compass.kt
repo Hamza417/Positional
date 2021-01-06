@@ -30,6 +30,12 @@ import app.simple.positional.constants.compassBloomTextColor
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
 import app.simple.positional.dialogs.compass.NoSensorAlert
+import app.simple.positional.math.Angle.getAngle
+import app.simple.positional.math.Angle.toThreeSixty
+import app.simple.positional.math.CompassAzimuth
+import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
+import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.Vector3
 import app.simple.positional.preference.CompassPreference.getCompassSpeed
 import app.simple.positional.preference.CompassPreference.getDirectionCode
 import app.simple.positional.preference.CompassPreference.getFlowerBloomTheme
@@ -53,15 +59,15 @@ class Compass : Fragment(), SensorEventListener {
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
-    private val orientation = FloatArray(3)
-    private val rotation = FloatArray(9)
-    private val inclination = FloatArray(9)
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
     private var isFLowerBlooming = false
     var showDirectionCode = true
     private var isUserRotatingDial = false
+
+    var accelerometer = Vector3.zero
+    var magnetometer = Vector3.zero
 
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
@@ -79,10 +85,10 @@ class Compass : Fragment(), SensorEventListener {
      *  see [smoothAndSetReadings] for its implementation
      */
     private var readingsAlpha = 0.06f
-    private val twoPI = 2.0 * Math.PI
-    private val degreesPerRadian = 180 / Math.PI
     private var rotationAngle = 0f
     private var flowerBloom = 0
+    private var lastDialAngle = 0F
+    private var startAngle = 0F
 
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
@@ -335,11 +341,16 @@ class Compass : Fragment(), SensorEventListener {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     isUserRotatingDial = true
+                    lastDialAngle = dial.rotation
+                    startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     return true
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dial.width.toFloat(), dial.height.toFloat())
-                    rotateDial((360.0f - currentAngle).toFloat())
+                    val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
+                    val finalAngle = ((currentAngle - startAngle) + lastDialAngle)
+                    println(finalAngle)
+
+                    viewRotation((finalAngle.toThreeSixty() - 360F) * -1)
                     return true
                 }
                 MotionEvent.ACTION_UP -> {
@@ -351,59 +362,25 @@ class Compass : Fragment(), SensorEventListener {
         }
     }
 
-    private fun rotateDial(degrees: Float) {
-        dial.rotation = degrees
-        viewRotation((degrees - 360.0f) * -1)
-    }
-
     override fun onSensorChanged(event: SensorEvent?) {
 
         if (event == null) return
 
         when (event.sensor.type) {
-            Sensor.TYPE_ACCELEROMETER -> smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
-            Sensor.TYPE_MAGNETIC_FIELD -> smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
+            Sensor.TYPE_ACCELEROMETER -> {
+                smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
+                accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
+            }
+            Sensor.TYPE_MAGNETIC_FIELD -> {
+                smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
+                magnetometer = Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
+            }
         }
 
-        val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(this.rotation, inclination, accelerometerReadings, magnetometerReadings)
+        rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
 
-        if (successfullyCalculatedRotationMatrix) {
-            SensorManager.getOrientation(this.rotation, orientation)
-
-            try {
-                if (isUserRotatingDial) {
-                    /* no-op */
-                } else {
-                    rotationAngle = adjustAzimuthForDisplayRotation(
-                            -(((((orientation[0] + twoPI) % twoPI * degreesPerRadian).toFloat())) + 360) % 360,
-                            requireActivity().windowManager
-                    )
-
-                    viewRotation(rotationAngle * -1)
-
-                    /**
-                     * Still testing this, currently it partially works
-                     *
-                     * the problem with the above algorithm is it only measures the direction correctly when device is facing up
-                     * This method approximately calculates if the device is facing up or down and that is by
-                     * comparing the z value to the x and y values. If the z value dominates or > 0 then device is facing up
-                     *
-                     * If device is facing down, then value calculated gives a negative result
-                     *
-                     * Alternative method would be to simple check [accelerometerReadings] z value and if it is positive device is facing up
-                     * if negative then device is facing down
-                     *
-                     * Value 1.0e-6 is there to prevent accidentally dividing by zero when device is exactly perpendicular to the gravity
-                     */
-                    // rotationAngle += if (accelerometerReadings[2] / sqrt(accelerometerReadings[0].pow(2) + accelerometerReadings[1].pow(2) + accelerometerReadings[2].pow(2) + 1.0e-6) > 0) {
-                    //    0f
-                    // } else {
-                    //    180f
-                    // }
-                }
-            } catch (e: IllegalStateException) {
-                e.printStackTrace()
-            }
+        if (!isUserRotatingDial) {
+            viewRotation(rotationAngle)
         }
     }
 

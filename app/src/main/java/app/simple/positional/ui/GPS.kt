@@ -29,6 +29,12 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.dialogs.app.PlayServiceIssue
 import app.simple.positional.dialogs.gps.GPSMenu
+import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.UnitConverter.toFeet
+import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
+import app.simple.positional.math.UnitConverter.toKilometers
+import app.simple.positional.math.UnitConverter.toMiles
+import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
@@ -163,7 +169,6 @@ class GPS : Fragment() {
         if (isCustomCoordinate) {
             specifiedLocationTextView.visibility = View.VISIBLE
             divider.visibility = View.VISIBLE
-
             marker = R.drawable.ic_place_custom.getBitmapFromVectorDrawable(requireContext(), 400)
         } else {
             marker = R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext(), 400)

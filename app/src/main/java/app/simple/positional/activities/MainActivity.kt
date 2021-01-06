@@ -57,7 +57,10 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
         bottomBar = findViewById(R.id.bottom_bar)
         locationIntent = Intent(applicationContext, LocationService::class.java)
-        startService(Intent(applicationContext, MessagingService::class.java))
+
+        if (!BuildConfig.DEBUG) {
+            startService(Intent(applicationContext, MessagingService::class.java))
+        }
 
         runApp()
         checkRunTimePermission()

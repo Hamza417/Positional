@@ -170,11 +170,13 @@ class AppSettings : Fragment(), CoordinatesCallback {
             appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
                     appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE, requireActivity(), 1337)
+                } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE) {
+                    Toast.makeText(requireContext(), "No Update Available", Toast.LENGTH_SHORT).show()
                 }
             }
 
             appUpdateInfoTask.addOnFailureListener {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), it.localizedMessage, Toast.LENGTH_LONG).show()
             }
         }
 

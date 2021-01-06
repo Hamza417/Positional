@@ -36,6 +36,7 @@ if (sensitiveDataFile.canRead()) {
             thisAppLicensingKey = sensitiveData['thisAppLicensingKey']
         }
 
+        // Not used currently
         if (sensitiveData.containsKey('dogbinAPIKey')) {
             dogBinAPIKey = sensitiveData['dogbinAPIKey']
         }
@@ -58,12 +59,15 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
+    def appVersionCode = 52
+    def appVersionName = "Build$appVersionCode"
+
     defaultConfig {
         applicationId "app.simple.positional"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 51
-        versionName "v6.4-stable"
+        versionCode appVersionCode
+        versionName appVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -77,10 +81,12 @@ android {
         lite {
             dimension "version"
             applicationIdSuffix ".lite"
-            versionNameSuffix "_lite"
+            versionName "$appVersionName type: Lite"
         }
+
         full {
             dimension "version"
+            versionName "$appVersionName type: Full"
         }
     }
 
@@ -91,6 +97,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             firebaseCrashlytics {
                 mappingFileUploadEnabled true
+            }
+
+            versionNameSuffix " tag: release"
+        }
+
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix " tag: debug"
+
+            /**
+             * This is necessary since I cannot create a debug Firebase
+             * project for a debug build, this part never goes into production
+             * so it won't cause any issues
+             *
+             * For future references to why it is here, this problem is caused by
+             * missing google-services.json file for the debug build and this code
+             * here is only masking the error and not solving it
+             */
+            gradle.taskGraph.whenReady {
+                tasks.each { task ->
+                    if(task.name.contains("processFullDebugGoogleServices")) {
+                        task.enabled = false
+                    }
+                }
             }
         }
     }
@@ -113,9 +143,11 @@ android {
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
 
+    // Google License and External Libraries if any
     implementation project(path: ':lvl_library')
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
+    // Tests
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

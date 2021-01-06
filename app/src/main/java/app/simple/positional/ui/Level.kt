@@ -19,10 +19,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.dialogs.compass.NoSensorAlert
+import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.preference.LevelPreferences.isNoSensorAlertON
 import app.simple.positional.util.fromHtml
 import app.simple.positional.util.loadImageResourcesWithoutAnimation
-import app.simple.positional.util.round
 
 class Level : Fragment(), SensorEventListener {
 
@@ -79,8 +79,12 @@ class Level : Fragment(), SensorEventListener {
         screenHeight = displayMetrics.heightPixels
         screenWidth = displayMetrics.widthPixels
 
-        gravityWidthMotionCompensator = screenWidth / 19.6f
-        gravityHeightMotionCompensator = screenHeight / 19.6f
+        /**
+         * Gravitational constant multiplied by 2
+         * (9.8 m/(s * s)) * 2 = 19.6
+         */
+        gravityWidthMotionCompensator = screenWidth / 19.6F
+        gravityHeightMotionCompensator = screenHeight / 19.6F
         return view
     }
 
