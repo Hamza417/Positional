@@ -59,7 +59,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 52
+    def appVersionCode = 53
     def appVersionName = "Build$appVersionCode"
 
     defaultConfig {
@@ -99,12 +99,12 @@ android {
                 mappingFileUploadEnabled true
             }
 
-            versionNameSuffix " tag: release"
+            versionNameSuffix " tag: Release"
         }
 
         debug {
             applicationIdSuffix ".debug"
-            versionNameSuffix " tag: debug"
+            versionNameSuffix " tag: Debug"
 
             /**
              * This is necessary since I cannot create a debug Firebase

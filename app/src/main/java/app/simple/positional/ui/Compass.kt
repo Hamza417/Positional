@@ -1,5 +1,7 @@
 package app.simple.positional.ui
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Color
@@ -12,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -49,12 +52,14 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.math.abs
 
 class Compass : Fragment(), SensorEventListener {
 
     private var handler = Handler(Looper.getMainLooper())
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var bottomSheetSlide: BottomSheetSlide
+    private var objectAnimator: ObjectAnimator? = null
     private var backPress: OnBackPressedDispatcher? = null
 
     private val accelerometerReadings = FloatArray(3)
@@ -310,6 +315,10 @@ class Compass : Fragment(), SensorEventListener {
 
     override fun onPause() {
         super.onPause()
+        handler.removeCallbacks(compassDialAnimationRunnable)
+        objectAnimator?.removeAllListeners()
+        objectAnimator?.cancel()
+        dial.clearAnimation()
         compassInfoText.clearAnimation()
         handler.removeCallbacksAndMessages(null)
         unregister()
@@ -341,6 +350,10 @@ class Compass : Fragment(), SensorEventListener {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     isUserRotatingDial = true
+                    objectAnimator?.removeAllListeners()
+                    objectAnimator?.cancel()
+                    dial.clearAnimation()
+                    handler.removeCallbacks(compassDialAnimationRunnable)
                     lastDialAngle = dial.rotation
                     startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     return true
@@ -348,13 +361,11 @@ class Compass : Fragment(), SensorEventListener {
                 MotionEvent.ACTION_MOVE -> {
                     val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     val finalAngle = ((currentAngle - startAngle) + lastDialAngle)
-                    println(finalAngle)
-
                     viewRotation((finalAngle.toThreeSixty() - 360F) * -1)
                     return true
                 }
                 MotionEvent.ACTION_UP -> {
-                    isUserRotatingDial = false
+                    handler.postDelayed(compassDialAnimationRunnable, 1000)
                     return true
                 }
             }
@@ -377,9 +388,8 @@ class Compass : Fragment(), SensorEventListener {
             }
         }
 
-        rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
-
         if (!isUserRotatingDial) {
+            rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
             viewRotation(rotationAngle)
         }
     }
@@ -507,5 +517,30 @@ class Compass : Fragment(), SensorEventListener {
                 remove()
             }
         })
+    }
+
+    private val compassDialAnimationRunnable = Runnable {
+        objectAnimator = ObjectAnimator.ofFloat(dial, "rotation", dial.rotation, rotationAngle * -1)
+        objectAnimator!!.duration = 1000L
+        objectAnimator!!.interpolator = DecelerateInterpolator()
+        objectAnimator!!.addUpdateListener { animation -> viewRotation(abs(animation.getAnimatedValue("rotation") as Float)) }
+        objectAnimator!!.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
+                /* no-op */
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                isUserRotatingDial = false
+            }
+
+            override fun onAnimationCancel(animation: Animator?) {
+                /* no-op */
+            }
+
+            override fun onAnimationRepeat(animation: Animator?) {
+                /* no-op */
+            }
+        })
+        objectAnimator!!.start()
     }
 }
