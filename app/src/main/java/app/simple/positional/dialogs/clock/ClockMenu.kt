@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.dialogs.app.BuyFull
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.ui.Clock
 import app.simple.positional.views.CustomBottomSheetDialog
@@ -55,7 +55,7 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
 
         view.findViewById<LinearLayout>(R.id.clock_needle_theme).setOnClickListener {
             if (BuildConfig.FLAVOR == "lite") {
-                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+                BuyFull().newInstance().show(childFragmentManager, "null")
             } else {
                 val clockNeedle = WeakReference(ClockNeedle(clock))
                 clockNeedle.get()?.show(parentFragmentManager, "null")

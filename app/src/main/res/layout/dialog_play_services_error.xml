@@ -1,83 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_dialog">
+    android:background="@drawable/bg_dialog"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/options_item_padding"
+        android:fontFamily="@font/medium"
+        android:padding="@dimen/options_item_padding"
+        android:text="Uh Ohh !!"
+        android:textColor="?attr/textPrimary"
+        android:textSize="@dimen/options_header_text_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="?attr/dividerColor" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/options_item_padding"
+        android:layout_weight="1"
+        android:fontFamily="@font/regular"
+        android:padding="@dimen/options_item_padding"
+        android:text="@string/play_services_issue"
+        android:textColor="?attr/textSecondary"
+        android:textSize="@dimen/description_text_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="?attr/dividerColor" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_gravity="end"
+        android:layout_marginVertical="5dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/play_services_issue_positive_reminder_checkbox"
+            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginHorizontal="10dp"
+            android:buttonTint="?attr/iconColor"
+            android:checked="true" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/options_item_padding"
-            android:fontFamily="@font/medium"
-            android:text="Uh Ohh !!"
-            android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_header_text_size" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="?attr/dividerColor" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:padding="10dp"
-            android:textSize="@dimen/description_text_size"
-            android:text="@string/play_services_issue"
-            android:textColor="?attr/textSecondary" />
+            android:text="Show Again"
+            android:textColor="?attr/textSecondary"
+            android:textSize="@dimen/options_item_text_size" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="?attr/dividerColor" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginVertical="5dp"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/play_services_issue_positive_reminder_checkbox"
-                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="start|center_vertical"
-                android:layout_marginHorizontal="10dp"
-                android:buttonTint="?attr/iconColor"
-                android:checked="true" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="Show Again"
-                android:textSize="@dimen/options_item_text_size"
-                android:textColor="?attr/textSecondary" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/play_services_issue_positive_button"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/ripple_btn"
-                android:text="Ok"
-                android:fontFamily="@font/medium"
-                android:textSize="@dimen/options_item_text_size"
-                android:textColor="?attr/textPrimary" />
-
-        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/play_services_issue_positive_button"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/ripple_btn"
+            android:fontFamily="@font/medium"
+            android:text="Ok"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/options_item_text_size" />
 
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>
+

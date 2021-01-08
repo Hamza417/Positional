@@ -11,7 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.activities.MainActivity
+import app.simple.positional.activities.main.MainActivity
 import app.simple.positional.preference.MainPreferences
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp

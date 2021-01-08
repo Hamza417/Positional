@@ -26,6 +26,13 @@ import app.simple.positional.util.loadImageResourcesWithoutAnimation
 
 class Level : Fragment(), SensorEventListener {
 
+    fun newInstance(): Level {
+        val args = Bundle()
+        val fragment = Level()
+        fragment.arguments = args
+        return fragment
+    }
+
     private lateinit var levelIndicator: ImageView
     private lateinit var levelDot: ImageView
     private lateinit var boundingBox: FrameLayout

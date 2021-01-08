@@ -58,6 +58,13 @@ import java.util.*
 
 class GPS : Fragment() {
 
+    fun newInstance(): GPS {
+        val args = Bundle()
+        val fragment = GPS()
+        fragment.arguments = args
+        return fragment
+    }
+
     private lateinit var expandUp: ImageView
 
     private lateinit var scrollView: NestedScrollView

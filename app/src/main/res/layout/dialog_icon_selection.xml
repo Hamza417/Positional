@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_view"
+    android:orientation="vertical"
+    android:padding="@dimen/options_container_horizontal_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/options_item_padding">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/options_item_padding"
+            android:src="@mipmap/ic_launcher_01" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="Default"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/options_item_text_size" />
+
+        <RadioButton
+            android:id="@+id/icon_one_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="?attr/iconColor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/options_item_padding">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/options_item_padding"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="Legacy"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/options_item_text_size" />
+
+        <RadioButton
+            android:id="@+id/icon_two_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="?attr/iconColor" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/options_item_padding">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/options_item_padding"
+            android:src="@mipmap/ic_launcher_02" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:layout_weight="1"
+            android:fontFamily="@font/regular"
+            android:text="Simple"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/options_item_text_size" />
+
+        <RadioButton
+            android:id="@+id/icon_three_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="?attr/iconColor" />
+
+    </LinearLayout>
+
+</LinearLayout>

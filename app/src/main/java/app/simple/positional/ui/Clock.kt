@@ -53,6 +53,13 @@ import java.util.*
 
 class Clock : Fragment() {
 
+    fun newInstance(): Clock {
+        val args = Bundle()
+        val fragment = Clock()
+        fragment.arguments = args
+        return fragment
+    }
+
     private lateinit var toolbar: MaterialToolbar
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 

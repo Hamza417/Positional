@@ -3,11 +3,6 @@
     <string name="licensing_key">@string/thisAppLicensingKey</string>
 
     <string name="app_name" tools:override="true">Positional</string>
-    <string name="access_fine_location_info">It is required to run the GPS of the device and fetch the possibly accurate location details</string>
-    <string name="internet_perm_info">Used to fetch the address of the given location</string>
-    <string name="coarse_perm_info">Used to show a precise location data in case GPS is unavailable or until available</string>
-    <string name="wfi_perm_info">Used to check if WiFi connectivity is available</string>
-    <string name="network_perm_info">Used to check if network is available and is connected</string>
 
     <string name="ellipsis">&#8230;</string>
     <string name="clock">Clock</string>
@@ -20,7 +15,6 @@
     <string name="found_issue">It is hard to make an app and even harder to make everything working flawlessly. In such situations it is always nice to have some support, if you found an issue please file an issue on Github expressing your problems or email me, it is quick and easy and it will only make the app better</string>
     <string name="play_services_issue">Looks your device does not support Google Play Services, it could be because of faulty implementation or your device manufacturer did not installed it, either way it is going to break some of the apps\' functionality</string>
     <string name="no_sensor_alert">Your device does not seem to have the required sensors available to make this feature work :(\n\nIf you think this is a mistake please contact developer to resolve this issue as soon as possible</string>
-    <string name="permission_acknowledgement">This app uses location information to calculate all the information shown in this app, this app does not collect any user data and does not sell any information of the user to any third party.\nThese are the permissions the app uses to show the meaningful information to the user</string>
     <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your device in figure eight direction to calibrate</string>
     <string name="compass_menu_button">Compass Menu Button</string>
     <string name="push_notifications">Receive non intrusive notifications about changes in upcoming updates</string>

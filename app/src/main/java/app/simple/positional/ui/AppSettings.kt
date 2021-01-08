@@ -32,9 +32,17 @@ import java.lang.ref.WeakReference
 
 class AppSettings : Fragment(), CoordinatesCallback {
 
+    fun newInstance(): AppSettings {
+        val args = Bundle()
+        val fragment = AppSettings()
+        fragment.arguments = args
+        return fragment
+    }
+
     private lateinit var buyFull: LinearLayout
     private lateinit var unit: LinearLayout
     private lateinit var theme: LinearLayout
+    private lateinit var icon: LinearLayout
     private lateinit var customLocation: LinearLayout
     private lateinit var pushNotification: LinearLayout
     private lateinit var appVersion: LinearLayout
@@ -63,6 +71,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         buyFull = view.findViewById(R.id.buy_full)
         unit = view.findViewById(R.id.settings_units)
         theme = view.findViewById(R.id.settings_theme)
+        icon = view.findViewById(R.id.settings_icons)
         customLocation = view.findViewById(R.id.setting_custom_location)
         pushNotification = view.findViewById(R.id.setting_notification)
         appVersion = view.findViewById(R.id.current_app_version)
@@ -108,6 +117,10 @@ class AppSettings : Fragment(), CoordinatesCallback {
             theme.show(parentFragmentManager, "null")
         }
 
+        icon.setOnClickListener {
+            Icons().newInstance().show(childFragmentManager, "app_icons")
+        }
+
         unit.setOnClickListener {
             val units = WeakReference(Units(WeakReference(this)))
             units.get()?.show(parentFragmentManager, "null")
@@ -120,7 +133,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
                 coordinates.coordinatesCallback = this
                 coordinates.show(childFragmentManager, "coordinates")
             } else {
-                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+                BuyFull().newInstance().show(childFragmentManager, "null")
             }
         }
 
@@ -136,7 +149,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
                     }
                 }
             } else {
-                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+                BuyFull().newInstance().show(childFragmentManager, "null")
                 toggleCustomLocation.isChecked = false
             }
         }

@@ -56,11 +56,19 @@ import kotlin.math.abs
 
 class Compass : Fragment(), SensorEventListener {
 
+    fun newInstance(): Compass {
+        val args = Bundle()
+        val fragment = Compass()
+        fragment.arguments = args
+        return fragment
+    }
+
     private var handler = Handler(Looper.getMainLooper())
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private var objectAnimator: ObjectAnimator? = null
     private var backPress: OnBackPressedDispatcher? = null
+    private var calibrationDialog: CompassCalibration? = null
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
@@ -354,7 +362,7 @@ class Compass : Fragment(), SensorEventListener {
                     objectAnimator?.cancel()
                     dial.clearAnimation()
                     handler.removeCallbacks(compassDialAnimationRunnable)
-                    lastDialAngle = dial.rotation
+                    lastDialAngle = if (dial.rotation < -180) abs(dial.rotation) else dial.rotation
                     startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     return true
                 }
@@ -399,13 +407,11 @@ class Compass : Fragment(), SensorEventListener {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
                     accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: Unreliable")
-                    val weakReference = WeakReference(CompassCalibration().newInstance())
-                    weakReference.get()?.show(parentFragmentManager, "null")
+                    openCalibrationDialog()
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
                     accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: Low")
-                    val weakReference = WeakReference(CompassCalibration().newInstance())
-                    weakReference.get()?.show(parentFragmentManager, "null")
+                    openCalibrationDialog()
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
                     accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: Medium")
@@ -420,13 +426,11 @@ class Compass : Fragment(), SensorEventListener {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
                     accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: Unreliable")
-                    val weakReference = WeakReference(CompassCalibration().newInstance())
-                    weakReference.get()?.show(parentFragmentManager, "null")
+                    openCalibrationDialog()
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
                     accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: Low")
-                    val weakReference = WeakReference(CompassCalibration().newInstance())
-                    weakReference.get()?.show(parentFragmentManager, "null")
+                    openCalibrationDialog()
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
                     accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: Medium")
@@ -470,7 +474,7 @@ class Compass : Fragment(), SensorEventListener {
             }
         }
 
-        degrees.text = StringBuilder().append(rotationAngle.toInt()).append("°")
+        degrees.text = StringBuilder().append(abs(rotationAngle.toInt())).append("°")
 
         direction.text = if (showDirectionCode) {
             getDirectionCodeFromAzimuth(azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
@@ -542,5 +546,12 @@ class Compass : Fragment(), SensorEventListener {
             }
         })
         objectAnimator!!.start()
+    }
+
+    private fun openCalibrationDialog() {
+        if (calibrationDialog == null) {
+            calibrationDialog = CompassCalibration().newInstance()
+            calibrationDialog!!.show(parentFragmentManager, "calibration_dialog")
+        }
     }
 }

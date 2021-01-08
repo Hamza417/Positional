@@ -29,6 +29,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
+            android:layout_marginHorizontal="@dimen/options_item_padding"
             android:padding="@dimen/options_item_padding"
             android:text="@string/found_issue"
             android:textColor="?attr/textSecondary"

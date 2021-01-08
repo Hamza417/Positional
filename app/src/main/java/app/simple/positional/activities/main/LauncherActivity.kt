@@ -1,4 +1,4 @@
-package app.simple.positional.activities
+package app.simple.positional.activities.main
 
 import android.os.Bundle
 import android.text.format.DateFormat

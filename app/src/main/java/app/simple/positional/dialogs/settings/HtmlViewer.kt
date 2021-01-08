@@ -1,12 +1,10 @@
 package app.simple.positional.dialogs.settings
 
-import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.widget.Toast
 import androidx.webkit.WebSettingsCompat
@@ -36,15 +34,11 @@ class HtmlViewer : CustomBottomSheetDialog() {
         return inflater.inflate(R.layout.dialog_legal_notes, container, false)
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         webView = view.findViewById(R.id.web_view)
-        webView.webChromeClient = WebChromeClient()
         webView.setBackgroundColor(0)
-        webView.settings.javaScriptEnabled = true
-        webView.settings.domStorageEnabled = true
 
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
             if (requireContext().resources.configuration.uiMode and

@@ -1,10 +1,7 @@
-package app.simple.positional.activities
+package app.simple.positional.activities.main
 
 import android.Manifest
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.PixelFormat
 import android.os.Bundle
@@ -13,7 +10,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
@@ -21,12 +18,8 @@ import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.dialogs.app.BuyFull
 import app.simple.positional.dialogs.app.PermissionDialog
 import app.simple.positional.firebase.MessagingService
-import app.simple.positional.preference.FragmentPreferences.getCurrentPage
-import app.simple.positional.preference.FragmentPreferences.setCurrentPage
-import app.simple.positional.preference.MainPreferences.getLaunchCount
-import app.simple.positional.preference.MainPreferences.getShowPermissionDialog
-import app.simple.positional.preference.MainPreferences.isScreenOn
-import app.simple.positional.preference.MainPreferences.setLaunchCount
+import app.simple.positional.preference.FragmentPreferences
+import app.simple.positional.preference.MainPreferences
 import app.simple.positional.services.LocationService
 import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.*
@@ -39,16 +32,13 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     private var locationIntent: Intent? = null
     private var reviewInfo: ReviewInfo? = null
-    private var filter: IntentFilter = IntentFilter()
-    private lateinit var localBroadcastReceiver: BroadcastReceiver
     private lateinit var bottomBar: SmoothBottomBar
+    private val fragmentTags = arrayOf("clock", "compass", "gps", "level", "settings")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        filter.addAction("finish")
-
-        if (isScreenOn()) {
+        if (MainPreferences.isScreenOn()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
@@ -66,27 +56,17 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         checkRunTimePermission()
 
         bottomBar.setOnItemSelectedListener {
-            setFragment(it)
-            setCurrentPage(it)
+            openFragment(it)
+            FragmentPreferences.setCurrentPage(it)
         }
 
         showReviewPromptToUser()
-        showPurchaseDialog(getLaunchCount())
-
-        localBroadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                if (intent?.action != null) {
-                    if (intent.action == "finish") {
-                        this@MainActivity.finish()
-                    }
-                }
-            }
-        }
+        showPurchaseDialog(MainPreferences.getLaunchCount())
     }
 
     private fun showReviewPromptToUser() {
 
-        if (getLaunchCount() < 5) {
+        if (MainPreferences.getLaunchCount() < 5) {
             return
         }
 
@@ -109,21 +89,18 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     override fun onResume() {
         super.onResume()
-        LocalBroadcastManager.getInstance(this).registerReceiver(localBroadcastReceiver, filter)
         runService()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        println("Destroy")
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(localBroadcastReceiver)
         stopService()
     }
 
     private fun checkRunTimePermission() {
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (getShowPermissionDialog()) {
+            if (MainPreferences.getShowPermissionDialog()) {
                 val permissionDialog = PermissionDialog().newInstance()
                 permissionDialog.show(supportFragmentManager, "permission_info")
             } else {
@@ -152,8 +129,8 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     }
 
     private fun runApp() {
-        setFragment(getCurrentPage())
-        bottomBar.itemActiveIndex = getCurrentPage()
+        openFragment(FragmentPreferences.getCurrentPage())
+        bottomBar.itemActiveIndex = FragmentPreferences.getCurrentPage()
 
     }
 
@@ -188,82 +165,38 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         ), DEFAULT_PERMISSION_REQUEST_CODE)
     }
 
-    private fun setFragment(position: Int) {
+    private fun openFragment(position: Int) {
+        supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                .replace(R.id.containers, getFragment(position), fragmentTags[position])
+                .commit()
+    }
+
+    private fun getFragment(position: Int): Fragment {
         when (position) {
             0 -> {
-                val clock = supportFragmentManager.findFragmentByTag("clock") as Clock?
-
-                if (clock == null) {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, Clock(), "clock")
-                            .commit()
-                } else {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, clock, "clock")
-                            .commit()
-                }
+                return supportFragmentManager.findFragmentByTag("clock") as Clock?
+                        ?: Clock().newInstance()
             }
             1 -> {
-                val compass = supportFragmentManager.findFragmentByTag("compass") as Compass?
-
-                if (compass == null) {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, Compass(), "compass")
-                            .commit()
-                } else {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, compass, "compass")
-                            .commit()
-                }
+                return supportFragmentManager.findFragmentByTag("compass") as Compass?
+                        ?: Compass().newInstance()
             }
             2 -> {
-                val gps = supportFragmentManager.findFragmentByTag("gps") as GPS?
-
-                if (gps == null) {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, GPS(), "gps")
-                            .commit()
-                } else {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, gps, "gps")
-                            .commit()
-                }
+                return supportFragmentManager.findFragmentByTag("gps") as GPS?
+                        ?: GPS().newInstance()
             }
             3 -> {
-                val level = supportFragmentManager.findFragmentByTag("level") as Level?
-
-                if (level == null) {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, Level(), "level")
-                            .commit()
-                } else {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, level, "level")
-                            .commit()
-                }
+                return supportFragmentManager.findFragmentByTag("level") as Level?
+                        ?: Level().newInstance()
             }
             4 -> {
-                val settings = supportFragmentManager.findFragmentByTag("settings") as AppSettings?
-
-                if (settings == null) {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, AppSettings(), "settings")
-                            .commit()
-                } else {
-                    supportFragmentManager.beginTransaction()
-                            .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                            .replace(R.id.containers, settings, "settings")
-                            .commit()
-                }
+                return supportFragmentManager.findFragmentByTag("settings") as AppSettings?
+                        ?: AppSettings().newInstance()
+            }
+            else -> {
+                return supportFragmentManager.findFragmentByTag("clock") as Clock?
+                        ?: Clock().newInstance()
             }
         }
     }
@@ -280,6 +213,6 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
             }
         }
 
-        setLaunchCount(getLaunchCount() + 1)
+        MainPreferences.setLaunchCount(MainPreferences.getLaunchCount() + 1)
     }
 }

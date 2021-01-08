@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.dialogs.app.BuyFull
 import app.simple.positional.preference.CompassPreference.isFlowerBloom
 import app.simple.positional.preference.CompassPreference.setDirectionCode
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
@@ -61,7 +61,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
                 weakReference.get()?.setFlower(isChecked)
                 setFlowerBloom(isChecked)
             } else {
-                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+                BuyFull().newInstance().show(childFragmentManager, "null")
                 toggleFlower.isChecked = false
             }
         }
@@ -71,7 +71,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
                 val compassBloom = CompassBloom(weakReference)
                 compassBloom.show(parentFragmentManager, "null")
             } else {
-                Toast.makeText(requireContext(), "This feature is only available in full version", Toast.LENGTH_LONG).show()
+                BuyFull().newInstance().show(childFragmentManager, "null")
                 toggleFlower.isChecked = false
             }
         }

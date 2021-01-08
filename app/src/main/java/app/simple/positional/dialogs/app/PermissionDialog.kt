@@ -1,10 +1,15 @@
 package app.simple.positional.dialogs.app
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.CheckBox
+import android.widget.Toast
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 import app.simple.positional.R
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.preference.MainPreferences.setShowPermissionDialog
@@ -18,6 +23,7 @@ class PermissionDialog : CustomBottomSheetDialog() {
     }
 
     private var permissionCallbacks: PermissionCallbacks? = null
+    private lateinit var webView: WebView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +42,23 @@ class PermissionDialog : CustomBottomSheetDialog() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        webView = view.findViewById(R.id.permissions_webview)
+        webView.setBackgroundColor(0)
+
         val grant: MaterialButton = view.findViewById(R.id.grant)
         val close: MaterialButton = view.findViewById(R.id.close)
+
+        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+            if (requireContext().resources.configuration.uiMode and
+                    Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+                WebSettingsCompat.setForceDark(webView.settings, WebSettingsCompat.FORCE_DARK_ON)
+            }
+        } else {
+            Toast.makeText(requireContext(), "If you are having trouble viewing this make sure you are using the latest WebView", Toast.LENGTH_LONG).show()
+        }
+
+        webView.loadUrl("file:///android_asset/required_permissions.html")
 
         grant.setOnClickListener {
             if (permissionCallbacks != null) {

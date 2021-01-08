@@ -18,7 +18,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.activities.MainActivity
+import app.simple.positional.activities.main.MainActivity
 import app.simple.positional.constants.*
 import app.simple.positional.preference.FragmentPreferences.setCurrentPage
 import app.simple.positional.util.addLinearGradient
