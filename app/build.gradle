@@ -59,7 +59,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 55
+    def appVersionCode = 56
     def appVersionName = "Build$appVersionCode"
 
     defaultConfig {
@@ -113,11 +113,13 @@ android {
              *
              * For future references to why it is here, this problem is caused by
              * missing google-services.json file for the debug build and this code
-             * here is only masking the error and not solving it
+             * here is only masking the error and not solving it. In short it will
+             * quickly compile the app for debug but won't work in release builds
+             * if google-services.json file is missing
              */
             gradle.taskGraph.whenReady {
                 tasks.each { task ->
-                    if(task.name.contains("processFullDebugGoogleServices")) {
+                    if(task.name.contains("processFullDebugGoogleServices") || task.name.contains("processLiteDebugGoogleServices")) {
                         task.enabled = false
                     }
                 }
