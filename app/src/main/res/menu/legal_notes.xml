@@ -9,4 +9,7 @@
     <item
         android:id="@+id/three"
         android:title="Terms of Use" />
+    <item
+        android:id="@+id/four"
+        android:title="Permissions" />
 </menu>

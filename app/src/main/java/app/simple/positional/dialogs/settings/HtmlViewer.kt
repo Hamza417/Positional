@@ -63,6 +63,9 @@ class HtmlViewer : CustomBottomSheetDialog() {
                 "Custom Coordinates Help" -> {
                     loadWebView("file:///android_asset/custom_coordinates_help.html")
                 }
+                "Permissions" -> {
+                    loadWebView("file:///android_asset/required_permissions.html")
+                }
             }
         }
     }

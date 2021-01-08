@@ -21,6 +21,7 @@
         <item name="android:colorEdgeEffect">@color/edgeEffect</item>
         <item name="cardBackground">#fafafa</item>
         <item name="clockDialColor">@color/clockDialColor</item>
+        <item name="dropDownListViewStyle">@style/PopUpTheme</item>
 
         <item name="indicator">@color/indicator</item>
         <item name="iconRegular">@color/iconRegular</item>
@@ -30,8 +31,6 @@
         <item name="switcher_on_end_color">@color/switcher_on_end_color</item>
         <item name="switcher_off_color">@color/switcher_off_color</item>
         <item name="switcher_icon_color">@color/switcher_icon_color</item>
-
-        <item name="android:popupBackground">@style/PopupMenu</item>
 
         <item name="alphaIcons">0.5</item>
     </style>
@@ -63,7 +62,7 @@
         <item name="android:windowExitAnimation">@anim/bottom_sheet_dialog_out</item>
     </style>
 
-    <style name="PopupMenu" parent="Widget.AppCompat.PopupMenu">
+    <style name="PopUpTheme" parent="Widget.AppCompat.ListView.DropDown">
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
