@@ -1,5 +1,6 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/gps_list_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,7 +35,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
-                android:text="GPS Info"
+                android:text="@string/gps_info"
                 android:textColor="?attr/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
 
@@ -47,6 +48,7 @@
                 android:padding="@dimen/copy_button_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_content_copy"
+                android:contentDescription="@string/button_copy"
                 app:tint="?attr/iconColor" />
 
         </LinearLayout>
@@ -66,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Provider"
+                android:text="@string/gps_provider"
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
@@ -77,6 +79,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/gps_status"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -87,6 +90,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/gps_source"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
@@ -106,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Location"
+                android:text="@string/gps_location"
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
@@ -117,6 +121,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/gps_accuracy"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -127,6 +132,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/gps_altitude"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -137,6 +143,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/gps_bearing"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
@@ -163,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="1"
-                    android:text="Movement"
+                    android:text="@string/gps_movement"
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <ImageButton
@@ -176,6 +183,7 @@
                     android:padding="@dimen/notification_button_padding"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_reset"
+                    android:contentDescription="@string/button_reset"
                     app:tint="?attr/iconColor" />
 
             </LinearLayout>
@@ -188,6 +196,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/gps_displacement"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -198,6 +207,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/gps_direction"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -208,6 +218,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/gps_speed"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
@@ -228,7 +239,7 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/light"
             android:gravity="center"
-            android:text="Information shown below are being updated for specified location coordinates"
+            android:text="@string/specified_location_notice"
             android:textAlignment="center"
             android:textColor="?attr/textSecondary"
             android:visibility="gone" />
@@ -246,7 +257,8 @@
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_coordinate_route" />
+                android:src="@drawable/ic_coordinate_route"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -258,7 +270,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Coordinates"
+                    android:text="@string/gps_coordinates"
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
@@ -269,6 +281,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/gps_latitude"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -279,6 +292,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/gps_longitude"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -299,7 +313,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Address"
+                android:text="@string/gps_address"
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView

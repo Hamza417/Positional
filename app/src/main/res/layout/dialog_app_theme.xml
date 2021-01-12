@@ -19,7 +19,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Light"
+            android:text="@string/theme_day"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -44,7 +44,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Dark"
+            android:text="@string/theme_night"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -69,7 +69,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Follow System"
+            android:text="@string/theme_follow_system"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -94,7 +94,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Auto (Day/Night)"
+            android:text="@string/theme_auto"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 

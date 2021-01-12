@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:fontFamily="@font/medium"
-            android:text="Compass"
+            android:text="@string/compass"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/top_bar_text_size" />
 
@@ -32,7 +32,7 @@
             android:layout_height="@dimen/top_bar_button_size"
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple_btn"
-            android:contentDescription="Compass Button"
+            android:contentDescription="@string/compass_options"
             android:src="@drawable/ic_more_horiz"
             android:tint="?attr/iconColor" />
 

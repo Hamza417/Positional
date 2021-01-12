@@ -43,6 +43,7 @@ li {
 }
 
 a:link {
-	color: rgb(96, 125, 139);
+	color: rgb(52, 152, 219);
+	text-decoration: none;
 	background-color: transparent;
 }

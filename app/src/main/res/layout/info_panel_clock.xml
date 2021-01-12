@@ -33,7 +33,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
-                android:text="Clock Info"
+                android:text="@string/clock_info"
                 android:textColor="?attr/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
 
@@ -44,6 +44,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ripple_btn"
                 android:padding="@dimen/copy_button_padding"
+                android:contentDescription="@string/button_ok"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_content_copy"
                 app:tint="?attr/iconColor" />
@@ -68,7 +69,7 @@
             android:layout_marginBottom="15dp"
             android:fontFamily="@font/light"
             android:gravity="center"
-            android:text="Information shown below are being updated for specified location coordinates"
+            android:text="@string/specified_location_notice"
             android:textAlignment="center"
             android:textColor="?attr/textSecondary"
             android:visibility="gone" />
@@ -102,7 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Local Time"
+                    android:text="@string/local_time"
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
@@ -113,6 +114,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/local_timezone"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -123,6 +125,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/local_time_24hr"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -133,6 +136,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/local_time_12hr"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -143,6 +147,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/local_day"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -153,6 +158,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/local_date"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -163,6 +169,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/local_day_of_year"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -173,6 +180,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/local_week_of_year"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -195,7 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="UTC Time"
+                android:text="@string/utc_time"
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
@@ -206,11 +214,13 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/utc_local_time_offset"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
                 android:id="@+id/time_utc"
                 style="@style/SecondaryTextView"
+                android:text="@string/utc_current_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
@@ -226,6 +236,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/utc_current_date"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
@@ -245,10 +256,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Sun Position"
+                android:text="@string/sun_position"
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
+                android:text="@string/sun_azimuth"
                 android:id="@+id/sun_azimuth"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
@@ -266,11 +278,13 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/sun_distance"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
                 android:id="@+id/sun_altitude"
                 style="@style/SecondaryTextView"
+                android:text="@string/sun_altitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
@@ -292,7 +306,8 @@
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_sunrise" />
+                android:src="@drawable/ic_sunrise"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -305,12 +320,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Sun Time"
+                    android:text="@string/sun_time"
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
                     android:id="@+id/sunrise_time"
                     style="@style/SecondaryTextView"
+                    android:text="@string/sun_sunrise"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
@@ -320,6 +336,7 @@
 
                 <TextView
                     android:id="@+id/sun_noon"
+                    android:text="@string/sun_noon"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -330,6 +347,7 @@
 
                 <TextView
                     android:id="@+id/sunset_time"
+                    android:text="@string/sun_sunset"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -340,6 +358,7 @@
 
                 <TextView
                     android:id="@+id/sun_nadir"
+                    android:text="@string/sun_nadir"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -365,7 +384,8 @@
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_twilight" />
+                android:src="@drawable/ic_twilight"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -378,12 +398,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Twilight"
+                    android:text="@string/twilight"
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
                     android:id="@+id/astronomical_dawn_twilight"
                     style="@style/SecondaryTextView"
+                    android:text="@string/twilight_astronomical_dawn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
@@ -394,6 +415,7 @@
                 <TextView
                     android:id="@+id/nautical_dawn_twilight"
                     style="@style/SecondaryTextView"
+                    android:text="@string/twilight_nautical_dawn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
@@ -404,6 +426,7 @@
                 <TextView
                     android:id="@+id/civil_dawn_twilight"
                     style="@style/SecondaryTextView"
+                    android:text="@string/twilight_civil_dawn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
@@ -414,6 +437,7 @@
                 <TextView
                     android:id="@+id/civil_dusk_twilight"
                     style="@style/SecondaryTextView"
+                    android:text="@string/twilight_civil_dusk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
@@ -424,6 +448,7 @@
                 <TextView
                     android:id="@+id/nautical_dusk_twilight"
                     style="@style/SecondaryTextView"
+                    android:text="@string/twilight_nautical_dusk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
@@ -435,6 +460,7 @@
                     android:id="@+id/astronomical_dusk_twilight"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
+                    android:text="@string/twilight_astronomical_dusk"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
@@ -460,7 +486,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Moon Position"
+                android:text="@string/moon_position"
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
@@ -471,6 +497,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/moon_azimuth"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -481,6 +508,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/moon_distance"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -491,6 +519,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/moon_altitude"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -501,6 +530,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/moon_parallactic_angle"
                 android:textSize="@dimen/info_text_secondary_size" />
         </LinearLayout>
 
@@ -517,7 +547,8 @@
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_moon_phase" />
+                android:src="@drawable/ic_moon_phase"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -530,7 +561,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Moon Time"
+                    android:text="@string/moon_time"
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
@@ -541,6 +572,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/moon_moonrise"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -551,6 +583,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/moon_moonset"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -575,7 +608,8 @@
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginTop="20dp"
                 android:padding="10dp"
-                android:src="@drawable/moon_phase_02" />
+                android:src="@drawable/moon_phase_02"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -587,7 +621,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:text="Moon Illumination"
+                    android:text="@string/moon_illumination"
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
@@ -598,6 +632,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/moon_fraction"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -608,6 +643,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/moon_angle"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -618,6 +654,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/moon_angle_state"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -628,6 +665,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/moon_phase"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -638,6 +676,7 @@
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/moon_phase_angle"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -660,7 +699,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:text="Moon Dates"
+                android:text="@string/moon_dates"
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
@@ -671,6 +710,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/moon_full_moon"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -681,6 +721,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/moon_new_moon"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -691,6 +732,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/moon_first_quarter"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
@@ -701,6 +743,7 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/moon_last_quarter"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>

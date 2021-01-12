@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:alpha="0"
-        android:padding="40dp"
+        android:layout_margin="60dp"
         android:src="@drawable/art_empty"
         tools:ignore="ContentDescription" />
 
@@ -39,7 +39,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
-                android:text="Locations"
+                android:text="@string/specified_data_list_locations"
                 android:textColor="?attr/textPrimary"
                 android:textSize="8pt" />
 
@@ -50,6 +50,7 @@
                 android:layout_gravity="end"
                 android:background="@drawable/ripple_btn"
                 android:src="@drawable/ic_delete"
+                android:contentDescription="@string/delete_all"
                 android:tint="?attr/iconColor" />
         </LinearLayout>
 

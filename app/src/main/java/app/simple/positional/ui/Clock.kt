@@ -35,15 +35,17 @@ import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
 import app.simple.positional.util.DigitalTimeFormatter.getTime
 import app.simple.positional.util.DigitalTimeFormatter.getTimeWithSeconds
+import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
+import app.simple.positional.util.HtmlHelper.fromHtml
+import app.simple.positional.util.MoonAngle.getMoonPhase
+import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.views.CustomCoordinatorLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.shredzone.commons.suncalc.*
+import java.lang.Runnable
 import java.lang.ref.WeakReference
 import java.text.ParseException
 import java.time.*
@@ -302,7 +304,7 @@ class Clock : Fragment() {
 
             val stringBuilder = StringBuilder()
 
-            stringBuilder.append("Local Time\n")
+            stringBuilder.append("${R.string.local_time}\n")
             stringBuilder.append("${localTimeZone.text}\n")
             stringBuilder.append("${digitalTime24.text}\n")
             stringBuilder.append("${digitalTime12.text}\n")
@@ -311,7 +313,7 @@ class Clock : Fragment() {
             stringBuilder.append("${localDayOfTheYear.text}\n")
             stringBuilder.append("${localWeekOfTheYear.text}\n\n")
 
-            stringBuilder.append("UTC Time\n")
+            stringBuilder.append("${R.string.utc_time}\n")
             stringBuilder.append("${utcTimeZone.text}\n")
             stringBuilder.append("${utcTime.text}\n")
             stringBuilder.append("${utcDate.text}\n\n")
@@ -322,7 +324,7 @@ class Clock : Fragment() {
             }
 
             if (sunAzimuth.text != "") {
-                stringBuilder.append("Sun Position\n")
+                stringBuilder.append("${R.string.sun_position}\n")
                 stringBuilder.append("${sunAzimuth.text}\n")
                 stringBuilder.append("${sunDistance.text}\n")
                 stringBuilder.append("${sunAltitude.text}\n")
@@ -331,32 +333,34 @@ class Clock : Fragment() {
                 stringBuilder.append("${sunNadir.text}\n")
                 stringBuilder.append("${sunNoon.text}\n\n")
 
-                stringBuilder.append("Twilight\n")
+                stringBuilder.append("${R.string.twilight}\n")
                 stringBuilder.append("${astronomicalDawnTwilight.text}\n")
                 stringBuilder.append("${nauticalDawnTwilight.text}\n")
                 stringBuilder.append("${civilDawnTwilight.text}\n")
                 stringBuilder.append("${civilDuskTwilight.text}\n\n")
                 stringBuilder.append("${nauticalDuskTwilight.text}\n")
-                stringBuilder.append("${astronomicalDuskTwilight.text}\n")
+                stringBuilder.append("${astronomicalDuskTwilight.text}\n\n")
 
-                stringBuilder.append("Moon Position\n")
+                stringBuilder.append("${R.string.moon_position}\n")
                 stringBuilder.append("${moonAzimuth.text}\n")
                 stringBuilder.append("${moonDistance.text}\n")
                 stringBuilder.append("${moonAltitude.text}\n")
                 stringBuilder.append("${moonParallacticAngle.text}\n")
                 stringBuilder.append("${moonriseTime.text}\n")
-                stringBuilder.append("${moonsetTime.text}\n")
+                stringBuilder.append("${moonsetTime.text}\n\n")
+
+                stringBuilder.append("${R.string.moon_illumination}\n")
                 stringBuilder.append("${moonFraction.text}\n")
                 stringBuilder.append("${moonAngle.text}\n")
                 stringBuilder.append("${moonAngleState.text}\n")
                 stringBuilder.append("${moonPhase.text}\n")
-                stringBuilder.append("${moonPhaseAngle.text}\n")
+                stringBuilder.append("${moonPhaseAngle.text}\n\n")
 
-                stringBuilder.append("Moon Dates\n")
+                stringBuilder.append("${R.string.moon_dates}\n")
                 stringBuilder.append("${nextNewMoon.text}\n")
                 stringBuilder.append("${nextFullMoon.text}\n")
                 stringBuilder.append("${nextFirstQuarter.text}\n")
-                stringBuilder.append("${nextLastQuarter.text}\n")
+                stringBuilder.append("${nextLastQuarter.text}\n\n")
             }
 
             if (BuildConfig.FLAVOR == "lite") {
@@ -375,7 +379,7 @@ class Clock : Fragment() {
         }
     }
 
-    private val textAnimationRunnable: Runnable = Runnable { clockInfoText.setTextAnimation("Time Info", 300) }
+    private val textAnimationRunnable: Runnable = Runnable { clockInfoText.setTextAnimation(getString(R.string.clock_info), 300) }
 
     private val clock: Runnable = object : Runnable {
         override fun run() {
@@ -462,58 +466,60 @@ class Clock : Fragment() {
     private fun calculateAndUpdateData(latitude: Double, longitude: Double) {
         CoroutineScope(Dispatchers.Default).launch {
 
+            if (context == null) return@launch
+
             // Set and Rise
             val sunTimes = SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()
 
             val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTime()) {
-                DateTimeFormatter.ofPattern("hh:mm:ss a")
+                DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(Locale.getDefault())
             } else {
                 DateTimeFormatter.ofPattern("HH:mm:ss")
             }
 
-            val sunrise = fromHtml("<b>Sunrise:</b> ${pattern.format(sunTimes.rise)}")
-            val sunset = fromHtml("<b>Sunset:</b> ${pattern.format(sunTimes.set)}")
-            val sunNoon = fromHtml("<b>Noon:</b> ${pattern.format(sunTimes.noon)}")
-            val sunNadir = fromHtml("<b>Nadir:</b> ${pattern.format(sunTimes.nadir)}")
+            val sunrise = fromHtml("<b>${getString(R.string.sun_sunrise)}</b> ${pattern.format(sunTimes.rise)}")
+            val sunset = fromHtml("<b>${getString(R.string.sun_sunset)}</b> ${pattern.format(sunTimes.set)}")
+            val sunNoon = fromHtml("<b>${getString(R.string.sun_noon)}</b> ${pattern.format(sunTimes.noon)}")
+            val sunNadir = fromHtml("<b>${getString(R.string.sun_nadir)}</b> ${pattern.format(sunTimes.nadir)}")
 
             val moonTimes = MoonTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude).execute()
-            val moonrise = fromHtml("<b>Moonrise:</b> ${pattern.format(moonTimes.rise)}")
-            val moonset = fromHtml("<b>Moonset:</b> ${pattern.format(moonTimes.set)}")
+            val moonrise = fromHtml("<b>${getString(R.string.moon_moonrise)}</b> ${pattern.format(moonTimes.rise)}")
+            val moonset = fromHtml("<b>${getString(R.string.moon_moonset)}</b> ${pattern.format(moonTimes.set)}")
 
             val twilightTimes = SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude)
-            val astronomicalDawn = fromHtml("<b>Astronomical Dawn:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise)}")
-            val astronomicalDusk = fromHtml("<b>Astronomical Dusk:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set)}")
-            val nauticalDawn = fromHtml("<b>Nautical Dawn:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().rise)}")
-            val nauticalDusk = fromHtml("<b>Nautical Dusk:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().set)}")
-            val civilDawn = fromHtml("<b>Civil Dawn:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().rise)}")
-            val civilDusk = fromHtml("<b>Civil Dusk:</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().set)}")
+            val astronomicalDawn = fromHtml("<b>${getString(R.string.twilight_astronomical_dawn)}</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise)}")
+            val nauticalDawn = fromHtml("<b>${getString(R.string.twilight_nautical_dawn)}</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().rise)}")
+            val civilDawn = fromHtml("<b>${getString(R.string.twilight_civil_dawn)}</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().rise)}")
+            val civilDusk = fromHtml("<b>${getString(R.string.twilight_civil_dusk)}</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.CIVIL).execute().set)}")
+            val nauticalDusk = fromHtml("<b>${getString(R.string.twilight_nautical_dusk)}</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.NAUTICAL).execute().set)}")
+            val astronomicalDusk = fromHtml("<b>${getString(R.string.twilight_astronomical_dusk)}</b> ${pattern.format(twilightTimes.twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set)}")
 
             // Position
             val sunPosition: SunPosition = SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).execute()
-            val sunAzimuth = fromHtml("<b>Azimuth:</b> ${round(sunPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(sunPosition.azimuth)}")
-            val sunAltitude = fromHtml("<b>Altitude:</b> ${round(sunPosition.trueAltitude, 2)}°")
+            val sunAzimuth = fromHtml("<b>${getString(R.string.sun_azimuth)}</b> ${round(sunPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), sunPosition.azimuth)}")
+            val sunAltitude = fromHtml("<b>${getString(R.string.sun_altitude)}</b> ${round(sunPosition.trueAltitude, 2)}°")
             val sunDistance = if (isMetric) {
-                fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance)} km")
+                fromHtml("<b>${getString(R.string.sun_distance)}</b> ${String.format("%.3E", sunPosition.distance)} ${getString(R.string.kilometer)}")
             } else {
-                fromHtml("<b>Distance:</b> ${String.format("%.3E", sunPosition.distance.toMiles())} miles")
+                fromHtml("<b>${getString(R.string.sun_distance)}</b> ${String.format("%.3E", sunPosition.distance.toMiles())} ${getString(R.string.miles)}")
             }
 
             val moonPosition: MoonPosition = MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()
-            val moonAzimuth = fromHtml("<b>Azimuth:</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(moonPosition.azimuth)}")
-            val moonAltitude = fromHtml("<b>Altitude:</b> ${round(moonPosition.altitude, 2)}°")
+            val moonAzimuth = fromHtml("<b>${getString(R.string.moon_azimuth)}</b> ${round(moonPosition.azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), moonPosition.azimuth)}")
+            val moonAltitude = fromHtml("<b>${getString(R.string.moon_altitude)}</b> ${round(moonPosition.altitude, 2)}°")
             val moonDistance = if (isMetric) {
-                fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance)} km")
+                fromHtml("<b>${getString(R.string.moon_distance)}</b> ${String.format("%.3E", moonPosition.distance)} ${getString(R.string.kilometer)}")
             } else {
-                fromHtml("<b>Distance:</b> ${String.format("%.3E", moonPosition.distance.toMiles())} miles")
+                fromHtml("<b>${getString(R.string.moon_distance)}</b> ${String.format("%.3E", moonPosition.distance.toMiles())} ${getString(R.string.miles)}")
             }
-            val moonParallacticAngle = fromHtml("<b>Parallactic Angle:</b> ${round(moonPosition.parallacticAngle, 2)}°")
+            val moonParallacticAngle = fromHtml("<b>${getString(R.string.moon_parallactic_angle)}</b> ${round(moonPosition.parallacticAngle, 2)}°")
 
             val moonIllumination = MoonIllumination.compute().timezone(timezone).on(Instant.now()).execute()
-            val moonFraction = fromHtml("<b>Fraction: </b> ${round(moonIllumination.fraction, 2)}")
-            val moonAngle = fromHtml("<b>Angle:</b> ${round(moonIllumination.angle, 2)}°")
-            val moonAngleState = fromHtml("<b>Angle State:</b> ${if (moonIllumination.angle < 0) "Waxing" else "Waning"}")
-            val moonPhase = fromHtml("<b>Phase:</b> ${getMoonPhase(moonIllumination.phase)}")
-            val moonPhaseAngle = fromHtml("<b>Phase Angle:</b> ${round(moonIllumination.phase, 2)}°")
+            val moonFraction = fromHtml("<b>${getString(R.string.moon_fraction)}</b> ${round(moonIllumination.fraction, 2)}")
+            val moonAngle = fromHtml("<b>${getString(R.string.moon_angle)}</b> ${round(moonIllumination.angle, 2)}°")
+            val moonAngleState = fromHtml("<b>${getString(R.string.moon_angle_state)}</b> ${if (moonIllumination.angle < 0) getString(R.string.waxing) else getString(R.string.waning)}")
+            val moonPhase = fromHtml("<b>${getString(R.string.moon_phase)}</b> ${getMoonPhase(requireContext(), moonIllumination.phase)}")
+            val moonPhaseAngle = fromHtml("<b>${getString(R.string.moon_phase_angle)}</b> ${round(moonIllumination.phase, 2)}°")
 
             if (moonImageCountViolation != 0) {
                 /**
@@ -526,10 +532,10 @@ class Clock : Fragment() {
                 moonImageCountViolation = 0
             }
 
-            val nextFullMoon = fromHtml("<b>Full Moon:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time)}")
-            val nextNewMoon = fromHtml("<b>New Moon:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.NEW_MOON).execute().time)}")
-            val nextFirstQuarter = fromHtml("<b>First Quarter:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FIRST_QUARTER).execute().time)}")
-            val nextLastQuarter = fromHtml("<b>Last Quarter:</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.LAST_QUARTER).execute().time)}")
+            val nextFullMoon = fromHtml("<b>${getString(R.string.moon_full_moon)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time)}")
+            val nextNewMoon = fromHtml("<b>${getString(R.string.moon_new_moon)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.NEW_MOON).execute().time)}")
+            val nextFirstQuarter = fromHtml("<b>${getString(R.string.moon_first_quarter)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FIRST_QUARTER).execute().time)}")
+            val nextLastQuarter = fromHtml("<b>${getString(R.string.moon_last_quarter)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.LAST_QUARTER).execute().time)}")
 
             withContext(Dispatchers.Main) {
                 try {
@@ -590,18 +596,18 @@ class Clock : Fragment() {
                 val zoneId = ZoneId.of(timezone)
                 val zonedDateTime: ZonedDateTime = Instant.now().atZone(zoneId)
 
-                localTimeZone = fromHtml("<b>Time Zone: </b> ${zonedDateTime.zone}")
-                digitalTime24 = fromHtml("<b>Time 24Hr:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))}")
-                digitalTime12 = fromHtml("<b>Time 12Hr:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a", Locale.getDefault()))}")
+                localTimeZone = fromHtml("<b>${getString(R.string.local_timezone)}</b> ${zonedDateTime.zone}")
+                digitalTime24 = fromHtml("<b>${getString(R.string.local_time_24hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))}")
+                digitalTime12 = fromHtml("<b>${getString(R.string.local_time_12hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a", Locale.getDefault()))}")
                 digitalTime = getTime(zonedDateTime)
-                localDate = fromHtml("<b>Date:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
-                localDay = fromHtml("<b>Day:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("EEEE"))}")
-                dayOfTheYear = fromHtml("<b>Day of Year:</b> ${LocalDate.now().dayOfYear.getOrdinal()}")
-                weekOfTheYear = fromHtml("<b>Week of Year:</b> ${zonedDateTime.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).getOrdinal()}")
+                localDate = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
+                localDay = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("EEEE"))}")
+                dayOfTheYear = fromHtml("<b>${getString(R.string.local_day_of_year)}</b> ${LocalDate.now().dayOfYear.getOrdinal()}")
+                weekOfTheYear = fromHtml("<b>${getString(R.string.local_week_of_year)}</b> ${zonedDateTime.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).getOrdinal()}")
 
-                utcTimeZone = fromHtml("<b>Local Time Offset:</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("XXX"))}")
-                utcTime = fromHtml("<b>Time:</b> ${getTimeWithSeconds(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())))}")
-                utcDate = fromHtml("<b>Date:</b> ${ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())).format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
+                utcTimeZone = fromHtml("<b>${getString(R.string.utc_local_time_offset)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("XXX"))}")
+                utcTime = fromHtml("<b>${getString(R.string.utc_current_time)}</b> ${getTimeWithSeconds(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())))}")
+                utcDate = fromHtml("<b>${getString(R.string.utc_current_date)}</b> ${ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())).format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
             } catch (e: ParseException) {
                 e.printStackTrace()
             }

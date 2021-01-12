@@ -51,26 +51,34 @@ class HtmlViewer : CustomBottomSheetDialog() {
 
         if (this.arguments != null) {
             when (this.requireArguments().get("source")) {
-                "Privacy Policy" -> {
-                    loadWebView("file:///android_asset/privacy_policy.html")
+                getString(R.string.privacy_policy) -> {
+                    webView.loadUrl("file:///android_asset/privacy_policy.html")
                 }
-                "Disclaimer" -> {
-                    loadWebView("file:///android_asset/disclaimer.html")
+                getString(R.string.disclaimer) -> {
+                    webView.loadUrl("file:///android_asset/disclaimer.html")
                 }
-                "Terms of Use" -> {
-                    loadWebView("file:///android_asset/terms_and_conditions.html")
+                getString(R.string.terms_of_use) -> {
+                    webView.loadUrl("file:///android_asset/terms_and_conditions.html")
                 }
                 "Custom Coordinates Help" -> {
-                    loadWebView("file:///android_asset/custom_coordinates_help.html")
+                    webView.loadUrl("file:///android_asset/custom_coordinates_help.html")
                 }
-                "Permissions" -> {
-                    loadWebView("file:///android_asset/required_permissions.html")
+                getString(R.string.permissions) -> {
+                    webView.loadUrl("file:///android_asset/required_permissions.html")
+                }
+                "license_failed" -> {
+                    webView.loadUrl("file:///android_asset/license_failed.html")
+                }
+                "Found Issue" -> {
+                    webView.loadUrl("file:///android_asset/found_issue.html")
+                }
+                "Buy" -> {
+                    webView.loadUrl("file:///android_asset/buy_full.html")
+                }
+                getString(R.string.credits) -> {
+                    webView.loadUrl("file:///android_asset/credits.html")
                 }
             }
         }
-    }
-
-    private fun loadWebView(url: String) {
-        webView.loadUrl(url)
     }
 }

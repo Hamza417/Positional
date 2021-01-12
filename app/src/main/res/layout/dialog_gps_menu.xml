@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_view"
@@ -34,7 +35,8 @@
                     android:layout_height="@dimen/options_icon_size"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_label"
-                    app:tint="?attr/iconRegular" />
+                    app:tint="?attr/iconRegular"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -43,7 +45,7 @@
                     android:layout_marginStart="@dimen/options_text_margin_start"
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
-                    android:text="Show Label"
+                    android:text="@string/show_label"
                     android:textColor="?attr/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
@@ -70,7 +72,8 @@
                     android:layout_height="@dimen/options_icon_size"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_satellite"
-                    app:tint="?attr/iconRegular" />
+                    app:tint="?attr/iconRegular"
+                    tools:ignore="ContentDescription" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -79,7 +82,7 @@
                     android:layout_marginStart="@dimen/options_text_margin_start"
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
-                    android:text="Satellite Map"
+                    android:text="@string/satellite_mode"
                     android:textColor="?attr/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 

@@ -19,7 +19,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Smooth"
+            android:text="@string/sensor_speed_smooth"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -44,7 +44,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Normal"
+            android:text="@string/sensor_speed_normal"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -69,7 +69,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Fast"
+            android:text="@string/sensor_speed_fast"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 

@@ -39,6 +39,8 @@ import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
+import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
+import app.simple.positional.util.HtmlHelper.fromHtml
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -181,7 +183,7 @@ class GPS : Fragment() {
             marker = R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext(), 400)
         }
 
-        providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
+        providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
 
         locationIconStatusUpdates()
         checkGooglePlayServices()
@@ -195,7 +197,7 @@ class GPS : Fragment() {
                 distanceSingleton.isInitialLocationSet = false
             }
 
-            Toast.makeText(requireContext(), "Reset Complete", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.reset_complete, Toast.LENGTH_SHORT).show()
         }
 
         locationBroadcastReceiver = object : BroadcastReceiver() {
@@ -216,28 +218,28 @@ class GPS : Fragment() {
                                 GPSPreferences.setLastLatitude(location!!.latitude.toFloat())
                                 GPSPreferences.setLastLongitude(location!!.longitude.toFloat())
 
-                                val providerSource = fromHtml("<b>Source:</b> ${location!!.provider.toUpperCase(Locale.getDefault())}")
-                                val providerStatus = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
+                                val providerSource = fromHtml("<b>${getString(R.string.gps_source)}</b> ${location!!.provider.toUpperCase(Locale.getDefault())}")
+                                val providerStatus = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
 
                                 val accuracy = if (isMetric) {
-                                    fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location!!.accuracy.toDouble(), 2)} m", 1)}")
+                                    fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${round(location!!.accuracy.toDouble(), 2)} ${getString(R.string.meter)}")
                                 } else {
-                                    fromHtml("<b>Accuracy:</b> ${buildSpannableString("${round(location!!.accuracy.toDouble().toFeet(), 2)} ft", 1)}")
+                                    fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${round(location!!.accuracy.toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
                                 }
 
                                 val altitude = if (isMetric) {
-                                    fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude, 2)} m", 1)}")
+                                    fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude, 2)} ${getString(R.string.meter)}")
                                 } else {
-                                    fromHtml("<b>Altitude:</b> ${buildSpannableString("${round(location!!.altitude.toFeet(), 2)} ft", 1)}")
+                                    fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
                                 }
 
                                 val speed = if (isMetric) {
-                                    fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)} km/h", 1)}")
+                                    fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)} ${getString(R.string.kilometer_hour)}")
                                 } else {
-                                    fromHtml("<b>Speed:</b> ${buildSpannableString("${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} mph", 1)}")
+                                    fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} ${getString(R.string.miles_hour)}")
                                 }
 
-                                val bearing = fromHtml("<b>Bearing:</b> ${location!!.bearing}°")
+                                val bearing = fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${location!!.bearing}°")
 
                                 val displacement: Spanned?
                                 val direction: Spanned?
@@ -269,22 +271,22 @@ class GPS : Fragment() {
                                             location!!.longitude
                                     )
                                     distanceSingleton.distanceCoordinates = LatLng(location!!.latitude, location!!.longitude)
-                                    direction = fromHtml("<b>Direction:</b> ${round(dir, 2)}° ${getDirectionCodeFromAzimuth(dir)}")
+                                    direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> ${round(dir, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), dir)}")
                                 } else {
-                                    direction = fromHtml("<b>Direction:</b> N/A")
+                                    direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> N/A")
                                 }
 
                                 displacement = if (displacementValue[0] < 1000) {
                                     if (isMetric) {
-                                        fromHtml("<b>Displacement:</b> ${round(displacementValue[0].toDouble(), 2)} m")
+                                        fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toDouble(), 2)} ${getString(R.string.meter)}")
                                     } else {
-                                        fromHtml("<b>Displacement:</b> ${round(displacementValue[0].toDouble().toFeet(), 2)} ft")
+                                        fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
                                     }
                                 } else {
                                     if (isMetric) {
-                                        fromHtml("<b>Displacement:</b> ${round(displacementValue[0].toKilometers().toDouble(), 2)} km")
+                                        fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toKilometers().toDouble(), 2)} ${getString(R.string.kilometer)}")
                                     } else {
-                                        fromHtml("<b>Displacement:</b> ${round(displacementValue[0].toMiles().toDouble().toFeet(), 2)} miles")
+                                        fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toMiles().toDouble().toFeet(), 2)} ${getString(R.string.miles)}")
                                     }
                                 }
 
@@ -307,8 +309,8 @@ class GPS : Fragment() {
                             }
                         }
                         "provider" -> {
-                            providerStatus.text = fromHtml("<b>Status:</b> ${if (getLocationStatus(requireContext())) "Enabled" else "Disabled"}")
-                            providerSource.text = fromHtml("<b>Source:</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
+                            providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
+                            providerSource.text = fromHtml("<b>${getString(R.string.gps_source)}</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
                             locationIconStatusUpdates()
                         }
                     }
@@ -379,16 +381,16 @@ class GPS : Fragment() {
             if (accuracy.text != "") {
                 val stringBuilder = StringBuilder()
 
-                stringBuilder.append("Provider\n")
+                stringBuilder.append("${getString(R.string.gps_provider)}\n")
                 stringBuilder.append("${providerStatus.text}\n")
                 stringBuilder.append("${providerSource.text}\n\n")
 
-                stringBuilder.append("Location\n")
+                stringBuilder.append("${getString(R.string.gps_location)}\n")
                 stringBuilder.append("${accuracy.text}\n")
                 stringBuilder.append("${altitude.text}\n")
                 stringBuilder.append("${bearing.text}\n\n")
 
-                stringBuilder.append("Movement\n")
+                stringBuilder.append("${getString(R.string.gps_movement)}\n")
                 stringBuilder.append("${displacement.text}\n")
                 stringBuilder.append("${direction.text}\n")
                 stringBuilder.append("${speed.text}\n")
@@ -397,11 +399,11 @@ class GPS : Fragment() {
                     stringBuilder.append("\n${specifiedLocationTextView.text}\n")
                 }
 
-                stringBuilder.append("\nCoordinates\n")
+                stringBuilder.append("\n${getString(R.string.gps_coordinates)}\n")
                 stringBuilder.append("${latitude.text}\n")
                 stringBuilder.append("${longitude.text}\n\n")
 
-                stringBuilder.append("Address: ${address.text}")
+                stringBuilder.append("${getString(R.string.gps_address)}: ${address.text}")
 
                 if (BuildConfig.FLAVOR == "lite") {
                     stringBuilder.append("\n\nInformation is copied using Positional Lite\n")
@@ -422,7 +424,7 @@ class GPS : Fragment() {
         }
     }
 
-    private val textAnimationRunnable: Runnable = Runnable { infoText.setTextAnimation("GPS Info", 300) }
+    private val textAnimationRunnable: Runnable = Runnable { infoText.setTextAnimation(getString(R.string.gps_info), 300) }
 
     override fun onPause() {
         super.onPause()
@@ -461,8 +463,8 @@ class GPS : Fragment() {
 
         moveMapCamera(LatLng(latitude_, longitude_), bearing)
 
-        latitude.text = fromHtml("<b>Latitude:</b> ${LocationConverter.latitudeAsDMS(latitude_, 3)}")
-        longitude.text = fromHtml("<b>Longitude:</b> ${LocationConverter.longitudeAsDMS(longitude_, 3)}")
+        latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${LocationConverter.latitudeAsDMS(latitude_, 3)}")
+        longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${LocationConverter.longitudeAsDMS(longitude_, 3)}")
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
@@ -494,9 +496,9 @@ class GPS : Fragment() {
 
             address = try {
                 if (context == null) {
-                    "!Error Fetching Address "
+                    getString(R.string.error)
                 } else if (!isNetworkAvailable(requireContext())) {
-                    "Internet connection not available"
+                    getString(R.string.internet_connection_alert)
                 } else {
                     val addresses: List<Address>
                     val geocoder = Geocoder(context, Locale.getDefault())
@@ -514,17 +516,17 @@ class GPS : Fragment() {
                     }
                 }
             } catch (e: IOException) {
-                "${e.message}\n!Error Fetching Address"
+                "${e.message}"
             } catch (e: NullPointerException) {
-                "${e.message}\n!No Address Found"
+                "${e.message}\n${getString(R.string.no_address_found)}"
             } catch (e: IllegalArgumentException) {
-                "Invalid Coordinates Supplied"
+                getString(R.string.invalid_coordinates)
             }
 
             withContext(Dispatchers.Main) {
                 try {
                     this@GPS.address.text = address
-                } catch (e: java.lang.NullPointerException) {
+                } catch (e: NullPointerException) {
                 } catch (e: UninitializedPropertyAccessException) {
                 }
             }

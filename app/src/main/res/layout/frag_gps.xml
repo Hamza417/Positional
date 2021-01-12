@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:fontFamily="@font/medium"
-            android:text="GPS"
+            android:text="@string/gps"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/top_bar_text_size" />
 
@@ -47,6 +47,7 @@
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple_btn"
             android:src="@drawable/ic_gps_fixed"
+            android:contentDescription="@string/gps_reset_location"
             android:tint="?attr/iconColor" />
 
         <ImageButton
@@ -57,6 +58,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/ripple_btn"
             android:src="@drawable/ic_more_horiz"
+            android:contentDescription="@string/gps_options"
             android:tint="?attr/iconColor" />
 
     </com.google.android.material.appbar.MaterialToolbar>

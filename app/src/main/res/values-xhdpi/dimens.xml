@@ -28,7 +28,7 @@
     <dimen name="options_container_horizontal_padding">10dp</dimen>
     <dimen name="options_container_vertical_padding">10dp</dimen>
     <dimen name="options_category_text_size">6pt</dimen>
-    <dimen name="options_sub_item_padding">0dp</dimen>
+    <dimen name="options_sub_item_padding">10dp</dimen>
     <dimen name="options_header_text_size">7pt</dimen>
     <dimen name="dialog_height">300dp</dimen>
     <dimen name="description_text_size">5pt</dimen>
@@ -60,8 +60,8 @@
     <!-- Miscellaneous/Main Base Activity -->
     <dimen name="bottom_nav_height">60dp</dimen>
     <dimen name="all_corner_radius">20dp</dimen>
-    <dimen name="launcher_app_title">16pt</dimen>
-    <dimen name="launcher_app_icon_dimen">150dp</dimen>
+    <dimen name="launcher_app_title">12pt</dimen>
+    <dimen name="launcher_app_icon_dimen">140dp</dimen>
     <dimen name="touch_indicator_size">100dp</dimen>
     <dimen name="license_text_size">12pt</dimen>
     <dimen name="license_check_indicator_dimen">40dp</dimen>

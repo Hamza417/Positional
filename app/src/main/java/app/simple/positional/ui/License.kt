@@ -14,8 +14,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
+import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.preference.MainPreferences.setLicenseStatus
-import app.simple.positional.util.fromHtml
 import app.simple.positional.util.setTextAnimation
 import com.google.android.vending.licensing.*
 
@@ -27,7 +27,6 @@ class License : Fragment(), LicenseCheckerCallback {
 
     private lateinit var licenseLoader: ImageView
     private lateinit var licenseStatus: TextView
-    private lateinit var invalidInfoTextView: TextView
 
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var licenceStatusCallback: LicenceStatusCallback
@@ -35,15 +34,6 @@ class License : Fragment(), LicenseCheckerCallback {
     private var base64PublicKey = ""
     private var mLicenseCheckerCallback: LicenseCheckerCallback? = null
     private var mChecker: LicenseChecker? = null
-
-    private val invalidLicenseServicePackageItemInfo = "com.android.vending.licensing.ILicensingService"
-    private val lpLicenseServiceFound = "<b>Invalid license server detected</b><br><br>" +
-            "Please uninstall <b>$invalidLicenseServicePackageItemInfo</b> and open the app again"
-    private val invalidInfo = "" +
-            "  <b><h3>Few things you can do:</h3></b><br>" +
-            "  • Check if your internet is working, it is required for verification<br>" +
-            "  • If you've downloaded this app from somewhere else, download it from Play Store<br>" +
-            "  • If you've purchased this app and still got this issue, please contact developer to resolve this immediately"
 
     // Generate your own 20 random bytes, and put them here.
     private val salt = byteArrayOf(-46, 65, 30, -128, -103, -57, 74, -64, 51, 88, -95, -45, 77, -117, -36, -113, -11, 32, -64, 89)
@@ -53,7 +43,6 @@ class License : Fragment(), LicenseCheckerCallback {
 
         licenseLoader = view.findViewById(R.id.licence_loader)
         licenseStatus = view.findViewById(R.id.licence_status)
-        invalidInfoTextView = view.findViewById(R.id.invalid_info)
 
         return view
     }
@@ -80,7 +69,7 @@ class License : Fragment(), LicenseCheckerCallback {
     override fun allow(reason: Int) {
         handler.post {
             try {
-                licenseStatus.setTextAnimation("Successful :)", 500)
+                licenseStatus.setTextAnimation(getString(R.string.license_successful), 500)
                 runHandler(true)
             } catch (e: NullPointerException) {
             }
@@ -90,10 +79,7 @@ class License : Fragment(), LicenseCheckerCallback {
     override fun doNotAllow(reason: Int) {
         when (reason) {
             Policy.NOT_LICENSED -> {
-                showDoNotAllowScreen("License Validation Failed", invalidInfo)
-            }
-            1337 -> {
-                showDoNotAllowScreen("Invalid License Server", lpLicenseServiceFound)
+                showDoNotAllowScreen(getString(R.string.license_failed))
             }
             else -> {
                 /* no-op */
@@ -101,13 +87,12 @@ class License : Fragment(), LicenseCheckerCallback {
         }
     }
 
-    private fun showDoNotAllowScreen(error: String, errorInfoInHtml: String) {
+    private fun showDoNotAllowScreen(error: String) {
         handler.post {
             try {
                 licenseStatus.setTextAnimation(error, 500)
                 licenseLoader.visibility = View.GONE
-                invalidInfoTextView.text = fromHtml(errorInfoInHtml)
-                invalidInfoTextView.visibility = View.VISIBLE
+                HtmlViewer().newInstance("license_failed").show(childFragmentManager, "license_failed")
             } catch (e: NullPointerException) {
             }
         }
@@ -116,7 +101,7 @@ class License : Fragment(), LicenseCheckerCallback {
     override fun applicationError(errorCode: Int) {
         handler.post {
             try {
-                licenseStatus.setTextAnimation("Error!!", 500)
+                licenseStatus.setTextAnimation(getString(R.string.error), 500)
                 runHandler(false)
             } catch (e: NullPointerException) {
             }

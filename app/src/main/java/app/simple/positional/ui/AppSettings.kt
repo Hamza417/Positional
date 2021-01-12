@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
-import app.simple.positional.dialogs.app.BuyFull
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getUnit
@@ -50,6 +49,8 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var changeLogs: LinearLayout
     private lateinit var github: LinearLayout
     private lateinit var foundIssues: LinearLayout
+    private lateinit var translate: LinearLayout
+    private lateinit var credits: LinearLayout
     private lateinit var keepScreenOn: LinearLayout
 
     private lateinit var toggleNotification: SwitchCompat
@@ -79,6 +80,8 @@ class AppSettings : Fragment(), CoordinatesCallback {
         changeLogs = view.findViewById(R.id.change_logs)
         github = view.findViewById(R.id.github)
         foundIssues = view.findViewById(R.id.found_issues)
+        translate = view.findViewById(R.id.translate)
+        credits = view.findViewById(R.id.credits)
         keepScreenOn = view.findViewById(R.id.setting_keep_screen_on)
 
         toggleNotification = view.findViewById(R.id.toggle_notifications)
@@ -133,7 +136,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
                 coordinates.coordinatesCallback = this
                 coordinates.show(childFragmentManager, "coordinates")
             } else {
-                BuyFull().newInstance().show(childFragmentManager, "null")
+                buyFull.callOnClick()
             }
         }
 
@@ -149,7 +152,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
                     }
                 }
             } else {
-                BuyFull().newInstance().show(childFragmentManager, "null")
+                buyFull.callOnClick()
                 toggleCustomLocation.isChecked = false
             }
         }
@@ -214,30 +217,38 @@ class AppSettings : Fragment(), CoordinatesCallback {
             startActivity(intent)
         }
 
+        credits.setOnClickListener {
+            HtmlViewer().newInstance(getString(R.string.credits)).show(childFragmentManager, "null")
+        }
+
         github.setOnClickListener {
             val uri: Uri = Uri.parse("https://github.com/Hamza417/Positional")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
 
+        translate.setOnClickListener {
+            val uri: Uri = Uri.parse("https://crowdin.com/project/positional/")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+        }
+
         foundIssues.setOnClickListener {
-            val issue = Issue().newInstance()
-            issue.show(childFragmentManager, "null")
+            HtmlViewer().newInstance("Found Issue").show(childFragmentManager, "Found Issue")
         }
 
         buyFull.setOnClickListener {
-            val buyFull = BuyFull().newInstance()
-            buyFull.show(childFragmentManager, "buy_full")
+            HtmlViewer().newInstance("Buy").show(childFragmentManager, "buy")
         }
     }
 
     fun setCurrentThemeValue(themeValue: Int) {
         try {
             currentTheme.text = when (themeValue) {
-                AppCompatDelegate.MODE_NIGHT_NO -> "Light"
-                AppCompatDelegate.MODE_NIGHT_YES -> "Dark"
-                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> "Follow System"
-                4 -> "Auto (Day/Night)"
+                AppCompatDelegate.MODE_NIGHT_NO -> getString(R.string.theme_day)
+                AppCompatDelegate.MODE_NIGHT_YES -> getString(R.string.theme_night)
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> getString(R.string.theme_follow_system)
+                4 -> getString(R.string.theme_auto)
                 else -> "Unknown Theme Selected!!"
             }
         } catch (e: NullPointerException) {
@@ -246,7 +257,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
     }
 
     fun setCurrentUnit(value: Boolean) {
-        currentUnit.text = if (value) "Metric" else "Imperial"
+        currentUnit.text = if (value) getString(R.string.unit_metric) else getString(R.string.unit_imperial)
     }
 
     override fun isCoordinatesSet(boolean: Boolean) {

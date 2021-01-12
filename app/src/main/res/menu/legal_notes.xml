@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/disclaimer"
-        android:title="Disclaimer" />
+        android:title="@string/disclaimer" />
     <item
         android:id="@+id/privacy_policy"
-        android:title="Privacy Policy" />
+        android:title="@string/privacy_policy" />
     <item
         android:id="@+id/three"
-        android:title="Terms of Use" />
+        android:title="@string/terms_of_use" />
     <item
         android:id="@+id/four"
-        android:title="Permissions" />
+        android:title="@string/permissions" />
 </menu>

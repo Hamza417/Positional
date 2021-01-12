@@ -19,9 +19,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.dialogs.compass.NoSensorAlert
+import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.preference.LevelPreferences.isNoSensorAlertON
-import app.simple.positional.util.fromHtml
+import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.loadImageResourcesWithoutAnimation
 
 class Level : Fragment(), SensorEventListener {
@@ -104,8 +105,6 @@ class Level : Fragment(), SensorEventListener {
         boundingBox.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    //isScreenTouched = true
-
                     levelIndicator.animate()
                             .scaleX(1.3f)
                             .scaleY(1.3f)
@@ -121,7 +120,6 @@ class Level : Fragment(), SensorEventListener {
                             .start()
                 }
                 MotionEvent.ACTION_UP -> {
-                    //isScreenTouched = false
                     levelIndicator.animate()
                             .scaleX(1f)
                             .scaleY(1f)
@@ -162,7 +160,7 @@ class Level : Fragment(), SensorEventListener {
 
             if (isScreenTouched) return
 
-            smoothAndSetReadings(gravityReadings, event.values)
+            smoothAndSetReadings(gravityReadings, event.values, readingsAlpha)
 
             levelDot.translationX = levelIndicator.translationX * -0.3f //gravityReadings[0] * -1 * gravityWidthMotionCompensator / 4
             levelDot.translationY = levelIndicator.translationY * -0.3f //gravityReadings[1] * gravityHeightMotionCompensator / 4
@@ -196,12 +194,6 @@ class Level : Fragment(), SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-
-    }
-
-    private fun smoothAndSetReadings(readings: FloatArray, newReadings: FloatArray) {
-        readings[0] = readingsAlpha * newReadings[0] + (1 - readingsAlpha) * readings[0] // x
-        readings[1] = readingsAlpha * newReadings[1] + (1 - readingsAlpha) * readings[1] // y
-        readings[2] = readingsAlpha * newReadings[2] + (1 - readingsAlpha) * readings[2] // z
+        /* no-op */
     }
 }

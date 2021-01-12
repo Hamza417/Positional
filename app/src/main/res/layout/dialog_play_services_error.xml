@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_dialog"
@@ -13,7 +14,8 @@
         android:padding="@dimen/options_item_padding"
         android:text="Uh Ohh !!"
         android:textColor="?attr/textPrimary"
-        android:textSize="@dimen/options_header_text_size" />
+        android:textSize="@dimen/options_header_text_size"
+        tools:ignore="HardcodedText" />
 
     <View
         android:layout_width="match_parent"
@@ -59,18 +61,18 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Show Again"
+            android:text="@string/show_again"
             android:textColor="?attr/textSecondary"
             android:textSize="@dimen/options_item_text_size" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/play_services_issue_positive_button"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:background="@drawable/ripple_btn"
             android:fontFamily="@font/medium"
-            android:text="Ok"
+            android:text="@string/button_ok"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 

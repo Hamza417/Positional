@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.dialogs.app.BuyFull
+import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.ui.Clock
 import app.simple.positional.views.CustomBottomSheetDialog
@@ -55,7 +55,7 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
 
         view.findViewById<LinearLayout>(R.id.clock_needle_theme).setOnClickListener {
             if (BuildConfig.FLAVOR == "lite") {
-                BuyFull().newInstance().show(childFragmentManager, "null")
+                HtmlViewer().newInstance("Buy").show(childFragmentManager, "buy")
             } else {
                 val clockNeedle = WeakReference(ClockNeedle(clock))
                 clockNeedle.get()?.show(parentFragmentManager, "null")

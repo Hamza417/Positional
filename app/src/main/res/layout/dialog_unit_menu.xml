@@ -19,7 +19,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Metric"
+            android:text="@string/unit_metric"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -44,7 +44,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Imperial"
+            android:text="@string/unit_imperial"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 

@@ -19,7 +19,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Orange Oval"
+            android:text="@string/bloom_orange_oval"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -44,7 +44,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Purple Square"
+            android:text="@string/bloom_purple_square"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -69,7 +69,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Red Circles"
+            android:text="@string/bloom_red_circles"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -94,7 +94,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Dark Petals"
+            android:text="@string/bloom_blue_petals"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 

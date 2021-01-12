@@ -33,7 +33,8 @@
             android:layout_height="@dimen/launcher_app_icon_dimen"
             android:layout_gravity="center"
             android:layout_margin="20dp"
-            android:src="@drawable/ic_place" />
+            android:src="@drawable/ic_place"
+            tools:ignore="ContentDescription" />
     </LinearLayout>
 
     <ImageView
@@ -45,6 +46,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/launcher_day_06"
         app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="ContentDescription"
         tools:layout_editor_absoluteX="0dp" />
 
     <ImageView
@@ -54,6 +56,6 @@
         android:src="@drawable/ic_touch_indicator"
         android:scaleX="0"
         android:scaleY="0"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="ContentDescription,MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

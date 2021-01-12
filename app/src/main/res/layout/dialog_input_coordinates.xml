@@ -27,7 +27,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
-                android:text="Enter Location Data"
+                android:text="@string/specified_hint_header"
                 android:textColor="?attr/textPrimary"
                 android:textSize="8pt" />
 
@@ -49,6 +49,7 @@
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="5dp"
                 android:background="@drawable/ripple_btn"
+                android:contentDescription="@string/open_saved_locations"
                 android:src="@drawable/ic_list" />
 
             <ImageButton
@@ -56,6 +57,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/ripple_btn"
+                android:contentDescription="@string/open_specified_location_documentation"
                 android:src="@drawable/ic_help" />
         </LinearLayout>
 
@@ -66,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:animateLayoutChanges="true"
-            android:hint="Address"
+            android:hint="@string/specified_hint_address"
             app:boxStrokeColor="?attr/iconColor"
             app:boxStrokeWidth="1px"
             app:boxStrokeWidthFocused="2px"
@@ -94,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:animateLayoutChanges="true"
-            android:hint="Latitude (±90)"
+            android:hint="@string/specified_hint_latitude"
             app:boxStrokeColor="?attr/iconColor"
             app:boxStrokeWidth="1px"
             app:boxStrokeWidthFocused="2px"
@@ -122,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:animateLayoutChanges="true"
-            android:hint="Longitude (±180)"
+            android:hint="@string/specified_hint_longitude"
             app:boxStrokeColor="?attr/iconColor"
             app:boxStrokeWidth="1px"
             app:boxStrokeWidthFocused="2px"
@@ -155,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:animateLayoutChanges="true"
-                android:hint="Timezone (Continent/Region)"
+                android:hint="@string/specified_hint_timezone"
                 app:boxStrokeColor="?attr/iconColor"
                 app:boxStrokeWidth="1px"
                 app:boxStrokeWidthFocused="2px"
@@ -185,10 +187,11 @@
                 android:background="@drawable/ripple_btn"
                 android:src="@drawable/ic_folder"
                 android:tint="?attr/iconColor"
-                tools:ignore="ContentDescription" />
+                android:contentDescription="@string/open_timezones" />
         </LinearLayout>
 
         <LinearLayout
+            style="?android:attr/buttonBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
@@ -197,18 +200,20 @@
 
             <Button
                 android:id="@+id/cancel_coordinate_input"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:background="@drawable/ripple_btn"
-                android:text="Cancel"
+                android:text="@string/button_cancel"
                 android:textColor="?attr/textPrimary" />
 
             <Button
                 android:id="@+id/set_coordinates"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:background="@drawable/ripple_btn"
-                android:text="Set"
+                android:text="@string/button_set"
                 android:textColor="?attr/textPrimary" />
 
         </LinearLayout>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.webkit.WebSettingsCompat
@@ -14,7 +15,6 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.preference.MainPreferences.setShowPermissionDialog
 import app.simple.positional.views.CustomBottomSheetDialog
-import com.google.android.material.button.MaterialButton
 
 class PermissionDialog : CustomBottomSheetDialog() {
 
@@ -46,8 +46,8 @@ class PermissionDialog : CustomBottomSheetDialog() {
         webView = view.findViewById(R.id.permissions_webview)
         webView.setBackgroundColor(0)
 
-        val grant: MaterialButton = view.findViewById(R.id.grant)
-        val close: MaterialButton = view.findViewById(R.id.close)
+        val grant: Button = view.findViewById(R.id.grant)
+        val close: Button = view.findViewById(R.id.close)
 
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
             if (requireContext().resources.configuration.uiMode and

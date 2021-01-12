@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -19,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:fontFamily="@font/medium"
-            android:text="Settings"
+            android:text="@string/settings"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/top_bar_text_size" />
 
@@ -45,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:fontFamily="@font/medium"
-                android:text="Appearance"
+                android:text="@string/appearance"
                 android:textColor="?attr/textSecondary"
                 android:textSize="@dimen/settings_secondary_text_size" />
 
@@ -69,7 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="Theme"
+                        android:text="@string/theme"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
@@ -97,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="Icon"
+                        android:text="@string/icon"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
@@ -105,7 +106,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="Main icon of the app in launcher"
+                        android:text="@string/desc_icon"
                         android:textColor="?attr/textSecondary"
                         android:textSize="@dimen/settings_secondary_text_size" />
 
@@ -118,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:fontFamily="@font/medium"
-                android:text="Configuration"
+                android:text="@string/configuration"
                 android:textColor="?attr/textSecondary"
                 android:textSize="@dimen/settings_secondary_text_size" />
 
@@ -142,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="Units"
+                        android:text="@string/units"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
@@ -178,7 +179,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/medium"
-                            android:text="Use Specified Coordinates"
+                            android:text="@string/specified_location"
                             android:textColor="?attr/textPrimary"
                             android:textSize="@dimen/settings_primary_text_size" />
 
@@ -186,7 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/regular"
-                            android:text="Specify custom Latitude, Longitude and Timezone and use it to fetch location data instead of using the device's GPS\n\nGPS data will remain unaffected"
+                            android:text="@string/desc_specified_location"
                             android:textColor="?attr/textSecondary"
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
@@ -223,7 +224,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/medium"
-                            android:text="Keep Screen On"
+                            android:text="@string/keep_screen_on"
                             android:textColor="?attr/textPrimary"
                             android:textSize="@dimen/settings_primary_text_size" />
 
@@ -231,7 +232,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/regular"
-                            android:text="Keep the screen on while the app is running"
+                            android:text="@string/desc_screen_on"
                             android:textColor="?attr/textSecondary"
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
@@ -267,7 +268,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/medium"
-                            android:text="Push Notification"
+                            android:text="@string/push_notification"
                             android:textColor="?attr/textPrimary"
                             android:textSize="@dimen/settings_primary_text_size" />
 
@@ -275,7 +276,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/regular"
-                            android:text="@string/push_notifications"
+                            android:text="@string/desc_push"
                             android:textColor="?attr/textSecondary"
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
@@ -297,7 +298,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:fontFamily="@font/medium"
-                android:text="About"
+                android:text="@string/about"
                 android:textColor="?attr/textSecondary"
                 android:textSize="@dimen/settings_secondary_text_size" />
 
@@ -321,7 +322,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="Legal Notes"
+                        android:text="@string/legal_notes"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
@@ -329,7 +330,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="Click to read app's Disclaimer, Privacy Policy and Terms and Conditions of use"
+                        android:text="@string/desc_legal"
                         android:textColor="?attr/textSecondary"
                         android:textSize="@dimen/settings_secondary_text_size" />
 
@@ -349,7 +350,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="App Version"
+                        android:text="@string/app_version"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
@@ -377,7 +378,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="Change Logs"
+                        android:text="@string/change_logs"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
@@ -385,9 +386,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="See the detailed change log for this and all the previous releases till date or information about any upcoming updates in future"
+                        android:text="@string/desc_changes"
                         android:textColor="?attr/textSecondary"
                         android:textSize="@dimen/settings_secondary_text_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/credits"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/medium"
+                        android:text="@string/credits"
+                        android:textColor="?attr/textPrimary"
+                        android:textSize="@dimen/settings_primary_text_size" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -397,7 +418,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:fontFamily="@font/medium"
-                android:text="Contribute"
+                android:text="@string/contribute"
                 android:textColor="?attr/textSecondary"
                 android:textSize="@dimen/settings_secondary_text_size" />
 
@@ -423,13 +444,14 @@
                         android:fontFamily="@font/medium"
                         android:text="Github"
                         android:textColor="?attr/textPrimary"
-                        android:textSize="@dimen/settings_primary_text_size" />
+                        android:textSize="@dimen/settings_primary_text_size"
+                        tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="If you are a developer and want to contribute to development, you can fork the repo or raise/fix an issue"
+                        android:text="@string/desc_git"
                         android:textColor="?attr/textSecondary"
                         android:textSize="@dimen/settings_secondary_text_size" />
 
@@ -449,7 +471,27 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="Found an issue?"
+                        android:text="@string/found_an_issue"
+                        android:textColor="?attr/textPrimary"
+                        android:textSize="@dimen/settings_primary_text_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/translate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/medium"
+                        android:text="@string/translate"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
@@ -457,7 +499,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="If you think there is a problem or something can be better"
+                        android:text="@string/desc_translate"
                         android:textColor="?attr/textSecondary"
                         android:textSize="@dimen/settings_secondary_text_size" />
 
@@ -472,13 +514,13 @@
                     android:focusable="true"
                     android:orientation="vertical"
                     android:padding="15dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="Buy Full Version"
+                        android:text="@string/buy_full"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
@@ -486,7 +528,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/regular"
-                        android:text="Support development by buying full version here"
+                        android:text="@string/desc_buy_full_version"
                         android:textColor="?attr/textSecondary"
                         android:textSize="@dimen/settings_secondary_text_size" />
 

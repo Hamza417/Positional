@@ -47,6 +47,9 @@ import app.simple.positional.preference.CompassPreference.isNoSensorAlertON
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
 import app.simple.positional.util.*
 import app.simple.positional.util.ColorAnimator.animateColorChange
+import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
+import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
+import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.views.CustomCoordinatorLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -220,10 +223,11 @@ class Compass : Fragment(), SensorEventListener {
 
             val stringBuilder = StringBuilder()
 
-            stringBuilder.append("Compass Info\n\nAccuracy\n")
+            stringBuilder.append("${getString(R.string.compass_info)}\n\n")
+            stringBuilder.append("${getString(R.string.compass_accuracy)}\n")
             stringBuilder.append("${accuracyAccelerometer.text}\n")
             stringBuilder.append("${accuracyMagnetometer.text}\n")
-            stringBuilder.append("\nMagnetic Field\n")
+            stringBuilder.append("\n${getString(R.string.compass_field)}\n")
             stringBuilder.append("${inclinationTextView.text}\n")
             stringBuilder.append("${declination.text}\n")
             stringBuilder.append("${fieldStrength.text}\n\n")
@@ -289,21 +293,21 @@ class Compass : Fragment(), SensorEventListener {
                                     location.time
                             )
 
-                            declination.text = fromHtml("<b>Declination:</b> ${
+                            declination.text = fromHtml("<b>${getString(R.string.compass_declination)}</b> ${
                                 round(
                                         geomagneticField.declination.toDouble(),
                                         2
                                 )
                             }°")
 
-                            inclinationTextView.text = fromHtml("<b>Inclination:</b> ${
+                            inclinationTextView.text = fromHtml("<b>${getString(R.string.compass_inclination)}</b> ${
                                 round(
                                         geomagneticField.inclination.toDouble(),
                                         2
                                 )
                             }°")
 
-                            fieldStrength.text = fromHtml("<b>Field Strength:</b> ${
+                            fieldStrength.text = fromHtml("<b>${getString(R.string.compass_field_strength)}</b> ${
                                 round(
                                         geomagneticField.fieldStrength.toDouble(),
                                         2
@@ -350,7 +354,7 @@ class Compass : Fragment(), SensorEventListener {
         }
     }
 
-    private val textAnimationRunnable: Runnable = Runnable { compassInfoText.setTextAnimation("Compass Info", 300) }
+    private val textAnimationRunnable: Runnable = Runnable { compassInfoText.setTextAnimation(getString(R.string.compass_info), 300) }
 
     private inner class MyOnTouchListener : View.OnTouchListener {
         @SuppressLint("ClickableViewAccessibility")
@@ -406,18 +410,18 @@ class Compass : Fragment(), SensorEventListener {
         if (sensor == sensorAccelerometer) {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
-                    accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: Unreliable")
+                    accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                     openCalibrationDialog()
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
-                    accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: Low")
+                    accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                     openCalibrationDialog()
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
-                    accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: Medium")
+                    accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
-                    accuracyMagnetometer.text = fromHtml("<b>Magnetic Field</b>: High")
+                    accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
                 }
             }
         }
@@ -425,18 +429,18 @@ class Compass : Fragment(), SensorEventListener {
         if (sensor == sensorAccelerometer) {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
-                    accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: Unreliable")
+                    accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                     openCalibrationDialog()
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
-                    accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: Low")
+                    accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                     openCalibrationDialog()
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
-                    accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: Medium")
+                    accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
-                    accuracyAccelerometer.text = fromHtml("<b>Accelerometer</b>: High")
+                    accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
                 }
             }
         }
@@ -477,9 +481,9 @@ class Compass : Fragment(), SensorEventListener {
         degrees.text = StringBuilder().append(abs(rotationAngle.toInt())).append("°")
 
         direction.text = if (showDirectionCode) {
-            getDirectionCodeFromAzimuth(azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
+            getDirectionCodeFromAzimuth(requireContext(), azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
         } else {
-            getDirectionNameFromAzimuth(azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
+            getDirectionNameFromAzimuth(requireContext(), azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
         }
     }
 

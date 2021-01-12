@@ -36,7 +36,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:fontFamily="@font/regular"
-            android:text="Needles"
+            android:text="@string/needles"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -68,7 +68,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:fontFamily="@font/regular"
-            android:text="Motion Type"
+            android:text="@string/motion_type"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
@@ -89,7 +89,8 @@
             android:layout_height="@dimen/options_icon_size"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_twenty_four_hours"
-            app:tint="?attr/iconRegular" />
+            app:tint="?attr/iconRegular"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="0dp"
@@ -98,7 +99,7 @@
             android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Use 12 Hour Format"
+            android:text="@string/time_format"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 

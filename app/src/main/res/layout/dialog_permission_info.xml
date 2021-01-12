@@ -59,27 +59,27 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:fontFamily="@font/regular"
-            android:text="Show Again"
+            android:text="@string/show_again"
             android:textColor="?attr/textSecondary"
             android:textSize="@dimen/options_item_text_size" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/close"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:background="@drawable/ripple_btn"
             android:fontFamily="@font/medium"
-            android:text="Close"
+            android:text="@string/button_close"
             android:textColor="?attr/textPrimary" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/grant"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:background="@drawable/ripple_btn"
             android:fontFamily="@font/medium"
-            android:text="Grant"
+            android:text="@string/button_grant"
             android:textColor="?attr/textPrimary" />
 
     </LinearLayout>

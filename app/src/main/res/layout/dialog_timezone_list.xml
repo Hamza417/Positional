@@ -39,10 +39,12 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_cards"
-                android:hint="Search Timezone"
+                android:hint="@string/search_timezone"
                 android:maxLength="15"
                 android:paddingHorizontal="15dp"
                 android:textColor="?attr/textSecondary"
+                android:importantForAutofill="no"
+                android:inputType="text"
                 android:textColorHint="?attr/dividerColor" />
 
             <TextView

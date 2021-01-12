@@ -15,8 +15,8 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
-import app.simple.positional.dialogs.app.BuyFull
 import app.simple.positional.dialogs.app.PermissionDialog
+import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
@@ -208,8 +208,7 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     private fun showPurchaseDialog(value: Int) {
         if (BuildConfig.FLAVOR == "lite") {
             if (value == 5 || value == 10 || value == 15 || value == 20) {
-                val purchaseDialog = BuyFull().newInstance()
-                purchaseDialog.show(supportFragmentManager, "buy_full")
+                HtmlViewer().newInstance("Buy").show(supportFragmentManager, "buy")
             }
         }
 

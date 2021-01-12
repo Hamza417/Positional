@@ -13,7 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import app.simple.positional.R
-import app.simple.positional.util.fromHtml
+import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.views.CustomBottomSheetDialog
 
 class CompassCalibration : CustomBottomSheetDialog(), SensorEventListener {
