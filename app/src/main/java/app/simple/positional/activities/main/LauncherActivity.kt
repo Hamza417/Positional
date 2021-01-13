@@ -40,7 +40,7 @@ class LauncherActivity : AppCompatActivity(), LicenceStatusCallback {
 
         setContentView(R.layout.activity_launcher)
 
-        if (getLicenceStatus() || BuildConfig.FLAVOR == "lite" || BuildConfig.DEBUG) {
+        if (getLicenceStatus() || BuildConfig.FLAVOR == "lite") {
             onLicenseCheckCompletion()
         } else {
             supportFragmentManager.beginTransaction()

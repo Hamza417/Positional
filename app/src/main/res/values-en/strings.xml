@@ -1,19 +1,17 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="licensing_key">@string/thisAppLicensingKey</string>
-    <string name="app_name">Positional</string>
-
+    <string name="app_name" tools:override="true">Positional</string>
     <!-- Panels -->
     <string name="clock">Clock</string>
     <string name="compass">Compass</string>
     <string name="gps">Location</string>
     <string name="level">Level</string>
     <string name="settings">Settings</string>
-
     <!-- Info Headers -->
     <string name="clock_info">Clock Info</string>
     <string name="compass_info">Compass Info</string>
     <string name="gps_info">GPS Info</string>
-
     <!-- Clock Information Headers-->
     <string name="local_time">Local Time</string>
     <string name="utc_time">UTC Time</string>
@@ -24,18 +22,15 @@
     <string name="moon_time">Moon Time</string>
     <string name="moon_illumination">Moon Illumination</string>
     <string name="moon_dates">Moon Dates</string>
-
     <!-- GPS Informatin Headers -->
     <string name="gps_provider">Provider</string>
     <string name="gps_location">Location</string>
     <string name="gps_movement">Movement</string>
     <string name="gps_coordinates">Coordinates</string>
     <string name="gps_address">Address</string>
-
     <!--Compass Information Header -->
     <string name="compass_accuracy">Accuracy</string>
     <string name="compass_field">Magnetic Field</string>
-
     <!-- Clock Information Items-->
     <string name="local_timezone">Timezone:</string>
     <string name="local_time_24hr">Time 24Hr:</string>
@@ -75,14 +70,12 @@
     <string name="moon_new_moon">New Moon:</string>
     <string name="moon_first_quarter">First Quarter:</string>
     <string name="moon_last_quarter">Last Quarter:</string>
-
     <!-- Compass information items -->
     <string name="accelerometer_accuracy">Accelerometer:</string>
     <string name="magnetometer_accuracy">Magnetometer:</string>
     <string name="compass_inclination">Inclination:</string>
     <string name="compass_declination">Declination:</string>
     <string name="compass_field_strength">Field Strength:</string>
-
     <!-- GPS Information Panel -->
     <string name="gps_status">Status:</string>
     <string name="gps_source">Source:</string>
@@ -94,17 +87,14 @@
     <string name="gps_speed">Speed:</string>
     <string name="gps_latitude">Latitude:</string>
     <string name="gps_longitude">Longitude:</string>
-
     <!-- Sensor Accuracy -->
     <string name="sensor_accuracy_unreliable">Unreliable</string>
     <string name="sensor_accuracy_low">Low</string>
     <string name="sensor_accuracy_medium">Medium</string>
     <string name="sensor_accuracy_high">High</string>
-
     <!-- GPS Source Status -->
     <string name="gps_enabled">Enabled</string>
     <string name="gps_disabled">Disabled</string>
-
     <!-- Units -->
     <string name="meter">m</string>
     <string name="kilometer">km</string>
@@ -112,7 +102,6 @@
     <string name="miles">miles</string>
     <string name="kilometer_hour">km/h</string>
     <string name="miles_hour">mph</string>
-
     <!-- Alert -->
     <string name="info_copied">Copied to Clipboard</string>
     <string name="info_error">Info couldn\'t be copied!!</string>
@@ -122,13 +111,11 @@
     <string name="error">Error</string>
     <string name="not_available">N/A</string>
     <string name="no_address_found">No address found for current location</string>
-
     <!-- Settings Categories -->
     <string name="appearance">Appearance</string>
     <string name="configuration">Configuration</string>
     <string name="about">About</string>
     <string name="contribute">Contribute</string>
-
     <!-- Settings Heading -->
     <string name="theme">Theme</string>
     <string name="icon">Icon</string>
@@ -142,14 +129,13 @@
     <string name="found_an_issue">Found an issue?</string>
     <string name="translate">Translate</string>
     <string name="buy_full">Buy Full Version</string>
-
     <!-- Settings Description -->
     <string name="theme_follow_system">Follow System</string>
     <string name="theme_day">Light</string>
     <string name="theme_night">Dark</string>
     <string name="theme_auto">Auto (Day/Night)</string>
     <string name="desc_icon">Main icon of the app in launcher</string>
-    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information
+    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to getch information
         instead of using device\' GPS as location information source\n\nGPS information will stay unaffected</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
     <string name="desc_push">Receive non intrusive notification about updates and other information</string>
@@ -158,14 +144,12 @@
     <string name="desc_git">Open app\'s repository</string>
     <string name="desc_translate">Help translating the app in your native language</string>
     <string name="desc_buy_full_version">Support development by buying full version</string>
-
     <!-- Clock Menu -->
     <string name="needles">Needle</string>
     <string name="motion_type">Motion Type</string>
     <string name="time_format">Use 12 Hour Format</string>
     <string name="motion_type_smooth">Smooth</string>
     <string name="motion_type_tick">Tick</string>
-
     <!-- Compass Menu -->
     <string name="bloom">Bloom</string>
     <string name="bloom_skins">Bloom Skins</string>
@@ -178,18 +162,15 @@
     <string name="bloom_purple_square">Purple Square</string>
     <string name="bloom_red_circles">Red Circles</string>
     <string name="bloom_blue_petals">Blue Petals</string>
-
     <!-- GPS Menu -->
     <string name="show_label">Show Label</string>
     <string name="satellite_mode">Satellite Mode</string>
-
     <!-- Settings Menus -->
     <string name="icon_default">Default</string>
     <string name="icon_legacy">Legacy</string>
     <string name="icon_simple">Simple</string>
     <string name="unit_metric">Metric</string>
     <string name="unit_imperial">Imperial</string>
-
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Enter Location Data</string>
     <string name="specified_data_list_locations">Locations</string>
@@ -197,7 +178,6 @@
     <string name="specified_hint_latitude">Latitude (±90)</string>
     <string name="specified_hint_longitude">Longitude (±180)</string>
     <string name="specified_hint_timezone">Timezone (Continent/Region)</string>
-
     <!-- Info -->
     <string name="play_services_issue">Looks your device does not support Google Play Services,
         it could be because of faulty implementation or your device manufacturer did not installed
@@ -213,7 +193,6 @@
     <string name="verifying_license">Verifying License</string>
     <string name="license_successful">Successful :)</string>
     <string name="license_failed">License Verification Failed</string>
-
     <!-- Button Text -->
     <string name="button_cancel">Cancel</string>
     <string name="button_set">Set</string>
@@ -222,7 +201,6 @@
     <string name="button_ok">OK</string>
     <string name="button_copy">Copy</string>
     <string name="button_reset">Reset</string>
-
     <!-- Button Descriptions -->
     <string name="clock_options">Clock Menu</string>
     <string name="compass_options">Compass Menu</string>
@@ -232,17 +210,14 @@
     <string name="open_saved_locations">Open saved locations</string>
     <string name="open_specified_location_documentation">Open specified location documentation</string>
     <string name="open_timezones">Open time zones</string>
-
     <!-- Bottom Bar -->
     <string name="ellipsis">&#8230;</string>
-
     <!-- Legal Menu -->
     <string name="disclaimer">Disclaimer</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="permissions">Permissions</string>
     <string name="credits">Credits</string>
-
     <!-- Moon Illumination -->
     <string name="waning">Waning</string>
     <string name="waning_gibbous">Waning Gibbous</string>
@@ -254,7 +229,6 @@
     <string name="new_moon">@string/moon_new_moon</string>
     <string name="third_quarter">Third Quarter</string>
     <string name="first_quarter">First Quarter</string>
-
     <!-- Directions -->
     <string name="north">North</string>
     <string name="north_west">North West</string>

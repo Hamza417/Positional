@@ -54,7 +54,15 @@ android {
     buildToolsVersion "29.0.3"
 
     def appVersionCode = 58
-    def appVersionName = "Build$appVersionCode"
+    def appVersionName = "build$appVersionCode"
+
+    /**
+     * set to true if the build is for internal testing
+     *
+     * its main purpose is to disable obfuscation and
+     * add internal tag to app's version
+     */
+    def isInternalVersion = false
 
     defaultConfig {
         applicationId "app.simple.positional"
@@ -79,16 +87,22 @@ android {
 
         full {
             dimension "version"
+
+            if(isInternalVersion) {
+                versionNameSuffix "_internal"
+            }
         }
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            firebaseCrashlytics {
-                mappingFileUploadEnabled true
+            if (!isInternalVersion) {
+                minifyEnabled true
+                shrinkResources false
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+                firebaseCrashlytics {
+                    mappingFileUploadEnabled true
+                }
             }
         }
 
@@ -135,10 +149,6 @@ android {
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
 
-    // Google License and External Libraries if any
-    implementation project(path: ':lvl_library')
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-
     // Tests
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -171,6 +181,7 @@ dependencies {
     // Third Party Implementations
     implementation 'org.shredzone.commons:commons-suncalc:3.4'
     implementation 'com.afollestad:viewpagerdots:1.0.0'
+    implementation 'com.github.angads25:toggle:1.1.0'
 
     // Room components
     implementation "androidx.room:room-ktx:2.2.6"

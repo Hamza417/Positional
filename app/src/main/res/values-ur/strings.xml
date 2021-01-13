@@ -1,19 +1,17 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="licensing_key">@string/thisAppLicensingKey</string>
-    <string name="app_name">Positional</string>
-
+    <string name="app_name" tools:override="true">Positional</string>
     <!-- Panels -->
     <string name="clock">Clock</string>
-    <string name="compass">Compass</string>
-    <string name="gps">Location</string>
-    <string name="level">Level</string>
-    <string name="settings">Settings</string>
-
+    <string name="compass">کمپاس</string>
+    <string name="gps">مقام</string>
+    <string name="level">سطح</string>
+    <string name="settings">ملاحظہ کریں</string>
     <!-- Info Headers -->
     <string name="clock_info">Clock Info</string>
     <string name="compass_info">Compass Info</string>
     <string name="gps_info">GPS Info</string>
-
     <!-- Clock Information Headers-->
     <string name="local_time">Local Time</string>
     <string name="utc_time">UTC Time</string>
@@ -24,42 +22,39 @@
     <string name="moon_time">Moon Time</string>
     <string name="moon_illumination">Moon Illumination</string>
     <string name="moon_dates">Moon Dates</string>
-
     <!-- GPS Informatin Headers -->
     <string name="gps_provider">Provider</string>
-    <string name="gps_location">Location</string>
+    <string name="gps_location">مقام</string>
     <string name="gps_movement">Movement</string>
-    <string name="gps_coordinates">Coordinates</string>
-    <string name="gps_address">Address</string>
-
+    <string name="gps_coordinates">نقاط</string>
+    <string name="gps_address">پتہ</string>
     <!--Compass Information Header -->
-    <string name="compass_accuracy">Accuracy</string>
-    <string name="compass_field">Magnetic Field</string>
-
+    <string name="compass_accuracy">قطعیت</string>
+    <string name="compass_field">مقناطیسی میدان</string>
     <!-- Clock Information Items-->
-    <string name="local_timezone">Timezone:</string>
-    <string name="local_time_24hr">Time 24Hr:</string>
-    <string name="local_time_12hr">Time 12Hr:</string>
-    <string name="local_day">Day:</string>
-    <string name="local_date">Date:</string>
-    <string name="local_day_of_year">Day of Year:</string>
-    <string name="local_week_of_year">Week of Year:</string>
-    <string name="utc_local_time_offset">Local Time Offset:</string>
-    <string name="utc_current_time">Time:</string>
-    <string name="utc_current_date">Date:</string>
-    <string name="sun_azimuth">Azimuth:</string>
-    <string name="sun_distance">Distance:</string>
-    <string name="sun_altitude">Altitude:</string>
-    <string name="sun_sunrise">Sunrise:</string>
-    <string name="sun_noon">Noon:</string>
-    <string name="sun_sunset">Sunset:</string>
-    <string name="sun_nadir">Nadir:</string>
-    <string name="twilight_astronomical_dawn">Astronomical Dawn:</string>
-    <string name="twilight_nautical_dawn">Nautical Dawn:</string>
-    <string name="twilight_civil_dawn">Civil Dawn:</string>
-    <string name="twilight_civil_dusk">Civil Dusk:</string>
-    <string name="twilight_nautical_dusk">Nautical Dusk:</string>
-    <string name="twilight_astronomical_dusk">Astronomical Dusk:</string>
+    <string name="local_timezone">ٹائم زون:</string>
+    <string name="local_time_24hr">وقت 24 گھنٹے:</string>
+    <string name="local_time_12hr">وقت 12 گھنٹے:</string>
+    <string name="local_day">دن:</string>
+    <string name="local_date">تاریخ:</string>
+    <string name="local_day_of_year">سال کا دن:</string>
+    <string name="local_week_of_year">سال کا ہفتہ:</string>
+    <string name="utc_local_time_offset">مقامی وقت آفسیٹ:</string>
+    <string name="utc_current_time">وقت:</string>
+    <string name="utc_current_date">تاریخ:</string>
+    <string name="sun_azimuth">عزیموت:</string>
+    <string name="sun_distance">دوری:</string>
+    <string name="sun_altitude">بلندی:</string>
+    <string name="sun_sunrise">طلوع آفتاب:</string>
+    <string name="sun_noon">دوپہر:</string>
+    <string name="sun_sunset">غروب آفتاب:</string>
+    <string name="sun_nadir">نادر:</string>
+    <string name="twilight_astronomical_dawn">فلکیات طلوع فجر:</string>
+    <string name="twilight_nautical_dawn">سمندری صبح:</string>
+    <string name="twilight_civil_dawn">سول فجر:</string>
+    <string name="twilight_civil_dusk">سول شام:</string>
+    <string name="twilight_nautical_dusk">سمندری شام:</string>
+    <string name="twilight_astronomical_dusk">فلکیاتی شام:</string>
     <string name="moon_azimuth">@string/sun_azimuth</string>
     <string name="moon_distance">@string/sun_distance</string>
     <string name="moon_altitude">@string/sun_altitude</string>
@@ -75,14 +70,12 @@
     <string name="moon_new_moon">New Moon:</string>
     <string name="moon_first_quarter">First Quarter:</string>
     <string name="moon_last_quarter">Last Quarter:</string>
-
     <!-- Compass information items -->
     <string name="accelerometer_accuracy">Accelerometer:</string>
     <string name="magnetometer_accuracy">Magnetometer:</string>
     <string name="compass_inclination">Inclination:</string>
     <string name="compass_declination">Declination:</string>
     <string name="compass_field_strength">Field Strength:</string>
-
     <!-- GPS Information Panel -->
     <string name="gps_status">Status:</string>
     <string name="gps_source">Source:</string>
@@ -94,57 +87,50 @@
     <string name="gps_speed">Speed:</string>
     <string name="gps_latitude">Latitude:</string>
     <string name="gps_longitude">Longitude:</string>
-
     <!-- Sensor Accuracy -->
     <string name="sensor_accuracy_unreliable">Unreliable</string>
     <string name="sensor_accuracy_low">Low</string>
     <string name="sensor_accuracy_medium">Medium</string>
     <string name="sensor_accuracy_high">High</string>
-
     <!-- GPS Source Status -->
     <string name="gps_enabled">Enabled</string>
-    <string name="gps_disabled">Disabled</string>
-
+    <string name="gps_disabled">بند</string>
     <!-- Units -->
-    <string name="meter">m</string>
-    <string name="kilometer">km</string>
-    <string name="feet">ft</string>
-    <string name="miles">miles</string>
-    <string name="kilometer_hour">km/h</string>
-    <string name="miles_hour">mph</string>
-
+    <string name="meter">م</string>
+    <string name="kilometer">کلومیٹر</string>
+    <string name="feet">فوٹ</string>
+    <string name="miles">میل</string>
+    <string name="kilometer_hour">کلومیٹر فی گھنٹہ</string>
+    <string name="miles_hour">میل فی گھنٹہ</string>
     <!-- Alert -->
-    <string name="info_copied">Copied to Clipboard</string>
-    <string name="info_error">Info couldn\'t be copied!!</string>
-    <string name="reset_complete">Reset Complete</string>
-    <string name="invalid_coordinates">Invalid Coordinates</string>
-    <string name="internet_connection_alert">Internet connection not available</string>
-    <string name="error">Error</string>
-    <string name="not_available">N/A</string>
-    <string name="no_address_found">No address found for current location</string>
-
+    <string name="info_copied">کلپ بورڈ میں کاپی ہو گیا ہے</string>
+    <string name="info_error">کاپی نہیں ہوسکی!!</string>
+    <string name="reset_complete">ری سیٹ مکمل</string>
+    <string name="invalid_coordinates">غلط نقاط</string>
+    <string name="internet_connection_alert">انٹرنیٹ کنکشن دستیاب نہیں ہے</string>
+    <string name="error">خرابی واقع ہوئی</string>
+    <string name="not_available">دستیاب نہیں ہے</string>
+    <string name="no_address_found">موجودہ مقام کے لئے کوئی پتہ نہیں ملا</string>
     <!-- Settings Categories -->
-    <string name="appearance">Appearance</string>
-    <string name="configuration">Configuration</string>
-    <string name="about">About</string>
-    <string name="contribute">Contribute</string>
-
+    <string name="appearance">ظہور</string>
+    <string name="configuration">تشکیل</string>
+    <string name="about">ایپ کے بارے میں</string>
+    <string name="contribute">حصہ ڈالیں</string>
     <!-- Settings Heading -->
     <string name="theme">Theme</string>
-    <string name="icon">Icon</string>
-    <string name="units">Units</string>
-    <string name="specified_location">Use Specified Location</string>
-    <string name="keep_screen_on">Keep Screen On</string>
-    <string name="push_notification">Push Notification</string>
-    <string name="legal_notes">Legal Notes</string>
-    <string name="app_version">App Version</string>
-    <string name="change_logs">Change Logs</string>
-    <string name="found_an_issue">Found an issue?</string>
-    <string name="translate">Translate</string>
-    <string name="buy_full">Buy Full Version</string>
-
+    <string name="icon">آئیکن</string>
+    <string name="units">یونٹ</string>
+    <string name="specified_location">مخصوص مقام استعمال کریں</string>
+    <string name="keep_screen_on">اسکرین آون رکھیں</string>
+    <string name="push_notification">پش اطلاع</string>
+    <string name="legal_notes">قانونی نوٹ</string>
+    <string name="app_version">ایپ ورژن</string>
+    <string name="change_logs">تبدیلیوں کے نوشتہ جات</string>
+    <string name="found_an_issue">ایک مسئلہ ملا؟</string>
+    <string name="translate">ترجمہ کریں</string>
+    <string name="buy_full">مکمل ورژن خریدیں</string>
     <!-- Settings Description -->
-    <string name="theme_follow_system">Follow System</string>
+    <string name="theme_follow_system">سسٹم پر عمل کریں</string>
     <string name="theme_day">Light</string>
     <string name="theme_night">Dark</string>
     <string name="theme_auto">Auto (Day/Night)</string>
@@ -158,14 +144,12 @@
     <string name="desc_git">Open app\'s repository</string>
     <string name="desc_translate">Help translating the app in your native language</string>
     <string name="desc_buy_full_version">Support development by buying full version</string>
-
     <!-- Clock Menu -->
     <string name="needles">Needle</string>
     <string name="motion_type">Motion Type</string>
     <string name="time_format">Use 12 Hour Format</string>
     <string name="motion_type_smooth">Smooth</string>
     <string name="motion_type_tick">Tick</string>
-
     <!-- Compass Menu -->
     <string name="bloom">Bloom</string>
     <string name="bloom_skins">Bloom Skins</string>
@@ -178,18 +162,15 @@
     <string name="bloom_purple_square">Purple Square</string>
     <string name="bloom_red_circles">Red Circles</string>
     <string name="bloom_blue_petals">Blue Petals</string>
-
     <!-- GPS Menu -->
     <string name="show_label">Show Label</string>
     <string name="satellite_mode">Satellite Mode</string>
-
     <!-- Settings Menus -->
     <string name="icon_default">Default</string>
     <string name="icon_legacy">Legacy</string>
     <string name="icon_simple">Simple</string>
     <string name="unit_metric">Metric</string>
     <string name="unit_imperial">Imperial</string>
-
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Enter Location Data</string>
     <string name="specified_data_list_locations">Locations</string>
@@ -197,7 +178,6 @@
     <string name="specified_hint_latitude">Latitude (±90)</string>
     <string name="specified_hint_longitude">Longitude (±180)</string>
     <string name="specified_hint_timezone">Timezone (Continent/Region)</string>
-
     <!-- Info -->
     <string name="play_services_issue">Looks your device does not support Google Play Services,
         it could be because of faulty implementation or your device manufacturer did not installed
@@ -213,7 +193,6 @@
     <string name="verifying_license">Verifying License</string>
     <string name="license_successful">Successful :)</string>
     <string name="license_failed">License Verification Failed</string>
-
     <!-- Button Text -->
     <string name="button_cancel">Cancel</string>
     <string name="button_set">Set</string>
@@ -222,7 +201,6 @@
     <string name="button_ok">OK</string>
     <string name="button_copy">Copy</string>
     <string name="button_reset">Reset</string>
-
     <!-- Button Descriptions -->
     <string name="clock_options">Clock Menu</string>
     <string name="compass_options">Compass Menu</string>
@@ -232,17 +210,14 @@
     <string name="open_saved_locations">Open saved locations</string>
     <string name="open_specified_location_documentation">Open specified location documentation</string>
     <string name="open_timezones">Open time zones</string>
-
     <!-- Bottom Bar -->
     <string name="ellipsis">&#8230;</string>
-
     <!-- Legal Menu -->
     <string name="disclaimer">Disclaimer</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="permissions">Permissions</string>
     <string name="credits">Credits</string>
-
     <!-- Moon Illumination -->
     <string name="waning">Waning</string>
     <string name="waning_gibbous">Waning Gibbous</string>
@@ -254,7 +229,6 @@
     <string name="new_moon">@string/moon_new_moon</string>
     <string name="third_quarter">Third Quarter</string>
     <string name="first_quarter">First Quarter</string>
-
     <!-- Directions -->
     <string name="north">North</string>
     <string name="north_west">North West</string>

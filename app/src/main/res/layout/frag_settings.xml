@@ -191,7 +191,7 @@
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
 
-                    <androidx.appcompat.widget.SwitchCompat
+                    <app.simple.positional.views.CustomSwitchCompat
                         android:id="@+id/toggle_custom_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -236,12 +236,13 @@
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
 
-                    <androidx.appcompat.widget.SwitchCompat
+                    <app.simple.positional.views.CustomSwitchCompat
                         android:id="@+id/toggle_screen_on"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:thumb="@drawable/switch_thumb"
+                        android:checked="false"
                         app:track="@drawable/switch_track" />
 
                 </LinearLayout>
@@ -280,7 +281,7 @@
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
 
-                    <androidx.appcompat.widget.SwitchCompat
+                    <app.simple.positional.views.CustomSwitchCompat
                         android:id="@+id/toggle_notifications"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

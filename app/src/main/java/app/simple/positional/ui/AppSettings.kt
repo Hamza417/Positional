@@ -2,6 +2,7 @@ package app.simple.positional.ui
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -10,7 +11,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
@@ -24,6 +24,7 @@ import app.simple.positional.preference.MainPreferences.isNotificationOn
 import app.simple.positional.preference.MainPreferences.isScreenOn
 import app.simple.positional.preference.MainPreferences.setCustomCoordinates
 import app.simple.positional.preference.MainPreferences.setScreenOn
+import app.simple.positional.views.CustomSwitchCompat
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
@@ -53,14 +54,15 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var credits: LinearLayout
     private lateinit var keepScreenOn: LinearLayout
 
-    private lateinit var toggleNotification: SwitchCompat
-    private lateinit var toggleKeepScreenOn: SwitchCompat
-    private lateinit var toggleCustomLocation: SwitchCompat
+    private lateinit var toggleNotification: CustomSwitchCompat
+    private lateinit var toggleKeepScreenOn: CustomSwitchCompat
+    private lateinit var toggleCustomLocation: CustomSwitchCompat
 
     private lateinit var specifiedLocationText: TextView
     private lateinit var currentTheme: TextView
     private lateinit var currentUnit: TextView
 
+    private lateinit var td: TransitionDrawable
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
@@ -87,6 +89,8 @@ class AppSettings : Fragment(), CoordinatesCallback {
         toggleNotification = view.findViewById(R.id.toggle_notifications)
         toggleKeepScreenOn = view.findViewById(R.id.toggle_screen_on)
         toggleCustomLocation = view.findViewById(R.id.toggle_custom_location)
+
+        td = toggleNotification.trackDrawable as TransitionDrawable
 
         specifiedLocationText = view.findViewById(R.id.specified_location_text)
         currentTheme = view.findViewById(R.id.current_theme)
