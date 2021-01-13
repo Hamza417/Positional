@@ -102,8 +102,6 @@
     <string name="miles">मील</string>
     <string name="kilometer_hour">किमी/घं</string>
     <string name="miles_hour">मील/घं</string>
-    <string name="coordinate_X">X</string>
-    <string name="coordinate_Y">Y</string>
     <!-- Alert -->
     <string name="info_copied">क्लिपबोर्ड पर कॉपी किया गया</string>
     <string name="info_error">जानकारी कॉपी नहीं की जा सकी!</string>
@@ -189,7 +187,6 @@
         जितनी जल्दी हो सके इस मुद्दे को हल करने के लिए</string>
     <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your
         device in figure eight direction to calibrate</string>
-    <string name="push_notifications">आगामी अद्यतनों में परिवर्तन के बारे में सूचनाएं प्राप्त करें</string>
     <string name="specified_location_notice">नीचे दी गई जानकारी निर्दिष्ट स्थान निर्देशांक के लिए अपडेट की जा रही है</string>
     <string name="show_again">फिर से दिखाएँ</string>
     <string name="search_timezone">समय क्षेत्र खोजें</string>
@@ -204,8 +201,6 @@
     <string name="button_ok">ठीक है</string>
     <string name="button_copy">कॉपी करें</string>
     <string name="button_reset">रीसेट करें</string>
-    <string name="button_email_me">डेवलपर को ईमेल करें</string>
-    <string name="button_raise_issue">GitHub में एक मुद्दा उठाएं</string>
     <!-- Button Descriptions -->
     <string name="clock_options">Clock Menu</string>
     <string name="compass_options">Compass Menu</string>

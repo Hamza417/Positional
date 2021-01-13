@@ -3,7 +3,7 @@ package app.simple.positional.constants
 import app.simple.positional.R
 
 /**
- * Should follow the needle sequences of [hours] [minutes] and [seconds] for the ease of access
+ * Should follow the needle sequences of hours minutes and seconds for the ease of access
  * This pattern will be followed throughout the app
  */
 var clockNeedleSkins: Array<Array<Int>> = arrayOf(

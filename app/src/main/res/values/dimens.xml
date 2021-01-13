@@ -36,12 +36,10 @@
     <dimen name="options_item_text_size">7pt</dimen>
     <dimen name="options_container_horizontal_padding">15dp</dimen>
     <dimen name="options_container_vertical_padding">10dp</dimen>
-    <dimen name="options_category_text_size">6pt</dimen>
     <dimen name="options_sub_item_padding">10dp</dimen>
     <dimen name="options_header_text_size">8pt</dimen>
     <dimen name="dialog_height">400dp</dimen>
     <dimen name="description_text_size">7pt</dimen>
-    <dimen name="permission_tag_text_size">8pt</dimen>
 
     <!-- Top Bar -->
     <dimen name="top_bar_elevation">2dp</dimen>

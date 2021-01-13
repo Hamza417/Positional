@@ -12,11 +12,11 @@ object MathExtensions {
         return wrap(angle, 0.0, 360.0) % 360
     }
 
-    fun wrap(value: Float, min: Float, max: Float): Float {
+    private fun wrap(value: Float, min: Float, max: Float): Float {
         return wrap(value.toDouble(), min.toDouble(), max.toDouble()).toFloat()
     }
 
-    fun wrap(value: Double, min: Double, max: Double): Double {
+    private fun wrap(value: Double, min: Double, max: Double): Double {
         val range = max - min
 
         var newValue = value
@@ -48,11 +48,11 @@ object MathExtensions {
         return cos(angle.toRadians())
     }
 
-    fun Double.toRadians(): Double {
+    private fun Double.toRadians(): Double {
         return Math.toRadians(this)
     }
 
-    fun Float.toRadians(): Float {
+    private fun Float.toRadians(): Float {
         return Math.toRadians(this.toDouble()).toFloat()
     }
 

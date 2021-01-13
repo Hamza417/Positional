@@ -8,7 +8,6 @@ apply plugin: 'com.google.gms.google-services'
 def noKeyFound = '"NO_KEY_FOUND"'
 def googleMapsAPIKey = noKeyFound
 def thisAppLicensingKey = noKeyFound
-def dogBinAPIKey = noKeyFound
 
 /**
  * Can be used for any API Key
@@ -34,11 +33,6 @@ if (sensitiveDataFile.canRead()) {
 
         if (sensitiveData.containsKey('thisAppLicensingKey')) {
             thisAppLicensingKey = sensitiveData['thisAppLicensingKey']
-        }
-
-        // Not used currently
-        if (sensitiveData.containsKey('dogbinAPIKey')) {
-            dogBinAPIKey = sensitiveData['dogbinAPIKey']
         }
     }
 }
@@ -73,7 +67,6 @@ android {
 
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
         resValue "string", "thisAppLicensingKey", thisAppLicensingKey
-        resValue "string", "dogBinAPIKey", dogBinAPIKey
     }
 
     flavorDimensions "version"

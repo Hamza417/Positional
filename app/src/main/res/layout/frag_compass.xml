@@ -39,7 +39,6 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -69,7 +68,6 @@
     </LinearLayout>
 
     <include
-        android:id="@+id/include2"
         layout="@layout/generic_compass_rose"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

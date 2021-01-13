@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package app.simple.positional.math
 
 import kotlin.math.acos

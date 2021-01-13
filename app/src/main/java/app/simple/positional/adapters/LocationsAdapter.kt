@@ -51,7 +51,7 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
         val timeZone: TextView = itemView.findViewById(R.id.adapter_locations_timezone)
         val dateAdded: TextView = itemView.findViewById(R.id.adapter_locations_date_added)
 
-        var currentVelocity = 0f
+        private var currentVelocity = 0f
 
         val rotation: SpringAnimation = SpringAnimation(itemView, SpringAnimation.ROTATION)
                 .setSpring(

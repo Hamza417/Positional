@@ -28,7 +28,6 @@
             android:textSize="@dimen/top_bar_text_size" />
 
         <ImageButton
-            android:id="@+id/level_menu"
             android:layout_width="@dimen/top_bar_button_size"
             android:layout_height="@dimen/top_bar_button_size"
             android:layout_gravity="center_vertical|end"

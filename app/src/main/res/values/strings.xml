@@ -116,8 +116,6 @@
     <string name="miles">miles</string>
     <string name="kilometer_hour">km/h</string>
     <string name="miles_hour">mph</string>
-    <string name="coordinate_X">X</string>
-    <string name="coordinate_Y">Y</string>
 
     <!-- Alert -->
     <string name="info_copied">Copied to Clipboard</string>
@@ -155,7 +153,7 @@
     <string name="theme_night">Dark</string>
     <string name="theme_auto">Auto (Day/Night)</string>
     <string name="desc_icon">Main icon of the app in launcher</string>
-    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to getch information
+    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information
         instead of using device\' GPS as location information source\n\nGPS information will stay unaffected</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
     <string name="desc_push">Receive non intrusive notification about updates and other information</string>
@@ -213,7 +211,6 @@
         to resolve this issue as soon as possible</string>
     <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your
         device in figure eight direction to calibrate</string>
-    <string name="push_notifications">Receive non intrusive notifications about changes in upcoming updates</string>
     <string name="specified_location_notice">Information shown below are being updated for specified location coordinates</string>
     <string name="show_again">Show Again</string>
     <string name="search_timezone">Search Timezones</string>
@@ -229,8 +226,6 @@
     <string name="button_ok">OK</string>
     <string name="button_copy">Copy</string>
     <string name="button_reset">Reset</string>
-    <string name="button_email_me">Email Me</string>
-    <string name="button_raise_issue">Raise Issue On Github</string>
 
     <!-- Button Descriptions -->
     <string name="clock_options">Clock Menu</string>

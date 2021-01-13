@@ -40,7 +40,6 @@
     </com.google.android.material.appbar.MaterialToolbar>
 
     <LinearLayout
-        android:id="@+id/clock_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/top_bar_height"

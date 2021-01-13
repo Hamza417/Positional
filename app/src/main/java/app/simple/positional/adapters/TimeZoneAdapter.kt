@@ -54,7 +54,7 @@ class TimeZoneAdapter(
         val timeZone: TextView = itemView.findViewById(R.id.time_zone_adapter_text)
         val layout: LinearLayout = itemView.findViewById(R.id.time_zone_adapter_item_container)
 
-        var currentVelocity = 0f
+        private var currentVelocity = 0f
 
         val rotation: SpringAnimation = SpringAnimation(itemView, SpringAnimation.ROTATION)
                 .setSpring(
