@@ -1,6 +1,7 @@
 package app.simple.positional.ui
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -13,7 +14,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
@@ -34,7 +35,7 @@ class Launcher : Fragment() {
     private lateinit var launcherBackground: ImageView
     private lateinit var touchIndicator: ImageView
     private lateinit var icon: ImageView
-    private lateinit var text: TextView
+    private lateinit var text: AppCompatTextView
     private lateinit var launcherContainer: ConstraintLayout
 
     private lateinit var intent: Intent
@@ -103,11 +104,10 @@ class Launcher : Fragment() {
 
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    handler.removeCallbacksAndMessages(null)
                     touchIndicator.x = event.x - (touchIndicator.width / 2)
                     touchIndicator.y = event.y - (touchIndicator.height / 2)
                     touchIndicator.animate().scaleX(1.2f).scaleY(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
-
-                    handler.removeCallbacksAndMessages(null)
                 }
                 MotionEvent.ACTION_MOVE -> {
                     touchIndicator.x = event.x - (touchIndicator.width / 2f)
@@ -148,13 +148,16 @@ class Launcher : Fragment() {
     private fun runPostDelayed(delay: Long) {
         handler.postDelayed({
             /*
-             * isDestroyed and isFinishing will check if the activity is alive or not
+             * [isActivityFinishing] will check if the activity is alive or not
              * It is possible that the app could have been launched by accident and user might want
              * to close it immediately, in such cases leaving the [Handler.postDelayed] in queue will
              * explicitly execute the action in the background even if the activity is closed
-             * and this will run the [MainActivity] and we don't want that
+             * and this will run the [MainActivity] and we don't want that.
+             *
+             * @see Handler.removeCallbacks
+             * @see Handler.removeCallbacksAndMessages
              */
-            if (requireActivity().isDestroyed || requireActivity().isFinishing) return@postDelayed
+            if (requireActivity().isActivityFinishing()) return@postDelayed
             runIntent()
         }, delay)
     }
@@ -166,20 +169,24 @@ class Launcher : Fragment() {
         requireActivity().finish()
     }
 
+    private fun Activity.isActivityFinishing(): Boolean {
+        return this.isFinishing || this.isDestroyed
+    }
+
     override fun onPause() {
-        super.onPause()
         icon.clearAnimation()
         text.clearAnimation()
         handler.removeCallbacksAndMessages(null)
+        super.onPause()
     }
 
     override fun onResume() {
-        super.onResume()
         runPostDelayed(2000)
+        super.onResume()
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         handler.removeCallbacksAndMessages(null)
+        super.onDestroy()
     }
 }

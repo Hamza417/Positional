@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
@@ -26,7 +26,7 @@ class License : Fragment(), LicenseCheckerCallback {
     }
 
     private lateinit var licenseLoader: ImageView
-    private lateinit var licenseStatus: TextView
+    private lateinit var licenseStatus: AppCompatTextView
 
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var licenceStatusCallback: LicenceStatusCallback
@@ -115,8 +115,13 @@ class License : Fragment(), LicenseCheckerCallback {
         }, 2000)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
         handler.removeCallbacksAndMessages(null)
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacksAndMessages(null)
+        super.onDestroy()
     }
 }

@@ -10,6 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,14 +19,16 @@
         app:layout_constraintVertical_bias="0.19"
         tools:ignore="UseCompoundDrawables">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/launcher_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/logo"
             android:text="@string/app_name"
+            android:textColor="?attr/textSecondary"
             android:textSize="@dimen/launcher_app_title" />
 
         <ImageView

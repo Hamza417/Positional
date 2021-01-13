@@ -39,8 +39,8 @@ import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.Vector3
+import app.simple.positional.preference.CompassPreference
 import app.simple.positional.preference.CompassPreference.getCompassSpeed
-import app.simple.positional.preference.CompassPreference.getDirectionCode
 import app.simple.positional.preference.CompassPreference.getFlowerBloomTheme
 import app.simple.positional.preference.CompassPreference.isFlowerBloom
 import app.simple.positional.preference.CompassPreference.isNoSensorAlertON
@@ -82,8 +82,8 @@ class Compass : Fragment(), SensorEventListener {
     var showDirectionCode = true
     private var isUserRotatingDial = false
 
-    var accelerometer = Vector3.zero
-    var magnetometer = Vector3.zero
+    private var accelerometer = Vector3.zero
+    private var magnetometer = Vector3.zero
 
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
@@ -167,7 +167,7 @@ class Compass : Fragment(), SensorEventListener {
         toolbar = view.findViewById(R.id.compass_appbar)
 
         filter.addAction("location")
-        showDirectionCode = getDirectionCode()
+        showDirectionCode = CompassPreference.getDirectionCode()
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))

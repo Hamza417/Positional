@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_view"
@@ -20,25 +19,19 @@
         android:orientation="horizontal"
         android:padding="@dimen/options_sub_item_padding">
 
-        <ImageView
-            android:layout_width="@dimen/options_icon_size"
-            android:layout_height="@dimen/options_icon_size"
-            android:layout_gravity="center_vertical"
-            android:padding="2dp"
-            android:src="@drawable/ic_navigation"
-            app:tint="?attr/iconRegular"
-            tools:ignore="ContentDescription" />
-
         <TextView
             android:id="@+id/clock_needle_theme_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:drawablePadding="@dimen/options_text_margin_start"
             android:fontFamily="@font/regular"
+            android:gravity="center_vertical"
             android:text="@string/needles"
             android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+            android:textSize="@dimen/options_item_text_size"
+            app:drawableLeftCompat="@drawable/ic_navigation"
+            app:drawableTint="?attr/iconRegular" />
 
     </LinearLayout>
 
@@ -50,27 +43,20 @@
         android:focusable="true"
         android:foreground="@drawable/ripple"
         android:orientation="horizontal"
-        android:padding="@dimen/options_sub_item_padding"
-        tools:ignore="UseCompoundDrawables">
-
-        <ImageView
-            android:layout_width="@dimen/options_icon_size"
-            android:layout_height="@dimen/options_icon_size"
-            android:layout_gravity="center_vertical"
-            android:padding="2dp"
-            android:src="@drawable/ic_rotate_which"
-            app:tint="?attr/iconRegular"
-            tools:ignore="ContentDescription" />
+        android:padding="@dimen/options_sub_item_padding">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:drawablePadding="@dimen/options_text_margin_start"
             android:fontFamily="@font/regular"
+            android:gravity="center_vertical"
             android:text="@string/motion_type"
             android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+            android:textSize="@dimen/options_item_text_size"
+            app:drawableLeftCompat="@drawable/ic_motion_type"
+            app:drawableTint="?attr/iconRegular" />
 
     </LinearLayout>
 
@@ -84,24 +70,19 @@
         android:orientation="horizontal"
         android:padding="@dimen/options_sub_item_padding">
 
-        <ImageView
-            android:layout_width="@dimen/options_icon_size"
-            android:layout_height="@dimen/options_icon_size"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_twenty_four_hours"
-            app:tint="?attr/iconRegular"
-            tools:ignore="ContentDescription" />
-
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
             android:layout_weight="1"
+            android:drawablePadding="@dimen/options_text_margin_start"
             android:fontFamily="@font/regular"
+            android:gravity="center_vertical"
             android:text="@string/time_format"
             android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+            android:textSize="@dimen/options_item_text_size"
+            app:drawableLeftCompat="@drawable/ic_twenty_four_hours"
+            app:drawableTint="?attr/iconRegular" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/toggle_default_time_format"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="licensing_key">@string/thisAppLicensingKey</string>
-    <string name="app_name" tools:override="true">Positional</string>
+    <string name="app_name" tools:override="true">पोज़िशनल</string>
     <!-- Panels -->
     <string name="clock">समय</string>
     <string name="compass">दिशा-सूचक</string>

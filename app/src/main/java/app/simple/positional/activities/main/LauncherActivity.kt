@@ -20,8 +20,7 @@ class LauncherActivity : AppCompatActivity(), LicenceStatusCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Global Shared Preferences
-        SharedPreferences.init(context = this)
+        SharedPreferences.init(context = applicationContext)
 
         if (isDayNightOn()) {
             setAppTheme(4)

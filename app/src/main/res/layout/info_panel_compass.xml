@@ -117,7 +117,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
-            android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
             android:padding="10dp">

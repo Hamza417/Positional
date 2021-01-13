@@ -21,6 +21,7 @@ import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.services.LocationService
+import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.*
 import app.simple.positional.util.displayLocationSettingsRequest
@@ -37,13 +38,20 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        window.setFormat(PixelFormat.RGBA_8888)
+
+        try {
+            SharedPreferences.getSharedPreferences()
+        } catch (e: UninitializedPropertyAccessException) {
+            SharedPreferences.init(applicationContext)
+        } catch (e: NullPointerException) {
+            SharedPreferences.init(applicationContext)
+        }
 
         if (MainPreferences.isScreenOn()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
-
-        setContentView(R.layout.activity_main)
-        window.setFormat(PixelFormat.RGBA_8888)
 
         bottomBar = findViewById(R.id.bottom_bar)
         locationIntent = Intent(applicationContext, LocationService::class.java)
