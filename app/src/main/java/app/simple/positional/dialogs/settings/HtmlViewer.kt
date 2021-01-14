@@ -31,7 +31,7 @@ class HtmlViewer : CustomBottomSheetDialog() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_legal_notes, container, false)
+        return inflater.inflate(R.layout.dialog_html, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,8 +75,8 @@ class HtmlViewer : CustomBottomSheetDialog() {
                 "Buy" -> {
                     webView.loadUrl("file:///android_asset/buy_full.html")
                 }
-                getString(R.string.credits) -> {
-                    webView.loadUrl("file:///android_asset/credits.html")
+                "translator" -> {
+                    webView.loadUrl("file:///android_asset/translators.html")
                 }
             }
         }

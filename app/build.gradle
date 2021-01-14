@@ -53,16 +53,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 58
-    def appVersionName = "build$appVersionCode"
-
-    /**
-     * set to true if the build is for internal testing
-     *
-     * its main purpose is to disable obfuscation and
-     * add internal tag to app's version
-     */
-    def isInternalVersion = false
+    def appVersionCode = 59
+    def appVersionName = "build${appVersionCode}"
 
     defaultConfig {
         applicationId "app.simple.positional"
@@ -87,22 +79,16 @@ android {
 
         full {
             dimension "version"
-
-            if(isInternalVersion) {
-                versionNameSuffix "_internal"
-            }
         }
     }
 
     buildTypes {
         release {
-            if (!isInternalVersion) {
-                minifyEnabled true
-                shrinkResources false
-                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-                firebaseCrashlytics {
-                    mappingFileUploadEnabled true
-                }
+            minifyEnabled true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            firebaseCrashlytics {
+                mappingFileUploadEnabled true
             }
         }
 

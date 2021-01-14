@@ -47,4 +47,10 @@
         <attr name="switcher_icon_color" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="Switch">
+        <attr name="thumbColor" format="color" />
+        <attr name="trackColorOn" format="color" />
+        <attr name="trackColorOff" format="color" />
+    </declare-styleable>
+
 </resources>

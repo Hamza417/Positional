@@ -191,7 +191,7 @@
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
 
-                    <app.simple.positional.views.CustomSwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/toggle_custom_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -236,7 +236,7 @@
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
 
-                    <app.simple.positional.views.CustomSwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/toggle_screen_on"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -281,7 +281,7 @@
                             android:textSize="@dimen/settings_secondary_text_size" />
                     </LinearLayout>
 
-                    <app.simple.positional.views.CustomSwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/toggle_notifications"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -389,26 +389,6 @@
                         android:text="@string/desc_changes"
                         android:textColor="?attr/textSecondary"
                         android:textSize="@dimen/settings_secondary_text_size" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/credits"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ripple"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/medium"
-                        android:text="@string/credits"
-                        android:textColor="?attr/textPrimary"
-                        android:textSize="@dimen/settings_primary_text_size" />
 
                 </LinearLayout>
             </LinearLayout>

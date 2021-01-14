@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/light"
+        android:gravity="center"
         android:text="@string/verifying_license"
         android:textColor="?attr/textPrimary"
         android:textSize="@dimen/license_text_size" />

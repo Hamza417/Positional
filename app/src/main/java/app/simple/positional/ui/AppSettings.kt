@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
@@ -24,7 +25,6 @@ import app.simple.positional.preference.MainPreferences.isNotificationOn
 import app.simple.positional.preference.MainPreferences.isScreenOn
 import app.simple.positional.preference.MainPreferences.setCustomCoordinates
 import app.simple.positional.preference.MainPreferences.setScreenOn
-import app.simple.positional.views.CustomSwitchCompat
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
@@ -51,12 +51,11 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var github: LinearLayout
     private lateinit var foundIssues: LinearLayout
     private lateinit var translate: LinearLayout
-    private lateinit var credits: LinearLayout
     private lateinit var keepScreenOn: LinearLayout
 
-    private lateinit var toggleNotification: CustomSwitchCompat
-    private lateinit var toggleKeepScreenOn: CustomSwitchCompat
-    private lateinit var toggleCustomLocation: CustomSwitchCompat
+    private lateinit var toggleNotification: SwitchCompat
+    private lateinit var toggleKeepScreenOn: SwitchCompat
+    private lateinit var toggleCustomLocation: SwitchCompat
 
     private lateinit var specifiedLocationText: TextView
     private lateinit var currentTheme: TextView
@@ -83,14 +82,11 @@ class AppSettings : Fragment(), CoordinatesCallback {
         github = view.findViewById(R.id.github)
         foundIssues = view.findViewById(R.id.found_issues)
         translate = view.findViewById(R.id.translate)
-        credits = view.findViewById(R.id.credits)
         keepScreenOn = view.findViewById(R.id.setting_keep_screen_on)
 
         toggleNotification = view.findViewById(R.id.toggle_notifications)
         toggleKeepScreenOn = view.findViewById(R.id.toggle_screen_on)
         toggleCustomLocation = view.findViewById(R.id.toggle_custom_location)
-
-        td = toggleNotification.trackDrawable as TransitionDrawable
 
         specifiedLocationText = view.findViewById(R.id.specified_location_text)
         currentTheme = view.findViewById(R.id.current_theme)
@@ -221,10 +217,6 @@ class AppSettings : Fragment(), CoordinatesCallback {
             startActivity(intent)
         }
 
-        credits.setOnClickListener {
-            HtmlViewer().newInstance(getString(R.string.credits)).show(childFragmentManager, "null")
-        }
-
         github.setOnClickListener {
             val uri: Uri = Uri.parse("https://github.com/Hamza417/Positional")
             val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -232,9 +224,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         }
 
         translate.setOnClickListener {
-            val uri: Uri = Uri.parse("https://crowdin.com/project/positional/")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(intent)
+            HtmlViewer().newInstance("translator").show(childFragmentManager, "translator")
         }
 
         foundIssues.setOnClickListener {

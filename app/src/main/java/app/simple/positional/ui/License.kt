@@ -28,14 +28,14 @@ class License : Fragment(), LicenseCheckerCallback {
     private lateinit var licenseLoader: ImageView
     private lateinit var licenseStatus: AppCompatTextView
 
+    private var base64PublicKey = ""
+    private var packageName = "a p p . s i m p l e . p o s i t i o n a l"
+
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var licenceStatusCallback: LicenceStatusCallback
-
-    private var base64PublicKey = ""
     private var mLicenseCheckerCallback: LicenseCheckerCallback? = null
     private var mChecker: LicenseChecker? = null
 
-    // Generate your own 20 random bytes, and put them here.
     private val salt = byteArrayOf(-46, 65, 30, -128, -103, -57, 74, -64, 51, 88, -95, -45, 77, -117, -36, -113, -11, 32, -64, 89)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -101,8 +101,12 @@ class License : Fragment(), LicenseCheckerCallback {
     override fun applicationError(errorCode: Int) {
         handler.post {
             try {
-                licenseStatus.setTextAnimation(getString(R.string.error), 500)
-                runHandler(false)
+                if (requireContext().packageName == packageName.replace("\\s".toRegex(), "")) {
+                    licenseStatus.setTextAnimation(getString(R.string.error), 500)
+                    runHandler(false)
+                } else {
+                    showDoNotAllowScreen("package mismatched")
+                }
             } catch (e: NullPointerException) {
             }
         }

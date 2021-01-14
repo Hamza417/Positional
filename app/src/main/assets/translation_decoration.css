@@ -1,0 +1,110 @@
+@font-face {
+	font-family: main_font;
+	src: url(file:///android_asset/candara.ttf);
+}
+
+body {
+	 background: rgba(0, 0, 0, 0);
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 min-height: 100vh;
+	 width: 100vw;
+	 margin: 0;
+	 padding: 0vh 10px;
+	 font-family: 'main_font';
+	 font-weight: 300;
+	 color: #333;
+	 box-sizing: border-box;
+}
+ body * {
+	 box-sizing: border-box;
+}
+ .timeline {
+	 width: 100%;
+	 max-width: 800px;
+	 background: rgba(0, 0, 0, 0);
+	 padding: 60px 20px;
+	 position: relative;
+}
+ .timeline:before {
+	 content: '';
+	 position: absolute;
+	 top: 0px;
+	 left: calc(33% + 5px);
+	 bottom: 0px;
+	 width: 4px;
+	 background: #ddd;
+}
+ .timeline:after {
+	 content: "";
+	 display: table;
+	 clear: both;
+}
+ .entry {
+	 clear: both;
+	 text-align: left;
+	 position: relative;
+}
+ .entry .title {
+	 margin-bottom: 0.5em;
+	 float: left;
+	 width: 33%;
+	 padding-right: 30px;
+	 text-align: right;
+	 position: relative;
+}
+ .entry .title:before {
+	 content: '';
+	 position: absolute;
+	 width: 8px;
+	 height: 8px;
+	 border: 4px solid salmon;
+	 background-color: #fff;
+	 border-radius: 100%;
+	 top: 7.5%;
+	 right: -8px;
+	 z-index: 99;
+}
+ .entry .title h3 {
+	 margin: 0;
+	 font-size: 120%;
+}
+ .entry .title p {
+	 margin: 0;
+	 font-size: 100%;
+}
+ .entry .body {
+	 margin: 0 0 3em;
+	 float: right;
+	 width: 66%;
+	 padding-left: 30px;
+}
+ .entry .body p {
+	 line-height: 1.4em;
+}
+ .entry .body p:first-child {
+	 margin-top: 0;
+	 font-weight: 400;
+}
+ .entry .body ul {
+	 color: grey;
+	 padding-left: 0;
+	 list-style-type: none;
+}
+ .entry .body ul li:before {
+	 content: "•";
+	 margin-right: 0.5em;
+}
+
+h1 {
+	color: salmon;
+	font-family: 'main_font';
+	text-align: left;
+}
+
+a:link {
+	color: salmon;
+	text-decoration: none;
+	background-color: transparent;
+}

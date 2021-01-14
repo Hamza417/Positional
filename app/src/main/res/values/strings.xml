@@ -199,15 +199,15 @@
     <string name="specified_hint_timezone">Timezone (Continent/Region)</string>
 
     <!-- Info -->
-    <string name="play_services_issue">Looks your device does not support Google Play Services,
-        it could be because of faulty implementation or your device manufacturer did not installed
-        it, either way it is going to break some of the apps\' functionality</string>
+    <string name="play_services_issue">Your device does not support Google Play Services,
+        it could be because of faulty implementation or your device manufacturer did not install it.
+        Features like maps will not work without it.</string>
     <string name="no_sensor_alert">Your device does not seem to have the required sensors available
         to make this feature work :(\n\nIf you think this is a mistake please contact developer
         to resolve this issue as soon as possible</string>
     <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your
-        device in figure eight direction to calibrate</string>
-    <string name="specified_location_notice">Information shown below are being updated for specified location coordinates</string>
+        device in figure eight direction to calibrate the sensors.</string>
+    <string name="specified_location_notice">Information shown below are being updated for specified location coordinates.</string>
     <string name="show_again">Show Again</string>
     <string name="search_timezone">Search Timezones</string>
     <string name="verifying_license">Verifying License</string>
@@ -241,7 +241,6 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="permissions">Permissions</string>
-    <string name="credits">Credits</string>
 
     <!-- Moon Illumination -->
     <string name="waning">Waning</string>
