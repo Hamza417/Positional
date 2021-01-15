@@ -30,7 +30,7 @@
             android:text="@string/needles"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size"
-            app:drawableLeftCompat="@drawable/ic_navigation"
+            app:drawableStartCompat="@drawable/ic_navigation"
             app:drawableTint="?attr/iconRegular" />
 
     </LinearLayout>
@@ -55,7 +55,7 @@
             android:text="@string/motion_type"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size"
-            app:drawableLeftCompat="@drawable/ic_motion_type"
+            app:drawableStartCompat="@drawable/ic_motion_type"
             app:drawableTint="?attr/iconRegular" />
 
     </LinearLayout>
@@ -81,7 +81,7 @@
             android:text="@string/time_format"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size"
-            app:drawableLeftCompat="@drawable/ic_twenty_four_hours"
+            app:drawableStartCompat="@drawable/ic_twenty_four_hours"
             app:drawableTint="?attr/iconRegular" />
 
         <androidx.appcompat.widget.SwitchCompat

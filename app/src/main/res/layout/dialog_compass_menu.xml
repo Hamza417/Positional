@@ -134,7 +134,7 @@
                     android:text="@string/sensor_speed"
                     android:textColor="?attr/textPrimary"
                     android:textSize="@dimen/options_item_text_size"
-                    app:drawableLeftCompat="@drawable/ic_speed_fast"
+                    app:drawableStartCompat="@drawable/ic_speed_fast"
                     app:drawableTint="?attr/iconRegular" />
 
             </LinearLayout>

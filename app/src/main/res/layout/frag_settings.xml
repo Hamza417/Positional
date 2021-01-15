@@ -494,7 +494,7 @@
                     android:focusable="true"
                     android:orientation="vertical"
                     android:padding="15dp"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
