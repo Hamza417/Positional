@@ -67,12 +67,10 @@
 ## Contribution
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
-
 <br/>
 
 ## Translate
-This app is currently only available in English language. If you want to translate the app in your native language
+This app is currently only available in English, Hindi and Urdu language. If you want to translate the app in your native language
 you can do so on [Crowdin](https://crowdin.com/project/positional/) <br/>
 
 Any person who is contributing to translation will be listed as a **Contributor** in app's credit section and will be given
