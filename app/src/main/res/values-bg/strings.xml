@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="licensing_key">@string/thisAppLicensingKey</string>
-    <string name="app_name">Позиция</string>
+    <string name="app_name">Позиционен</string>
     <!-- Panels -->
     <string name="clock">Часовник</string>
     <string name="compass">Компас</string>
@@ -53,60 +53,60 @@
     <string name="twilight_nautical_dawn">Зазоряване на морското равнище:</string>
     <string name="twilight_civil_dawn">Civil Dawn:</string>
     <string name="twilight_civil_dusk">Civil Dusk:</string>
-    <string name="twilight_nautical_dusk">Nautical Dusk:</string>
-    <string name="twilight_astronomical_dusk">Astronomical Dusk:</string>
+    <string name="twilight_nautical_dusk">Морски здрач:</string>
+    <string name="twilight_astronomical_dusk">Астрономически здрач:</string>
     <string name="moon_azimuth">@string/sun_azimuth</string>
     <string name="moon_distance">@string/sun_distance</string>
     <string name="moon_altitude">@string/sun_altitude</string>
     <string name="moon_parallactic_angle">Parallactic Angle:</string>
-    <string name="moon_moonrise">Moonrise:</string>
-    <string name="moon_moonset">Moonset:</string>
-    <string name="moon_fraction">Fraction:</string>
-    <string name="moon_angle">Angle:</string>
-    <string name="moon_angle_state">Angle State:</string>
-    <string name="moon_phase">Phase:</string>
-    <string name="moon_phase_angle">Phase Angle:</string>
-    <string name="moon_full_moon">Full Moon:</string>
-    <string name="moon_new_moon">New Moon:</string>
-    <string name="moon_first_quarter">First Quarter:</string>
-    <string name="moon_last_quarter">Last Quarter:</string>
+    <string name="moon_moonrise">Лунен изгрев:</string>
+    <string name="moon_moonset">Лунен залез:</string>
+    <string name="moon_fraction">Част:</string>
+    <string name="moon_angle">Ъгъл:</string>
+    <string name="moon_angle_state">Състояние на ъгъла:</string>
+    <string name="moon_phase">Фаза:</string>
+    <string name="moon_phase_angle">Фазов ъгъл:</string>
+    <string name="moon_full_moon">Пълнолуние:</string>
+    <string name="moon_new_moon">Новолуние:</string>
+    <string name="moon_first_quarter">Първа четвърт:</string>
+    <string name="moon_last_quarter">Последна четвърт:</string>
     <!-- Compass information items -->
-    <string name="accelerometer_accuracy">Accelerometer:</string>
-    <string name="magnetometer_accuracy">Magnetometer:</string>
-    <string name="compass_inclination">Inclination:</string>
-    <string name="compass_declination">Declination:</string>
-    <string name="compass_field_strength">Field Strength:</string>
+    <string name="accelerometer_accuracy">Акселерометър:</string>
+    <string name="magnetometer_accuracy">Магнетометър:</string>
+    <string name="compass_inclination">Наклон:</string>
+    <string name="compass_declination">Отклонение:</string>
+    <string name="compass_field_strength">Сила на полето:</string>
     <!-- GPS Information Panel -->
-    <string name="gps_status">Status:</string>
-    <string name="gps_source">Source:</string>
-    <string name="gps_accuracy">Accuracy:</string>
-    <string name="gps_altitude">Altitude:</string>
-    <string name="gps_bearing">Bearing:</string>
-    <string name="gps_displacement">Displacement:</string>
-    <string name="gps_direction">Direction:</string>
-    <string name="gps_speed">Speed:</string>
-    <string name="gps_latitude">Latitude:</string>
+    <string name="gps_status">Статус:</string>
+    <string name="gps_source">Източник:</string>
+    <string name="gps_accuracy">Точност:</string>
+    <string name="gps_altitude">Надм. вис:</string>
+    <string name="gps_bearing">Посока:</string>
+    <string name="gps_displacement">Изместване:</string>
+    <string name="gps_direction">Посока:</string>
+    <string name="gps_speed">Скорост:</string>
+    <string name="gps_latitude">Геогр. ширина:</string>
     <string name="gps_longitude">Географска дължина:</string>
     <!-- Sensor Accuracy -->
-    <string name="sensor_accuracy_unreliable">Unreliable</string>
-    <string name="sensor_accuracy_low">Low</string>
-    <string name="sensor_accuracy_medium">Medium</string>
-    <string name="sensor_accuracy_high">High</string>
+    <string name="sensor_accuracy_unreliable">Ненадеждно</string>
+    <string name="sensor_accuracy_low">Ниско</string>
+    <string name="sensor_accuracy_medium">Средно</string>
+    <string name="sensor_accuracy_high">Високо</string>
     <!-- GPS Source Status -->
-    <string name="gps_enabled">Enabled</string>
-    <string name="gps_disabled">Disabled</string>
+    <string name="gps_enabled">Включено</string>
+    <string name="gps_disabled">Изключено</string>
     <!-- Units -->
-    <string name="meter">m</string>
-    <string name="kilometer">km</string>
-    <string name="feet">ft</string>
-    <string name="miles">miles</string>
-    <string name="kilometer_hour">km/h</string>
-    <string name="miles_hour">mph</string>
+    <string name="meter">м</string>
+    <string name="kilometer">км</string>
+    <string name="feet">фт</string>
+    <string name="miles">мили</string>
+    <string name="kilometer_hour">км/ч</string>
+    <string name="miles_hour">мили/ч</string>
     <!-- Alert -->
-    <string name="info_copied">Copied to Clipboard</string>
-    <string name="info_error">Info couldn\'t be copied!!</string>
-    <string name="reset_complete">Reset Complete</string>
-    <string name="invalid_coordinates">Invalid Coordinates</string>
+    <string name="info_copied">Копирано в клипборда</string>
+    <string name="info_error">Информацията не може да бъде копирана!!</string>
+    <string name="reset_complete">Настройките са върнати</string>
+    <string name="invalid_coordinates">Невалидни координати</string>
     <string name="internet_connection_alert">Не е налична мрежова връзка</string>
     <string name="error">Грешка</string>
     <string name="not_available">N/A</string>
@@ -127,7 +127,7 @@
     <string name="app_version">Версия на приложението</string>
     <string name="change_logs">Списък с промени</string>
     <string name="found_an_issue">Намерихте проблем?</string>
-    <string name="translate">Translation</string>
+    <string name="translate">Превод</string>
     <string name="buy_full">Купете пълната версия</string>
     <!-- Settings Description -->
     <string name="theme_follow_system">Следвайте системните настройки</string>
@@ -135,26 +135,25 @@
     <string name="theme_night">Тъмна</string>
     <string name="theme_auto">Автоматично (Ден/Нощ)</string>
     <string name="desc_icon">Главна икона на приложението</string>
-    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information
-        instead of using device\' GPS as location information source\n\nGPS information will stay unaffected</string>
-    <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
-    <string name="desc_push">Receive non intrusive notification about updates and other information</string>
-    <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>
-    <string name="desc_changes">Detailed change logs for all the builds till now</string>
-    <string name="desc_git">Open app\'s repository</string>
-    <string name="desc_translate">Help translating the app in your native language</string>
-    <string name="desc_buy_full_version">Support development by buying full version</string>
+    <string name="desc_specified_location">Посочете персонализирана ширина, дължина и часова зона и го използвайте за извличане на информация        вместо да използвате GPS на устройството като източник на информация за местоположението\n\nGPS информацията ще остане незасегната</string>
+    <string name="desc_screen_on">Предотвратяване заспиването на устройството, докато се използва приложението</string>
+    <string name="desc_push">Получавайте ненатрапчиво известие за актуализации и друга информация</string>
+    <string name="desc_legal">Прочетете отказ от отговорност, Политика за поверителност и Условия за използване</string>
+    <string name="desc_changes">Подробни регистрационни файлове за всички компилации досега</string>
+    <string name="desc_git">Отворете хранилището на приложението</string>
+    <string name="desc_translate">Помогнете за превода на приложението на вашия роден език</string>
+    <string name="desc_buy_full_version">Подкрепете развитието на приложението чрез закупуване на пълната му версия</string>
     <!-- Clock Menu -->
     <string name="needles">Needle</string>
-    <string name="motion_type">Motion Type</string>
-    <string name="time_format">Use 12 Hour Format</string>
-    <string name="motion_type_smooth">Smooth</string>
+    <string name="motion_type">Тип на движението</string>
+    <string name="time_format">Използвай 12-часов формат</string>
+    <string name="motion_type_smooth">Плавно</string>
     <string name="motion_type_tick">Tick</string>
     <!-- Compass Menu -->
     <string name="bloom">Bloom</string>
     <string name="bloom_skins">Bloom Skins</string>
-    <string name="show_code">Show Code</string>
-    <string name="sensor_speed">Sensor Speed</string>
+    <string name="show_code">Показване на кода</string>
+    <string name="sensor_speed">Скорост на сензора</string>
     <string name="sensor_speed_smooth">@string/motion_type_smooth</string>
     <string name="sensor_speed_normal">Нормално</string>
     <string name="sensor_speed_fast">Бързо</string>
@@ -164,40 +163,40 @@
     <string name="bloom_blue_petals">Сини венчелистчета</string>
     <!-- GPS Menu -->
     <string name="show_label">Покажи етикетите</string>
-    <string name="satellite_mode">Satellite Mode</string>
+    <string name="satellite_mode">Сателит</string>
     <!-- Settings Menus -->
-    <string name="icon_default">Default</string>
-    <string name="icon_legacy">Legacy</string>
-    <string name="icon_simple">Simple</string>
-    <string name="unit_metric">Metric</string>
-    <string name="unit_imperial">Imperial</string>
+    <string name="icon_default">Основен</string>
+    <string name="icon_legacy">Завещание</string>
+    <string name="icon_simple">Опростено</string>
+    <string name="unit_metric">Метрични</string>
+    <string name="unit_imperial">Британски</string>
     <!-- Specified Coordinates Menu -->
-    <string name="specified_hint_header">Enter Location Data</string>
-    <string name="specified_data_list_locations">Locations</string>
+    <string name="specified_hint_header">Въведете местоположение</string>
+    <string name="specified_data_list_locations">Местоположения</string>
     <string name="specified_hint_address">@string/gps_address</string>
-    <string name="specified_hint_latitude">Latitude (±90)</string>
-    <string name="specified_hint_longitude">Longitude (±180)</string>
-    <string name="specified_hint_timezone">Timezone (Continent/Region)</string>
+    <string name="specified_hint_latitude">Географска ширина (±90)</string>
+    <string name="specified_hint_longitude">Географска дължина (±180)</string>
+    <string name="specified_hint_timezone">Часова зона (Континент / Регион)</string>
     <!-- Info -->
-    <string name="play_services_issue">Your device does not support Google Play Services,
-        it could be because of faulty implementation or your device manufacturer did not install it.
-        Features like maps will not work without it.</string>
-    <string name="no_sensor_alert">Your device does not seem to have the required sensors available
-        to make this feature work :(\n\nIf you think this is a mistake please contact developer
-        to resolve this issue as soon as possible</string>
-    <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your
-        device in figure eight direction to calibrate the sensors.</string>
-    <string name="specified_location_notice">Information shown below are being updated for specified location coordinates.</string>
-    <string name="show_again">Show Again</string>
-    <string name="search_timezone">Search Timezones</string>
-    <string name="verifying_license">Verifying License</string>
-    <string name="license_successful">Successful :)</string>
-    <string name="license_failed">License Verification Failed</string>
+    <string name="play_services_issue">Вашето устройство не поддържа услуги на Google Play,
+        това може да се дължи на неправилно изпълнение или производителят на вашето устройство не ги е инсталирал.
+        Функции като карти няма да работят без тях.</string>
+    <string name="no_sensor_alert">Изглежда, че вашето устройство не разполага с необходимите сензори
+        за да работи тази функция :(\n\nАко смятате, че това е грешка, моля, свържете се с разработчика
+        за да разреши този проблем възможно най-скоро</string>
+    <string name="compass_calibration_notice">Точността на сензора на компаса на вашето устройство е ниска, движете
+         устройство във фигура осем за калибриране на сензорите.</string>
+    <string name="specified_location_notice">Информацията, показана по-долу, се актуализира за посочените координати на местоположението.</string>
+    <string name="show_again">Покажи отново</string>
+    <string name="search_timezone">Търси часова зона</string>
+    <string name="verifying_license">Проверка на лиценза</string>
+    <string name="license_successful">Успешно :)</string>
+    <string name="license_failed">Проверката на лиценза не бе успешна</string>
     <!-- Button Text -->
-    <string name="button_cancel">Cancel</string>
-    <string name="button_set">Set</string>
-    <string name="button_close">Close</string>
-    <string name="button_grant">Grant</string>
+    <string name="button_cancel">Отказ</string>
+    <string name="button_set">Задай</string>
+    <string name="button_close">Затвори</string>
+    <string name="button_grant">Разреши</string>
     <string name="button_ok">ОК</string>
     <string name="button_copy">Копирай</string>
     <string name="button_reset">Изчисти</string>
@@ -208,8 +207,8 @@
     <string name="gps_reset_location">Нулиране на локацията</string>
     <string name="delete_all">Изтрий всичко</string>
     <string name="open_saved_locations">Отвори запазени локации</string>
-    <string name="open_specified_location_documentation">Open specified location documentation</string>
-    <string name="open_timezones">Open time zones</string>
+    <string name="open_specified_location_documentation">Отворете документацията за определено местоположение</string>
+    <string name="open_timezones">Отвори часовите зони</string>
     <!-- Bottom Bar -->
     <string name="ellipsis">&#8230;</string>
     <!-- Legal Menu -->
@@ -219,15 +218,15 @@
     <string name="permissions">Разрешения</string>
     <!-- Moon Illumination -->
     <string name="waning">Внимание</string>
-    <string name="waning_gibbous">Waning Gibbous</string>
-    <string name="waning_crescent">Waning Crescent</string>
+    <string name="waning_gibbous">Намаляваща полупълна</string>
+    <string name="waning_crescent">Залязващ полумесец</string>
     <string name="waxing">Waxing</string>
-    <string name="waxing_gibbous">Waxing Gibbous</string>
-    <string name="waxing_crescent">Waxing Crescent</string>
+    <string name="waxing_gibbous">Растяща луна</string>
+    <string name="waxing_crescent">Восъчен полумесец</string>
     <string name="full_moon">@string/moon_full_moon</string>
     <string name="new_moon">@string/moon_new_moon</string>
-    <string name="third_quarter">Third Quarter</string>
-    <string name="first_quarter">First Quarter</string>
+    <string name="third_quarter">Трета четвърт</string>
+    <string name="first_quarter">Първа четвърт</string>
     <!-- Directions -->
     <string name="north">Север</string>
     <string name="north_west">Северозапад</string>

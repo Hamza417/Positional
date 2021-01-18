@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="licensing_key">@string/thisAppLicensingKey</string>
-    <string name="app_name" tools:override="true">Positional</string>
+    <string name="app_name">Positional</string>
     <!-- Panels -->
     <string name="clock">Clock</string>
     <string name="compass">Compass</string>
@@ -217,7 +217,6 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="permissions">Permissions</string>
-    <string name="credits">Credits</string>
     <!-- Moon Illumination -->
     <string name="waning">Waning</string>
     <string name="waning_gibbous">Waning Gibbous</string>

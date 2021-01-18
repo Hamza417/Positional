@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.preference.CompassPreference.isFlowerBloom
 import app.simple.positional.preference.CompassPreference.setDirectionCode
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
@@ -31,6 +31,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
     private lateinit var bloomText: TextView
     private lateinit var bloomSkinsText: TextView
     private lateinit var blooms: LinearLayout
+    private lateinit var bloomSwitchContainer: LinearLayout
     private lateinit var speed: LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,6 +42,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
         bloomText = view.findViewById(R.id.compass_bloom_text)
         bloomSkinsText = view.findViewById(R.id.compass_bloom_skins_text)
         blooms = view.findViewById(R.id.compass_bloom_theme)
+        bloomSwitchContainer = view.findViewById(R.id.bloom_switch_container)
         speed = view.findViewById(R.id.compass_speed)
 
         return view
@@ -61,7 +63,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
                 weakReference.get()?.setFlower(isChecked)
                 setFlowerBloom(isChecked)
             } else {
-                HtmlViewer().newInstance("Buy").show(childFragmentManager, "buy")
+                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
                 toggleFlower.isChecked = false
             }
         }
@@ -71,7 +73,16 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
                 val compassBloom = CompassBloom(weakReference)
                 compassBloom.show(parentFragmentManager, "null")
             } else {
-                HtmlViewer().newInstance("Buy").show(childFragmentManager, "buy")
+                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
+                toggleFlower.isChecked = false
+            }
+        }
+
+        bloomSwitchContainer.setOnClickListener {
+            if (BuildConfig.FLAVOR != "lite") {
+                toggleFlower.isChecked = !toggleFlower.isChecked
+            } else {
+                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
                 toggleFlower.isChecked = false
             }
         }

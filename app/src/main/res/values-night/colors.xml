@@ -22,7 +22,7 @@
 
     <color name="switcher_on_start_color">#2196F3</color>
     <color name="switcher_on_end_color">@color/switcher_on_start_color</color>
-    <color name="switcher_off_color">#474747</color>
+    <color name="switcher_off_color">#B5001C2B</color>
     <color name="switcher_icon_color">@android:color/white</color>
 
     <color name="clock_needle_stroke_color">#292929</color>

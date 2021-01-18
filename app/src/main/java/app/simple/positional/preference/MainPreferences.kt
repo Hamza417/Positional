@@ -1,5 +1,6 @@
 package app.simple.positional.preference
 
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import org.jetbrains.annotations.NotNull
@@ -20,6 +21,7 @@ object MainPreferences {
     private const val timezone = "custom_timezone"
     private const val address = "specified_address"
     private const val screenOn = "keep_the_screen_on"
+    private const val appLanguage = "current_language_locale"
 
     fun setLaunchCount(value: Int) {
         getSharedPreferences().edit().putInt(launchCount, value).apply()
@@ -139,5 +141,13 @@ object MainPreferences {
 
     fun getAddress(): String? {
         return getSharedPreferences().getString(address, "")
+    }
+
+    fun setAppLanguage(@NonNull locale: String) {
+        getSharedPreferences().edit().putString(appLanguage, locale).apply()
+    }
+
+    fun getAppLanguage(): String? {
+        return getSharedPreferences().getString(appLanguage, "bg")
     }
 }

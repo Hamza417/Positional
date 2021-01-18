@@ -24,6 +24,7 @@ class MessagingService : FirebaseMessagingService() {
 
     private val requestCode = 1
     private val notificationID = 6578
+    private val tag = "Firebase Messaging"
 
     override fun onCreate() {
         super.onCreate()
@@ -32,12 +33,12 @@ class MessagingService : FirebaseMessagingService() {
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                Log.w(tag, "Fetching FCM registration token failed", task.exception)
                 return@OnCompleteListener
             }
 
             if (BuildConfig.DEBUG) {
-                Log.d("TAG", task.result)
+                Log.d(tag, task.result)
             }
         })
     }
@@ -49,8 +50,9 @@ class MessagingService : FirebaseMessagingService() {
             try {
                 val title = p0.notification?.title
                 val body = p0.notification?.body
+                val action = p0.notification?.clickAction
 
-                sendNotification(title!!, body!!)
+                sendNotification(title!!, body!!, action!!)
             } catch (e: NullPointerException) {
             }
         }
@@ -60,10 +62,11 @@ class MessagingService : FirebaseMessagingService() {
         super.onNewToken(p0)
         if (BuildConfig.DEBUG) {
             baseContext.getSharedPreferences("Preferences", Context.MODE_PRIVATE).edit().putString("token", p0).apply()
+            Log.d(tag, p0)
         }
     }
 
-    private fun sendNotification(title: String, messageBody: String) {
+    private fun sendNotification(title: String, messageBody: String, action: String?) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_ONE_SHOT)
@@ -73,7 +76,7 @@ class MessagingService : FirebaseMessagingService() {
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_place_notification)
                 .setColor(Color.parseColor("#1B9CFF"))
-                .setSubText("Upcoming Changes")
+                .setSubText("Positional Alert")
                 .setContentTitle(title)
                 .setStyle(NotificationCompat.BigTextStyle().bigText(messageBody))
                 .setAutoCancel(true)
@@ -86,7 +89,7 @@ class MessagingService : FirebaseMessagingService() {
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(channelId,
-                    "App Update",
+                    "Positional Push Notifications",
                     NotificationManager.IMPORTANCE_DEFAULT)
             notificationManager.createNotificationChannel(channel)
         }

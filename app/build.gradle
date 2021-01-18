@@ -53,7 +53,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 60
+    def appVersionCode = 61
     def appVersionName = "build${appVersionCode}"
 
     defaultConfig {
@@ -67,6 +67,15 @@ android {
 
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
         resValue "string", "thisAppLicensingKey", thisAppLicensingKey
+    }
+
+    bundle {
+        /**
+         * It is required for app to be able to change language dynamically
+         */
+        language {
+            enableSplit = false
+        }
     }
 
     flavorDimensions "version"
@@ -89,30 +98,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             firebaseCrashlytics {
                 mappingFileUploadEnabled true
-            }
-        }
-
-        debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix "_debug"
-
-            /**
-             * This is necessary since I cannot create a debug Firebase
-             * project for a debug build, this part never goes into production
-             * so it won't cause any issues
-             *
-             * For future references to why it is here, this problem is caused by
-             * missing google-services.json file for the debug build and this code
-             * here is only masking the error and not solving it. In short it will
-             * quickly compile the app for debug but won't work in release builds
-             * if google-services.json file is missing
-             */
-            gradle.taskGraph.whenReady {
-                tasks.each { task ->
-                    if(task.name.contains("processFullDebugGoogleServices") || task.name.contains("processLiteDebugGoogleServices")) {
-                        task.enabled = false
-                    }
-                }
             }
         }
     }
@@ -167,7 +152,6 @@ dependencies {
     // Third Party Implementations
     implementation 'org.shredzone.commons:commons-suncalc:3.4'
     implementation 'com.afollestad:viewpagerdots:1.0.0'
-    implementation 'com.github.angads25:toggle:1.1.0'
 
     // Room components
     implementation "androidx.room:room-ktx:2.2.6"

@@ -2,10 +2,10 @@
 
     <item>
         <shape android:shape="oval">
-            <solid android:color="#E4FFFFFF" />
+            <solid android:color="@color/switcher_icon_color" />
             <stroke
                 android:width="6dp"
-                android:color="#00F0F0F0" />
+                android:color="#00BFBFBF" />
             <size
                 android:width="25dp"
                 android:height="25dp" />

@@ -2,7 +2,6 @@ package app.simple.positional.ui
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -61,7 +60,6 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var currentTheme: TextView
     private lateinit var currentUnit: TextView
 
-    private lateinit var td: TransitionDrawable
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
@@ -152,7 +150,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
                     }
                 }
             } else {
-                buyFull.callOnClick()
+                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
                 toggleCustomLocation.isChecked = false
             }
         }
@@ -187,7 +185,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
                     appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE, requireActivity(), 1337)
                 } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE) {
-                    Toast.makeText(requireContext(), "No Update Available", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), R.string.no_update, Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -208,7 +206,6 @@ class AppSettings : Fragment(), CoordinatesCallback {
             }
 
             popup.show()
-
         }
 
         changeLogs.setOnClickListener {
