@@ -28,8 +28,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.constants.compassBloomRes
-import app.simple.positional.constants.compassBloomTextColor
+import app.simple.positional.constants.CompassBloom.compassBloomRes
+import app.simple.positional.constants.CompassBloom.compassBloomTextColor
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
 import app.simple.positional.dialogs.compass.NoSensorAlert
@@ -46,6 +46,7 @@ import app.simple.positional.preference.CompassPreference.isFlowerBloom
 import app.simple.positional.preference.CompassPreference.isNoSensorAlertON
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
 import app.simple.positional.util.*
+import app.simple.positional.util.AsyncImageLoader.loadImageResources
 import app.simple.positional.util.ColorAnimator.animateColorChange
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth

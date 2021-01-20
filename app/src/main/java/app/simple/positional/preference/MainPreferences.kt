@@ -148,6 +148,6 @@ object MainPreferences {
     }
 
     fun getAppLanguage(): String? {
-        return getSharedPreferences().getString(appLanguage, "bg")
+        return getSharedPreferences().getString(appLanguage, "default")
     }
 }

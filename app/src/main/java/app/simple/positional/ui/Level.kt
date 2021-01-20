@@ -22,8 +22,8 @@ import app.simple.positional.dialogs.compass.NoSensorAlert
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.preference.LevelPreferences.isNoSensorAlertON
+import app.simple.positional.util.AsyncImageLoader.loadImageResourcesWithoutAnimation
 import app.simple.positional.util.HtmlHelper.fromHtml
-import app.simple.positional.util.loadImageResourcesWithoutAnimation
 
 class Level : Fragment(), SensorEventListener {
 

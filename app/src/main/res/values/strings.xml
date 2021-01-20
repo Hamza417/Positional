@@ -135,6 +135,7 @@
     <string name="theme">Theme</string>
     <string name="icon">Icon</string>
     <string name="units">Units</string>
+    <string name="language">Language</string>
     <string name="specified_location">Use Specified Location</string>
     <string name="keep_screen_on">Keep Screen On</string>
     <string name="push_notification">Push Notification</string>
@@ -215,6 +216,7 @@
     <string name="verifying_license">Verifying License</string>
     <string name="license_successful">Successful :)</string>
     <string name="license_failed">License Verification Failed</string>
+    <string name="auto_system_default">Auto (System Default)</string>
 
     <!-- Button Text -->
     <string name="button_cancel">Cancel</string>

@@ -36,10 +36,6 @@ data class Vector3(val x: Float, val y: Float, val z: Float) {
         )
     }
 
-    fun toFloatArray(): FloatArray {
-        return floatArrayOf(x, y, z)
-    }
-
     fun dot(other: Vector3): Float {
         return x * other.x + y * other.y + z * other.z
     }

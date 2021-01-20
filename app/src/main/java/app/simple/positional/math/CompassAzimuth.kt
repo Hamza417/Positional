@@ -6,6 +6,7 @@ import app.simple.positional.math.MathExtensions.normalizeAngle
 import app.simple.positional.math.MathExtensions.toDegrees
 import kotlin.math.atan2
 
+@Suppress("unused")
 object CompassAzimuth {
     @Suppress("deprecation")
     fun adjustAzimuthForDisplayRotation(azimuth: Float, windowManager: WindowManager): Float {

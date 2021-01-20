@@ -2,7 +2,6 @@ package app.simple.positional.activities.main
 
 import android.os.Bundle
 import android.text.format.DateFormat
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
@@ -16,7 +15,7 @@ import app.simple.positional.theme.setAppTheme
 import app.simple.positional.ui.Launcher
 import app.simple.positional.ui.License
 
-class LauncherActivity : AppCompatActivity(), LicenceStatusCallback {
+class LauncherActivity : BaseActivity(), LicenceStatusCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

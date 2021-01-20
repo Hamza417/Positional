@@ -22,7 +22,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.constants.clockNeedleSkins
+import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
@@ -33,6 +33,8 @@ import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
+import app.simple.positional.util.AsyncImageLoader.loadImageResources
+import app.simple.positional.util.AsyncImageLoader.loadImageResourcesWithoutAnimation
 import app.simple.positional.util.DigitalTimeFormatter.getTime
 import app.simple.positional.util.DigitalTimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth

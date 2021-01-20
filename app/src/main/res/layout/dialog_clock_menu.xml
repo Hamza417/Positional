@@ -13,7 +13,7 @@
         android:id="@+id/clock_needle_theme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple"
+        android:background="@drawable/ripple_btn"
         android:clickable="true"
         android:focusable="true"
         android:orientation="horizontal"
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="@drawable/ripple"
+        android:background="@drawable/ripple_btn"
         android:orientation="horizontal"
         android:padding="@dimen/options_sub_item_padding">
 
@@ -64,7 +64,7 @@
         android:id="@+id/clock_menu_default_time_format"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple"
+        android:background="@drawable/ripple_btn"
         android:clickable="true"
         android:focusable="true"
         android:orientation="horizontal"

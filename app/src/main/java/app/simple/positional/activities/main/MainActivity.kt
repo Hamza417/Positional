@@ -8,15 +8,12 @@ import android.os.Bundle
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.dialogs.app.PermissionDialog
-import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
@@ -24,16 +21,18 @@ import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.*
-import app.simple.positional.util.displayLocationSettingsRequest
-import app.simple.positional.util.getLocationStatus
+import app.simple.positional.util.LocationExtension.getLocationStatus
+import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.google.firebase.messaging.FirebaseMessaging
 
-class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide {
+class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
 
     private var locationIntent: Intent? = null
     private var reviewInfo: ReviewInfo? = null
     private lateinit var bottomBar: SmoothBottomBar
+    private lateinit var bottomBarWrapper: FrameLayout
     private val fragmentTags = arrayOf("clock", "compass", "gps", "level", "settings")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,19 +53,22 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         }
 
         bottomBar = findViewById(R.id.bottom_bar)
+        bottomBarWrapper = findViewById(R.id.bottom_bar_wrapper)
         locationIntent = Intent(applicationContext, LocationService::class.java)
-        startService(Intent(applicationContext, MessagingService::class.java))
+
+        if (MainPreferences.isNotificationOn()) {
+            FirebaseMessaging.getInstance().subscribeToTopic("push_notification")
+            startService(Intent(applicationContext, MessagingService::class.java))
+        }
 
         runApp()
         checkRunTimePermission()
+        showReviewPromptToUser()
 
         bottomBar.setOnItemSelectedListener {
             openFragment(it)
             FragmentPreferences.setCurrentPage(it)
         }
-
-        showReviewPromptToUser()
-        showPurchaseDialog(MainPreferences.getLaunchCount())
     }
 
     private fun showReviewPromptToUser() {
@@ -97,8 +99,8 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
         runService()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         stopService()
     }
 
@@ -171,13 +173,15 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
     }
 
     private fun openFragment(position: Int) {
-        supportFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                .replace(R.id.containers, getFragment(position), fragmentTags[position])
-                .commit()
+        getFragment(position)?.let {
+            supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                    .replace(R.id.containers, it, fragmentTags[position])
+                    .commit()
+        }
     }
 
-    private fun getFragment(position: Int): Fragment {
+    private fun getFragment(position: Int): Fragment? {
         when (position) {
             0 -> {
                 return supportFragmentManager.findFragmentByTag("clock") as Clock?
@@ -199,24 +203,12 @@ class MainActivity : AppCompatActivity(), PermissionCallbacks, BottomSheetSlide 
                 return supportFragmentManager.findFragmentByTag("settings") as AppSettings?
                         ?: AppSettings().newInstance()
             }
-            else -> {
-                return supportFragmentManager.findFragmentByTag("clock") as Clock?
-                        ?: Clock().newInstance()
-            }
         }
+
+        return null
     }
 
     override fun onBottomSheetSliding(slideOffset: Float) {
-        findViewById<FrameLayout>(R.id.bottom_bar_wrapper).translationY = (findViewById<FrameLayout>(R.id.bottom_bar_wrapper).height * slideOffset)
-    }
-
-    private fun showPurchaseDialog(value: Int) {
-        if (BuildConfig.FLAVOR == "lite") {
-            if (value == 5 || value == 10 || value == 15 || value == 20) {
-                HtmlViewer().newInstance("Buy").show(supportFragmentManager, "buy")
-            }
-        }
-
-        MainPreferences.setLaunchCount(MainPreferences.getLaunchCount() + 1)
+        bottomBarWrapper.translationY = bottomBarWrapper.height * slideOffset
     }
 }

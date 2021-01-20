@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.viewpager.widget.PagerAdapter
 import app.simple.positional.R
-import app.simple.positional.constants.clockNeedleSkins
+import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
 
 class ClockNeedleSkinsAdapter(context: Context) : PagerAdapter() {
 

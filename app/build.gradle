@@ -53,7 +53,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 61
+    def appVersionCode = 63
     def appVersionName = "build${appVersionCode}"
 
     defaultConfig {
@@ -67,15 +67,6 @@ android {
 
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
         resValue "string", "thisAppLicensingKey", thisAppLicensingKey
-    }
-
-    bundle {
-        /**
-         * It is required for app to be able to change language dynamically
-         */
-        language {
-            enableSplit = false
-        }
     }
 
     flavorDimensions "version"

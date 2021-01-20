@@ -14,6 +14,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.adapters.LocaleAdapter.Companion.localeList
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
@@ -27,6 +28,7 @@ import app.simple.positional.preference.MainPreferences.setScreenOn
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.firebase.messaging.FirebaseMessaging
 import java.lang.ref.WeakReference
 
 class AppSettings : Fragment(), CoordinatesCallback {
@@ -40,6 +42,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
 
     private lateinit var buyFull: LinearLayout
     private lateinit var unit: LinearLayout
+    private lateinit var language: LinearLayout
     private lateinit var theme: LinearLayout
     private lateinit var icon: LinearLayout
     private lateinit var customLocation: LinearLayout
@@ -59,6 +62,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var specifiedLocationText: TextView
     private lateinit var currentTheme: TextView
     private lateinit var currentUnit: TextView
+    private lateinit var currentLanguage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +74,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
 
         buyFull = view.findViewById(R.id.buy_full)
         unit = view.findViewById(R.id.settings_units)
+        language = view.findViewById(R.id.settings_languages)
         theme = view.findViewById(R.id.settings_theme)
         icon = view.findViewById(R.id.settings_icons)
         customLocation = view.findViewById(R.id.setting_custom_location)
@@ -89,6 +94,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         specifiedLocationText = view.findViewById(R.id.specified_location_text)
         currentTheme = view.findViewById(R.id.current_theme)
         currentUnit = view.findViewById(R.id.current_unit)
+        currentLanguage = view.findViewById(R.id.current_language)
 
         return view
     }
@@ -113,6 +119,12 @@ class AppSettings : Fragment(), CoordinatesCallback {
         toggleKeepScreenOn.isChecked = isScreenOn()
         isCoordinatesSet(isCustomCoordinate()) // toggle coordinate switch
 
+        for (i in localeList.indices) {
+            if (MainPreferences.getAppLanguage() == localeList[i].localeCode) {
+                currentLanguage.text = localeList[i].language
+            }
+        }
+
         theme.setOnClickListener {
             val theme = Theme(WeakReference(this))
             theme.show(parentFragmentManager, "null")
@@ -125,6 +137,10 @@ class AppSettings : Fragment(), CoordinatesCallback {
         unit.setOnClickListener {
             val units = WeakReference(Units(WeakReference(this)))
             units.get()?.show(parentFragmentManager, "null")
+        }
+
+        language.setOnClickListener {
+            Locales().newInstance().show(childFragmentManager, "locales")
         }
 
         customLocation.setOnClickListener {
@@ -174,6 +190,12 @@ class AppSettings : Fragment(), CoordinatesCallback {
         }
 
         toggleNotification.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                FirebaseMessaging.getInstance().subscribeToTopic("push_notification")
+            } else {
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("push_notification")
+            }
+
             MainPreferences.setNotifications(isChecked)
         }
 
@@ -240,7 +262,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
                 AppCompatDelegate.MODE_NIGHT_YES -> getString(R.string.theme_night)
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> getString(R.string.theme_follow_system)
                 4 -> getString(R.string.theme_auto)
-                else -> "Unknown Theme Selected!!"
+                else -> "Unknown Theme Selected!!" // Unreachable
             }
         } catch (e: NullPointerException) {
             e.printStackTrace()

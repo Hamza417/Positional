@@ -127,6 +127,11 @@ object LauncherBackground {
     )
 
     private fun parseColor(value: String): Int {
+        /**
+         * Do not use extension function, using reference type
+         * function is more easy to read, use and manage
+         * in a situation like this
+         */
         return Color.parseColor(value)
     }
 }

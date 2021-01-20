@@ -11,60 +11,62 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Context, delay: Int) {
-    CoroutineScope(Dispatchers.Default).launch {
-        val drawable = if (resourceValue != 0) context.resources?.let {
-            ResourcesCompat.getDrawable(it, resourceValue, null)
-        }!! else null
+object AsyncImageLoader {
+    fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Context, delay: Int) {
+        CoroutineScope(Dispatchers.Default).launch {
+            val drawable = if (resourceValue != 0) context.resources?.let {
+                ResourcesCompat.getDrawable(it, resourceValue, null)
+            }!! else null
 
-        withContext(Dispatchers.Main) {
-            val animOut: Animation = AnimationUtils.loadAnimation(context, R.anim.image_out)
-            val animIn: Animation = AnimationUtils.loadAnimation(context, R.anim.image_in)
+            withContext(Dispatchers.Main) {
+                val animOut: Animation = AnimationUtils.loadAnimation(context, R.anim.image_out)
+                val animIn: Animation = AnimationUtils.loadAnimation(context, R.anim.image_in)
 
-            animIn.startOffset = delay.toLong()
-            animOut.startOffset = delay.toLong()
+                animIn.startOffset = delay.toLong()
+                animOut.startOffset = delay.toLong()
 
-            animOut.setAnimationListener(object : Animation.AnimationListener {
-                override fun onAnimationStart(animation: Animation?) {}
+                animOut.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) {}
 
-                override fun onAnimationEnd(animation: Animation?) {
-                    imageView.setImageDrawable(drawable)
-                    animIn.setAnimationListener(object : Animation.AnimationListener {
-                        override fun onAnimationStart(animation: Animation?) {
+                    override fun onAnimationEnd(animation: Animation?) {
+                        imageView.setImageDrawable(drawable)
+                        animIn.setAnimationListener(object : Animation.AnimationListener {
+                            override fun onAnimationStart(animation: Animation?) {
 
-                        }
+                            }
 
-                        override fun onAnimationEnd(animation: Animation?) {
+                            override fun onAnimationEnd(animation: Animation?) {
 
-                        }
+                            }
 
-                        override fun onAnimationRepeat(animation: Animation?) {
+                            override fun onAnimationRepeat(animation: Animation?) {
 
-                        }
+                            }
 
-                    })
-                    imageView.startAnimation(animIn)
-                }
+                        })
+                        imageView.startAnimation(animIn)
+                    }
 
-                override fun onAnimationRepeat(animation: Animation?) {}
-            })
-            imageView.startAnimation(animOut)
+                    override fun onAnimationRepeat(animation: Animation?) {}
+                })
+                imageView.startAnimation(animOut)
 
+            }
         }
     }
-}
 
 
-fun loadImageResourcesWithoutAnimation(resourceValue: Int, imageView: ImageView, context: Context) {
-    CoroutineScope(Dispatchers.Default).launch {
-        val drawable = if (resourceValue != 0) context.resources?.let {
-            ResourcesCompat.getDrawable(it, resourceValue, null)
-        }!! else null
+    fun loadImageResourcesWithoutAnimation(resourceValue: Int, imageView: ImageView, context: Context) {
+        CoroutineScope(Dispatchers.Default).launch {
+            val drawable = if (resourceValue != 0) context.resources?.let {
+                ResourcesCompat.getDrawable(it, resourceValue, null)
+            }!! else null
 
-        withContext(Dispatchers.Main) {
-            try {
-                imageView.setImageDrawable(drawable)
-            } catch (e: NullPointerException) {
+            withContext(Dispatchers.Main) {
+                try {
+                    imageView.setImageDrawable(drawable)
+                } catch (e: NullPointerException) {
+                }
             }
         }
     }

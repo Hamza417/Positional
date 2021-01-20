@@ -41,6 +41,8 @@ import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
+import app.simple.positional.util.LocationExtension.getDirection
+import app.simple.positional.util.LocationExtension.getLocationStatus
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.CameraUpdateFactory
