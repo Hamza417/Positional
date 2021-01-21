@@ -7,7 +7,10 @@
 <br/>
 
 ## Download
-<a href="https://play.google.com/store/apps/details?id=app.simple.positional.lite"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_free_icon.png" width="30%"> </a> <a href="https://play.google.com/store/apps/details?id=app.simple.positional"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_full_icon.png" width="30%"> </a> </a> <a href="https://youtu.be/QU-ZLQShu_A"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/youtube_icon.png" width="30%"> </a>
+<a href="https://play.google.com/store/apps/details?id=app.simple.positional.lite"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_free_icon.png" width="30%"> </a> <a href="https://play.google.com/store/apps/details?id=app.simple.positional"><img src="https://github.com/Hamza417/Positional/blob/master/googleplay_icons/google_play_full_icon.png" width="30%"></a> <br/>
+
+Watch the app's introduction video on YouTube </a><a href="https://youtu.be/QU-ZLQShu_A">here</a>
+
 <br/>
   
 <br/>
