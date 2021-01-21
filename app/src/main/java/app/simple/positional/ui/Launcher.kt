@@ -22,8 +22,8 @@ import app.simple.positional.R
 import app.simple.positional.activities.main.MainActivity
 import app.simple.positional.constants.*
 import app.simple.positional.preference.FragmentPreferences.setCurrentPage
-import app.simple.positional.util.addLinearGradient
-import app.simple.positional.util.addRadialGradient
+import app.simple.positional.util.BitmapGradient.addLinearGradient
+import app.simple.positional.util.BitmapGradient.addRadialGradient
 import app.simple.positional.util.getBitmapFromVectorDrawable
 
 class Launcher : Fragment() {
@@ -101,7 +101,6 @@ class Launcher : Fragment() {
         text.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.image_in))
 
         launcherContainer.setOnTouchListener { _, event ->
-
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     handler.removeCallbacksAndMessages(null)

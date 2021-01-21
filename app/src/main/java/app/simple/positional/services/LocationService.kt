@@ -1,7 +1,6 @@
 package app.simple.positional.services
 
 import android.Manifest
-import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,16 +13,12 @@ import android.os.IBinder
 import android.os.Looper
 import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import app.simple.positional.singleton.DistanceSingleton
-
 
 class LocationService : Service(), LocationListener {
-    private val distanceSingleton = DistanceSingleton
     private var locationManager: LocationManager? = null
     private var handler = Handler(Looper.getMainLooper())
     private var delay: Long = 1000
     private var isDestroying = false
-    private var notificationManager: NotificationManager? = null
     private var location: Location? = null
 
     override fun onBind(intent: Intent): IBinder? {

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
+import app.simple.positional.constants.UniversalStrings
 import app.simple.positional.dialogs.app.PermissionDialog
 import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
@@ -29,6 +30,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
 
+    private val defaultPermissionRequestCode = 123
     private var locationIntent: Intent? = null
     private var reviewInfo: ReviewInfo? = null
     private lateinit var bottomBar: SmoothBottomBar
@@ -47,6 +49,8 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
         } catch (e: NullPointerException) {
             SharedPreferences.init(applicationContext)
         }
+
+        UniversalStrings.init(baseContext)
 
         if (MainPreferences.isScreenOn()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -72,18 +76,14 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
     }
 
     private fun showReviewPromptToUser() {
-
         if (MainPreferences.getLaunchCount() < 5) {
             return
         }
 
         val manager = ReviewManagerFactory.create(this)
-
-        val request = manager.requestReviewFlow()
-        request.addOnCompleteListener { request_ ->
-            if (request_.isSuccessful) {
-                reviewInfo = request_.result
-
+        manager.requestReviewFlow().addOnCompleteListener { request ->
+            if (request.isSuccessful) {
+                reviewInfo = request.result
                 reviewInfo?.let {
                     val flow = manager.launchReviewFlow(this@MainActivity, it)
                     flow.addOnCompleteListener {
@@ -111,7 +111,7 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
                 val permissionDialog = PermissionDialog().newInstance()
                 permissionDialog.show(supportFragmentManager, "permission_info")
             } else {
-                Toast.makeText(this, "Location Permission Denied!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_LONG).show()
             }
         } else {
             showPrompt()
@@ -121,7 +121,7 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == DEFAULT_PERMISSION_REQUEST_CODE) {
+        if (requestCode == defaultPermissionRequestCode) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 showPrompt()
                 runService()
@@ -129,7 +129,7 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
             } else {
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                    Toast.makeText(this, "Some features may not work without location permission", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, R.string.no_location_permission_alert, Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -138,7 +138,6 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
     private fun runApp() {
         openFragment(FragmentPreferences.getCurrentPage())
         bottomBar.itemActiveIndex = FragmentPreferences.getCurrentPage()
-
     }
 
     private fun runService() {
@@ -161,15 +160,11 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
         }
     }
 
-    companion object {
-        var DEFAULT_PERMISSION_REQUEST_CODE = 123
-    }
-
     override fun onGrantRequest() {
         ActivityCompat.requestPermissions(this, arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
-        ), DEFAULT_PERMISSION_REQUEST_CODE)
+        ), defaultPermissionRequestCode)
     }
 
     private fun openFragment(position: Int) {

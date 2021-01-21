@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.LocaleCallback
+import app.simple.positional.constants.UniversalStrings
 import app.simple.positional.preference.MainPreferences
 
 class LocaleAdapter : RecyclerView.Adapter<LocaleAdapter.Holder>() {
@@ -21,7 +22,7 @@ class LocaleAdapter : RecyclerView.Adapter<LocaleAdapter.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.locale.text = if (position == 0) holder.itemView.context.getString(R.string.auto_system_default) else localeList[position].language
+        holder.locale.text = if (position == 0) holder.itemView.context.getString(R.string.auto_system_default_language) else localeList[position].language
         holder.indicator.isVisible = localeList[position].localeCode == MainPreferences.getAppLanguage()
 
         holder.container.setOnClickListener {
@@ -42,12 +43,11 @@ class LocaleAdapter : RecyclerView.Adapter<LocaleAdapter.Holder>() {
     companion object {
         class Locales(var language: String = "Default", var localeCode: String = "en")
 
-        val localeList: MutableList<Locales> = arrayListOf(
-                Locales("Auto" /* Placeholder string, use resource value here */, "default"),
+        val localeList = arrayListOf(
+                Locales(UniversalStrings.autoSystemLanguageString, "default"),
                 Locales("English", "en"),
                 Locales("български", "bg"),
                 Locales("हिन्दी", "hi"),
-                Locales("اردو", "ur")
-        )
+                Locales("اردو", "ur"))
     }
 }

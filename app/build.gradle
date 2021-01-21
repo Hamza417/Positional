@@ -53,7 +53,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 63
+    def appVersionCode = 64
     def appVersionName = "build${appVersionCode}"
 
     defaultConfig {
@@ -67,6 +67,12 @@ android {
 
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
         resValue "string", "thisAppLicensingKey", thisAppLicensingKey
+    }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
     }
 
     flavorDimensions "version"
@@ -131,7 +137,6 @@ dependencies {
 
     // Google Firebase, Services and Default android libs
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
     implementation 'com.google.android.gms:play-services-basement:17.5.0'

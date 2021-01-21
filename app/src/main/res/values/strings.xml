@@ -216,7 +216,9 @@
     <string name="verifying_license">Verifying License</string>
     <string name="license_successful">Successful :)</string>
     <string name="license_failed">License Verification Failed</string>
-    <string name="auto_system_default">Auto (System Default)</string>
+    <string name="auto_system_default_language">Auto (System Default)</string>
+    <string name="location_permission_denied">"Location Permission Denied!"</string>
+    <string name="no_location_permission_alert">Some features may not work without location permission</string>
 
     <!-- Button Text -->
     <string name="button_cancel">Cancel</string>

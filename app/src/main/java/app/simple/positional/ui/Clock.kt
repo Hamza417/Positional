@@ -269,18 +269,6 @@ class Clock : Fragment() {
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     backPressed(false)
                     if (backPress!!.hasEnabledCallbacks()) {
-                        /**
-                         * This is a workaround and not a full fledged method to
-                         * remove any existing callbacks
-                         *
-                         * The [bottomSheetBehavior] adds a new callback every time it is expanded
-                         * and it is a feasible approach to remove any existing callbacks
-                         * as soon as it is collapsed, the callback number will always remain
-                         * one
-                         *
-                         * What makes this approach a slightly less reliable is because so
-                         * many presumption has been taken here
-                         */
                         backPress?.onBackPressed()
                     }
                 }
@@ -383,7 +371,7 @@ class Clock : Fragment() {
 
     private val textAnimationRunnable: Runnable = Runnable { clockInfoText.setTextAnimation(getString(R.string.clock_info), 300) }
 
-    private val clock: Runnable = object : Runnable {
+    private val clock = object : Runnable {
         override fun run() {
             hour.rotation = getHoursInDegrees(getCurrentTimeData())
             minutes.rotation = getMinutesInDegrees(getCurrentTimeData())
@@ -458,11 +446,13 @@ class Clock : Fragment() {
     }
 
     fun setMotionDelay(value: Boolean) {
+        handler.removeCallbacks(clock)
         delay = if (value) {
             (1000 / getDisplayRefreshRate(requireContext(), requireActivity())!!).toLong()
         } else {
             1000
         }
+        handler.post(clock)
     }
 
     private fun calculateAndUpdateData(latitude: Double, longitude: Double) {
@@ -640,6 +630,18 @@ class Clock : Fragment() {
     }
 
     private fun backPressed(value: Boolean) {
+        /**
+         * This is a workaround and not a full fledged method to
+         * remove any existing callbacks
+         *
+         * The [bottomSheetBehavior] adds a new callback every time it is expanded
+         * and it is a feasible approach to remove any existing callbacks
+         * as soon as it is collapsed, the callback number will always remain
+         * one
+         *
+         * What makes this approach a slightly less reliable is because so
+         * many presumptions have been taken here
+         */
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
                 if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {

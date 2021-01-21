@@ -16,4 +16,13 @@ object NullSafety {
     fun Any?.asNotNull(): Any {
         return this ?: throw UninitializedPropertyAccessException()
     }
+
+    /**
+     * Check if an object is null
+     *
+     * @return boolean
+     */
+    fun Any?.isNull(): Boolean {
+        return this == null
+    }
 }

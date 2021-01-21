@@ -21,6 +21,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -43,6 +44,7 @@ import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getDirection
 import app.simple.positional.util.LocationExtension.getLocationStatus
+import app.simple.positional.util.NullSafety.isNull
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -178,8 +180,8 @@ class GPS : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (isCustomCoordinate) {
-            specifiedLocationTextView.visibility = View.VISIBLE
-            divider.visibility = View.VISIBLE
+            specifiedLocationTextView.isVisible = true
+            divider.isVisible = true
             marker = R.drawable.ic_place_custom.getBitmapFromVectorDrawable(requireContext(), 400)
         } else {
             marker = R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext(), 400)
@@ -320,44 +322,27 @@ class GPS : Fragment() {
             }
         }
 
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-
-            bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-                override fun onStateChanged(bottomSheet: View, newState: Int) {
-                    if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                        backPressed(true)
-                    } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                        backPressed(false)
-                        if (backPress!!.hasEnabledCallbacks()) {
-                            /**
-                             * This is a workaround and not a full fledged method to
-                             * remove any existing callbacks
-                             *
-                             * The [bottomSheetBehavior] adds a new callback every time it is expanded
-                             * and it is a feasible approach to remove any existing callbacks
-                             * as soon as it is collapsed, the callback number will always remain
-                             * one
-                             *
-                             * What makes this approach a slightly less reliable is because so
-                             * many presumption has been taken here
-                             */
-                            backPress?.onBackPressed()
-                        }
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    backPressed(true)
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    backPressed(false)
+                    if (backPress!!.hasEnabledCallbacks()) {
+                        backPress?.onBackPressed()
                     }
                 }
+            }
 
-                override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                    scrollView.alpha = slideOffset
-                    expandUp.alpha = (1 - slideOffset)
-                    expandUp.rotationX = (-180 * slideOffset)
-                    // gpsLayout.translationY = 150 * -slideOffset
-                    // gpsLayout.alpha = (1 - slideOffset)
-                    view.findViewById<View>(R.id.gps_dim).alpha = slideOffset
-                    bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                    toolbar.translationY = (toolbar.height * -slideOffset)
-                }
-            })
-        }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                scrollView.alpha = slideOffset
+                expandUp.alpha = (1 - slideOffset)
+                expandUp.rotationX = (-180 * slideOffset)
+                view.findViewById<View>(R.id.gps_dim).alpha = slideOffset
+                bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                toolbar.translationY = (toolbar.height * -slideOffset)
+            }
+        })
 
         menu.setOnClickListener {
             val weakReference = WeakReference(GPSMenu(WeakReference(this@GPS)))
@@ -470,7 +455,6 @@ class GPS : Fragment() {
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
-
         val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(lastLatitude, lastLongitude)
 
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(latLng).tilt(0f).zoom(18f).build()))
@@ -494,9 +478,7 @@ class GPS : Fragment() {
 
     private fun getAddress(latitude: Double, longitude: Double) {
         CoroutineScope(Dispatchers.IO).launch {
-            val address: String
-
-            address = try {
+            val address = try {
                 if (context == null) {
                     getString(R.string.error)
                 } else if (!isNetworkAvailable(requireContext())) {
@@ -535,7 +517,7 @@ class GPS : Fragment() {
         }
     }
 
-    private val mapMoved: Runnable = object : Runnable {
+    private val mapMoved = object : Runnable {
         override fun run() {
             if (context == null) return
             isMapMoved = false
@@ -552,63 +534,52 @@ class GPS : Fragment() {
     }
 
     private fun moveMapCamera(latLng: LatLng, bearing: Float) {
-        if (googleMap == null) return
+        if (googleMap.isNull()) return
         if (isMapMoved) return
 
-        val cameraPosition = googleMap?.cameraPosition?.tilt?.let { CameraPosition.builder().target(latLng).tilt(it).zoom(18f).bearing(bearing).build() }
+        val cameraPosition = googleMap?.cameraPosition?.tilt?.let {
+            CameraPosition.builder().target(latLng).tilt(it).zoom(18f).bearing(bearing).build()
+        }
 
-        clearMap()
-
-        val markerOptions = MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker))
-        googleMap?.addMarker(markerOptions)
-
+        googleMap?.clear()
+        googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker)))
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
     }
 
-    private fun clearMap() {
-        googleMap?.clear()
-    }
-
     fun showLabel(value: Boolean) {
-        if (googleMap == null) return
-
-        GPSPreferences.setLabelMode(value)
-
-        var mapRawStyle = 0
-
-        when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-            Configuration.UI_MODE_NIGHT_YES -> {
-                mapRawStyle = if (value) {
-                    R.raw.maps_dark_labelled
-                } else {
-                    R.raw.maps_dark_no_label
-                }
-            }
-            Configuration.UI_MODE_NIGHT_NO -> {
-                mapRawStyle = if (value) {
-                    R.raw.maps_light_labelled
-                } else {
-                    R.raw.maps_no_label
-                }
-            }
-            Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-
-            }
+        if (!googleMap.isNull()) {
+            googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
+                    requireContext(),
+                    when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                        Configuration.UI_MODE_NIGHT_YES -> {
+                            if (value) {
+                                R.raw.maps_dark_labelled
+                            } else {
+                                R.raw.maps_dark_no_label
+                            }
+                        }
+                        Configuration.UI_MODE_NIGHT_NO -> {
+                            if (value) {
+                                R.raw.maps_light_labelled
+                            } else {
+                                R.raw.maps_no_label
+                            }
+                        }
+                        else -> 0
+                    }
+            ))
         }
 
-        val mapStyleOptions: MapStyleOptions = MapStyleOptions.loadRawResourceStyle(requireContext(), mapRawStyle)
-
-        googleMap?.setMapStyle(mapStyleOptions)
+        GPSPreferences.setLabelMode(value)
     }
 
     fun setSatellite(value: Boolean) {
-        if (googleMap == null) return
-
-        if (value) {
-            googleMap?.mapType = GoogleMap.MAP_TYPE_SATELLITE
-        } else {
-            googleMap?.mapType = GoogleMap.MAP_TYPE_NORMAL
-        }
+        if (!googleMap.isNull())
+            googleMap?.mapType = if (value) {
+                GoogleMap.MAP_TYPE_SATELLITE
+            } else {
+                GoogleMap.MAP_TYPE_NORMAL
+            }
     }
 
     private fun checkGooglePlayServices(): Boolean {
@@ -625,6 +596,9 @@ class GPS : Fragment() {
     }
 
     private fun backPressed(value: Boolean) {
+        /**
+         * @see Clock.backPressed
+         */
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
                 if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
