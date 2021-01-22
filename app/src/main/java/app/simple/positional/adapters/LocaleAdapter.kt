@@ -10,8 +10,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.LocaleCallback
-import app.simple.positional.constants.UniversalStrings
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.util.LocaleHelper.localeList
 
 class LocaleAdapter : RecyclerView.Adapter<LocaleAdapter.Holder>() {
 
@@ -38,16 +38,5 @@ class LocaleAdapter : RecyclerView.Adapter<LocaleAdapter.Holder>() {
         val indicator: ImageView = itemView.findViewById(R.id.locale_indicator)
         val locale: TextView = itemView.findViewById(R.id.locales_adapter_text)
         val container: LinearLayout = itemView.findViewById(R.id.locales_adapter_item_container)
-    }
-
-    companion object {
-        class Locales(var language: String = "Default", var localeCode: String = "en")
-
-        val localeList = arrayListOf(
-                Locales(UniversalStrings.autoSystemLanguageString, "default"),
-                Locales("English", "en"),
-                Locales("български", "bg"),
-                Locales("हिन्दी", "hi"),
-                Locales("اردو", "ur"))
     }
 }

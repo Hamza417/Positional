@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
-import app.simple.positional.constants.UniversalStrings
 import app.simple.positional.dialogs.app.PermissionDialog
 import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
@@ -49,8 +48,6 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
         } catch (e: NullPointerException) {
             SharedPreferences.init(applicationContext)
         }
-
-        UniversalStrings.init(baseContext)
 
         if (MainPreferences.isScreenOn()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

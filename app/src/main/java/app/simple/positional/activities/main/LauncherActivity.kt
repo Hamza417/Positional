@@ -12,14 +12,16 @@ import app.simple.positional.preference.MainPreferences.getLicenceStatus
 import app.simple.positional.preference.MainPreferences.isDayNightOn
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.theme.setAppTheme
-import app.simple.positional.ui.Launcher
 import app.simple.positional.ui.License
+import app.simple.positional.ui.SplashScreen
+import app.simple.positional.util.LocaleHelper
 
 class LauncherActivity : BaseActivity(), LicenceStatusCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         SharedPreferences.init(context = applicationContext)
+        LocaleHelper.autoSystemLanguageString = resources.getString(R.string.auto_system_default_language)
 
         if (isDayNightOn()) {
             setAppTheme(4)
@@ -52,7 +54,7 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
     override fun onLicenseCheckCompletion() {
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                .replace(R.id.launcher_act, Launcher().newInstance(), "launcher")
+                .replace(R.id.launcher_act, SplashScreen().newInstance(), "launcher")
                 .commit()
     }
 }

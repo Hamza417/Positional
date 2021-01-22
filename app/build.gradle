@@ -53,7 +53,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 64
+    def appVersionCode = 65
     def appVersionName = "build${appVersionCode}"
 
     defaultConfig {

@@ -26,10 +26,10 @@ import app.simple.positional.util.BitmapGradient.addLinearGradient
 import app.simple.positional.util.BitmapGradient.addRadialGradient
 import app.simple.positional.util.getBitmapFromVectorDrawable
 
-class Launcher : Fragment() {
+class SplashScreen : Fragment() {
 
-    fun newInstance(): Launcher {
-        return Launcher()
+    fun newInstance(): SplashScreen {
+        return SplashScreen()
     }
 
     private lateinit var launcherBackground: ImageView
