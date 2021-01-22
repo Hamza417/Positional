@@ -1,5 +1,6 @@
 package app.simple.positional.dialogs.settings
 
+import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.location.Address
@@ -229,10 +230,14 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
         }
 
         cancel.setOnClickListener {
-            isCoordinateSet = MainPreferences.isCustomCoordinate()
-            coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
             this.dialog?.dismiss()
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        isCoordinateSet = MainPreferences.isCustomCoordinate()
+        coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
     }
 
     private val geoCoderRunnable: Runnable = Runnable { getCoordinatesFromAddress(address) }
