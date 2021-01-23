@@ -590,7 +590,7 @@ class Clock : Fragment() {
 
                 localTimeZone = fromHtml("<b>${getString(R.string.local_timezone)}</b> ${zonedDateTime.zone}")
                 digitalTime24 = fromHtml("<b>${getString(R.string.local_time_24hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))}")
-                digitalTime12 = fromHtml("<b>${getString(R.string.local_time_12hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a", Locale.getDefault()))}")
+                digitalTime12 = fromHtml("<b>${getString(R.string.local_time_12hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a"))}")
                 digitalTime = getTime(zonedDateTime)
                 localDate = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
                 localDay = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("EEEE"))}")

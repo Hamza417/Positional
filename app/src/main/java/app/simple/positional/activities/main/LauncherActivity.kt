@@ -14,14 +14,12 @@ import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.theme.setAppTheme
 import app.simple.positional.ui.License
 import app.simple.positional.ui.SplashScreen
-import app.simple.positional.util.LocaleHelper
 
 class LauncherActivity : BaseActivity(), LicenceStatusCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         SharedPreferences.init(context = applicationContext)
-        LocaleHelper.autoSystemLanguageString = resources.getString(R.string.auto_system_default_language)
 
         if (isDayNightOn()) {
             setAppTheme(4)

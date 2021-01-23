@@ -7,7 +7,4 @@ object LowPassFilter {
         readings[2] = readingsAlpha * newReadings[2] + (1 - readingsAlpha) * readings[2] // z
     }
 
-    fun Float.smoothReadings(newReadings: Float, readingsAlpha: Float): Float {
-        return readingsAlpha * newReadings + (1 - readingsAlpha) * this
-    }
 }

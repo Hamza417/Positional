@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
@@ -21,16 +22,17 @@ import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.*
+import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.messaging.FirebaseMessaging
+import java.util.*
 
 class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
 
     private val defaultPermissionRequestCode = 123
-    private var locationIntent: Intent? = null
     private var reviewInfo: ReviewInfo? = null
     private lateinit var bottomBar: SmoothBottomBar
     private lateinit var bottomBarWrapper: FrameLayout
@@ -53,9 +55,10 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
+        LocaleHelper.setAppLocale(ConfigurationCompat.getLocales(resources.configuration)[0])
+
         bottomBar = findViewById(R.id.bottom_bar)
         bottomBarWrapper = findViewById(R.id.bottom_bar_wrapper)
-        locationIntent = Intent(applicationContext, LocationService::class.java)
 
         if (MainPreferences.isNotificationOn()) {
             FirebaseMessaging.getInstance().subscribeToTopic("push_notification")
@@ -74,6 +77,7 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
 
     private fun showReviewPromptToUser() {
         if (MainPreferences.getLaunchCount() < 5) {
+            MainPreferences.setLaunchCount(MainPreferences.getLaunchCount() + 1)
             return
         }
 
@@ -112,7 +116,6 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
             }
         } else {
             showPrompt()
-            runService()
         }
     }
 
@@ -122,7 +125,6 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 showPrompt()
                 runService()
-                baseContext.startService(Intent(this, LocationService::class.java))
             } else {
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) &&
                         ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
@@ -139,14 +141,14 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
 
     private fun runService() {
         try {
-            applicationContext.startService(locationIntent)
+            applicationContext.startService(Intent(applicationContext, LocationService::class.java))
         } catch (e: IllegalStateException) {
         }
     }
 
     private fun stopService() {
         try {
-            applicationContext.stopService(locationIntent)
+            applicationContext.stopService(Intent(applicationContext, LocationService::class.java))
         } catch (e: IllegalStateException) {
         }
     }

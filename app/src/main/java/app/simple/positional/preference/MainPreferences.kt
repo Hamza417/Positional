@@ -3,7 +3,6 @@ package app.simple.positional.preference
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
-import app.simple.positional.util.LocaleHelper
 import org.jetbrains.annotations.NotNull
 
 object MainPreferences {
@@ -149,6 +148,6 @@ object MainPreferences {
     }
 
     fun getAppLanguage(): String? {
-        return getSharedPreferences().getString(appLanguage, LocaleHelper.getSystemLanguageCode())
+        return getSharedPreferences().getString(appLanguage, "default")
     }
 }

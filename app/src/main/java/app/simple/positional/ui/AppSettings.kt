@@ -121,7 +121,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
 
         for (i in localeList.indices) {
             if (MainPreferences.getAppLanguage() == localeList[i].localeCode) {
-                currentLanguage.text = localeList[i].language
+                currentLanguage.text = if (i == 0) getString(R.string.auto_system_default_language) else localeList[i].language
             }
         }
 

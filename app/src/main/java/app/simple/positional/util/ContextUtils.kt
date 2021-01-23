@@ -18,9 +18,14 @@ open class ContextUtils(context: Context) : ContextWrapper(context) {
          * older APIs which can cause issues in some phones.
          *
          * @param baseContext is base context
-         * @param localeToSwitchTo is the new locale app to be converted
+         * @param languageCode is code of the language e.g. en for English
          */
-        fun updateLocale(baseContext: Context, localeToSwitchTo: Locale): ContextWrapper {
+        fun updateLocale(baseContext: Context, languageCode: String): ContextWrapper {
+            val localeToSwitchTo = if (languageCode == "default") {
+                Locale.forLanguageTag(LocaleHelper.getSystemLanguageCode())
+            } else {
+                Locale.forLanguageTag(languageCode)
+            }
             var context = baseContext
             val resources: Resources = context.resources
             val configuration: Configuration = resources.configuration
@@ -38,6 +43,7 @@ open class ContextUtils(context: Context) : ContextWrapper(context) {
                 @Suppress("deprecation")
                 resources.updateConfiguration(configuration, resources.displayMetrics)
             }
+
             return ContextUtils(context)
         }
     }

@@ -13,13 +13,12 @@ import android.os.IBinder
 import android.os.Looper
 import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import app.simple.positional.util.NullSafety.isNull
 
 class LocationService : Service(), LocationListener {
     private var locationManager: LocationManager? = null
     private var handler = Handler(Looper.getMainLooper())
     private var delay: Long = 1000
-    private var isDestroying = false
-    private var location: Location? = null
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -35,24 +34,13 @@ class LocationService : Service(), LocationListener {
         return START_REDELIVER_INTENT
     }
 
-    override fun onTaskRemoved(rootIntent: Intent) {
-        super.onTaskRemoved(rootIntent)
-
-        if (locationManager != null) {
-            locationManager?.removeUpdates(this)
-        }
-        handler.removeCallbacks(locationUpdater)
-        stopSelf()
-    }
-
     override fun onDestroy() {
-        removeCallbacks()
-        isDestroying = true
+        locationManager?.removeUpdates(this)
+        handler.removeCallbacks(locationUpdater)
         super.onDestroy()
     }
 
     override fun onLocationChanged(location: Location) {
-        this.location = location
         Intent().also { intent ->
             intent.action = "location"
             intent.putExtra("location", location)
@@ -89,13 +77,9 @@ class LocationService : Service(), LocationListener {
 
     private val locationUpdater: Runnable = object : Runnable {
         override fun run() {
-            fireLocationSearch()
+            requestLocation()
             handler.postDelayed(this, delay)
         }
-    }
-
-    private fun fireLocationSearch() {
-        requestLocation()
     }
 
     private fun requestLastKnownLocation() {
@@ -115,11 +99,11 @@ class LocationService : Service(), LocationListener {
             }
         }
 
-        if (location != null) {
-            onLocationChanged(location)
+        if (location.isNull()) {
             handler.post(locationUpdater)
         } else {
-            fireLocationSearch()
+            onLocationChanged(location!!)
+            handler.post(locationUpdater)
         }
     }
 
@@ -148,10 +132,5 @@ class LocationService : Service(), LocationListener {
                         applicationContext,
                         Manifest.permission.ACCESS_FINE_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED)
-    }
-
-    private fun removeCallbacks() {
-        locationManager?.removeUpdates(this)
-        handler.removeCallbacks(locationUpdater)
     }
 }
