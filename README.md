@@ -20,20 +20,20 @@ If the Play Store links don't work, <a href="https://github.com/Hamza417/Positio
 ## What's This ?
   **Positional** is a location based app that utilises the phone's GPS hardware and fetches various details of the current latitude and longitude data like Altitude, Speed, Address and similar other information and show it in easily understandable format to the user. Along side this main functionality of being a location app, Positional also provides a separate panel for **Compass** and **Clock** and they serve their own purpose based on their name.
   
-  **Compass** provides info related to direction and **Clock** fetches the time related information based on the current location and timezone and also sun's information like Sunset, SUnrise, Twilights and many other info.
+  **Compass** provides info related to direction and **Clock** fetches the time related information based on the current location and timezone and also sun's information like Sunset, Sunrise, Twilight and many other info.
   
-  On top of all the core functionality Positional is a highly polished app and provides another layer of flexibility to customize the app as per liking includin skins for Clock and Compass faces, colors, and many other features that should have been there.
+  On top of all the core functionality Positional is a highly polished app and provides another layer of flexibility to customize the app as per liking including skins for Clock and Compass faces, colors, and many other features that should have been there.
 
-</br>
+<br/>
 
 ## Stats
-
+[![Total Lines](https://img.shields.io/tokei/lines/github.com/Hamza417/Positional?color=%23DE7E42&label=Total%20Lines)]
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visits&edge_flat=false)](https://hits.seeyoufarm.com)
-[![Changelogs](https://badgen.net/badge/Changelogs/Latest%20Release/green?list)](https://github.com/Hamza417/Positional/releases)
-![Status](https://badgen.net/badge/Status/stable/orange?icon)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional) [![Legacy](https://badgen.net/badge/Try%20Legacy%20Version/Download/grey)](https://github.com/Hamza417/Positional/releases/download/1.7-beta/1.7-beta.apk)
+[![Changelog](https://img.shields.io/badge/Changelog-Latest%20Release-green)](https://github.com/Hamza417/Positional/releases)
+[![Status](https://img.shields.io/badge/Status-Stable-orange)]
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional) [![Legacy](https://img.shields.io/badge/Try%20Legacy%20Version-Download-lightgrey)](https://github.com/Hamza417/Positional/releases/download/1.7-beta/1.7-beta.apk)
 
-</br>
+<br/>
 
 ## Screenshots
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/01.png" width="100%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/02.png" width="100%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/03.png" width="100%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/06.png" width="100%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/05.png" width="100%"> <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/04.png" width="100%">
@@ -75,11 +75,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 <br/>
 
 ## Translate
-This app is currently only available in English, Hindi and Urdu language. If you want to translate the app in your native language
-you can do so on [Crowdin](https://crowdin.com/project/positional/) <br/>
-
-Any person who is contributing to translation will be listed as a **Contributor** in app's credit section and will be given
-the full version for free
+This app is currently only available in Bulgarian, English, Hindi and Urdu language. If you want to translate the app in your native language
+you can do so on [Crowdin](https://crowdin.com/project/positional/)
 
 <br/>
 
