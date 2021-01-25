@@ -27,10 +27,10 @@ If the Play Store links don't work, <a href="https://github.com/Hamza417/Positio
 <br/>
 
 ## Stats
-[![Total Lines](https://img.shields.io/tokei/lines/github.com/Hamza417/Positional?color=%23DE7E42&label=Total%20Lines)]
+![Total Lines](https://img.shields.io/tokei/lines/github.com/Hamza417/Positional?color=%23DE7E42&label=Total%20Lines)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visits&edge_flat=false)](https://hits.seeyoufarm.com)
 [![Changelog](https://img.shields.io/badge/Changelog-Latest%20Release-green)](https://github.com/Hamza417/Positional/releases)
-[![Status](https://img.shields.io/badge/Status-Stable-orange)]
+![Status](https://img.shields.io/badge/Status-Stable-orange)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional) [![Legacy](https://img.shields.io/badge/Try%20Legacy%20Version-Download-lightgrey)](https://github.com/Hamza417/Positional/releases/download/1.7-beta/1.7-beta.apk)
 
 <br/>
