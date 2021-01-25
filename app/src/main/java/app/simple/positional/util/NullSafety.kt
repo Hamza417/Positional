@@ -6,7 +6,9 @@ object NullSafety {
      * Quickly performs a null safety check
      * of a potential null object that has
      * no way to initialize but to throw an
-     * exception
+     * exception. This approach is unsafe
+     * and should not be used with conditional
+     * statements
      *
      * Requires casting to the original object
      *

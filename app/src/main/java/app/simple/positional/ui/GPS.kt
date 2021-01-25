@@ -25,9 +25,11 @@ import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.room.Room
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.database.LocationDatabase
 import app.simple.positional.dialogs.app.PlayServiceIssue
 import app.simple.positional.dialogs.gps.GPSMenu
 import app.simple.positional.math.MathExtensions.round
@@ -36,6 +38,7 @@ import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.math.UnitConverter.toMilesPerHour
+import app.simple.positional.model.Locations
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
@@ -47,10 +50,7 @@ import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.NullSafety.isNull
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -80,6 +80,7 @@ class GPS : Fragment() {
     private lateinit var locationIndicator: ImageButton
     private lateinit var menu: ImageButton
     private lateinit var copy: ImageButton
+    private lateinit var save: ImageButton
     private lateinit var movementReset: ImageButton
 
     private lateinit var accuracy: TextView
@@ -114,7 +115,7 @@ class GPS : Fragment() {
     private var lastLongitude = 0.0
 
     private var distanceSingleton = DistanceSingleton
-    private lateinit var mapFragment: SupportMapFragment
+    private var mapView: MapView? = null
     private var googleMap: GoogleMap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,6 +133,7 @@ class GPS : Fragment() {
         locationIndicator = view.findViewById(R.id.gps_location_indicator)
         menu = view.findViewById(R.id.gps_menu)
         copy = view.findViewById(R.id.gps_copy)
+        save = view.findViewById(R.id.gps_save)
         movementReset = view.findViewById(R.id.movement_reset)
         expandUp = view.findViewById(R.id.expand_up_gps_sheet)
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
@@ -170,8 +172,16 @@ class GPS : Fragment() {
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
-        mapFragment = (childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?)!!
-        mapFragment.getMapAsync(callback)
+
+        handler.postDelayed({
+            /**
+             * This prevents the lag when fragment is switched
+             */
+            mapView = view.findViewById(R.id.map)
+            mapView?.alpha = 0F
+            mapView?.onCreate(savedInstanceState)
+            mapView?.getMapAsync(callback)
+        }, 250)
 
         return view
     }
@@ -361,6 +371,40 @@ class GPS : Fragment() {
                 }
         }
 
+        save.setOnClickListener {
+            CoroutineScope(Dispatchers.Default).launch {
+                val isLocationSaved: Boolean
+                val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").build()
+                val locations = Locations()
+                if (location.isNull()) {
+                    Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show()
+                    isLocationSaved = false
+                } else {
+                    locations.latitude = location?.latitude!!
+                    locations.longitude = location?.longitude!!
+                    locations.address = address.text.toString()
+                    locations.timeZone = Calendar.getInstance().timeZone.id
+                    locations.date = System.currentTimeMillis()
+
+                    db.locationDao()?.insetLocation(locations)
+                    db.close()
+
+                    isLocationSaved = true
+                }
+
+                withContext(Dispatchers.Main) {
+                    handler.removeCallbacks(textAnimationRunnable)
+                    if (isLocationSaved) {
+                        infoText.setTextAnimation(getString(R.string.location_saved), 300)
+                        handler.postDelayed(textAnimationRunnable, 3000)
+                    } else {
+                        infoText.setTextAnimation(getString(R.string.location_not_saved), 300)
+                        handler.postDelayed(textAnimationRunnable, 3000)
+                    }
+                }
+            }
+        }
+
         copy.setOnClickListener {
             handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -411,10 +455,13 @@ class GPS : Fragment() {
         }
     }
 
-    private val textAnimationRunnable: Runnable = Runnable { infoText.setTextAnimation(getString(R.string.gps_info), 300) }
+    private val textAnimationRunnable: Runnable = Runnable {
+        infoText.setTextAnimation(getString(R.string.gps_info), 300)
+    }
 
     override fun onPause() {
         super.onPause()
+        mapView?.onPause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(mapMoved)
         handler.removeCallbacks(textAnimationRunnable)
@@ -427,6 +474,7 @@ class GPS : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        mapView?.onDestroy()
         distanceSingleton.isMapPanelVisible = false
     }
 
@@ -436,6 +484,11 @@ class GPS : Fragment() {
             handler.post(customDataUpdater)
         }
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView?.onLowMemory()
     }
 
     private val customDataUpdater: Runnable = object : Runnable {
@@ -455,12 +508,22 @@ class GPS : Fragment() {
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
+        MapsInitializer.initialize(requireContext())
+        mapView?.onResume()
+
+        /**
+         * Workaround for flashing of view when map is
+         * Initialized
+         */
+        mapView?.animate()?.alpha(1F)?.setDuration(500)?.start()
+
         val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(lastLatitude, lastLongitude)
 
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(latLng).tilt(0f).zoom(18f).build()))
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
         googleMap.uiSettings.isMyLocationButtonEnabled = false
+
         this.googleMap = googleMap
 
         showLabel(GPSPreferences.isLabelOn())

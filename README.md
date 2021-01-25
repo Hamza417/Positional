@@ -15,8 +15,6 @@
 [![Intro](https://img.shields.io/badge/App%20Intro-YouTube-E74C3C?style=flat&logo=youtube)](https://youtu.be/QU-ZLQShu_A)
 
 <br/>
-  
-<br/>
 
 ## What's This ?
   **Positional** is a location based app that utilises the phone's GPS hardware and fetches various details of the current latitude and longitude data like Altitude, Speed, Address and similar other information and show it in easily understandable format to the user. Along side this main functionality of being a location app, Positional also provides a separate panel for **Compass** and **Clock** and they serve their own purpose based on their name.

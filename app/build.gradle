@@ -47,13 +47,12 @@ if (googleMapsAPIKey == noKeyFound) {
 }
 // End of reading the sensitive data
 
-
 android {
 
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 65
+    def appVersionCode = 66
     def appVersionName = "build${appVersionCode}"
 
     defaultConfig {
