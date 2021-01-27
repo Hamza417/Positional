@@ -123,6 +123,7 @@
     <string name="not_available">N/A</string>
     <string name="no_address_found">No address found for current location</string>
     <string name="location_saved">Saved Successfully</string>
+    <string name="already_saved">Already Saved!</string>
     <string name="location_not_saved">Could not be saved!</string>
     <string name="no_update">No Update Available</string>
     <string name="only_full_version">This feature is only available in full version.</string>

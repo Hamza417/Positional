@@ -2,16 +2,9 @@ package app.simple.positional.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(
-        tableName = "location",
-        indices = [Index(
-                value = ["latitude", "longitude", "address", "time_zone"],
-                unique = true
-        )]
-)
+@Entity(tableName = "location")
 class Locations {
     @PrimaryKey
     @ColumnInfo(name = "date_added")

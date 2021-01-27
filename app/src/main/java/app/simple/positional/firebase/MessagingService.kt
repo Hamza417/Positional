@@ -50,9 +50,9 @@ class MessagingService : FirebaseMessagingService() {
             try {
                 val title = p0.notification?.title
                 val body = p0.notification?.body
-                val action = p0.notification?.clickAction
+                p0.notification?.clickAction
 
-                sendNotification(title!!, body!!, action!!)
+                sendNotification(title!!, body!!)
             } catch (e: NullPointerException) {
             }
         }
@@ -66,7 +66,7 @@ class MessagingService : FirebaseMessagingService() {
         }
     }
 
-    private fun sendNotification(title: String, messageBody: String, action: String?) {
+    private fun sendNotification(title: String, messageBody: String) {
         val intent = Intent(this, MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_ONE_SHOT)

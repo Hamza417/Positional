@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import app.simple.positional.R
 import app.simple.positional.adapters.LocationsAdapter
 import app.simple.positional.callbacks.LocationAdapterCallback
@@ -81,12 +79,8 @@ class SavedLocations : CustomDialogFragment(), LocationAdapterCallback {
             val db = Room.databaseBuilder(
                     requireContext(),
                     LocationDatabase::class.java,
-                    "locations.db"
-            ).addMigrations(object : Migration(1, 2) {
-                override fun migrate(database: SupportSQLiteDatabase) {
-                    database.execSQL("CREATE TABLE `location_2` (`date_added` INTEGER NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `address` TEXT NOT NULL, `time_zone` TEXT NOT NULL, PRIMARY KEY(`date_added`))")
-                }
-            }).build()
+                    "locations.db").build()
+
             val list = db.locationDao()!!.getAllLocations()
             db.close()
 

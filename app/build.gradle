@@ -66,6 +66,13 @@ android {
 
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
         resValue "string", "thisAppLicensingKey", thisAppLicensingKey
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.schemaLocation":
+                                      "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     bundle {

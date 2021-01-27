@@ -181,7 +181,7 @@ class GPS : Fragment() {
             mapView?.alpha = 0F
             mapView?.onCreate(savedInstanceState)
             mapView?.getMapAsync(callback)
-        }, 250)
+        }, 300)
 
         return view
     }
@@ -372,34 +372,49 @@ class GPS : Fragment() {
         }
 
         save.setOnClickListener {
+            if (BuildConfig.FLAVOR == "lite") {
+                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             CoroutineScope(Dispatchers.Default).launch {
                 val isLocationSaved: Boolean
                 val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").build()
                 val locations = Locations()
-                if (location.isNull()) {
-                    Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show()
+
+                if (MainPreferences.isCustomCoordinate()) {
                     isLocationSaved = false
                 } else {
-                    locations.latitude = location?.latitude!!
-                    locations.longitude = location?.longitude!!
-                    locations.address = address.text.toString()
-                    locations.timeZone = Calendar.getInstance().timeZone.id
-                    locations.date = System.currentTimeMillis()
+                    if (location.isNull()) {
+                        Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show()
+                        isLocationSaved = false
+                    } else {
+                        locations.latitude = location?.latitude!!
+                        locations.longitude = location?.longitude!!
+                        locations.address = address.text.toString()
+                        locations.timeZone = Calendar.getInstance().timeZone.id
+                        locations.date = System.currentTimeMillis()
 
-                    db.locationDao()?.insetLocation(locations)
-                    db.close()
+                        db.locationDao()?.insetLocation(locations)
+                        db.close()
 
-                    isLocationSaved = true
+                        isLocationSaved = true
+                    }
                 }
 
                 withContext(Dispatchers.Main) {
                     handler.removeCallbacks(textAnimationRunnable)
-                    if (isLocationSaved) {
-                        infoText.setTextAnimation(getString(R.string.location_saved), 300)
+                    if (MainPreferences.isCustomCoordinate()) {
+                        infoText.setTextAnimation(getString(R.string.already_saved), 300)
                         handler.postDelayed(textAnimationRunnable, 3000)
                     } else {
-                        infoText.setTextAnimation(getString(R.string.location_not_saved), 300)
-                        handler.postDelayed(textAnimationRunnable, 3000)
+                        if (isLocationSaved) {
+                            infoText.setTextAnimation(getString(R.string.location_saved), 300)
+                            handler.postDelayed(textAnimationRunnable, 3000)
+                        } else {
+                            infoText.setTextAnimation(getString(R.string.location_not_saved), 300)
+                            handler.postDelayed(textAnimationRunnable, 3000)
+                        }
                     }
                 }
             }
@@ -483,6 +498,7 @@ class GPS : Fragment() {
         if (isCustomCoordinate) {
             handler.post(customDataUpdater)
         }
+        mapView?.onResume()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
     }
 
@@ -559,7 +575,7 @@ class GPS : Fragment() {
                     if (addresses != null && addresses.isNotEmpty()) {
                         addresses[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
                     } else {
-                        "N/A"
+                        getString(R.string.not_available)
                     }
                 }
             } catch (e: IOException) {
@@ -668,7 +684,10 @@ class GPS : Fragment() {
                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
 
-                // Remove this callback
+                /**
+                 * Remove this callback as soon as it's been called
+                 * to prevent any further registering
+                 */
                 remove()
             }
         })
