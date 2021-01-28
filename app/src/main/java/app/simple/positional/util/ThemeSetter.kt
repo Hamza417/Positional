@@ -1,4 +1,4 @@
-package app.simple.positional.helper
+package app.simple.positional.util
 
 import androidx.annotation.IntRange
 import androidx.appcompat.app.AppCompatDelegate

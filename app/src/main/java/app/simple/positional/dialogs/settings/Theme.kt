@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
-import app.simple.positional.helper.ThemeSetter
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.ui.AppSettings
+import app.simple.positional.util.ThemeSetter
 import app.simple.positional.views.CustomBottomSheetDialog
 import java.lang.ref.WeakReference
 
