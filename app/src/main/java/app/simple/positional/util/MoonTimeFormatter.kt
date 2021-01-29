@@ -13,7 +13,7 @@ object MoonTimeFormatter {
      */
     fun formatZonedTimeDate(zonedDateTime: ZonedDateTime): String {
         return try {
-            zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+            zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss").withLocale(LocaleHelper.getAppLocale()))
         } catch (e: ParseException) {
             "N/A"
         }
@@ -21,7 +21,7 @@ object MoonTimeFormatter {
 
     fun formatMoonDate(zonedDateTime: ZonedDateTime): String {
         return try {
-            zonedDateTime.format(DateTimeFormatter.ofPattern(getMoonTimePattern()))
+            zonedDateTime.format(DateTimeFormatter.ofPattern(getMoonTimePattern()).withLocale(LocaleHelper.getAppLocale()))
         } catch (e: ParseException) {
             "N/A"
         }

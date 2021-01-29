@@ -3,7 +3,7 @@ package app.simple.positional.util
 import android.icu.text.MessageFormat
 import android.os.Build
 
-fun Number?.getOrdinal(): String? {
+fun Number?.toOrdinal(): String {
     if (this == null) {
         return "N/A"
     }

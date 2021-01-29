@@ -464,7 +464,7 @@ class Clock : Fragment() {
             val sunTimes = SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()
 
             val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTime()) {
-                DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(Locale.getDefault())
+                DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(LocaleHelper.getAppLocale())
             } else {
                 DateTimeFormatter.ofPattern("HH:mm:ss")
             }
@@ -587,19 +587,20 @@ class Clock : Fragment() {
             try {
                 val zoneId = ZoneId.of(timezone)
                 val zonedDateTime: ZonedDateTime = Instant.now().atZone(zoneId)
+                val patternLocale = LocaleHelper.getAppLocale()
 
                 localTimeZone = fromHtml("<b>${getString(R.string.local_timezone)}</b> ${zonedDateTime.zone}")
-                digitalTime24 = fromHtml("<b>${getString(R.string.local_time_24hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss"))}")
-                digitalTime12 = fromHtml("<b>${getString(R.string.local_time_12hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a"))}")
+                digitalTime24 = fromHtml("<b>${getString(R.string.local_time_24hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss").withLocale(patternLocale))}")
+                digitalTime12 = fromHtml("<b>${getString(R.string.local_time_12hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(patternLocale))}")
                 digitalTime = getTime(zonedDateTime)
-                localDate = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
-                localDay = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("EEEE"))}")
-                dayOfTheYear = fromHtml("<b>${getString(R.string.local_day_of_year)}</b> ${LocalDate.now().dayOfYear.getOrdinal()}")
-                weekOfTheYear = fromHtml("<b>${getString(R.string.local_week_of_year)}</b> ${zonedDateTime.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).getOrdinal()}")
+                localDate = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("dd MMMM, yyyy").withLocale(patternLocale))}")
+                localDay = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("EEEE").withLocale(patternLocale))}")
+                dayOfTheYear = fromHtml("<b>${getString(R.string.local_day_of_year)}</b> ${LocalDate.now().dayOfYear.toOrdinal()}")
+                weekOfTheYear = fromHtml("<b>${getString(R.string.local_week_of_year)}</b> ${zonedDateTime.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).toOrdinal()}")
 
-                utcTimeZone = fromHtml("<b>${getString(R.string.utc_local_time_offset)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("XXX"))}")
+                utcTimeZone = fromHtml("<b>${getString(R.string.utc_local_time_offset)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("XXX").withLocale(patternLocale))}")
                 utcTime = fromHtml("<b>${getString(R.string.utc_current_time)}</b> ${getTimeWithSeconds(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())))}")
-                utcDate = fromHtml("<b>${getString(R.string.utc_current_date)}</b> ${ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())).format(DateTimeFormatter.ofPattern("dd MMMM, yyyy"))}")
+                utcDate = fromHtml("<b>${getString(R.string.utc_current_date)}</b> ${ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())).format(DateTimeFormatter.ofPattern("dd MMMM, yyyy").withLocale(patternLocale))}")
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
