@@ -259,8 +259,8 @@
     <string name="waxing">Waxing</string>
     <string name="waxing_gibbous">Waxing Gibbous</string>
     <string name="waxing_crescent">Waxing Crescent</string>
-    <string name="full_moon">@string/moon_full_moon</string>
-    <string name="new_moon">@string/moon_new_moon</string>
+    <string name="full_moon">Full Moon</string>
+    <string name="new_moon">New Moon</string>
     <string name="third_quarter">Third Quarter</string>
     <string name="first_quarter">First Quarter</string>
 

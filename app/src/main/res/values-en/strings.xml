@@ -111,6 +111,12 @@
     <string name="error">Error</string>
     <string name="not_available">N/A</string>
     <string name="no_address_found">No address found for current location</string>
+    <string name="location_saved">Saved Successfully</string>
+    <string name="already_saved">Already Saved!</string>
+    <string name="location_not_saved">Could not be saved!</string>
+    <string name="no_update">No Update Available</string>
+    <string name="only_full_version">This feature is only available in full version.</string>
+    <string name="location_not_available">Location is not yet available</string>
     <!-- Settings Categories -->
     <string name="appearance">Appearance</string>
     <string name="configuration">Configuration</string>
@@ -120,6 +126,7 @@
     <string name="theme">Theme</string>
     <string name="icon">Icon</string>
     <string name="units">Units</string>
+    <string name="language">Language</string>
     <string name="specified_location">Use Specified Location</string>
     <string name="keep_screen_on">Keep Screen On</string>
     <string name="push_notification">Push Notification</string>
@@ -127,7 +134,7 @@
     <string name="app_version">App Version</string>
     <string name="change_logs">Change Logs</string>
     <string name="found_an_issue">Found an issue?</string>
-    <string name="translate">Translate</string>
+    <string name="translate">Translation</string>
     <string name="buy_full">Buy Full Version</string>
     <!-- Settings Description -->
     <string name="theme_follow_system">Follow System</string>
@@ -179,20 +186,23 @@
     <string name="specified_hint_longitude">Longitude (±180)</string>
     <string name="specified_hint_timezone">Timezone (Continent/Region)</string>
     <!-- Info -->
-    <string name="play_services_issue">Looks your device does not support Google Play Services,
-        it could be because of faulty implementation or your device manufacturer did not installed
-        it, either way it is going to break some of the apps\' functionality</string>
+    <string name="play_services_issue">Your device does not support Google Play Services,
+        it could be because of faulty implementation or your device manufacturer did not install it.
+        Features like maps will not work without it.</string>
     <string name="no_sensor_alert">Your device does not seem to have the required sensors available
         to make this feature work :(\n\nIf you think this is a mistake please contact developer
         to resolve this issue as soon as possible</string>
     <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your
-        device in figure eight direction to calibrate</string>
-    <string name="specified_location_notice">Information shown below are being updated for specified location coordinates</string>
+        device in figure eight direction to calibrate the sensors.</string>
+    <string name="specified_location_notice">Information shown below are being updated for specified location coordinates.</string>
     <string name="show_again">Show Again</string>
     <string name="search_timezone">Search Timezones</string>
     <string name="verifying_license">Verifying License</string>
     <string name="license_successful">Successful :)</string>
     <string name="license_failed">License Verification Failed</string>
+    <string name="auto_system_default_language">Auto (System Default)</string>
+    <string name="location_permission_denied">"Location Permission Denied!"</string>
+    <string name="no_location_permission_alert">Some features may not work without location permission</string>
     <!-- Button Text -->
     <string name="button_cancel">Cancel</string>
     <string name="button_set">Set</string>
@@ -224,8 +234,8 @@
     <string name="waxing">Waxing</string>
     <string name="waxing_gibbous">Waxing Gibbous</string>
     <string name="waxing_crescent">Waxing Crescent</string>
-    <string name="full_moon">@string/moon_full_moon</string>
-    <string name="new_moon">@string/moon_new_moon</string>
+    <string name="full_moon">Full Moon</string>
+    <string name="new_moon">New Moon</string>
     <string name="third_quarter">Third Quarter</string>
     <string name="first_quarter">First Quarter</string>
     <!-- Directions -->

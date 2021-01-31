@@ -71,8 +71,8 @@
     <string name="moon_first_quarter">پہلا کوارٹر:</string>
     <string name="moon_last_quarter">آخری کوارٹر:</string>
     <!-- Compass information items -->
-    <string name="accelerometer_accuracy">Accelerometer:</string>
-    <string name="magnetometer_accuracy">Magnetometer:</string>
+    <string name="accelerometer_accuracy">ایکسیلیومیٹر:</string>
+    <string name="magnetometer_accuracy">مقناطیسی میٹر:</string>
     <string name="compass_inclination">جھکاو:</string>
     <string name="compass_declination">تخفیف:</string>
     <string name="compass_field_strength">میدان کی طاقت:</string>
@@ -111,6 +111,12 @@
     <string name="error">خرابی واقع ہوئی</string>
     <string name="not_available">دستیاب نہیں ہے</string>
     <string name="no_address_found">موجودہ مقام کے لئے کوئی پتہ نہیں ملا</string>
+    <string name="location_saved">کامیابی سے محفوظ کیا گیا</string>
+    <string name="already_saved">پہلے ہی محفوظ!</string>
+    <string name="location_not_saved">محفوظ نہیں ہو سکتا!</string>
+    <string name="no_update">کوئی اپ ڈیٹ دستیاب نہیں ہے</string>
+    <string name="only_full_version">یہ خصوصیت صرف مکمل ورژن میں دستیاب ہے۔</string>
+    <string name="location_not_available">مقام ابھی دستیاب نہیں ہے</string>
     <!-- Settings Categories -->
     <string name="appearance">ظہور</string>
     <string name="configuration">تشکیل</string>
@@ -120,6 +126,7 @@
     <string name="theme">تھیم</string>
     <string name="icon">آئیکن</string>
     <string name="units">یونٹ</string>
+    <string name="language">زبان</string>
     <string name="specified_location">مخصوص مقام استعمال کریں</string>
     <string name="keep_screen_on">اسکرین آون رکھیں</string>
     <string name="push_notification">پش اطلاع</string>
@@ -189,6 +196,9 @@ GPS معلومات غیر متاثر رہیں گے</string>
     <string name="verifying_license">تصدیق لائسنس</string>
     <string name="license_successful">کامیاب :)</string>
     <string name="license_failed">لائسنس کی توثیق ناکام</string>
+    <string name="auto_system_default_language">آٹو (سسٹم ڈیفالٹ)</string>
+    <string name="location_permission_denied">"مقام کی اجازت سے انکار!"</string>
+    <string name="no_location_permission_alert">کچھ خصوصیات مقام کی اجازت کے بغیر کام نہیں کرسکتی ہیں۔</string>
     <!-- Button Text -->
     <string name="button_cancel">منسوخ کریں</string>
     <string name="button_set">سیٹ کریں</string>
@@ -220,8 +230,8 @@ GPS معلومات غیر متاثر رہیں گے</string>
     <string name="waxing">موم</string>
     <string name="waxing_gibbous">ویکسنگ گیبس</string>
     <string name="waxing_crescent">ویکسنگ کریسنٹ</string>
-    <string name="full_moon">@string/moon_full_moon</string>
-    <string name="new_moon">@string/moon_new_moon</string>
+    <string name="full_moon">پورا چاند</string>
+    <string name="new_moon">نیا چاند</string>
     <string name="third_quarter">تیسرا چوتھائی</string>
     <string name="first_quarter">پہلا چوتھائی</string>
     <!-- Directions -->

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="licensing_key">@string/thisAppLicensingKey</string>
-    <string name="app_name" tools:override="true">पोज़िशनल</string>
+    <string name="app_name">पोज़िशनल</string>
     <!-- Panels -->
     <string name="clock">समय</string>
     <string name="compass">दिशा-सूचक</string>
@@ -81,7 +81,7 @@
     <string name="gps_source">स्रोत:</string>
     <string name="gps_accuracy">सटीकता:</string>
     <string name="gps_altitude">उन्नतांश:</string>
-    <string name="gps_bearing">Bearing:</string>
+    <string name="gps_bearing">वहन:</string>
     <string name="gps_displacement">विस्थापन:</string>
     <string name="gps_direction">दिशा:</string>
     <string name="gps_speed">गति:</string>
@@ -111,6 +111,12 @@
     <string name="error">एरर!</string>
     <string name="not_available">अनुपलब्ध</string>
     <string name="no_address_found">वर्तमान स्थान के लिए कोई पता नहीं मिला</string>
+    <string name="location_saved">सफलतापूर्वक सहेजा गया।</string>
+    <string name="already_saved">पहले ही सहेजा गया</string>
+    <string name="location_not_saved">सहेजा नहीं जा सका</string>
+    <string name="no_update">कोई अद्यतन उपलब्ध नहीं है</string>
+    <string name="only_full_version">यह सुविधा केवल पूर्ण संस्करण में उपलब्ध है|</string>
+    <string name="location_not_available">स्थान उपलब्ध नहीं है</string>
     <!-- Settings Categories -->
     <string name="appearance">दिखावट</string>
     <string name="configuration">विन्यास</string>
@@ -120,6 +126,7 @@
     <string name="theme">थीम</string>
     <string name="icon">आइकॉन</string>
     <string name="units">इकाई</string>
+    <string name="language">भाषा</string>
     <string name="specified_location">निर्दिष्ट स्थान का उपयोग करें</string>
     <string name="keep_screen_on">स्क्रीन चालू रखें</string>
     <string name="push_notification">संभर अधिसूचना</string>
@@ -179,20 +186,22 @@
     <string name="specified_hint_longitude">देशान्तर (±180)</string>
     <string name="specified_hint_timezone">समयक्षेत्र (महाद्वीप / क्षेत्र)</string>
     <!-- Info -->
-    <string name="play_services_issue">लगता है कि आपका डिवाइस Google Play सेवाओं का समर्थन नहीं करता है,
-        यह दोषपूर्ण कार्यान्वयन के कारण हो सकता है या आपके डिवाइस निर्माता ने स्थापित नहीं किया है
-        यह, किसी भी तरह से यह ऐप की कुछ कार्यक्षमता को तोड़ने वाला है|</string>
+    <string name="play_services_issue">आपके डिवाइस में Google Play सेवाएँ नहीं हैं,
+         यह दोषपूर्ण कार्यान्वयन के कारण हो सकता है या आपके डिवाइस निर्माता ने इसे स्थापित नहीं किया है।
+         इसके बिना मैप्स जैसे फीचर्स काम नहीं करेंगे।</string>
     <string name="no_sensor_alert">आपके डिवाइस में आवश्यक सेंसर उपलब्ध नहीं हैं
         इस सुविधा को बनाने के लिए: (\n\nयदि आपको लगता है कि यह एक गलती है तो कृपया डेवलपर से संपर्क करें
         जितनी जल्दी हो सके इस मुद्दे को हल करने के लिए</string>
-    <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your
-        device in figure eight direction to calibrate</string>
-    <string name="specified_location_notice">नीचे दी गई जानकारी निर्दिष्ट स्थान निर्देशांक के लिए अपडेट की जा रही है</string>
+    <string name="compass_calibration_notice">आपकी डिवाइस कम्पास सेंसर की सटीकता कम है, इसको कैलिब्रेट करने के लिए अपनी डिवाइस को आठ नंबर के तरीके से घुमाएं | </string>
+    <string name="specified_location_notice">नीचे दी गई जानकारी निर्दिष्ट स्थान निर्देशांक के लिए अपडेट की जा रही है|</string>
     <string name="show_again">फिर से दिखाएँ</string>
     <string name="search_timezone">समय क्षेत्र खोजें</string>
     <string name="verifying_license">लाइसेंस का सत्यापन</string>
     <string name="license_successful">सफल :)</string>
     <string name="license_failed">लाइसेंस सत्यापन विफल रहा</string>
+    <string name="auto_system_default_language">ऑटो (सिस्टम डिफ़ॉल्ट)</string>
+    <string name="location_permission_denied">"स्थान अनुमति अस्वीकृत!"</string>
+    <string name="no_location_permission_alert">कुछ सुविधाएं बिना स्थान की अनुमति के काम नहीं कर सकती हैं|</string>
     <!-- Button Text -->
     <string name="button_cancel">रद्द करें</string>
     <string name="button_set">सेट करें</string>
@@ -224,9 +233,9 @@
     <string name="waxing">शुक्ल</string>
     <string name="waxing_gibbous">वैक्सिंग गिब्बस</string>
     <string name="waxing_crescent">ढलते अर्द्धचंद्र</string>
-    <string name="full_moon">पूर्णिमा</string>
+    <string name="full_moon">पूर्णचंद्र</string>
     <string name="new_moon">अमावस्या</string>
-    <string name="third_quarter">Third Quarter</string>
+    <string name="third_quarter">तीसरा क्वार्टर</string>
     <string name="first_quarter">अर्धचन्द्र</string>
     <!-- Directions -->
     <string name="north">उत्तर</string>

@@ -36,7 +36,7 @@
     <string name="local_time_24hr">24ч. време:</string>
     <string name="local_time_12hr">12ч. време:</string>
     <string name="local_day">Ден:</string>
-    <string name="local_date">Дата:</string>
+    <string name="local_date">Ден:</string>
     <string name="local_day_of_year">Ден от годината:</string>
     <string name="local_week_of_year">Седмица от годината:</string>
     <string name="utc_local_time_offset">Времева разлика:</string>
@@ -51,14 +51,14 @@
     <string name="sun_nadir">Надир:</string>
     <string name="twilight_astronomical_dawn">Астрономическо зазоряване:</string>
     <string name="twilight_nautical_dawn">Зазоряване на морското равнище:</string>
-    <string name="twilight_civil_dawn">Civil Dawn:</string>
-    <string name="twilight_civil_dusk">Civil Dusk:</string>
+    <string name="twilight_civil_dawn">Разсъмване:</string>
+    <string name="twilight_civil_dusk">Зазоряване:</string>
     <string name="twilight_nautical_dusk">Морски здрач:</string>
     <string name="twilight_astronomical_dusk">Астрономически здрач:</string>
     <string name="moon_azimuth">@string/sun_azimuth</string>
     <string name="moon_distance">@string/sun_distance</string>
     <string name="moon_altitude">@string/sun_altitude</string>
-    <string name="moon_parallactic_angle">Parallactic Angle:</string>
+    <string name="moon_parallactic_angle">Паралактичен ъгъл:</string>
     <string name="moon_moonrise">Лунен изгрев:</string>
     <string name="moon_moonset">Лунен залез:</string>
     <string name="moon_fraction">Част:</string>
@@ -80,13 +80,13 @@
     <string name="gps_status">Статус:</string>
     <string name="gps_source">Източник:</string>
     <string name="gps_accuracy">Точност:</string>
-    <string name="gps_altitude">Надм. вис:</string>
+    <string name="gps_altitude">Надм. височина:</string>
     <string name="gps_bearing">Посока:</string>
     <string name="gps_displacement">Изместване:</string>
     <string name="gps_direction">Посока:</string>
     <string name="gps_speed">Скорост:</string>
     <string name="gps_latitude">Геогр. ширина:</string>
-    <string name="gps_longitude">Географска дължина:</string>
+    <string name="gps_longitude">Геогр. дължина:</string>
     <!-- Sensor Accuracy -->
     <string name="sensor_accuracy_unreliable">Ненадеждно</string>
     <string name="sensor_accuracy_low">Ниско</string>
@@ -111,6 +111,12 @@
     <string name="error">Грешка</string>
     <string name="not_available">N/A</string>
     <string name="no_address_found">Не са открити адреси за вашето местоположение</string>
+    <string name="location_saved">Запазено успешно</string>
+    <string name="already_saved">Вече запазено!</string>
+    <string name="location_not_saved">Не може да бъде запазено!</string>
+    <string name="no_update">Няма нови актуализации</string>
+    <string name="only_full_version">Тази функция е налична само в пълната версия.</string>
+    <string name="location_not_available">Местоположението все още не е налично</string>
     <!-- Settings Categories -->
     <string name="appearance">Външен вид</string>
     <string name="configuration">Конфигурация</string>
@@ -120,6 +126,7 @@
     <string name="theme">Тема</string>
     <string name="icon">Икона</string>
     <string name="units">Мерни единици</string>
+    <string name="language">Език</string>
     <string name="specified_location">Използвай указано местоположение</string>
     <string name="keep_screen_on">Поддържане на екрана включен</string>
     <string name="push_notification">Известия</string>
@@ -130,28 +137,28 @@
     <string name="translate">Превод</string>
     <string name="buy_full">Купете пълната версия</string>
     <!-- Settings Description -->
-    <string name="theme_follow_system">Следвайте системните настройки</string>
+    <string name="theme_follow_system">Следвай системната тема</string>
     <string name="theme_day">Светла</string>
     <string name="theme_night">Тъмна</string>
     <string name="theme_auto">Автоматично (Ден/Нощ)</string>
     <string name="desc_icon">Главна икона на приложението</string>
     <string name="desc_specified_location">Посочете персонализирана ширина, дължина и часова зона и го използвайте за извличане на информация        вместо да използвате GPS на устройството като източник на информация за местоположението\n\nGPS информацията ще остане незасегната</string>
     <string name="desc_screen_on">Предотвратяване заспиването на устройството, докато се използва приложението</string>
-    <string name="desc_push">Получавайте ненатрапчиво известие за актуализации и друга информация</string>
-    <string name="desc_legal">Прочетете отказ от отговорност, Политика за поверителност и Условия за използване</string>
+    <string name="desc_push">Получавайте ненатрапчиви известия за актуализации и друга информация</string>
+    <string name="desc_legal">Прочетете Отказ от отговорност, Политика за поверителност и Условия за използване на приложението</string>
     <string name="desc_changes">Подробни регистрационни файлове за всички компилации досега</string>
     <string name="desc_git">Отворете хранилището на приложението</string>
     <string name="desc_translate">Помогнете за превода на приложението на вашия роден език</string>
     <string name="desc_buy_full_version">Подкрепете развитието на приложението чрез закупуване на пълната му версия</string>
     <!-- Clock Menu -->
-    <string name="needles">Needle</string>
+    <string name="needles">Стрелки</string>
     <string name="motion_type">Тип на движението</string>
     <string name="time_format">Използвай 12-часов формат</string>
     <string name="motion_type_smooth">Плавно</string>
-    <string name="motion_type_tick">Tick</string>
+    <string name="motion_type_tick">Тиктакане</string>
     <!-- Compass Menu -->
-    <string name="bloom">Bloom</string>
-    <string name="bloom_skins">Bloom Skins</string>
+    <string name="bloom">Цветенца</string>
+    <string name="bloom_skins">Дизайн на цветенцата</string>
     <string name="show_code">Показване на кода</string>
     <string name="sensor_speed">Скорост на сензора</string>
     <string name="sensor_speed_smooth">@string/motion_type_smooth</string>
@@ -192,6 +199,9 @@
     <string name="verifying_license">Проверка на лиценза</string>
     <string name="license_successful">Успешно :)</string>
     <string name="license_failed">Проверката на лиценза не бе успешна</string>
+    <string name="auto_system_default_language">Автоматично (по подразбиране)</string>
+    <string name="location_permission_denied">"Разрешение за местоположение бе отказано!"</string>
+    <string name="no_location_permission_alert">Някои функции може да не работят без разрешение за местоположение</string>
     <!-- Button Text -->
     <string name="button_cancel">Отказ</string>
     <string name="button_set">Задай</string>
@@ -223,8 +233,8 @@
     <string name="waxing">Waxing</string>
     <string name="waxing_gibbous">Растяща луна</string>
     <string name="waxing_crescent">Восъчен полумесец</string>
-    <string name="full_moon">@string/moon_full_moon</string>
-    <string name="new_moon">@string/moon_new_moon</string>
+    <string name="full_moon">Пълнолуние</string>
+    <string name="new_moon">Новолуние</string>
     <string name="third_quarter">Трета четвърт</string>
     <string name="first_quarter">Първа четвърт</string>
     <!-- Directions -->
