@@ -154,6 +154,7 @@ dependencies {
     // Third Party Implementations
     implementation 'org.shredzone.commons:commons-suncalc:3.4'
     implementation 'com.afollestad:viewpagerdots:1.0.0'
+    implementation 'com.github.Berico-Technologies:Geo-Coordinate-Conversion-Java:360781e5be'
 
     // Room components
     implementation "androidx.room:room-ktx:2.2.6"

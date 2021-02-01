@@ -379,14 +379,13 @@ class GPS : Fragment() {
 
             CoroutineScope(Dispatchers.Default).launch {
                 val isLocationSaved: Boolean
-                val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").build()
+                val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
                 val locations = Locations()
 
                 if (MainPreferences.isCustomCoordinate()) {
                     isLocationSaved = false
                 } else {
                     if (location.isNull()) {
-                        Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show()
                         isLocationSaved = false
                     } else {
                         locations.latitude = location?.latitude!!

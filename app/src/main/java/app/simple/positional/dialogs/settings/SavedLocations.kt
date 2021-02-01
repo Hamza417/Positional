@@ -79,7 +79,9 @@ class SavedLocations : CustomDialogFragment(), LocationAdapterCallback {
             val db = Room.databaseBuilder(
                     requireContext(),
                     LocationDatabase::class.java,
-                    "locations.db").build()
+                    "locations.db")
+                    .fallbackToDestructiveMigration()
+                    .build()
 
             val list = db.locationDao()!!.getAllLocations()
             db.close()

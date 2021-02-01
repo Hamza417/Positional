@@ -14,17 +14,17 @@ object DigitalTimeFormatter {
      */
     fun getTime(zoneDateTime: ZonedDateTime): SpannableString {
         return if (ClockPreferences.getDefaultClockTime()) {
-            buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("hh:mm a").withLocale(LocaleHelper.getAppLocale())), 2)
+            buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("hh:mm a").withLocale(LocaleHelper.getAppLocale())))
         } else {
-            buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("HH:mm").withLocale(LocaleHelper.getAppLocale())), 0)
+            buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("HH:mm").withLocale(LocaleHelper.getAppLocale())))
         }
     }
 
     fun getTimeWithSeconds(zoneDateTime: ZonedDateTime): SpannableString {
         return if (ClockPreferences.getDefaultClockTime()) {
-            buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(LocaleHelper.getAppLocale())), 2)
+            buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(LocaleHelper.getAppLocale())))
         } else {
-            buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss").withLocale(LocaleHelper.getAppLocale())), 0)
+            buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss").withLocale(LocaleHelper.getAppLocale())))
         }
     }
 }

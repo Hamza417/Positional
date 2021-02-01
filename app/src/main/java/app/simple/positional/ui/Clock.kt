@@ -594,7 +594,7 @@ class Clock : Fragment() {
                 digitalTime12 = fromHtml("<b>${getString(R.string.local_time_12hr)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(patternLocale))}")
                 digitalTime = getTime(zonedDateTime)
                 localDate = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("dd MMMM, yyyy").withLocale(patternLocale))}")
-                localDay = fromHtml("<b>${getString(R.string.local_date)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("EEEE").withLocale(patternLocale))}")
+                localDay = fromHtml("<b>${getString(R.string.local_day)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("EEEE").withLocale(patternLocale))}")
                 dayOfTheYear = fromHtml("<b>${getString(R.string.local_day_of_year)}</b> ${LocalDate.now().dayOfYear.toOrdinal()}")
                 weekOfTheYear = fromHtml("<b>${getString(R.string.local_week_of_year)}</b> ${zonedDateTime.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).toOrdinal()}")
 

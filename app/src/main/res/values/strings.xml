@@ -194,6 +194,9 @@
     <string name="icon_default">Default</string>
     <string name="icon_legacy">Legacy</string>
     <string name="icon_simple">Simple</string>
+    <string name="icon_simple_no_shadow">Simple (No Shadow)</string>
+    <string name="icon_simple_teal">Simple (Teal)</string>
+    <string name="icon_simple_pink">Simple (Pink)</string>
     <string name="unit_metric">Metric</string>
     <string name="unit_imperial">Imperial</string>
 

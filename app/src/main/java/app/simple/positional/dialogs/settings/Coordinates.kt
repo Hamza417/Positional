@@ -337,7 +337,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
                 MainPreferences.setTimeZone(timezoneInputEditText.text.toString())
 
                 if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty() || timezoneInputEditText.text.toString().isNotEmpty()) {
-                    val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").build()
+                    val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
                     val locations = Locations()
 
                     try {
