@@ -46,7 +46,13 @@ object LauncherBackground {
             R.drawable.launcher_day_39,
             R.drawable.launcher_day_40,
             R.drawable.launcher_day_41,
-            R.drawable.launcher_day_42
+            R.drawable.launcher_day_42,
+            R.drawable.launcher_day_43,
+            R.drawable.launcher_day_44,
+            R.drawable.launcher_day_45,
+            R.drawable.launcher_day_46,
+            R.drawable.launcher_day_47,
+            R.drawable.launcher_day_48
     )
 
     val vectorBackgroundNight = arrayOf(
@@ -109,7 +115,13 @@ object LauncherBackground {
             arrayOf(parseColor("#FF864141"), parseColor("#FFC06790")),
             arrayOf(parseColor("#FF2d3f43"), parseColor("#FF5c6b4d")),
             arrayOf(parseColor("#FF9C3F88"), parseColor("#FFBD2E94")),
-            arrayOf(parseColor("#FF129483"), parseColor("#FF3EAF98"))
+            arrayOf(parseColor("#FF129483"), parseColor("#FF3EAF98")),
+            arrayOf(parseColor("#FFFF9266"), parseColor("#FFFFDC78")),
+            arrayOf(parseColor("#FF3d6199"), parseColor("#FFfa7169")),
+            arrayOf(parseColor("#FF28ADD1"), parseColor("#FFFF9F29")),
+            arrayOf(parseColor("#FF0042AE"), parseColor("#FF5BA9FD")),
+            arrayOf(parseColor("#FF0a6d82"), parseColor("#FF5aa7c3")),
+            arrayOf(parseColor("#FF190D46"), parseColor("#FF402287"))
     )
 
     val vectorNightColors: Array<Array<Int>> = arrayOf(
@@ -131,11 +143,6 @@ object LauncherBackground {
     )
 
     private fun parseColor(value: String): Int {
-        /**
-         * Do not use extension function, using reference type
-         * function is more easy to read, use and manage
-         * in a situation like this
-         */
         return Color.parseColor(value)
     }
 }

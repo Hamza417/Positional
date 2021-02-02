@@ -89,6 +89,15 @@ class Icons : CustomBottomSheetDialog() {
             requireActivity().packageManager.getComponentEnabledSetting(ComponentName(requireActivity(), IconThreeAlias::class.java)) -> {
                 3
             }
+            requireActivity().packageManager.getComponentEnabledSetting(ComponentName(requireActivity(), IconFourAlias::class.java)) -> {
+                4
+            }
+            requireActivity().packageManager.getComponentEnabledSetting(ComponentName(requireActivity(), IconFiveAlias::class.java)) -> {
+                5
+            }
+            requireActivity().packageManager.getComponentEnabledSetting(ComponentName(requireActivity(), IconSixAlias::class.java)) -> {
+                6
+            }
             else -> {
                 1
             }
@@ -101,6 +110,7 @@ class Icons : CustomBottomSheetDialog() {
         iconThree.isChecked = value == 3
         iconFour.isChecked = value == 4
         iconFive.isChecked = value == 5
+        iconSix.isChecked = value == 6
     }
 
     private fun setIcon() {
