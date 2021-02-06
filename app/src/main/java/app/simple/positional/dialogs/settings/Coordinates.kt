@@ -243,11 +243,11 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
     private val geoCoderRunnable: Runnable = Runnable { getCoordinatesFromAddress(address) }
 
     private fun isValidLongitude(longitude: Double): Boolean {
-        return (longitude >= -180 && longitude <= 180)
+        return longitude >= -180 && longitude <= 180
     }
 
     private fun isValidLatitude(latitude: Double): Boolean {
-        return (latitude >= -90 && latitude <= 90)
+        return latitude >= -90 && latitude <= 90
     }
 
     private fun getCoordinatesFromAddress(address: String) {
@@ -273,8 +273,8 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
                     latitude = addresses[0].latitude
                     longitude = addresses[0].longitude
                 }
-            } catch (e: IOException) {
-            } catch (e: NullPointerException) {
+            } catch (ignored: IOException) {
+            } catch (ignored: NullPointerException) {
             }
             withContext(Dispatchers.Main) {
                 try {
@@ -286,8 +286,8 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
                         longitudeInputEditText.text?.clear()
                     }
                     addressIndicator.hide()
-                } catch (e: NullPointerException) {
-                } catch (e: UninitializedPropertyAccessException) {
+                } catch (ignored: NullPointerException) {
+                } catch (ignored: UninitializedPropertyAccessException) {
                 }
             }
         }
@@ -296,9 +296,9 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
     private fun setButton() {
         try {
             setCoordinatesButton.isClickable =
-                    (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) &&
+                    isValidLatitude(latitudeInputEditText.text.toString().toDouble()) &&
                             isValidLongitude(longitudeInputEditText.text.toString().toDouble()) &&
-                            isValidTimeZone)
+                            isValidTimeZone
 
             if (setCoordinatesButton.isClickable) {
                 setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.textPrimary))
