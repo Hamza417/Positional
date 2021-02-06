@@ -343,7 +343,7 @@ class SmoothBottomBar @JvmOverloads constructor(
         super.onSizeChanged(w, h, oldw, oldh)
 
         var lastX = barSideMargins
-        itemWidth = (width - (barSideMargins * 2)) / items.size
+        itemWidth = (width - barSideMargins * 2) / items.size
 
         // reverse items layout order if layout direction is RTL
         val itemsToLayout = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1
@@ -353,7 +353,7 @@ class SmoothBottomBar @JvmOverloads constructor(
         for (item in itemsToLayout) {
             // Prevent text overflow by shortening the item title
             var shorted = false
-            while (paintText.measureText(item.title) > itemWidth - itemIconSize - itemIconMargin - (itemPadding * 2)) {
+            while (paintText.measureText(item.title) > itemWidth - itemIconSize - itemIconMargin - itemPadding * 2) {
                 item.title = item.title.dropLast(1)
                 shorted = true
             }
@@ -424,10 +424,10 @@ class SmoothBottomBar @JvmOverloads constructor(
                 item.icon.mutate()
                 item.icon.setBounds(
                         item.rect.centerX()
-                                .toInt() - itemIconSize.toInt() / 2 + ((textLength / 2) * (1 - (OPAQUE - item.alpha) / OPAQUE.toFloat())).toInt(),
+                                .toInt() - itemIconSize.toInt() / 2 + (textLength / 2 * (1 - (OPAQUE - item.alpha) / OPAQUE.toFloat())).toInt(),
                         height / 2 - itemIconSize.toInt() / 2,
                         item.rect.centerX()
-                                .toInt() + itemIconSize.toInt() / 2 + ((textLength / 2) * (1 - (OPAQUE - item.alpha) / OPAQUE.toFloat())).toInt(),
+                                .toInt() + itemIconSize.toInt() / 2 + (textLength / 2 * (1 - (OPAQUE - item.alpha) / OPAQUE.toFloat())).toInt(),
                         height / 2 + itemIconSize.toInt() / 2
                 )
 
@@ -448,10 +448,10 @@ class SmoothBottomBar @JvmOverloads constructor(
                 item.icon.mutate()
                 item.icon.setBounds(
                         item.rect.centerX()
-                                .toInt() - itemIconSize.toInt() / 2 - ((textLength / 2) * (1 - (OPAQUE - item.alpha) / OPAQUE.toFloat())).toInt(),
+                                .toInt() - itemIconSize.toInt() / 2 - (textLength / 2 * (1 - (OPAQUE - item.alpha) / OPAQUE.toFloat())).toInt(),
                         height / 2 - itemIconSize.toInt() / 2,
                         item.rect.centerX()
-                                .toInt() + itemIconSize.toInt() / 2 - ((textLength / 2) * (1 - (OPAQUE - item.alpha) / OPAQUE.toFloat())).toInt(),
+                                .toInt() + itemIconSize.toInt() / 2 - (textLength / 2 * (1 - (OPAQUE - item.alpha) / OPAQUE.toFloat())).toInt(),
                         height / 2 + itemIconSize.toInt() / 2
                 )
 

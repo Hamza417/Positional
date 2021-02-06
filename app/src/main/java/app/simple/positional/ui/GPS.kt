@@ -349,11 +349,11 @@ class GPS : Fragment() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 scrollView.alpha = slideOffset
-                expandUp.alpha = (1 - slideOffset)
-                expandUp.rotationX = (-180 * slideOffset)
+                expandUp.alpha = 1 - slideOffset
+                expandUp.rotationX = -180 * slideOffset
                 view.findViewById<View>(R.id.gps_dim).alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                toolbar.translationY = (toolbar.height * -slideOffset)
+                toolbar.translationY = toolbar.height * -slideOffset
             }
         })
 
@@ -601,8 +601,8 @@ class GPS : Fragment() {
             withContext(Dispatchers.Main) {
                 try {
                     this@GPS.address.text = address
-                } catch (e: NullPointerException) {
-                } catch (e: UninitializedPropertyAccessException) {
+                } catch (ignored: NullPointerException) {
+                } catch (ignored: UninitializedPropertyAccessException) {
                 }
             }
         }

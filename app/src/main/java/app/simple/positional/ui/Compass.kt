@@ -264,10 +264,10 @@ class Compass : Fragment(), SensorEventListener {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 compassListScrollView.alpha = slideOffset
-                expandUp.alpha = (1 - slideOffset)
+                expandUp.alpha = 1 - slideOffset
                 dim.alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                toolbar.translationY = (toolbar.height * -slideOffset)
+                toolbar.translationY = toolbar.height * -slideOffset
             }
         })
 
@@ -363,7 +363,7 @@ class Compass : Fragment(), SensorEventListener {
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
-                    val finalAngle = ((currentAngle - startAngle) + lastDialAngle)
+                    val finalAngle = currentAngle - startAngle + lastDialAngle
                     viewRotation((finalAngle.toThreeSixty() - 360F) * -1)
                     return true
                 }

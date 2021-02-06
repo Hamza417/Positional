@@ -305,10 +305,10 @@ class SparkLineLayout @JvmOverloads constructor(
         dataMax = data.maxOrNull() ?: 1f
         dataMin = data.minOrNull() ?: 1f
         val markerH = if (markerIsCircleStyle) markerWidth else markerHeight
-        heightPadding = (markerH + sparkLineThickness * 2)
+        heightPadding = markerH + sparkLineThickness * 2
 
-        xStep = (measuredWidth - (heightPadding * 2)) / ((data.count() - 1)).toFloat()
-        yStep = (measuredHeight - (heightPadding * 2)) / ((dataMax - dataMin))
+        xStep = (measuredWidth - heightPadding * 2) / (data.count() - 1).toFloat()
+        yStep = (measuredHeight - heightPadding * 2) / (dataMax - dataMin)
 
         when {
             splitLineRatio < 0F -> splitLineRatio = 0F
@@ -324,21 +324,15 @@ class SparkLineLayout @JvmOverloads constructor(
         pathSparkLine = Path().apply {
             var xStart = heightPadding
 
-            moveTo(xStart, (measuredHeight - heightPadding) - ((data[0] - dataMin) * yStep))
+            moveTo(xStart, measuredHeight - heightPadding - (data[0] - dataMin) * yStep)
             xStart += xStep
             for (index in 1 until data.size) {
                 val prevVal: Float = getPrevVal(index)
-
                 val nextVal: Float = getNextVal(index)
-
                 val prevD = getPrevD(xStart, index, prevVal)
-
                 val curD = getCurD(xStart, index, nextVal)
-
                 val controlPoint1 = getControlPointLeft(xStart, prevVal, prevD)
-
                 val controlPoint2 = getControlPointRight(xStart, index, curD)
-
                 val currentPoint = getCurrentPoint(xStart, index)
 
                 this.cubicTo(controlPoint1, controlPoint2, currentPoint)
@@ -355,7 +349,7 @@ class SparkLineLayout @JvmOverloads constructor(
         val numPoint = calculateSplitNumPoint()
         val t: Float = calculateRatioBetweenPoints()
 
-        pathLineLeft.moveTo(xStart, (measuredHeight - heightPadding) - ((data.first() - dataMin) * yStep))
+        pathLineLeft.moveTo(xStart, measuredHeight - heightPadding - (data.first() - dataMin) * yStep)
         xStart += xStep
         for (index in 1 until data.size) {
 
@@ -377,7 +371,7 @@ class SparkLineLayout @JvmOverloads constructor(
                     val prevPoint: PointF = if (numPoint != 0) {
                         PointF(
                                 xStart - xStep,
-                                (measuredHeight - heightPadding) - ((data[index - 1] - dataMin) * yStep)
+                                measuredHeight - heightPadding - (data[index - 1] - dataMin) * yStep
                         )
                     } else {
                         currentPoint
@@ -407,7 +401,7 @@ class SparkLineLayout @JvmOverloads constructor(
     private fun drawMarkers(canvas: Canvas) {
         for (i in 0 until data.size) {
             val x: Float = i * xStep
-            val y: Float = (measuredHeight - heightPadding) - ((data[i] - dataMin) * yStep)
+            val y: Float = measuredHeight - heightPadding - (data[i] - dataMin) * yStep
 
             drawMarker(canvas, x + heightPadding, y)
         }
@@ -421,18 +415,18 @@ class SparkLineLayout @JvmOverloads constructor(
             }
         } else {
             canvas.drawRect(
-                    x - (markerWidth / 2),
-                    y - (markerHeight / 2),
-                    x + (markerWidth / 2),
-                    y + (markerHeight / 2),
+                    x - markerWidth / 2,
+                    y - markerHeight / 2,
+                    x + markerWidth / 2,
+                    y + markerHeight / 2,
                     paintMarker
             )
             if (markerBorderSize > 0) {
                 canvas.drawRect(
-                        x - (markerWidth / 2),
-                        y - (markerHeight / 2),
-                        x + (markerWidth / 2),
-                        y + (markerHeight / 2),
+                        x - markerWidth / 2,
+                        y - markerHeight / 2,
+                        x + markerWidth / 2,
+                        y + markerHeight / 2,
                         paintMarkerStroke
                 )
             }
@@ -440,10 +434,10 @@ class SparkLineLayout @JvmOverloads constructor(
     }
 
     private fun getPrevVal(index: Int): Float {
-        return (when {
+        return when {
             index > 0 -> data[index - 1] - dataMin
             else -> data[index] - dataMin
-        }).toFloat()
+        }.toFloat()
     }
 
     private fun getNextVal(index: Int): Float {
@@ -457,13 +451,13 @@ class SparkLineLayout @JvmOverloads constructor(
     private fun getPrevD(xStart: Float, index: Int, prevVal: Float): PointF {
         return PointF(
                 (xStart - (xStart - xStep)) * sparkLineBezier,
-                ((data[index] - dataMin) - prevVal) * sparkLineBezier
+                (data[index] - dataMin - prevVal) * sparkLineBezier
         )
     }
 
     private fun getCurD(xStart: Float, index: Int, nextVal: Float): PointF {
         return PointF(
-                ((xStart + xStep) - xStart) * sparkLineBezier,
+                (xStart + xStep - xStart) * sparkLineBezier,
                 (nextVal - (data[index] - dataMin)) * sparkLineBezier
         )
     }
@@ -471,19 +465,20 @@ class SparkLineLayout @JvmOverloads constructor(
     private fun getControlPointLeft(xStart: Float, prevVal: Float, prevD: PointF): PointF {
         return PointF(
                 (xStart - xStep) + prevD.x,
-                (((measuredHeight - heightPadding) - (prevVal * yStep)) - prevD.y)
+                measuredHeight - heightPadding - prevVal * yStep - prevD.y
         )
     }
 
     private fun getControlPointRight(xStart: Float, index: Int, curD: PointF): PointF {
         return PointF(
                 xStart - curD.x,
-                ((measuredHeight - heightPadding) - ((data[index] - dataMin) * yStep)) + curD.y
+                measuredHeight - heightPadding - (data[index] - dataMin) * yStep + curD.y
         )
     }
 
     private fun getCurrentPoint(xStart: Float, index: Int): PointF {
-        return PointF(xStart, (measuredHeight - heightPadding) - ((data[index] - dataMin) * yStep))
+        return PointF(xStart,
+                measuredHeight - heightPadding - (data[index] - dataMin) * yStep)
     }
 
     private fun calculateSplitNumPoint(): Int {
@@ -492,7 +487,6 @@ class SparkLineLayout @JvmOverloads constructor(
             1.0F -> data.size - 1
             0.0F -> 0
             else -> ceil(widthRatio / xStep).toInt()
-
         }
     }
 
@@ -501,7 +495,7 @@ class SparkLineLayout @JvmOverloads constructor(
         return when (splitLineRatio) {
             1F -> 1F
             0F -> 0F
-            else -> (widthRatio % xStep) / xStep
+            else -> widthRatio % xStep / xStep
         }
     }
 

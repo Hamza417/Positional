@@ -276,10 +276,10 @@ class Clock : Fragment() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 scrollView.alpha = slideOffset
-                expandUp.alpha = (1 - slideOffset)
+                expandUp.alpha = 1 - slideOffset
                 view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                toolbar.translationY = (toolbar.height * -slideOffset)
+                toolbar.translationY = toolbar.height * -slideOffset
             }
         })
 
@@ -563,8 +563,8 @@ class Clock : Fragment() {
                     this@Clock.nextNewMoon.text = nextNewMoon
                     this@Clock.nextFirstQuarter.text = nextFirstQuarter
                     this@Clock.nextLastQuarter.text = nextLastQuarter
-                } catch (e: NullPointerException) {
-                } catch (e: UninitializedPropertyAccessException) {
+                } catch (ignored: NullPointerException) {
+                } catch (ignored: UninitializedPropertyAccessException) {
                 }
             }
         }
@@ -618,8 +618,8 @@ class Clock : Fragment() {
                     this@Clock.utcTimeZone.text = utcTimeZone
                     this@Clock.utcDate.text = utcDate
                     this@Clock.utcTime.text = utcTime
-                } catch (e: NullPointerException) {
-                } catch (e: UninitializedPropertyAccessException) {
+                } catch (ignored: NullPointerException) {
+                } catch (ignored: UninitializedPropertyAccessException) {
                 }
             }
         }
