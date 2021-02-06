@@ -38,8 +38,6 @@ class SplashScreen : Fragment() {
     private lateinit var text: AppCompatTextView
     private lateinit var launcherContainer: ConstraintLayout
 
-    private lateinit var intent: Intent
-
     private var randomDayValue: Int = 0
     private var randomNightValue: Int = 0
     private var colorOne: Int = 0x000000
@@ -61,8 +59,6 @@ class SplashScreen : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        intent = requireActivity().intent
 
         setShortcutScreen()
 
@@ -123,8 +119,8 @@ class SplashScreen : Fragment() {
     }
 
     private fun setShortcutScreen() {
-        if (intent.action == null) return
-        when (intent.action) {
+        if (requireActivity().intent.action == null) return
+        when (requireActivity().intent.action) {
             "open_clock" -> {
                 setScreenValue(0)
             }

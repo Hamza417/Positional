@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.LocationAdapterCallback
 import app.simple.positional.model.Locations
-import app.simple.positional.util.LocationConverter.latitudeAsDMS
-import app.simple.positional.util.LocationConverter.longitudeAsDMS
+import app.simple.positional.util.DMSConverter.latitudeAsDMS
+import app.simple.positional.util.DMSConverter.longitudeAsDMS
 import app.simple.positional.util.bouncyValue
 import app.simple.positional.util.stiffnessValue
 import java.text.SimpleDateFormat
@@ -29,8 +29,8 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.address.text = locations[position].address
-        holder.latitude.text = latitudeAsDMS(locations[position].latitude, 2)
-        holder.longitude.text = longitudeAsDMS(locations[position].longitude, 2)
+        holder.latitude.text = latitudeAsDMS(locations[position].latitude, 2, holder.itemView.context)
+        holder.longitude.text = longitudeAsDMS(locations[position].longitude, 2, holder.itemView.context)
         holder.timeZone.text = locations[position].timeZone
         holder.dateAdded.text = getFormattedDate(position)
 

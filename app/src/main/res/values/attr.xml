@@ -14,9 +14,7 @@
     <attr name="indicator" format="color" />
     <attr name="shadowColor" format="color" />
     <attr name="cardBackground" format="color" />
-
     <attr name="clockDialColor" format="color" />
-
     <attr name="alphaIcons" format="float" />
 
     <declare-styleable name="SmoothBottomBar">
@@ -47,10 +45,26 @@
         <attr name="switcher_icon_color" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="Switch">
-        <attr name="thumbColor" format="color" />
-        <attr name="trackColorOn" format="color" />
-        <attr name="trackColorOff" format="color" />
+    <declare-styleable name="SparkLineLayout">
+        <attr name="s_line_color" format="color|reference" />
+        <attr name="s_line_second_color" format="color|reference" />
+        <attr name="s_line_thickness" format="dimension|reference" />
+        <attr name="s_line_bezier" format="float|reference" />
+        <attr name="s_gradient_line" format="boolean|reference" />
+
+        <attr name="s_split_line" format="boolean|reference" />
+        <attr name="s_split_ratio" format="float|reference" />
+        <attr name="s_split_left_color" format="color|reference" />
+        <attr name="s_split_right_color" format="color|reference" />
+
+        <attr name="s_marker_width" format="dimension|reference" />
+        <attr name="s_marker_height" format="dimension|reference" />
+        <attr name="s_marker_background_color" format="color|reference" />
+
+        <attr name="s_marker_border_color" format="color|reference" />
+        <attr name="s_marker_border_size" format="dimension|reference" />
+
+        <attr name="s_marker_circle_style" format="boolean|reference" />
     </declare-styleable>
 
 </resources>

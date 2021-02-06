@@ -25,7 +25,7 @@ object CompassPreference {
         getSharedPreferences().edit().putBoolean(flowerBloom, value).apply()
     }
 
-    fun isFlowerBloom(): Boolean {
+    fun isFlowerBloomOn(): Boolean {
         return getSharedPreferences().getBoolean(flowerBloom, false)
     }
 

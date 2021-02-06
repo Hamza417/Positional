@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_popup"
+    android:clipToPadding="false"
+    android:padding="@dimen/options_container_vertical_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_popup"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/location_details"
+            android:textAlignment="center"
+            android:textColor="?attr/textSecondary"
+            android:textSize="6pt" />
+
+        <TextView
+            android:id="@+id/location_accuracy_chart_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/light"
+            android:padding="5dp"
+            android:text="@string/compass_accuracy"
+            android:textColor="?attr/textPrimary"
+            android:textSize="10pt" />
+
+        <app.simple.positional.sparkline.SparkLineLayout
+            android:id="@+id/location_accuracy_chart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:s_gradient_line="true"
+            app:s_line_bezier="0.5"
+            app:s_line_color="@color/graph_location_line_color_first"
+            app:s_line_second_color="@color/graph_location_line_color_second"
+            app:s_line_thickness="4dp"
+            app:s_marker_background_color="@color/graph_location_circle_color"
+            app:s_marker_circle_style="true"
+            app:s_marker_width="8dp" />
+
+        <TextView
+            android:id="@+id/location_altitude_chart_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/light"
+            android:padding="5dp"
+            android:text="@string/gps_altitude"
+            android:textColor="?attr/textPrimary"
+            android:textSize="10pt" />
+
+        <app.simple.positional.sparkline.SparkLineLayout
+            android:id="@+id/location_altitude_chart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:s_gradient_line="true"
+            app:s_line_bezier="0.5"
+            app:s_line_color="@color/graph_location_line_color_first"
+            app:s_line_second_color="@color/graph_location_line_color_second"
+            app:s_line_thickness="4dp"
+            app:s_marker_background_color="@color/graph_location_circle_color"
+            app:s_marker_circle_style="true"
+            app:s_marker_width="8dp" />
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

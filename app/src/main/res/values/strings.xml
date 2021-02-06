@@ -226,6 +226,7 @@
     <string name="auto_system_default_language">Auto (System Default)</string>
     <string name="location_permission_denied">"Location Permission Denied!"</string>
     <string name="no_location_permission_alert">Some features may not work without location permission</string>
+    <string name="location_details">Location Details</string>
 
     <!-- Button Text -->
     <string name="button_cancel">Cancel</string>

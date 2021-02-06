@@ -91,6 +91,10 @@ object MainPreferences {
         getSharedPreferences().edit().putBoolean(unit, value).apply()
     }
 
+    /**
+     * returns true if Metric else false
+     * for Imperial
+     */
     fun getUnit(): Boolean {
         return getSharedPreferences().getBoolean(unit, true)
     }

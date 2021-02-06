@@ -14,10 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -31,7 +28,9 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.dialogs.app.PlayServiceIssue
+import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
+import app.simple.positional.dialogs.gps.LocationExpansion
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
@@ -77,6 +76,8 @@ class GPS : Fragment() {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
+    private lateinit var locationBox: LinearLayout
+    private lateinit var coordinatesBox: FrameLayout
     private lateinit var locationIndicator: ImageButton
     private lateinit var menu: ImageButton
     private lateinit var copy: ImageButton
@@ -137,6 +138,9 @@ class GPS : Fragment() {
         movementReset = view.findViewById(R.id.movement_reset)
         expandUp = view.findViewById(R.id.expand_up_gps_sheet)
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
+
+        locationBox = view.findViewById(R.id.gps_panel_location)
+        coordinatesBox = view.findViewById(R.id.gps_panel_coordinates)
 
         accuracy = view.findViewById(R.id.gps_accuracy)
         address = view.findViewById(R.id.gps_address)
@@ -220,8 +224,7 @@ class GPS : Fragment() {
                     when (intent.action) {
                         "location" -> {
                             CoroutineScope(Dispatchers.IO).launch {
-                                location = intent.getParcelableExtra("location")!!
-                                if (location == null) return@launch
+                                location = intent.getParcelableExtra("location") ?: return@launch
 
                                 if (!distanceSingleton.isInitialLocationSet!!) {
                                     distanceSingleton.initialPointCoordinates = LatLng(location!!.latitude, location!!.longitude)
@@ -467,6 +470,16 @@ class GPS : Fragment() {
                 handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
+
+        locationBox.setOnClickListener {
+            LocationExpansion.newInstance().show(childFragmentManager, "location_expansion")
+        }
+
+        coordinatesBox.setOnClickListener {
+            val latitude = if (isCustomCoordinate) customLatitude else location!!.latitude
+            val longitude = if (isCustomCoordinate) customLongitude else location!!.longitude
+            CoordinatesExpansion.newInstance(latitude, longitude).show(childFragmentManager, "coordinates_expansion")
+        }
     }
 
     private val textAnimationRunnable: Runnable = Runnable {
@@ -518,8 +531,8 @@ class GPS : Fragment() {
 
         moveMapCamera(LatLng(latitude_, longitude_), bearing)
 
-        latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${LocationConverter.latitudeAsDMS(latitude_, 3)}")
-        longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${LocationConverter.longitudeAsDMS(longitude_, 3)}")
+        latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude_, 3, requireContext())}")
+        longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, 3, requireContext())}")
     }
 
     private val callback = OnMapReadyCallback { googleMap ->

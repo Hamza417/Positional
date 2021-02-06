@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="300dp"
@@ -12,16 +11,15 @@
         android:orientation="vertical"
         tools:ignore="UselessParent">
 
-        <com.afollestad.viewpagerdots.DotsIndicator
-            android:id="@+id/indicator"
+        <TextView
+            android:id="@+id/current_clock_theme"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/regular"
+            android:textSize="6pt"
             android:layout_marginTop="10dp"
-            app:dot_height="2dp"
-            app:dot_margin="4dp"
-            app:dot_tint="?attr/iconColor"
-            app:dot_width="2dp" />
+            android:textColor="?attr/textPrimary" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/needle_skin"

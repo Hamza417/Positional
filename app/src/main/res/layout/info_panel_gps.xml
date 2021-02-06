@@ -103,8 +103,10 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/gps_panel_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/ripple"
             android:layout_marginVertical="5dp"
             android:clickable="true"
             android:focusable="true"
@@ -249,6 +251,7 @@
             android:visibility="gone" />
 
         <FrameLayout
+            android:id="@+id/gps_panel_coordinates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"

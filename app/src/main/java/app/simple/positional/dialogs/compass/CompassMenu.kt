@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.preference.CompassPreference.isFlowerBloom
+import app.simple.positional.preference.CompassPreference.isFlowerBloomOn
 import app.simple.positional.preference.CompassPreference.setDirectionCode
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
 import app.simple.positional.ui.Compass
@@ -52,7 +52,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
         super.onViewCreated(view, savedInstanceState)
 
         if (BuildConfig.FLAVOR != "lite") {
-            toggleFlower.isChecked = isFlowerBloom()
+            toggleFlower.isChecked = isFlowerBloomOn()
         } else {
             bloomText.setTextColor(Color.GRAY)
             bloomSkinsText.setTextColor(Color.GRAY)

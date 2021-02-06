@@ -31,4 +31,9 @@
 
     <color name="clock_needle_stroke_color">#FFFFFF</color>
     <color name="clock_needle_fill_color">#202020</color>
+
+    <!-- Graph -->
+    <color name="graph_location_line_color_first">#FFEB3B</color>
+    <color name="graph_location_line_color_second">#FC2B38</color>
+    <color name="graph_location_circle_color">#FF5722</color>
 </resources>

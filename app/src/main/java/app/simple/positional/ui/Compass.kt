@@ -40,17 +40,13 @@ import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.Vector3
 import app.simple.positional.preference.CompassPreference
-import app.simple.positional.preference.CompassPreference.getCompassSpeed
-import app.simple.positional.preference.CompassPreference.getFlowerBloomTheme
-import app.simple.positional.preference.CompassPreference.isFlowerBloom
-import app.simple.positional.preference.CompassPreference.isNoSensorAlertON
-import app.simple.positional.preference.CompassPreference.setFlowerBloom
 import app.simple.positional.util.*
 import app.simple.positional.util.AsyncImageLoader.loadImageResources
 import app.simple.positional.util.ColorAnimator.animateColorChange
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
+import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.views.CustomCoordinatorLayout
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -79,7 +75,6 @@ class Compass : Fragment(), SensorEventListener {
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
-    private var isFLowerBlooming = false
     var showDirectionCode = true
     private var isUserRotatingDial = false
 
@@ -130,7 +125,6 @@ class Compass : Fragment(), SensorEventListener {
     private lateinit var copy: ImageButton
     private lateinit var menu: ImageButton
     private lateinit var dialContainer: FrameLayout
-    private lateinit var compassMainLayout: CustomCoordinatorLayout
     private lateinit var compassListScrollView: NestedScrollView
     private lateinit var dim: View
     private lateinit var toolbar: MaterialToolbar
@@ -162,7 +156,7 @@ class Compass : Fragment(), SensorEventListener {
         copy = view.findViewById(R.id.compass_copy)
         menu = view.findViewById(R.id.compass_menu)
         dialContainer = view.findViewById(R.id.dial_container)
-        compassMainLayout = view.findViewById(R.id.compass_main_layout)
+        (view.findViewById(R.id.compass_main_layout) as CustomCoordinatorLayout).setProxyView(view)
         compassListScrollView = view.findViewById(R.id.compass_list_scroll_view)
         dim = view.findViewById(R.id.compass_dim)
         toolbar = view.findViewById(R.id.compass_appbar)
@@ -175,28 +169,28 @@ class Compass : Fragment(), SensorEventListener {
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         try {
-            if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null && sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
+            if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD).isNull() && sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER).isNull()) {
+                haveAccelerometerSensor = false
+                haveMagnetometerSensor = false
+
+                if (CompassPreference.isNoSensorAlertON()) {
+                    val noSensorAlert = NoSensorAlert().newInstance("compass")
+                    noSensorAlert.show(parentFragmentManager, "no_sensor_alert")
+                }
+            } else {
                 sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
                 sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
                 haveMagnetometerSensor = true
                 haveAccelerometerSensor = true
-            } else {
-                haveAccelerometerSensor = false
-                haveMagnetometerSensor = false
-
-                if (isNoSensorAlertON()) {
-                    val noSensorAlert = NoSensorAlert().newInstance("compass")
-                    noSensorAlert.show(parentFragmentManager, "no_sensor_alert")
-                }
             }
         } catch (e: NullPointerException) {
             haveAccelerometerSensor = false
             haveMagnetometerSensor = false
         }
 
-        isFLowerBlooming = isFlowerBloom()
-        flowerBloom = getFlowerBloomTheme()
-        setSpeed(getCompassSpeed())
+        flowerBloom = CompassPreference.getFlowerBloomTheme()
+        setSpeed(CompassPreference.getCompassSpeed())
+        setFlower(CompassPreference.isFlowerBloomOn())
 
         return view
     }
@@ -204,10 +198,6 @@ class Compass : Fragment(), SensorEventListener {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        compassMainLayout.setProxyView(view)
-
-        setFlower(isFLowerBlooming)
 
         loadImageResources(R.drawable.compass_dial, dial, requireContext(), 0)
 
@@ -408,6 +398,13 @@ class Compass : Fragment(), SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+
+        if (!haveMagnetometerSensor && !haveAccelerometerSensor) {
+            accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.not_available)}")
+            accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.not_available)}")
+            return
+        }
+
         if (sensor == sensorAccelerometer) {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
@@ -450,7 +447,7 @@ class Compass : Fragment(), SensorEventListener {
     private fun viewRotation(rotationAngle: Float) {
         dial.rotation = rotationAngle * -1
 
-        if (isFLowerBlooming) {
+        if (CompassPreference.isFlowerBloomOn()) {
             when (flowerBloom) {
                 0 -> {
                     flowerOne.rotation = rotationAngle * 2
@@ -493,26 +490,26 @@ class Compass : Fragment(), SensorEventListener {
     }
 
     fun setFlower(value: Boolean) {
-        isFLowerBlooming = value
-        val x = compassBloomRes[getFlowerBloomTheme()]
+        CompassPreference.setFlowerBloom(value)
+        val x = compassBloomRes[CompassPreference.getFlowerBloomTheme()]
         if (value) {
             loadImageResources(x, flowerOne, requireContext(), 0)
             loadImageResources(x, flowerTwo, requireContext(), 50)
             loadImageResources(x, flowerThree, requireContext(), 100)
             loadImageResources(x, flowerFour, requireContext(), 150)
-            animateColorChange(degrees, compassBloomTextColor[getFlowerBloomTheme()], Color.parseColor("#ffffff"))
+            animateColorChange(degrees, compassBloomTextColor[CompassPreference.getFlowerBloomTheme()], Color.parseColor("#ffffff"))
         } else {
             loadImageResources(0, flowerOne, requireContext(), 150)
             loadImageResources(0, flowerTwo, requireContext(), 100)
             loadImageResources(0, flowerThree, requireContext(), 50)
             loadImageResources(0, flowerFour, requireContext(), 0)
-            animateColorChange(degrees, degrees.currentTextColor, compassBloomTextColor[getFlowerBloomTheme()])
+            animateColorChange(degrees, degrees.currentTextColor, compassBloomTextColor[CompassPreference.getFlowerBloomTheme()])
         }
     }
 
     fun setFlowerTheme(value: Int) {
-        setFlowerBloom(value)
-        setFlower(value = isFlowerBloom())
+        CompassPreference.setFlowerBloom(value)
+        setFlower(value = CompassPreference.isFlowerBloomOn())
         flowerBloom = value
     }
 
