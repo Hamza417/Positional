@@ -68,7 +68,7 @@ public class CustomBottomSheetBehavior <V extends View> extends BottomSheetBehav
                 return !ignoreUntilClose
                         && Math.abs(initialY - Math.abs(event.getRawY())) > touchSlop
                         || super.onInterceptTouchEvent(parent, child, event);
-            
+    
             // once the tap or movement is completed we reset
             // the initial values to restore normal behavior
             case MotionEvent.ACTION_UP:
@@ -76,9 +76,9 @@ public class CustomBottomSheetBehavior <V extends View> extends BottomSheetBehav
                 initialY = 0;
                 ignoreUntilClose = false;
                 return super.onInterceptTouchEvent(parent, child, event);
-            
+    
+            default:
+                return super.onInterceptTouchEvent(parent, child, event);
         }
-        
-        return super.onInterceptTouchEvent(parent, child, event);
     }
 }

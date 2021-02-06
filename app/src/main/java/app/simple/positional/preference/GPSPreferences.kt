@@ -35,8 +35,8 @@ object GPSPreferences {
         getSharedPreferences().edit().putFloat(lastLongitude, value).apply()
     }
 
-    fun getLastCoordinates(): Array<Float> {
-        return arrayOf(
+    fun getLastCoordinates(): FloatArray {
+        return floatArrayOf(
                 getSharedPreferences().getFloat(lastLatitude, 48.8584f),
                 getSharedPreferences().getFloat(lastLongitude, 2.2945f)
         )

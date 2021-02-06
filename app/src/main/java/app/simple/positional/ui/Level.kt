@@ -175,16 +175,16 @@ class Level : Fragment(), SensorEventListener {
             }
 
             if (gravityReadings[0] * gravityWidthMotionCompensator - levelIndicator.width / 2
-                    > boundingBox.width / 2 * -1 &&
-                    gravityReadings[0] * gravityWidthMotionCompensator + levelIndicator.width / 2
+                    > boundingBox.width / 2 * -1
+                    && gravityReadings[0] * gravityWidthMotionCompensator + levelIndicator.width / 2
                     < boundingBox.width / 2) {
                 levelIndicator.translationX = gravityReadings[0] * gravityWidthMotionCompensator
             }
 
             if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - levelIndicator.height / 2
-                    > (boundingBox.height / 2 * -1)
+                    > boundingBox.height / 2 * -1
                     && gravityReadings[1] * -1 * gravityHeightMotionCompensator + levelIndicator.height / 2
-                    < (boundingBox.height / 2)) {
+                    < boundingBox.height / 2) {
                 levelIndicator.translationY = gravityReadings[1] * -1 * gravityHeightMotionCompensator
             }
 

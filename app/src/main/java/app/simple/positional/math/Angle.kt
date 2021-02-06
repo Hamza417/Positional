@@ -29,11 +29,11 @@ object Angle {
         val x2 = xTouch - centerX
         val y2 = yTouch - centerY
         val d1 = sqrt((centerY * centerY).toDouble())
-        val d2 = sqrt((x2 * x2 + y2 * y2))
+        val d2 = sqrt(x2 * x2 + y2 * y2)
         return if (xTouch >= centerX) {
-            Math.toDegrees(acos((-centerY * y2) / (d1 * d2))).toFloat()
+            Math.toDegrees(acos(-centerY * y2 / (d1 * d2))).toFloat()
         } else
-            (360 - Math.toDegrees(acos((-centerY * y2) / (d1 * d2)))).toFloat()
+            (360 - Math.toDegrees(acos(-centerY * y2 / (d1 * d2)))).toFloat()
     }
 
     fun Float.toThreeSixty(): Float {

@@ -32,22 +32,24 @@ object AsyncImageLoader {
                         imageView.setImageDrawable(drawable)
                         animIn.setAnimationListener(object : Animation.AnimationListener {
                             override fun onAnimationStart(animation: Animation?) {
-
+                                /* no-op */
                             }
 
                             override fun onAnimationEnd(animation: Animation?) {
-
+                                /* no-op */
                             }
 
                             override fun onAnimationRepeat(animation: Animation?) {
-
+                                /* no-op */
                             }
 
                         })
                         imageView.startAnimation(animIn)
                     }
 
-                    override fun onAnimationRepeat(animation: Animation?) {}
+                    override fun onAnimationRepeat(animation: Animation?) {
+                        /* no-op */
+                    }
                 })
                 imageView.startAnimation(animOut)
 
@@ -65,7 +67,7 @@ object AsyncImageLoader {
             withContext(Dispatchers.Main) {
                 try {
                     imageView.setImageDrawable(drawable)
-                } catch (e: NullPointerException) {
+                } catch (ignored: NullPointerException) {
                 }
             }
         }

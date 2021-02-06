@@ -464,7 +464,7 @@ class SparkLineLayout @JvmOverloads constructor(
 
     private fun getControlPointLeft(xStart: Float, prevVal: Float, prevD: PointF): PointF {
         return PointF(
-                (xStart - xStep) + prevD.x,
+                xStart - xStep + prevD.x,
                 measuredHeight - heightPadding - prevVal * yStep - prevD.y
         )
     }

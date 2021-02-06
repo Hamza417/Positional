@@ -63,8 +63,8 @@ class SplashScreen : Fragment() {
         setShortcutScreen()
 
         if (BuildConfig.FLAVOR == "full") {
-            randomDayValue = (LauncherBackground.vectorBackground.indices).random()
-            randomNightValue = (LauncherBackground.vectorBackgroundNight.indices).random()
+            randomDayValue = LauncherBackground.vectorBackground.indices.random()
+            randomNightValue = LauncherBackground.vectorBackgroundNight.indices.random()
         } else {
             randomDayValue = 5
             randomNightValue = 0
@@ -100,13 +100,13 @@ class SplashScreen : Fragment() {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     handler.removeCallbacksAndMessages(null)
-                    touchIndicator.x = event.x - (touchIndicator.width / 2)
-                    touchIndicator.y = event.y - (touchIndicator.height / 2)
+                    touchIndicator.x = event.x - touchIndicator.width / 2
+                    touchIndicator.y = event.y - touchIndicator.height / 2
                     touchIndicator.animate().scaleX(1.2f).scaleY(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    touchIndicator.x = event.x - (touchIndicator.width / 2f)
-                    touchIndicator.y = event.y - (touchIndicator.height / 2f)
+                    touchIndicator.x = event.x - touchIndicator.width / 2f
+                    touchIndicator.y = event.y - touchIndicator.height / 2f
                 }
                 MotionEvent.ACTION_UP -> {
                     touchIndicator.animate().scaleX(0.5f).scaleY(0.5f).alpha(0f).start()

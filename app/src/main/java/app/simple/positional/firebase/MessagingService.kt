@@ -53,7 +53,7 @@ class MessagingService : FirebaseMessagingService() {
                 p0.notification?.clickAction
 
                 sendNotification(title!!, body!!)
-            } catch (e: NullPointerException) {
+            } catch (ignored: NullPointerException) {
             }
         }
     }

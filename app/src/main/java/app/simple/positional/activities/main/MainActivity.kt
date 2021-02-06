@@ -142,14 +142,14 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
     private fun runService() {
         try {
             applicationContext.startService(Intent(applicationContext, LocationService::class.java))
-        } catch (e: IllegalStateException) {
+        } catch (ignored: IllegalStateException) {
         }
     }
 
     private fun stopService() {
         try {
             applicationContext.stopService(Intent(applicationContext, LocationService::class.java))
-        } catch (e: IllegalStateException) {
+        } catch (ignored: IllegalStateException) {
         }
     }
 

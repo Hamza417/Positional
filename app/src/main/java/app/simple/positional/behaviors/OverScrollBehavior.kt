@@ -28,7 +28,7 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
      * Removing them will cause the app to crash
      */
     private fun unused(context: Context, attributeSet: AttributeSet): Boolean {
-        return (context == attributeSet)
+        return context == attributeSet
     }
 
     override fun onStartNestedScroll(
@@ -55,7 +55,7 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
             consumed: IntArray
     ) {
 
-        overScrollY -= (dyUnconsumed / OVER_SCROLL_AREA)
+        overScrollY -= dyUnconsumed / OVER_SCROLL_AREA
         val group = target as ViewGroup
         val count = group.childCount
         for (i in 0 until count) {

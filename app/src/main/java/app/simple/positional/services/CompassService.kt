@@ -83,7 +83,7 @@ class CompassService : Service(), SensorEventListener {
         if (successfullyCalculatedRotationMatrix) {
             SensorManager.getOrientation(this.rotation, orientation)
 
-            rotationAngle = -(((((orientation[0] + twoPI) % twoPI * degreesPerRadian).toFloat())) + 360) % 360
+            rotationAngle = -(((orientation[0] + twoPI) % twoPI * degreesPerRadian).toFloat() + 360) % 360
 
             Intent().also { intent ->
                 intent.action = "compass_update"

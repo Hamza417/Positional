@@ -71,7 +71,7 @@ class License : Fragment(), LicenseCheckerCallback {
             try {
                 licenseStatus.setTextAnimation(getString(R.string.license_successful), 500)
                 runHandler(true)
-            } catch (e: NullPointerException) {
+            } catch (ignored: NullPointerException) {
             }
         }
     }
@@ -93,7 +93,7 @@ class License : Fragment(), LicenseCheckerCallback {
                 licenseStatus.setTextAnimation(error, 500)
                 licenseLoader.visibility = View.GONE
                 HtmlViewer().newInstance("license_failed").show(childFragmentManager, "license_failed")
-            } catch (e: NullPointerException) {
+            } catch (ignored: NullPointerException) {
             }
         }
     }
@@ -107,7 +107,7 @@ class License : Fragment(), LicenseCheckerCallback {
                 } else {
                     showDoNotAllowScreen("package mismatched")
                 }
-            } catch (e: NullPointerException) {
+            } catch (ignored: NullPointerException) {
             }
         }
     }

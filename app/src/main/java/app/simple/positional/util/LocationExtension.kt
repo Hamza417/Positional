@@ -25,7 +25,7 @@ object LocationExtension {
 
     fun bearing(endPoint: LatLng, startPoint: LatLng): String {
 
-        val radians = atan2((endPoint.longitude - startPoint.longitude), (endPoint.latitude - startPoint.longitude))
+        val radians = atan2(endPoint.longitude - startPoint.longitude, endPoint.latitude - startPoint.longitude)
 
         val compassReading = radians * (180 / Math.PI)
 

@@ -124,8 +124,8 @@ object MainPreferences {
         getSharedPreferences().edit().putFloat(longitude, value).apply()
     }
 
-    fun getCoordinates(): Array<Float> {
-        return arrayOf(
+    fun getCoordinates(): FloatArray {
+        return floatArrayOf(
                 getSharedPreferences().getFloat(latitude, 0f),
                 getSharedPreferences().getFloat(longitude, 0f)
         )

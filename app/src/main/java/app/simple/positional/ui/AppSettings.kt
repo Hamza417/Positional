@@ -276,8 +276,8 @@ class AppSettings : Fragment(), CoordinatesCallback {
     override fun isCoordinatesSet(boolean: Boolean) {
         try {
             toggleCustomLocation.isChecked = boolean
-        } catch (e: java.lang.NullPointerException) {
-        } catch (e: UninitializedPropertyAccessException) {
+        } catch (ignored: NullPointerException) {
+        } catch (ignored: UninitializedPropertyAccessException) {
         }
     }
 }

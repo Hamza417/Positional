@@ -5,7 +5,7 @@ import java.time.ZonedDateTime
 
 object TimeConverter {
     fun getSecondsInDegreesWithDecimalPrecision(calendar: ZonedDateTime): Float {
-        return (calendar.second + (calendar.nano / 1000000000f)) * 6f
+        return (calendar.second + calendar.nano / 1000000000f) * 6f
     }
 
     fun getSecondsInDegrees(zonedDateTime: ZonedDateTime): Float {
@@ -13,7 +13,7 @@ object TimeConverter {
     }
 
     fun getMinutesInDegrees(zonedDateTime: ZonedDateTime): Float {
-        val value = ((zonedDateTime.second / 60f) * 100f) / 100f
+        val value = zonedDateTime.second / 60f * 100f / 100f
         return (zonedDateTime.minute + value) * 6f
     }
 
