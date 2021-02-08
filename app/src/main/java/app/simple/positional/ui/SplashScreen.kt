@@ -22,9 +22,9 @@ import app.simple.positional.R
 import app.simple.positional.activities.main.MainActivity
 import app.simple.positional.constants.*
 import app.simple.positional.preference.FragmentPreferences.setCurrentPage
-import app.simple.positional.util.BitmapGradient.addLinearGradient
-import app.simple.positional.util.BitmapGradient.addRadialGradient
-import app.simple.positional.util.getBitmapFromVectorDrawable
+import app.simple.positional.util.BitmapHelper.addLinearGradient
+import app.simple.positional.util.BitmapHelper.addRadialGradient
+import app.simple.positional.util.GetVectorDrawable.getBitmapFromVectorDrawable
 
 class SplashScreen : Fragment() {
 
@@ -74,25 +74,20 @@ class SplashScreen : Fragment() {
             Configuration.UI_MODE_NIGHT_YES -> {
                 colorOne = LauncherBackground.vectorNightColors[randomNightValue][0]
                 colorTwo = LauncherBackground.vectorNightColors[randomNightValue][1]
-                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    launcherBackground.setImageResource(LauncherBackground.vectorBackgroundNight[randomNightValue])
-                }
+                launcherBackground.setImageResource(LauncherBackground.vectorBackgroundNight[randomNightValue])
             }
             Configuration.UI_MODE_NIGHT_NO -> {
                 colorOne = LauncherBackground.vectorColors[randomDayValue][0]
                 colorTwo = LauncherBackground.vectorColors[randomDayValue][1]
-                if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                    launcherBackground.setImageResource(LauncherBackground.vectorBackground[randomDayValue])
-                }
+                launcherBackground.setImageResource(LauncherBackground.vectorBackground[randomDayValue])
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
 
             }
         }
 
-        touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = requireContext(), 400)?.let { addRadialGradient(it, colorTwo) })
-
-        icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = requireContext(), 400)?.let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
+        touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = requireContext(), size = 400).let { addRadialGradient(it, colorTwo) })
+        icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = requireContext(), size = 400).let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
         icon.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.launcher_icon))
         text.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.image_in))
 
@@ -103,13 +98,17 @@ class SplashScreen : Fragment() {
                     touchIndicator.x = event.x - touchIndicator.width / 2
                     touchIndicator.y = event.y - touchIndicator.height / 2
                     touchIndicator.animate().scaleX(1.2f).scaleY(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
+                    icon.animate().translationX(event.x / 50F).translationY(event.y / 50F).setInterpolator(DecelerateInterpolator()).start()
                 }
                 MotionEvent.ACTION_MOVE -> {
                     touchIndicator.x = event.x - touchIndicator.width / 2f
                     touchIndicator.y = event.y - touchIndicator.height / 2f
+                    icon.translationX = event.x / 50F
+                    icon.translationY = event.y / 50F
                 }
                 MotionEvent.ACTION_UP -> {
                     touchIndicator.animate().scaleX(0.5f).scaleY(0.5f).alpha(0f).start()
+                    icon.animate().translationX(0F).translationY(0F).setInterpolator(DecelerateInterpolator()).start()
                     runPostDelayed(1000)
                 }
             }

@@ -3,9 +3,27 @@ package app.simple.positional.util
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.UTMCoord
 
+/**
+ * [UTMConverter] converts the latitude and longitude
+ * in decimal format to UTM coordinates
+ */
 object UTMConverter {
-    fun getUTMCoordinates(latitude: Double, longitude: Double): String {
-        return "${getUtmZone(latitude, longitude)} ${getUtmEasting(latitude, longitude)} ${getUtmNorthing(latitude, longitude)}"
+    /**
+     * Fetches the UTM data object containing
+     * zone, easting, northing and central meridian
+     * in [String] formats
+     *
+     * @param latitude
+     * @param longitude
+     * @return [UTM]
+     */
+    fun getUTM(latitude: Double, longitude: Double): UTM {
+        return UTM(
+                getUtmZone(latitude, longitude),
+                getUtmEasting(latitude, longitude),
+                getUtmNorthing(latitude, longitude),
+                getUtmCoord(latitude, longitude).centralMeridian.toString()
+        )
     }
 
     private fun getUtmEasting(lat: Double, lon: Double): String {
@@ -62,4 +80,26 @@ object UTMConverter {
             )
         }m N"
     }
+
+    open class UTM(
+            /**
+             * Zone of the UTM coordinates
+             */
+            val zone: String,
+
+            /**
+             * Easting of the UTM coordinates
+             */
+            val easting: String,
+
+            /**
+             * Northing of the UTM coordinates
+             */
+            val northing: String,
+
+            /**
+             * [centralMeridian] returns the meridian of the
+             * given coordinates
+             */
+            val centralMeridian: String)
 }

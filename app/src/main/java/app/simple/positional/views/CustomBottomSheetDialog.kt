@@ -9,6 +9,8 @@ open class CustomBottomSheetDialog : BottomSheetDialogFragment() {
         super.onActivityCreated(savedInstanceState)
         dialog?.window?.attributes?.windowAnimations = R.style.BottomDialogAnimation
         dialog?.window?.setDimAmount(0.5f)
-        dialog?.window?.setElevation(5f)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+            dialog?.window?.setElevation(5f)
+        }
     }
 }

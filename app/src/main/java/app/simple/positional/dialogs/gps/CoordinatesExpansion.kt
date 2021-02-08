@@ -14,7 +14,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.DMSConverter
-import app.simple.positional.util.HtmlHelper
+import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.UTMConverter
 import app.simple.positional.views.CustomBottomSheetDialog
@@ -36,10 +36,10 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
     private lateinit var ddLatitude: TextView
     private lateinit var ddLongitude: TextView
     private lateinit var mgrsCoordinates: TextView
-    private lateinit var utmCoordinates: TextView
-
-    private var latitude = 0.0
-    private var longitude = 0.0
+    private lateinit var utmZone: TextView
+    private lateinit var utmEasting: TextView
+    private lateinit var utmNorthing: TextView
+    private lateinit var utmMeridian: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
@@ -57,7 +57,10 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
         ddLatitude = view.findViewById(R.id.dd_latitude)
         ddLongitude = view.findViewById(R.id.dd_longitude)
         mgrsCoordinates = view.findViewById(R.id.mgrs_coordinates)
-        utmCoordinates = view.findViewById(R.id.utm_coordinates)
+        utmZone = view.findViewById(R.id.utm_zone)
+        utmEasting = view.findViewById(R.id.utm_easting)
+        utmNorthing = view.findViewById(R.id.utm_northing)
+        utmMeridian = view.findViewById(R.id.utm_meridian)
 
         return view
     }
@@ -97,20 +100,27 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
             if (context.isNull()) return@launch
 
             try {
-                val dmsLatitude = HtmlHelper.fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude, 3, requireContext())}")
-                val dmsLongitude = HtmlHelper.fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude, 3, requireContext())}")
-                val dmLatitude = HtmlHelper.fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDM(latitude, requireContext())}")
-                val dmLongitude = HtmlHelper.fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDM(longitude, requireContext())}")
-                val ddLatitude = HtmlHelper.fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDD(latitude, requireContext())}")
-                val ddLongitude = HtmlHelper.fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDD(longitude, requireContext())}")
+                val dmsLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude, 3, requireContext())}")
+                val dmsLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude, 3, requireContext())}")
+                val dmLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDM(latitude, requireContext())}")
+                val dmLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDM(longitude, requireContext())}")
+                val ddLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDD(latitude, requireContext())}")
+                val ddLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDD(longitude, requireContext())}")
                 val mgrsCoord = MGRSCoord.fromLatLon(Angle.fromDegreesLatitude(latitude), Angle.fromDegreesLongitude(longitude)).toString()
-                val utmCoord = UTMConverter.getUTMCoordinates(latitude, longitude)
+                val utm = UTMConverter.getUTM(latitude, longitude)
+                val utmZone = fromHtml("<b>${getString(R.string.utm_zone)}</b> ${utm.zone}")
+                val utmEasting = fromHtml("<b>${getString(R.string.utm_easting)}</b> ${utm.easting}")
+                val utmNorthing = fromHtml("<b>${getString(R.string.utm_northing)}</b> ${utm.northing}")
+                val utmMeridian = fromHtml("<b>${getString(R.string.utm_meridian)}</b> ${utm.centralMeridian}")
 
                 withContext(Dispatchers.Main) {
                     this@CoordinatesExpansion.dmsLatitude.text = dmsLatitude
                     this@CoordinatesExpansion.dmsLongitude.text = dmsLongitude
                     this@CoordinatesExpansion.mgrsCoordinates.text = mgrsCoord
-                    this@CoordinatesExpansion.utmCoordinates.text = utmCoord
+                    this@CoordinatesExpansion.utmZone.text = utmZone
+                    this@CoordinatesExpansion.utmEasting.text = utmEasting
+                    this@CoordinatesExpansion.utmNorthing.text = utmNorthing
+                    this@CoordinatesExpansion.utmMeridian.text = utmMeridian
                     this@CoordinatesExpansion.dmLatitude.text = dmLatitude
                     this@CoordinatesExpansion.dmLongitude.text = dmLongitude
                     this@CoordinatesExpansion.ddLatitude.text = ddLatitude

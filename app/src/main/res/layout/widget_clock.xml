@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/clock_image_dimensions"
+    android:layout_height="@dimen/clock_image_dimensions">
+
+    <ImageView
+        android:id="@+id/widget_sweep_seconds"
+        android:layout_width="@dimen/clock_image_dimensions"
+        android:layout_height="@dimen/clock_image_dimensions"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:rotation="-90"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/widget_clock_face"
+        android:layout_width="@dimen/clock_image_dimensions"
+        android:layout_height="@dimen/clock_image_dimensions"
+        android:layout_gravity="center"
+        android:src="@drawable/clock_face"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/widget_day_night_indicator"
+        android:layout_width="@dimen/clock_day_night_indicator"
+        android:layout_height="@dimen/clock_day_night_indicator"
+        android:layout_gravity="center"
+        android:layout_marginBottom="60dp"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/widget_hour"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:layout_margin="25dp"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/widget_minutes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:layout_margin="25dp"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/widget_seconds"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:layout_margin="25dp"
+        tools:ignore="ContentDescription" />
+
+</FrameLayout>

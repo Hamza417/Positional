@@ -256,6 +256,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
             android:clickable="true"
+            android:background="@drawable/ripple"
             android:focusable="true"
             android:padding="10dp">
 

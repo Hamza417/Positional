@@ -16,14 +16,15 @@
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/coordinated_details_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/medium"
             android:text="@string/location_details"
-            android:textAlignment="center"
-            android:textColor="?attr/textSecondary"
-            android:textSize="6pt" />
+            android:padding="5dp"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/info_text_secondary_size" />
 
         <TextView
             android:id="@+id/location_accuracy_chart_text"
@@ -35,6 +36,16 @@
             android:text="@string/compass_accuracy"
             android:textColor="?attr/textPrimary"
             android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/location_accuracy_chart_data_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/light"
+            android:paddingHorizontal="5dp"
+            android:lines="3"
+            android:textColor="?attr/textPrimary"
+            android:textSize="6pt" />
 
         <app.simple.positional.sparkline.SparkLineLayout
             android:id="@+id/location_accuracy_chart"
@@ -60,6 +71,16 @@
             android:textColor="?attr/textPrimary"
             android:textSize="10pt" />
 
+        <TextView
+            android:id="@+id/location_altitude_chart_data_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/light"
+            android:paddingHorizontal="5dp"
+            android:lines="3"
+            android:textColor="?attr/textPrimary"
+            android:textSize="6pt" />
+
         <app.simple.positional.sparkline.SparkLineLayout
             android:id="@+id/location_altitude_chart"
             android:layout_width="match_parent"
@@ -74,6 +95,5 @@
             app:s_marker_width="8dp" />
 
     </LinearLayout>
-
 
 </androidx.core.widget.NestedScrollView>

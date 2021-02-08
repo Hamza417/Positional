@@ -3,7 +3,6 @@ package app.simple.positional.util
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
-import java.util.*
 
 object HtmlHelper {
     fun fromHtml(str: String): Spanned {
@@ -16,9 +15,6 @@ object HtmlHelper {
     }
 
     private fun formatString(str: String): String {
-        /**
-         * TODO - fix locale bug
-         */
-        return String.format(Locale.ROOT, "%s", str)
+        return String.format(LocaleHelper.getAppLocale(), "%s", str)
     }
 }

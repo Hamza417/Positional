@@ -25,7 +25,6 @@ object UnitConverter {
     /**
      * Converts float value in meters to miles
      */
-
     fun Float.toMiles(): Float {
         return this / 1609
     }

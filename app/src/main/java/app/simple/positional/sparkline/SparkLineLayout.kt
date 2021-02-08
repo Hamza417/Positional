@@ -46,21 +46,21 @@ class SparkLineLayout @JvmOverloads constructor(
     /*
     Attrs
      */
-    var sparkLineColor: Int = SPARKLINE_COLOR
-    var sparkLineSecondColor: Int = SPARKLINE_SECOND_COLOR
-    var sparkLineThickness: Float = SPARKLINE_THICKNESS
-    var sparkLineBezier: Float = SPARKLINE_BEZIER
-    var markerWidth: Float = MARKER_WIDTH
-    var markerHeight: Float = MARKER_HEIGHT
-    var markerBackgroundColor: Int = MARKER_BACKGROUND_COLOR
-    var markerBorderColor: Int = MARKER_BORDER_COLOR
-    var markerBorderSize: Float = MARKER_BORDER_SIZE
-    var markerIsCircleStyle: Boolean = MARKER_IS_CIRCLE_STYLE
-    var splitLineRatio: Float = SPLIT_LINE_RATIO
-    var isSplitLine = IS_SPLIT_LINE
-    var lineSplitLeftColor = LINE_SPLIT_LEFT_COLOR
-    var lineSplitRightColor = LINE_SPLIT_RIGHT_COLOR
-    var isGradientLine = IS_GRADIENT_LINE
+    private var sparkLineColor: Int = SPARKLINE_COLOR
+    private var sparkLineSecondColor: Int = SPARKLINE_SECOND_COLOR
+    private var sparkLineThickness: Float = SPARKLINE_THICKNESS
+    private var sparkLineBezier: Float = SPARKLINE_BEZIER
+    private var markerWidth: Float = MARKER_WIDTH
+    private var markerHeight: Float = MARKER_HEIGHT
+    private var markerBackgroundColor: Int = MARKER_BACKGROUND_COLOR
+    private var markerBorderColor: Int = MARKER_BORDER_COLOR
+    private var markerBorderSize: Float = MARKER_BORDER_SIZE
+    private var markerIsCircleStyle: Boolean = MARKER_IS_CIRCLE_STYLE
+    private var splitLineRatio: Float = SPLIT_LINE_RATIO
+    private var isSplitLine = IS_SPLIT_LINE
+    private var lineSplitLeftColor = LINE_SPLIT_LEFT_COLOR
+    private var lineSplitRightColor = LINE_SPLIT_RIGHT_COLOR
+    private var isGradientLine = IS_GRADIENT_LINE
 
     /*
     Paint
@@ -250,7 +250,7 @@ class SparkLineLayout @JvmOverloads constructor(
     fun setData(arrayData: ArrayList<Float>) {
         inputData.clear()
         data.clear()
-        inputData = arrayData
+        inputData = ArrayList(arrayData)
 
         val num = getCountNumForMaxNum(inputData.maxOrNull() ?: 1F)
 
@@ -259,10 +259,6 @@ class SparkLineLayout @JvmOverloads constructor(
         }
 
         invalidate()
-    }
-
-    fun getData(): ArrayList<Float> {
-        return inputData
     }
 
     private fun initPaint() {

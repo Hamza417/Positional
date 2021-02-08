@@ -42,9 +42,9 @@ import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
-import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
+import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
+import app.simple.positional.util.GetVectorDrawable.getBitmapFromVectorDrawable
 import app.simple.positional.util.HtmlHelper.fromHtml
-import app.simple.positional.util.LocationExtension.getDirection
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.NullSafety.isNull
 import com.google.android.gms.common.ConnectionResult
@@ -281,14 +281,8 @@ class GPS : Fragment() {
 
                                 if (location!!.speed > 0f) {
                                     distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(distanceValue[0])
-                                    val dir = getDirection(
-                                            distanceSingleton.distanceCoordinates!!.latitude,
-                                            distanceSingleton.distanceCoordinates!!.longitude,
-                                            location!!.latitude,
-                                            location!!.longitude
-                                    )
                                     distanceSingleton.distanceCoordinates = LatLng(location!!.latitude, location!!.longitude)
-                                    direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> ${round(dir, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), dir)}")
+                                    direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> ${getDirectionNameFromAzimuth(requireContext(), location!!.bearing.toDouble())}")
                                 } else {
                                     direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> N/A")
                                 }

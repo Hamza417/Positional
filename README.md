@@ -10,7 +10,7 @@
 [![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
 [![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
 
-[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Download%20Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build68/app-lite-release.apk)
+[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Download%20Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build69/app-lite-release.apk)
 
 [![Intro](https://img.shields.io/badge/App%20Intro-YouTube-E74C3C?style=flat&logo=youtube)](https://youtu.be/QU-ZLQShu_A)
 
@@ -87,15 +87,6 @@ you can do so on [Crowdin](https://crowdin.com/project/positional/)
 
 ## Libraries Used
 * [commons-suncalc](https://github.com/shred/commons-suncalc) by **Richard Körber**
-
-<br/>
-
-## Services Used
-* **Google Maps** for showing map in the app
-* **Firebase Crashlytics** for logging crash reports of the app
-* **Firebase Analytics** for logging app behavior in various devices and countries
-
-Read the [Privacy Policy](./PRIVACY.md) of the app for more info
   
 <br/>
 

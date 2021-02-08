@@ -46,8 +46,6 @@
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/button_copy"
-                android:padding="@dimen/copy_button_padding"
-                android:scaleType="fitCenter"
                 android:src="@drawable/ic_content_copy"
                 app:tint="?attr/iconColor" />
 
@@ -192,13 +190,47 @@
             tools:ignore="HardcodedText" />
 
         <TextView
-            android:id="@+id/utm_coordinates"
+            android:id="@+id/utm_zone"
             style="@style/SecondaryTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
             android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-            android:maxLines="3"
+            android:maxLines="1"
+            android:text="@string/utm_zone"
+            android:textSize="@dimen/info_text_secondary_size" />
+
+        <TextView
+            android:id="@+id/utm_easting"
+            style="@style/SecondaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+            android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+            android:maxLines="1"
+            android:text="@string/utm_easting"
+            android:textSize="@dimen/info_text_secondary_size" />
+
+        <TextView
+            android:id="@+id/utm_northing"
+            style="@style/SecondaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+            android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+            android:maxLines="1"
+            android:text="@string/utm_northing"
+            android:textSize="@dimen/info_text_secondary_size" />
+
+        <TextView
+            android:id="@+id/utm_meridian"
+            style="@style/SecondaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+            android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+            android:maxLines="1"
+            android:text="@string/utm_meridian"
             android:textSize="@dimen/info_text_secondary_size" />
 
     </LinearLayout>

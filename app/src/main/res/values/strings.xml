@@ -226,7 +226,6 @@
     <string name="auto_system_default_language">Auto (System Default)</string>
     <string name="location_permission_denied">"Location Permission Denied!"</string>
     <string name="no_location_permission_alert">Some features may not work without location permission</string>
-    <string name="location_details">Location Details</string>
 
     <!-- Button Text -->
     <string name="button_cancel">Cancel</string>
@@ -285,4 +284,16 @@
     <string name="south_east_SE">SE</string>
     <string name="east_E">E</string>
     <string name="north_east_NE">NE</string>
+
+    <!-- Graph -->
+    <string name="location_details">Location Details</string>
+    <string name="min">Min:</string>
+    <string name="max">Max:</string>
+    <string name="avg">Avg:</string>
+
+    <!-- UTM -->
+    <string name="utm_zone">Zone:</string>
+    <string name="utm_easting">Easting:</string>
+    <string name="utm_northing">Northing:</string>
+    <string name="utm_meridian">Central Meridian:</string>
 </resources>
