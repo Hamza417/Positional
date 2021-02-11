@@ -6,24 +6,24 @@
 
 <br/>
 
-## Download
-[![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
-[![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
-
-[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Download%20Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build69/app-lite-release.apk)
-
-[![Intro](https://img.shields.io/badge/App%20Intro-YouTube-E74C3C?style=flat&logo=youtube)](https://youtu.be/QU-ZLQShu_A)
-
-[![Legacy](https://img.shields.io/github/downloads/Hamza417/Positional/1.7-beta/total?color=229954&label=Download%20Legacy%20Version)](https://github.com/Hamza417/Positional/releases/download/1.7-beta/1.7-beta.apk)
-
-<br/>
-
 ## What's This ?
   **Positional** is a location based app that utilises the phone's GPS hardware and fetches various details of the current latitude and longitude data like Altitude, Speed, Address and similar other information and show it in easily understandable format to the user. Along side this main functionality of being a location app, Positional also provides a separate panel for **Compass** and **Clock** and they serve their own purpose based on their name.
   
   **Compass** provides info related to direction and **Clock** fetches the time related information based on the current location and timezone and also sun's information like Sunset, Sunrise, Twilight and many other info.
   
   On top of all the core functionality Positional is a highly polished app and provides another layer of flexibility to customize the app as per liking including skins for Clock and Compass faces, colors, and many other features that should have been there.
+
+<br/>
+
+## Download
+[![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
+[![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
+
+[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Download%20Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build70/app-lite-release.apk)
+
+[![Intro](https://img.shields.io/badge/App%20Intro-YouTube-E74C3C?style=flat&logo=youtube)](https://youtu.be/QU-ZLQShu_A)
+
+[![Legacy](https://img.shields.io/github/downloads/Hamza417/Positional/1.7-beta/total?color=229954&label=Download%20Legacy%20Version)](https://github.com/Hamza417/Positional/releases/download/1.7-beta/1.7-beta.apk)
 
 <br/>
 
