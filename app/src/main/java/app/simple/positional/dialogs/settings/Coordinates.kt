@@ -26,6 +26,7 @@ import app.simple.positional.database.LocationDatabase
 import app.simple.positional.math.TimeConverter.isValidTimeZone
 import app.simple.positional.model.Locations
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.resolveAttrColor
 import app.simple.positional.views.CustomDialogFragment
 import com.google.android.material.textfield.TextInputEditText
@@ -256,6 +257,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
                 addressIndicator.show()
             }
 
+            if (context.isNull()) return@launch
             val geocoder = Geocoder(requireContext())
             val addresses: MutableList<Address>?
             var latitude: Double? = null

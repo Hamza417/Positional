@@ -42,8 +42,8 @@ import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
+import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
-import app.simple.positional.util.GetVectorDrawable.getBitmapFromVectorDrawable
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.NullSafety.isNull
@@ -196,9 +196,9 @@ class GPS : Fragment() {
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
             divider.isVisible = true
-            marker = R.drawable.ic_place_custom.getBitmapFromVectorDrawable(requireContext(), 400)
+            marker = R.drawable.ic_place_custom.toBitmap(requireContext(), 400)
         } else {
-            marker = R.drawable.ic_place.getBitmapFromVectorDrawable(requireContext(), 400)
+            marker = R.drawable.ic_place.toBitmap(requireContext(), 400)
         }
 
         providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")

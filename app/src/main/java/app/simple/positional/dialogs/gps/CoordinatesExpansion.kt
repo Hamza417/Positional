@@ -1,22 +1,24 @@
 package app.simple.positional.dialogs.gps
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.UTMConverter
+import app.simple.positional.util.setTextAnimation
 import app.simple.positional.views.CustomBottomSheetDialog
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
@@ -28,7 +30,9 @@ import kotlinx.coroutines.withContext
 class CoordinatesExpansion : CustomBottomSheetDialog() {
 
     private lateinit var broadcastReceiver: BroadcastReceiver
+    private val handler = Handler(Looper.getMainLooper())
 
+    private lateinit var coordinatesDataTextView: TextView
     private lateinit var dmsLatitude: TextView
     private lateinit var dmsLongitude: TextView
     private lateinit var dmLatitude: TextView
@@ -41,6 +45,8 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
     private lateinit var utmNorthing: TextView
     private lateinit var utmMeridian: TextView
 
+    private lateinit var copyImageButton: ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
         retainInstance = true
@@ -50,6 +56,7 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.expansion_dialog_coordinates, container, false)
 
+        coordinatesDataTextView = view.findViewById(R.id.coordinated_details_text)
         dmsLatitude = view.findViewById(R.id.dms_latitude)
         dmsLongitude = view.findViewById(R.id.dms_longitude)
         dmLatitude = view.findViewById(R.id.dm_latitude)
@@ -61,6 +68,8 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
         utmEasting = view.findViewById(R.id.utm_easting)
         utmNorthing = view.findViewById(R.id.utm_northing)
         utmMeridian = view.findViewById(R.id.utm_meridian)
+
+        copyImageButton = view.findViewById(R.id.coordinates_copy)
 
         return view
     }
@@ -79,6 +88,47 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
                 }
             }
         }
+
+        copyImageButton.setOnClickListener {
+            handler.removeCallbacks(textAnimationRunnable)
+            val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val stringBuilder = StringBuilder()
+
+            stringBuilder.append("DD°MM'SS.SSS\n")
+            stringBuilder.append("${dmsLatitude.text}\n")
+            stringBuilder.append("${dmsLongitude.text}\n")
+            stringBuilder.append("\n")
+            stringBuilder.append("DD°MM.MMM'\n")
+            stringBuilder.append("${dmLatitude.text}\n")
+            stringBuilder.append("${dmLongitude.text}\n")
+            stringBuilder.append("\n")
+            stringBuilder.append("DD.DDD°\n")
+            stringBuilder.append("${ddLatitude.text}\n")
+            stringBuilder.append("${ddLongitude.text}\n")
+            stringBuilder.append("\n")
+            stringBuilder.append("MGRS\n")
+            stringBuilder.append("${mgrsCoordinates.text}\n")
+            stringBuilder.append("\n")
+            stringBuilder.append("UTM\n")
+            stringBuilder.append("${utmZone.text}\n")
+            stringBuilder.append("${utmEasting.text}\n")
+            stringBuilder.append("${utmNorthing.text}\n")
+            stringBuilder.append("${utmMeridian.text}\n")
+
+            if (BuildConfig.FLAVOR == "lite") {
+                stringBuilder.append("\n\n")
+                stringBuilder.append("Information is copied using Positional Lite\n")
+                stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
+            }
+
+            val clip: ClipData = ClipData.newPlainText("Coordinates Data", stringBuilder)
+            clipboard.setPrimaryClip(clip)
+
+            if (clipboard.hasPrimaryClip()) {
+                coordinatesDataTextView.setTextAnimation(getString(R.string.info_copied), 300)
+                handler.postDelayed(textAnimationRunnable, 3000)
+            }
+        }
     }
 
     override fun onResume() {
@@ -93,6 +143,12 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
         if (!MainPreferences.isCustomCoordinate()) {
             LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
         }
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacks(textAnimationRunnable)
+        coordinatesDataTextView.clearAnimation()
+        super.onDestroy()
     }
 
     private fun formatCoordinates(latitude: Double, longitude: Double) {
@@ -129,6 +185,10 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
             } catch (ignored: IllegalStateException) {
             }
         }
+    }
+
+    private val textAnimationRunnable = Runnable {
+        coordinatesDataTextView.setTextAnimation(getString(R.string.gps_coordinates), 300)
     }
 
     companion object {

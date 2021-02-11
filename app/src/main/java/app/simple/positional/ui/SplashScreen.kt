@@ -24,7 +24,7 @@ import app.simple.positional.constants.*
 import app.simple.positional.preference.FragmentPreferences.setCurrentPage
 import app.simple.positional.util.BitmapHelper.addLinearGradient
 import app.simple.positional.util.BitmapHelper.addRadialGradient
-import app.simple.positional.util.GetVectorDrawable.getBitmapFromVectorDrawable
+import app.simple.positional.util.BitmapHelper.toBitmap
 
 class SplashScreen : Fragment() {
 
@@ -86,8 +86,8 @@ class SplashScreen : Fragment() {
             }
         }
 
-        touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator.getBitmapFromVectorDrawable(context = requireContext(), size = 400).let { addRadialGradient(it, colorTwo) })
-        icon.setImageBitmap(R.drawable.ic_place.getBitmapFromVectorDrawable(context = requireContext(), size = 400).let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
+        touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator.toBitmap(context = requireContext(), size = 400).let { addRadialGradient(it, colorTwo) })
+        icon.setImageBitmap(R.drawable.ic_place.toBitmap(context = requireContext(), size = 400).let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
         icon.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.launcher_icon))
         text.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.image_in))
 

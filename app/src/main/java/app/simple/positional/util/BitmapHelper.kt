@@ -1,6 +1,8 @@
 package app.simple.positional.util
 
+import android.content.Context
 import android.graphics.*
+import androidx.core.content.ContextCompat
 
 object BitmapHelper {
     fun addLinearGradient(originalBitmap: Bitmap, array: IntArray): Bitmap? {
@@ -52,5 +54,24 @@ object BitmapHelper {
         canvas.drawBitmap(bitmap, matrix, Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG or Paint.FILTER_BITMAP_FLAG))
         matrix.reset()
         return rotatedBitmap
+    }
+
+    fun addOverlayToBitmap(mainBitmap: Bitmap, overlayBitmap: Bitmap): Bitmap? {
+        val bmOverlay = Bitmap.createBitmap(mainBitmap.width, mainBitmap.height, mainBitmap.config)
+        val canvas = Canvas(bmOverlay)
+        canvas.drawBitmap(mainBitmap, Matrix(), null)
+        canvas.drawBitmap(overlayBitmap, 0F, 0F, null)
+        mainBitmap.recycle()
+        overlayBitmap.recycle()
+        return bmOverlay
+    }
+
+    fun Int.toBitmap(context: Context, size: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(context, this)
+        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable?.setBounds(0, 0, canvas.width, canvas.height)
+        drawable?.draw(canvas)
+        return bitmap
     }
 }

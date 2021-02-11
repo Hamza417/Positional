@@ -369,7 +369,9 @@ class Clock : Fragment() {
         }
     }
 
-    private val textAnimationRunnable: Runnable = Runnable { clockInfoText.setTextAnimation(getString(R.string.clock_info), 300) }
+    private val textAnimationRunnable = Runnable {
+        clockInfoText.setTextAnimation(getString(R.string.clock_info), 300)
+    }
 
     private val clock = object : Runnable {
         override fun run() {
