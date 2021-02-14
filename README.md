@@ -33,6 +33,7 @@
 [![Release](https://img.shields.io/github/v/release/Hamza417/Positional?color=212F3D&label=Release)](https://github.com/Hamza417/Positional/releases)
 ![Status](https://img.shields.io/badge/Status-Stable-orange)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional) [![CodeFactor](https://www.codefactor.io/repository/github/hamza417/positional/badge)](https://www.codefactor.io/repository/github/hamza417/positional)
+[![API](https://img.shields.io/badge/MinAPI-21-lightgrey)] [![MinDensity](https://img.shields.io/badge/MinDensity-xHDPI-orange)]
 
 <br/>
 
