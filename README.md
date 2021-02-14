@@ -16,7 +16,7 @@
 <br/>
 
 ## Download
-![API](https://img.shields.io/badge/MinAPI-21-lightgrey) ![MinDensity](https://img.shields.io/badge/MinDensity-xHDPI-orange)
+![API](https://img.shields.io/badge/API-21%2B-%23138D75) ![MinDensity](https://img.shields.io/badge/Density-xhdpi-%232980B9)
 
 [![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
 [![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
