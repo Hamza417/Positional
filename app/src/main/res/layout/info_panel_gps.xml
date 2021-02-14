@@ -143,20 +143,10 @@
                 android:text="@string/gps_altitude"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-            <TextView
-                android:id="@+id/gps_bearing"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/gps_bearing"
-                android:textSize="@dimen/info_text_secondary_size" />
-
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/gps_panel_movement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
@@ -203,6 +193,17 @@
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
                 android:text="@string/gps_displacement"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+            <TextView
+                android:id="@+id/gps_bearing"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:text="@string/gps_bearing"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView

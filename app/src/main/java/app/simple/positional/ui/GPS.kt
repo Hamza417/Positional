@@ -31,6 +31,7 @@ import app.simple.positional.dialogs.app.PlayServiceIssue
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
 import app.simple.positional.dialogs.gps.LocationExpansion
+import app.simple.positional.dialogs.gps.MovementExpansion
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
@@ -77,6 +78,7 @@ class GPS : Fragment() {
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
     private lateinit var locationBox: LinearLayout
+    private lateinit var movementBox: LinearLayout
     private lateinit var coordinatesBox: FrameLayout
     private lateinit var locationIndicator: ImageButton
     private lateinit var menu: ImageButton
@@ -140,6 +142,7 @@ class GPS : Fragment() {
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
 
         locationBox = view.findViewById(R.id.gps_panel_location)
+        movementBox = view.findViewById(R.id.gps_panel_movement)
         coordinatesBox = view.findViewById(R.id.gps_panel_coordinates)
 
         accuracy = view.findViewById(R.id.gps_accuracy)
@@ -467,6 +470,10 @@ class GPS : Fragment() {
 
         locationBox.setOnClickListener {
             LocationExpansion.newInstance().show(childFragmentManager, "location_expansion")
+        }
+
+        movementBox.setOnClickListener {
+            MovementExpansion.newInstance().show(childFragmentManager, "movement_expansion")
         }
 
         coordinatesBox.setOnClickListener {

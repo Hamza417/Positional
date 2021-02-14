@@ -27,4 +27,8 @@
 
     <color name="clock_needle_stroke_color">#292929</color>
     <color name="clock_needle_fill_color">#f0f0f0</color>
+
+    <!-- Speedometer -->
+    <color name="speedometer_dial">#FFFFFF</color>
+    <color name="speedometer_number">#E6E6E6</color>
 </resources>

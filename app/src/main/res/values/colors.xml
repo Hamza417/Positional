@@ -36,4 +36,10 @@
     <color name="graph_location_line_color_first">#43cea2</color>
     <color name="graph_location_line_color_second">#185a9d</color>
     <color name="graph_location_circle_color">#00AC4D</color>
+
+    <!-- Speedometer -->
+    <color name="speedometer_start">#00B4FB</color>
+    <color name="speedometer_end">#DA0057</color>
+    <color name="speedometer_dial">#191919</color>
+    <color name="speedometer_number">#353535</color>
 </resources>

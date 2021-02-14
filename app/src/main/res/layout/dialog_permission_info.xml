@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dialog_height"
-    android:background="@drawable/bg_dialog"
+    android:background="@drawable/bg_bottom_dialog"
     android:orientation="vertical"
     tools:ignore="UselessParent">
 
