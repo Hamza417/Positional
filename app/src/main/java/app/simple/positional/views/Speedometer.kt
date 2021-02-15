@@ -14,11 +14,14 @@ import android.widget.ImageView
 import androidx.core.widget.ImageViewCompat
 import app.simple.positional.R
 import app.simple.positional.constants.SpeedometerConstants
-import app.simple.positional.util.AsyncImageLoader
+import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.BitmapHelper
 import app.simple.positional.util.BitmapHelper.toBitmap
 import com.google.android.material.animation.ArgbEvaluatorCompat
 
+/**
+ * Shows a gauge/dial for the speed
+ */
 class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : FrameLayout(context, attrs) {
 
     /**
@@ -28,13 +31,24 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
     private var isGradientNeedle = false
     private var firstGradientColor = 0
     private var colorfulNeedle = false
-    private var whichImage = 0
+    private var whichImage = -1
+
+    /**
+     * [needleAngleCompensator] compensates the missing portion of
+     * the speedometer gauge and the assigned value should be
+     * strictly 0, 60, 120 and 180
+     */
+    private var needleAngleCompensator = 0F
 
     /**
      * Views
      */
     private val needle: ImageView
     private val dial: ImageView
+
+    /**
+     * Animation objects
+     */
     private var objectAnimator: ObjectAnimator? = null
     private var colorAnimation: ValueAnimator? = null
 
@@ -48,6 +62,7 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
                 isGradientNeedle = getBoolean(R.styleable.Speedometer_gradient_needle, false)
                 colorfulNeedle = getBoolean(R.styleable.Speedometer_colorful_needle, false)
                 firstGradientColor = getColor(R.styleable.Speedometer_first_gradient_color, Color.parseColor("#009bce"))
+                whichImage = R.drawable.speedometer_dial_normal_range
             } finally {
                 recycle()
             }
@@ -55,24 +70,46 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
     }
 
     fun setSpeedValue(value: Float) {
-        if (value < 300F) {
-            if (whichImage == 0) {
-                AsyncImageLoader.loadImageResources(R.drawable.speedometer_dial_normal_range, dial, context, 0)
-                whichImage = 1
-            }
-        } else if (value > 300F) {
-            if (whichImage == 1) {
-                AsyncImageLoader.loadImageResources(R.drawable.speedometer_dial_medium_range, dial, context, 0)
-                whichImage = 0
-            }
-        }
-        println(value / 2)
+        setDial(value)
         rotateNeedle(value)
     }
 
+    private fun setDial(value: Float) {
+        when {
+            value <= 300F -> {
+                if (whichImage != R.drawable.speedometer_dial_normal_range) {
+                    loadImage(R.drawable.speedometer_dial_normal_range, dial, context, 0)
+                    whichImage = R.drawable.speedometer_dial_normal_range
+                    needleAngleCompensator = 0F
+                }
+            }
+            value in 300.01F..600F -> {
+                if (whichImage != R.drawable.speedometer_dial_medium_range) {
+                    loadImage(R.drawable.speedometer_dial_medium_range, dial, context, 0)
+                    whichImage = R.drawable.speedometer_dial_medium_range
+                    needleAngleCompensator = 60F
+                }
+            }
+            value in 600.01F..900F -> {
+                if (whichImage != R.drawable.speedometer_dial_high_range) {
+                    loadImage(R.drawable.speedometer_dial_high_range, dial, context, 0)
+                    whichImage = R.drawable.speedometer_dial_high_range
+                    needleAngleCompensator = 120F
+                }
+            }
+            value >= 900.01F -> {
+                if (whichImage != R.drawable.speedometer_dial_max_range) {
+                    loadImage(R.drawable.speedometer_dial_max_range, dial, context, 0)
+                    whichImage = R.drawable.speedometer_dial_max_range
+                    needleAngleCompensator = 180F
+                }
+            }
+        }
+    }
+
     private fun rotateNeedle(value: Float) {
-        objectAnimator = ObjectAnimator.ofFloat(needle, "rotation", needle.rotation, if (value > 300F) value + 60F else value)
-        objectAnimator!!.duration = getAnimationDuration(value)
+        objectAnimator = ObjectAnimator.ofFloat(needle, "rotation", needle.rotation, value.reifyNeedleAngle())
+        objectAnimator!!.duration = 1000L
         objectAnimator!!.interpolator = DecelerateInterpolator(1.5F)
         objectAnimator!!.setAutoCancel(true)
         objectAnimator!!.start()
@@ -82,9 +119,14 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
         }
     }
 
+    /**
+     * Status: Not in use
+     *
+     * Animates the needle color as the speed increases or decreases
+     */
     private fun animateColorChange(value: Float) {
         colorAnimation = ValueAnimator.ofObject(ArgbEvaluatorCompat(), lastColor, SpeedometerConstants.getSpeedometerColor(value / 2))
-        colorAnimation!!.duration = getAnimationDuration(value)
+        colorAnimation!!.duration = 1000L
         colorAnimation!!.interpolator = AccelerateDecelerateInterpolator()
         colorAnimation!!.addUpdateListener { animation ->
             lastColor = animation.animatedValue as Int
@@ -103,12 +145,30 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
         colorAnimation!!.start()
     }
 
-    private fun getAnimationDuration(value: Float): Long {
-        return if (value == 0f) {
-            3000L
+    /**
+     * This function will lock the value if it exceeds 600 km/h or 1200°
+     * or compensates the values according to the gauge's nature using
+     * the [needleAngleCompensator] variable
+     *
+     * the multiplication of the two is only for converting the speed
+     * into angle for the needle
+     *
+     * Check this vector graphic to see the gauge's structure and why
+     * the multiplication is necessary
+     *
+     * @see R.drawable.speedometer_dial_normal_range
+     * @return [Float]
+     */
+    private fun Float.reifyNeedleAngle(): Float {
+        return (if (this >= 600F) {
+            1200F
         } else {
-            500L
-        }
+            if (this > 150F) {
+                this + needleAngleCompensator
+            } else {
+                this
+            }
+        }) * 2F
     }
 
     /**
@@ -119,6 +179,8 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
     fun clear() {
         objectAnimator?.cancel()
         colorAnimation?.cancel()
+        dial.clearAnimation()
         needle.clearAnimation()
+        invalidate()
     }
 }

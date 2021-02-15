@@ -41,7 +41,7 @@ import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.Vector3
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.util.*
-import app.simple.positional.util.AsyncImageLoader.loadImageResources
+import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.ColorAnimator.animateColorChange
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
@@ -199,7 +199,7 @@ class Compass : Fragment(), SensorEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadImageResources(R.drawable.compass_dial, dial, requireContext(), 0)
+        loadImage(R.drawable.compass_dial, dial, requireContext(), 0)
 
         dialContainer.setOnTouchListener(MyOnTouchListener())
 
@@ -493,16 +493,16 @@ class Compass : Fragment(), SensorEventListener {
         CompassPreference.setFlowerBloom(value)
         val x = compassBloomRes[CompassPreference.getFlowerBloomTheme()]
         if (value) {
-            loadImageResources(x, flowerOne, requireContext(), 0)
-            loadImageResources(x, flowerTwo, requireContext(), 50)
-            loadImageResources(x, flowerThree, requireContext(), 100)
-            loadImageResources(x, flowerFour, requireContext(), 150)
+            loadImage(x, flowerOne, requireContext(), 0)
+            loadImage(x, flowerTwo, requireContext(), 50)
+            loadImage(x, flowerThree, requireContext(), 100)
+            loadImage(x, flowerFour, requireContext(), 150)
             animateColorChange(degrees, compassBloomTextColor[CompassPreference.getFlowerBloomTheme()], Color.parseColor("#ffffff"))
         } else {
-            loadImageResources(0, flowerOne, requireContext(), 150)
-            loadImageResources(0, flowerTwo, requireContext(), 100)
-            loadImageResources(0, flowerThree, requireContext(), 50)
-            loadImageResources(0, flowerFour, requireContext(), 0)
+            loadImage(0, flowerOne, requireContext(), 150)
+            loadImage(0, flowerTwo, requireContext(), 100)
+            loadImage(0, flowerThree, requireContext(), 50)
+            loadImage(0, flowerFour, requireContext(), 0)
             animateColorChange(degrees, degrees.currentTextColor, compassBloomTextColor[CompassPreference.getFlowerBloomTheme()])
         }
     }

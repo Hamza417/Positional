@@ -33,7 +33,7 @@ import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
-import app.simple.positional.util.AsyncImageLoader.loadImageResources
+import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.AsyncImageLoader.loadImageResourcesWithoutAnimation
 import app.simple.positional.util.DigitalTimeFormatter.getTime
 import app.simple.positional.util.DigitalTimeFormatter.getTimeWithSeconds
@@ -442,9 +442,9 @@ class Clock : Fragment() {
     }
 
     fun setNeedle(value: Int) {
-        loadImageResources(clockNeedleSkins[value][0], hour, requireContext(), 0)
-        loadImageResources(clockNeedleSkins[value][1], minutes, requireContext(), 100)
-        loadImageResources(clockNeedleSkins[value][2], seconds, requireContext(), 200)
+        loadImage(clockNeedleSkins[value][0], hour, requireContext(), 0)
+        loadImage(clockNeedleSkins[value][1], minutes, requireContext(), 100)
+        loadImage(clockNeedleSkins[value][2], seconds, requireContext(), 200)
     }
 
     fun setMotionDelay(value: Boolean) {

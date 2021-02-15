@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 object AsyncImageLoader {
-    fun loadImageResources(resourceValue: Int, imageView: ImageView, context: Context, delay: Int) {
+    fun loadImage(resourceValue: Int, imageView: ImageView, context: Context, delay: Int) {
         CoroutineScope(Dispatchers.Default).launch {
             val drawable = if (resourceValue != 0) context.resources?.let {
                 ResourcesCompat.getDrawable(it, resourceValue, null)

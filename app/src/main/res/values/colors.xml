@@ -38,8 +38,10 @@
     <color name="graph_location_circle_color">#00AC4D</color>
 
     <!-- Speedometer -->
-    <color name="speedometer_start">#00B4FB</color>
-    <color name="speedometer_end">#DA0057</color>
+    <color name="speedometer_needle_start">#C30C00</color>
+    <color name="speedometer_needle_end">#F88000</color>
+    <color name="speedometer_start">@color/speedometer_needle_start</color>
+    <color name="speedometer_end">@color/speedometer_needle_start</color>
     <color name="speedometer_dial">#191919</color>
     <color name="speedometer_number">#353535</color>
 </resources>
