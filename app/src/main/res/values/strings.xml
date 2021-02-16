@@ -138,6 +138,7 @@
     <!-- Settings Heading -->
     <string name="theme">Theme</string>
     <string name="icon">Icon</string>
+    <string name="corner_radius">Corner Radius</string>
     <string name="units">Units</string>
     <string name="language">Language</string>
     <string name="specified_location">Use Specified Location</string>
@@ -156,6 +157,7 @@
     <string name="theme_night">Dark</string>
     <string name="theme_auto">Auto (Day/Night)</string>
     <string name="desc_icon">Main icon of the app in launcher</string>
+    <string name="desc_radius">Rounded corner radius of the app</string>
     <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information
         instead of using device\' GPS as location information source\n\nGPS information will stay unaffected</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>

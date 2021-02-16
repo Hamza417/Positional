@@ -1,5 +1,6 @@
 package app.simple.positional.preference
 
+import androidx.annotation.IntRange
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
@@ -22,6 +23,7 @@ object MainPreferences {
     private const val address = "specified_address"
     private const val screenOn = "keep_the_screen_on"
     private const val appLanguage = "current_language_locale"
+    private const val appCornerRadius = "corner_radius"
 
     fun setLaunchCount(value: Int) {
         getSharedPreferences().edit().putInt(launchCount, value).apply()
@@ -153,5 +155,13 @@ object MainPreferences {
 
     fun getAppLanguage(): String? {
         return getSharedPreferences().getString(appLanguage, "default")
+    }
+
+    fun setCornerRadius(@IntRange(from = 25, to = 300) radius: Int) {
+        getSharedPreferences().edit().putInt(appCornerRadius, radius / 5).apply()
+    }
+
+    fun getCornerRadius(): Int {
+        return getSharedPreferences().getInt(appCornerRadius, 20)
     }
 }

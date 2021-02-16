@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.corners.DynamicCornerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dialog_height"
-    android:background="@drawable/bg_popup">
+    android:backgroundTint="@color/toolbarBackground"
+    app:roundBottomCorners="true"
+    app:roundTopCorners="true">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/locale_recycler_view"
@@ -12,4 +15,4 @@
         android:clipToPadding="false"
         android:paddingVertical="@dimen/options_container_vertical_padding" />
 
-</FrameLayout>
+</app.simple.positional.corners.DynamicCornerFrameLayout>

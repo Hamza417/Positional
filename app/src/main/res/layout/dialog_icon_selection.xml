@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.corners.DynamicCornerCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dialog_height"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/bg_view">
+    android:backgroundTint="@color/toolbarBackground"
+    app:roundTopCorners="true">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:padding="@dimen/options_container_horizontal_padding"
         android:layout_height="@dimen/dialog_height"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:padding="@dimen/options_container_horizontal_padding"
         app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
         <LinearLayout
@@ -46,9 +47,9 @@
                     android:id="@+id/icon_one_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_gravity="center_vertical"
-                    android:buttonTint="?attr/iconColor" />
+                    android:buttonTint="?attr/iconColor"
+                    android:gravity="center" />
 
             </LinearLayout>
 
@@ -80,6 +81,7 @@
                     android:id="@+id/icon_two_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:buttonTint="?attr/iconColor" />
 
             </LinearLayout>
@@ -112,6 +114,7 @@
                     android:id="@+id/icon_three_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:buttonTint="?attr/iconColor" />
 
             </LinearLayout>
@@ -144,6 +147,7 @@
                     android:id="@+id/icon_four_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:buttonTint="?attr/iconColor" />
 
             </LinearLayout>
@@ -176,6 +180,7 @@
                     android:id="@+id/icon_five_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:buttonTint="?attr/iconColor" />
 
             </LinearLayout>
@@ -208,6 +213,7 @@
                     android:id="@+id/icon_six_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:buttonTint="?attr/iconColor" />
 
             </LinearLayout>
@@ -216,4 +222,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</app.simple.positional.corners.DynamicCornerCoordinatorLayout>

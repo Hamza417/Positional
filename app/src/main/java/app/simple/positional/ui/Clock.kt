@@ -23,6 +23,7 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
+import app.simple.positional.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
@@ -43,7 +44,6 @@ import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.views.CustomCoordinatorLayout
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
 import org.shredzone.commons.suncalc.*
@@ -64,7 +64,7 @@ class Clock : Fragment() {
         return fragment
     }
 
-    private lateinit var toolbar: MaterialToolbar
+    private lateinit var toolbar: DynamicCornerMaterialToolbar
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
     private lateinit var hour: ImageView

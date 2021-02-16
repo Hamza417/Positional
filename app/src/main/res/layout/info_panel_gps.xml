@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="?attr/toolbarBackground"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:elevation="5dp"
@@ -13,6 +12,7 @@
     android:fadingEdgeLength="50dp"
     android:overScrollMode="always"
     android:paddingHorizontal="10dp"
+    android:background="@color/toolbarBackground"
     android:requiresFadingEdge="vertical">
 
     <LinearLayout

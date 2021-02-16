@@ -17,11 +17,9 @@
         <item name="rippleColor">@color/rippleColor</item>
         <item name="android:statusBarColor">@color/toolbarBackground</item>
         <item name="android:navigationBarColor">@color/toolbarBackground</item>
-        <item name="android:windowLightStatusBar">true</item>
         <item name="android:colorEdgeEffect">@color/edgeEffect</item>
         <item name="cardBackground">#fafafa</item>
         <item name="clockDialColor">@color/clockDialColor</item>
-        <item name="dropDownListViewStyle">@style/PopUpTheme</item>
 
         <item name="indicator">@color/indicator</item>
         <item name="iconRegular">@color/iconRegular</item>
@@ -60,10 +58,6 @@
     <style name="BottomDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/bottom_sheet_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/bottom_sheet_dialog_out</item>
-    </style>
-
-    <style name="PopUpTheme" parent="Widget.AppCompat.ListView.DropDown">
-        <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
     <style name="SecondaryTextView" parent="Widget.AppCompat.TextView">

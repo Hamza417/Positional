@@ -18,13 +18,13 @@
         android:alpha="0"
         android:background="#7E000000" />
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <app.simple.positional.corners.DynamicCornerMaterialToolbar
         android:id="@+id/gps_appbar"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
         android:layout_gravity="top"
-        android:background="@drawable/bg_toolbar"
+        android:backgroundTint="?attr/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
         app:contentInsetStart="10dp">
@@ -59,7 +59,7 @@
             android:contentDescription="@string/gps_options"
             android:tint="?attr/iconColor" />
 
-    </com.google.android.material.appbar.MaterialToolbar>
+    </app.simple.positional.corners.DynamicCornerMaterialToolbar>
 
     <include layout="@layout/bottom_sheet_gps" />
 

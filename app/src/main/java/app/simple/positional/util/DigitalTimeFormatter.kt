@@ -2,6 +2,7 @@ package app.simple.positional.util
 
 import android.text.SpannableString
 import app.simple.positional.preference.ClockPreferences
+import app.simple.positional.util.SpannableStringBuilder.buildSpannableString
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
@@ -14,6 +15,8 @@ object DigitalTimeFormatter {
      */
     fun getTime(zoneDateTime: ZonedDateTime): SpannableString {
         return if (ClockPreferences.getDefaultClockTime()) {
+
+
             buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("hh:mm a").withLocale(LocaleHelper.getAppLocale())))
         } else {
             buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("HH:mm").withLocale(LocaleHelper.getAppLocale())))

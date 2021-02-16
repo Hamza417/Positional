@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
+
     <style name="LightTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -14,10 +15,12 @@
         <item name="dividerColor">@color/dividerColor</item>
         <item name="popupBackground">@color/popupBackground</item>
         <item name="toolbarBackground">@color/toolbarBackground</item>
-        <item name="android:statusBarColor">@color/toolbarBackground</item>
         <item name="rippleColor">@color/rippleColor</item>
+        <item name="android:statusBarColor">@color/toolbarBackground</item>
+        <item name="android:navigationBarColor">@color/toolbarBackground</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:colorEdgeEffect">@color/edgeEffect</item>
-        <item name="cardBackground">#515151</item>
+        <item name="cardBackground">#fafafa</item>
         <item name="clockDialColor">@color/clockDialColor</item>
 
         <item name="indicator">@color/indicator</item>
@@ -30,25 +33,5 @@
         <item name="switcher_icon_color">@color/switcher_icon_color</item>
 
         <item name="alphaIcons">0.5</item>
-    </style>
-
-    <style name="DialogAnimation">
-        <item name="android:windowEnterAnimation">@anim/dialog_in</item>
-        <item name="android:windowExitAnimation">@anim/dialog_out</item>
-    </style>
-
-    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
-    </style>
-
-    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:windowMinWidthMajor">100%</item>
-        <item name="android:windowMinWidthMinor">100%</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:colorEdgeEffect">?attr/appAccent</item>
     </style>
 </resources>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.simple.positional.corners.DynamicCornerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/app_corner_dialog_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="?attr/toolbarBackground"
+    android:padding="@dimen/options_item_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/app_corner_radius_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/degrees"
+            android:gravity="center"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/info_text_primary_size" />
+
+        <SeekBar
+            android:id="@+id/app_corner_radius_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginVertical="20dp"
+            android:maxHeight="4dp"
+            android:progressDrawable="@drawable/seek_bar"
+            android:progressTint="@color/seek_bar"
+            android:thumb="@drawable/seekbar_thumb" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/app_corner_radius_cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="@dimen/options_item_padding"
+                android:background="@drawable/ripple_btn"
+                android:text="@string/button_cancel"
+                android:textColor="?attr/textSecondary" />
+
+            <Button
+                android:id="@+id/app_corner_radius_set"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/ripple_btn"
+                android:text="@string/button_set"
+                android:textColor="?attr/textSecondary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</app.simple.positional.corners.DynamicCornerFrameLayout>

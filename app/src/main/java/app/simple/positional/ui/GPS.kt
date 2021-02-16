@@ -26,6 +26,7 @@ import androidx.room.Room
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.dialogs.app.PlayServiceIssue
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
@@ -52,7 +53,6 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -74,7 +74,7 @@ class GPS : Fragment() {
     private lateinit var expandUp: ImageView
 
     private lateinit var scrollView: NestedScrollView
-    private lateinit var toolbar: MaterialToolbar
+    private lateinit var toolbar: DynamicCornerMaterialToolbar
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
     private lateinit var locationBox: LinearLayout

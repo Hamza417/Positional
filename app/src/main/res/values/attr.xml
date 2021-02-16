@@ -73,4 +73,11 @@
         <attr name="colorful_needle" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="DynamicCornerLayout">
+        <!-- At least one of them needs to be true else roundness will be applies to all corners
+                default is false for both of them -->
+        <attr name="roundTopCorners" format="boolean" />
+        <attr name="roundBottomCorners" format="boolean" />
+    </declare-styleable>
+
 </resources>

@@ -6,13 +6,13 @@
     android:id="@+id/compass_main_layout"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <app.simple.positional.corners.DynamicCornerMaterialToolbar
         android:id="@+id/compass_appbar"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
         android:layout_gravity="top"
-        android:background="@drawable/bg_toolbar"
+        android:backgroundTint="?attr/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
         app:contentInsetStart="10dp">
@@ -36,7 +36,7 @@
             android:src="@drawable/ic_more_horiz"
             android:tint="?attr/iconColor" />
 
-    </com.google.android.material.appbar.MaterialToolbar>
+    </app.simple.positional.corners.DynamicCornerMaterialToolbar>
 
     <LinearLayout
         android:layout_width="wrap_content"

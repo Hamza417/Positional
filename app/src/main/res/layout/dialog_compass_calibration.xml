@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_bottom_dialog"
+    android:backgroundTint="@color/toolbarBackground"
     android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:roundTopCorners="true"
     android:padding="20dp">
 
     <ImageView
@@ -25,9 +27,9 @@
         android:fontFamily="@font/regular"
         android:gravity="center"
         android:text="@string/compass_calibration_notice"
-        android:textSize="@dimen/description_text_size"
         android:textAlignment="center"
-        android:textColor="?attr/textSecondary" />
+        android:textColor="?attr/textSecondary"
+        android:textSize="@dimen/description_text_size" />
 
     <TextView
         android:id="@+id/calibrate_accuracy"
@@ -37,8 +39,8 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/medium"
         android:gravity="center"
-        android:textSize="@dimen/description_text_size"
         android:textAlignment="center"
-        android:textColor="?attr/textPrimary" />
+        android:textColor="?attr/textPrimary"
+        android:textSize="@dimen/description_text_size" />
 
-</LinearLayout>
+</app.simple.positional.corners.DynamicCornerLinearLayout>

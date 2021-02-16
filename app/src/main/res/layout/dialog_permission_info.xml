@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dialog_height"
-    android:background="@drawable/bg_bottom_dialog"
+    android:backgroundTint="@color/toolbarBackground"
     android:orientation="vertical"
+    app:roundTopCorners="true"
     tools:ignore="UselessParent">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -84,4 +85,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</app.simple.positional.corners.DynamicCornerLinearLayout>

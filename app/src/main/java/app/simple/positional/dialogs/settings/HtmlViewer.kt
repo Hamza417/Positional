@@ -78,6 +78,9 @@ class HtmlViewer : CustomBottomSheetDialog() {
                 "translator" -> {
                     webView.loadUrl("file:///android_asset/translators.html")
                 }
+                "About Developer" -> {
+                    webView.loadUrl("file:///android_asset/about_me/index.html")
+                }
             }
         }
     }

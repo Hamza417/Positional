@@ -45,6 +45,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var language: LinearLayout
     private lateinit var theme: LinearLayout
     private lateinit var icon: LinearLayout
+    private lateinit var corner: LinearLayout
     private lateinit var customLocation: LinearLayout
     private lateinit var pushNotification: LinearLayout
     private lateinit var appVersion: LinearLayout
@@ -77,6 +78,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         language = view.findViewById(R.id.settings_languages)
         theme = view.findViewById(R.id.settings_theme)
         icon = view.findViewById(R.id.settings_icons)
+        corner = view.findViewById(R.id.settings_corner_radius)
         customLocation = view.findViewById(R.id.setting_custom_location)
         pushNotification = view.findViewById(R.id.setting_notification)
         appVersion = view.findViewById(R.id.current_app_version)
@@ -132,6 +134,10 @@ class AppSettings : Fragment(), CoordinatesCallback {
 
         icon.setOnClickListener {
             Icons().newInstance().show(childFragmentManager, "app_icons")
+        }
+
+        corner.setOnClickListener {
+            RoundedCorner.newInstance().show(parentFragmentManager, "rounded_corners")
         }
 
         unit.setOnClickListener {

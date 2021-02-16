@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_view"
+    android:backgroundTint="?attr/toolbarBackground"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="vertical"
-    android:padding="@dimen/options_container_horizontal_padding">
+    android:padding="@dimen/options_container_horizontal_padding"
+    app:roundTopCorners="true">
 
     <LinearLayout
         android:id="@+id/clock_needle_theme"
@@ -39,9 +40,9 @@
         android:id="@+id/clock_motion_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/ripple_btn"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/ripple_btn"
         android:orientation="horizontal"
         android:padding="@dimen/options_sub_item_padding">
 
@@ -94,4 +95,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</app.simple.positional.corners.DynamicCornerLinearLayout>

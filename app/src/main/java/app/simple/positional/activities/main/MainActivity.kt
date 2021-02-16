@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.PixelFormat
 import android.os.Bundle
 import android.view.WindowManager
-import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.os.ConfigurationCompat
@@ -14,6 +13,7 @@ import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
+import app.simple.positional.corners.DynamicCornerFrameLayout
 import app.simple.positional.dialogs.app.PermissionDialog
 import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
@@ -35,7 +35,7 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
     private val defaultPermissionRequestCode = 123
     private var reviewInfo: ReviewInfo? = null
     private lateinit var bottomBar: SmoothBottomBar
-    private lateinit var bottomBarWrapper: FrameLayout
+    private lateinit var bottomBarWrapper: DynamicCornerFrameLayout
     private val fragmentTags = arrayOf("clock", "compass", "gps", "level", "settings")
 
     override fun onCreate(savedInstanceState: Bundle?) {

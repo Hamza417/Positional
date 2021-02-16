@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <app.simple.positional.corners.DynamicCornerMaterialToolbar
         android:id="@+id/materialToolbar"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
-        android:background="@drawable/bg_toolbar"
+        android:backgroundTint="?attr/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
         app:contentInsetStart="10dp"
@@ -37,7 +37,7 @@
             android:visibility="gone"
             tools:ignore="ContentDescription" />
 
-    </com.google.android.material.appbar.MaterialToolbar>
+    </app.simple.positional.corners.DynamicCornerMaterialToolbar>
 
     <FrameLayout
         android:id="@+id/indicator_bounding_box"

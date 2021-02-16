@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <app.simple.positional.corners.DynamicCornerMaterialToolbar
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
-        android:background="@drawable/bg_toolbar"
+        android:backgroundTint="?attr/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
         app:contentInsetStart="10dp">
@@ -23,7 +23,7 @@
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/top_bar_text_size" />
 
-    </com.google.android.material.appbar.MaterialToolbar>
+    </app.simple.positional.corners.DynamicCornerMaterialToolbar>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -49,11 +49,13 @@
                 android:textColor="?attr/textSecondary"
                 android:textSize="@dimen/settings_secondary_text_size" />
 
-            <LinearLayout
+            <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_cards"
-                android:orientation="vertical">
+                android:backgroundTint="@color/card_background"
+                android:orientation="vertical"
+                app:roundBottomCorners="true"
+                app:roundTopCorners="true">
 
                 <LinearLayout
                     android:id="@+id/settings_theme"
@@ -111,7 +113,35 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/settings_corner_radius"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/medium"
+                        android:text="@string/corner_radius"
+                        android:textColor="?attr/textPrimary"
+                        android:textSize="@dimen/settings_primary_text_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/regular"
+                        android:text="@string/desc_radius"
+                        android:textColor="?attr/textSecondary"
+                        android:textSize="@dimen/settings_secondary_text_size" />
+
+                </LinearLayout>
+
+            </app.simple.positional.corners.DynamicCornerLinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -122,11 +152,13 @@
                 android:textColor="?attr/textSecondary"
                 android:textSize="@dimen/settings_secondary_text_size" />
 
-            <LinearLayout
+            <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_cards"
-                android:orientation="vertical">
+                android:backgroundTint="@color/card_background"
+                android:orientation="vertical"
+                app:roundBottomCorners="true"
+                app:roundTopCorners="true">
 
                 <LinearLayout
                     android:id="@+id/settings_units"
@@ -241,8 +273,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:thumb="@drawable/switch_thumb"
                         android:checked="false"
+                        android:thumb="@drawable/switch_thumb"
                         app:track="@drawable/switch_track" />
 
                 </LinearLayout>
@@ -319,7 +351,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </app.simple.positional.corners.DynamicCornerLinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -330,11 +362,13 @@
                 android:textColor="?attr/textSecondary"
                 android:textSize="@dimen/settings_secondary_text_size" />
 
-            <LinearLayout
+            <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_cards"
-                android:orientation="vertical">
+                android:backgroundTint="@color/card_background"
+                android:orientation="vertical"
+                app:roundBottomCorners="true"
+                app:roundTopCorners="true">
 
                 <LinearLayout
                     android:id="@+id/legal_notes"
@@ -419,7 +453,7 @@
                         android:textSize="@dimen/settings_secondary_text_size" />
 
                 </LinearLayout>
-            </LinearLayout>
+            </app.simple.positional.corners.DynamicCornerLinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -430,11 +464,13 @@
                 android:textColor="?attr/textSecondary"
                 android:textSize="@dimen/settings_secondary_text_size" />
 
-            <LinearLayout
+            <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_cards"
-                android:orientation="vertical">
+                android:backgroundTint="@color/card_background"
+                android:orientation="vertical"
+                app:roundBottomCorners="true"
+                app:roundTopCorners="true">
 
                 <LinearLayout
                     android:id="@+id/github"
@@ -542,7 +578,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </app.simple.positional.corners.DynamicCornerLinearLayout>
 
         </LinearLayout>
 

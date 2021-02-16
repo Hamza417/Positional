@@ -30,6 +30,7 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
 import app.simple.positional.constants.CompassBloom.compassBloomTextColor
+import app.simple.positional.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
 import app.simple.positional.dialogs.compass.NoSensorAlert
@@ -48,7 +49,6 @@ import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.views.CustomCoordinatorLayout
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.lang.ref.WeakReference
 import java.util.*
@@ -127,7 +127,7 @@ class Compass : Fragment(), SensorEventListener {
     private lateinit var dialContainer: FrameLayout
     private lateinit var compassListScrollView: NestedScrollView
     private lateinit var dim: View
-    private lateinit var toolbar: MaterialToolbar
+    private lateinit var toolbar: DynamicCornerMaterialToolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

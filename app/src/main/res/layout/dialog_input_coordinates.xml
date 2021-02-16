@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.corners.DynamicCornerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_popup"
+    android:backgroundTint="@color/toolbarBackground"
     android:paddingHorizontal="@dimen/options_container_horizontal_padding"
     android:paddingVertical="@dimen/options_container_vertical_padding">
 
@@ -40,8 +40,8 @@
                 android:indeterminateBehavior="repeat"
                 android:indeterminateDuration="100"
                 android:indeterminateOnly="true"
-                android:progressTint="?attr/iconColor"
-                android:indeterminateTint="?attr/iconColor" />
+                android:indeterminateTint="?attr/iconColor"
+                android:progressTint="?attr/iconColor" />
 
             <ImageButton
                 android:id="@+id/open_saved_locations"
@@ -49,18 +49,18 @@
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="5dp"
                 android:background="@drawable/ripple_btn"
-                android:tint="?attr/iconColor"
                 android:contentDescription="@string/open_saved_locations"
-                android:src="@drawable/ic_list" />
+                android:src="@drawable/ic_list"
+                android:tint="?attr/iconColor" />
 
             <ImageButton
                 android:id="@+id/help_custom_coordinates"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/ripple_btn"
-                android:tint="?attr/iconColor"
                 android:contentDescription="@string/open_specified_location_documentation"
-                android:src="@drawable/ic_help" />
+                android:src="@drawable/ic_help"
+                android:tint="?attr/iconColor" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -186,9 +186,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="2.5dp"
                 android:background="@drawable/ripple_btn"
+                android:contentDescription="@string/open_timezones"
                 android:src="@drawable/ic_folder"
-                android:tint="?attr/iconColor"
-                android:contentDescription="@string/open_timezones" />
+                android:tint="?attr/iconColor" />
         </LinearLayout>
 
         <LinearLayout
@@ -221,4 +221,4 @@
 
     </LinearLayout>
 
-</FrameLayout>
+</app.simple.positional.corners.DynamicCornerFrameLayout>

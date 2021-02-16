@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_view"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/toolbarBackground"
     android:orientation="vertical"
+    app:roundTopCorners="true"
     android:padding="@dimen/options_container_horizontal_padding">
 
     <LinearLayout
@@ -56,4 +58,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</app.simple.positional.corners.DynamicCornerLinearLayout>

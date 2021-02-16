@@ -1,4 +1,4 @@
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.corners.DynamicCornersNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/compass_list_scroll_view"
@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:alpha="0"
     android:animateLayoutChanges="true"
-    android:background="@drawable/bg_view"
+    android:backgroundTint="@color/toolbarBackground"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:elevation="5dp"
@@ -14,7 +14,8 @@
     android:fadingEdgeLength="50dp"
     android:overScrollMode="always"
     android:paddingHorizontal="10dp"
-    android:requiresFadingEdge="vertical">
+    android:requiresFadingEdge="vertical"
+    app:roundTopCorners="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,8 +47,8 @@
                 android:layout_height="@dimen/copy_button_dimensions"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ripple_btn"
-                android:src="@drawable/ic_content_copy"
                 android:contentDescription="@string/button_copy"
+                android:src="@drawable/ic_content_copy"
                 app:tint="?attr/iconColor" />
 
         </LinearLayout>
@@ -83,9 +84,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:text="@string/magnetometer_accuracy"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
+                android:text="@string/magnetometer_accuracy"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
@@ -144,11 +145,11 @@
                     android:id="@+id/compass_inclination"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
-                    android:text="@string/compass_inclination"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/compass_inclination"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -157,9 +158,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:text="@string/compass_declination"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                     android:maxLines="1"
+                    android:text="@string/compass_declination"
                     android:textSize="@dimen/info_text_secondary_size" />
 
                 <TextView
@@ -169,8 +170,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:text="@string/compass_field_strength"
                     android:maxLines="1"
+                    android:text="@string/compass_field_strength"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -178,4 +179,4 @@
 
     </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+</app.simple.positional.corners.DynamicCornersNestedScrollView>
