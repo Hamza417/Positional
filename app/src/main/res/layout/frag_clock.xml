@@ -16,7 +16,8 @@
         android:backgroundTint="?attr/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
-        app:contentInsetStart="10dp">
+        app:contentInsetStart="10dp"
+        app:roundBottomCorners="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,8 +34,8 @@
             android:layout_height="@dimen/top_bar_button_size"
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple_btn"
-            android:src="@drawable/ic_more_horiz"
             android:contentDescription="@string/clock_options"
+            android:src="@drawable/ic_more_horiz"
             android:tint="?attr/iconColor" />
 
     </app.simple.positional.corners.DynamicCornerMaterialToolbar>
@@ -101,9 +102,9 @@
                 android:id="@+id/seconds"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/clock_needle_dimensions"
+                android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:layout_gravity="center"
                 tools:ignore="ContentDescription" />
 
         </FrameLayout>

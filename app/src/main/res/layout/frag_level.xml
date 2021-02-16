@@ -16,7 +16,8 @@
         app:contentInsetStart="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:roundBottomCorners="true">
 
         <TextView
             android:layout_width="wrap_content"

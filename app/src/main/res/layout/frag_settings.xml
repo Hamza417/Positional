@@ -12,6 +12,7 @@
         android:backgroundTint="?attr/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
+        app:roundBottomCorners="true"
         app:contentInsetStart="10dp">
 
         <TextView

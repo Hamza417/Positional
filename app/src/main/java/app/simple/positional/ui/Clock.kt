@@ -131,7 +131,6 @@ class Clock : Fragment() {
     private lateinit var bottomSheetSlide: BottomSheetSlide
 
     var delay: Long = 1000
-    private var moonImageCountViolation = 1
     private var dayNightIndicatorImageCountViolation = 1
     private var isMetric = true
     private var isCustomCoordinate = false
@@ -515,17 +514,6 @@ class Clock : Fragment() {
             val moonPhase = fromHtml("<b>${getString(R.string.moon_phase)}</b> ${getMoonPhase(requireContext(), moonIllumination.phase)}")
             val moonPhaseAngle = fromHtml("<b>${getString(R.string.moon_phase_angle)}</b> ${round(moonIllumination.phase, 2)}°")
 
-            if (moonImageCountViolation != 0) {
-                /**
-                 * [moonImageCountViolation] will prevent the moon image loading every time location updates
-                 *
-                 * Since the range of change is so small, its approximation/accuracy won't be affected in this tiny time frame
-                 * The value of the calculation is being trimmed to 2 decimal places anyway
-                 */
-                loadImageResourcesWithoutAnimation(getMoonPhaseGraphics(round(moonIllumination.phase, 2)), moonPhaseGraphics, requireContext())
-                moonImageCountViolation = 0
-            }
-
             val nextFullMoon = fromHtml("<b>${getString(R.string.moon_full_moon)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time)}")
             val nextNewMoon = fromHtml("<b>${getString(R.string.moon_new_moon)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.NEW_MOON).execute().time)}")
             val nextFirstQuarter = fromHtml("<b>${getString(R.string.moon_first_quarter)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FIRST_QUARTER).execute().time)}")
@@ -561,6 +549,8 @@ class Clock : Fragment() {
                     this@Clock.moonAngleState.text = moonAngleState
                     this@Clock.moonPhase.text = moonPhase
                     this@Clock.moonPhaseAngle.text = moonPhaseAngle
+                    this@Clock.moonPhaseGraphics.setImageResource(getMoonPhaseGraphics(round(moonIllumination.phase, 2)))
+                    this@Clock.moonPhaseGraphics.rotation = (moonPosition.parallacticAngle - moonIllumination.angle).toFloat()
                     this@Clock.nextFullMoon.text = nextFullMoon
                     this@Clock.nextNewMoon.text = nextNewMoon
                     this@Clock.nextFirstQuarter.text = nextFirstQuarter
