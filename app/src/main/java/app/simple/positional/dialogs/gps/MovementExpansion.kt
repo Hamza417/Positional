@@ -14,8 +14,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.math.MathExtensions
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
-import app.simple.positional.math.UnitConverter.toKilometers
-import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.HtmlHelper
@@ -50,7 +48,7 @@ class MovementExpansion : CustomBottomSheetDialog() {
                 if (intent.action == "location") {
                     val location = intent.getParcelableExtra<Location>("location")!!
 
-                    speedometer.setSpeedValue(if (MainPreferences.getUnit()) location.speed.toKilometers() else location.speed.toMiles())
+                    speedometer.setSpeedValue(if (MainPreferences.getUnit()) location.speed.toKiloMetersPerHour() else location.speed.toMilesPerHour())
                     speed.text = if (MainPreferences.getUnit()) {
                         HtmlHelper.fromHtml("<b>${getString(R.string.gps_speed)}</b> ${MathExtensions.round(location.speed.toDouble().toKiloMetersPerHour(), 2)} ${getString(R.string.kilometer_hour)}")
                     } else {

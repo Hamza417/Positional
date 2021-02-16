@@ -152,6 +152,7 @@
             android:layout_marginVertical="5dp"
             android:clickable="true"
             android:focusable="true"
+            android:background="@drawable/ripple"
             android:orientation="vertical"
             android:padding="10dp">
 

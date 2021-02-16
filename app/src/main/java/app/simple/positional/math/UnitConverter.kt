@@ -16,6 +16,13 @@ object UnitConverter {
     }
 
     /**
+     * Converts double value in m/s to km/h
+     */
+    fun Float.toKiloMetersPerHour(): Float {
+        return this * 3.6F
+    }
+
+    /**
      * Converts float value of meters to kilometers
      */
     fun Float.toKilometers(): Float {
@@ -34,6 +41,13 @@ object UnitConverter {
      */
     fun Double.toMilesPerHour(): Double {
         return this * 0.621371
+    }
+
+    /**
+     * Converts double value in km/h to miles/hour
+     */
+    fun Float.toMilesPerHour(): Float {
+        return this.toKiloMetersPerHour() * 0.621371F
     }
 
     /**

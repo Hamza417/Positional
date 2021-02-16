@@ -70,8 +70,9 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
     }
 
     fun setSpeedValue(value: Float) {
-        setDial(value)
-        rotateNeedle(value)
+        println(value)
+        setDial(value * 2)
+        rotateNeedle(value * 2)
     }
 
     private fun setDial(value: Float) {
@@ -125,7 +126,7 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
      * Animates the needle color as the speed increases or decreases
      */
     private fun animateColorChange(value: Float) {
-        colorAnimation = ValueAnimator.ofObject(ArgbEvaluatorCompat(), lastColor, SpeedometerConstants.getSpeedometerColor(value / 2))
+        colorAnimation = ValueAnimator.ofObject(ArgbEvaluatorCompat(), lastColor, SpeedometerConstants.getSpeedometerColor(value / 2.0))
         colorAnimation!!.duration = 1000L
         colorAnimation!!.interpolator = AccelerateDecelerateInterpolator()
         colorAnimation!!.addUpdateListener { animation ->
@@ -160,15 +161,15 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
      * @return [Float]
      */
     private fun Float.reifyNeedleAngle(): Float {
-        return (if (this >= 600F) {
+        return if (this >= 1200F) {
             1200F
         } else {
-            if (this > 150F) {
+            if (this > 300F) {
                 this + needleAngleCompensator
             } else {
                 this
             }
-        }) * 2F
+        }
     }
 
     /**

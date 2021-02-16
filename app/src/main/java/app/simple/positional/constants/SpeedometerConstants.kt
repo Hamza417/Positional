@@ -7,11 +7,11 @@ object SpeedometerConstants {
 
     private const val speedometerColorValueDivider = 10.0F
 
-    fun getSpeedometerColor(value: Float): Int {
+    fun getSpeedometerColor(value: Double): Int {
         return parseColor(getColor()[getValue(value)])
     }
 
-    private fun getValue(value: Float): Int {
+    private fun getValue(value: Double): Int {
         return if ((value / speedometerColorValueDivider).roundToInt() == 0) {
             0
         } else {
