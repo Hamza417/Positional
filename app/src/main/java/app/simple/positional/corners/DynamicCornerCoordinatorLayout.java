@@ -8,18 +8,13 @@ import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 public class DynamicCornerCoordinatorLayout extends CoordinatorLayout {
-    public DynamicCornerCoordinatorLayout(@NonNull Context context) {
-        super(context);
-        LayoutBackground.setBackground(context, this);
-    }
-    
     public DynamicCornerCoordinatorLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        LayoutBackground.setBackground(context, this);
+        LayoutBackground.setBackground(context, this, attrs);
     }
     
     public DynamicCornerCoordinatorLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutBackground.setBackground(context, this);
+        LayoutBackground.setBackground(context, this, attrs);
     }
 }

@@ -157,11 +157,11 @@ object MainPreferences {
         return getSharedPreferences().getString(appLanguage, "default")
     }
 
-    fun setCornerRadius(@IntRange(from = 25, to = 300) radius: Int) {
+    fun setCornerRadius(@IntRange(from = 25, to = 400) radius: Int) {
         getSharedPreferences().edit().putInt(appCornerRadius, radius / 5).apply()
     }
 
     fun getCornerRadius(): Int {
-        return getSharedPreferences().getInt(appCornerRadius, 20)
+        return getSharedPreferences().getInt(appCornerRadius, 30)
     }
 }

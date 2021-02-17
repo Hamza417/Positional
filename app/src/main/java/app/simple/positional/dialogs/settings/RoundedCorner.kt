@@ -1,6 +1,7 @@
 package app.simple.positional.dialogs.settings
 
 import android.animation.ObjectAnimator
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,7 +54,7 @@ class RoundedCorner : CustomDialogFragment() {
 
         lastCornerValue = getCornerRadius() * 5
         radiusValue.text = buildSpannableString("${getCornerRadius()} px", 2)
-        radiusSeekBar.max = 300
+        radiusSeekBar.max = 400
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             radiusSeekBar.min = 25
         }
@@ -85,17 +86,18 @@ class RoundedCorner : CustomDialogFragment() {
 
         cancel.setOnClickListener {
             isValueSet = false
+            MainPreferences.setCornerRadius(lastCornerValue)
             this.dismiss()
         }
 
-        this.dialog?.setOnDismissListener {
-            if (isValueSet) {
-                MainPreferences.setCornerRadius(lastCornerValue)
-                requireActivity().recreate()
-            }
-        }
-
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        if (isValueSet) {
+            requireActivity().recreate()
+        }
+        super.onDismiss(dialog)
     }
 
     private fun updateBackground(radius: Float) {

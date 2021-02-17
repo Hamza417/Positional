@@ -2,6 +2,7 @@ package app.simple.positional.corners;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.util.AttributeSet;
 import android.view.ViewGroup;
 
 import com.google.android.material.shape.CornerFamily;
@@ -12,8 +13,8 @@ import app.simple.positional.R;
 import app.simple.positional.preference.MainPreferences;
 
 class LayoutBackground {
-    static void setBackground(Context context, ViewGroup viewGroup) {
-        TypedArray theme = context.getTheme().obtainStyledAttributes(R.styleable.DynamicCornerLayout);
+    static void setBackground(Context context, ViewGroup viewGroup, AttributeSet attrs) {
+        TypedArray theme = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DynamicCornerLayout, 0, 0);
         
         boolean roundTopCorners = theme.getBoolean(R.styleable.DynamicCornerLayout_roundTopCorners, false);
         boolean roundBottomCorners = theme.getBoolean(R.styleable.DynamicCornerLayout_roundBottomCorners, false);
