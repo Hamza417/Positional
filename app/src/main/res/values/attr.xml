@@ -78,6 +78,7 @@
                 default is false for both of them -->
         <attr name="roundTopCorners" format="boolean" />
         <attr name="roundBottomCorners" format="boolean" />
+        <attr name="roundAllCorners" format="boolean" />
     </declare-styleable>
 
 </resources>
