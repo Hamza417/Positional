@@ -104,80 +104,14 @@
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
-                    android:id="@+id/local_timezone"
+                    android:id="@+id/local_timezone_data"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/local_timezone"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/digital_time_24_hour"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/local_time_24hr"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/digital_time_12_hour"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/local_time_12hr"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/local_day"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/local_day"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/local_date"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/local_date"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/local_day_of_the_year"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/local_day_of_year"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/local_week_of_the_year"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/local_week_of_year"
+                    android:lines="7"
+                    android:lineSpacingExtra="10dp"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -203,36 +137,14 @@
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
-                android:id="@+id/time_zone_utc"
+                android:id="@+id/utc_time_data"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/utc_local_time_offset"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/time_utc"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/utc_current_time"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/date_utc"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/utc_current_date"
+                android:lines="3"
+                android:lineSpacingExtra="10dp"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
@@ -255,36 +167,14 @@
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
-                android:id="@+id/sun_azimuth"
+                android:id="@+id/sun_position_data"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/sun_azimuth"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/sun_distance"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/sun_distance"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/sun_altitude"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/sun_altitude"
+                android:lines="3"
+                android:lineSpacingExtra="10dp"
                 android:textSize="@dimen/info_text_secondary_size" />
         </LinearLayout>
 
@@ -318,47 +208,14 @@
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
-                    android:id="@+id/sunrise_time"
+                    android:id="@+id/sun_time_data"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/sun_sunrise"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/sun_noon"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/sun_noon"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/sunset_time"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/sun_sunset"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/sun_nadir"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/sun_nadir"
+                    android:lines="4"
+                    android:lineSpacingExtra="10dp"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -395,69 +252,14 @@
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
-                    android:id="@+id/astronomical_dawn_twilight"
+                    android:id="@+id/twilight_data"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/twilight_astronomical_dawn"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/nautical_dawn_twilight"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/twilight_nautical_dawn"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/civil_dawn_twilight"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/twilight_civil_dawn"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/civil_dusk_twilight"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/twilight_civil_dusk"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/nautical_dusk_twilight"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/twilight_nautical_dusk"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/astronomical_dusk_twilight"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/twilight_astronomical_dusk"
+                    android:lines="6"
+                    android:lineSpacingExtra="10dp"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -482,48 +284,16 @@
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
-                android:id="@+id/moon_azimuth"
+                android:id="@+id/moon_position_data"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/moon_azimuth"
+                android:lines="4"
+                android:lineSpacingExtra="10dp"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-            <TextView
-                android:id="@+id/moon_distance"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/moon_distance"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/moon_altitude"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/moon_altitude"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/moon_parallactic_angle"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/moon_parallactic_angle"
-                android:textSize="@dimen/info_text_secondary_size" />
         </LinearLayout>
 
         <FrameLayout
@@ -556,25 +326,14 @@
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
-                    android:id="@+id/moonrise_time"
+                    android:id="@+id/moon_time_data"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/moon_moonrise"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/moon_set_time"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/moon_moonset"
+                    android:lines="2"
+                    android:lineSpacingExtra="10dp"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -615,58 +374,14 @@
                     android:textSize="@dimen/info_text_primary_size" />
 
                 <TextView
-                    android:id="@+id/moon_fraction"
+                    android:id="@+id/moon_illumination_data"
                     style="@style/SecondaryTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                     android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/moon_fraction"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/moon_angle"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/moon_angle"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/moon_angle_state"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/moon_angle_state"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/moon_phase"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/moon_phase"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/moon_phase_angle"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/moon_phase_angle"
+                    android:lines="5"
+                    android:lineSpacingExtra="10dp"
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
@@ -692,47 +407,14 @@
                 android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
-                android:id="@+id/next_full_moon"
+                android:id="@+id/moon_dates_data"
                 style="@style/SecondaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/moon_full_moon"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/next_new_moon"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/moon_new_moon"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/next_first_quarter"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/moon_first_quarter"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/next_last_quarter"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/moon_last_quarter"
+                android:lines="4"
+                android:lineSpacingExtra="10dp"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
