@@ -29,6 +29,7 @@ class RoundedCorner : CustomDialogFragment() {
 
     private var objectAnimator: ObjectAnimator? = null
     private var lastCornerValue = 0
+    private var isValueSet = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
@@ -78,13 +79,20 @@ class RoundedCorner : CustomDialogFragment() {
         })
 
         set.setOnClickListener {
+            isValueSet = true
             this.dismiss()
-            requireActivity().recreate()
         }
 
         cancel.setOnClickListener {
-            MainPreferences.setCornerRadius(lastCornerValue)
+            isValueSet = false
             this.dismiss()
+        }
+
+        this.dialog?.setOnDismissListener {
+            if (isValueSet) {
+                MainPreferences.setCornerRadius(lastCornerValue)
+                requireActivity().recreate()
+            }
         }
 
         super.onViewCreated(view, savedInstanceState)

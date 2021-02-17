@@ -188,7 +188,7 @@ class GPS : Fragment() {
             mapView?.alpha = 0F
             mapView?.onCreate(savedInstanceState)
             mapView?.getMapAsync(callback)
-        }, 300)
+        }, 500)
 
         return view
     }
