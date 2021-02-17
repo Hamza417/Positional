@@ -72,9 +72,9 @@
             android:textColor="?attr/textSecondary"
             android:visibility="gone" />
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:clickable="true"
             android:clipChildren="false"
@@ -83,40 +83,45 @@
             android:paddingHorizontal="10dp">
 
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
                 android:src="@drawable/ic_access_time"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView"
+                style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:text="@string/local_time"
+                android:textSize="@dimen/info_text_primary_size"
+                app:layout_constraintBottom_toTopOf="@+id/local_timezone_data"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    style="@style/PrimaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/local_time"
-                    android:textSize="@dimen/info_text_primary_size" />
+            <TextView
+                android:id="@+id/local_timezone_data"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="10dp"
+                android:lines="7"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-                <TextView
-                    android:id="@+id/local_timezone_data"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:lines="7"
-                    android:lineSpacingExtra="10dp"
-                    android:textSize="@dimen/info_text_secondary_size" />
 
-            </LinearLayout>
-
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,8 +148,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:lines="3"
                 android:lineSpacingExtra="10dp"
+                android:lines="3"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
@@ -173,56 +178,59 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:lines="3"
                 android:lineSpacingExtra="10dp"
+                android:lines="3"
                 android:textSize="@dimen/info_text_secondary_size" />
         </LinearLayout>
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginVertical="20dp"
             android:clickable="true"
             android:focusable="true"
             android:paddingHorizontal="10dp">
 
             <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
-                android:layout_gravity="end|center_vertical"
                 android:src="@drawable/ic_sunrise"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:text="@string/sun_time"
+                android:textSize="@dimen/info_text_primary_size"
+                app:layout_constraintBottom_toTopOf="@id/sun_time_data"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    style="@style/PrimaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/sun_time"
-                    android:textSize="@dimen/info_text_primary_size" />
+            <TextView
+                android:id="@+id/sun_time_data"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="10dp"
+                android:lines="4"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-                <TextView
-                    android:id="@+id/sun_time_data"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:lines="4"
-                    android:lineSpacingExtra="10dp"
-                    android:textSize="@dimen/info_text_secondary_size" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginVertical="20dp"
@@ -235,36 +243,41 @@
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
                 android:src="@drawable/ic_twilight"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView3"
+                style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:text="@string/twilight"
+                android:textSize="@dimen/info_text_primary_size"
+                app:layout_constraintBottom_toTopOf="@id/twilight_data"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_editor_absoluteY="0dp" />
 
-                <TextView
-                    style="@style/PrimaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/twilight"
-                    android:textSize="@dimen/info_text_primary_size" />
+            <TextView
+                android:id="@+id/twilight_data"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="10dp"
+                android:lines="6"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-                <TextView
-                    android:id="@+id/twilight_data"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:lines="6"
-                    android:lineSpacingExtra="10dp"
-                    android:textSize="@dimen/info_text_secondary_size" />
 
-            </LinearLayout>
-
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -290,13 +303,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:lines="4"
                 android:lineSpacingExtra="10dp"
+                android:lines="4"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginVertical="20dp"
@@ -309,38 +322,42 @@
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
                 android:src="@drawable/ic_moon_phase"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView4"
+                style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                android:text="@string/moon_time"
+                android:textSize="@dimen/info_text_primary_size"
+                app:layout_constraintBottom_toTopOf="@id/moon_time_data"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    style="@style/PrimaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/moon_time"
-                    android:textSize="@dimen/info_text_primary_size" />
+            <TextView
+                android:id="@+id/moon_time_data"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="10dp"
+                android:lines="2"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-                <TextView
-                    android:id="@+id/moon_time_data"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:lines="2"
-                    android:lineSpacingExtra="10dp"
-                    android:textSize="@dimen/info_text_secondary_size" />
 
-            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </FrameLayout>
-
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginVertical="20dp"
@@ -355,38 +372,42 @@
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
-                android:layout_marginTop="20dp"
                 android:padding="10dp"
                 android:src="@drawable/moon_phase_02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:text="@string/moon_illumination"
+                android:textSize="@dimen/info_text_primary_size"
+                app:layout_constraintBottom_toTopOf="@id/moon_illumination_data"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    style="@style/PrimaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/moon_illumination"
-                    android:textSize="@dimen/info_text_primary_size" />
+            <TextView
+                android:id="@+id/moon_illumination_data"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="10dp"
+                android:lines="5"
+                android:textSize="@dimen/info_text_secondary_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-                <TextView
-                    android:id="@+id/moon_illumination_data"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:lines="5"
-                    android:lineSpacingExtra="10dp"
-                    android:textSize="@dimen/info_text_secondary_size" />
 
-            </LinearLayout>
-
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -402,7 +423,6 @@
                 style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
                 android:text="@string/moon_dates"
                 android:textSize="@dimen/info_text_primary_size" />
 
@@ -412,9 +432,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:lines="4"
+                android:layout_marginTop="10dp"
                 android:lineSpacingExtra="10dp"
+                android:lines="4"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>

@@ -33,9 +33,14 @@ body{
 }
 
 .inner-container h1{
-    margin-bottom: 30px;
     font-size: 30px;
     font-weight: 900;
+}
+
+.inner-container h6{
+    font-size: 10px;
+    font-weight: 900;
+    color: grey;
 }
 
 .text{
@@ -43,7 +48,6 @@ body{
     color: #545454;
     line-height: 30px;
     text-align: justify;
-    margin-bottom: 40px;
 }
 
 .skills{

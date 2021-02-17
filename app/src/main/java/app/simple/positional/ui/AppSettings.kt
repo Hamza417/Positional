@@ -228,7 +228,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
             popup.gravity = Gravity.END
 
             popup.setOnMenuItemClickListener { item ->
-                val legalNotes = HtmlViewer().newInstance(item.title.toString())
+                val legalNotes = HtmlViewer.newInstance(item.title.toString())
                 legalNotes.show(childFragmentManager, "legal_notes")
                 true
             }
@@ -237,9 +237,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         }
 
         changeLogs.setOnClickListener {
-            val uri: Uri = Uri.parse("https://github.com/Hamza417/Positional/releases")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(intent)
+            HtmlViewer.newInstance("Change Logs").show(childFragmentManager, "change_logs")
         }
 
         github.setOnClickListener {
@@ -249,15 +247,15 @@ class AppSettings : Fragment(), CoordinatesCallback {
         }
 
         translate.setOnClickListener {
-            HtmlViewer().newInstance("translator").show(childFragmentManager, "translator")
+            HtmlViewer.newInstance("translator").show(childFragmentManager, "translator")
         }
 
         foundIssues.setOnClickListener {
-            HtmlViewer().newInstance("Found Issue").show(childFragmentManager, "Found Issue")
+            HtmlViewer.newInstance("Found Issue").show(childFragmentManager, "Found Issue")
         }
 
         buyFull.setOnClickListener {
-            HtmlViewer().newInstance("Buy").show(childFragmentManager, "buy")
+            HtmlViewer.newInstance("Buy").show(childFragmentManager, "buy")
         }
     }
 

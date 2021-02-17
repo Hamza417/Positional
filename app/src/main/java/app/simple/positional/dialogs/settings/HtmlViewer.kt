@@ -1,6 +1,7 @@
 package app.simple.positional.dialogs.settings
 
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,19 +11,19 @@ import android.widget.Toast
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import app.simple.positional.R
+import app.simple.positional.util.isNetworkAvailable
 import app.simple.positional.views.CustomBottomSheetDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.net.URL
 
 class HtmlViewer : CustomBottomSheetDialog() {
 
     private lateinit var webView: WebView
-
-    fun newInstance(string: String): HtmlViewer {
-        val args = Bundle()
-        args.putString("source", string)
-        val fragment = HtmlViewer()
-        fragment.arguments = args
-        return fragment
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,8 @@ class HtmlViewer : CustomBottomSheetDialog() {
 
         webView = view.findViewById(R.id.web_view)
         webView.setBackgroundColor(0)
+        webView.settings.allowContentAccess = true
+        webView.settings.allowFileAccess = true
 
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
             if (requireContext().resources.configuration.uiMode and
@@ -81,7 +84,48 @@ class HtmlViewer : CustomBottomSheetDialog() {
                 "About Developer" -> {
                     webView.loadUrl("file:///android_asset/about_me/index.html")
                 }
+                "Change Logs" -> {
+                    webView.loadUrl("file:///android_asset/loading.html")
+                    downloadChangeLogs()
+                }
             }
+        }
+    }
+
+    private fun downloadChangeLogs() {
+        @Suppress("BlockingMethodInNonBlockingContext")
+        CoroutineScope(Dispatchers.IO).launch {
+
+            if (isNetworkAvailable(requireContext())) {
+                val url = "https://raw.githubusercontent.com/Hamza417/Positional/master/changelogs/changelogs.html"
+                URL(url).openStream().use { input ->
+                    if (File("${requireContext().cacheDir}/changelogs.html").exists()) {
+                        File("${requireContext().cacheDir}/changelogs.html").delete()
+                    }
+                    FileOutputStream(File("${requireContext().cacheDir}/changelogs.html")).use { output ->
+                        input.copyTo(output)
+                    }
+                }
+
+                withContext(Dispatchers.Main) {
+                    webView.loadUrl(Uri.fromFile(File("${requireContext().cacheDir}/changelogs.html")).toString())
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    webView.loadUrl("file:///android_asset/network.html")
+                }
+            }
+        }
+
+    }
+
+    companion object {
+        fun newInstance(string: String): HtmlViewer {
+            val args = Bundle()
+            args.putString("source", string)
+            val fragment = HtmlViewer()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

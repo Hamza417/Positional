@@ -92,7 +92,7 @@ class License : Fragment(), LicenseCheckerCallback {
             try {
                 licenseStatus.setTextAnimation(error, 500)
                 licenseLoader.visibility = View.GONE
-                HtmlViewer().newInstance("license_failed").show(childFragmentManager, "license_failed")
+                HtmlViewer.newInstance("license_failed").show(childFragmentManager, "license_failed")
             } catch (ignored: NullPointerException) {
             }
         }

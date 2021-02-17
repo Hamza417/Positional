@@ -114,7 +114,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
         }
 
         help.setOnClickListener {
-            HtmlViewer().newInstance("Custom Coordinates Help").show(childFragmentManager, "help")
+            HtmlViewer.newInstance("Custom Coordinates Help").show(childFragmentManager, "help")
         }
 
         addressInputEditText.addTextChangedListener(object : TextWatcher {
@@ -209,18 +209,15 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
         })
 
         setCoordinatesButton.setOnClickListener {
-            try {
+            isCoordinateSet = try {
                 MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
                 MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
-                isCoordinateSet = true
+                true
             } catch (e: java.lang.NumberFormatException) {
-                isCoordinateSet = false
-                this.dialog?.dismiss()
+                false
             } catch (e: java.lang.NullPointerException) {
-                isCoordinateSet = false
-                this.dialog?.dismiss()
+                false
             }
-            coordinatesCallback?.isCoordinatesSet(true)
             finish()
         }
 
@@ -279,6 +276,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
             } catch (ignored: NullPointerException) {
             }
             withContext(Dispatchers.Main) {
+                if (context.isNull()) return@withContext
                 try {
                     if (latitude != null && longitude != null) {
                         latitudeInputEditText.setText(latitude.toString())
@@ -359,7 +357,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
 
             withContext(Dispatchers.Main) {
                 coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
-                dialog?.dismiss()
+                this@Coordinates.dialog?.dismiss()
             }
         }
     }
