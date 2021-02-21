@@ -53,7 +53,7 @@
             <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/toolbarBackground"
+                android:backgroundTint="@color/card_background"
                 android:orientation="vertical"
                 app:roundBottomCorners="true"
                 app:roundTopCorners="true">
@@ -156,7 +156,7 @@
             <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/toolbarBackground"
+                android:backgroundTint="@color/card_background"
                 android:orientation="vertical"
                 app:roundBottomCorners="true"
                 app:roundTopCorners="true">
@@ -366,7 +366,7 @@
             <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/toolbarBackground"
+                android:backgroundTint="@color/card_background"
                 android:orientation="vertical"
                 app:roundBottomCorners="true"
                 app:roundTopCorners="true">
@@ -468,7 +468,7 @@
             <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/toolbarBackground"
+                android:backgroundTint="@color/card_background"
                 android:orientation="vertical"
                 app:roundBottomCorners="true"
                 app:roundTopCorners="true">

@@ -14,6 +14,7 @@
     <color name="rippleColor">#8E8E8E</color>
     <color name="clockDialColor">#ECECEC</color>
     <color name="edgeEffect">#EAEAEA</color>
+    <color name="card_background">@color/toolbarBackground</color>
 
     <!-- Bottom Bar Color -->
     <color name="iconRegular">#808080</color>
