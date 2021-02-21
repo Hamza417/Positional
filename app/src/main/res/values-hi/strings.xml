@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="licensing_key">@string/thisAppLicensingKey</string>
-    <string name="app_name">पोज़िशनल</string>
     <!-- Panels -->
     <string name="clock">समय</string>
     <string name="compass">दिशा-सूचक</string>
     <string name="gps">स्थान</string>
     <string name="level">स्तर</string>
-    <string name="settings">सैटिन्ग्स</string>
+    <string name="settings">सेटिंग्स</string>
     <!-- Info Headers -->
     <string name="clock_info">समय की जानकारी</string>
     <string name="compass_info">कम्पास की जानकारी</string>
@@ -55,9 +53,6 @@
     <string name="twilight_civil_dusk">नागरिक शाम:</string>
     <string name="twilight_nautical_dusk">समुद्री शाम:</string>
     <string name="twilight_astronomical_dusk">खगोलीय शाम:</string>
-    <string name="moon_azimuth">@string/sun_azimuth</string>
-    <string name="moon_distance">@string/sun_distance</string>
-    <string name="moon_altitude">@string/sun_altitude</string>
     <string name="moon_parallactic_angle">लंबन कोण:</string>
     <string name="moon_moonrise">चंद्रोदय:</string>
     <string name="moon_moonset">चन्द्रास्त:</string>
@@ -107,7 +102,7 @@
     <string name="info_error">जानकारी कॉपी नहीं की जा सकी!</string>
     <string name="reset_complete">रीसेट</string>
     <string name="invalid_coordinates">अमान्य निर्देशांक</string>
-    <string name="internet_connection_alert">(इंटरनेट कनेक्शन उपलब्ध नहीं)</string>
+    <string name="internet_connection_alert">इंटरनेट कनेक्शन उपलब्ध नहीं</string>
     <string name="error">एरर!</string>
     <string name="not_available">अनुपलब्ध</string>
     <string name="no_address_found">वर्तमान स्थान के लिए कोई पता नहीं मिला</string>
@@ -125,6 +120,7 @@
     <!-- Settings Heading -->
     <string name="theme">थीम</string>
     <string name="icon">आइकॉन</string>
+    <string name="corner_radius">कोने की त्रिज्या</string>
     <string name="units">इकाई</string>
     <string name="language">भाषा</string>
     <string name="specified_location">निर्दिष्ट स्थान का उपयोग करें</string>
@@ -132,7 +128,7 @@
     <string name="push_notification">संभर अधिसूचना</string>
     <string name="legal_notes">कानूनी नोट्स</string>
     <string name="app_version">ऐप का वर्श़न</string>
-    <string name="change_logs">चेंज लॉग</string>
+    <string name="development_status">विकास की स्थिति</string>
     <string name="found_an_issue">एक मुद्दा मिला?</string>
     <string name="translate">अनुवाद करें</string>
     <string name="buy_full">फुल वर्जन खरीदें</string>
@@ -142,12 +138,13 @@
     <string name="theme_night">डार्क</string>
     <string name="theme_auto">ऑटो (दिन / रात)</string>
     <string name="desc_icon">लॉन्चर में ऐप का मुख्य आइकन</string>
+    <string name="desc_radius">एप का गोल कोना</string>
     <string name="desc_specified_location">कस्टम अक्षांश, देशांतर और टाइमज़ोन निर्दिष्ट करें और जानकारी प्राप्त करने के लिए इसका उपयोग करें
         डिवाइस के जीपीएस का उपयोग करने के बजाय स्थान सूचना स्रोत\n\nGPS जानकारी अप्रभावित रहेगी</string>
     <string name="desc_screen_on">ऐप दिखाई देने पर डिवाइस को सोने से रोकता है</string>
     <string name="desc_push">अद्यतन और अन्य जानकारी के बारे में गैर दखल देने वाली अधिसूचना प्राप्त करें</string>
     <string name="desc_legal">ऐप की अस्वीकृति, गोपनीयता नीति और उपयोग की शर्तें पढ़ें</string>
-    <string name="desc_changes">अब तक के सभी बिल्ड के लिए विस्तृत परिवर्तन लॉग</string>
+    <string name="desc_changes">आगामी निर्माण के लिए ऐप्लिकेशन के वर्तमान विकास की स्थिति प्राप्त करें|</string>
     <string name="desc_git">ऐप का रिपॉजिटरी खोलें</string>
     <string name="desc_translate">अपनी मूल भाषा में एप्लिकेशन का अनुवाद करने में सहायता करें I</string>
     <string name="desc_buy_full_version">पूर्ण संस्करण खरीदकर विकास का समर्थन करें</string>
@@ -162,7 +159,6 @@
     <string name="bloom_skins">ब्लूम की थीम</string>
     <string name="show_code">कोड दिखाएं</string>
     <string name="sensor_speed">सेंसर की गति</string>
-    <string name="sensor_speed_smooth">@string/motion_type_smooth</string>
     <string name="sensor_speed_normal">समान्य</string>
     <string name="sensor_speed_fast">तेज</string>
     <string name="bloom_orange_oval">ऑरेंज ओवल</string>
@@ -176,12 +172,14 @@
     <string name="icon_default">पूर्व निर्धारित</string>
     <string name="icon_legacy">विरासत</string>
     <string name="icon_simple">साधारण</string>
+    <string name="icon_simple_no_shadow">सरल (कोई छाया नहीं)</string>
+    <string name="icon_simple_teal">सरल (चैती)</string>
+    <string name="icon_simple_pink">सिंपल (पिंक)</string>
     <string name="unit_metric">मीट्रिक</string>
     <string name="unit_imperial">इम्पीरियल</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">स्थान डेटा दर्ज करें</string>
     <string name="specified_data_list_locations">स्थान</string>
-    <string name="specified_hint_address">@string/gps_address</string>
     <string name="specified_hint_latitude">अक्षांश (±90)</string>
     <string name="specified_hint_longitude">देशान्तर (±180)</string>
     <string name="specified_hint_timezone">समयक्षेत्र (महाद्वीप / क्षेत्र)</string>
@@ -254,4 +252,14 @@
     <string name="south_east_SE">द-पू</string>
     <string name="east_E">पू</string>
     <string name="north_east_NE">उ-पू</string>
+    <!-- Graph -->
+    <string name="location_details">स्थान का विवरण</string>
+    <string name="min">न्यूनतम:</string>
+    <string name="max">अधिकत्तम:</string>
+    <string name="avg">औसत:</string>
+    <!-- UTM -->
+    <string name="utm_zone">क्षेत्र:</string>
+    <string name="utm_easting">पूरब का:</string>
+    <string name="utm_northing">नोर्थिंग:</string>
+    <string name="utm_meridian">सेंट्रल मेरिडियन:</string>
 </resources>

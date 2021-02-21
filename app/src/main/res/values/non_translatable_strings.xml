@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- These strings are not to be translated and should be used as is -->
+
+    <string name="licensing_key" translatable="false">@string/thisAppLicensingKey</string>
+    <string name="app_name" translatable="false">Positional</string>
+    <string name="moon_azimuth" translatable="false">@string/sun_azimuth</string>
+    <string name="moon_distance" translatable="false">@string/sun_distance</string>
+    <string name="moon_altitude" translatable="false">@string/sun_altitude</string>
+    <string name="sensor_speed_smooth" translatable="false">@string/motion_type_smooth</string>
+    <string name="specified_hint_address" translatable="false">@string/gps_address</string>
+</resources>

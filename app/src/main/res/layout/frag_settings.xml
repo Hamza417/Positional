@@ -53,7 +53,7 @@
             <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/card_background"
+                android:backgroundTint="@color/toolbarBackground"
                 android:orientation="vertical"
                 app:roundBottomCorners="true"
                 app:roundTopCorners="true">
@@ -156,7 +156,7 @@
             <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/card_background"
+                android:backgroundTint="@color/toolbarBackground"
                 android:orientation="vertical"
                 app:roundBottomCorners="true"
                 app:roundTopCorners="true">
@@ -366,7 +366,7 @@
             <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/card_background"
+                android:backgroundTint="@color/toolbarBackground"
                 android:orientation="vertical"
                 app:roundBottomCorners="true"
                 app:roundTopCorners="true">
@@ -441,7 +441,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/medium"
-                        android:text="@string/change_logs"
+                        android:text="@string/development_status"
                         android:textColor="?attr/textPrimary"
                         android:textSize="@dimen/settings_primary_text_size" />
 
@@ -468,7 +468,7 @@
             <app.simple.positional.corners.DynamicCornerLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/card_background"
+                android:backgroundTint="@color/toolbarBackground"
                 android:orientation="vertical"
                 app:roundBottomCorners="true"
                 app:roundTopCorners="true">

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="licensing_key">@string/thisAppLicensingKey</string>
-    <string name="app_name">Позиционен</string>
     <!-- Panels -->
     <string name="clock">Часовник</string>
     <string name="compass">Компас</string>
@@ -55,9 +53,6 @@
     <string name="twilight_civil_dusk">Зазоряване:</string>
     <string name="twilight_nautical_dusk">Морски здрач:</string>
     <string name="twilight_astronomical_dusk">Астрономически здрач:</string>
-    <string name="moon_azimuth">@string/sun_azimuth</string>
-    <string name="moon_distance">@string/sun_distance</string>
-    <string name="moon_altitude">@string/sun_altitude</string>
     <string name="moon_parallactic_angle">Паралактичен ъгъл:</string>
     <string name="moon_moonrise">Лунен изгрев:</string>
     <string name="moon_moonset">Лунен залез:</string>
@@ -125,6 +120,7 @@
     <!-- Settings Heading -->
     <string name="theme">Тема</string>
     <string name="icon">Икона</string>
+    <string name="corner_radius">Corner Radius</string>
     <string name="units">Мерни единици</string>
     <string name="language">Език</string>
     <string name="specified_location">Използвай указано местоположение</string>
@@ -132,7 +128,7 @@
     <string name="push_notification">Известия</string>
     <string name="legal_notes">Правни бележки</string>
     <string name="app_version">Версия на приложението</string>
-    <string name="change_logs">Списък с промени</string>
+    <string name="development_status">Development Status</string>
     <string name="found_an_issue">Намерихте проблем?</string>
     <string name="translate">Превод</string>
     <string name="buy_full">Купете пълната версия</string>
@@ -142,11 +138,12 @@
     <string name="theme_night">Тъмна</string>
     <string name="theme_auto">Автоматично (Ден/Нощ)</string>
     <string name="desc_icon">Главна икона на приложението</string>
+    <string name="desc_radius">Rounded corner radius of the app</string>
     <string name="desc_specified_location">Посочете персонализирана ширина, дължина и часова зона и го използвайте за извличане на информация        вместо да използвате GPS на устройството като източник на информация за местоположението\n\nGPS информацията ще остане незасегната</string>
     <string name="desc_screen_on">Предотвратяване заспиването на устройството, докато се използва приложението</string>
     <string name="desc_push">Получавайте ненатрапчиви известия за актуализации и друга информация</string>
     <string name="desc_legal">Прочетете Отказ от отговорност, Политика за поверителност и Условия за използване на приложението</string>
-    <string name="desc_changes">Подробни регистрационни файлове за всички компилации досега</string>
+    <string name="desc_changes">Get the app\'s current development status for the upcoming build</string>
     <string name="desc_git">Отворете хранилището на приложението</string>
     <string name="desc_translate">Помогнете за превода на приложението на вашия роден език</string>
     <string name="desc_buy_full_version">Подкрепете развитието на приложението чрез закупуване на пълната му версия</string>
@@ -161,7 +158,6 @@
     <string name="bloom_skins">Дизайн на цветенцата</string>
     <string name="show_code">Показване на кода</string>
     <string name="sensor_speed">Скорост на сензора</string>
-    <string name="sensor_speed_smooth">@string/motion_type_smooth</string>
     <string name="sensor_speed_normal">Нормално</string>
     <string name="sensor_speed_fast">Бързо</string>
     <string name="bloom_orange_oval">Оранжев овал</string>
@@ -175,12 +171,14 @@
     <string name="icon_default">Основен</string>
     <string name="icon_legacy">Завещание</string>
     <string name="icon_simple">Опростено</string>
+    <string name="icon_simple_no_shadow">Simple (No Shadow)</string>
+    <string name="icon_simple_teal">Simple (Teal)</string>
+    <string name="icon_simple_pink">Simple (Pink)</string>
     <string name="unit_metric">Метрични</string>
     <string name="unit_imperial">Британски</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Въведете местоположение</string>
     <string name="specified_data_list_locations">Местоположения</string>
-    <string name="specified_hint_address">@string/gps_address</string>
     <string name="specified_hint_latitude">Географска ширина (±90)</string>
     <string name="specified_hint_longitude">Географска дължина (±180)</string>
     <string name="specified_hint_timezone">Часова зона (Континент / Регион)</string>
@@ -254,4 +252,14 @@
     <string name="south_east_SE">ЮИ</string>
     <string name="east_E">И</string>
     <string name="north_east_NE">СИ</string>
+    <!-- Graph -->
+    <string name="location_details">Location Details</string>
+    <string name="min">Min:</string>
+    <string name="max">Max:</string>
+    <string name="avg">Avg:</string>
+    <!-- UTM -->
+    <string name="utm_zone">Zone:</string>
+    <string name="utm_easting">Easting:</string>
+    <string name="utm_northing">Northing:</string>
+    <string name="utm_meridian">Central Meridian:</string>
 </resources>

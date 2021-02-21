@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.net.URL
 
@@ -82,8 +83,8 @@ class HtmlViewer : CustomBottomSheetDialog() {
                     webView.loadUrl("file:///android_asset/html/translators.html")
                 }
                 "Change Logs" -> {
-                    webView.loadUrl("file:///android_asset/html/changelogs.html")
-                    //downloadChangeLogs()
+                    webView.loadUrl("file:///android_asset/html/loading.html")
+                    downloadChangeLogs()
                 }
             }
         }
@@ -92,24 +93,29 @@ class HtmlViewer : CustomBottomSheetDialog() {
     private fun downloadChangeLogs() {
         @Suppress("BlockingMethodInNonBlockingContext")
         CoroutineScope(Dispatchers.IO).launch {
-
-            if (isNetworkAvailable(requireContext())) {
-                val url = "https://raw.githubusercontent.com/Hamza417/Positional/master/changelogs/changelogs.html"
-                URL(url).openStream().use { input ->
-                    if (File("${requireContext().cacheDir}/changelogs.html").exists()) {
-                        File("${requireContext().cacheDir}/changelogs.html").delete()
+            try {
+                if (isNetworkAvailable(requireContext())) {
+                    val url = "https://raw.githubusercontent.com/Hamza417/Positional/master/app/src/main/assets/html/changelogs.html"
+                    URL(url).openStream().use { input ->
+                        if (File("${requireContext().cacheDir}/changelogs.html").exists()) {
+                            File("${requireContext().cacheDir}/changelogs.html").delete()
+                        }
+                        FileOutputStream(File("${requireContext().cacheDir}/changelogs.html")).use { output ->
+                            input.copyTo(output)
+                        }
                     }
-                    FileOutputStream(File("${requireContext().cacheDir}/changelogs.html")).use { output ->
-                        input.copyTo(output)
+
+                    withContext(Dispatchers.Main) {
+                        webView.loadUrl(Uri.fromFile(File("${requireContext().cacheDir}/changelogs.html")).toString())
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), R.string.internet_connection_alert, Toast.LENGTH_SHORT).show()
                     }
                 }
-
+            } catch (e: FileNotFoundException) {
                 withContext(Dispatchers.Main) {
-                    webView.loadUrl(Uri.fromFile(File("${requireContext().cacheDir}/changelogs.html")).toString())
-                }
-            } else {
-                withContext(Dispatchers.Main) {
-                    webView.loadUrl("file:///android_asset/network.html")
+                    webView.loadUrl("file:///android_asset/html/four_zero_four.html")
                 }
             }
         }
