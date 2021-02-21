@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="file:///android_asset/css/changelogs.css" rel="stylesheet">
+</head>
+
+<main>
+    <h2>Build73</h2>
+    <h4>Updated 22 Feb, 2021</h4>
+
+    <p>
+        During the test in past few day here are a few things I found that needs my attention. The
+        use of <b>Context</b> inside a Coroutine is a problematic approach because currently the
+        coroutines used are independent threads and they don't stop when the view is closed which
+        eventually leads to app getting stopped. This will be my primary objective to be addressed
+        in this build.
+    </p>
+</main>

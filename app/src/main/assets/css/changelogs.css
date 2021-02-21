@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700");
+ body {
+	 font-family: 'Open Sans', sans-serif;
+	 margin: 0;
+	 padding: 0 4em;
+}
+ main {
+	 min-width: 200px;
+	 max-width: 500px;
+	 margin: auto;
+}
+
+ h2 {
+     font-size: 2em;
+     margin-bottom: 0;
+}
+ h4 {
+     font-size: .5em;
+     color: rgb(97, 106, 107);
+}
+ p {
+	 font-size: 1em;
+	 line-height: 1.75em;
+	 border-top: 3px solid;
+	 border-image: linear-gradient(to right, #743ad5 0%, #d53a9d 100%);
+	 border-image-slice: 1;
+	 border-width: 3px;
+	 margin: 0;
+	 padding: 40px;
+	 counter-increment: section;
+	 position: relative;
+	 color: #34435e;
+}
+ p:before {
+	 content: counter(section);
+	 position: absolute;
+	 border-radius: 50%;
+	 padding: 10px;
+	 height: 1.25em;
+	 width: 1.25em;
+	 background-color: #34435e;
+	 text-align: center;
+	 line-height: 1.25em;
+	 color: #fff;
+	 font-size: 1em;
+}
+ p:nth-child(odd) {
+	 border-right: 3px solid;
+	 padding-left: 0;
+}
+ p:nth-child(odd):before {
+	 left: 100%;
+	 margin-left: -20px;
+}
+ p:nth-child(even) {
+	 border-left: 3px solid;
+	 padding-right: 0;
+}
+ p:nth-child(even):before {
+	 right: 100%;
+	 margin-right: -20px;
+}
+ p:first-child {
+	 border-top: 0;
+	 border-top-right-radius: 0;
+	 border-top-left-radius: 0;
+}
+ p:last-child {
+	 border-bottom-right-radius: 0;
+	 border-bottom-left-radius: 0;
+}

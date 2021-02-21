@@ -55,38 +55,35 @@ class HtmlViewer : CustomBottomSheetDialog() {
         if (this.arguments != null) {
             when (this.requireArguments().get("source")) {
                 getString(R.string.privacy_policy) -> {
-                    webView.loadUrl("file:///android_asset/privacy_policy.html")
+                    webView.loadUrl("file:///android_asset/html/privacy_policy.html")
                 }
                 getString(R.string.disclaimer) -> {
-                    webView.loadUrl("file:///android_asset/disclaimer.html")
+                    webView.loadUrl("file:///android_asset/html/disclaimer.html")
                 }
                 getString(R.string.terms_of_use) -> {
-                    webView.loadUrl("file:///android_asset/terms_and_conditions.html")
+                    webView.loadUrl("file:///android_asset/html/terms_and_conditions.html")
                 }
                 "Custom Coordinates Help" -> {
-                    webView.loadUrl("file:///android_asset/custom_coordinates_help.html")
+                    webView.loadUrl("file:///android_asset/html/custom_coordinates_help.html")
                 }
                 getString(R.string.permissions) -> {
-                    webView.loadUrl("file:///android_asset/required_permissions.html")
+                    webView.loadUrl("file:///android_asset/html/required_permissions.html")
                 }
                 "license_failed" -> {
-                    webView.loadUrl("file:///android_asset/license_failed.html")
+                    webView.loadUrl("file:///android_asset/html/license_failed.html")
                 }
                 "Found Issue" -> {
-                    webView.loadUrl("file:///android_asset/found_issue.html")
+                    webView.loadUrl("file:///android_asset/html/found_issue.html")
                 }
                 "Buy" -> {
-                    webView.loadUrl("file:///android_asset/buy_full.html")
+                    webView.loadUrl("file:///android_asset/html/buy_full.html")
                 }
                 "translator" -> {
-                    webView.loadUrl("file:///android_asset/translators.html")
-                }
-                "About Developer" -> {
-                    webView.loadUrl("file:///android_asset/about_me/index.html")
+                    webView.loadUrl("file:///android_asset/html/translators.html")
                 }
                 "Change Logs" -> {
-                    webView.loadUrl("file:///android_asset/loading.html")
-                    downloadChangeLogs()
+                    webView.loadUrl("file:///android_asset/html/changelogs.html")
+                    //downloadChangeLogs()
                 }
             }
         }

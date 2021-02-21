@@ -58,7 +58,7 @@ class PermissionDialog : CustomBottomSheetDialog() {
             Toast.makeText(requireContext(), "If you are having trouble viewing this make sure you are using the latest WebView", Toast.LENGTH_LONG).show()
         }
 
-        webView.loadUrl("file:///android_asset/required_permissions.html")
+        webView.loadUrl("file:///android_asset/html/required_permissions.html")
 
         grant.setOnClickListener {
             if (permissionCallbacks != null) {
