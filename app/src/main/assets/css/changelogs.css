@@ -6,7 +6,7 @@
 }
  main {
 	 min-width: 200px;
-	 max-width: 500px;
+	 max-width: 600px;
 	 margin: auto;
 }
 
@@ -29,7 +29,6 @@
 	 padding: 40px;
 	 counter-increment: section;
 	 position: relative;
-	 color: #34435e;
 }
  p:before {
 	 content: counter(section);
