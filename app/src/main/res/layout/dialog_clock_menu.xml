@@ -1,98 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="?attr/toolbarBackground"
+    android:backgroundTint="@android:color/transparent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:orientation="vertical"
-    android:padding="@dimen/options_container_horizontal_padding"
-    app:roundTopCorners="true">
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/clock_needle_theme"
+    <app.simple.positional.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ripple_btn"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal"
-        android:padding="@dimen/options_sub_item_padding">
+        android:backgroundTint="?attr/toolbarBackground"
+        android:padding="@dimen/options_container_horizontal_padding"
+        android:orientation="vertical"
+        android:elevation="40dp"
+        android:translationZ="20dp"
+        android:layout_margin="@dimen/options_container_horizontal_padding">
 
         <TextView
             android:id="@+id/clock_needle_theme_text"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:drawablePadding="@dimen/options_text_margin_start"
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
+            android:padding="@dimen/options_sub_item_padding"
             android:text="@string/needles"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:drawableStartCompat="@drawable/ic_navigation"
             app:drawableTint="?attr/iconRegular" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/clock_motion_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ripple_btn"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal"
-        android:padding="@dimen/options_sub_item_padding">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/dividerColor"
+            android:layout_marginVertical="@dimen/options_sub_item_padding" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/clock_motion_type_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:drawablePadding="@dimen/options_text_margin_start"
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
+            android:padding="@dimen/options_sub_item_padding"
             android:text="@string/motion_type"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:drawableStartCompat="@drawable/ic_motion_type"
             app:drawableTint="?attr/iconRegular" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/clock_menu_default_time_format"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ripple_btn"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal"
-        android:padding="@dimen/options_sub_item_padding">
-
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/clock_menu_default_time_format"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:drawablePadding="@dimen/options_text_margin_start"
-            android:fontFamily="@font/regular"
-            android:gravity="center_vertical"
-            android:text="@string/time_format"
-            android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size"
-            app:drawableStartCompat="@drawable/ic_twenty_four_hours"
-            app:drawableTint="?attr/iconRegular" />
+            android:background="@drawable/ripple_btn"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_sub_item_padding">
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/toggle_default_time_format"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/options_icon_size"
-            android:checked="true"
-            android:thumb="@drawable/switch_thumb"
-            app:track="@drawable/switch_track" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="@string/time_format"
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableStartCompat="@drawable/ic_twenty_four_hours"
+                app:drawableTint="?attr/iconRegular" />
 
-    </LinearLayout>
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_default_time_format"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/options_icon_size"
+                android:checked="true"
+                android:thumb="@drawable/switch_thumb"
+                app:track="@drawable/switch_track" />
 
-</app.simple.positional.corners.DynamicCornerLinearLayout>
+        </LinearLayout>
+
+    </app.simple.positional.corners.DynamicCornerLinearLayout>
+
+</LinearLayout>

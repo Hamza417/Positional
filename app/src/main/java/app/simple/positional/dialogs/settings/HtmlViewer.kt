@@ -12,7 +12,7 @@ import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import app.simple.positional.R
 import app.simple.positional.util.isNetworkAvailable
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,7 +21,7 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.net.URL
 
-class HtmlViewer : CustomBottomSheetDialog() {
+class HtmlViewer : CustomBottomSheetDialogFragment() {
 
     private lateinit var webView: WebView
 

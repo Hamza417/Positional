@@ -34,7 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:fontFamily="@font/medium"
+            android:fontFamily="@font/heading"
+            android:textStyle="bold"
             android:text="@string/gps"
             android:textColor="?attr/textPrimary"
             android:textSize="@dimen/top_bar_text_size" />
@@ -56,7 +57,7 @@
             android:layout_gravity="center_vertical|end"
             android:layout_marginEnd="20dp"
             android:background="@drawable/ripple_btn"
-            android:src="@drawable/ic_more_horiz"
+            android:src="@drawable/ic_menu"
             android:contentDescription="@string/gps_options"
             android:tint="?attr/iconColor" />
 

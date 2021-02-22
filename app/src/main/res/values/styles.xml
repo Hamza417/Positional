@@ -46,6 +46,7 @@
         <item name="android:windowMinWidthMinor">100%</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:colorEdgeEffect">?attr/appAccent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
         <item name="android:windowEnterAnimation">@anim/bottom_sheet_dialog_in</item>
         <item name="android:windowExitAnimation">@anim/bottom_sheet_dialog_out</item>
     </style>

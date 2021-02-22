@@ -8,10 +8,10 @@ import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.ui.AppSettings
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
-class Units(private val weakReference: WeakReference<AppSettings>) : CustomBottomSheetDialog() {
+class Units(private val weakReference: WeakReference<AppSettings>) : CustomBottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

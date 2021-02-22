@@ -9,10 +9,10 @@ import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
-class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialog() {
+class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)

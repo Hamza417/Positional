@@ -1,88 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dialog_height"
-    android:backgroundTint="@color/toolbarBackground"
-    android:orientation="vertical"
-    app:roundTopCorners="true"
-    tools:ignore="UselessParent">
+    android:layout_height="wrap_content"
+    android:backgroundTint="@android:color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:padding="@dimen/options_container_horizontal_padding">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <app.simple.positional.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:fadingEdge="vertical"
-        android:fadingEdgeLength="20dp"
-        android:paddingHorizontal="@dimen/all_corner_radius"
-        android:requiresFadingEdge="vertical">
+        android:layout_height="@dimen/dialog_height"
+        android:backgroundTint="@color/toolbarBackground"
+        android:elevation="40dp"
+        android:orientation="vertical">
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dialog_height"
-            app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
-
-            <WebView
-                android:id="@+id/permissions_webview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </androidx.core.widget.NestedScrollView>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="?attr/dividerColor" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/show_perm_dialog"
-            style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginHorizontal="10dp"
-            android:buttonTint="?attr/iconColor"
-            android:checked="true" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:fontFamily="@font/regular"
-            android:text="@string/show_again"
-            android:textColor="?attr/textSecondary"
-            android:textSize="@dimen/options_item_text_size" />
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="20dp"
+            android:requiresFadingEdge="vertical">
 
-        <Button
-            android:id="@+id/close"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/ripple_btn"
-            android:fontFamily="@font/medium"
-            android:text="@string/button_close"
-            android:textColor="?attr/textPrimary" />
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
-        <Button
-            android:id="@+id/grant"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/ripple_btn"
-            android:fontFamily="@font/medium"
-            android:text="@string/button_grant"
-            android:textColor="?attr/textPrimary" />
+                <WebView
+                    android:id="@+id/permissions_webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-    </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</app.simple.positional.corners.DynamicCornerLinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="?attr/dividerColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/show_perm_dialog"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginHorizontal="10dp"
+                android:buttonTint="?attr/iconColor"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="@string/show_again"
+                android:textColor="?attr/textSecondary"
+                android:textSize="@dimen/options_item_text_size" />
+
+            <Button
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/ripple_btn"
+                android:fontFamily="@font/medium"
+                android:text="@string/button_close"
+                android:textColor="?attr/textPrimary" />
+
+            <Button
+                android:id="@+id/grant"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/ripple_btn"
+                android:fontFamily="@font/medium"
+                android:text="@string/button_grant"
+                android:textColor="?attr/textPrimary" />
+
+        </LinearLayout>
+
+    </app.simple.positional.corners.DynamicCornerLinearLayout>
+
+</FrameLayout>

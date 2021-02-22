@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/toolbarBackground"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:roundTopCorners="true"
-    android:padding="20dp">
+    android:backgroundTint="@android:color/transparent">
 
-    <ImageView
+    <app.simple.positional.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/compass_calibrate"
-        tools:ignore="ContentDescription" />
+        android:backgroundTint="@color/toolbarBackground"
+        android:elevation="40dp"
+        android:padding="@dimen/options_container_horizontal_padding"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/regular"
-        android:gravity="center"
-        android:text="@string/compass_calibration_notice"
-        android:textAlignment="center"
-        android:textColor="?attr/textSecondary"
-        android:textSize="@dimen/description_text_size" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/compass_calibrate"
+            tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/calibrate_accuracy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/medium"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textColor="?attr/textPrimary"
-        android:textSize="@dimen/description_text_size" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginHorizontal="40dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/regular"
+            android:gravity="center"
+            android:text="@string/compass_calibration_notice"
+            android:textAlignment="center"
+            android:textColor="?attr/textSecondary"
+            android:textSize="@dimen/description_text_size" />
 
-</app.simple.positional.corners.DynamicCornerLinearLayout>
+        <TextView
+            android:id="@+id/calibrate_accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/description_text_size" />
+
+    </app.simple.positional.corners.DynamicCornerLinearLayout>
+
+</FrameLayout>

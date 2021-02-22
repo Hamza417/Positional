@@ -19,9 +19,9 @@ import app.simple.positional.preference.MainPreferences
 import app.simple.positional.sparkline.SparkLineLayout
 import app.simple.positional.util.ArrayHelper.isLastValueSame
 import app.simple.positional.util.HtmlHelper.fromHtml
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 
-class LocationExpansion : CustomBottomSheetDialog() {
+class LocationExpansion : CustomBottomSheetDialogFragment() {
 
     private var broadcastReceiver: BroadcastReceiver? = null
     private val broadcastFilter = IntentFilter()

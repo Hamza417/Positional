@@ -9,6 +9,7 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -226,8 +227,20 @@ class Clock : ScopedFragment() {
         })
 
         menu.setOnClickListener {
-            val clockMenu = WeakReference(ClockMenu(WeakReference(this)))
-            clockMenu.get()?.show(parentFragmentManager, "null")
+            val clockMenu = ClockMenu.newInstance()
+            clockMenu.clock = WeakReference(this)
+            clockMenu.show(parentFragmentManager, "null")
+            //parentFragmentManager.executePendingTransactions()
+            clockMenu.dialog?.setOnDismissListener {
+                requireView().animate()
+                        .scaleY(1f)
+                        .scaleX(1f)
+                        .translationY(0F)
+                        .alpha(1F)
+                        .setInterpolator(OvershootInterpolator(1.5F))
+                        .setDuration(500L)
+                        .start()
+            }
         }
 
         copyButton.setOnClickListener {

@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.activities.alias.*
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 
-class Icons : CustomBottomSheetDialog() {
+class Icons : CustomBottomSheetDialogFragment() {
 
     private lateinit var iconOne: RadioButton
     private lateinit var iconTwo: RadioButton

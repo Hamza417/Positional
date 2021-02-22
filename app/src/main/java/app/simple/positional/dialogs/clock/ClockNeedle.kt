@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import app.simple.positional.R
@@ -13,10 +12,10 @@ import app.simple.positional.constants.ClockSkinsConstants
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.ui.Clock
 import app.simple.positional.util.LocaleHelper
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
-class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDialog() {
+class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDialogFragment() {
 
     private lateinit var needleSkin: ViewPager
 
@@ -34,9 +33,6 @@ class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDi
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // This will prevent the underlying dialog from dimming preventing a flashy animation that can cause some issues to some users
-        this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
         needleSkin.adapter = ClockNeedleSkinsAdapter(requireContext())
         needleSkin.currentItem = ClockPreferences.getClockNeedleTheme()

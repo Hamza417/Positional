@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/app_corner_dialog_container"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:roundTopCorners="true"
-    android:backgroundTint="?attr/toolbarBackground"
-    android:padding="@dimen/options_item_padding">
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <LinearLayout
+    <app.simple.positional.corners.DynamicCornerLinearLayout
+        android:id="@+id/app_corner_dialog_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:backgroundTint="?attr/toolbarBackground"
+        android:elevation="40dp"
+        android:orientation="vertical"
+        android:padding="@dimen/options_item_padding">
 
         <TextView
             android:id="@+id/app_corner_radius_textview"
@@ -62,6 +64,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </app.simple.positional.corners.DynamicCornerLinearLayout>
 
-</app.simple.positional.corners.DynamicCornerFrameLayout>
+</FrameLayout>

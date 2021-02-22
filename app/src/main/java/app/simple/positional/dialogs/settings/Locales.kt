@@ -10,9 +10,9 @@ import app.simple.positional.R
 import app.simple.positional.adapters.LocaleAdapter
 import app.simple.positional.callbacks.LocaleCallback
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 
-class Locales : CustomBottomSheetDialog(), LocaleCallback {
+class Locales : CustomBottomSheetDialogFragment(), LocaleCallback {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var localeAdapter: LocaleAdapter

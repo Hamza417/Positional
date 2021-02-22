@@ -15,10 +15,10 @@ import app.simple.positional.preference.CompassPreference.isFlowerBloomOn
 import app.simple.positional.preference.CompassPreference.setDirectionCode
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
 import app.simple.positional.ui.Compass
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
-class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialog() {
+class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

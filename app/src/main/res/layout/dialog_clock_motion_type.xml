@@ -1,61 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:backgroundTint="@color/toolbarBackground"
     android:orientation="vertical"
-    app:roundTopCorners="true"
+    android:clipToPadding="false"
+    android:clipChildren="false"
     android:padding="@dimen/options_container_horizontal_padding">
 
-    <LinearLayout
+    <app.simple.positional.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/options_item_padding">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:padding="@dimen/options_container_horizontal_padding"
+        android:backgroundTint="@color/toolbarBackground"
+        android:elevation="40dp"
+        android:translationZ="20dp"
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
-            android:layout_weight="1"
-            android:fontFamily="@font/regular"
-            android:text="@string/motion_type_smooth"
-            android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
 
-        <RadioButton
-            android:id="@+id/motion_smooth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/iconColor" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/options_text_margin_start"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="@string/motion_type_smooth"
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
 
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/motion_smooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="?attr/iconColor" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/options_item_padding">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
-            android:layout_weight="1"
-            android:fontFamily="@font/regular"
-            android:text="@string/motion_type_tick"
-            android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
 
-        <RadioButton
-            android:id="@+id/motion_tick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/iconColor" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/options_text_margin_start"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="@string/motion_type_tick"
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
 
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/motion_tick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="?attr/iconColor" />
 
-</app.simple.positional.corners.DynamicCornerLinearLayout>
+        </LinearLayout>
+
+    </app.simple.positional.corners.DynamicCornerLinearLayout>
+
+</FrameLayout>

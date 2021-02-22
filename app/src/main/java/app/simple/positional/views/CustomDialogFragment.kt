@@ -29,7 +29,7 @@ open class CustomDialogFragment : DialogFragment(), CoroutineScope {
         window.attributes.width = FrameLayout.LayoutParams.MATCH_PARENT
         @Suppress("deprecation")
         window.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        window.setDimAmount(0.75f)
+        window.setDimAmount(0.5f)
         window.attributes.gravity = Gravity.CENTER
         window.attributes.width = (displayMetrics.widthPixels * 1f / 100f * 85f).toInt()
     }

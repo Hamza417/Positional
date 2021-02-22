@@ -13,13 +13,14 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.ui.Clock
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
-class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDialog() {
+class ClockMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var defaultTimeFormatContainer: LinearLayout
     private lateinit var defaultTimeFormatSwitch: SwitchCompat
+    lateinit var clock: WeakReference<Clock>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +54,7 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
             ClockPreferences.setDefaultClockTime(isChecked)
         }
 
-        view.findViewById<LinearLayout>(R.id.clock_needle_theme).setOnClickListener {
+        view.findViewById<TextView>(R.id.clock_needle_theme_text).setOnClickListener {
             if (BuildConfig.FLAVOR == "lite") {
                 Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
             } else {
@@ -62,14 +63,18 @@ class ClockMenu(private val clock: WeakReference<Clock>) : CustomBottomSheetDial
             }
         }
 
-        view.findViewById<LinearLayout>(R.id.clock_motion_type).setOnClickListener {
+        view.findViewById<TextView>(R.id.clock_motion_type_text).setOnClickListener {
             val clockMotionType = WeakReference(ClockMotionType(clock))
             clockMotionType.get()?.show(parentFragmentManager, "null")
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        clock.clear()
+    companion object {
+        fun newInstance(): ClockMenu {
+            val args = Bundle()
+            val fragment = ClockMenu()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

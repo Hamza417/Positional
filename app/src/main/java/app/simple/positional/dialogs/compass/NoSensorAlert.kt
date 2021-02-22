@@ -9,9 +9,9 @@ import android.widget.CheckBox
 import app.simple.positional.R
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.preference.LevelPreferences
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 
-class NoSensorAlert : CustomBottomSheetDialog() {
+class NoSensorAlert : CustomBottomSheetDialogFragment() {
 
     fun newInstance(string: String): NoSensorAlert {
         val args = Bundle()

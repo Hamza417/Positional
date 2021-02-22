@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dialog_height"
-    android:backgroundTint="@color/toolbarBackground"
-    app:roundBottomCorners="true"
-    app:roundTopCorners="true">
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:clipChildren="false"
+    android:backgroundTint="@android:color/transparent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/locale_recycler_view"
+    <app.simple.positional.corners.DynamicCornerFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingVertical="@dimen/options_container_vertical_padding" />
+        android:layout_height="@dimen/dialog_height"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:backgroundTint="@color/toolbarBackground"
+        android:elevation="40dp"
+        android:paddingVertical="@dimen/options_container_vertical_padding">
 
-</app.simple.positional.corners.DynamicCornerFrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/locale_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false" />
+
+    </app.simple.positional.corners.DynamicCornerFrameLayout>
+
+</FrameLayout>

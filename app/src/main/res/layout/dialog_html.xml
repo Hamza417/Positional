@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/toolbarBackground"
-    app:roundTopCorners="true">
+    android:background="@android:color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <androidx.core.widget.NestedScrollView
+    <app.simple.positional.corners.DynamicCornerCoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_height"
-        android:clipToPadding="false"
-        android:fadingEdge="vertical"
-        android:fadingEdgeLength="25dp"
-        android:requiresFadingEdge="vertical"
-        app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:backgroundTint="@color/toolbarBackground"
+        android:elevation="40dp">
 
-        <WebView
-            android:id="@+id/web_view"
+        <app.simple.positional.corners.DynamicCornersNestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="25dp"
+            android:requiresFadingEdge="vertical"
+            android:backgroundTint="@color/toolbarBackground"
+            app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
-    </androidx.core.widget.NestedScrollView>
+            <WebView
+                android:id="@+id/web_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-</app.simple.positional.corners.DynamicCornerCoordinatorLayout>
+        </app.simple.positional.corners.DynamicCornersNestedScrollView>
+    </app.simple.positional.corners.DynamicCornerCoordinatorLayout>
+</FrameLayout>

@@ -14,12 +14,12 @@ import androidx.webkit.WebViewFeature
 import app.simple.positional.R
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.preference.MainPreferences.setShowPermissionDialog
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 
-class PermissionDialog : CustomBottomSheetDialog() {
+class PermissionDialogFragment : CustomBottomSheetDialogFragment() {
 
-    fun newInstance(): PermissionDialog {
-        return PermissionDialog()
+    fun newInstance(): PermissionDialogFragment {
+        return PermissionDialogFragment()
     }
 
     private var permissionCallbacks: PermissionCallbacks? = null

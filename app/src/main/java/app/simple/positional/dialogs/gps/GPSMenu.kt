@@ -8,10 +8,10 @@ import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.R
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.ui.GPS
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
-class GPSMenu(private val weakReference: WeakReference<GPS>) : CustomBottomSheetDialog() {
+class GPSMenu(private val weakReference: WeakReference<GPS>) : CustomBottomSheetDialogFragment() {
 
     private lateinit var toggleLabel: SwitchCompat
     private lateinit var toggleSatellite: SwitchCompat

@@ -19,14 +19,14 @@ import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.UTMConverter
 import app.simple.positional.util.setTextAnimation
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CoordinatesExpansion : CustomBottomSheetDialog() {
+class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
 
     private lateinit var broadcastReceiver: BroadcastReceiver
     private val handler = Handler(Looper.getMainLooper())

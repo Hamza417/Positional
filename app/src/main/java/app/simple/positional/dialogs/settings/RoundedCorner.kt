@@ -11,22 +11,22 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import app.simple.positional.R
-import app.simple.positional.corners.DynamicCornerFrameLayout
+import app.simple.positional.corners.DynamicCornerLinearLayout
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getCornerRadius
 import app.simple.positional.util.SpannableStringBuilder.buildSpannableString
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 
-class RoundedCorner : CustomBottomSheetDialog() {
+class RoundedCorner : CustomBottomSheetDialogFragment() {
 
     private lateinit var radiusValue: TextView
     private lateinit var radiusSeekBar: SeekBar
     private lateinit var cancel: Button
     private lateinit var set: Button
-    private lateinit var cornerFrameLayout: DynamicCornerFrameLayout
+    private lateinit var cornerFrameLayout: DynamicCornerLinearLayout
 
     private var objectAnimator: ObjectAnimator? = null
     private var lastCornerValue = 0

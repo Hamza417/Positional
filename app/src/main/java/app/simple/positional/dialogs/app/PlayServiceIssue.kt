@@ -8,9 +8,9 @@ import android.widget.Button
 import android.widget.CheckBox
 import app.simple.positional.R
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 
-class PlayServiceIssue : CustomBottomSheetDialog() {
+class PlayServiceIssue : CustomBottomSheetDialogFragment() {
 
     fun newInstance(): PlayServiceIssue {
         return PlayServiceIssue()

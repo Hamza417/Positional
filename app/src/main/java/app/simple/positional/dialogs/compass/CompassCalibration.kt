@@ -14,9 +14,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import app.simple.positional.R
 import app.simple.positional.util.HtmlHelper.fromHtml
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 
-class CompassCalibration : CustomBottomSheetDialog(), SensorEventListener {
+class CompassCalibration : CustomBottomSheetDialogFragment(), SensorEventListener {
 
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor

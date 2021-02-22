@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="?android:attr/buttonBarButtonStyle"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:backgroundTint="@color/toolbarBackground"
-    app:roundTopCorners="true">
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:padding="@dimen/options_container_horizontal_padding"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <app.simple.positional.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:orientation="vertical"
+        android:elevation="40dp"
+        android:translationZ="20dp"
+        android:backgroundTint="@color/toolbarBackground"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:padding="@dimen/options_container_horizontal_padding"
         tools:ignore="UselessParent">
 
         <TextView
@@ -32,6 +36,6 @@
             android:paddingTop="10dp"
             android:paddingBottom="20dp" />
 
-    </LinearLayout>
+    </app.simple.positional.corners.DynamicCornerLinearLayout>
 
-</app.simple.positional.corners.DynamicCornerFrameLayout>
+</FrameLayout>

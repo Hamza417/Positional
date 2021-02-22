@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.preference.ClockPreferences.getMovementType
 import app.simple.positional.preference.ClockPreferences.setMovementType
 import app.simple.positional.ui.Clock
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
-class ClockMotionType(private val clock: WeakReference<Clock>) : CustomBottomSheetDialog() {
+class ClockMotionType(private val clock: WeakReference<Clock>) : CustomBottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
@@ -34,9 +33,6 @@ class ClockMotionType(private val clock: WeakReference<Clock>) : CustomBottomShe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // This will prevent the underlying dialog from dimming preventing a flashy animation that can cause some issues to some users
-        this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
         setButton(getMovementType())
 

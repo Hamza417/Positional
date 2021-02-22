@@ -1,111 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/toolbarBackground"
-    android:orientation="vertical"
-    android:padding="@dimen/options_container_horizontal_padding"
-    app:roundTopCorners="true">
+    android:backgroundTint="@android:color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <LinearLayout
+    <app.simple.positional.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/options_item_padding">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:elevation="40dp"
+        android:backgroundTint="@color/toolbarBackground"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:padding="@dimen/options_container_horizontal_padding">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
-            android:layout_weight="1"
-            android:fontFamily="@font/regular"
-            android:text="@string/theme_day"
-            android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
 
-        <RadioButton
-            android:id="@+id/light"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/iconColor" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/options_text_margin_start"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="@string/theme_day"
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
 
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="?attr/iconColor" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/options_item_padding">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
-            android:layout_weight="1"
-            android:fontFamily="@font/regular"
-            android:text="@string/theme_night"
-            android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
 
-        <RadioButton
-            android:id="@+id/dark"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/iconColor" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/options_text_margin_start"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="@string/theme_night"
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
 
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="?attr/iconColor" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/options_item_padding">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
-            android:layout_weight="1"
-            android:fontFamily="@font/regular"
-            android:text="@string/theme_follow_system"
-            android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
 
-        <RadioButton
-            android:id="@+id/follow_system"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/iconColor" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/options_text_margin_start"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="@string/theme_follow_system"
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
 
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/follow_system"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="?attr/iconColor" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="@dimen/options_item_padding">
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
-            android:layout_weight="1"
-            android:fontFamily="@font/regular"
-            android:text="@string/theme_auto"
-            android:textColor="?attr/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
 
-        <RadioButton
-            android:id="@+id/day_night"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/iconColor" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/options_text_margin_start"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="@string/theme_auto"
+                android:textColor="?attr/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
 
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/day_night"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="?attr/iconColor" />
 
-</app.simple.positional.corners.DynamicCornerLinearLayout>
+        </LinearLayout>
+
+    </app.simple.positional.corners.DynamicCornerLinearLayout>
+
+</FrameLayout>

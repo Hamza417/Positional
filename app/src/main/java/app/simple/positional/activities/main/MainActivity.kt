@@ -14,7 +14,7 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.corners.DynamicCornerFrameLayout
-import app.simple.positional.dialogs.app.PermissionDialog
+import app.simple.positional.dialogs.app.PermissionDialogFragment
 import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
@@ -109,7 +109,7 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (MainPreferences.getShowPermissionDialog()) {
-                val permissionDialog = PermissionDialog().newInstance()
+                val permissionDialog = PermissionDialogFragment().newInstance()
                 permissionDialog.show(supportFragmentManager, "permission_info")
             } else {
                 Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_LONG).show()

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornerCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dialog_height"
-    android:backgroundTint="@color/toolbarBackground"
-    app:roundTopCorners="true">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:padding="@dimen/options_container_horizontal_padding"
+    android:backgroundTint="@android:color/transparent">
 
-    <androidx.core.widget.NestedScrollView
+    <app.simple.positional.corners.DynamicCornersNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_height"
-        android:clipChildren="false"
-        android:clipToPadding="false"
+        android:backgroundTint="@color/toolbarBackground"
         android:padding="@dimen/options_container_horizontal_padding"
         app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
@@ -220,6 +221,6 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </app.simple.positional.corners.DynamicCornersNestedScrollView>
 
-</app.simple.positional.corners.DynamicCornerCoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

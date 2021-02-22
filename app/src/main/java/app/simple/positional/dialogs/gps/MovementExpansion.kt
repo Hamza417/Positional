@@ -17,10 +17,10 @@ import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.HtmlHelper
-import app.simple.positional.views.CustomBottomSheetDialog
+import app.simple.positional.views.CustomBottomSheetDialogFragment
 import app.simple.positional.views.Speedometer
 
-class MovementExpansion : CustomBottomSheetDialog() {
+class MovementExpansion : CustomBottomSheetDialogFragment() {
 
     private var broadcastReceiver: BroadcastReceiver? = null
 
