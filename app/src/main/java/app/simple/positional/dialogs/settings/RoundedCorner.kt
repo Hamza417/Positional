@@ -15,12 +15,12 @@ import app.simple.positional.corners.DynamicCornerFrameLayout
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getCornerRadius
 import app.simple.positional.util.SpannableStringBuilder.buildSpannableString
-import app.simple.positional.views.CustomDialogFragment
+import app.simple.positional.views.CustomBottomSheetDialog
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 
-class RoundedCorner : CustomDialogFragment() {
+class RoundedCorner : CustomBottomSheetDialog() {
 
     private lateinit var radiusValue: TextView
     private lateinit var radiusSeekBar: SeekBar
@@ -86,7 +86,6 @@ class RoundedCorner : CustomDialogFragment() {
 
         cancel.setOnClickListener {
             isValueSet = false
-            MainPreferences.setCornerRadius(lastCornerValue)
             this.dismiss()
         }
 
@@ -96,6 +95,8 @@ class RoundedCorner : CustomDialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         if (isValueSet) {
             requireActivity().recreate()
+        } else {
+            MainPreferences.setCornerRadius(lastCornerValue)
         }
         super.onDismiss(dialog)
     }

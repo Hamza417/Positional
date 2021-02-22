@@ -3,6 +3,8 @@
     android:id="@+id/app_corner_dialog_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:roundTopCorners="true"
     android:backgroundTint="?attr/toolbarBackground"
     android:padding="@dimen/options_item_padding">
 

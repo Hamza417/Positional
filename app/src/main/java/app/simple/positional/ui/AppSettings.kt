@@ -1,5 +1,6 @@
 package app.simple.positional.ui
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -223,14 +224,21 @@ class AppSettings : Fragment(), CoordinatesCallback {
         }
 
         legalNotes.setOnClickListener {
-            val popup = PopupMenu(requireContext(), legalNotes)
+            val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.CustomPopupMenu)
+            val popup = PopupMenu(wrapper, legalNotes, 0, 0, 0)
             popup.menuInflater.inflate(R.menu.legal_notes, popup.menu)
             popup.gravity = Gravity.END
+
+            this@AppSettings.view?.animate()?.alpha(0.5F)?.start()
 
             popup.setOnMenuItemClickListener { item ->
                 val legalNotes = HtmlViewer.newInstance(item.title.toString())
                 legalNotes.show(childFragmentManager, "legal_notes")
                 true
+            }
+
+            popup.setOnDismissListener {
+                this@AppSettings.view?.animate()?.alpha(1F)?.start()
             }
 
             popup.show()
