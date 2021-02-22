@@ -20,11 +20,11 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
-import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.room.Room
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.database.LocationDatabase
@@ -54,15 +54,13 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.IOException
+import java.lang.Runnable
 import java.lang.ref.WeakReference
 import java.util.*
 
-class GPS : Fragment() {
+class GPS : ScopedFragment() {
 
     fun newInstance(): GPS {
         val args = Bundle()
@@ -223,11 +221,12 @@ class GPS : Fragment() {
 
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                if (intent != null) {
-                    when (intent.action) {
-                        "location" -> {
-                            CoroutineScope(Dispatchers.IO).launch {
-                                location = intent.getParcelableExtra("location") ?: return@launch
+                when (intent!!.action) {
+                    "location" -> {
+                        launch {
+                            withContext(Dispatchers.Default) {
+                                location = intent.getParcelableExtra("location")
+                                        ?: return@withContext
 
                                 if (!distanceSingleton.isInitialLocationSet!!) {
                                     distanceSingleton.initialPointCoordinates = LatLng(location!!.latitude, location!!.longitude)
@@ -322,11 +321,11 @@ class GPS : Fragment() {
                                 }
                             }
                         }
-                        "provider" -> {
-                            providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
-                            providerSource.text = fromHtml("<b>${getString(R.string.gps_source)}</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
-                            locationIconStatusUpdates()
-                        }
+                    }
+                    "provider" -> {
+                        providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
+                        providerSource.text = fromHtml("<b>${getString(R.string.gps_source)}</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
+                        locationIconStatusUpdates()
                     }
                 }
             }

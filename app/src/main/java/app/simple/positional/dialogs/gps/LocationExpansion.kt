@@ -20,10 +20,6 @@ import app.simple.positional.sparkline.SparkLineLayout
 import app.simple.positional.util.ArrayHelper.isLastValueSame
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.views.CustomBottomSheetDialog
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class LocationExpansion : CustomBottomSheetDialog() {
 
@@ -81,33 +77,28 @@ class LocationExpansion : CustomBottomSheetDialog() {
                 if (intent.action == "location") {
                     val location = intent.getParcelableExtra<Location>("location") ?: return
 
-                    CoroutineScope(Dispatchers.Default).launch {
+                    val accuracyData = manipulateDataForGraph(accuracyData, location.accuracy)
+                    val altitudeData = manipulateDataForGraph(altitudeData, location.altitude.toFloat())
 
-                        val accuracyData = manipulateDataForGraph(accuracyData, location.accuracy)
-                        val altitudeData = manipulateDataForGraph(altitudeData, location.altitude.toFloat())
+                    val accuracy: Spanned?
+                    val altitude: Spanned?
+                    val accuracyInfo = prepareGraphInformation(accuracyData)
+                    val altitudeInfo = prepareGraphInformation(altitudeData)
 
-                        val accuracy: Spanned?
-                        val altitude: Spanned?
-                        val accuracyInfo = prepareGraphInformation(accuracyData)
-                        val altitudeInfo = prepareGraphInformation(altitudeData)
-
-                        if (MainPreferences.getUnit()) { // If unit is metric
-                            accuracy = fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${MathExtensions.round(location.accuracy.toDouble(), 2)} ${getString(R.string.meter)}")
-                            altitude = fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${MathExtensions.round(location.altitude, 2)} ${getString(R.string.meter)}")
-                        } else { // else imperial
-                            accuracy = fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${MathExtensions.round(location.accuracy.toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
-                            altitude = fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${MathExtensions.round(location.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
-                        }
-
-                        withContext(Dispatchers.Main) {
-                            accuracyChart.setData(accuracyData)
-                            altitudeChart.setData(altitudeData)
-                            accuracyTextView.text = accuracy
-                            altitudeTextView.text = altitude
-                            accuracyInfoTextView.text = accuracyInfo
-                            altitudeInfoTextView.text = altitudeInfo
-                        }
+                    if (MainPreferences.getUnit()) { // If unit is metric
+                        accuracy = fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${MathExtensions.round(location.accuracy.toDouble(), 2)} ${getString(R.string.meter)}")
+                        altitude = fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${MathExtensions.round(location.altitude, 2)} ${getString(R.string.meter)}")
+                    } else { // else imperial
+                        accuracy = fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${MathExtensions.round(location.accuracy.toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
+                        altitude = fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${MathExtensions.round(location.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
                     }
+
+                    accuracyChart.setData(accuracyData)
+                    altitudeChart.setData(altitudeData)
+                    accuracyTextView.text = accuracy
+                    altitudeTextView.text = altitude
+                    accuracyInfoTextView.text = accuracyInfo
+                    altitudeInfoTextView.text = altitudeInfo
                 }
             }
         }

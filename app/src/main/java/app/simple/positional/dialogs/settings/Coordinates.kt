@@ -26,12 +26,10 @@ import app.simple.positional.database.LocationDatabase
 import app.simple.positional.math.TimeConverter.isValidTimeZone
 import app.simple.positional.model.Locations
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.resolveAttrColor
 import app.simple.positional.views.CustomDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -249,46 +247,44 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
     }
 
     private fun getCoordinatesFromAddress(address: String) {
-        CoroutineScope(Dispatchers.IO).launch {
-            withContext(Dispatchers.Main) {
-                addressIndicator.show()
-            }
+        launch {
+            addressIndicator.show()
 
-            if (context.isNull()) return@launch
             val geocoder = Geocoder(requireContext())
             val addresses: MutableList<Address>?
             var latitude: Double? = null
             var longitude: Double? = null
 
-            MainPreferences.setAddress(address)
+            withContext(Dispatchers.IO) {
+
+                MainPreferences.setAddress(address)
+
+                try {
+                    @Suppress("BlockingMethodInNonBlockingContext")
+                    /**
+                     * [Dispatchers.IO] can withstand blocking calls
+                     */
+                    addresses = geocoder.getFromLocationName(address, 1)
+                    if (addresses != null && addresses.isNotEmpty()) {
+                        latitude = addresses[0].latitude
+                        longitude = addresses[0].longitude
+                    }
+                } catch (ignored: IOException) {
+                } catch (ignored: NullPointerException) {
+                }
+            }
 
             try {
-                @Suppress("BlockingMethodInNonBlockingContext")
-                /**
-                 * [Dispatchers.IO] can withstand blocking calls
-                 */
-                addresses = geocoder.getFromLocationName(address, 1)
-                if (addresses != null && addresses.isNotEmpty()) {
-                    latitude = addresses[0].latitude
-                    longitude = addresses[0].longitude
+                if (latitude != null && longitude != null) {
+                    latitudeInputEditText.setText(latitude.toString())
+                    longitudeInputEditText.setText(longitude.toString())
+                } else {
+                    latitudeInputEditText.text?.clear()
+                    longitudeInputEditText.text?.clear()
                 }
-            } catch (ignored: IOException) {
+                addressIndicator.hide()
             } catch (ignored: NullPointerException) {
-            }
-            withContext(Dispatchers.Main) {
-                if (context.isNull()) return@withContext
-                try {
-                    if (latitude != null && longitude != null) {
-                        latitudeInputEditText.setText(latitude.toString())
-                        longitudeInputEditText.setText(longitude.toString())
-                    } else {
-                        latitudeInputEditText.text?.clear()
-                        longitudeInputEditText.text?.clear()
-                    }
-                    addressIndicator.hide()
-                } catch (ignored: NullPointerException) {
-                } catch (ignored: UninitializedPropertyAccessException) {
-                }
+            } catch (ignored: UninitializedPropertyAccessException) {
             }
         }
     }
@@ -331,34 +327,34 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
     }
 
     private fun finish() {
-        CoroutineScope(Dispatchers.Default).launch {
-            MainPreferences.setCustomCoordinates(isCoordinateSet)
-            if (isCoordinateSet && isValidTimeZone) {
-                MainPreferences.setTimeZone(timezoneInputEditText.text.toString())
+        launch {
+            withContext(Dispatchers.Default) {
+                if (isCoordinateSet && isValidTimeZone) {
+                    MainPreferences.setTimeZone(timezoneInputEditText.text.toString())
 
-                if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty() || timezoneInputEditText.text.toString().isNotEmpty()) {
-                    val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
-                    val locations = Locations()
+                    if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty() || timezoneInputEditText.text.toString().isNotEmpty()) {
+                        val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
+                        val locations = Locations()
 
-                    try {
-                        locations.address = addressInputEditText.text.toString()
-                        locations.latitude = latitudeInputEditText.text.toString().toDouble()
-                        locations.longitude = longitudeInputEditText.text.toString().toDouble()
-                        locations.timeZone = timezoneInputEditText.text.toString()
-                        locations.date = System.currentTimeMillis()
-                        db.locationDao()?.insetLocation(location = locations)
-                    } catch (e: NumberFormatException) {
-                        e.printStackTrace()
-                    } finally {
-                        db.close()
+                        try {
+                            locations.address = addressInputEditText.text.toString()
+                            locations.latitude = latitudeInputEditText.text.toString().toDouble()
+                            locations.longitude = longitudeInputEditText.text.toString().toDouble()
+                            locations.timeZone = timezoneInputEditText.text.toString()
+                            locations.date = System.currentTimeMillis()
+                            db.locationDao()?.insetLocation(location = locations)
+                        } catch (e: NumberFormatException) {
+                            isCoordinateSet = false
+                        } finally {
+                            MainPreferences.setCustomCoordinates(isCoordinateSet)
+                            db.close()
+                        }
                     }
                 }
             }
 
-            withContext(Dispatchers.Main) {
-                coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
-                this@Coordinates.dialog?.dismiss()
-            }
+            coordinatesCallback?.isCoordinatesSet(isCoordinateSet)
+            this@Coordinates.dialog?.dismiss()
         }
     }
 }

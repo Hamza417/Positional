@@ -5,6 +5,7 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +17,11 @@ import app.simple.positional.R
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper.fromHtml
-import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.UTMConverter
 import app.simple.positional.util.setTextAnimation
 import app.simple.positional.views.CustomBottomSheetDialog
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -152,38 +151,47 @@ class CoordinatesExpansion : CustomBottomSheetDialog() {
     }
 
     private fun formatCoordinates(latitude: Double, longitude: Double) {
-        CoroutineScope(Dispatchers.Default).launch {
-            if (context.isNull()) return@launch
+        launch {
 
-            try {
-                val dmsLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude, 3, requireContext())}")
-                val dmsLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude, 3, requireContext())}")
-                val dmLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDM(latitude, requireContext())}")
-                val dmLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDM(longitude, requireContext())}")
-                val ddLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDD(latitude, requireContext())}")
-                val ddLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDD(longitude, requireContext())}")
-                val mgrsCoord = MGRSCoord.fromLatLon(Angle.fromDegreesLatitude(latitude), Angle.fromDegreesLongitude(longitude)).toString()
+            val dmsLatitude: Spanned
+            val dmsLongitude: Spanned
+            val dmLatitude: Spanned
+            val dmLongitude: Spanned
+            val ddLatitude: Spanned
+            val ddLongitude: Spanned
+            val mgrsCoord: String
+            val utmZone: Spanned
+            val utmEasting: Spanned
+            val utmNorthing: Spanned
+            val utmMeridian: Spanned
+
+            withContext(Dispatchers.Default) {
+                dmsLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude, 3, requireContext())}")
+                dmsLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude, 3, requireContext())}")
+                dmLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDM(latitude, requireContext())}")
+                dmLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDM(longitude, requireContext())}")
+                ddLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDD(latitude, requireContext())}")
+                ddLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDD(longitude, requireContext())}")
+                mgrsCoord = MGRSCoord.fromLatLon(Angle.fromDegreesLatitude(latitude), Angle.fromDegreesLongitude(longitude)).toString()
+
                 val utm = UTMConverter.getUTM(latitude, longitude)
-                val utmZone = fromHtml("<b>${getString(R.string.utm_zone)}</b> ${utm.zone}")
-                val utmEasting = fromHtml("<b>${getString(R.string.utm_easting)}</b> ${utm.easting}")
-                val utmNorthing = fromHtml("<b>${getString(R.string.utm_northing)}</b> ${utm.northing}")
-                val utmMeridian = fromHtml("<b>${getString(R.string.utm_meridian)}</b> ${utm.centralMeridian}")
-
-                withContext(Dispatchers.Main) {
-                    this@CoordinatesExpansion.dmsLatitude.text = dmsLatitude
-                    this@CoordinatesExpansion.dmsLongitude.text = dmsLongitude
-                    this@CoordinatesExpansion.mgrsCoordinates.text = mgrsCoord
-                    this@CoordinatesExpansion.utmZone.text = utmZone
-                    this@CoordinatesExpansion.utmEasting.text = utmEasting
-                    this@CoordinatesExpansion.utmNorthing.text = utmNorthing
-                    this@CoordinatesExpansion.utmMeridian.text = utmMeridian
-                    this@CoordinatesExpansion.dmLatitude.text = dmLatitude
-                    this@CoordinatesExpansion.dmLongitude.text = dmLongitude
-                    this@CoordinatesExpansion.ddLatitude.text = ddLatitude
-                    this@CoordinatesExpansion.ddLongitude.text = ddLongitude
-                }
-            } catch (ignored: IllegalStateException) {
+                utmZone = fromHtml("<b>${getString(R.string.utm_zone)}</b> ${utm.zone}")
+                utmEasting = fromHtml("<b>${getString(R.string.utm_easting)}</b> ${utm.easting}")
+                utmNorthing = fromHtml("<b>${getString(R.string.utm_northing)}</b> ${utm.northing}")
+                utmMeridian = fromHtml("<b>${getString(R.string.utm_meridian)}</b> ${utm.centralMeridian}")
             }
+
+            this@CoordinatesExpansion.dmsLatitude.text = dmsLatitude
+            this@CoordinatesExpansion.dmsLongitude.text = dmsLongitude
+            this@CoordinatesExpansion.mgrsCoordinates.text = mgrsCoord
+            this@CoordinatesExpansion.utmZone.text = utmZone
+            this@CoordinatesExpansion.utmEasting.text = utmEasting
+            this@CoordinatesExpansion.utmNorthing.text = utmNorthing
+            this@CoordinatesExpansion.utmMeridian.text = utmMeridian
+            this@CoordinatesExpansion.dmLatitude.text = dmLatitude
+            this@CoordinatesExpansion.dmLongitude.text = dmLongitude
+            this@CoordinatesExpansion.ddLatitude.text = ddLatitude
+            this@CoordinatesExpansion.ddLongitude.text = ddLongitude
         }
     }
 

@@ -9,19 +9,22 @@
     <h4>Update 22 Feb, 2021</h4>
 
     <p>
+        Updated all the threads inside the fragments
+    </p>
+
+    <p style="text-color:rgb(169, 169, 169)">
         I think I found a better way to run independent threads inside an activity scope and solve
         the crashes. Right now I am working on <b>Specified Coordinates</b> popup dialog since it
         was most prone to be getting crashed and so far it seems that it is working without any
-        issue. If this solution is reliable I will have to rewrite the codes of all the threads used
-        in this application.
+        issue. If this solution is reliable I will just have to rewrite the codes of all the threads
+        used in this application.
     </p>
 
-    <p>
+    <p style="text-color:rgb(169, 169, 169)">
         During the test in past few day here are a few things I found that needs my attention. The
         use of <b>Context</b> inside a Coroutine is a problematic approach because currently the
         coroutines used are independent threads and they don't stop when the view is closed which
         eventually leads to app getting stopped/crashed. This will be my primary objective to be
-        addressed
-        in this build.
+        addressed in this build.
     </p>
 </main>
