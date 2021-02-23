@@ -22,12 +22,6 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
     private lateinit var defaultTimeFormatSwitch: SwitchCompat
     lateinit var clock: WeakReference<Clock>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_clock_menu, container, false)
 

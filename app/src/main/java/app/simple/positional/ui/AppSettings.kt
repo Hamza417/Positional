@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
@@ -47,15 +48,15 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var theme: LinearLayout
     private lateinit var icon: LinearLayout
     private lateinit var corner: LinearLayout
-    private lateinit var customLocation: LinearLayout
-    private lateinit var pushNotification: LinearLayout
+    private lateinit var customLocation: ConstraintLayout
+    private lateinit var pushNotification: ConstraintLayout
     private lateinit var appVersion: LinearLayout
     private lateinit var legalNotes: LinearLayout
     private lateinit var changeLogs: LinearLayout
     private lateinit var github: LinearLayout
     private lateinit var foundIssues: LinearLayout
     private lateinit var translate: LinearLayout
-    private lateinit var keepScreenOn: LinearLayout
+    private lateinit var keepScreenOn: ConstraintLayout
 
     private lateinit var toggleNotification: SwitchCompat
     private lateinit var toggleKeepScreenOn: SwitchCompat

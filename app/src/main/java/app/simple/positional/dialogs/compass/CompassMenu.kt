@@ -29,10 +29,10 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
     private lateinit var toggleFlower: SwitchCompat
     private lateinit var toggleCode: SwitchCompat
     private lateinit var bloomText: TextView
-    private lateinit var bloomSkinsText: TextView
-    private lateinit var blooms: LinearLayout
+    private lateinit var blooms: TextView
     private lateinit var bloomSwitchContainer: LinearLayout
-    private lateinit var speed: LinearLayout
+    private lateinit var codeSwitchContainer: LinearLayout
+    private lateinit var speed: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_compass_menu, container, false)
@@ -40,9 +40,9 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
         toggleFlower = view.findViewById(R.id.toggle_flower)
         toggleCode = view.findViewById(R.id.toggle_code)
         bloomText = view.findViewById(R.id.compass_bloom_text)
-        bloomSkinsText = view.findViewById(R.id.compass_bloom_skins_text)
-        blooms = view.findViewById(R.id.compass_bloom_theme)
+        blooms = view.findViewById(R.id.compass_bloom_skins_text)
         bloomSwitchContainer = view.findViewById(R.id.bloom_switch_container)
+        codeSwitchContainer = view.findViewById(R.id.compass_menu_show_code)
         speed = view.findViewById(R.id.compass_speed)
 
         return view
@@ -55,7 +55,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
             toggleFlower.isChecked = isFlowerBloomOn()
         } else {
             bloomText.setTextColor(Color.GRAY)
-            bloomSkinsText.setTextColor(Color.GRAY)
+            blooms.setTextColor(Color.GRAY)
         }
 
         toggleFlower.setOnCheckedChangeListener { _, isChecked ->
@@ -85,6 +85,10 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
                 Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
                 toggleFlower.isChecked = false
             }
+        }
+
+        codeSwitchContainer.setOnClickListener {
+            toggleCode.isChecked = !toggleCode.isChecked
         }
 
         toggleCode.setOnCheckedChangeListener { _, isChecked ->

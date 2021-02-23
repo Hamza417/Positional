@@ -1,0 +1,90 @@
+<app.simple.positional.corners.DynamicCornerLinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/card_background"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/legal_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/legal_notes"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/desc_legal"
+            android:textColor="?attr/textSecondary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/current_app_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/app_version"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/versionName"
+            android:textColor="?attr/textSecondary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/change_logs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/development_status"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/desc_changes"
+            android:textColor="?attr/textSecondary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </LinearLayout>
+</app.simple.positional.corners.DynamicCornerLinearLayout>

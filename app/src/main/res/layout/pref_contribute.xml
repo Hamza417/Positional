@@ -1,0 +1,114 @@
+<app.simple.positional.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:backgroundTint="@color/card_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/github"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            tools:ignore="HardcodedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="Github"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/desc_git"
+            android:textColor="?attr/textSecondary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/found_issues"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/found_an_issue"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/translate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/translate"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/desc_translate"
+            android:textColor="?attr/textSecondary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buy_full"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/buy_full"
+            android:textColor="?attr/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:text="@string/desc_buy_full_version"
+            android:textColor="?attr/textSecondary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </LinearLayout>
+
+</app.simple.positional.corners.DynamicCornerLinearLayout>

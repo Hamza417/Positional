@@ -476,9 +476,13 @@ class GPS : ScopedFragment() {
         }
 
         coordinatesBox.setOnClickListener {
-            val latitude = if (isCustomCoordinate) customLatitude else location!!.latitude
-            val longitude = if (isCustomCoordinate) customLongitude else location!!.longitude
-            CoordinatesExpansion.newInstance(latitude, longitude).show(childFragmentManager, "coordinates_expansion")
+            if (location.isNull() && !isCustomCoordinate) {
+                Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show()
+            } else {
+                val latitude = if (isCustomCoordinate) customLatitude else location!!.latitude
+                val longitude = if (isCustomCoordinate) customLongitude else location!!.longitude
+                CoordinatesExpansion.newInstance(latitude, longitude).show(childFragmentManager, "coordinates_expansion")
+            }
         }
     }
 

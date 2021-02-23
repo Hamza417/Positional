@@ -110,9 +110,11 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
 
                 } else {
                     Toast.makeText(requireContext(), R.string.internet_connection_alert, Toast.LENGTH_SHORT).show()
+                    this@HtmlViewer.dismiss()
                 }
             } catch (e: FileNotFoundException) {
-                webView.loadUrl("file:///android_asset/html/four_zero_four.html")
+                Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                this@HtmlViewer.dismiss()
             }
         }
     }

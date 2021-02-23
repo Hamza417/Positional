@@ -174,6 +174,7 @@
     <string name="bloom_skins">Bloom Skins</string>
     <string name="show_code">Show Code</string>
     <string name="sensor_speed">Sensor Speed</string>
+    <string name="sensor_noise_filter">Sensor Noise Filter</string>
     <string name="sensor_speed_normal">Normal</string>
     <string name="sensor_speed_fast">Fast</string>
     <string name="bloom_orange_oval">Orange Oval</string>

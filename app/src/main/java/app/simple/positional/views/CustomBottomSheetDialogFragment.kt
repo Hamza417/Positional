@@ -16,13 +16,16 @@ open class CustomBottomSheetDialogFragment : BottomSheetDialogFragment(), Corout
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_FRAME, R.style.CustomBottomSheetDialogTheme)
+        retainInstance = true
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dialog?.window?.attributes?.windowAnimations = R.style.BottomDialogAnimation
-        dialog?.window?.setDimAmount(0.2f)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
-            dialog?.window?.setElevation(5f)
-        }
+        dialog?.window?.setDimAmount(0.3f)
     }
 
     override fun onDestroy() {
