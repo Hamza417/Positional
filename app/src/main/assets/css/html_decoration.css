@@ -40,6 +40,7 @@ li::marker {
 
 li {
 	color: rgb(32, 32, 32);
+	text-align: left;
 }
 
 a:link {

@@ -69,6 +69,9 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
                 getString(R.string.permissions) -> {
                     webView.loadUrl("file:///android_asset/html/required_permissions.html")
                 }
+                "Credits" -> {
+                    webView.loadUrl("file:///android_asset/html/credits.html")
+                }
                 "license_failed" -> {
                     webView.loadUrl("file:///android_asset/html/license_failed.html")
                 }

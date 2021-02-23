@@ -572,42 +572,44 @@ class GPS : ScopedFragment() {
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {
-        CoroutineScope(Dispatchers.IO).launch {
-            val address = try {
-                if (context == null) {
-                    getString(R.string.error)
-                } else if (!isNetworkAvailable(requireContext())) {
-                    getString(R.string.internet_connection_alert)
-                } else {
-                    val addresses: List<Address>
-                    val geocoder = Geocoder(context, Locale.getDefault())
+        launch {
+            var address: String = getString(R.string.not_available)
 
-                    @Suppress("BlockingMethodInNonBlockingContext")
-                    /**
-                     * [Dispatchers.IO] can withstand blocking calls
-                     */
-                    addresses = geocoder.getFromLocation(latitude, longitude, 1)
-
-                    if (addresses != null && addresses.isNotEmpty()) {
-                        addresses[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
+            withContext(Dispatchers.IO) {
+                address = try {
+                    if (context == null) {
+                        getString(R.string.error)
+                    } else if (!isNetworkAvailable(requireContext())) {
+                        getString(R.string.internet_connection_alert)
                     } else {
-                        getString(R.string.not_available)
+                        val addresses: List<Address>
+                        val geocoder = Geocoder(context, Locale.getDefault())
+
+                        @Suppress("BlockingMethodInNonBlockingContext")
+                        /**
+                         * [Dispatchers.IO] can withstand blocking calls
+                         */
+                        addresses = geocoder.getFromLocation(latitude, longitude, 1)
+
+                        if (addresses != null && addresses.isNotEmpty()) {
+                            addresses[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
+                        } else {
+                            getString(R.string.not_available)
+                        }
                     }
+                } catch (e: IOException) {
+                    "${e.message}"
+                } catch (e: NullPointerException) {
+                    "${e.message}\n${getString(R.string.no_address_found)}"
+                } catch (e: IllegalArgumentException) {
+                    getString(R.string.invalid_coordinates)
                 }
-            } catch (e: IOException) {
-                "${e.message}"
-            } catch (e: NullPointerException) {
-                "${e.message}\n${getString(R.string.no_address_found)}"
-            } catch (e: IllegalArgumentException) {
-                getString(R.string.invalid_coordinates)
             }
 
-            withContext(Dispatchers.Main) {
-                try {
-                    this@GPS.address.text = address
-                } catch (ignored: NullPointerException) {
-                } catch (ignored: UninitializedPropertyAccessException) {
-                }
+            try {
+                this@GPS.address.text = address
+            } catch (ignored: NullPointerException) {
+            } catch (ignored: UninitializedPropertyAccessException) {
             }
         }
     }
