@@ -27,7 +27,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
                 android:text="@string/specified_hint_header"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="8pt" />
 
             <androidx.core.widget.ContentLoadingProgressBar
@@ -40,8 +40,8 @@
                 android:indeterminateBehavior="repeat"
                 android:indeterminateDuration="100"
                 android:indeterminateOnly="true"
-                android:indeterminateTint="?attr/iconColor"
-                android:progressTint="?attr/iconColor" />
+                android:indeterminateTint="@color/iconColor"
+                android:progressTint="@color/iconColor" />
 
             <ImageButton
                 android:id="@+id/open_saved_locations"
@@ -51,7 +51,7 @@
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/open_saved_locations"
                 android:src="@drawable/ic_list"
-                android:tint="?attr/iconColor" />
+                android:tint="@color/iconColor" />
 
             <ImageButton
                 android:id="@+id/help_custom_coordinates"
@@ -60,7 +60,7 @@
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/open_specified_location_documentation"
                 android:src="@drawable/ic_help"
-                android:tint="?attr/iconColor" />
+                android:tint="@color/iconColor" />
         </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -70,7 +70,7 @@
             android:layout_marginVertical="10dp"
             android:animateLayoutChanges="true"
             android:hint="@string/specified_hint_address"
-            app:boxStrokeColor="?attr/iconColor"
+            app:boxStrokeColor="@color/iconColor"
             app:boxStrokeWidth="1px"
             app:boxStrokeWidthFocused="2px"
             app:errorEnabled="false"
@@ -78,7 +78,7 @@
             app:errorTextColor="@android:color/holo_red_dark"
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
-            app:hintTextColor="?attr/textSecondary"
+            app:hintTextColor="@color/textSecondary"
             tools:ignore="PxUsage">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:maxLines="4"
-                android:textColor="?attr/textSecondary" />
+                android:textColor="@color/textSecondary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,7 +98,7 @@
             android:layout_marginVertical="10dp"
             android:animateLayoutChanges="true"
             android:hint="@string/specified_hint_latitude"
-            app:boxStrokeColor="?attr/iconColor"
+            app:boxStrokeColor="@color/iconColor"
             app:boxStrokeWidth="1px"
             app:boxStrokeWidthFocused="2px"
             app:errorEnabled="false"
@@ -106,7 +106,7 @@
             app:errorTextColor="@android:color/holo_red_dark"
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
-            app:hintTextColor="?attr/textSecondary"
+            app:hintTextColor="@color/textSecondary"
             tools:ignore="PxUsage">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:textColor="?attr/textSecondary" />
+                android:textColor="@color/textSecondary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,7 +126,7 @@
             android:layout_marginVertical="10dp"
             android:animateLayoutChanges="true"
             android:hint="@string/specified_hint_longitude"
-            app:boxStrokeColor="?attr/iconColor"
+            app:boxStrokeColor="@color/iconColor"
             app:boxStrokeWidth="1px"
             app:boxStrokeWidthFocused="2px"
             app:errorEnabled="false"
@@ -134,14 +134,14 @@
             app:errorTextColor="@android:color/holo_red_dark"
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
-            app:hintTextColor="?attr/textSecondary"
+            app:hintTextColor="@color/textSecondary"
             tools:ignore="PxUsage">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/longitude_input"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="?attr/textSecondary" />
+                android:textColor="@color/textSecondary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -159,7 +159,7 @@
                 android:layout_weight="1"
                 android:animateLayoutChanges="true"
                 android:hint="@string/specified_hint_timezone"
-                app:boxStrokeColor="?attr/iconColor"
+                app:boxStrokeColor="@color/iconColor"
                 app:boxStrokeWidth="1px"
                 app:boxStrokeWidthFocused="2px"
                 app:errorEnabled="false"
@@ -167,14 +167,14 @@
                 app:errorTextColor="@android:color/holo_red_dark"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="true"
-                app:hintTextColor="?attr/textSecondary"
+                app:hintTextColor="@color/textSecondary"
                 tools:ignore="PxUsage">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/timezone_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="?attr/textSecondary" />
+                    android:textColor="@color/textSecondary" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -188,7 +188,7 @@
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/open_timezones"
                 android:src="@drawable/ic_folder"
-                android:tint="?attr/iconColor" />
+                android:tint="@color/iconColor" />
         </LinearLayout>
 
         <LinearLayout
@@ -206,7 +206,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/ripple_btn"
                 android:text="@string/button_cancel"
-                android:textColor="?attr/textPrimary" />
+                android:textColor="@color/textPrimary" />
 
             <Button
                 android:id="@+id/set_coordinates"
@@ -215,7 +215,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/ripple_btn"
                 android:text="@string/button_set"
-                android:textColor="?attr/textPrimary" />
+                android:textColor="@color/textPrimary" />
 
         </LinearLayout>
 

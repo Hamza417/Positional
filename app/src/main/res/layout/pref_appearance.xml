@@ -1,8 +1,24 @@
 <app.simple.positional.corners.DynamicCornerLinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/card_background"
+    android:backgroundTint="@android:color/transparent"
     android:orientation="vertical"
+    android:layout_marginVertical="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:fontFamily="@font/medium"
+        android:text="@string/appearance"
+        android:textColor="@color/textSecondary"
+        android:textSize="10pt" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="15dp"
+        android:background="@color/dividerColor" />
 
     <LinearLayout
         android:id="@+id/settings_theme"
@@ -19,7 +35,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
             android:text="@string/theme"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size" />
 
         <TextView
@@ -27,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
     </LinearLayout>
@@ -47,7 +63,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
             android:text="@string/icon"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size" />
 
         <TextView
@@ -55,7 +71,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
             android:text="@string/desc_icon"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
     </LinearLayout>
@@ -75,7 +91,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
             android:text="@string/corner_radius"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size" />
 
         <TextView
@@ -83,7 +99,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
             android:text="@string/desc_radius"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
     </LinearLayout>

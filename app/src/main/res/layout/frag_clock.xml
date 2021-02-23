@@ -13,7 +13,7 @@
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
-        android:backgroundTint="?attr/toolbarBackground"
+        android:backgroundTint="@color/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
         app:contentInsetStart="10dp"
@@ -26,7 +26,7 @@
             android:fontFamily="@font/heading"
             android:textStyle="bold"
             android:text="@string/clock"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/top_bar_text_size" />
 
         <ImageButton
@@ -37,7 +37,7 @@
             android:background="@drawable/ripple_btn"
             android:contentDescription="@string/clock_options"
             android:src="@drawable/ic_menu"
-            android:tint="?attr/iconColor" />
+            android:tint="@color/iconColor" />
 
     </app.simple.positional.corners.DynamicCornerMaterialToolbar>
 
@@ -117,7 +117,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="25dp"
             android:fontFamily="@font/light"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="16pt" />
 
     </LinearLayout>

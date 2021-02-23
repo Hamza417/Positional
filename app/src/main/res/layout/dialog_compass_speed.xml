@@ -30,14 +30,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/sensor_speed_smooth"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/speed_smooth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -55,14 +55,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/sensor_speed_normal"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/speed_normal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -80,14 +80,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/sensor_speed_fast"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/speed_fast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 

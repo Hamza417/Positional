@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="textPrimary" format="color" />
-    <attr name="textSecondary" format="color" />
-    <attr name="appAccent" format="color" />
-    <attr name="iconColor" format="color" />
-    <attr name="rippleColor" format="color" />
-    <attr name="mainBackground" format="color" />
-    <attr name="dividerColor" format="color" />
-    <attr name="popupBackground" format="color" />
-    <attr name="toolbarBackground" format="color" />
-    <attr name="iconRegular" format="color" />
-    <attr name="indicator" format="color" />
-    <attr name="shadowColor" format="color" />
-    <attr name="cardBackground" format="color" />
-    <attr name="clockDialColor" format="color" />
-    <attr name="alphaIcons" format="float" />
-
     <declare-styleable name="SmoothBottomBar">
         <attr name="menu" format="reference" />
         <attr name="backgroundColor" format="color" />
@@ -37,13 +21,6 @@
     </declare-styleable>
 
     <attr name="SmoothBottomBarStyle" format="reference" />
-
-    <declare-styleable name="Switcher">
-        <attr name="switcher_on_start_color" format="color" />
-        <attr name="switcher_on_end_color" format="color" />
-        <attr name="switcher_off_color" format="color" />
-        <attr name="switcher_icon_color" format="color" />
-    </declare-styleable>
 
     <declare-styleable name="SparkLineLayout">
         <attr name="s_line_color" format="color|reference" />

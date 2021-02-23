@@ -26,7 +26,6 @@ import app.simple.positional.database.LocationDatabase
 import app.simple.positional.math.TimeConverter.isValidTimeZone
 import app.simple.positional.model.Locations
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.util.resolveAttrColor
 import app.simple.positional.views.CustomDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -297,7 +296,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
                             isValidTimeZone
 
             if (setCoordinatesButton.isClickable) {
-                setCoordinatesButton.setTextColor(requireContext().resolveAttrColor(R.attr.textPrimary))
+                setCoordinatesButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.textPrimary))
             } else {
                 setCoordinatesButton.setTextColor(Color.DKGRAY)
             }

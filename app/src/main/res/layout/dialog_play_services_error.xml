@@ -15,14 +15,14 @@
         android:fontFamily="@font/medium"
         android:padding="@dimen/options_item_padding"
         android:text="Uh Ohh !!"
-        android:textColor="?attr/textPrimary"
+        android:textColor="@color/textPrimary"
         android:textSize="@dimen/options_header_text_size"
         tools:ignore="HardcodedText" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="?attr/dividerColor" />
+        android:background="@color/dividerColor" />
 
     <TextView
         android:layout_width="match_parent"
@@ -32,13 +32,13 @@
         android:fontFamily="@font/regular"
         android:padding="@dimen/options_item_padding"
         android:text="@string/play_services_issue"
-        android:textColor="?attr/textSecondary"
+        android:textColor="@color/textSecondary"
         android:textSize="@dimen/description_text_size" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="?attr/dividerColor" />
+        android:background="@color/dividerColor" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
             android:layout_height="30dp"
             android:layout_gravity="start|center_vertical"
             android:layout_marginHorizontal="10dp"
-            android:buttonTint="?attr/iconColor"
+            android:buttonTint="@color/iconColor"
             android:checked="true" />
 
         <TextView
@@ -64,7 +64,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/regular"
             android:text="@string/show_again"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textSecondary"
             android:textSize="@dimen/options_item_text_size" />
 
         <Button
@@ -75,7 +75,7 @@
             android:background="@drawable/ripple_btn"
             android:fontFamily="@font/medium"
             android:text="@string/button_ok"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size" />
 
     </LinearLayout>

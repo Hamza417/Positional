@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/options_container_horizontal_padding"
-        android:backgroundTint="?attr/toolbarBackground"
+        android:backgroundTint="@color/toolbarBackground"
         android:elevation="40dp"
         android:orientation="vertical"
         android:padding="@dimen/options_item_padding">
@@ -23,7 +23,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/degrees"
             android:gravity="center"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/info_text_primary_size" />
 
         <SeekBar
@@ -51,7 +51,7 @@
                 android:layout_marginEnd="@dimen/options_item_padding"
                 android:background="@drawable/ripple_btn"
                 android:text="@string/button_cancel"
-                android:textColor="?attr/textSecondary" />
+                android:textColor="@color/textSecondary" />
 
             <Button
                 android:id="@+id/app_corner_radius_set"
@@ -60,7 +60,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/ripple_btn"
                 android:text="@string/button_set"
-                android:textColor="?attr/textSecondary" />
+                android:textColor="@color/textSecondary" />
 
         </LinearLayout>
 

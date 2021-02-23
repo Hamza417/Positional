@@ -29,14 +29,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/unit_metric"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/unit_metric"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -54,14 +54,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/unit_imperial"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/unit_imperial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 

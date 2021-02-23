@@ -11,7 +11,7 @@
     <app.simple.positional.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="?attr/toolbarBackground"
+        android:backgroundTint="@color/toolbarBackground"
         android:padding="@dimen/options_container_horizontal_padding"
         android:orientation="vertical"
         android:elevation="40dp"
@@ -29,10 +29,10 @@
             android:padding="@dimen/options_sub_item_padding"
             android:text="@string/needles"
             android:background="@drawable/ripple_btn"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:drawableStartCompat="@drawable/ic_navigation"
-            app:drawableTint="?attr/iconRegular" />
+            app:drawableTint="@color/iconRegular" />
 
         <View
             android:layout_width="match_parent"
@@ -51,10 +51,10 @@
             android:padding="@dimen/options_sub_item_padding"
             android:background="@drawable/ripple_btn"
             android:text="@string/motion_type"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:drawableStartCompat="@drawable/ic_motion_type"
-            app:drawableTint="?attr/iconRegular" />
+            app:drawableTint="@color/iconRegular" />
 
         <LinearLayout
             android:id="@+id/clock_menu_default_time_format"
@@ -75,10 +75,10 @@
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
                 android:text="@string/time_format"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:drawableStartCompat="@drawable/ic_twenty_four_hours"
-                app:drawableTint="?attr/iconRegular" />
+                app:drawableTint="@color/iconRegular" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/toggle_default_time_format"

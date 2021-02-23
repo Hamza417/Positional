@@ -31,7 +31,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/medium"
             android:maxLines="2"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="7pt" />
 
         <TextView
@@ -41,7 +41,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/regular"
             android:maxLines="1"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textSecondary"
             android:textSize="5pt" />
 
         <TextView
@@ -51,7 +51,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/regular"
             android:maxLines="1"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textSecondary"
             android:textSize="5pt" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/regular"
             android:maxLines="1"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textSecondary"
             android:textSize="5pt" />
 
         <TextView
@@ -71,7 +71,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/regular"
             android:maxLines="1"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textSecondary"
             android:textSize="5pt" />
 
     </LinearLayout>

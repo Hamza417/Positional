@@ -41,7 +41,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
                     android:text="@string/icon_default"
-                    android:textColor="?attr/textPrimary"
+                    android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
                 <RadioButton
@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:buttonTint="?attr/iconColor"
+                    android:buttonTint="@color/iconColor"
                     android:gravity="center" />
 
             </LinearLayout>
@@ -75,7 +75,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
                     android:text="@string/icon_legacy"
-                    android:textColor="?attr/textPrimary"
+                    android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
                 <RadioButton
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:buttonTint="?attr/iconColor" />
+                    android:buttonTint="@color/iconColor" />
 
             </LinearLayout>
 
@@ -108,7 +108,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
                     android:text="@string/icon_simple"
-                    android:textColor="?attr/textPrimary"
+                    android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
                 <RadioButton
@@ -116,7 +116,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:buttonTint="?attr/iconColor" />
+                    android:buttonTint="@color/iconColor" />
 
             </LinearLayout>
 
@@ -141,7 +141,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
                     android:text="@string/icon_simple_teal"
-                    android:textColor="?attr/textPrimary"
+                    android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
                 <RadioButton
@@ -149,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:buttonTint="?attr/iconColor" />
+                    android:buttonTint="@color/iconColor" />
 
             </LinearLayout>
 
@@ -174,7 +174,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
                     android:text="@string/icon_simple_no_shadow"
-                    android:textColor="?attr/textPrimary"
+                    android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
                 <RadioButton
@@ -182,7 +182,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:buttonTint="?attr/iconColor" />
+                    android:buttonTint="@color/iconColor" />
 
             </LinearLayout>
 
@@ -207,7 +207,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/regular"
                     android:text="@string/icon_simple_pink"
-                    android:textColor="?attr/textPrimary"
+                    android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
                 <RadioButton
@@ -215,7 +215,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:buttonTint="?attr/iconColor" />
+                    android:buttonTint="@color/iconColor" />
 
             </LinearLayout>
 

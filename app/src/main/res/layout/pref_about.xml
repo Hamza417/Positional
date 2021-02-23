@@ -1,8 +1,24 @@
-<app.simple.positional.corners.DynamicCornerLinearLayout android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/card_background"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_marginVertical="20dp"
+    android:backgroundTint="@android:color/transparent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:fontFamily="@font/medium"
+        android:text="@string/about"
+        android:textColor="@color/textSecondary"
+        android:textSize="10pt" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="15dp"
+        android:background="@color/dividerColor" />
 
     <LinearLayout
         android:id="@+id/legal_notes"
@@ -19,7 +35,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
             android:text="@string/legal_notes"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size" />
 
         <TextView
@@ -27,7 +43,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
             android:text="@string/desc_legal"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
     </LinearLayout>
@@ -47,7 +63,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
             android:text="@string/app_version"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size" />
 
         <TextView
@@ -55,7 +71,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
             android:text="@string/versionName"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
     </LinearLayout>
@@ -75,16 +91,17 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
             android:text="@string/development_status"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"
+            android:layout_marginEnd="30dp"
             android:text="@string/desc_changes"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
     </LinearLayout>
-</app.simple.positional.corners.DynamicCornerLinearLayout>
+</LinearLayout>

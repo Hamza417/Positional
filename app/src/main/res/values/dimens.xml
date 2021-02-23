@@ -61,7 +61,7 @@
     <dimen name="level_text_size">6pt</dimen>
 
     <!-- Settings -->
-    <dimen name="settings_primary_text_size">7pt</dimen>
+    <dimen name="settings_primary_text_size">8pt</dimen>
     <dimen name="settings_secondary_text_size">6pt</dimen>
 
     <!-- Miscellaneous/Main Base Activity -->

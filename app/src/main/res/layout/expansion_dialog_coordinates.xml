@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
                 android:text="@string/gps_coordinates"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <ImageButton
@@ -48,7 +48,7 @@
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/button_copy"
                 android:src="@drawable/ic_content_copy"
-                app:tint="?attr/iconColor" />
+                app:tint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -157,7 +157,7 @@
             android:gravity="center"
             android:text="@string/specified_location_notice"
             android:textAlignment="center"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textSecondary"
             android:visibility="gone" />
 
         <TextView

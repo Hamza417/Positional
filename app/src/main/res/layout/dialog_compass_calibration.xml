@@ -33,7 +33,7 @@
             android:gravity="center"
             android:text="@string/compass_calibration_notice"
             android:textAlignment="center"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textSecondary"
             android:textSize="@dimen/description_text_size" />
 
         <TextView
@@ -45,7 +45,7 @@
             android:fontFamily="@font/medium"
             android:gravity="center"
             android:textAlignment="center"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/description_text_size" />
 
     </app.simple.positional.corners.DynamicCornerLinearLayout>

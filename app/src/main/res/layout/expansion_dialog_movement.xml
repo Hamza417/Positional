@@ -18,7 +18,7 @@
             android:fontFamily="@font/light"
             android:padding="5dp"
             android:text="@string/gps_movement"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/info_text_primary_size" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:fontFamily="@font/light"
             android:padding="5dp"
             android:text="@string/gps_speed"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/info_text_secondary_size" />
 
         <app.simple.positional.views.Speedometer

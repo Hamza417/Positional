@@ -23,7 +23,7 @@
             android:fontFamily="@font/light"
             android:padding="5dp"
             android:text="@string/location_details"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/info_text_primary_size" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:fontFamily="@font/light"
             android:padding="5dp"
             android:text="@string/compass_accuracy"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/info_text_secondary_size" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:fontFamily="@font/light"
             android:lines="3"
             android:paddingHorizontal="5dp"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="6pt" />
 
         <app.simple.positional.sparkline.SparkLineLayout
@@ -67,7 +67,7 @@
             android:fontFamily="@font/light"
             android:padding="5dp"
             android:text="@string/gps_altitude"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/info_text_secondary_size" />
 
         <TextView
@@ -77,7 +77,7 @@
             android:fontFamily="@font/light"
             android:lines="3"
             android:paddingHorizontal="5dp"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="6pt" />
 
         <app.simple.positional.sparkline.SparkLineLayout

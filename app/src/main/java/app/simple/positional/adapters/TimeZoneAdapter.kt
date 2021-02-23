@@ -11,13 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.TimeZonesCallback
 import app.simple.positional.util.bouncyValue
-import app.simple.positional.util.resolveAttrColor
 import app.simple.positional.util.stiffnessValue
 import java.util.*
 
@@ -83,7 +83,7 @@ class TimeZoneAdapter(
         val endPos = startPos + searchText.length
 
         if (startPos != -1) {
-            val colorKeyword = ColorStateList(arrayOf(intArrayOf()), intArrayOf(context.resolveAttrColor(R.attr.switcher_on_start_color)))
+            val colorKeyword = ColorStateList(arrayOf(intArrayOf()), intArrayOf(ContextCompat.getColor(context, R.color.switch_on_end_color)))
             val highlightSpan = TextAppearanceSpan(null, Typeface.NORMAL, -1, colorKeyword, null)
             sb.setSpan(highlightSpan, startPos, endPos, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         }

@@ -38,7 +38,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
                 android:text="@string/compass_info"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
 
             <ImageButton
@@ -49,7 +49,7 @@
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/button_copy"
                 android:src="@drawable/ic_content_copy"
-                app:tint="?attr/iconColor" />
+                app:tint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -96,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginHorizontal="20dp"
-            android:background="?attr/dividerColor"
+            android:background="@color/dividerColor"
             android:visibility="gone" />
 
         <TextView
@@ -109,7 +109,7 @@
             android:gravity="center"
             android:text="@string/specified_location_notice"
             android:textAlignment="center"
-            android:textColor="?attr/textSecondary"
+            android:textColor="@color/textSecondary"
             android:visibility="gone" />
 
         <FrameLayout

@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
         android:layout_gravity="top"
-        android:backgroundTint="?attr/toolbarBackground"
+        android:backgroundTint="@color/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:roundBottomCorners="true"
         app:contentInsetEnd="10dp"
@@ -37,7 +37,7 @@
             android:fontFamily="@font/heading"
             android:textStyle="bold"
             android:text="@string/gps"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/top_bar_text_size" />
 
         <ImageButton
@@ -48,7 +48,7 @@
             android:background="@drawable/ripple_btn"
             android:src="@drawable/ic_gps_fixed"
             android:contentDescription="@string/gps_reset_location"
-            android:tint="?attr/iconColor" />
+            android:tint="@color/iconColor" />
 
         <ImageButton
             android:id="@+id/gps_menu"
@@ -59,7 +59,7 @@
             android:background="@drawable/ripple_btn"
             android:src="@drawable/ic_menu"
             android:contentDescription="@string/gps_options"
-            android:tint="?attr/iconColor" />
+            android:tint="@color/iconColor" />
 
     </app.simple.positional.corners.DynamicCornerMaterialToolbar>
 

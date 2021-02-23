@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_nav_height"
         android:layout_gravity="bottom"
-        android:backgroundTint="?attr/toolbarBackground"
+        android:backgroundTint="@color/toolbarBackground"
         android:elevation="10dp"
         app:roundTopCorners="true"
         app:roundBottomCorners="false">
@@ -29,13 +29,13 @@
             app:cornerRadius="@dimen/all_corner_radius"
             app:duration="500"
             app:iconSize="20dp"
-            app:iconTint="?attr/iconRegular"
-            app:iconTintActive="?attr/iconColor"
-            app:indicatorColor="?attr/indicator"
+            app:iconTint="@color/iconRegular"
+            app:iconTintActive="@color/iconColor"
+            app:indicatorColor="@color/indicator"
             app:indicatorRadius="@dimen/all_corner_radius"
             app:itemFontFamily="@font/light"
             app:menu="@menu/toolbar_items"
-            app:textColor="?attr/textSecondary"
+            app:textColor="@color/textSecondary"
             app:textSize="4pt" />
     </app.simple.positional.corners.DynamicCornerFrameLayout>
 

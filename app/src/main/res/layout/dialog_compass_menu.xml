@@ -37,10 +37,10 @@
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
                 android:text="@string/bloom"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:drawableStartCompat="@drawable/ic_bloom"
-                app:drawableTint="?attr/iconRegular" />
+                app:drawableTint="@color/iconRegular" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/toggle_flower"
@@ -61,10 +61,10 @@
             android:gravity="center_vertical"
             android:padding="@dimen/options_item_padding"
             android:text="@string/bloom_skins"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:drawableStartCompat="@drawable/ic_bloom_skin"
-            app:drawableTint="?attr/iconRegular" />
+            app:drawableTint="@color/iconRegular" />
 
 
         <View
@@ -92,10 +92,10 @@
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
                 android:text="@string/show_code"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:drawableStartCompat="@drawable/ic_direction_code"
-                app:drawableTint="?attr/iconRegular" />
+                app:drawableTint="@color/iconRegular" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/toggle_code"
@@ -125,10 +125,10 @@
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
                 android:text="True North"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:drawableStartCompat="@drawable/ic_direction_code"
-                app:drawableTint="?attr/iconRegular" />
+                app:drawableTint="@color/iconRegular" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/toggle_true_north"
@@ -151,10 +151,10 @@
             android:gravity="center_vertical"
             android:padding="@dimen/options_item_padding"
             android:text="@string/sensor_speed"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:drawableStartCompat="@drawable/ic_speed"
-            app:drawableTint="?attr/iconRegular" />
+            app:drawableTint="@color/iconRegular" />
 
         <TextView
             android:id="@+id/compass_noise_filter"
@@ -167,10 +167,10 @@
             android:gravity="center_vertical"
             android:padding="@dimen/options_item_padding"
             android:text="@string/sensor_noise_filter"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:drawableStartCompat="@drawable/ic_filter"
-            app:drawableTint="?attr/iconRegular" />
+            app:drawableTint="@color/iconRegular" />
 
     </app.simple.positional.corners.DynamicCornerLinearLayout>
 

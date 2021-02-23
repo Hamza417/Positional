@@ -31,10 +31,10 @@
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
                 android:text="@string/show_label"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:drawableStartCompat="@drawable/ic_label"
-                app:drawableTint="?attr/iconRegular" />
+                app:drawableTint="@color/iconRegular" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/toggle_label"
@@ -63,10 +63,10 @@
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
                 android:text="@string/satellite_mode"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:drawableLeftCompat="@drawable/ic_satellite"
-                app:drawableTint="?attr/iconRegular" />
+                app:drawableTint="@color/iconRegular" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/toggle_satellite"

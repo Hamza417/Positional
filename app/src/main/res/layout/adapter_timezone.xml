@@ -23,7 +23,7 @@
         android:id="@+id/time_zone_adapter_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="?attr/textSecondary"
+        android:textColor="@color/textSecondary"
         android:fontFamily="@font/regular"
         android:layout_gravity="center_vertical"
         android:textSize="7pt" />

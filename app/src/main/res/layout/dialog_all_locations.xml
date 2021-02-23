@@ -40,7 +40,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
                 android:text="@string/specified_data_list_locations"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="8pt" />
 
             <ImageButton
@@ -51,7 +51,7 @@
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/delete_all"
                 android:src="@drawable/ic_delete"
-                android:tint="?attr/iconColor" />
+                android:tint="@color/iconColor" />
         </LinearLayout>
 
         <View

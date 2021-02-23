@@ -17,7 +17,7 @@
         android:layout_gravity="center"
         android:alpha="0"
         android:src="@drawable/ic_sentiment_very_dissatisfied"
-        app:tint="?attr/indicator"
+        app:tint="@color/indicator"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
@@ -46,8 +46,8 @@
                 android:inputType="text"
                 android:maxLength="15"
                 android:paddingHorizontal="15dp"
-                android:textColor="?attr/textSecondary"
-                android:textColorHint="?attr/dividerColor" />
+                android:textColor="@color/textSecondary"
+                android:textColorHint="@color/dividerColor" />
 
             <TextView
                 android:id="@+id/current_item_substring"
@@ -58,7 +58,7 @@
                 android:fontFamily="@font/light"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="8pt" />
         </LinearLayout>
 

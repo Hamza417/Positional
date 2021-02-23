@@ -31,14 +31,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/bloom_orange_oval"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/bloom_orange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -56,14 +56,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/bloom_purple_square"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/bloom_purple"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -81,14 +81,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/bloom_red_circles"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/bloom_flower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -106,14 +106,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/bloom_blue_petals"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/bloom_petals"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 

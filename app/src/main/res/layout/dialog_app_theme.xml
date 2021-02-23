@@ -29,14 +29,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/theme_day"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -54,14 +54,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/theme_night"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/dark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -79,14 +79,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/theme_follow_system"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/follow_system"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -104,14 +104,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/theme_auto"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/day_night"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 

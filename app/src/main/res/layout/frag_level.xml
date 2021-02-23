@@ -10,7 +10,7 @@
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
-        android:backgroundTint="?attr/toolbarBackground"
+        android:backgroundTint="@color/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
         app:contentInsetStart="10dp"
@@ -26,7 +26,7 @@
             android:fontFamily="@font/heading"
             android:textStyle="bold"
             android:text="@string/level"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/top_bar_text_size" />
 
         <ImageButton
@@ -35,7 +35,7 @@
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple_btn"
             android:src="@drawable/ic_more_horiz"
-            android:tint="?attr/iconColor"
+            android:tint="@color/iconColor"
             android:visibility="gone"
             tools:ignore="ContentDescription" />
 
@@ -84,7 +84,7 @@
                 android:fontFamily="@font/light"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/level_text_size" />
 
             <TextView
@@ -95,7 +95,7 @@
                 android:fontFamily="@font/light"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/level_text_size" />
 
         </LinearLayout>

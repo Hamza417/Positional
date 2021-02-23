@@ -31,14 +31,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/motion_type_smooth"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/motion_smooth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconRegular" />
 
         </LinearLayout>
 
@@ -56,14 +56,14 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
                 android:text="@string/motion_type_tick"
-                android:textColor="?attr/textPrimary"
+                android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <RadioButton
                 android:id="@+id/motion_tick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="?attr/iconColor" />
+                android:buttonTint="@color/iconRegular" />
 
         </LinearLayout>
 

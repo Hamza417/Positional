@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
         android:layout_gravity="top"
-        android:backgroundTint="?attr/toolbarBackground"
+        android:backgroundTint="@color/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
         app:contentInsetStart="10dp"
@@ -25,7 +25,7 @@
             android:fontFamily="@font/heading"
             android:textStyle="bold"
             android:text="@string/compass"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/top_bar_text_size" />
 
         <ImageButton
@@ -36,7 +36,7 @@
             android:background="@drawable/ripple_btn"
             android:contentDescription="@string/compass_options"
             android:src="@drawable/ic_menu"
-            android:tint="?attr/iconColor" />
+            android:tint="@color/iconColor" />
 
     </app.simple.positional.corners.DynamicCornerMaterialToolbar>
 
@@ -55,7 +55,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_navigation"
-            app:tint="?attr/iconColor"
+            app:tint="@color/iconColor"
             tools:ignore="ContentDescription" />
 
         <TextView
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/light"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/compass_direction_text_size" />
 
     </LinearLayout>

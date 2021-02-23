@@ -4,7 +4,7 @@
     android:viewportWidth="100"
     android:viewportHeight="100">
     <path
-        android:fillColor="?attr/iconColor"
+        android:fillColor="@color/iconColor"
         android:pathData="M17,50A33,33 0,0 0,83 50A33,34 0,0 1,17 50"
         android:strokeColor="#00000000" />
 </vector>

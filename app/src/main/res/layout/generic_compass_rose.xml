@@ -21,7 +21,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/degree_indicator_margin_top"
             android:src="@drawable/ic_arrow_drop_up"
-            app:tint="?attr/iconColor"
+            app:tint="@color/iconColor"
             tools:ignore="ContentDescription" />
 
         <ImageView

@@ -8,7 +8,7 @@
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
-        android:backgroundTint="?attr/toolbarBackground"
+        android:backgroundTint="@color/toolbarBackground"
         android:elevation="@dimen/top_bar_elevation"
         app:contentInsetEnd="10dp"
         app:contentInsetStart="10dp"
@@ -20,7 +20,7 @@
             android:layout_margin="15dp"
             android:fontFamily="@font/heading"
             android:text="@string/settings"
-            android:textColor="?attr/textPrimary"
+            android:textColor="@color/textPrimary"
             android:textSize="@dimen/top_bar_text_size"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingHorizontal="15dp"
+        android:paddingHorizontal="25dp"
         android:paddingTop="@dimen/top_bar_height"
         android:paddingBottom="90dp"
         app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
@@ -41,47 +41,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/medium"
-                android:text="@string/appearance"
-                android:textColor="?attr/textSecondary"
-                android:textSize="@dimen/settings_secondary_text_size" />
-
             <include layout="@layout/pref_appearance" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/medium"
-                android:text="@string/configuration"
-                android:textColor="?attr/textSecondary"
-                android:textSize="@dimen/settings_secondary_text_size" />
 
             <include layout="@layout/pref_configuration" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/medium"
-                android:text="@string/about"
-                android:textColor="?attr/textSecondary"
-                android:textSize="@dimen/settings_secondary_text_size" />
-
             <include layout="@layout/pref_about" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:fontFamily="@font/medium"
-                android:text="@string/contribute"
-                android:textColor="?attr/textSecondary"
-                android:textSize="@dimen/settings_secondary_text_size" />
 
             <include layout="@layout/pref_contribute" />
 
