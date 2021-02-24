@@ -70,6 +70,6 @@
 }
 
 img {
-     filter: drop-shadow(0px 10px 50px #D7DBDD);
+     filter: drop-shadow(0 10px 50px #D7DBDD);
      margin-top: 50px;
 }

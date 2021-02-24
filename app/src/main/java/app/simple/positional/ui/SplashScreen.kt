@@ -7,6 +7,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -98,13 +99,13 @@ class SplashScreen : Fragment() {
                     touchIndicator.x = event.x - touchIndicator.width / 2
                     touchIndicator.y = event.y - touchIndicator.height / 2
                     touchIndicator.animate().scaleX(1.2f).scaleY(1.2f).alpha(1.0f).setInterpolator(DecelerateInterpolator()).start()
-                    icon.animate().translationX(event.x / 50F).translationY(event.y / 50F).setInterpolator(DecelerateInterpolator()).start()
+                    icon.animate().translationX((event.x - DisplayMetrics().widthPixels / 2) / 50F).translationY(event.y / 50F).setInterpolator(DecelerateInterpolator()).start()
                 }
                 MotionEvent.ACTION_MOVE -> {
                     touchIndicator.x = event.x - touchIndicator.width / 2f
                     touchIndicator.y = event.y - touchIndicator.height / 2f
-                    icon.translationX = event.x / 50F
-                    icon.translationY = event.y / 50F
+                    icon.translationX = (event.x - DisplayMetrics().widthPixels / 2) / 30F
+                    icon.translationY = event.y / 30F
                 }
                 MotionEvent.ACTION_UP -> {
                     touchIndicator.animate().scaleX(0.5f).scaleY(0.5f).alpha(0f).start()
