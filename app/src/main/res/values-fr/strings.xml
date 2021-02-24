@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">Clock</string>
-    <string name="compass">Compass</string>
+    <string name="clock">Horloge</string>
+    <string name="compass">Boussole</string>
     <string name="gps">Location</string>
     <string name="level">Level</string>
-    <string name="settings">Settings</string>
+    <string name="settings">Paramètres</string>
     <!-- Info Headers -->
-    <string name="clock_info">Clock Info</string>
-    <string name="compass_info">Compass Info</string>
-    <string name="gps_info">GPS Info</string>
+    <string name="clock_info">Clock Information</string>
+    <string name="compass_info">Compass Information</string>
+    <string name="gps_info">GPS Information</string>
     <!-- Clock Information Headers-->
-    <string name="local_time">Local Time</string>
-    <string name="utc_time">UTC Time</string>
+    <string name="local_time">Heure locale</string>
+    <string name="utc_time">Heure UTC</string>
     <string name="sun_position">Sun Position</string>
     <string name="sun_time">Sun Time</string>
     <string name="twilight">Twilight</string>
@@ -139,12 +139,12 @@
     <string name="theme_auto">Auto (Day/Night)</string>
     <string name="desc_icon">Main icon of the app in launcher</string>
     <string name="desc_radius">Rounded corner radius of the app</string>
-    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to getch information
+    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information
         instead of using device\' GPS as location information source\n\nGPS information will stay unaffected</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
     <string name="desc_push">Receive non intrusive notification about updates and other information</string>
     <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>
-    <string name="desc_status">Get the app\'s current development status for the upcoming build</string>
+    <string name="desc_changes">Get the app\'s current development status for the upcoming build</string>
     <string name="desc_git">Open app\'s repository</string>
     <string name="desc_translate">Help translating the app in your native language</string>
     <string name="desc_buy_full_version">Support development by buying full version</string>

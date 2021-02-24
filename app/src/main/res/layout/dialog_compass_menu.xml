@@ -113,6 +113,7 @@
             android:background="@drawable/ripple_btn"
             android:clickable="true"
             android:focusable="true"
+            android:visibility="gone"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
 
@@ -166,6 +167,7 @@
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
             android:padding="@dimen/options_item_padding"
+            android:visibility="gone"
             android:text="@string/sensor_noise_filter"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"

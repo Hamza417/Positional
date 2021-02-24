@@ -61,8 +61,6 @@
         <item name="android:fontFamily">@font/medium</item>
         <item name="android:popupElevation">50dp</item>
         <item name="android:popupAnimationStyle">@style/DialogAnimation</item>
-        <item name="elevationOverlayColor">@color/switch_on_end_color</item>
-        <item name="elevationOverlayEnabled">true</item>
     </style>
 
 </resources>

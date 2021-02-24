@@ -13,6 +13,7 @@ import app.simple.positional.callbacks.LocaleCallback
 import app.simple.positional.model.Locales
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.LocaleHelper
+import java.util.*
 
 class LocaleAdapter : RecyclerView.Adapter<LocaleAdapter.Holder>() {
 
@@ -20,14 +21,11 @@ class LocaleAdapter : RecyclerView.Adapter<LocaleAdapter.Holder>() {
     private var localeList: MutableList<Locales> = LocaleHelper.localeList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        //localeList.sortBy { it.language.toLowerCase(Locale.ROOT) }
+        localeList.sortBy { it.language.toLowerCase(Locale.ROOT) }
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_locales, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        if (position == 0) {
-            holder.indicator.setImageResource(R.drawable.ic_dot_red)
-        }
         holder.locale.text = if (position == 0) holder.itemView.context.getString(R.string.auto_system_default_language) else localeList[position].language
         holder.indicator.isVisible = localeList[position].localeCode == MainPreferences.getAppLanguage()
 

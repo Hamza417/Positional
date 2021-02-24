@@ -144,7 +144,7 @@
     <string name="desc_screen_on">ऐप दिखाई देने पर डिवाइस को सोने से रोकता है</string>
     <string name="desc_push">अद्यतन और अन्य जानकारी के बारे में गैर दखल देने वाली अधिसूचना प्राप्त करें</string>
     <string name="desc_legal">ऐप की अस्वीकृति, गोपनीयता नीति और उपयोग की शर्तें पढ़ें</string>
-    <string name="desc_changes">आगामी निर्माण के लिए ऐप्लिकेशन के वर्तमान विकास की स्थिति प्राप्त करें|</string>
+    <string name="desc_status">आगामी निर्माण के लिए ऐप्लिकेशन के वर्तमान विकास की स्थिति प्राप्त करें|</string>
     <string name="desc_git">ऐप का रिपॉजिटरी खोलें</string>
     <string name="desc_translate">अपनी मूल भाषा में एप्लिकेशन का अनुवाद करने में सहायता करें I</string>
     <string name="desc_buy_full_version">पूर्ण संस्करण खरीदकर विकास का समर्थन करें</string>

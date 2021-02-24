@@ -120,7 +120,7 @@
     <!-- Settings Heading -->
     <string name="theme">Тема</string>
     <string name="icon">Икона</string>
-    <string name="corner_radius">Corner Radius</string>
+    <string name="corner_radius">Радиус на ъгъл</string>
     <string name="units">Мерни единици</string>
     <string name="language">Език</string>
     <string name="specified_location">Използвай указано местоположение</string>
@@ -128,7 +128,7 @@
     <string name="push_notification">Известия</string>
     <string name="legal_notes">Правни бележки</string>
     <string name="app_version">Версия на приложението</string>
-    <string name="development_status">Development Status</string>
+    <string name="development_status">Статус на разработка</string>
     <string name="found_an_issue">Намерихте проблем?</string>
     <string name="translate">Превод</string>
     <string name="buy_full">Купете пълната версия</string>
@@ -138,12 +138,12 @@
     <string name="theme_night">Тъмна</string>
     <string name="theme_auto">Автоматично (Ден/Нощ)</string>
     <string name="desc_icon">Главна икона на приложението</string>
-    <string name="desc_radius">Rounded corner radius of the app</string>
+    <string name="desc_radius">Радиус на заоблените ъгли на приложението</string>
     <string name="desc_specified_location">Посочете персонализирана ширина, дължина и часова зона и го използвайте за извличане на информация        вместо да използвате GPS на устройството като източник на информация за местоположението\n\nGPS информацията ще остане незасегната</string>
     <string name="desc_screen_on">Предотвратяване заспиването на устройството, докато се използва приложението</string>
     <string name="desc_push">Получавайте ненатрапчиви известия за актуализации и друга информация</string>
     <string name="desc_legal">Прочетете Отказ от отговорност, Политика за поверителност и Условия за използване на приложението</string>
-    <string name="desc_changes">Get the app\'s current development status for the upcoming build</string>
+    <string name="desc_changes">Получете текущото състояние на разработката на приложението за предстоящата компилация</string>
     <string name="desc_git">Отворете хранилището на приложението</string>
     <string name="desc_translate">Помогнете за превода на приложението на вашия роден език</string>
     <string name="desc_buy_full_version">Подкрепете развитието на приложението чрез закупуване на пълната му версия</string>
@@ -171,9 +171,9 @@
     <string name="icon_default">Основен</string>
     <string name="icon_legacy">Завещание</string>
     <string name="icon_simple">Опростено</string>
-    <string name="icon_simple_no_shadow">Simple (No Shadow)</string>
-    <string name="icon_simple_teal">Simple (Teal)</string>
-    <string name="icon_simple_pink">Simple (Pink)</string>
+    <string name="icon_simple_no_shadow">Обикновено (Без сянка)</string>
+    <string name="icon_simple_teal">Обикновено (Циан)</string>
+    <string name="icon_simple_pink">Обикновено (Розово)</string>
     <string name="unit_metric">Метрични</string>
     <string name="unit_imperial">Британски</string>
     <!-- Specified Coordinates Menu -->
@@ -253,13 +253,13 @@
     <string name="east_E">И</string>
     <string name="north_east_NE">СИ</string>
     <!-- Graph -->
-    <string name="location_details">Location Details</string>
-    <string name="min">Min:</string>
-    <string name="max">Max:</string>
-    <string name="avg">Avg:</string>
+    <string name="location_details">Местоположение детайли</string>
+    <string name="min">Мин:</string>
+    <string name="max">Макс:</string>
+    <string name="avg">Средно:</string>
     <!-- UTM -->
-    <string name="utm_zone">Zone:</string>
-    <string name="utm_easting">Easting:</string>
-    <string name="utm_northing">Northing:</string>
-    <string name="utm_meridian">Central Meridian:</string>
+    <string name="utm_zone">Зона:</string>
+    <string name="utm_easting">Отклонение към изток:</string>
+    <string name="utm_northing">Отклонение към север:</string>
+    <string name="utm_meridian">Централен меридиан:</string>
 </resources>

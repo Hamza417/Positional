@@ -32,7 +32,6 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.IOException
 import java.util.*
 
 class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCallback {
@@ -61,12 +60,6 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
     private var address = ""
     private var isCoordinateSet = false
     private var isValidTimeZone = true
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_input_coordinates, container, false)
@@ -249,27 +242,20 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
         launch {
             addressIndicator.show()
 
-            val geocoder = Geocoder(requireContext())
-            val addresses: MutableList<Address>?
+            val geocoder = Geocoder(context)
+            var addresses: MutableList<Address>?
             var latitude: Double? = null
             var longitude: Double? = null
 
             withContext(Dispatchers.IO) {
+                runCatching {
+                    MainPreferences.setAddress(address)
 
-                MainPreferences.setAddress(address)
-
-                try {
-                    @Suppress("BlockingMethodInNonBlockingContext")
-                    /**
-                     * [Dispatchers.IO] can withstand blocking calls
-                     */
                     addresses = geocoder.getFromLocationName(address, 1)
-                    if (addresses != null && addresses.isNotEmpty()) {
-                        latitude = addresses[0].latitude
-                        longitude = addresses[0].longitude
+                    if (addresses != null && addresses!!.isNotEmpty()) {
+                        latitude = addresses!![0].latitude
+                        longitude = addresses!![0].longitude
                     }
-                } catch (ignored: IOException) {
-                } catch (ignored: NullPointerException) {
                 }
             }
 

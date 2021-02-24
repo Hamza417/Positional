@@ -33,7 +33,7 @@
     <string name="local_timezone">Timezone:</string>
     <string name="local_time_24hr">Tiempo 24h:</string>
     <string name="local_time_12hr">Tiempo 12h:</string>
-    <string name="local_day">Día:</string>
+    <string name="local_day">Dia:</string>
     <string name="local_date">Fecha de:</string>
     <string name="local_day_of_year">Día del Año:</string>
     <string name="local_week_of_year">Semana de año:</string>
@@ -64,20 +64,20 @@
     <string name="moon_full_moon">Luna llena:</string>
     <string name="moon_new_moon">Luna nueva:</string>
     <string name="moon_first_quarter">Cuarto creciente:</string>
-    <string name="moon_last_quarter">Last Quarter:</string>
+    <string name="moon_last_quarter">Cuarto creciente:</string>
     <!-- Compass information items -->
     <string name="accelerometer_accuracy">Accelerometer:</string>
     <string name="magnetometer_accuracy">Magnetometer:</string>
-    <string name="compass_inclination">Inclination:</string>
-    <string name="compass_declination">Declination:</string>
-    <string name="compass_field_strength">Field Strength:</string>
+    <string name="compass_inclination">Incluye:</string>
+    <string name="compass_declination">Declinación:</string>
+    <string name="compass_field_strength">Fuerza del campo:</string>
     <!-- GPS Information Panel -->
-    <string name="gps_status">Status:</string>
-    <string name="gps_source">Source:</string>
-    <string name="gps_accuracy">Accuracy:</string>
-    <string name="gps_altitude">Altitude:</string>
-    <string name="gps_bearing">Bearing:</string>
-    <string name="gps_displacement">Displacement:</string>
+    <string name="gps_status">Estado:</string>
+    <string name="gps_source">Origen:</string>
+    <string name="gps_accuracy">Exactitud:</string>
+    <string name="gps_altitude">Altitud:</string>
+    <string name="gps_bearing">Orientación:</string>
+    <string name="gps_displacement">Desplazamiento:</string>
     <string name="gps_direction">Direction:</string>
     <string name="gps_speed">Speed:</string>
     <string name="gps_latitude">Latitude:</string>

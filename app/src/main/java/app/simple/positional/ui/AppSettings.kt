@@ -52,6 +52,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var pushNotification: ConstraintLayout
     private lateinit var appVersion: LinearLayout
     private lateinit var legalNotes: LinearLayout
+    private lateinit var developmentStatus: LinearLayout
     private lateinit var changeLogs: LinearLayout
     private lateinit var github: LinearLayout
     private lateinit var foundIssues: LinearLayout
@@ -85,6 +86,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         pushNotification = view.findViewById(R.id.setting_notification)
         appVersion = view.findViewById(R.id.current_app_version)
         legalNotes = view.findViewById(R.id.legal_notes)
+        developmentStatus = view.findViewById(R.id.development_status)
         changeLogs = view.findViewById(R.id.change_logs)
         github = view.findViewById(R.id.github)
         foundIssues = view.findViewById(R.id.found_issues)
@@ -243,6 +245,10 @@ class AppSettings : Fragment(), CoordinatesCallback {
             }
 
             popup.show()
+        }
+
+        developmentStatus.setOnClickListener {
+            HtmlViewer.newInstance("Development Status").show(childFragmentManager, "development_status")
         }
 
         changeLogs.setOnClickListener {

@@ -331,8 +331,8 @@ class Compass : Fragment(), SensorEventListener {
         if (context == null) return
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
-            sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_FASTEST)
-            sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_FASTEST)
+            sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
+            sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
         }
     }
 

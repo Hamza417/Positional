@@ -1,6 +1,5 @@
-<app.simple.positional.corners.DynamicCornerLinearLayout android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@android:color/transparent"
     android:orientation="vertical"
     android:layout_marginVertical="20dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -104,4 +103,4 @@
 
     </LinearLayout>
 
-</app.simple.positional.corners.DynamicCornerLinearLayout>
+</LinearLayout>

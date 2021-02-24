@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/locales_adapter_item_container"
     android:layout_width="match_parent"
@@ -23,11 +24,13 @@
 
     <ImageView
         android:id="@+id/locale_indicator"
-        android:layout_width="8dp"
-        android:layout_height="8dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="invisible"
         android:layout_gravity="center_vertical"
         android:layout_marginHorizontal="@dimen/options_item_padding"
-        android:src="@drawable/ic_circle_stroke"
-        tools:ignore="ContentDescription" />
+        android:src="@drawable/ic_check"
+        tools:ignore="ContentDescription"
+        app:tint="@android:color/holo_blue_bright" />
 
 </LinearLayout>
