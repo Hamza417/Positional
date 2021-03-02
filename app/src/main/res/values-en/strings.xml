@@ -129,6 +129,7 @@
     <string name="legal_notes">Legal Notes</string>
     <string name="app_version">App Version</string>
     <string name="development_status">Development Status</string>
+    <string name="change_logs">Change Logs</string>
     <string name="found_an_issue">Found an issue?</string>
     <string name="translate">Translation</string>
     <string name="buy_full">Buy Full Version</string>
@@ -139,12 +140,12 @@
     <string name="theme_auto">Auto (Day/Night)</string>
     <string name="desc_icon">Main icon of the app in launcher</string>
     <string name="desc_radius">Rounded corner radius of the app</string>
-    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to getch information
-        instead of using device\' GPS as location information source\n\nGPS information will stay unaffected</string>
+    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
     <string name="desc_push">Receive non intrusive notification about updates and other information</string>
     <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>
     <string name="desc_status">Get the app\'s current development status for the upcoming build</string>
+    <string name="desc_changes">List of changes for this build</string>
     <string name="desc_git">Open app\'s repository</string>
     <string name="desc_translate">Help translating the app in your native language</string>
     <string name="desc_buy_full_version">Support development by buying full version</string>
@@ -159,6 +160,7 @@
     <string name="bloom_skins">Bloom Skins</string>
     <string name="show_code">Show Code</string>
     <string name="sensor_speed">Sensor Speed</string>
+    <string name="sensor_noise_filter">Sensor Noise Filter</string>
     <string name="sensor_speed_normal">Normal</string>
     <string name="sensor_speed_fast">Fast</string>
     <string name="bloom_orange_oval">Orange Oval</string>
@@ -184,14 +186,7 @@
     <string name="specified_hint_longitude">Longitude (±180)</string>
     <string name="specified_hint_timezone">Timezone (Continent/Region)</string>
     <!-- Info -->
-    <string name="play_services_issue">Your device does not support Google Play Services,
-        it could be because of faulty implementation or your device manufacturer did not install it.
-        Features like maps will not work without it.</string>
-    <string name="no_sensor_alert">Your device does not seem to have the required sensors available
-        to make this feature work :(\n\nIf you think this is a mistake please contact developer
-        to resolve this issue as soon as possible</string>
-    <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your
-        device in figure eight direction to calibrate the sensors.</string>
+    <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your device in figure eight direction to calibrate the sensors.</string>
     <string name="specified_location_notice">Information shown below are being updated for specified location coordinates.</string>
     <string name="show_again">Show Again</string>
     <string name="search_timezone">Search Timezones</string>
@@ -225,6 +220,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="permissions">Permissions</string>
+    <string name="credits">Credits</string>
     <!-- Moon Illumination -->
     <string name="waning">Waning</string>
     <string name="waning_gibbous">Waning Gibbous</string>

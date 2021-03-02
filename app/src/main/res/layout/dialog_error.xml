@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@android:color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <app.simple.positional.corners.DynamicCornerLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/toolbarBackground"
+        android:elevation="40dp"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:orientation="vertical">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
+
+                <app.simple.positional.views.CustomWebView
+                    android:id="@+id/error_webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/dividerColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/show_again_error_dialog"
+                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginHorizontal="10dp"
+                android:buttonTint="@color/iconColor"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="@string/show_again"
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/options_item_text_size" />
+
+            <Button
+                android:id="@+id/close_error_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/ripple_btn"
+                android:fontFamily="@font/medium"
+                android:text="@string/button_close"
+                android:textColor="@color/textPrimary" />
+
+        </LinearLayout>
+
+    </app.simple.positional.corners.DynamicCornerLinearLayout>
+
+</FrameLayout>

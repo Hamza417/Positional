@@ -7,27 +7,26 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
-    <app.simple.positional.corners.DynamicCornerCoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_height"
         android:layout_margin="@dimen/options_container_horizontal_padding"
-        android:backgroundTint="@color/toolbarBackground"
         android:elevation="40dp">
 
         <app.simple.positional.corners.DynamicCornersNestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fadingEdge="vertical"
+            android:backgroundTint="@color/toolbarBackground"
             android:fadingEdgeLength="25dp"
             android:requiresFadingEdge="vertical"
-            android:backgroundTint="@color/toolbarBackground"
             app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
-            <WebView
+            <app.simple.positional.views.CustomWebView
                 android:id="@+id/web_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
         </app.simple.positional.corners.DynamicCornersNestedScrollView>
-    </app.simple.positional.corners.DynamicCornerCoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </FrameLayout>

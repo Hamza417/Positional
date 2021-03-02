@@ -129,6 +129,7 @@
     <string name="legal_notes">قانونی نوٹ</string>
     <string name="app_version">ایپ ورژن</string>
     <string name="development_status">ترقی کی حیثیت</string>
+    <string name="change_logs">چینج لوگص</string>
     <string name="found_an_issue">ایک مسئلہ ملا؟</string>
     <string name="translate">ترجمہ کریں</string>
     <string name="buy_full">مکمل ورژن خریدیں</string>
@@ -139,13 +140,12 @@
     <string name="theme_auto">آٹو (دن / رات)</string>
     <string name="desc_icon">لانچر میں موجود ایپ کا مین آئکن</string>
     <string name="desc_radius">ایپ کا گول کونے کا رداس</string>
-    <string name="desc_specified_location">اپنی مرضی کے مطابق عرض البلد ، طول البلد اور ٹائم زون کی وضاحت کریں اور اس کو معلومات کے وسائل کے بطور آلہ کے GPS کو استعمال کرنے کی بجائے معلومات لانے کیلئے استعمال کریں
-
-GPS معلومات غیر متاثر رہیں گے</string>
+    <string name="desc_specified_location">عرض البلد ، طول البلد اور ٹائم زون کی وضاحت کریں اور معلومات لانے کیلئے اس کا استعمال کریں۔ کوئی بھی معلومات جو صرف GPS استعمال کرتی ہے وہ متاثر نہیں ہوگی۔</string>
     <string name="desc_screen_on">ایپ کے مرئی ہونے کے دوران آلے کو آف کرنے سے روکتا ہے</string>
     <string name="desc_push">اپ ڈیٹس اور دیگر معلومات کے بارے میں عدم مداخلت کی اطلاعات موصول کریں</string>
     <string name="desc_legal">ایپ کی دستبرداری ، رازداری کی پالیسی اور استعمال کی شرائط پڑھیں</string>
     <string name="desc_status">آئندہ تعمیر کیلئے ایپ کی موجودہ ترقیاتی حیثیت حاصل کریں</string>
+    <string name="desc_changes">اس ورژن میں تبدیلیوں کی فہرست۔</string>
     <string name="desc_git">ایپ کا ذخیرہ کھولیں</string>
     <string name="desc_translate">اپنی مادری زبان میں ایپ کا ترجمہ کرنے میں مدد کریں</string>
     <string name="desc_buy_full_version">مکمل ورژن خرید کر ترقی کی حمایت کریں</string>
@@ -160,6 +160,7 @@ GPS معلومات غیر متاثر رہیں گے</string>
     <string name="bloom_skins">بلوم تھیم</string>
     <string name="show_code">صرف کوڈ دکھائیں</string>
     <string name="sensor_speed">سینسر کی رفتار</string>
+    <string name="sensor_noise_filter">سینسر نویز فلٹر</string>
     <string name="sensor_speed_normal">عام</string>
     <string name="sensor_speed_fast">تیز</string>
     <string name="bloom_orange_oval">اورنج اوول</string>
@@ -185,9 +186,7 @@ GPS معلومات غیر متاثر رہیں گے</string>
     <string name="specified_hint_longitude">طول البلد (180±)</string>
     <string name="specified_hint_timezone">ٹائم زون (براعظم / خطہ)</string>
     <!-- Info -->
-    <string name="play_services_issue">آپ کا آلہ گوگل پلے سروسز کی حمایت نہیں کرتا ہے ، اس کی غلطی کے نفاذ کی وجہ سے ہوسکتا ہے یا آپ کے آلہ کارخانہ دار نے اسے انسٹال نہیں کیا ہے۔ نقشہ جیسی خصوصیات اس کے بغیر کام نہیں کریں گی۔</string>
-    <string name="no_sensor_alert">ایسا نہیں لگتا ہے کہ آپ کے آلے میں اس خصوصیت کو کام کرنے کے ل the مطلوبہ سینسر دستیاب ہیں۔ اگر آپ کو لگتا ہے کہ یہ غلطی ہے تو برائے مہربانی اس مسئلے کو جلد سے جلد حل کرنے کے لئے ڈویلپر سے رابطہ کریں</string>
-    <string name="compass_calibration_notice">آپ کے آلے کمپاس سینسر کی درستگی کم ہے ، اسے کیلیبریٹ کرنے کے لیے  ، اپنے آلے کو آٹھ نمبر والے انداز میں گھمائیں۔</string>
+    <string name="compass_calibration_notice">آپ کے آلے کمپاس سینسر کی درستگی کم ہے، اسے کیلیبریٹ کرنے کے لیے ، اپنے آلے کو آٹھ نمبر والے انداز میں گھمائیں۔.</string>
     <string name="specified_location_notice">ذیل میں دکھائی گئی معلومات کو مخصوص مقام کوآرڈینیٹ کیلئے تازہ کاری کی جارہی ہے۔</string>
     <string name="show_again">دوبارہ دکھائیں</string>
     <string name="search_timezone">ٹائم زونز تلاش کریں</string>
@@ -215,12 +214,12 @@ GPS معلومات غیر متاثر رہیں گے</string>
     <string name="open_specified_location_documentation">مخصوص مقام کی دستاویزات کو کھولیں</string>
     <string name="open_timezones">ٹائم زون کھولیں</string>
     <!-- Bottom Bar -->
-    <string name="ellipsis">&#8230;</string>
     <!-- Legal Menu -->
     <string name="disclaimer">دستبرداری</string>
     <string name="privacy_policy">رازداری کی پالیسی</string>
     <string name="terms_of_use">استعمال کی شرائط</string>
     <string name="permissions">اجازت</string>
+    <string name="credits">کریڈٹ</string>
     <!-- Moon Illumination -->
     <string name="waning">وانگ</string>
     <string name="waning_gibbous">وانگ گبائوس</string>

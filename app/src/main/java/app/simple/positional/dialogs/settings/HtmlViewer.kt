@@ -1,18 +1,15 @@
 package app.simple.positional.dialogs.settings
 
-import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
 import android.widget.Toast
-import androidx.webkit.WebSettingsCompat
-import androidx.webkit.WebViewFeature
 import app.simple.positional.R
 import app.simple.positional.util.isNetworkAvailable
 import app.simple.positional.views.CustomBottomSheetDialogFragment
+import app.simple.positional.views.CustomWebView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,7 +20,7 @@ import java.net.URL
 
 class HtmlViewer : CustomBottomSheetDialogFragment() {
 
-    private lateinit var webView: WebView
+    private lateinit var webView: CustomWebView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_html, container, false)
@@ -33,18 +30,6 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         webView = view.findViewById(R.id.web_view)
-        webView.setBackgroundColor(0)
-        webView.settings.allowContentAccess = true
-        webView.settings.allowFileAccess = true
-
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-            if (requireContext().resources.configuration.uiMode and
-                    Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-                WebSettingsCompat.setForceDark(webView.settings, WebSettingsCompat.FORCE_DARK_ON)
-            }
-        } else {
-            Toast.makeText(requireContext(), "If you are having trouble viewing this make sure you are using the latest WebView", Toast.LENGTH_LONG).show()
-        }
 
         if (this.arguments != null) {
             when (this.requireArguments().get("source")) {

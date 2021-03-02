@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
-                <WebView
+                <app.simple.positional.views.CustomWebView
                     android:id="@+id/permissions_webview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

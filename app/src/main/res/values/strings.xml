@@ -153,8 +153,7 @@
     <string name="theme_auto">Auto (Day/Night)</string>
     <string name="desc_icon">Main icon of the app in launcher</string>
     <string name="desc_radius">Rounded corner radius of the app</string>
-    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information
-        instead of using device\' GPS as location information source\n\nGPS information will stay unaffected</string>
+    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
     <string name="desc_push">Receive non intrusive notification about updates and other information</string>
     <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>
@@ -206,14 +205,7 @@
     <string name="specified_hint_timezone">Timezone (Continent/Region)</string>
 
     <!-- Info -->
-    <string name="play_services_issue">Your device does not support Google Play Services,
-        it could be because of faulty implementation or your device manufacturer did not install it.
-        Features like maps will not work without it.</string>
-    <string name="no_sensor_alert">Your device does not seem to have the required sensors available
-        to make this feature work :(\n\nIf you think this is a mistake please contact developer
-        to resolve this issue as soon as possible</string>
-    <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your
-        device in figure eight direction to calibrate the sensors.</string>
+    <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your device in figure eight direction to calibrate the sensors.</string>
     <string name="specified_location_notice">Information shown below are being updated for specified location coordinates.</string>
     <string name="show_again">Show Again</string>
     <string name="search_timezone">Search Timezones</string>
@@ -251,6 +243,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="permissions">Permissions</string>
+    <string name="credits">Credits</string>
 
     <!-- Moon Illumination -->
     <string name="waning">Waning</string>

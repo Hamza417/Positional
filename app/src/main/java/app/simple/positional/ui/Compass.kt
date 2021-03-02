@@ -23,17 +23,17 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
-import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
 import app.simple.positional.constants.CompassBloom.compassBloomTextColor
 import app.simple.positional.corners.DynamicCornerMaterialToolbar
+import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
-import app.simple.positional.dialogs.compass.NoSensorAlert
 import app.simple.positional.math.Angle.getAngle
 import app.simple.positional.math.Angle.toThreeSixty
 import app.simple.positional.math.CompassAzimuth
@@ -54,7 +54,7 @@ import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.math.abs
 
-class Compass : Fragment(), SensorEventListener {
+class Compass : ScopedFragment(), SensorEventListener {
 
     fun newInstance(): Compass {
         val args = Bundle()
@@ -129,11 +129,6 @@ class Compass : Fragment(), SensorEventListener {
     private lateinit var dim: View
     private lateinit var toolbar: DynamicCornerMaterialToolbar
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_compass, container, false)
 
@@ -174,8 +169,8 @@ class Compass : Fragment(), SensorEventListener {
                 haveMagnetometerSensor = false
 
                 if (CompassPreference.isNoSensorAlertON()) {
-                    val noSensorAlert = NoSensorAlert().newInstance("compass")
-                    noSensorAlert.show(parentFragmentManager, "no_sensor_alert")
+                    ErrorDialog.newInstance("Compass Sensor")
+                            .show(childFragmentManager, "error_dialog")
                 }
             } else {
                 sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)

@@ -38,7 +38,7 @@
                 android:id="@+id/motion_smooth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/iconRegular" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 
@@ -63,7 +63,7 @@
                 android:id="@+id/motion_tick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/iconRegular" />
+                android:buttonTint="@color/iconColor" />
 
         </LinearLayout>
 

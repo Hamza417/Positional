@@ -4,5 +4,5 @@
     <item android:title="@string/privacy_policy" />
     <item android:title="@string/terms_of_use" />
     <item android:title="@string/permissions" />
-    <item android:title="Credits" />
+    <item android:title="@string/credits" />
 </menu>

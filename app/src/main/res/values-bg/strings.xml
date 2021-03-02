@@ -129,6 +129,7 @@
     <string name="legal_notes">Правни бележки</string>
     <string name="app_version">Версия на приложението</string>
     <string name="development_status">Статус на разработка</string>
+    <string name="change_logs">Списък с промени</string>
     <string name="found_an_issue">Намерихте проблем?</string>
     <string name="translate">Превод</string>
     <string name="buy_full">Купете пълната версия</string>
@@ -139,11 +140,12 @@
     <string name="theme_auto">Автоматично (Ден/Нощ)</string>
     <string name="desc_icon">Главна икона на приложението</string>
     <string name="desc_radius">Радиус на заоблените ъгли на приложението</string>
-    <string name="desc_specified_location">Посочете персонализирана ширина, дължина и часова зона и го използвайте за извличане на информация        вместо да използвате GPS на устройството като източник на информация за местоположението\n\nGPS информацията ще остане незасегната</string>
+    <string name="desc_specified_location">Посочете персонализирана ширина, дължина и часова зона и ги използвайте за извличане на информация. Всяка информация, която използва само GPS, ще остане незасегната</string>
     <string name="desc_screen_on">Предотвратяване заспиването на устройството, докато се използва приложението</string>
     <string name="desc_push">Получавайте ненатрапчиви известия за актуализации и друга информация</string>
     <string name="desc_legal">Прочетете Отказ от отговорност, Политика за поверителност и Условия за използване на приложението</string>
-    <string name="desc_changes">Получете текущото състояние на разработката на приложението за предстоящата компилация</string>
+    <string name="desc_status">Получете текущото състояние на разработката на приложението за предстоящата компилация</string>
+    <string name="desc_changes">Списък на промените за тази компилация</string>
     <string name="desc_git">Отворете хранилището на приложението</string>
     <string name="desc_translate">Помогнете за превода на приложението на вашия роден език</string>
     <string name="desc_buy_full_version">Подкрепете развитието на приложението чрез закупуване на пълната му версия</string>
@@ -158,6 +160,7 @@
     <string name="bloom_skins">Дизайн на цветенцата</string>
     <string name="show_code">Показване на кода</string>
     <string name="sensor_speed">Скорост на сензора</string>
+    <string name="sensor_noise_filter">Филтър за шум на сензора</string>
     <string name="sensor_speed_normal">Нормално</string>
     <string name="sensor_speed_fast">Бързо</string>
     <string name="bloom_orange_oval">Оранжев овал</string>
@@ -183,14 +186,7 @@
     <string name="specified_hint_longitude">Географска дължина (±180)</string>
     <string name="specified_hint_timezone">Часова зона (Континент / Регион)</string>
     <!-- Info -->
-    <string name="play_services_issue">Вашето устройство не поддържа услуги на Google Play,
-        това може да се дължи на неправилно изпълнение или производителят на вашето устройство не ги е инсталирал.
-        Функции като карти няма да работят без тях.</string>
-    <string name="no_sensor_alert">Изглежда, че вашето устройство не разполага с необходимите сензори
-        за да работи тази функция :(\n\nАко смятате, че това е грешка, моля, свържете се с разработчика
-        за да разреши този проблем възможно най-скоро</string>
-    <string name="compass_calibration_notice">Точността на сензора на компаса на вашето устройство е ниска, движете
-         устройство във фигура осем за калибриране на сензорите.</string>
+    <string name="compass_calibration_notice">Точността на сензора на компаса на вашето устройство е ниска, движете устройство във фигура осем за калибриране на сензорите.</string>
     <string name="specified_location_notice">Информацията, показана по-долу, се актуализира за посочените координати на местоположението.</string>
     <string name="show_again">Покажи отново</string>
     <string name="search_timezone">Търси часова зона</string>
@@ -224,11 +220,12 @@
     <string name="privacy_policy">Политика за Поверителност</string>
     <string name="terms_of_use">Условия за Ползване</string>
     <string name="permissions">Разрешения</string>
+    <string name="credits">Благодарности</string>
     <!-- Moon Illumination -->
-    <string name="waning">Внимание</string>
+    <string name="waning">Намаляваща</string>
     <string name="waning_gibbous">Намаляваща полупълна</string>
     <string name="waning_crescent">Залязващ полумесец</string>
-    <string name="waxing">Waxing</string>
+    <string name="waxing">Изгряваща</string>
     <string name="waxing_gibbous">Растяща луна</string>
     <string name="waxing_crescent">Восъчен полумесец</string>
     <string name="full_moon">Пълнолуние</string>

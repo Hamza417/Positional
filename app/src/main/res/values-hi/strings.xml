@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">समय</string>
+    <string name="clock">क्लॉक</string>
     <string name="compass">दिशा-सूचक</string>
-    <string name="gps">स्थान</string>
+    <string name="gps">लोकेशन</string>
     <string name="level">स्तर</string>
     <string name="settings">सेटिंग्स</string>
     <!-- Info Headers -->
@@ -129,6 +129,7 @@
     <string name="legal_notes">कानूनी नोट्स</string>
     <string name="app_version">ऐप का वर्श़न</string>
     <string name="development_status">विकास की स्थिति</string>
+    <string name="change_logs">चेंज लॉग</string>
     <string name="found_an_issue">एक मुद्दा मिला?</string>
     <string name="translate">अनुवाद करें</string>
     <string name="buy_full">फुल वर्जन खरीदें</string>
@@ -139,12 +140,12 @@
     <string name="theme_auto">ऑटो (दिन / रात)</string>
     <string name="desc_icon">लॉन्चर में ऐप का मुख्य आइकन</string>
     <string name="desc_radius">एप का गोल कोना</string>
-    <string name="desc_specified_location">कस्टम अक्षांश, देशांतर और टाइमज़ोन निर्दिष्ट करें और जानकारी प्राप्त करने के लिए इसका उपयोग करें
-        डिवाइस के जीपीएस का उपयोग करने के बजाय स्थान सूचना स्रोत\n\nGPS जानकारी अप्रभावित रहेगी</string>
+    <string name="desc_specified_location">कस्टम अक्षांश, देशांतर और टाइमज़ोन निर्दिष्ट करें और जानकारी प्राप्त करने के लिए इसका उपयोग करें। कोई भी जानकारी जो केवल GPS का उपयोग करती है अप्रभावित रहेगी</string>
     <string name="desc_screen_on">ऐप दिखाई देने पर डिवाइस को सोने से रोकता है</string>
     <string name="desc_push">अद्यतन और अन्य जानकारी के बारे में गैर दखल देने वाली अधिसूचना प्राप्त करें</string>
     <string name="desc_legal">ऐप की अस्वीकृति, गोपनीयता नीति और उपयोग की शर्तें पढ़ें</string>
     <string name="desc_status">आगामी निर्माण के लिए ऐप्लिकेशन के वर्तमान विकास की स्थिति प्राप्त करें|</string>
+    <string name="desc_changes">पिछले निर्माण के बाद हुए परिवर्तनों की सूची</string>
     <string name="desc_git">ऐप का रिपॉजिटरी खोलें</string>
     <string name="desc_translate">अपनी मूल भाषा में एप्लिकेशन का अनुवाद करने में सहायता करें I</string>
     <string name="desc_buy_full_version">पूर्ण संस्करण खरीदकर विकास का समर्थन करें</string>
@@ -159,6 +160,7 @@
     <string name="bloom_skins">ब्लूम की थीम</string>
     <string name="show_code">कोड दिखाएं</string>
     <string name="sensor_speed">सेंसर की गति</string>
+    <string name="sensor_noise_filter">सेंसर नॉइज़ फ़िल्टर</string>
     <string name="sensor_speed_normal">समान्य</string>
     <string name="sensor_speed_fast">तेज</string>
     <string name="bloom_orange_oval">ऑरेंज ओवल</string>
@@ -184,13 +186,7 @@
     <string name="specified_hint_longitude">देशान्तर (±180)</string>
     <string name="specified_hint_timezone">समयक्षेत्र (महाद्वीप / क्षेत्र)</string>
     <!-- Info -->
-    <string name="play_services_issue">आपके डिवाइस में Google Play सेवाएँ नहीं हैं,
-         यह दोषपूर्ण कार्यान्वयन के कारण हो सकता है या आपके डिवाइस निर्माता ने इसे स्थापित नहीं किया है।
-         इसके बिना मैप्स जैसे फीचर्स काम नहीं करेंगे।</string>
-    <string name="no_sensor_alert">आपके डिवाइस में आवश्यक सेंसर उपलब्ध नहीं हैं
-        इस सुविधा को बनाने के लिए: (\n\nयदि आपको लगता है कि यह एक गलती है तो कृपया डेवलपर से संपर्क करें
-        जितनी जल्दी हो सके इस मुद्दे को हल करने के लिए</string>
-    <string name="compass_calibration_notice">आपकी डिवाइस कम्पास सेंसर की सटीकता कम है, इसको कैलिब्रेट करने के लिए अपनी डिवाइस को आठ नंबर के तरीके से घुमाएं | </string>
+    <string name="compass_calibration_notice">आपकी डिवाइस कम्पास सेंसर की सटीकता कम है, इसको कैलिब्रेट करने के लिए अपनी डिवाइस को आठ नंबर के तरीके से घुमाएं |</string>
     <string name="specified_location_notice">नीचे दी गई जानकारी निर्दिष्ट स्थान निर्देशांक के लिए अपडेट की जा रही है|</string>
     <string name="show_again">फिर से दिखाएँ</string>
     <string name="search_timezone">समय क्षेत्र खोजें</string>
@@ -224,6 +220,7 @@
     <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="terms_of_use">नियम व शर्तें</string>
     <string name="permissions">अनुमतियां</string>
+    <string name="credits">क्रेडिट्स</string>
     <!-- Moon Illumination -->
     <string name="waning">कृष्ण</string>
     <string name="waning_gibbous">ढलते अर्द्धचंद्र</string>

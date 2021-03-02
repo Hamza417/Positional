@@ -31,6 +31,6 @@
         android:layout_marginHorizontal="@dimen/options_item_padding"
         android:src="@drawable/ic_check"
         tools:ignore="ContentDescription"
-        app:tint="@android:color/holo_blue_bright" />
+        app:tint="@android:color/holo_blue_dark" />
 
 </LinearLayout>

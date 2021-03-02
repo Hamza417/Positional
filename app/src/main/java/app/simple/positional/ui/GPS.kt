@@ -28,7 +28,7 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.database.LocationDatabase
-import app.simple.positional.dialogs.app.PlayServiceIssue
+import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
 import app.simple.positional.dialogs.gps.LocationExpansion
@@ -682,8 +682,8 @@ class GPS : ScopedFragment() {
         val resultCode = availability.isGooglePlayServicesAvailable(requireContext())
         if (resultCode != ConnectionResult.SUCCESS) {
             if (MainPreferences.getShowPlayServiceDialog()) {
-                val playServiceIssue = PlayServiceIssue().newInstance()
-                playServiceIssue.show(parentFragmentManager, "null")
+                ErrorDialog.newInstance("Play Services")
+                        .show(childFragmentManager, "error_dialog")
             }
             return false
         }
