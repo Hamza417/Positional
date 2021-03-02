@@ -153,7 +153,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/timezone_container"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -167,14 +167,17 @@
                 app:errorTextColor="@android:color/holo_red_dark"
                 app:hintAnimationEnabled="true"
                 app:hintEnabled="true"
+                app:endIconTint="@color/iconColor"
                 app:hintTextColor="@color/textSecondary"
                 tools:ignore="PxUsage">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:id="@+id/timezone_input"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="@color/textSecondary" />
+                    android:textColor="@color/textSecondary"
+                    android:maxLines="1"
+                    tools:ignore="LabelFor" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -196,6 +199,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
+            android:layout_marginTop="10dp"
             android:animateLayoutChanges="true"
             android:orientation="horizontal">
 
@@ -204,18 +208,22 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/ripple_btn"
                 android:text="@string/button_cancel"
+                android:textSize="@dimen/button_text_size"
                 android:textColor="@color/textPrimary" />
 
-            <Button
+            <app.simple.positional.corners.DynamicCornerButton
                 android:id="@+id/set_coordinates"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:background="@drawable/ripple_btn"
+                android:clickable="false"
+                android:textSize="@dimen/button_text_size"
+                android:backgroundTint="@color/iconColor"
                 android:text="@string/button_set"
-                android:textColor="@color/textPrimary" />
+                android:textColor="@color/buttonTextColor" />
 
         </LinearLayout>
 

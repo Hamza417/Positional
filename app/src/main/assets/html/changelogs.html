@@ -5,62 +5,44 @@
 </head>
 
 <main>
-    <h2>Build74</h2>
-    <h4>Last Updated: 24 Feb, 2021</h4>
-    <h4>Status: Released</h4>
+    <h2>Build75</h2>
+    <h4>Last Updated: 02 March, 2021</h4>
+    <h4>Status: In Development</h4>
 
     <p>
-        Redesigned <b>Settings</b> panel to get rid of clutters
+        Here are the few issues I have encountered till now in Build74 that I will be taking care of
+        in the upcoming build.
 
-        <img
-                src="https://i.ibb.co/zHv2dXY/photo-2021-02-24-01-30-33.jpg"
-                width="100%"
-                alt="photo-2021-02-24-01-30-33" border="0">
+        <br>
+        <br>
+
+        • Rare crash in map panel<br>
+        • Some UI issues<br>
+        • Button design problems<br>
+        • Underlying view hierarchy issues<br>
+        • Options in settings panel<br>
+        • Fixing some typos<br>
+        • Clock needle themes<br>
+        • Clock dial themes (not sure)<br>
+        • Direction indicator<br>
+        • Option to skip saving of custom location<br>
     </p>
 
     <p>
-        Fixed crash when <b>Coordinates</b> is clicked in GPS panel. It was happening due to
-        unavailability of location.
-    </p>
-
-    <p>
-        Following the popup menu redesigning, I felt that other menus are lacking something too so I
-        redesigned the whole app's menu and they are now more elegant.
+        Made popup pages a bit larger for easier readings
 
         <img
-                src="https://i.ibb.co/Pj5zKPV/Screenshot-2021-02-23-00-37-36-275-app-simple-positional.png"
+                src="https://i.ibb.co/gtZDZT2/photo-2021-03-02-14-21-43.jpg"
                 width="100%"
-                alt="Screenshot-2021-02-23-00-37-36-275-app-simple-positional"
                 border="0">
     </p>
 
     <p>
-        Redesigned the popup menu of the app, earlier it didn't go very well with the app's design.
+        Added suggestions list for timezone for quicker timezone searches
 
-        It looks something like this, the left one is the older design and the right one is the
-        updated one
-
-        <img alt="Untitled-3" border="0"
-             src="https://i.ibb.co/KDT5X2r/Untitled-3.png" width="100%">
-    </p>
-
-    <p>
-        Updated all the threads inside the fragments.
-    </p>
-
-    <p>
-        I think I found a better way to run independent threads inside an activity scope and solve
-        the crashes. Right now I am working on <b>Specified Coordinates</b> popup dialog since it
-        was most prone to be getting crashed and so far it seems that it is working without any
-        issue. If this solution is reliable I will just have to rewrite the codes of all the threads
-        used in this application.
-    </p>
-
-    <p>
-        During the test in past few day here are a few things I found that needs my attention. The
-        use of <b>Context</b> inside a Coroutine is a problematic approach because currently the
-        coroutines used are independent threads and they don't stop when the view is closed which
-        eventually leads to app getting stopped/crashed. This will be my primary objective to be
-        addressed in this build.
+        <img
+                src="https://i.ibb.co/2scWHp0/photo-2021-03-02-14-26-55.jpg"
+                width="100%"
+                border="0">
     </p>
 </main>

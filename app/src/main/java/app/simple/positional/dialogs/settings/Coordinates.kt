@@ -2,7 +2,6 @@ package app.simple.positional.dialogs.settings
 
 import android.content.DialogInterface
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -13,6 +12,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat
@@ -22,6 +23,7 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.callbacks.LocationAdapterCallback
 import app.simple.positional.callbacks.TimeZoneSelected
+import app.simple.positional.corners.DynamicCornerButton
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.math.TimeConverter.isValidTimeZone
 import app.simple.positional.model.Locations
@@ -32,6 +34,7 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.ZoneOffset
 import java.util.*
 
 class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCallback {
@@ -46,12 +49,12 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
     private lateinit var timezoneList: ImageButton
     private lateinit var savedLocations: ImageButton
     private lateinit var help: ImageButton
-    private lateinit var setCoordinatesButton: Button
+    private lateinit var setCoordinatesButton: DynamicCornerButton
     private lateinit var cancel: Button
     private lateinit var addressInputEditText: TextInputEditText
     private lateinit var latitudeInputEditText: TextInputEditText
     private lateinit var longitudeInputEditText: TextInputEditText
-    private lateinit var timezoneInputEditText: TextInputEditText
+    private lateinit var timezoneInputEditText: AutoCompleteTextView
     private lateinit var latitudeInputLayout: TextInputLayout
     private lateinit var longitudeInputLayout: TextInputLayout
     private lateinit var timezoneInputLayout: TextInputLayout
@@ -77,6 +80,8 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
         latitudeInputLayout = view.findViewById(R.id.latitude_container)
         longitudeInputLayout = view.findViewById(R.id.longitude_container)
         timezoneInputLayout = view.findViewById(R.id.timezone_container)
+
+        timezoneInputEditText.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, ZoneOffset.getAvailableZoneIds().toTypedArray()))
 
         return view
     }
@@ -281,22 +286,16 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
                             isValidLongitude(longitudeInputEditText.text.toString().toDouble()) &&
                             isValidTimeZone
 
-            if (setCoordinatesButton.isClickable) {
-                setCoordinatesButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.textPrimary))
-            } else {
-                setCoordinatesButton.setTextColor(Color.DKGRAY)
-            }
         } catch (e: NumberFormatException) {
-            setCoordinatesButton.setTextColor(Color.DKGRAY)
             setCoordinatesButton.isClickable = false
         } catch (e: NullPointerException) {
-            setCoordinatesButton.setTextColor(Color.DKGRAY)
             setCoordinatesButton.isClickable = false
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        setCoordinatesButton.clearAnimation()
         handler.removeCallbacks(geoCoderRunnable)
     }
 

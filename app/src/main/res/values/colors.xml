@@ -17,7 +17,6 @@
     <color name="clockDialColor">#000000</color>
     <color name="edgeEffect">#717171</color>
     <color name="card_background">#FBFBFB</color>
-
     <color name="seek_bar">#34495E</color>
 
     <!-- Bottom Bar Color -->
@@ -28,6 +27,11 @@
     <color name="switch_on_end_color">@color/switcher_on_start_color</color>
     <color name="switch_off">#EAEAEA</color>
     <color name="switcher_icon_color">@android:color/white</color>
+
+    <!-- Button -->
+    <color name="buttonTextColor">#FFFFFF</color>
+    <color name="buttonTintClickable">@color/switch_on_end_color</color>
+    <color name="buttonTintNotClickable">#8E8E8E</color>
 
     <color name="notification_icon_color">#D60044</color>
     <color name="valid_input">#10D609</color>
