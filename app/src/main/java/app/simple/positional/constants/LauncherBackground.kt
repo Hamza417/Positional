@@ -58,7 +58,10 @@ object LauncherBackground {
             R.drawable.launcher_day_51,
             R.drawable.launcher_day_52,
             R.drawable.launcher_day_53,
-            R.drawable.launcher_day_54
+            R.drawable.launcher_day_54,
+            R.drawable.launcher_day_55,
+            R.drawable.launcher_day_56,
+            R.drawable.launcher_day_57
     )
 
     val vectorBackgroundNight = intArrayOf(
@@ -79,6 +82,11 @@ object LauncherBackground {
             R.drawable.launcher_night_15
     )
 
+    /**
+     * The gradient color pattern is linear and offset is +Y to -Y and
+     * it is advisable to use the darker shade first and light shade after
+     * to achieve a nice looking gradient tint
+     */
     val vectorColors: Array<IntArray> = arrayOf(
             intArrayOf(parseColor("#FFF6E58D"), parseColor("#FFE056FD")),
             intArrayOf(parseColor("#FFFFD71D"), parseColor("#FF804700")),
@@ -134,6 +142,9 @@ object LauncherBackground {
             intArrayOf(parseColor("#FFcd4416"), parseColor("#FFd56735")),
             intArrayOf(parseColor("#FF008CA2"), parseColor("#FF00C8CA")),
             intArrayOf(parseColor("#FF0085bb"), parseColor("#FF66d9db")),
+            intArrayOf(parseColor("#FF5a4647"), parseColor("#FF7e3d40")),
+            intArrayOf(parseColor("#FF00919B"), parseColor("#FF00BDC6")),
+            intArrayOf(parseColor("#FFFF7979"), parseColor("#FFF6E58D")),
     )
 
     val vectorNightColors: Array<IntArray> = arrayOf(

@@ -70,8 +70,6 @@ class SplashScreen : Fragment() {
             randomNightValue = 0
         }
 
-        randomDayValue = 53
-
         when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
                 colorOne = LauncherBackground.vectorNightColors[randomNightValue][0]
