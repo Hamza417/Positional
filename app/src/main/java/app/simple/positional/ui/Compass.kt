@@ -359,7 +359,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                 MotionEvent.ACTION_MOVE -> {
                     val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     val finalAngle = currentAngle - startAngle + lastDialAngle
-                    viewRotation((abs(finalAngle.normalizeEulerAngle(inverseResult = true))))
+                    viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)))
                     return true
                 }
                 MotionEvent.ACTION_UP -> {
@@ -443,38 +443,10 @@ class Compass : ScopedFragment(), SensorEventListener {
         dial.rotation = rotationAngle * -1
 
         if (CompassPreference.isFlowerBloomOn()) {
-            when (flowerBloom) {
-                0 -> {
-                    flowerOne.rotation = rotationAngle * 2
-                    flowerTwo.rotation = rotationAngle * -3 + 45
-                    flowerThree.rotation = rotationAngle * 1 + 90
-                    flowerFour.rotation = rotationAngle * -4 + 135
-                }
-                1 -> {
-                    flowerOne.rotation = rotationAngle * 2
-                    flowerTwo.rotation = rotationAngle * -3 + 22.5f
-                    flowerThree.rotation = rotationAngle * 1 + 45f
-                    flowerFour.rotation = rotationAngle * -4 + 67.5f
-                }
-                2 -> {
-                    flowerOne.rotation = rotationAngle * 2
-                    flowerTwo.rotation = rotationAngle * -3 + 45
-                    flowerThree.rotation = rotationAngle * 1 + 90
-                    flowerFour.rotation = rotationAngle * -4 + 135
-                }
-                3 -> {
-                    flowerOne.rotation = rotationAngle * 2
-                    flowerTwo.rotation = rotationAngle * -3 + 45
-                    flowerThree.rotation = rotationAngle * 1 + 90
-                    flowerFour.rotation = rotationAngle * -4 + 135
-                }
-                4 -> {
-                    flowerOne.rotation = rotationAngle * 2
-                    flowerTwo.rotation = rotationAngle * -3 + 45
-                    flowerThree.rotation = rotationAngle * 1 + 90
-                    flowerFour.rotation = rotationAngle * -4 + 135
-                }
-            }
+            flowerOne.rotation = rotationAngle * 2
+            flowerTwo.rotation = rotationAngle * -3 + 45
+            flowerThree.rotation = rotationAngle * 1 + 90
+            flowerFour.rotation = rotationAngle * -4 + 135
         }
 
         degrees.text = StringBuilder().append(abs(rotationAngle.toInt())).append("°")
