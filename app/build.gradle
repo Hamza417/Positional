@@ -103,6 +103,30 @@ android {
                 mappingFileUploadEnabled true
             }
         }
+
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "_debug"
+
+            /**
+             * This is necessary since I cannot create a debug Firebase
+             * project for a debug build, this part never goes into production
+             * so it won't cause any issues
+             *
+             * For future references to why it is here, this problem is caused by
+             * missing google-services.json file for the debug build and this code
+             * here is only masking the error and not solving it. In short it will
+             * quickly compile the app for debug but won't work in release builds
+             * if google-services.json file is missing
+             */
+            gradle.taskGraph.whenReady {
+                tasks.each { task ->
+                    if(task.name.contains("processFullDebugGoogleServices") || task.name.contains("processLiteDebugGoogleServices")) {
+                        task.enabled = false
+                    }
+                }
+            }
+        }
     }
 
     compileOptions {
@@ -121,7 +145,7 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.1'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
     // Tests
     testImplementation 'junit:junit:4.13.1'

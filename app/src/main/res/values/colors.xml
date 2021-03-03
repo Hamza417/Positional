@@ -17,7 +17,7 @@
     <color name="clockDialColor">#000000</color>
     <color name="edgeEffect">#717171</color>
     <color name="card_background">#FBFBFB</color>
-    <color name="seek_bar">#34495E</color>
+    <color name="seek_bar">#2196F3</color>
 
     <!-- Bottom Bar Color -->
     <color name="iconRegular">#9A9A9A</color>

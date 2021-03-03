@@ -6,5 +6,4 @@ object LowPassFilter {
         readings[1] = readingsAlpha * newReadings[1] + (1 - readingsAlpha) * readings[1] // y
         readings[2] = readingsAlpha * newReadings[2] + (1 - readingsAlpha) * readings[2] // z
     }
-
 }

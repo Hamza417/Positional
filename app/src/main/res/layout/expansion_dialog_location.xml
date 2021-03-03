@@ -56,7 +56,7 @@
             app:s_line_second_color="@color/graph_location_line_color_second"
             app:s_line_thickness="4dp"
             app:s_marker_background_color="@color/graph_location_circle_color"
-            app:s_marker_circle_style="true"
+            app:s_marker_circle_style="false"
             app:s_marker_width="8dp" />
 
         <TextView
@@ -90,7 +90,7 @@
             app:s_line_second_color="@color/graph_location_line_color_second"
             app:s_line_thickness="4dp"
             app:s_marker_background_color="@color/graph_location_circle_color"
-            app:s_marker_circle_style="true"
+            app:s_marker_circle_style="false"
             app:s_marker_width="8dp" />
 
     </LinearLayout>

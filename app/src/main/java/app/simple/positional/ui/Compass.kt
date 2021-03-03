@@ -35,7 +35,7 @@ import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
 import app.simple.positional.math.Angle.getAngle
-import app.simple.positional.math.Angle.toThreeSixty
+import app.simple.positional.math.Angle.normalizeEulerAngle
 import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
@@ -352,14 +352,14 @@ class Compass : ScopedFragment(), SensorEventListener {
                     objectAnimator?.cancel()
                     dial.clearAnimation()
                     handler.removeCallbacks(compassDialAnimationRunnable)
-                    lastDialAngle = if (dial.rotation < -180) abs(dial.rotation) else dial.rotation
+                    lastDialAngle = dial.rotation //if (dial.rotation < -180) abs(dial.rotation) else dial.rotation
                     startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     return true
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     val finalAngle = currentAngle - startAngle + lastDialAngle
-                    viewRotation((finalAngle.toThreeSixty() - 360F) * -1)
+                    viewRotation((abs(finalAngle.normalizeEulerAngle(inverseResult = true))))
                     return true
                 }
                 MotionEvent.ACTION_UP -> {
@@ -526,20 +526,11 @@ class Compass : ScopedFragment(), SensorEventListener {
         objectAnimator!!.interpolator = DecelerateInterpolator()
         objectAnimator!!.addUpdateListener { animation -> viewRotation(abs(animation.getAnimatedValue("rotation") as Float)) }
         objectAnimator!!.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {
-                /* no-op */
-            }
-
+            override fun onAnimationStart(animation: Animator?) {}
+            override fun onAnimationCancel(animation: Animator?) {}
+            override fun onAnimationRepeat(animation: Animator?) {}
             override fun onAnimationEnd(animation: Animator?) {
                 isUserRotatingDial = false
-            }
-
-            override fun onAnimationCancel(animation: Animator?) {
-                /* no-op */
-            }
-
-            override fun onAnimationRepeat(animation: Animator?) {
-                /* no-op */
             }
         })
         objectAnimator!!.start()

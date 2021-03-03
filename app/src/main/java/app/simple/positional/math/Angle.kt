@@ -9,8 +9,10 @@ import kotlin.math.sqrt
 
 object Angle {
     /**
+     * @deprecated use [Angle.getAngle] function for accurate results
      * @return The angle of the unit circle with the image view's center
      */
+    @Deprecated("Not suitable for angle measurements")
     fun getAngleUsingQuadrant(xTouch: Double, yTouch: Double, dialerWidth: Float, dialerHeight: Float): Double {
         val x: Double = xTouch - dialerWidth / 2.0
         val y: Double = dialerHeight - yTouch - dialerHeight / 2.0
@@ -36,16 +38,26 @@ object Angle {
             (360 - Math.toDegrees(acos(-centerY * y2 / (d1 * d2)))).toFloat()
     }
 
-    fun Float.toThreeSixty(): Float {
-        return if (this < 0) {
-            this + 360F
-        } else {
-            this
-        }
+    /**
+     * Normalizes Euler angle within an acceptable range
+     * such as an image rotation could exceed 360° in some cases where
+     * few extra values are simplified together, in short this fun limits
+     * the value range to be within 0° - 360° even if the actual values are
+     * more or less
+     *
+     * @param [inverseResult] inverses the final value by 360° useful in cases
+     * like compass rotation where degrees are inverted for fetching direction
+     *
+     * @return [Float]
+     */
+    fun Float.normalizeEulerAngle(inverseResult: Boolean): Float {
+        var normalized = this % 360
+        if (normalized < 0) normalized += 360
+        return if (inverseResult) normalized - 360F else normalized
     }
 
     /**
-     * @return The selected quadrant.
+     * @return [Int] The selected quadrant.
      */
     private fun getQuadrant(x: Double, y: Double): Int {
         return if (x >= 0) {
