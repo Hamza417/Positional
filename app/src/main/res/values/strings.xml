@@ -182,6 +182,7 @@
     <string name="bloom_purple_square">Purple Square</string>
     <string name="bloom_red_circles">Red Circles</string>
     <string name="bloom_blue_petals">Blue Petals</string>
+    <string name="bloom_octagon">Octagon</string>
 
     <!-- GPS Menu -->
     <string name="show_label">Show Label</string>

@@ -66,7 +66,6 @@
             app:drawableStartCompat="@drawable/ic_bloom_skin"
             app:drawableTint="@color/iconRegular" />
 
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
@@ -113,7 +112,6 @@
             android:background="@drawable/ripple_btn"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="gone"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
 
@@ -167,7 +165,6 @@
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
             android:padding="@dimen/options_item_padding"
-            android:visibility="gone"
             android:text="@string/sensor_noise_filter"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"

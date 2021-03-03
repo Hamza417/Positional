@@ -57,7 +57,8 @@ object LauncherBackground {
             R.drawable.launcher_day_50,
             R.drawable.launcher_day_51,
             R.drawable.launcher_day_52,
-            R.drawable.launcher_day_53
+            R.drawable.launcher_day_53,
+            R.drawable.launcher_day_54
     )
 
     val vectorBackgroundNight = intArrayOf(
@@ -131,7 +132,8 @@ object LauncherBackground {
             intArrayOf(parseColor("#FF36A1FF"), parseColor("#FF7DE5FF")),
             intArrayOf(parseColor("#FFbe5c35"), parseColor("#FFeabc83")),
             intArrayOf(parseColor("#FFcd4416"), parseColor("#FFd56735")),
-            intArrayOf(parseColor("#FF008CA2"), parseColor("#FF00C8CA"))
+            intArrayOf(parseColor("#FF008CA2"), parseColor("#FF00C8CA")),
+            intArrayOf(parseColor("#FF0085bb"), parseColor("#FF66d9db")),
     )
 
     val vectorNightColors: Array<IntArray> = arrayOf(

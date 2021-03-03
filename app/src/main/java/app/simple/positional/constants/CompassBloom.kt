@@ -8,7 +8,8 @@ object CompassBloom {
             R.drawable.compass_bloom_01,
             R.drawable.compass_bloom_02,
             R.drawable.compass_bloom_03,
-            R.drawable.compass_bloom_04
+            R.drawable.compass_bloom_04,
+            R.drawable.compass_bloom_05
     )
 
     var compassBloomTextColor = arrayOf(
@@ -16,5 +17,6 @@ object CompassBloom {
             Color.parseColor("#6F2374"), // Red
             Color.parseColor("#FFEE074D"), // Purple
             Color.parseColor("#FF1BA0D1"), // Moon Dark
+            Color.parseColor("#FF169C65"), // Dark Green
     )
 }

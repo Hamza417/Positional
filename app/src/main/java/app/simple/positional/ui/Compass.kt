@@ -468,6 +468,12 @@ class Compass : ScopedFragment(), SensorEventListener {
                     flowerThree.rotation = rotationAngle * 1 + 90
                     flowerFour.rotation = rotationAngle * -4 + 135
                 }
+                4 -> {
+                    flowerOne.rotation = rotationAngle * 2
+                    flowerTwo.rotation = rotationAngle * -3 + 45
+                    flowerThree.rotation = rotationAngle * 1 + 90
+                    flowerFour.rotation = rotationAngle * -4 + 135
+                }
             }
         }
 

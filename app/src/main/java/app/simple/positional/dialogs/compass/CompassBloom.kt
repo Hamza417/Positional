@@ -12,16 +12,12 @@ import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
 class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialogFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-    }
 
     private lateinit var orange: RadioButton
     private lateinit var purple: RadioButton
     private lateinit var flower: RadioButton
     private lateinit var petals: RadioButton
+    private lateinit var octagon: RadioButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_compass_bloom, container, false)
@@ -30,6 +26,7 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
         purple = view.findViewById(R.id.bloom_purple)
         flower = view.findViewById(R.id.bloom_flower)
         petals = view.findViewById(R.id.bloom_petals)
+        octagon = view.findViewById(R.id.bloom_octagon)
 
         return view
     }
@@ -54,6 +51,10 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
         petals.setOnClickListener {
             setValue(3)
         }
+
+        octagon.setOnClickListener {
+            setValue(4)
+        }
     }
 
     private fun setValue(value: Int) {
@@ -68,5 +69,6 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
         purple.isChecked = value == 1
         flower.isChecked = value == 2
         petals.isChecked = value == 3
+        octagon.isChecked = value == 4
     }
 }
