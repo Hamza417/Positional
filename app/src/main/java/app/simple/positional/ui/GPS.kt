@@ -509,6 +509,11 @@ class GPS : ScopedFragment() {
         distanceSingleton.isMapPanelVisible = false
     }
 
+    override fun onStop() {
+        super.onStop()
+        mapView?.onStop()
+    }
+
     override fun onResume() {
         super.onResume()
         if (isCustomCoordinate) {

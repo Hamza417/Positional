@@ -8,7 +8,7 @@
 
     <app.simple.positional.corners.DynamicCornerFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dialog_height"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/options_container_horizontal_padding"
         android:backgroundTint="@color/toolbarBackground"
         android:elevation="40dp"

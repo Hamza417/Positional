@@ -21,12 +21,6 @@ class Locales : CustomBottomSheetDialogFragment(), LocaleCallback {
         return this
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_locales, container, false)
         recyclerView = view.findViewById(R.id.locale_recycler_view)

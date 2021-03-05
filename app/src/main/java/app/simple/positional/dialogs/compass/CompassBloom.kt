@@ -4,29 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
+import android.widget.TextView
+import androidx.viewpager.widget.ViewPager
 import app.simple.positional.R
+import app.simple.positional.adapters.BloomSkinAdapter
+import app.simple.positional.constants.CompassBloom
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
+import app.simple.positional.util.LocaleHelper
 import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
 class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialogFragment() {
 
-    private lateinit var orange: RadioButton
-    private lateinit var purple: RadioButton
-    private lateinit var flower: RadioButton
-    private lateinit var petals: RadioButton
-    private lateinit var octagon: RadioButton
+    private lateinit var viewPager: ViewPager
+    private lateinit var textView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_compass_bloom, container, false)
 
-        orange = view.findViewById(R.id.bloom_orange)
-        purple = view.findViewById(R.id.bloom_purple)
-        flower = view.findViewById(R.id.bloom_flower)
-        petals = view.findViewById(R.id.bloom_petals)
-        octagon = view.findViewById(R.id.bloom_octagon)
+        viewPager = view.findViewById(R.id.bloom_skin_view_pager)
+        textView = view.findViewById(R.id.current_bloom_theme)
 
         return view
     }
@@ -34,41 +32,36 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setButtons(CompassPreference.getFlowerBloomTheme())
+        viewPager.adapter = BloomSkinAdapter(requireContext())
+        viewPager.currentItem = CompassPreference.getFlowerBloomTheme()
 
-        orange.setOnClickListener {
-            setValue(0)
-        }
+        textView.text = String.format(
+                locale = LocaleHelper.getAppLocale(),
+                format = "${viewPager.currentItem + 1}/${CompassBloom.compassBloomRes.size}"
+        )
 
-        purple.setOnClickListener {
-            setValue(1)
-        }
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                /* no-op */
+            }
 
-        flower.setOnClickListener {
-            setValue(2)
-        }
+            override fun onPageSelected(position: Int) {
+                textView.text = String.format(
+                        locale = LocaleHelper.getAppLocale(),
+                        format = "${position + 1}/${CompassBloom.compassBloomRes.size}"
+                )
+            }
 
-        petals.setOnClickListener {
-            setValue(3)
-        }
-
-        octagon.setOnClickListener {
-            setValue(4)
-        }
+            override fun onPageScrollStateChanged(state: Int) {
+                if (state == ViewPager.SCROLL_STATE_SETTLING) {
+                    setValue(viewPager.currentItem)
+                }
+            }
+        })
     }
 
     private fun setValue(value: Int) {
         weakReference.get()?.setFlowerTheme(value)
-        setButtons(value)
-    }
-
-    private fun setButtons(value: Int) {
         CompassPreference.setFlowerBloom(value)
-
-        orange.isChecked = value == 0
-        purple.isChecked = value == 1
-        flower.isChecked = value == 2
-        petals.isChecked = value == 3
-        octagon.isChecked = value == 4
     }
 }

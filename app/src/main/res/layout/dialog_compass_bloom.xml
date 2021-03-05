@@ -10,137 +10,30 @@
 
     <app.simple.positional.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:backgroundTint="@color/toolbarBackground"
         android:elevation="40dp"
         android:padding="@dimen/options_container_horizontal_padding"
         android:layout_margin="@dimen/options_container_horizontal_padding"
         android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/current_bloom_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/textPrimary"
+            android:textSize="6pt" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/bloom_skin_view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/bloom_orange_oval"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
-
-            <RadioButton
-                android:id="@+id/bloom_orange"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/iconColor" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/bloom_purple_square"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
-
-            <RadioButton
-                android:id="@+id/bloom_purple"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/iconColor" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/bloom_red_circles"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
-
-            <RadioButton
-                android:id="@+id/bloom_flower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/iconColor" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/bloom_blue_petals"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
-
-            <RadioButton
-                android:id="@+id/bloom_petals"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/iconColor" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/bloom_octagon"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
-
-            <RadioButton
-                android:id="@+id/bloom_octagon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/iconColor" />
-
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp" />
 
     </app.simple.positional.corners.DynamicCornerLinearLayout>
 

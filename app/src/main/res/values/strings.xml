@@ -178,11 +178,6 @@
     <string name="sensor_noise_filter">Sensor Noise Filter</string>
     <string name="sensor_speed_normal">Normal</string>
     <string name="sensor_speed_fast">Fast</string>
-    <string name="bloom_orange_oval">Orange Oval</string>
-    <string name="bloom_purple_square">Purple Square</string>
-    <string name="bloom_red_circles">Red Circles</string>
-    <string name="bloom_blue_petals">Blue Petals</string>
-    <string name="bloom_octagon">Octagon</string>
 
     <!-- GPS Menu -->
     <string name="show_label">Show Label</string>
@@ -235,9 +230,6 @@
     <string name="open_saved_locations">Open saved locations</string>
     <string name="open_specified_location_documentation">Open specified location documentation</string>
     <string name="open_timezones">Open time zones</string>
-
-    <!-- Bottom Bar -->
-    <string name="ellipsis">&#8230;</string>
 
     <!-- Legal Menu -->
     <string name="disclaimer">Disclaimer</string>

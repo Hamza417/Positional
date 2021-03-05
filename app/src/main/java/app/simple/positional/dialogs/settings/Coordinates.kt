@@ -2,6 +2,7 @@ package app.simple.positional.dialogs.settings
 
 import android.content.DialogInterface
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -23,7 +24,6 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.callbacks.LocationAdapterCallback
 import app.simple.positional.callbacks.TimeZoneSelected
-import app.simple.positional.corners.DynamicCornerButton
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.math.TimeConverter.isValidTimeZone
 import app.simple.positional.model.Locations
@@ -49,7 +49,7 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
     private lateinit var timezoneList: ImageButton
     private lateinit var savedLocations: ImageButton
     private lateinit var help: ImageButton
-    private lateinit var setCoordinatesButton: DynamicCornerButton
+    private lateinit var setCoordinatesButton: Button
     private lateinit var cancel: Button
     private lateinit var addressInputEditText: TextInputEditText
     private lateinit var latitudeInputEditText: TextInputEditText
@@ -285,10 +285,16 @@ class Coordinates : CustomDialogFragment(), TimeZoneSelected, LocationAdapterCal
                     isValidLatitude(latitudeInputEditText.text.toString().toDouble()) &&
                             isValidLongitude(longitudeInputEditText.text.toString().toDouble()) &&
                             isValidTimeZone
-
+            if (setCoordinatesButton.isClickable) {
+                setCoordinatesButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.textPrimary))
+            } else {
+                setCoordinatesButton.setTextColor(Color.DKGRAY)
+            }
         } catch (e: NumberFormatException) {
+            setCoordinatesButton.setTextColor(Color.DKGRAY)
             setCoordinatesButton.isClickable = false
         } catch (e: NullPointerException) {
+            setCoordinatesButton.setTextColor(Color.DKGRAY)
             setCoordinatesButton.isClickable = false
         }
     }

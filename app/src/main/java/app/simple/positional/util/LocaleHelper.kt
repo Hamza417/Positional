@@ -17,7 +17,6 @@ object LocaleHelper {
             Locales("English", "en"),
             Locales("Español", "es"),
             Locales("български", "bg"),
-            Locales("Français", "fr"),
             Locales("हिन्दी", "hi"),
             Locales("اردو", "ur"))
 

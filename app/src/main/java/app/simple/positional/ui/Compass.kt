@@ -470,13 +470,13 @@ class Compass : ScopedFragment(), SensorEventListener {
             loadImage(x, flowerTwo, requireContext(), 50)
             loadImage(x, flowerThree, requireContext(), 100)
             loadImage(x, flowerFour, requireContext(), 150)
-            animateColorChange(degrees, compassBloomTextColor[CompassPreference.getFlowerBloomTheme()], Color.parseColor("#ffffff"))
+            degrees.animateColorChange(Color.parseColor("#ffffff"))
         } else {
             loadImage(0, flowerOne, requireContext(), 150)
             loadImage(0, flowerTwo, requireContext(), 100)
             loadImage(0, flowerThree, requireContext(), 50)
             loadImage(0, flowerFour, requireContext(), 0)
-            animateColorChange(degrees, degrees.currentTextColor, compassBloomTextColor[CompassPreference.getFlowerBloomTheme()])
+            degrees.animateColorChange(compassBloomTextColor[CompassPreference.getFlowerBloomTheme()])
         }
     }
 
@@ -502,6 +502,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         objectAnimator = ObjectAnimator.ofFloat(dial, "rotation", dial.rotation, rotationAngle * -1)
         objectAnimator!!.duration = 1000L
         objectAnimator!!.interpolator = DecelerateInterpolator()
+        objectAnimator!!.setAutoCancel(true)
         objectAnimator!!.addUpdateListener { animation -> viewRotation(abs(animation.getAnimatedValue("rotation") as Float)) }
         objectAnimator!!.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {}
