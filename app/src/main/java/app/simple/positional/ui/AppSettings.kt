@@ -160,7 +160,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
                 coordinates.coordinatesCallback = this
                 coordinates.show(childFragmentManager, "coordinates")
             } else {
-                buyFull.callOnClick()
+                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
             }
         }
 

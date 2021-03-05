@@ -79,7 +79,8 @@ object LauncherBackground {
             R.drawable.launcher_night_12,
             R.drawable.launcher_night_13,
             R.drawable.launcher_night_14,
-            R.drawable.launcher_night_15
+            R.drawable.launcher_night_15,
+            R.drawable.launcher_night_16
     )
 
     /**
@@ -96,29 +97,29 @@ object LauncherBackground {
             intArrayOf(parseColor("#FF52618c"), parseColor("#FF6b8ea9")),
             intArrayOf(parseColor("#FF434E94"), parseColor("#FF081146")),
             intArrayOf(parseColor("#FFDE7E42"), parseColor("#FFBF5047")),
-            intArrayOf(parseColor("#FF246887"), parseColor("#FF247ca7")),
-            intArrayOf(parseColor("#FFff7841"), parseColor("#FFf14f2a")),
+            intArrayOf(parseColor("#FFc75124"), parseColor("#FFFBB58E")),
+            intArrayOf(parseColor("#FF3cb1c3"), parseColor("#FFb5b1a5")),
             intArrayOf(parseColor("#FF596869"), parseColor("#FFa9a094")),
             intArrayOf(parseColor("#FFC2602A"), parseColor("#FFE89144")),
             intArrayOf(parseColor("#FFFC6F55"), parseColor("#FFC3687B")),
             intArrayOf(parseColor("#FF69525E"), parseColor("#FF432131")),
             intArrayOf(parseColor("#FF441F00"), parseColor("#FFBE804C")),
-            intArrayOf(parseColor("#FF871E67"), parseColor("#FF4a0a32")),
+            intArrayOf(parseColor("#FFB58061"), parseColor("#FFD08F4D")),
             intArrayOf(parseColor("#FFFF8A9F"), parseColor("#FFB6577C")),
             intArrayOf(parseColor("#FFffe8c7"), parseColor("#FFf5c579")),
             intArrayOf(parseColor("#FF91AEAD"), parseColor("#FF2f4a5d")),
             intArrayOf(parseColor("#FF008D7D"), parseColor("#FF1e0b53")),
             intArrayOf(parseColor("#FF872133"), parseColor("#FFBB4657")),
             intArrayOf(parseColor("#FF44408D"), parseColor("#FF1C7EB6")),
-            intArrayOf(parseColor("#FF9F38AA"), parseColor("#FF541A5A")),
+            intArrayOf(parseColor("#FF047a62"), parseColor("#FF9df3c4")),
             intArrayOf(parseColor("#FFEBAC59"), parseColor("#FF9C314C")),
             intArrayOf(parseColor("#FF00748e"), parseColor("#FF004b5b")),
-            intArrayOf(parseColor("#FF8D6AA9"), parseColor("#FFBD95C3")),
+            intArrayOf(parseColor("#FF20804C"), parseColor("#FF6BE297")),
             intArrayOf(parseColor("#FF48543E"), parseColor("#FFBEA46F")),
-            intArrayOf(parseColor("#FFBE4E31"), parseColor("#FF7A3027")),
+            intArrayOf(parseColor("#FF7E2845"), parseColor("#FFE15B64")),
             intArrayOf(parseColor("#FF912B86"), parseColor("#FF33307F")),
             intArrayOf(parseColor("#FF7b8c62"), parseColor("#FF4b594b")),
-            intArrayOf(parseColor("#FFB1606B"), parseColor("#FFF3A464")),
+            intArrayOf(parseColor("#FF58b046"), parseColor("#FF73e06e")),
             intArrayOf(parseColor("#FFF27E8B"), parseColor("#FF395175")),
             intArrayOf(parseColor("#FFBC8E6F"), parseColor("#FFE9C49E")),
             intArrayOf(parseColor("#FFa14118"), parseColor("#FFdb6532")),
@@ -162,7 +163,8 @@ object LauncherBackground {
             intArrayOf(parseColor("#FFf0a87f"), parseColor("#FF415262")),
             intArrayOf(parseColor("#FFFFEC84"), parseColor("#FFFF8B88")),
             intArrayOf(parseColor("#FF225664"), parseColor("#FF65CBBF")),
-            intArrayOf(parseColor("#FF35556f"), parseColor("#FF5492c2"))
+            intArrayOf(parseColor("#FF35556f"), parseColor("#FF5492c2")),
+            intArrayOf(parseColor("#FF0096FF"), parseColor("#FF1A47A2"))
     )
 
     private fun parseColor(value: String): Int {

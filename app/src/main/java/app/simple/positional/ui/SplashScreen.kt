@@ -4,13 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
@@ -75,6 +73,9 @@ class SplashScreen : Fragment() {
                 colorOne = LauncherBackground.vectorNightColors[randomNightValue][0]
                 colorTwo = LauncherBackground.vectorNightColors[randomNightValue][1]
                 launcherBackground.setImageResource(LauncherBackground.vectorBackgroundNight[randomNightValue])
+                val window: Window = requireActivity().window
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                window.statusBarColor = Color.TRANSPARENT
             }
             Configuration.UI_MODE_NIGHT_NO -> {
                 colorOne = LauncherBackground.vectorColors[randomDayValue][0]

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
@@ -60,7 +61,7 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
         bottomBar = findViewById(R.id.bottom_bar)
         bottomBarWrapper = findViewById(R.id.bottom_bar_wrapper)
 
-        if (MainPreferences.isNotificationOn()) {
+        if (MainPreferences.isNotificationOn() && !BuildConfig.DEBUG) {
             FirebaseMessaging.getInstance().subscribeToTopic("push_notification")
             startService(Intent(applicationContext, MessagingService::class.java))
         }

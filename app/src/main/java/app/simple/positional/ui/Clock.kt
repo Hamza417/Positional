@@ -460,7 +460,7 @@ class Clock : ScopedFragment() {
                 this@Clock.moonPositionData.text = moonPositionData
                 this@Clock.moonIlluminationData.text = moonIlluminationData
                 this@Clock.moonPhaseGraphics.setImageResource(getMoonPhaseGraphics(round(moonIllumination.phase, 2)))
-                this@Clock.moonPhaseGraphics.rotation = (moonPosition.parallacticAngle - moonIllumination.angle).toFloat()
+                //this@Clock.moonPhaseGraphics.rotation = (moonPosition.parallacticAngle - moonIllumination.angle).toFloat()
                 this@Clock.moonDatesData.text = moonDatesData
             } catch (ignored: NullPointerException) {
             } catch (ignored: UninitializedPropertyAccessException) {
