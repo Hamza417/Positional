@@ -162,11 +162,7 @@
     <string name="sensor_speed">Velocidad sensor</string>
     <string name="sensor_noise_filter">Sensor Noise Filter</string>
     <string name="sensor_speed_normal">Media</string>
-    <string name="sensor_speed_fast">Rapido</string>
-    <string name="bloom_orange_oval">Lana naranja</string>
-    <string name="bloom_purple_square">Cuadrado Morado</string>
-    <string name="bloom_red_circles">círculo rojo</string>
-    <string name="bloom_blue_petals">Animales azules</string>
+    <string name="sensor_speed_fast">Rápido</string>
     <!-- GPS Menu -->
     <string name="show_label">Ver etiqueta</string>
     <string name="satellite_mode">Modo Satellite</string>

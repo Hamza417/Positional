@@ -163,10 +163,6 @@
     <string name="sensor_noise_filter">سینسر نویز فلٹر</string>
     <string name="sensor_speed_normal">عام</string>
     <string name="sensor_speed_fast">تیز</string>
-    <string name="bloom_orange_oval">اورنج اوول</string>
-    <string name="bloom_purple_square">ارغوانی اسکوائر</string>
-    <string name="bloom_red_circles">سرخ دائرے</string>
-    <string name="bloom_blue_petals">نیلی پنکھڑیوں</string>
     <!-- GPS Menu -->
     <string name="show_label">لیبل دکھائیں</string>
     <string name="satellite_mode">سیٹلائٹ وضع</string>

@@ -163,10 +163,6 @@
     <string name="sensor_noise_filter">Филтър за шум на сензора</string>
     <string name="sensor_speed_normal">Нормално</string>
     <string name="sensor_speed_fast">Бързо</string>
-    <string name="bloom_orange_oval">Оранжев овал</string>
-    <string name="bloom_purple_square">Лилав квадрат</string>
-    <string name="bloom_red_circles">Червени кръгове</string>
-    <string name="bloom_blue_petals">Сини венчелистчета</string>
     <!-- GPS Menu -->
     <string name="show_label">Покажи етикетите</string>
     <string name="satellite_mode">Сателит</string>

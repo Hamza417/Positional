@@ -163,10 +163,6 @@
     <string name="sensor_noise_filter">सेंसर नॉइज़ फ़िल्टर</string>
     <string name="sensor_speed_normal">समान्य</string>
     <string name="sensor_speed_fast">तेज</string>
-    <string name="bloom_orange_oval">ऑरेंज ओवल</string>
-    <string name="bloom_purple_square">बैंगनी वर्ग</string>
-    <string name="bloom_red_circles">लाल घेरा</string>
-    <string name="bloom_blue_petals">नीली पंखुड़ियाँ</string>
     <!-- GPS Menu -->
     <string name="show_label">लेबल दिखाएं</string>
     <string name="satellite_mode">सैटेलाइट मोड</string>
