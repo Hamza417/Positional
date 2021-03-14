@@ -17,7 +17,8 @@ object SharedPreferences {
      * Call [init] first before making a instance request
      *
      * @see init
-     * @throws NullPointerException
+     * @throws NullPointerException if the [init] is not called
+     * prior to accessing the [sharedPreferences] instance
      */
     fun getSharedPreferences(): SharedPreferences {
         return sharedPreferences ?: throw NullPointerException()
