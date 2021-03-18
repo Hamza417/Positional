@@ -7,12 +7,9 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.ClockPreferences.getMovementType
-import app.simple.positional.preference.ClockPreferences.setMovementType
-import app.simple.positional.ui.Clock
-import java.lang.ref.WeakReference
+import app.simple.positional.preference.ClockPreferences
 
-class ClockMotionType(private val clock: WeakReference<Clock>) : CustomBottomSheetDialogFragment() {
+class ClockMotionType : CustomBottomSheetDialogFragment() {
 
     private lateinit var smooth: RadioButton
     private lateinit var tick: RadioButton
@@ -29,22 +26,29 @@ class ClockMotionType(private val clock: WeakReference<Clock>) : CustomBottomShe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setButton(getMovementType())
+        setButton(ClockPreferences.getMovementType())
 
         smooth.setOnClickListener {
             setButton(true)
-            clock.get()?.setMotionDelay(true)
         }
 
         tick.setOnClickListener {
             setButton(false)
-            clock.get()?.setMotionDelay(false)
         }
     }
 
     private fun setButton(value: Boolean) {
         smooth.isChecked = value
         tick.isChecked = !value
-        setMovementType(value)
+        ClockPreferences.setMovementType(value)
+    }
+
+    companion object {
+        fun newInstance(): ClockMotionType {
+            val args = Bundle()
+            val fragment = ClockMotionType()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

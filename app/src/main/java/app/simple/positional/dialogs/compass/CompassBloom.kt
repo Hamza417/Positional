@@ -11,11 +11,9 @@ import app.simple.positional.adapters.BloomSkinAdapter
 import app.simple.positional.constants.CompassBloom
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.CompassPreference
-import app.simple.positional.ui.Compass
 import app.simple.positional.util.LocaleHelper
-import java.lang.ref.WeakReference
 
-class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialogFragment() {
+class CompassBloom : CustomBottomSheetDialogFragment() {
 
     private lateinit var viewPager: ViewPager
     private lateinit var textView: TextView
@@ -54,14 +52,9 @@ class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBo
 
             override fun onPageScrollStateChanged(state: Int) {
                 if (state == ViewPager.SCROLL_STATE_SETTLING) {
-                    setValue(viewPager.currentItem)
+                    CompassPreference.setFlowerBloom(viewPager.currentItem)
                 }
             }
         })
-    }
-
-    private fun setValue(value: Int) {
-        weakReference.get()?.setFlowerTheme(value)
-        CompassPreference.setFlowerBloom(value)
     }
 }

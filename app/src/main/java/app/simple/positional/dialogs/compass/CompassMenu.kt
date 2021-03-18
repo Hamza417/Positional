@@ -15,10 +15,8 @@ import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.CompassPreference.isFlowerBloomOn
 import app.simple.positional.preference.CompassPreference.setDirectionCode
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
-import app.simple.positional.ui.Compass
-import java.lang.ref.WeakReference
 
-class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialogFragment() {
+class CompassMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var toggleFlower: SwitchCompat
     private lateinit var toggleCode: SwitchCompat
@@ -54,7 +52,6 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
 
         toggleFlower.setOnCheckedChangeListener { _, isChecked ->
             if (BuildConfig.FLAVOR != "lite") {
-                weakReference.get()?.setFlower(isChecked)
                 setFlowerBloom(isChecked)
             } else {
                 Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
@@ -64,8 +61,7 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
 
         blooms.setOnClickListener {
             if (BuildConfig.FLAVOR != "lite") {
-                val compassBloom = CompassBloom(weakReference)
-                compassBloom.show(parentFragmentManager, "null")
+                CompassBloom().show(parentFragmentManager, "null")
             } else {
                 Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
                 toggleFlower.isChecked = false
@@ -86,18 +82,11 @@ class CompassMenu(private val weakReference: WeakReference<Compass>) : CustomBot
         }
 
         toggleCode.setOnCheckedChangeListener { _, isChecked ->
-            weakReference.get()?.showDirectionCode = isChecked
             setDirectionCode(isChecked)
         }
 
         speed.setOnClickListener {
-            val compassSpeed = WeakReference(CompassSpeed(weakReference))
-            compassSpeed.get()?.show(parentFragmentManager, "null")
+            CompassSpeed().show(parentFragmentManager, "null")
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        weakReference.clear()
     }
 }

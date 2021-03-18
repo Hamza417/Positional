@@ -9,7 +9,6 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.OvershootInterpolator
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -34,6 +33,7 @@ import app.simple.positional.math.TimeConverter.getSecondsInDegreesWithDecimalPr
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.*
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.AsyncImageLoader.loadImageResourcesWithoutAnimation
@@ -48,14 +48,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
 import org.shredzone.commons.suncalc.*
 import java.lang.Runnable
-import java.lang.ref.WeakReference
 import java.text.ParseException
 import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.temporal.IsoFields
 import java.util.*
 
-class Clock : ScopedFragment() {
+class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     fun newInstance(): Clock {
         val args = Bundle()
@@ -222,20 +221,7 @@ class Clock : ScopedFragment() {
         })
 
         menu.setOnClickListener {
-            val clockMenu = ClockMenu.newInstance()
-            clockMenu.clock = WeakReference(this)
-            clockMenu.show(parentFragmentManager, "null")
-            //parentFragmentManager.executePendingTransactions()
-            clockMenu.dialog?.setOnDismissListener {
-                requireView().animate()
-                        .scaleY(1f)
-                        .scaleX(1f)
-                        .translationY(0F)
-                        .alpha(1F)
-                        .setInterpolator(OvershootInterpolator(1.5F))
-                        .setDuration(500L)
-                        .start()
-            }
+            ClockMenu.newInstance().show(parentFragmentManager, "null")
         }
 
         copyButton.setOnClickListener {
@@ -334,6 +320,7 @@ class Clock : ScopedFragment() {
     override fun onPause() {
         super.onPause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
+        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         handler.removeCallbacks(clock)
         handler.removeCallbacks(calender)
         handler.removeCallbacks(textAnimationRunnable)
@@ -346,6 +333,7 @@ class Clock : ScopedFragment() {
 
     override fun onResume() {
         super.onResume()
+        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         handler.post(clock)
         handler.post(calender)
@@ -358,13 +346,13 @@ class Clock : ScopedFragment() {
         setNeedle(ClockPreferences.getClockNeedleTheme())
     }
 
-    fun setNeedle(value: Int) {
+    private fun setNeedle(value: Int) {
         loadImage(clockNeedleSkins[value][0], hour, requireContext(), 0)
         loadImage(clockNeedleSkins[value][1], minutes, requireContext(), 100)
         loadImage(clockNeedleSkins[value][2], seconds, requireContext(), 200)
     }
 
-    fun setMotionDelay(value: Boolean) {
+    private fun setMotionDelay(value: Boolean) {
         handler.removeCallbacks(clock)
         delay = if (value) {
             (1000 / getDisplayRefreshRate(requireContext(), requireActivity())!!).toLong()
@@ -529,5 +517,16 @@ class Clock : ScopedFragment() {
                 remove()
             }
         })
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            ClockPreferences.clockNeedleMovementType -> {
+                setMotionDelay(ClockPreferences.getMovementType())
+            }
+            ClockPreferences.clockNeedle -> {
+                setNeedle(ClockPreferences.getClockNeedleTheme())
+            }
+        }
     }
 }

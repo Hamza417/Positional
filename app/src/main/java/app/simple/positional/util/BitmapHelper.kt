@@ -70,16 +70,6 @@ object BitmapHelper {
         return rotatedBitmap
     }
 
-    fun addOverlayToBitmap(mainBitmap: Bitmap, overlayBitmap: Bitmap): Bitmap? {
-        val bmOverlay = Bitmap.createBitmap(mainBitmap.width, mainBitmap.height, mainBitmap.config)
-        val canvas = Canvas(bmOverlay)
-        canvas.drawBitmap(mainBitmap, Matrix(), null)
-        canvas.drawBitmap(overlayBitmap, 0F, 0F, null)
-        mainBitmap.recycle()
-        overlayBitmap.recycle()
-        return bmOverlay
-    }
-
     fun Int.toBitmap(context: Context, size: Int): Bitmap {
         val drawable = ContextCompat.getDrawable(context, this)
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)

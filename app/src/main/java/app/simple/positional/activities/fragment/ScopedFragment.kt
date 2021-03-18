@@ -1,6 +1,5 @@
 package app.simple.positional.activities.fragment
 
-import android.os.Bundle
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,11 +26,6 @@ open class ScopedFragment : Fragment(), CoroutineScope {
      */
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        retainInstance = true
-        super.onCreate(savedInstanceState)
-    }
 
     /**
      * Cancel the job instance here, since

@@ -2,6 +2,7 @@ package app.simple.positional.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -21,22 +22,14 @@ import app.simple.positional.decorations.popup.MainListPopupMenu
 import app.simple.positional.decorations.popup.PopupMenuCallback
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.preference.MainPreferences.getUnit
-import app.simple.positional.preference.MainPreferences.isCustomCoordinate
-import app.simple.positional.preference.MainPreferences.isDayNightOn
-import app.simple.positional.preference.MainPreferences.isNotificationOn
-import app.simple.positional.preference.MainPreferences.isScreenOn
-import app.simple.positional.preference.MainPreferences.setCustomCoordinates
-import app.simple.positional.preference.MainPreferences.setScreenOn
-import app.simple.positional.singleton.SharedPreferences
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.LocaleHelper.localeList
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.messaging.FirebaseMessaging
-import java.lang.ref.WeakReference
 
-class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
+class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPreferences.OnSharedPreferenceChangeListener {
 
     fun newInstance(): AppSettings {
         val args = Bundle()
@@ -119,20 +112,17 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
             specifiedLocationText.setTextColor(Color.GRAY)
         }
 
-        if (isDayNightOn()) {
+        if (MainPreferences.isDayNightOn()) {
             setCurrentThemeValue(4)
         } else {
             setCurrentThemeValue(AppCompatDelegate.getDefaultNightMode())
         }
 
-        setCurrentUnit(getUnit())
+        setCurrentUnit(MainPreferences.getUnit())
         setCurrentLocation()
-
-        setPreferenceListener()
-
-        toggleNotification.isChecked = isNotificationOn()
-        toggleKeepScreenOn.isChecked = isScreenOn()
-        isCoordinatesSet(isCustomCoordinate()) // toggle coordinate switch
+        toggleNotification.isChecked = MainPreferences.isNotificationOn()
+        toggleKeepScreenOn.isChecked = MainPreferences.isScreenOn()
+        isCoordinatesSet(MainPreferences.isCustomCoordinate())
 
         for (i in localeList.indices) {
             if (MainPreferences.getAppLanguage() == localeList[i].localeCode) {
@@ -141,8 +131,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         theme.setOnClickListener {
-            val theme = Theme(WeakReference(this))
-            theme.show(parentFragmentManager, "null")
+            Theme().show(parentFragmentManager, "null")
         }
 
         icon.setOnClickListener {
@@ -154,8 +143,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         unit.setOnClickListener {
-            val units = WeakReference(Units(WeakReference(this)))
-            units.get()?.show(parentFragmentManager, "null")
+            Units().show(parentFragmentManager, "null")
         }
 
         locationProvider.setOnClickListener {
@@ -185,7 +173,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
                         coordinates.coordinatesCallback = this
                         coordinates.show(childFragmentManager, "coordinates")
                     } else {
-                        setCustomCoordinates(isChecked)
+                        MainPreferences.setCustomCoordinates(isChecked)
                     }
                 }
             } else {
@@ -199,7 +187,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         toggleKeepScreenOn.setOnCheckedChangeListener { _, isChecked ->
-            setScreenOn(isChecked)
+            MainPreferences.setScreenOn(isChecked)
 
             if (isChecked) {
                 requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -284,16 +272,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
         }
     }
 
-    private fun setPreferenceListener() {
-        SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener { _, key ->
-            when (key) {
-                MainPreferences.locationProvider -> {
-                    setCurrentLocation()
-                }
-            }
-        }
-    }
-
     private fun setCurrentLocation() {
         currentLocationProvider.text = when (MainPreferences.getLocationProvider()) {
             "android" -> "Android Location Provider"
@@ -302,7 +280,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
         }
     }
 
-    fun setCurrentThemeValue(themeValue: Int) {
+    private fun setCurrentThemeValue(themeValue: Int) {
         try {
             currentTheme.text = when (themeValue) {
                 AppCompatDelegate.MODE_NIGHT_NO -> getString(R.string.theme_day)
@@ -316,7 +294,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
         }
     }
 
-    fun setCurrentUnit(value: Boolean) {
+    private fun setCurrentUnit(value: Boolean) {
         currentUnit.text = if (value) getString(R.string.unit_metric) else getString(R.string.unit_imperial)
     }
 
@@ -331,5 +309,29 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
     override fun onMenuItemClicked(source: String) {
         val legalNotes = HtmlViewer.newInstance(source)
         legalNotes.show(childFragmentManager, "legal_notes")
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            MainPreferences.locationProvider -> {
+                setCurrentLocation()
+            }
+            MainPreferences.unit -> {
+                setCurrentUnit(MainPreferences.getUnit())
+            }
+            MainPreferences.theme -> {
+                setCurrentThemeValue(MainPreferences.getTheme())
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
     }
 }

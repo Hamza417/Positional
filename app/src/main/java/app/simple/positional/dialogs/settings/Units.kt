@@ -8,10 +8,8 @@ import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.ui.AppSettings
-import java.lang.ref.WeakReference
 
-class Units(private val weakReference: WeakReference<AppSettings>) : CustomBottomSheetDialogFragment() {
+class Units : CustomBottomSheetDialogFragment() {
 
     private lateinit var metric: RadioButton
     private lateinit var imperial: RadioButton
@@ -32,12 +30,10 @@ class Units(private val weakReference: WeakReference<AppSettings>) : CustomBotto
 
         metric.setOnCheckedChangeListener { _, isChecked ->
             setButtons(isChecked)
-            weakReference.get()?.setCurrentUnit(isChecked)
         }
 
         imperial.setOnCheckedChangeListener { _, isChecked ->
             setButtons(!isChecked)
-            weakReference.get()?.setCurrentUnit(!isChecked)
         }
     }
 

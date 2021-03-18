@@ -9,11 +9,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.ui.AppSettings
 import app.simple.positional.util.ThemeSetter
-import java.lang.ref.WeakReference
 
-class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBottomSheetDialogFragment() {
+class Theme : CustomBottomSheetDialogFragment() {
 
     private lateinit var light: RadioButton
     private lateinit var dark: RadioButton
@@ -69,8 +67,6 @@ class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBotto
         dark.isChecked = value == AppCompatDelegate.MODE_NIGHT_YES
         followSystem.isChecked = value == AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
         dayNight.isChecked = value == 4
-
-        weakReference.get()?.setCurrentThemeValue(value)
 
         ThemeSetter.setAppTheme(value)
     }

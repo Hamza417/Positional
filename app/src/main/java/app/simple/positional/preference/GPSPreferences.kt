@@ -5,11 +5,11 @@ import org.jetbrains.annotations.NotNull
 
 object GPSPreferences {
 
-    private const val GPSLabelMode = "gps_label_mode"
-    private const val GPSSatellite = "gps_satellite_mode"
+    const val GPSLabelMode = "gps_label_mode"
+    const val GPSSatellite = "gps_satellite_mode"
     private const val lastLatitude = "last_latitude"
     private const val lastLongitude = "last_longitude"
-    private const val highContrastMap = "high_contrast_map"
+    const val highContrastMap = "high_contrast_map"
 
     fun isLabelOn(): Boolean {
         return getSharedPreferences().getBoolean(GPSLabelMode, true)

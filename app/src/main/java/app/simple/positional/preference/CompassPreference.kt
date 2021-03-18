@@ -5,10 +5,10 @@ import org.jetbrains.annotations.NotNull
 
 object CompassPreference {
 
-    private const val direction_code = "direction_code"
-    private const val flowerBloom = "flower"
-    private const val flowerBloomTheme = "flower_theme"
-    private const val compassSpeed = "compass_speed"
+    const val direction_code = "direction_code"
+    const val flowerBloom = "flower"
+    const val flowerBloomTheme = "flower_theme"
+    const val compassSpeed = "compass_speed"
     private const val noSensorAlertCompass = "no_sensor_alert_compass_dialog_show"
 
     // Parallax

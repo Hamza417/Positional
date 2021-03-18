@@ -11,11 +11,9 @@ import app.simple.positional.adapters.ClockNeedleSkinsAdapter
 import app.simple.positional.constants.ClockSkinsConstants
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.ClockPreferences
-import app.simple.positional.ui.Clock
 import app.simple.positional.util.LocaleHelper
-import java.lang.ref.WeakReference
 
-class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDialogFragment() {
+class ClockNeedle : CustomBottomSheetDialogFragment() {
 
     private lateinit var needleSkin: ViewPager
 
@@ -51,9 +49,17 @@ class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDi
             override fun onPageScrollStateChanged(state: Int) {
                 if (state == ViewPager.SCROLL_STATE_SETTLING) {
                     ClockPreferences.setClockNeedleTheme(needleSkin.currentItem)
-                    clock.get()?.setNeedle(needleSkin.currentItem)
                 }
             }
         })
+    }
+
+    companion object {
+        fun newInstance(): ClockNeedle {
+            val args = Bundle()
+            val fragment = ClockNeedle()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

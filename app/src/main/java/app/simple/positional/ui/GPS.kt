@@ -43,6 +43,7 @@ import app.simple.positional.model.Locations
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.*
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
@@ -57,10 +58,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
 import java.io.IOException
 import java.lang.Runnable
-import java.lang.ref.WeakReference
 import java.util.*
 
-class GPS : ScopedFragment() {
+class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     fun newInstance(): GPS {
         val args = Bundle()
@@ -349,8 +349,7 @@ class GPS : ScopedFragment() {
         })
 
         menu.setOnClickListener {
-            val weakReference = WeakReference(GPSMenu(WeakReference(this@GPS)))
-            weakReference.get()?.show(parentFragmentManager, "gps_menu")
+            GPSMenu().show(parentFragmentManager, "gps_menu")
         }
 
         locationIndicator.setOnClickListener {
@@ -488,6 +487,7 @@ class GPS : ScopedFragment() {
     override fun onPause() {
         super.onPause()
         mapView?.onPause()
+        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(mapMoved)
         handler.removeCallbacks(textAnimationRunnable)
@@ -511,6 +511,7 @@ class GPS : ScopedFragment() {
 
     override fun onResume() {
         super.onResume()
+        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
         if (isCustomCoordinate) {
             handler.post(customDataUpdater)
         }
@@ -641,7 +642,7 @@ class GPS : ScopedFragment() {
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
     }
 
-    fun showLabel(value: Boolean) {
+    private fun showLabel(value: Boolean) {
         if (!googleMap.isNull()) {
             if (GPSPreferences.getHighContrastMap()) {
                 googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
@@ -679,7 +680,7 @@ class GPS : ScopedFragment() {
         GPSPreferences.setLabelMode(value)
     }
 
-    fun setSatellite(value: Boolean) {
+    private fun setSatellite(value: Boolean) {
         if (!googleMap.isNull())
             googleMap?.mapType = if (value) {
                 GoogleMap.MAP_TYPE_SATELLITE
@@ -718,5 +719,16 @@ class GPS : ScopedFragment() {
                 remove()
             }
         })
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            GPSPreferences.highContrastMap, GPSPreferences.GPSLabelMode -> {
+                showLabel(GPSPreferences.isLabelOn())
+            }
+            GPSPreferences.GPSSatellite -> {
+                setSatellite(GPSPreferences.isSatelliteOn())
+            }
+        }
     }
 }

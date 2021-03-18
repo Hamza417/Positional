@@ -42,19 +42,19 @@ import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.Vector3
 import app.simple.positional.preference.CompassPreference
-import app.simple.positional.util.*
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.ColorAnimator.animateColorChange
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.setTextAnimation
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.math.abs
 
-class Compass : ScopedFragment(), SensorEventListener {
+class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     fun newInstance(): Compass {
         val args = Bundle()
@@ -75,7 +75,7 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
-    var showDirectionCode = true
+    private var showDirectionCode = true
     private var isUserRotatingDial = false
 
     private var accelerometer = Vector3.zero
@@ -199,8 +199,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         dialContainer.setOnTouchListener(MyOnTouchListener())
 
         menu.setOnClickListener {
-            val weakReference = WeakReference(CompassMenu(WeakReference(this@Compass)))
-            weakReference.get()?.show(parentFragmentManager, "compass_menu")
+            CompassMenu().show(parentFragmentManager, "compass_menu")
         }
 
         copy.setOnClickListener {
@@ -308,11 +307,13 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     override fun onResume() {
         super.onResume()
+        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
         register()
     }
 
     override fun onPause() {
         super.onPause()
+        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         handler.removeCallbacks(compassDialAnimationRunnable)
         objectAnimator?.removeAllListeners()
         objectAnimator?.cancel()
@@ -458,11 +459,11 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
     }
 
-    fun setSpeed(value: Float) {
+    private fun setSpeed(value: Float) {
         readingsAlpha = value
     }
 
-    fun setFlower(value: Boolean) {
+    private fun setFlower(value: Boolean) {
         CompassPreference.setFlowerBloom(value)
         val x = compassBloomRes[CompassPreference.getFlowerBloomTheme()]
         if (value) {
@@ -480,7 +481,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
     }
 
-    fun setFlowerTheme(value: Int) {
+    private fun setFlowerTheme(value: Int) {
         CompassPreference.setFlowerBloom(value)
         setFlower(value = CompassPreference.isFlowerBloomOn())
         flowerBloom = value
@@ -519,6 +520,23 @@ class Compass : ScopedFragment(), SensorEventListener {
         if (calibrationDialog == null) {
             calibrationDialog = CompassCalibration().newInstance()
             calibrationDialog!!.show(parentFragmentManager, "calibration_dialog")
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            CompassPreference.compassSpeed -> {
+                setSpeed(CompassPreference.getCompassSpeed())
+            }
+            CompassPreference.direction_code -> {
+                showDirectionCode = CompassPreference.getDirectionCode()
+            }
+            CompassPreference.flowerBloomTheme -> {
+                setFlowerTheme(CompassPreference.getFlowerBloomTheme())
+            }
+            CompassPreference.flowerBloom -> {
+                setFlower(CompassPreference.isFlowerBloomOn())
+            }
         }
     }
 }

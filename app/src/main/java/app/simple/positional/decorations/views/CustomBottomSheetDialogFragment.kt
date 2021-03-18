@@ -18,7 +18,6 @@ open class CustomBottomSheetDialogFragment : BottomSheetDialogFragment(), Corout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
         setStyle(STYLE_NO_FRAME, R.style.CustomBottomSheetDialogTheme)
     }
 

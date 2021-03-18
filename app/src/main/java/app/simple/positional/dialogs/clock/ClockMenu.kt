@@ -13,14 +13,11 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.ClockPreferences
-import app.simple.positional.ui.Clock
-import java.lang.ref.WeakReference
 
 class ClockMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var defaultTimeFormatContainer: LinearLayout
     private lateinit var defaultTimeFormatSwitch: SwitchCompat
-    lateinit var clock: WeakReference<Clock>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_clock_menu, container, false)
@@ -52,14 +49,12 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
             if (BuildConfig.FLAVOR == "lite") {
                 Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
             } else {
-                val clockNeedle = WeakReference(ClockNeedle(clock))
-                clockNeedle.get()?.show(parentFragmentManager, "null")
+                ClockNeedle.newInstance().show(parentFragmentManager, "null")
             }
         }
 
         view.findViewById<TextView>(R.id.clock_motion_type_text).setOnClickListener {
-            val clockMotionType = WeakReference(ClockMotionType(clock))
-            clockMotionType.get()?.show(parentFragmentManager, "null")
+            ClockMotionType.newInstance().show(parentFragmentManager, "null")
         }
     }
 

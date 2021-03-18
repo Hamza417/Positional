@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull
 object ClockPreferences {
 
     private const val clockDefaultTimeFormat = "is_clock_time_type_am_pm"
-    private const val clockNeedleMovementType = "clock_needle_movement_type"
-    private const val clockNeedle = "clock_needle_res_value"
+    const val clockNeedleMovementType = "clock_needle_movement_type"
+    const val clockNeedle = "clock_needle_res_value"
 
     fun setDefaultClockTime(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(clockDefaultTimeFormat, value).apply()

@@ -8,10 +8,8 @@ import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.CompassPreference
-import app.simple.positional.ui.Compass
-import java.lang.ref.WeakReference
 
-class CompassSpeed(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialogFragment() {
+class CompassSpeed : CustomBottomSheetDialogFragment() {
 
     private lateinit var smooth: RadioButton
     private lateinit var normal: RadioButton
@@ -34,17 +32,14 @@ class CompassSpeed(private val weakReference: WeakReference<Compass>) : CustomBo
 
         smooth.setOnClickListener {
             setButtons(0.03f)
-            weakReference.get()?.setSpeed(0.03f)
         }
 
         normal.setOnClickListener {
             setButtons(0.06f)
-            weakReference.get()?.setSpeed(0.06f)
         }
 
         fast.setOnClickListener {
             setButtons(0.15f)
-            weakReference.get()?.setSpeed(0.15f)
         }
     }
 
