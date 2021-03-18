@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <app.simple.positional.corners.DynamicCornerMaterialToolbar
+    <app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_bar_height"
@@ -24,17 +24,21 @@
             android:textSize="@dimen/top_bar_text_size"
             android:textStyle="bold" />
 
-    </app.simple.positional.corners.DynamicCornerMaterialToolbar>
+    </app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar>
 
-    <androidx.core.widget.NestedScrollView
+    <app.simple.positional.decorations.views.BouncyNestedScrollView
+        android:id="@+id/settings_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:paddingHorizontal="25dp"
         android:paddingTop="@dimen/top_bar_height"
-        android:paddingBottom="90dp"
-        app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
+        android:paddingBottom="@dimen/bottom_nav_height"
+        app:damping_ratio="DAMPING_RATIO_NO_BOUNCY"
+        app:fling_animation_size="0.75"
+        app:overscroll_animation_size="0.75"
+        app:stiffness="STIFFNESS_LOW">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,6 +55,6 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </app.simple.positional.decorations.views.BouncyNestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

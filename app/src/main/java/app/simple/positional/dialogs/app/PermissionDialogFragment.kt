@@ -8,9 +8,9 @@ import android.widget.Button
 import android.widget.CheckBox
 import app.simple.positional.R
 import app.simple.positional.callbacks.PermissionCallbacks
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomWebView
 import app.simple.positional.preference.MainPreferences.setShowPermissionDialog
-import app.simple.positional.views.CustomBottomSheetDialogFragment
-import app.simple.positional.views.CustomWebView
 
 class PermissionDialogFragment : CustomBottomSheetDialogFragment() {
 
@@ -29,7 +29,6 @@ class PermissionDialogFragment : CustomBottomSheetDialogFragment() {
         } catch (e: ClassCastException) {
             null
         }
-        retainInstance = true
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

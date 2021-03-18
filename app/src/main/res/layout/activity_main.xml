@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <app.simple.positional.corners.DynamicCornerFrameLayout
+    <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
         android:id="@+id/bottom_bar_wrapper"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_nav_height"
@@ -37,6 +37,6 @@
             app:menu="@menu/toolbar_items"
             app:textColor="@color/textSecondary"
             app:textSize="4pt" />
-    </app.simple.positional.corners.DynamicCornerFrameLayout>
+    </app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
 
 </merge>

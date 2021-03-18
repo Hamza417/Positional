@@ -8,7 +8,7 @@
     android:padding="@dimen/options_container_horizontal_padding"
     android:backgroundTint="@android:color/transparent">
 
-    <app.simple.positional.corners.DynamicCornersNestedScrollView
+    <app.simple.positional.decorations.corners.DynamicCornersNestedScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_height"
         android:backgroundTint="@color/toolbarBackground"
@@ -221,6 +221,6 @@
 
         </LinearLayout>
 
-    </app.simple.positional.corners.DynamicCornersNestedScrollView>
+    </app.simple.positional.decorations.corners.DynamicCornersNestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

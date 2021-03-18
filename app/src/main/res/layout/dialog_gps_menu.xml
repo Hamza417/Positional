@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:backgroundTint="@android:color/transparent">
 
-    <app.simple.positional.corners.DynamicCornerLinearLayout
+    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/options_container_horizontal_padding"
@@ -77,6 +77,37 @@
 
         </LinearLayout>
 
-    </app.simple.positional.corners.DynamicCornerLinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="@string/high_contrast_mode"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableLeftCompat="@drawable/ic_filter_b_and_w"
+                app:drawableTint="@color/iconRegular" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_high_contrast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumb="@drawable/switch_thumb"
+                app:track="@drawable/switch_track" />
+
+        </LinearLayout>
+
+    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
 </FrameLayout>

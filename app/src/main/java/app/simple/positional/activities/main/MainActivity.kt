@@ -14,7 +14,7 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
-import app.simple.positional.corners.DynamicCornerFrameLayout
+import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.dialogs.app.PermissionDialogFragment
 import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
@@ -26,6 +26,7 @@ import app.simple.positional.ui.*
 import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
+import app.simple.positional.util.NullSafety.isNull
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.messaging.FirebaseMessaging
@@ -66,7 +67,11 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
             startService(Intent(applicationContext, MessagingService::class.java))
         }
 
-        runApp()
+        if (savedInstanceState.isNull()) {
+            openFragment(FragmentPreferences.getCurrentPage())
+        }
+        bottomBar.itemActiveIndex = FragmentPreferences.getCurrentPage()
+
         checkRunTimePermission()
         showReviewPromptToUser()
 
@@ -133,11 +138,6 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
                 }
             }
         }
-    }
-
-    private fun runApp() {
-        openFragment(FragmentPreferences.getCurrentPage())
-        bottomBar.itemActiveIndex = FragmentPreferences.getCurrentPage()
     }
 
     private fun runService() {

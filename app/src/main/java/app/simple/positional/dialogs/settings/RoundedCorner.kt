@@ -11,11 +11,11 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import app.simple.positional.R
-import app.simple.positional.corners.DynamicCornerLinearLayout
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getCornerRadius
 import app.simple.positional.util.SpannableStringBuilder.buildSpannableString
-import app.simple.positional.views.CustomBottomSheetDialogFragment
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
@@ -31,12 +31,6 @@ class RoundedCorner : CustomBottomSheetDialogFragment() {
     private var objectAnimator: ObjectAnimator? = null
     private var lastCornerValue = 0
     private var isValueSet = false
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_app_corner, container, false)
@@ -54,7 +48,7 @@ class RoundedCorner : CustomBottomSheetDialogFragment() {
 
         lastCornerValue = getCornerRadius() * 5
         radiusValue.text = buildSpannableString("${getCornerRadius()} px", 2)
-        radiusSeekBar.max = 400
+        radiusSeekBar.max = 500
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             radiusSeekBar.min = 25
         }

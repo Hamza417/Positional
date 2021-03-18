@@ -1,4 +1,4 @@
-package app.simple.positional.views
+package app.simple.positional.decorations.views
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator

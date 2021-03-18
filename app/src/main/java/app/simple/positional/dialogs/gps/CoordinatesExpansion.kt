@@ -14,12 +14,12 @@ import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.UTMConverter
 import app.simple.positional.util.setTextAnimation
-import app.simple.positional.views.CustomBottomSheetDialogFragment
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
 import kotlinx.coroutines.Dispatchers
@@ -45,12 +45,6 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
     private lateinit var utmMeridian: TextView
 
     private lateinit var copyImageButton: ImageButton
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.expansion_dialog_coordinates, container, false)

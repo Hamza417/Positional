@@ -7,18 +7,13 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.ui.AppSettings
 import app.simple.positional.util.ThemeSetter
-import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
 class Theme(private val weakReference: WeakReference<AppSettings>) : CustomBottomSheetDialogFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-    }
 
     private lateinit var light: RadioButton
     private lateinit var dark: RadioButton

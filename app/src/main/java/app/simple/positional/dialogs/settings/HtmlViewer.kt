@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import app.simple.positional.R
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomWebView
 import app.simple.positional.util.isNetworkAvailable
-import app.simple.positional.views.CustomBottomSheetDialogFragment
-import app.simple.positional.views.CustomWebView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

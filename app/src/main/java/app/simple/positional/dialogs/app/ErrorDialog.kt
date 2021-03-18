@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import app.simple.positional.R
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomWebView
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.preference.LevelPreferences
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.views.CustomBottomSheetDialogFragment
-import app.simple.positional.views.CustomWebView
 
 class ErrorDialog : CustomBottomSheetDialogFragment() {
 

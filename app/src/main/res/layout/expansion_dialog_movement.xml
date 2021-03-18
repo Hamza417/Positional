@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.corners.DynamicCornersNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.corners.DynamicCornersNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +31,7 @@
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/info_text_secondary_size" />
 
-        <app.simple.positional.views.Speedometer
+        <app.simple.positional.decorations.views.Speedometer
             android:id="@+id/speedometer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,4 +42,4 @@
 
     </LinearLayout>
 
-</app.simple.positional.corners.DynamicCornersNestedScrollView>
+</app.simple.positional.decorations.corners.DynamicCornersNestedScrollView>

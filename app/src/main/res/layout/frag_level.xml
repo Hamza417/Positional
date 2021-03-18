@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <app.simple.positional.corners.DynamicCornerMaterialToolbar
+    <app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
         android:id="@+id/materialToolbar"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:visibility="gone"
             tools:ignore="ContentDescription" />
 
-    </app.simple.positional.corners.DynamicCornerMaterialToolbar>
+    </app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar>
 
     <FrameLayout
         android:id="@+id/indicator_bounding_box"

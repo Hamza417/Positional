@@ -7,7 +7,7 @@
     android:padding="@dimen/options_container_horizontal_padding"
     android:layout_height="wrap_content">
 
-    <app.simple.positional.corners.DynamicCornerLinearLayout
+    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:orientation="vertical"
@@ -36,6 +36,6 @@
             android:paddingTop="10dp"
             android:paddingBottom="20dp" />
 
-    </app.simple.positional.corners.DynamicCornerLinearLayout>
+    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
 </FrameLayout>

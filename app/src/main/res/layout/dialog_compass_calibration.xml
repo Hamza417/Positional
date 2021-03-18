@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:backgroundTint="@android:color/transparent">
 
-    <app.simple.positional.corners.DynamicCornerLinearLayout
+    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/toolbarBackground"
@@ -48,6 +48,6 @@
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/description_text_size" />
 
-    </app.simple.positional.corners.DynamicCornerLinearLayout>
+    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
 </FrameLayout>

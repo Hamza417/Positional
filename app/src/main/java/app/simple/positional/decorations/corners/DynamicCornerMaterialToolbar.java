@@ -1,4 +1,4 @@
-package app.simple.positional.corners;
+package app.simple.positional.decorations.corners;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,6 +7,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import app.simple.positional.decorations.utils.LayoutBackground;
 
 public class DynamicCornerMaterialToolbar extends MaterialToolbar {
     public DynamicCornerMaterialToolbar(@NonNull Context context, @Nullable AttributeSet attrs) {

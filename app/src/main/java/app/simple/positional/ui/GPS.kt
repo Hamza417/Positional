@@ -26,8 +26,8 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.database.LocationDatabase
+import app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
@@ -118,11 +118,6 @@ class GPS : ScopedFragment() {
     private var distanceSingleton = DistanceSingleton
     private var mapView: MapView? = null
     private var googleMap: GoogleMap? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.frag_gps, container, false)
@@ -648,26 +643,37 @@ class GPS : ScopedFragment() {
 
     fun showLabel(value: Boolean) {
         if (!googleMap.isNull()) {
-            googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
-                    requireContext(),
-                    when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                        Configuration.UI_MODE_NIGHT_YES -> {
-                            if (value) {
-                                R.raw.maps_dark_labelled
-                            } else {
-                                R.raw.maps_dark_no_label
-                            }
+            if (GPSPreferences.getHighContrastMap()) {
+                googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
+                        requireContext(),
+                        if (value) {
+                            R.raw.map_high_contrast_labelled
+                        } else {
+                            R.raw.map_high_contrast_non_labelled
                         }
-                        Configuration.UI_MODE_NIGHT_NO -> {
-                            if (value) {
-                                R.raw.maps_light_labelled
-                            } else {
-                                R.raw.maps_no_label
+                ))
+            } else {
+                googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
+                        requireContext(),
+                        when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                            Configuration.UI_MODE_NIGHT_YES -> {
+                                if (value) {
+                                    R.raw.maps_dark_labelled
+                                } else {
+                                    R.raw.maps_dark_no_label
+                                }
                             }
+                            Configuration.UI_MODE_NIGHT_NO -> {
+                                if (value) {
+                                    R.raw.maps_light_labelled
+                                } else {
+                                    R.raw.maps_no_label
+                                }
+                            }
+                            else -> 0
                         }
-                        else -> 0
-                    }
-            ))
+                ))
+            }
         }
 
         GPSPreferences.setLabelMode(value)

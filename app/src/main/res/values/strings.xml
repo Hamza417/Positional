@@ -182,6 +182,7 @@
     <!-- GPS Menu -->
     <string name="show_label">Show Label</string>
     <string name="satellite_mode">Satellite Mode</string>
+    <string name="high_contrast_mode">High Contrast Map</string>
 
     <!-- Settings Menus -->
     <string name="icon_default">Default</string>
@@ -237,6 +238,7 @@
     <string name="terms_of_use">Terms of Use</string>
     <string name="permissions">Permissions</string>
     <string name="credits">Credits</string>
+    <string name="internet_uses">Internet Uses</string>
 
     <!-- Moon Illumination -->
     <string name="waning">Waning</string>

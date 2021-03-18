@@ -1,4 +1,4 @@
-package app.simple.positional.corners;
+package app.simple.positional.decorations.corners;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
+import app.simple.positional.decorations.utils.LayoutBackground;
 
 public class DynamicCornersNestedScrollView extends NestedScrollView {
     public DynamicCornersNestedScrollView(@NonNull Context context, @Nullable AttributeSet attrs) {

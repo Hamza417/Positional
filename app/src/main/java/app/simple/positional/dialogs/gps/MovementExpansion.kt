@@ -12,13 +12,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.Speedometer
 import app.simple.positional.math.MathExtensions
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.HtmlHelper
-import app.simple.positional.views.CustomBottomSheetDialogFragment
-import app.simple.positional.views.Speedometer
 
 class MovementExpansion : CustomBottomSheetDialogFragment() {
 
@@ -26,12 +26,6 @@ class MovementExpansion : CustomBottomSheetDialogFragment() {
 
     private lateinit var speedometer: Speedometer
     private lateinit var speed: TextView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        retainInstance = true
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.expansion_dialog_movement, container, false)

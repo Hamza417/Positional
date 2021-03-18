@@ -8,7 +8,7 @@
     android:clipToPadding="false"
     android:orientation="vertical">
 
-    <app.simple.positional.corners.DynamicCornerLinearLayout
+    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/toolbarBackground"
@@ -90,6 +90,6 @@
 
         </LinearLayout>
 
-    </app.simple.positional.corners.DynamicCornerLinearLayout>
+    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
 </LinearLayout>

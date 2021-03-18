@@ -9,21 +9,15 @@ import androidx.viewpager.widget.ViewPager
 import app.simple.positional.R
 import app.simple.positional.adapters.ClockNeedleSkinsAdapter
 import app.simple.positional.constants.ClockSkinsConstants
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.ui.Clock
 import app.simple.positional.util.LocaleHelper
-import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
 class ClockNeedle(private val clock: WeakReference<Clock>) : CustomBottomSheetDialogFragment() {
 
     private lateinit var needleSkin: ViewPager
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_clock_needle_skins, container, false)

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.activities.alias.*
-import app.simple.positional.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 
 class Icons : CustomBottomSheetDialogFragment() {
 
@@ -25,12 +25,6 @@ class Icons : CustomBottomSheetDialogFragment() {
         val fragment = Icons()
         fragment.arguments = args
         return fragment
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -25,10 +25,10 @@ import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.callbacks.LocationAdapterCallback
 import app.simple.positional.callbacks.TimeZoneSelected
 import app.simple.positional.database.LocationDatabase
+import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.math.TimeConverter.isValidTimeZone
 import app.simple.positional.model.Locations
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.views.CustomDialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers

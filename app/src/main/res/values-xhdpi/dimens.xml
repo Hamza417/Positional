@@ -66,4 +66,5 @@
     <dimen name="pill_height">3dp</dimen>
     <dimen name="pill_width">60dp</dimen>
     <dimen name="button_text_size">5pt</dimen>
+    <dimen name="popup_text_size">6pt</dimen>
 </resources>

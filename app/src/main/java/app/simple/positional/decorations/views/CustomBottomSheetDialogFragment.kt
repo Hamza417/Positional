@@ -1,4 +1,4 @@
-package app.simple.positional.views
+package app.simple.positional.decorations.views
 
 import android.os.Bundle
 import android.view.View
@@ -18,8 +18,8 @@ open class CustomBottomSheetDialogFragment : BottomSheetDialogFragment(), Corout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_FRAME, R.style.CustomBottomSheetDialogTheme)
         retainInstance = true
+        setStyle(STYLE_NO_FRAME, R.style.CustomBottomSheetDialogTheme)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

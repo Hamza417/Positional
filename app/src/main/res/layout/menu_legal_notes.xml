@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.simple.positional.decorations.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/mainBackground"
+    android:clipChildren="true"
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+        android:id="@+id/menu_disclaimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/disclaimer"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+        android:id="@+id/menu_privacy_policy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/privacy_policy"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+        android:id="@+id/menu_terms_of_use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/terms_of_use"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+        android:id="@+id/menu_permissions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/permissions"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+        android:id="@+id/menu_credits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/credits"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+        android:id="@+id/menu_internet_uses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/internet_uses"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+</app.simple.positional.decorations.corners.DynamicCornerLinearLayout>

@@ -18,11 +18,11 @@ import app.simple.positional.R
 import app.simple.positional.adapters.TimeZoneAdapter
 import app.simple.positional.callbacks.TimeZoneSelected
 import app.simple.positional.callbacks.TimeZonesCallback
+import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.util.flingTranslationMagnitude
 import app.simple.positional.util.forEachVisibleHolder
 import app.simple.positional.util.overscrollRotationMagnitude
 import app.simple.positional.util.overscrollTranslationMagnitude
-import app.simple.positional.views.CustomDialogFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,12 +46,6 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
     private lateinit var searchEditText: EditText
     private lateinit var nothingFound: ImageView
     private lateinit var currentItemSubstring: TextView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_timezone_list, container, false)

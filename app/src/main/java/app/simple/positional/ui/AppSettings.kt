@@ -1,6 +1,6 @@
 package app.simple.positional.ui
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -10,13 +10,15 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+import app.simple.positional.decorations.popup.MainListPopupMenu
+import app.simple.positional.decorations.popup.PopupMenuCallback
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getUnit
@@ -33,7 +35,7 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.firebase.messaging.FirebaseMessaging
 import java.lang.ref.WeakReference
 
-class AppSettings : Fragment(), CoordinatesCallback {
+class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
 
     fun newInstance(): AppSettings {
         val args = Bundle()
@@ -41,6 +43,9 @@ class AppSettings : Fragment(), CoordinatesCallback {
         fragment.arguments = args
         return fragment
     }
+
+    private var xOff = 0F
+    private var yOff = 0F
 
     private lateinit var buyFull: LinearLayout
     private lateinit var unit: LinearLayout
@@ -67,11 +72,6 @@ class AppSettings : Fragment(), CoordinatesCallback {
     private lateinit var currentTheme: TextView
     private lateinit var currentUnit: TextView
     private lateinit var currentLanguage: TextView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
@@ -105,6 +105,7 @@ class AppSettings : Fragment(), CoordinatesCallback {
         return view
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -226,25 +227,22 @@ class AppSettings : Fragment(), CoordinatesCallback {
             }
         }
 
+        legalNotes.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    xOff = event.x
+                    yOff = event.y
+                }
+            }
+
+            false
+        }
+
         legalNotes.setOnClickListener {
-            val wrapper: Context = ContextThemeWrapper(requireContext(), R.style.CustomPopupMenu)
-            val popup = PopupMenu(wrapper, legalNotes, 0, 0, 0)
-            popup.menuInflater.inflate(R.menu.legal_notes, popup.menu)
-            popup.gravity = Gravity.END
-
-            this@AppSettings.view?.animate()?.alpha(0.5F)?.start()
-
-            popup.setOnMenuItemClickListener { item ->
-                val legalNotes = HtmlViewer.newInstance(item.title.toString())
-                legalNotes.show(childFragmentManager, "legal_notes")
-                true
-            }
-
-            popup.setOnDismissListener {
-                this@AppSettings.view?.animate()?.alpha(1F)?.start()
-            }
-
-            popup.show()
+            val popupMenu = MainListPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.menu_legal_notes,
+                    DynamicCornerLinearLayout(context, null),
+                    true), legalNotes, xOff, yOff)
+            popupMenu.popupMenuCallback = this
         }
 
         developmentStatus.setOnClickListener {
@@ -298,5 +296,10 @@ class AppSettings : Fragment(), CoordinatesCallback {
         } catch (ignored: NullPointerException) {
         } catch (ignored: UninitializedPropertyAccessException) {
         }
+    }
+
+    override fun onMenuItemClicked(source: String) {
+        val legalNotes = HtmlViewer.newInstance(source)
+        legalNotes.show(childFragmentManager, "legal_notes")
     }
 }

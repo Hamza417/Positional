@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clock_main_layout"
@@ -8,7 +8,7 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
-    <app.simple.positional.corners.DynamicCornerMaterialToolbar
+    <app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
         android:id="@+id/clock_appbar"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:src="@drawable/ic_menu"
             android:tint="@color/iconColor" />
 
-    </app.simple.positional.corners.DynamicCornerMaterialToolbar>
+    </app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -131,5 +131,5 @@
 
     <include layout="@layout/bottom_sheet_clock" />
 
-</app.simple.positional.views.CustomCoordinatorLayout>
+</app.simple.positional.decorations.views.CustomCoordinatorLayout>
 

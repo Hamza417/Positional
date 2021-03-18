@@ -13,8 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import app.simple.positional.R
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.util.HtmlHelper.fromHtml
-import app.simple.positional.views.CustomBottomSheetDialogFragment
 
 class CompassCalibration : CustomBottomSheetDialogFragment(), SensorEventListener {
 
@@ -31,12 +31,6 @@ class CompassCalibration : CustomBottomSheetDialogFragment(), SensorEventListene
 
     fun newInstance(): CompassCalibration {
         return CompassCalibration()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

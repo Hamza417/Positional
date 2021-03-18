@@ -9,6 +9,7 @@ object GPSPreferences {
     private const val GPSSatellite = "gps_satellite_mode"
     private const val lastLatitude = "last_latitude"
     private const val lastLongitude = "last_longitude"
+    private const val highContrastMap = "high_contrast_map"
 
     fun isLabelOn(): Boolean {
         return getSharedPreferences().getBoolean(GPSLabelMode, true)
@@ -40,5 +41,13 @@ object GPSPreferences {
                 getSharedPreferences().getFloat(lastLatitude, 48.8584f),
                 getSharedPreferences().getFloat(lastLongitude, 2.2945f)
         )
+    }
+
+    fun setHighContrastMap(boolean: Boolean) {
+        getSharedPreferences().edit().putBoolean(highContrastMap, boolean).apply()
+    }
+
+    fun getHighContrastMap(): Boolean {
+        return getSharedPreferences().getBoolean(highContrastMap, false)
     }
 }

@@ -30,7 +30,8 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
 import app.simple.positional.constants.CompassBloom.compassBloomTextColor
-import app.simple.positional.corners.DynamicCornerMaterialToolbar
+import app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
+import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
@@ -48,7 +49,6 @@ import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.NullSafety.isNull
-import app.simple.positional.views.CustomCoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.lang.ref.WeakReference
 import java.util.*

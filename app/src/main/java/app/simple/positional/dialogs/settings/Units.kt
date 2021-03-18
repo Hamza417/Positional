@@ -6,18 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import app.simple.positional.R
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.ui.AppSettings
-import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
 class Units(private val weakReference: WeakReference<AppSettings>) : CustomBottomSheetDialogFragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-    }
 
     private lateinit var metric: RadioButton
     private lateinit var imperial: RadioButton

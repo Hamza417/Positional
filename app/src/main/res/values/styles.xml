@@ -51,16 +51,4 @@
         <item name="android:textColor">@color/textPrimary</item>
     </style>
 
-    <style name="CustomPopupMenu" parent="Widget.AppCompat.PopupMenu">
-        <item name="android:textColor">@color/textSecondary</item>
-        <item name="android:popupBackground">@drawable/bg_popup_menu</item>
-        <item name="android:itemBackground">@android:color/transparent</item>
-        <item name="android:itemPadding">5dp</item>
-        <item name="android:padding">3dp</item>
-        <item name="android:scrollbarSize">0dp</item>
-        <item name="android:fontFamily">@font/medium</item>
-        <item name="android:popupElevation">50dp</item>
-        <item name="android:popupAnimationStyle">@style/DialogAnimation</item>
-    </style>
-
 </resources>

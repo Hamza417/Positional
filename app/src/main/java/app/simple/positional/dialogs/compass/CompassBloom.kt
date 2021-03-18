@@ -9,10 +9,10 @@ import androidx.viewpager.widget.ViewPager
 import app.simple.positional.R
 import app.simple.positional.adapters.BloomSkinAdapter
 import app.simple.positional.constants.CompassBloom
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.ui.Compass
 import app.simple.positional.util.LocaleHelper
-import app.simple.positional.views.CustomBottomSheetDialogFragment
 import java.lang.ref.WeakReference
 
 class CompassBloom(private val weakReference: WeakReference<Compass>) : CustomBottomSheetDialogFragment() {

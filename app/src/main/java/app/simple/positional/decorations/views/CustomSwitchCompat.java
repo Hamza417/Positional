@@ -1,4 +1,4 @@
-package app.simple.positional.views;
+package app.simple.positional.decorations.views;
 
 import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;

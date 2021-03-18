@@ -13,13 +13,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.math.MathExtensions
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.sparkline.SparkLineLayout
 import app.simple.positional.util.ArrayHelper.isLastValueSame
 import app.simple.positional.util.HtmlHelper.fromHtml
-import app.simple.positional.views.CustomBottomSheetDialogFragment
 
 class LocationExpansion : CustomBottomSheetDialogFragment() {
 
@@ -35,12 +35,6 @@ class LocationExpansion : CustomBottomSheetDialogFragment() {
     private lateinit var altitudeTextView: TextView
     private lateinit var accuracyInfoTextView: TextView
     private lateinit var altitudeInfoTextView: TextView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        retainInstance = true
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.expansion_dialog_location, container, false)
