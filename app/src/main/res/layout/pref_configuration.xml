@@ -48,6 +48,34 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/settings_location_provider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/location_provider"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <TextView
+            android:id="@+id/current_location_provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </LinearLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/setting_custom_location"
         android:layout_width="match_parent"

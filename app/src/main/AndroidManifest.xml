@@ -167,6 +167,10 @@
             android:enabled="true" />
 
         <service
+            android:name=".services.FusedLocationService"
+            android:enabled="true" />
+
+        <service
             android:name=".services.ClockWidgetService"
             android:enabled="true" />
 

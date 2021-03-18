@@ -28,6 +28,7 @@ import app.simple.positional.preference.MainPreferences.isNotificationOn
 import app.simple.positional.preference.MainPreferences.isScreenOn
 import app.simple.positional.preference.MainPreferences.setCustomCoordinates
 import app.simple.positional.preference.MainPreferences.setScreenOn
+import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.util.LocaleHelper.localeList
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -49,6 +50,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
 
     private lateinit var buyFull: LinearLayout
     private lateinit var unit: LinearLayout
+    private lateinit var locationProvider: LinearLayout
     private lateinit var language: LinearLayout
     private lateinit var theme: LinearLayout
     private lateinit var icon: LinearLayout
@@ -72,12 +74,14 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var currentTheme: TextView
     private lateinit var currentUnit: TextView
     private lateinit var currentLanguage: TextView
+    private lateinit var currentLocationProvider: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
 
         buyFull = view.findViewById(R.id.buy_full)
         unit = view.findViewById(R.id.settings_units)
+        locationProvider = view.findViewById(R.id.settings_location_provider)
         language = view.findViewById(R.id.settings_languages)
         theme = view.findViewById(R.id.settings_theme)
         icon = view.findViewById(R.id.settings_icons)
@@ -101,6 +105,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
         currentTheme = view.findViewById(R.id.current_theme)
         currentUnit = view.findViewById(R.id.current_unit)
         currentLanguage = view.findViewById(R.id.current_language)
+        currentLocationProvider = view.findViewById(R.id.current_location_provider)
 
         return view
     }
@@ -121,6 +126,9 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         setCurrentUnit(getUnit())
+        setCurrentLocation()
+
+        setPreferenceListener()
 
         toggleNotification.isChecked = isNotificationOn()
         toggleKeepScreenOn.isChecked = isScreenOn()
@@ -148,6 +156,10 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
         unit.setOnClickListener {
             val units = WeakReference(Units(WeakReference(this)))
             units.get()?.show(parentFragmentManager, "null")
+        }
+
+        locationProvider.setOnClickListener {
+            LocationProvider.newInstance().show(childFragmentManager, "location_provider")
         }
 
         language.setOnClickListener {
@@ -269,6 +281,24 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback {
 
         buyFull.setOnClickListener {
             HtmlViewer.newInstance("Buy").show(childFragmentManager, "buy")
+        }
+    }
+
+    private fun setPreferenceListener() {
+        SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener { _, key ->
+            when (key) {
+                MainPreferences.locationProvider -> {
+                    setCurrentLocation()
+                }
+            }
+        }
+    }
+
+    private fun setCurrentLocation() {
+        currentLocationProvider.text = when (MainPreferences.getLocationProvider()) {
+            "android" -> "Android Location Provider"
+            "fused" -> "Fused Location Provider"
+            else -> ""
         }
     }
 

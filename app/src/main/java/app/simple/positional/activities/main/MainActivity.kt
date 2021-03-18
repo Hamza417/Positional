@@ -19,6 +19,7 @@ import app.simple.positional.dialogs.app.PermissionDialogFragment
 import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.services.FusedLocationService
 import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.smoothbottombar.SmoothBottomBar
@@ -78,6 +79,25 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
         bottomBar.setOnItemSelectedListener {
             openFragment(it)
             FragmentPreferences.setCurrentPage(it)
+        }
+
+        SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener { preferences, key ->
+            try {
+                if (key == MainPreferences.locationProvider) {
+                    when (MainPreferences.getLocationProvider()) {
+                        "fused" -> {
+                            stopService(Intent(applicationContext, LocationService::class.java))
+                            startService(Intent(applicationContext, FusedLocationService::class.java))
+                        }
+                        "android" -> {
+                            stopService(Intent(applicationContext, FusedLocationService::class.java))
+                            startService(Intent(applicationContext, LocationService::class.java))
+                        }
+                    }
+                }
+            } catch (e: IllegalStateException) {
+                Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -142,14 +162,20 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
 
     private fun runService() {
         try {
-            applicationContext.startService(Intent(applicationContext, LocationService::class.java))
+            when (MainPreferences.getLocationProvider()) {
+                "android" -> startService(Intent(applicationContext, LocationService::class.java))
+                "fused" -> startService(Intent(applicationContext, FusedLocationService::class.java))
+            }
         } catch (ignored: IllegalStateException) {
         }
     }
 
     private fun stopService() {
         try {
-            applicationContext.stopService(Intent(applicationContext, LocationService::class.java))
+            when (MainPreferences.getLocationProvider()) {
+                "android" -> stopService(Intent(applicationContext, LocationService::class.java))
+                "fused" -> stopService(Intent(applicationContext, FusedLocationService::class.java))
+            }
         } catch (ignored: IllegalStateException) {
         }
     }

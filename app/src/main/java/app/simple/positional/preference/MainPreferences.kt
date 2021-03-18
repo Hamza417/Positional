@@ -24,6 +24,7 @@ object MainPreferences {
     private const val screenOn = "keep_the_screen_on"
     private const val appLanguage = "current_language_locale"
     private const val appCornerRadius = "corner_radius"
+    const val locationProvider = "location_provider"
 
     fun setLaunchCount(value: Int) {
         getSharedPreferences().edit().putInt(launchCount, value).apply()
@@ -157,11 +158,23 @@ object MainPreferences {
         return getSharedPreferences().getString(appLanguage, "default")
     }
 
-    fun setCornerRadius(@IntRange(from = 25, to = 500) radius: Int) {
+    fun setCornerRadius(@IntRange(from = 25, to = 400) radius: Int) {
         getSharedPreferences().edit().putInt(appCornerRadius, radius / 5).apply()
     }
 
     fun getCornerRadius(): Int {
         return getSharedPreferences().getInt(appCornerRadius, 30)
+    }
+
+    /**
+     * @param value - Use "fused" for Fused Location Provider and
+     *                "android" for Android Location Provider
+     */
+    fun setLocationProvider(value: String) {
+        getSharedPreferences().edit().putString(locationProvider, value).apply()
+    }
+
+    fun getLocationProvider(): String {
+        return getSharedPreferences().getString(locationProvider, "fused")!!
     }
 }

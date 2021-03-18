@@ -106,40 +106,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ripple_btn"
-            android:clickable="true"
-            android:visibility="gone"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:drawablePadding="@dimen/options_text_margin_start"
-                android:fontFamily="@font/regular"
-                android:gravity="center_vertical"
-                android:text="True North"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size"
-                app:drawableStartCompat="@drawable/ic_direction_code"
-                app:drawableTint="@color/iconRegular" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/toggle_true_north"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/options_icon_size"
-                android:checked="true"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
-
-        </LinearLayout>
-
         <TextView
             android:id="@+id/compass_speed"
             android:layout_width="match_parent"
@@ -154,23 +120,6 @@
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:drawableStartCompat="@drawable/ic_speed"
-            app:drawableTint="@color/iconRegular" />
-
-        <TextView
-            android:id="@+id/compass_noise_filter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/ripple_btn"
-            android:drawablePadding="@dimen/options_text_margin_start"
-            android:fontFamily="@font/regular"
-            android:gravity="center_vertical"
-            android:padding="@dimen/options_item_padding"
-            android:visibility="gone"
-            android:text="@string/sensor_noise_filter"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/options_item_text_size"
-            app:drawableStartCompat="@drawable/ic_filter"
             app:drawableTint="@color/iconRegular" />
 
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>

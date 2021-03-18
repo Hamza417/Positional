@@ -48,7 +48,7 @@ class RoundedCorner : CustomBottomSheetDialogFragment() {
 
         lastCornerValue = getCornerRadius() * 5
         radiusValue.text = buildSpannableString("${getCornerRadius()} px", 2)
-        radiusSeekBar.max = 500
+        radiusSeekBar.max = 400
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             radiusSeekBar.min = 25
         }
