@@ -367,7 +367,7 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
                     val child = getChildAt(0)
                     val lp = child.layoutParams as LayoutParams
                     val childSize = child.measuredHeight
-                    val parentSpace = (measuredHeight - paddingTop - paddingBottom - lp.topMargin - lp.bottomMargin)
+                    val parentSpace = measuredHeight - paddingTop - paddingBottom - lp.topMargin - lp.bottomMargin
                     if (childSize < parentSpace) {
                         val childWidthMeasureSpec = getChildMeasureSpec(widthMeasureSpec, paddingLeft + paddingRight + lp.leftMargin + lp.rightMargin, lp.width)
                         val childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(parentSpace, MeasureSpec.EXACTLY)
@@ -623,7 +623,7 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
                     val oldY = scrollY
                     val range = scrollRange
                     val overscrollMode = overScrollMode
-                    val canOverscroll = (overscrollMode == OVER_SCROLL_ALWAYS || overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0)
+                    val canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS || overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0
 
                     // Calling overScrollByCompat will call onOverScrolled, which
                     // calls onScrollChanged if applicable.
@@ -706,9 +706,6 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
         val pointerIndex = ev.actionIndex
         val pointerId = ev.getPointerId(pointerIndex)
         if (pointerId == mActivePointerId) {
-            // This was our active pointer going up. Choose a new
-            // active pointer and adjust accordingly.
-            // TODO: Make this decision more intelligent.
             val newPointerIndex = if (pointerIndex == 0) 1 else 0
             mLastMotionY = ev.getY(newPointerIndex).toInt()
             mActivePointerId = ev.getPointerId(newPointerIndex)
@@ -764,8 +761,8 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
         val overScrollMode = overScrollMode
         val canScrollHorizontal = computeHorizontalScrollRange() > computeHorizontalScrollExtent()
         val canScrollVertical = computeVerticalScrollRange() > computeVerticalScrollExtent()
-        val overScrollHorizontal = (overScrollMode == OVER_SCROLL_ALWAYS || overScrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && canScrollHorizontal)
-        val overScrollVertical = (overScrollMode == OVER_SCROLL_ALWAYS || overScrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && canScrollVertical)
+        val overScrollHorizontal = overScrollMode == OVER_SCROLL_ALWAYS || overScrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && canScrollHorizontal
+        val overScrollVertical = overScrollMode == OVER_SCROLL_ALWAYS || overScrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && canScrollVertical
         var newScrollX = scrollX
 
         if (!overScrollHorizontal)
@@ -860,7 +857,7 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
                     focusCandidate = view
                     foundFullyContainedFocusable = viewIsFullyContained
                 } else {
-                    val viewIsCloserToBoundary = (topFocus && viewTop < focusCandidate.top || !topFocus && viewBottom > focusCandidate.bottom)
+                    val viewIsCloserToBoundary = topFocus && viewTop < focusCandidate.top || !topFocus && viewBottom > focusCandidate.bottom
                     if (foundFullyContainedFocusable) {
                         if (viewIsFullyContained && viewIsCloserToBoundary)
                             focusCandidate = view
@@ -1054,7 +1051,7 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
     private fun isWithinDeltaOfScreen(descendant: View, delta: Int, height: Int): Boolean {
         descendant.getDrawingRect(mTempRect)
         offsetDescendantRectToMyCoords(descendant, mTempRect)
-        return (mTempRect.bottom + delta >= scrollY && mTempRect.top - delta <= scrollY + height)
+        return mTempRect.bottom + delta >= scrollY && mTempRect.top - delta <= scrollY + height
     }
 
     /**
@@ -1209,7 +1206,7 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
             }
             if (unconsumed != 0) {
                 val mode = overScrollMode
-                val canOverscroll = (mode == OVER_SCROLL_ALWAYS || (mode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0))
+                val canOverscroll = mode == OVER_SCROLL_ALWAYS || mode == OVER_SCROLL_IF_CONTENT_SCROLLS && range > 0
                 if (canOverscroll) {
                     ensureGlows()
 
@@ -1297,14 +1294,10 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
         val actualScreenBottom = screenBottom
         val fadingEdge = verticalFadingEdgeLength
 
-        // TODO: screenTop should be incremented by fadingEdge * getTopFadingEdgeStrength (but for
-        // the target scroll distance).
         // leave room for top fading edge as long as rect isn't at very top
         if (rect.top > 0)
             screenTop += fadingEdge
 
-        // TODO: screenBottom should be decremented by fadingEdge * getBottomFadingEdgeStrength (but
-        // for the target scroll distance).
         // leave room for bottom fading edge as long as rect isn't at very bottom
         val child = getChildAt(0)
         val lp = child.layoutParams as LayoutParams
@@ -1319,9 +1312,9 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
             // screen size chunk).
 
             scrollYDelta += if (rect.height() > height) // just enough to get screen size chunk on
-                (rect.top - screenTop)
+                rect.top - screenTop
             else // get entire rect at bottom of screen
-                (rect.bottom - screenBottom)
+                rect.bottom - screenBottom
 
             // make sure we aren't scrolling beyond the end of our content
             val bottom = child.bottom + lp.bottomMargin
@@ -1333,9 +1326,9 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
             // size chunk of it).
 
             scrollYDelta -= if (rect.height() > height) // screen size chunk
-                (screenBottom - rect.bottom)
+                screenBottom - rect.bottom
             else // entire rect at top
-                (screenTop - rect.top)
+                screenTop - rect.top
 
             // make sure we aren't scrolling any further than the top our content
             scrollYDelta = max(scrollYDelta, -scrollY)
@@ -1581,7 +1574,7 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
         }
 
         override fun toString(): String =
-                ("HorizontalScrollView.SavedState{" + Integer.toHexString(System.identityHashCode(this)) + " scrollPosition=" + scrollPosition + "}")
+                "HorizontalScrollView.SavedState{" + Integer.toHexString(System.identityHashCode(this)) + " scrollPosition=" + scrollPosition + "}"
 
 
         @Suppress("unused")
@@ -1606,7 +1599,7 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
             when (action) {
                 AccessibilityNodeInfoCompat.ACTION_SCROLL_FORWARD -> {
                     run {
-                        val viewportHeight: Int = (nsvHost.height - nsvHost.paddingBottom - nsvHost.paddingTop)
+                        val viewportHeight: Int = nsvHost.height - nsvHost.paddingBottom - nsvHost.paddingTop
 
                         val targetScrollY: Int = min(nsvHost.scrollY + viewportHeight, nsvHost.scrollRange)
 
@@ -1620,7 +1613,7 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
                 }
                 AccessibilityNodeInfoCompat.ACTION_SCROLL_BACKWARD -> {
                     run {
-                        val viewportHeight: Int = (nsvHost.height - nsvHost.paddingBottom - nsvHost.paddingTop)
+                        val viewportHeight: Int = nsvHost.height - nsvHost.paddingBottom - nsvHost.paddingTop
                         val targetScrollY: Int = max(nsvHost.scrollY - viewportHeight, 0)
                         if (targetScrollY != nsvHost.scrollY) {
                             nsvHost.smoothScrollTo(0, targetScrollY)
@@ -1685,14 +1678,14 @@ class BouncyNestedScrollView @JvmOverloads constructor(context: Context, attrs: 
                 child === parent -> true
                 else -> {
                     val theParent = child.parent
-                    (theParent is ViewGroup) && isViewDescendantOf(theParent as View, parent)
+                    theParent is ViewGroup && isViewDescendantOf(theParent as View, parent)
                 }
             }
         }
 
         private fun clamp(n: Int, my: Int, child: Int): Int {
             return if (my >= child || n < 0) 0
-            else if ((my + n) > child) child - my
+            else if (my + n > child) child - my
             else n
         }
     }

@@ -33,12 +33,13 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
 
-class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
+class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide, android.content.SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val defaultPermissionRequestCode = 123
     private var reviewInfo: ReviewInfo? = null
     private lateinit var bottomBar: SmoothBottomBar
     private lateinit var bottomBarWrapper: DynamicCornerFrameLayout
+    private lateinit var sharedPreferenceChangeListener: android.content.SharedPreferences.OnSharedPreferenceChangeListener
     private val fragmentTags = arrayOf("clock", "compass", "gps", "level", "settings")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,25 +81,6 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
             openFragment(it)
             FragmentPreferences.setCurrentPage(it)
         }
-
-        SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener { preferences, key ->
-            try {
-                if (key == MainPreferences.locationProvider) {
-                    when (MainPreferences.getLocationProvider()) {
-                        "fused" -> {
-                            stopService(Intent(applicationContext, LocationService::class.java))
-                            startService(Intent(applicationContext, FusedLocationService::class.java))
-                        }
-                        "android" -> {
-                            stopService(Intent(applicationContext, FusedLocationService::class.java))
-                            startService(Intent(applicationContext, LocationService::class.java))
-                        }
-                    }
-                }
-            } catch (e: IllegalStateException) {
-                Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     private fun showReviewPromptToUser() {
@@ -123,11 +105,13 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
 
     override fun onResume() {
         super.onResume()
+        SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
         runService()
     }
 
     override fun onPause() {
         super.onPause()
+        SharedPreferences.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         stopService()
     }
 
@@ -231,5 +215,24 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide {
 
     override fun onBottomSheetSliding(slideOffset: Float) {
         bottomBarWrapper.translationY = bottomBarWrapper.height * slideOffset
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: android.content.SharedPreferences?, key: String?) {
+        try {
+            if (key == MainPreferences.locationProvider) {
+                when (MainPreferences.getLocationProvider()) {
+                    "fused" -> {
+                        stopService(Intent(applicationContext, LocationService::class.java))
+                        startService(Intent(applicationContext, FusedLocationService::class.java))
+                    }
+                    "android" -> {
+                        stopService(Intent(applicationContext, FusedLocationService::class.java))
+                        startService(Intent(applicationContext, LocationService::class.java))
+                    }
+                }
+            }
+        } catch (e: IllegalStateException) {
+            Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
+        }
     }
 }
