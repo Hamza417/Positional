@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/options_container_horizontal_padding"
         android:backgroundTint="@color/toolbarBackground"
-        android:padding="@dimen/options_container_horizontal_padding"
         android:elevation="40dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/options_container_horizontal_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,14 +62,14 @@
                 android:drawablePadding="@dimen/options_text_margin_start"
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
-                android:text="@string/satellite_mode"
+                android:text="@string/high_contrast_mode"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
-                app:drawableLeftCompat="@drawable/ic_satellite"
+                app:drawableLeftCompat="@drawable/ic_filter_b_and_w"
                 app:drawableTint="@color/iconRegular" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/toggle_satellite"
+                android:id="@+id/toggle_high_contrast"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:thumb="@drawable/switch_thumb"
@@ -93,14 +93,51 @@
                 android:drawablePadding="@dimen/options_text_margin_start"
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
-                android:text="@string/high_contrast_mode"
+                android:text="@string/show_building"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
-                app:drawableLeftCompat="@drawable/ic_filter_b_and_w"
+                app:drawableLeftCompat="@drawable/ic_home"
                 app:drawableTint="@color/iconRegular" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/toggle_high_contrast"
+                android:id="@+id/toggle_buildings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumb="@drawable/switch_thumb"
+                app:track="@drawable/switch_track" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginVertical="@dimen/options_sub_item_padding"
+            android:background="@color/dividerColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="@string/satellite_mode"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableLeftCompat="@drawable/ic_satellite"
+                app:drawableTint="@color/iconRegular" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_satellite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:thumb="@drawable/switch_thumb"

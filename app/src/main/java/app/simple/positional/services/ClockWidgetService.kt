@@ -48,15 +48,10 @@ class ClockWidgetService : Service() {
         isScreenOn = (getSystemService(Context.DISPLAY_SERVICE) as DisplayManager).displays[0].state == Display.STATE_ON
 
         if (isScreenOn) {
-            handler.post(clockWidgetRunnable)
+            postCallbacks()
             widgetNotification()
         }
         return super.onStartCommand(intent, flags, startId)
-    }
-
-    override fun onTaskRemoved(rootIntent: Intent?) {
-        stopSelf()
-        super.onTaskRemoved(rootIntent)
     }
 
     override fun onCreate() {
@@ -69,13 +64,13 @@ class ClockWidgetService : Service() {
                 when (intent.action) {
                     Intent.ACTION_SCREEN_ON -> {
                         isScreenOn = true
-                        handler.post(clockWidgetRunnable)
+                        postCallbacks()
                         widgetNotification()
                     }
                     Intent.ACTION_SCREEN_OFF -> {
                         isScreenOn = false
                         stopForeground(true)
-                        handler.removeCallbacks(clockWidgetRunnable)
+                        removeCallbacks()
                     }
                 }
             }
@@ -87,7 +82,7 @@ class ClockWidgetService : Service() {
     }
 
     override fun onDestroy() {
-        handler.removeCallbacks(clockWidgetRunnable)
+        removeCallbacks()
         unregisterReceiver(mReceiver)
         super.onDestroy()
     }
@@ -114,6 +109,11 @@ class ClockWidgetService : Service() {
                     val componentName = ComponentName(applicationContext, ClockWidget::class.java)
                     val manager = AppWidgetManager.getInstance(applicationContext)
                     manager.updateAppWidget(componentName, views)
+
+                    hour!!.recycle()
+                    minute!!.recycle()
+                    second!!.recycle()
+                    trail!!.recycle()
                 }
             }
 
@@ -152,5 +152,24 @@ class ClockWidgetService : Service() {
         val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         service.createNotificationChannel(chan)
         return serviceChannelId
+    }
+
+    /**
+     * Removes all handler callbacks
+     */
+    private fun removeCallbacks() {
+        handler.removeCallbacks(clockWidgetRunnable)
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    /**
+     * Starts any runnable that were removed from the queue
+     * This function will remove any other pending callbacks
+     * before posting and new one to make sure same
+     * callback does not get posted multiple times
+     */
+    private fun postCallbacks() {
+        removeCallbacks()
+        handler.post(clockWidgetRunnable)
     }
 }

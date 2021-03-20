@@ -122,6 +122,7 @@
     <string name="icon">आइकॉन</string>
     <string name="corner_radius">कोने की त्रिज्या</string>
     <string name="units">इकाई</string>
+    <string name="location_provider">स्थान प्रदाता</string>
     <string name="language">भाषा</string>
     <string name="specified_location">निर्दिष्ट स्थान का उपयोग करें</string>
     <string name="keep_screen_on">स्क्रीन चालू रखें</string>
@@ -166,6 +167,8 @@
     <!-- GPS Menu -->
     <string name="show_label">लेबल दिखाएं</string>
     <string name="satellite_mode">सैटेलाइट मोड</string>
+    <string name="high_contrast_mode">उच्च कंट्रास्ट नक्शा</string>
+    <string name="show_building">भवन दिखाएं</string>
     <!-- Settings Menus -->
     <string name="icon_default">पूर्व निर्धारित</string>
     <string name="icon_legacy">विरासत</string>
@@ -209,14 +212,13 @@
     <string name="open_saved_locations">सहेजे गए स्थान खोलें</string>
     <string name="open_specified_location_documentation">निर्दिष्ट स्थान प्रलेखन खोलें</string>
     <string name="open_timezones">समय क्षेत्र खोलें</string>
-    <!-- Bottom Bar -->
-    <string name="ellipsis">&#8230;</string>
     <!-- Legal Menu -->
     <string name="disclaimer">अस्वीकरण</string>
     <string name="privacy_policy">गोपनीयता नीति</string>
     <string name="terms_of_use">नियम व शर्तें</string>
     <string name="permissions">अनुमतियां</string>
     <string name="credits">क्रेडिट्स</string>
+    <string name="internet_uses">इंटरनेट उपयोग</string>
     <!-- Moon Illumination -->
     <string name="waning">कृष्ण</string>
     <string name="waning_gibbous">ढलते अर्द्धचंद्र</string>
@@ -255,4 +257,8 @@
     <string name="utm_easting">पूरब का:</string>
     <string name="utm_northing">नोर्थिंग:</string>
     <string name="utm_meridian">सेंट्रल मेरिडियन:</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">डिफ़ॉल्ट एंड्रॉइड लोकेशन एपीआई, बेहद सटीक है लेकिन एक समय में केवल एक स्थान प्रदाता तक सीमित है और इनडोर स्थान अनुरोध इसकी सटीकता को प्रभावित कर सकती हैं, कम समय में स्थान को अपडेट करने के लिए एक शक्तिशाली जीपीएस सेंसर की आवश्यकता होगी।</string>
+    <string name="desc_fused_location_provider">गूगल की फ़्यूज़्ड लोकेशन एपीआई जो विभिन्न लोकेशन प्रोवाइडर से लोकेशन डेटा को ट्राईऍंगुलेट करती है और रिजल्ट को कई स्थानों पर एवरेज करती है। ये अलग-अलग परिणाम दे सकती है लेकिन कम बैटरी का उपयोग करती है।</string>
+    <string name="desc_location_provider_note">नोट: किसी भी एपीआई का उपयोग विभिन्न कारकों के आधार पर अलग-अलग परिणाम दे सकती है और उनमें से कोई भी एक दूसरे के लिए सटीकता का प्रमाण नहीं है, एपीआई का परीक्षण करें और आपके क्षेत्र में सबसे अच्छा काम करने वाले चयनितों को रखें।</string>
 </resources>

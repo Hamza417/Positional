@@ -122,6 +122,7 @@
     <string name="icon">Icon</string>
     <string name="corner_radius">Corner Radius</string>
     <string name="units">Units</string>
+    <string name="location_provider">Location Provider</string>
     <string name="language">Language</string>
     <string name="specified_location">Use Specified Location</string>
     <string name="keep_screen_on">Keep Screen On</string>
@@ -166,6 +167,8 @@
     <!-- GPS Menu -->
     <string name="show_label">Show Label</string>
     <string name="satellite_mode">Satellite Mode</string>
+    <string name="high_contrast_mode">High Contrast Map</string>
+    <string name="show_building">Show Buildings</string>
     <!-- Settings Menus -->
     <string name="icon_default">Default</string>
     <string name="icon_legacy">Legacy</string>
@@ -209,14 +212,13 @@
     <string name="open_saved_locations">Open saved locations</string>
     <string name="open_specified_location_documentation">Open specified location documentation</string>
     <string name="open_timezones">Open time zones</string>
-    <!-- Bottom Bar -->
-    <string name="ellipsis">&#8230;</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Disclaimer</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="terms_of_use">Terms of Use</string>
     <string name="permissions">Permissions</string>
     <string name="credits">Credits</string>
+    <string name="internet_uses">Internet Uses</string>
     <!-- Moon Illumination -->
     <string name="waning">Waning</string>
     <string name="waning_gibbous">Waning Gibbous</string>
@@ -255,4 +257,8 @@
     <string name="utm_easting">Easting:</string>
     <string name="utm_northing">Northing:</string>
     <string name="utm_meridian">Central Meridian:</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">Default Android\'s Location API, highly accurate but is limited to only one location provider at a time and indoor location requests can impact its accuracy, requires a powerful GPS sensor to update location quickly.</string>
+    <string name="desc_fused_location_provider">Google\'s Fused Location API that triangulates location data from various location providers and averages out the result into a series of locations. Can give varying results but uses less battery.</string>
+    <string name="desc_location_provider_note">Note: Using any of the APIs can give different results depending on the various factors and none of them are a proof of accuracy for one another, test the APIs and keep the one selected that works best within your region.</string>
 </resources>

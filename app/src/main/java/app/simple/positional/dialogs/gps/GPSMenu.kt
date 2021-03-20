@@ -14,6 +14,7 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
     private lateinit var toggleLabel: SwitchCompat
     private lateinit var toggleSatellite: SwitchCompat
     private lateinit var toggleHighContrast: SwitchCompat
+    private lateinit var toggleBuilding: SwitchCompat
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_gps_menu, container, false)
@@ -21,6 +22,7 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleLabel = view.findViewById(R.id.toggle_label)
         toggleSatellite = view.findViewById(R.id.toggle_satellite)
         toggleHighContrast = view.findViewById(R.id.toggle_high_contrast)
+        toggleBuilding = view.findViewById(R.id.toggle_buildings)
 
         return view
     }
@@ -31,6 +33,7 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleLabel.isChecked = GPSPreferences.isLabelOn()
         toggleSatellite.isChecked = GPSPreferences.isSatelliteOn()
         toggleHighContrast.isChecked = GPSPreferences.getHighContrastMap()
+        toggleBuilding.isChecked = GPSPreferences.getShowBuildingsOnMap()
 
         toggleLabel.setOnCheckedChangeListener { _, isChecked ->
             GPSPreferences.setLabelMode(isChecked)
@@ -43,6 +46,10 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
 
         toggleHighContrast.setOnCheckedChangeListener { _, isChecked ->
             GPSPreferences.setHighContrastMap(isChecked)
+        }
+
+        toggleBuilding.setOnCheckedChangeListener { _, isChecked ->
+            GPSPreferences.setShowBuildingsOnMap(isChecked)
         }
     }
 }

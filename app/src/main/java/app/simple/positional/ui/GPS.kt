@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Spanned
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,6 +76,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private lateinit var toolbar: DynamicCornerMaterialToolbar
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
+    private lateinit var dim: View
     private lateinit var locationBox: LinearLayout
     private lateinit var movementBox: LinearLayout
     private lateinit var coordinatesBox: FrameLayout
@@ -105,6 +107,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
+    private lateinit var cameraPosition: CameraPosition
 
     private var isMapMoved = false
     private var isMetric = true
@@ -126,6 +129,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         scrollView = view.findViewById(R.id.gps_list_scroll_view)
         scrollView.alpha = 0f
         divider = view.findViewById(R.id.gps_divider)
+        dim = view.findViewById(R.id.gps_dim)
         locationIndicator = view.findViewById(R.id.gps_location_indicator)
         menu = view.findViewById(R.id.gps_menu)
         copy = view.findViewById(R.id.gps_copy)
@@ -156,6 +160,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         filter.addAction("location")
         filter.addAction("provider")
+        filter.addAction("volume")
 
         isMetric = MainPreferences.getUnit()
 
@@ -188,6 +193,9 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.isFocusableInTouchMode = true
+        view.requestFocus()
 
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
@@ -322,6 +330,13 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                         providerSource.text = fromHtml("<b>${getString(R.string.gps_source)}</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
                         locationIconStatusUpdates()
                     }
+                    "volume" -> {
+                        when (intent.getIntExtra("key_code", 0)) {
+                            KeyEvent.KEYCODE_VOLUME_UP -> {
+                                //googleMap!!.cameraPosition.zoom = googleMap!!.cameraPosition.zoom - 10F
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -342,7 +357,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                 scrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
                 expandUp.rotationX = -180 * slideOffset
-                view.findViewById<View>(R.id.gps_dim).alpha = slideOffset
+                dim.alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
                 toolbar.translationY = toolbar.height * -slideOffset
             }
@@ -478,6 +493,24 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                 CoordinatesExpansion.newInstance(latitude, longitude).show(childFragmentManager, "coordinates_expansion")
             }
         }
+
+        view.setOnKeyListener { _, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                when (keyCode) {
+                    KeyEvent.KEYCODE_VOLUME_UP -> {
+                        googleMap!!.cameraPosition.zoom.apply {
+                            this + 6F
+                        }
+                        println("Volume Up")
+                    }
+                    KeyEvent.KEYCODE_VOLUME_DOWN -> {
+
+                    }
+                }
+            }
+
+            true
+        }
     }
 
     private val textAnimationRunnable: Runnable = Runnable {
@@ -561,6 +594,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         showLabel(GPSPreferences.isLabelOn())
         setSatellite(GPSPreferences.isSatelliteOn())
+        setBuildings(GPSPreferences.getShowBuildingsOnMap())
 
         this.googleMap?.setOnCameraMoveListener {
             isMapMoved = true
@@ -632,11 +666,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private fun moveMapCamera(latLng: LatLng, bearing: Float) {
         if (googleMap.isNull()) return
         if (isMapMoved) return
-
-        val cameraPosition = googleMap?.cameraPosition?.tilt?.let {
-            CameraPosition.builder().target(latLng).tilt(it).zoom(18f).bearing(bearing).build()
-        }
-
+        cameraPosition = CameraPosition.builder().target(latLng).tilt(googleMap!!.cameraPosition.tilt).zoom(googleMap!!.cameraPosition.zoom).bearing(bearing).build()
         googleMap?.clear()
         googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker)))
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
@@ -653,6 +683,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                             R.raw.map_high_contrast_non_labelled
                         }
                 ))
+
             } else {
                 googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
                         requireContext(),
@@ -687,6 +718,10 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             } else {
                 GoogleMap.MAP_TYPE_NORMAL
             }
+    }
+
+    private fun setBuildings(value: Boolean) {
+        googleMap!!.isBuildingsEnabled = value
     }
 
     private fun checkGooglePlayServices(): Boolean {
@@ -728,6 +763,9 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             }
             GPSPreferences.GPSSatellite -> {
                 setSatellite(GPSPreferences.isSatelliteOn())
+            }
+            GPSPreferences.showBuilding -> {
+                setBuildings(GPSPreferences.getShowBuildingsOnMap())
             }
         }
     }

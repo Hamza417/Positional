@@ -3,8 +3,8 @@ package app.simple.positional.services
 import android.app.Service
 import android.content.Intent
 import android.location.Location
+import android.os.HandlerThread
 import android.os.IBinder
-import android.os.Looper
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.PermissionUtils
@@ -19,6 +19,7 @@ class FusedLocationService : Service() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
+    private lateinit var handlerThread: HandlerThread
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -26,6 +27,8 @@ class FusedLocationService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+
+        handlerThread = HandlerThread("location_thread")
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(applicationContext)
         locationRequest = LocationRequest.create()
@@ -52,6 +55,9 @@ class FusedLocationService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         requestLastLocation()
+        if (!handlerThread.isAlive) {
+            handlerThread.start()
+        }
         return START_REDELIVER_INTENT
     }
 
@@ -69,13 +75,14 @@ class FusedLocationService : Service() {
 
     private fun requestCurrentLocation() {
         if (PermissionUtils.checkPermission(applicationContext)) {
-            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, handlerThread.looper)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+        handlerThread.quitSafely()
     }
 
     private fun broadcastLocation(location: Location) {

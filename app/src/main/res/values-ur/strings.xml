@@ -122,6 +122,7 @@
     <string name="icon">آئیکن</string>
     <string name="corner_radius">کارنر رداس</string>
     <string name="units">یونٹ</string>
+    <string name="location_provider">مقام فراہم کرنے والا</string>
     <string name="language">زبان</string>
     <string name="specified_location">مخصوص مقام استعمال کریں</string>
     <string name="keep_screen_on">اسکرین آون رکھیں</string>
@@ -166,6 +167,8 @@
     <!-- GPS Menu -->
     <string name="show_label">لیبل دکھائیں</string>
     <string name="satellite_mode">سیٹلائٹ وضع</string>
+    <string name="high_contrast_mode">اعلی کنٹراسٹ نقشہ</string>
+    <string name="show_building">عمارتیں دکھائیں</string>
     <!-- Settings Menus -->
     <string name="icon_default">طے شدہ</string>
     <string name="icon_legacy">میراث</string>
@@ -209,13 +212,13 @@
     <string name="open_saved_locations">محفوظ جگہیں کھولیں</string>
     <string name="open_specified_location_documentation">مخصوص مقام کی دستاویزات کو کھولیں</string>
     <string name="open_timezones">ٹائم زون کھولیں</string>
-    <!-- Bottom Bar -->
     <!-- Legal Menu -->
     <string name="disclaimer">دستبرداری</string>
     <string name="privacy_policy">رازداری کی پالیسی</string>
     <string name="terms_of_use">استعمال کی شرائط</string>
     <string name="permissions">اجازت</string>
     <string name="credits">کریڈٹ</string>
+    <string name="internet_uses">انٹرنیٹ کے استعمال</string>
     <!-- Moon Illumination -->
     <string name="waning">وانگ</string>
     <string name="waning_gibbous">وانگ گبائوس</string>
@@ -254,5 +257,8 @@
     <string name="utm_easting">مشرق:</string>
     <string name="utm_northing">شمالی:</string>
     <string name="utm_meridian">وسطی میریڈیئن:</string>
-    <string name="ellipsis">&#8230;</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">ڈیفالٹ اینڈروئیڈ کا لوکیشن API ، انتہائی درست لیکن ایک وقت میں صرف ایک مقام فراہم کرنے والے تک محدود ہے اور اندرونی مقام کی درخواستیں اس کی درستگی کو متاثر کرسکتی ہیں ، مقام کو جلدی سے اپ ڈیٹ کرنے کیلئے ایک طاقتور GPS سینسر کی ضرورت ہوتی ہے۔</string>
+    <string name="desc_fused_location_provider">گوگل کا فیوزڈ لوکیشن API جو مختلف مقام فراہم کرنے والے سے محل وقوع کے ڈیٹا کو مثلث بناتا ہے اور اس کا نتیجہ مقامات کی ایک سیریز میں اوسط سے نکالتا ہے۔ مختلف نتائج دے سکتے ہیں لیکن بیٹری کم استعمال کرتی ہے۔</string>
+    <string name="desc_location_provider_note">نوٹ: کسی بھی API کا استعمال مختلف عوامل پر انحصار کرتے ہوئے مختلف نتائج دے سکتا ہے اور ان میں سے کوئی بھی ایک دوسرے کے لئے درستگی کا ثبوت نہیں ہے ، APIs کی جانچ کریں اور منتخب کردہ کو منتخب کریں جو آپ کے علاقے میں بہترین کام کرتا ہے۔</string>
 </resources>

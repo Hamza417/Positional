@@ -184,6 +184,7 @@
     <string name="show_label">Show Label</string>
     <string name="satellite_mode">Satellite Mode</string>
     <string name="high_contrast_mode">High Contrast Map</string>
+    <string name="show_building">Show Buildings</string>
 
     <!-- Settings Menus -->
     <string name="icon_default">Default</string>

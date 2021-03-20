@@ -39,7 +39,6 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide, andr
     private var reviewInfo: ReviewInfo? = null
     private lateinit var bottomBar: SmoothBottomBar
     private lateinit var bottomBarWrapper: DynamicCornerFrameLayout
-    private lateinit var sharedPreferenceChangeListener: android.content.SharedPreferences.OnSharedPreferenceChangeListener
     private val fragmentTags = arrayOf("clock", "compass", "gps", "level", "settings")
 
     override fun onCreate(savedInstanceState: Bundle?) {

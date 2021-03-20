@@ -26,17 +26,13 @@ public class AnimatedBackgroundTextView extends AppCompatTextView {
     @SuppressLint ("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: {
-                animateBackground(ContextCompat.getColor(getContext(), R.color.animated_text_background), this);
-                break;
-            }
-            case MotionEvent.ACTION_UP: {
-                animateBackground(Color.TRANSPARENT, this);
-                break;
-            }
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            animateBackground(ContextCompat.getColor(getContext(), R.color.animated_text_background), this);
         }
-        
+        else {
+            animateBackground(Color.TRANSPARENT, this);
+        }
+    
         return super.onTouchEvent(event);
     }
     
