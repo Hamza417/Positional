@@ -160,7 +160,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         filter.addAction("location")
         filter.addAction("provider")
-        filter.addAction("volume")
 
         isMetric = MainPreferences.getUnit()
 
@@ -194,8 +193,8 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.isFocusableInTouchMode = true
-        view.requestFocus()
+        // view.isFocusableInTouchMode = true
+        // view.requestFocus()
 
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
@@ -329,13 +328,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                         providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
                         providerSource.text = fromHtml("<b>${getString(R.string.gps_source)}</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
                         locationIconStatusUpdates()
-                    }
-                    "volume" -> {
-                        when (intent.getIntExtra("key_code", 0)) {
-                            KeyEvent.KEYCODE_VOLUME_UP -> {
-                                //googleMap!!.cameraPosition.zoom = googleMap!!.cameraPosition.zoom - 10F
-                            }
-                        }
                     }
                 }
             }

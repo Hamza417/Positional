@@ -26,7 +26,7 @@
 
     </app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar>
 
-    <app.simple.positional.decorations.views.BouncyNestedScrollView
+    <com.factor.bouncy.BouncyNestedScrollView
         android:id="@+id/settings_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -55,6 +55,6 @@
 
         </LinearLayout>
 
-    </app.simple.positional.decorations.views.BouncyNestedScrollView>
+    </com.factor.bouncy.BouncyNestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

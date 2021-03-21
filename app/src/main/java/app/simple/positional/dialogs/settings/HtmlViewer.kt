@@ -66,6 +66,9 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
                 "Change Logs" -> {
                     webView.loadUrl("file:///android_asset/html/local_changelogs.html")
                 }
+                getString(R.string.internet_uses) -> {
+                    webView.loadUrl("file:///android_asset/html/internet_uses.html")
+                }
                 "Development Status" -> {
                     webView.loadUrl("file:///android_asset/html/loading.html")
                     launch {

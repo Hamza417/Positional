@@ -35,7 +35,7 @@
     <string name="local_time_12hr">Tiempo 24hr:</string>
     <string name="local_day">Días</string>
     <string name="local_date">Date:</string>
-    <string name="local_day_of_year">Dia del año:</string>
+    <string name="local_day_of_year">Día del año:</string>
     <string name="local_week_of_year">Semana del Año:</string>
     <string name="utc_local_time_offset">Oferta de hora local:</string>
     <string name="utc_current_time">Hora:</string>
@@ -122,6 +122,7 @@
     <string name="icon">Icono:</string>
     <string name="corner_radius">Radio de la esquina</string>
     <string name="units">unidades</string>
+    <string name="location_provider">Location Provider</string>
     <string name="language">Idiomas</string>
     <string name="specified_location">Usar código de ubicación específico</string>
     <string name="keep_screen_on">Mantener pantalla activa</string>
@@ -166,6 +167,8 @@
     <!-- GPS Menu -->
     <string name="show_label">Ver etiqueta</string>
     <string name="satellite_mode">Modo Satellite</string>
+    <string name="high_contrast_mode">High Contrast Map</string>
+    <string name="show_building">Show Buildings</string>
     <!-- Settings Menus -->
     <string name="icon_default">Prederterminado</string>
     <string name="icon_legacy">Herencia</string>
@@ -209,14 +212,13 @@
     <string name="open_saved_locations">Abrir ubicaciones guardadas</string>
     <string name="open_specified_location_documentation">Abrir la documentación de ubicación especificada</string>
     <string name="open_timezones">Abrir zonas horarias</string>
-    <!-- Bottom Bar -->
-    <string name="ellipsis">&#8230;</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Aviso legal</string>
     <string name="privacy_policy">Política de privacidad</string>
     <string name="terms_of_use">Términos y condiciones de uso</string>
     <string name="permissions">Permisos</string>
     <string name="credits">Credits</string>
+    <string name="internet_uses">Internet Uses</string>
     <!-- Moon Illumination -->
     <string name="waning">Waning</string>
     <string name="waning_gibbous">Cuarto menguante</string>
@@ -255,4 +257,8 @@
     <string name="utm_easting">Abscisa:</string>
     <string name="utm_northing">Norte:</string>
     <string name="utm_meridian">Meridiano central:</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">Default Android\'s Location API, highly accurate but is limited to only one location provider at a time and indoor location requests can impact its accuracy, requires a powerful GPS sensor to update location quickly.</string>
+    <string name="desc_fused_location_provider">Google\'s Fused Location API that triangulates location data from various location providers and averages out the result into a series of locations. Can give varying results but uses less battery.</string>
+    <string name="desc_location_provider_note">Note: Using any of the APIs can give different results depending on the various factors and none of them are a proof of accuracy for one another, test the APIs and keep the one selected that works best within your region.</string>
 </resources>

@@ -168,7 +168,7 @@
     <string name="show_label">Покажи етикетите</string>
     <string name="satellite_mode">Сателит</string>
     <string name="high_contrast_mode">Висок контраст на картата</string>
-    <string name="show_building">Show Buildings</string>
+    <string name="show_building">Показване на сградите</string>
     <!-- Settings Menus -->
     <string name="icon_default">Основен</string>
     <string name="icon_legacy">Завещание</string>

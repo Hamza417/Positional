@@ -9,19 +9,19 @@
     <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_height"
-        android:backgroundTint="@color/toolbarBackground"
         android:layout_margin="@dimen/options_container_horizontal_padding"
-        android:clipToPadding="true"
+        android:backgroundTint="@color/toolbarBackground"
         android:clipChildren="true"
+        android:clipToPadding="true"
         android:elevation="40dp">
 
-        <app.simple.positional.decorations.views.BouncyNestedScrollView
+        <com.factor.bouncy.BouncyNestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fadingEdge="vertical"
-            android:fadingEdgeLength="25dp"
             android:clipChildren="true"
             android:clipToPadding="true"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="25dp"
             android:requiresFadingEdge="vertical">
 
             <app.simple.positional.decorations.views.CustomWebView
@@ -29,6 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </app.simple.positional.decorations.views.BouncyNestedScrollView>
+        </com.factor.bouncy.BouncyNestedScrollView>
     </app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
 </FrameLayout>
