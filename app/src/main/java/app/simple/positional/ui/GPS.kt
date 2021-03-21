@@ -109,7 +109,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private var backPress: OnBackPressedDispatcher? = null
     private lateinit var cameraPosition: CameraPosition
 
-    private var isMapMoved = false
     private var isMetric = true
     private var isCustomCoordinate = false
 
@@ -318,7 +317,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                                     this@GPS.direction.text = direction
 
                                     if (!isCustomCoordinate) {
-                                        updateViews(location!!.latitude, location!!.longitude, location!!.bearing)
+                                        updateViews(location!!.latitude, location!!.longitude)
                                     }
                                 }
                             }
@@ -361,12 +360,12 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         locationIndicator.setOnClickListener {
             if (isCustomCoordinate) {
-                isMapMoved = false
-                updateViews(customLatitude, customLongitude, 0f)
+                updateViews(customLatitude, customLongitude)
+                addMarker(LatLng(customLatitude, customLongitude))
             } else
                 if (location != null) {
-                    isMapMoved = false
                     moveMapCamera(LatLng(location!!.latitude, location!!.longitude), location!!.bearing)
+                    addMarker(LatLng(location!!.latitude, location!!.longitude))
                     handler.removeCallbacks(mapMoved)
                 }
         }
@@ -551,15 +550,13 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
     private val customDataUpdater: Runnable = object : Runnable {
         override fun run() {
-            updateViews(customLatitude, customLongitude, 0f)
+            updateViews(customLatitude, customLongitude)
             handler.postDelayed(this, 1000)
         }
     }
 
-    private fun updateViews(latitude_: Double, longitude_: Double, bearing: Float) {
+    private fun updateViews(latitude_: Double, longitude_: Double) {
         getAddress(latitude_, longitude_)
-
-        moveMapCamera(LatLng(latitude_, longitude_), bearing)
 
         latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude_, 3, requireContext())}")
         longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, 3, requireContext())}")
@@ -577,19 +574,21 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(lastLatitude, lastLongitude)
 
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(latLng).tilt(0f).zoom(18f).build()))
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
         googleMap.uiSettings.isMyLocationButtonEnabled = false
 
         this.googleMap = googleMap
 
+        moveMapCamera(latLng, 0F)
+        addMarker(latLng)
         showLabel(GPSPreferences.isLabelOn())
         setSatellite(GPSPreferences.isSatelliteOn())
         setBuildings(GPSPreferences.getShowBuildingsOnMap())
 
         this.googleMap?.setOnCameraMoveListener {
-            isMapMoved = true
+            GPSPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
+            GPSPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
             handler.removeCallbacks(mapMoved)
         }
 
@@ -639,10 +638,10 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         }
     }
 
-    private val mapMoved = object : Runnable {
-        override fun run() {
-            if (context == null) return
-            isMapMoved = false
+    private val mapMoved = Runnable {
+        if (GPSPreferences.getMapAutoCenter()) {
+            val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(lastLatitude, lastLongitude)
+            moveMapCamera(latLng, 0F)
         }
     }
 
@@ -657,11 +656,20 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
     private fun moveMapCamera(latLng: LatLng, bearing: Float) {
         if (googleMap.isNull()) return
-        if (isMapMoved) return
-        cameraPosition = CameraPosition.builder().target(latLng).tilt(googleMap!!.cameraPosition.tilt).zoom(googleMap!!.cameraPosition.zoom).bearing(bearing).build()
+
+        cameraPosition = CameraPosition.builder()
+                .target(latLng)
+                .tilt(GPSPreferences.getMapTilt())
+                .zoom(GPSPreferences.getMapZoom())
+                .bearing(bearing).build()
+
+        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
+    }
+
+    private fun addMarker(latLng: LatLng) {
+        if (googleMap.isNull()) return
         googleMap?.clear()
         googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker)))
-        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
     }
 
     private fun showLabel(value: Boolean) {

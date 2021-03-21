@@ -15,8 +15,10 @@
         android:padding="@dimen/options_container_horizontal_padding">
 
         <LinearLayout
+            android:id="@+id/gps_menu_show_label_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
@@ -47,8 +49,10 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/gps_menu_high_contrast_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
@@ -78,8 +82,10 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/gps_menu_show_building_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
@@ -115,8 +121,10 @@
             android:background="@color/dividerColor" />
 
         <LinearLayout
+            android:id="@+id/gps_menu_satellite_mode_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal"
@@ -138,6 +146,45 @@
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/toggle_satellite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:thumb="@drawable/switch_thumb"
+                app:track="@drawable/switch_track" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginVertical="@dimen/options_sub_item_padding"
+            android:background="@color/dividerColor" />
+
+        <LinearLayout
+            android:id="@+id/gps_menu_auto_center_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="Auto Center Map"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableLeftCompat="@drawable/ic_gps_fixed"
+                app:drawableTint="@color/iconRegular" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/toggle_auto_center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:thumb="@drawable/switch_thumb"

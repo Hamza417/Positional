@@ -5,10 +5,13 @@ import org.jetbrains.annotations.NotNull
 
 object GPSPreferences {
 
-    const val GPSLabelMode = "gps_label_mode"
-    const val GPSSatellite = "gps_satellite_mode"
     private const val lastLatitude = "last_latitude"
     private const val lastLongitude = "last_longitude"
+    private const val mapZoom = "map_zoom_value"
+    private const val mapTilt = "map_tilt_value"
+    private const val mapAutoCenter = "auto_center_map"
+    const val GPSLabelMode = "gps_label_mode"
+    const val GPSSatellite = "gps_satellite_mode"
     const val highContrastMap = "high_contrast_map"
     const val showBuilding = "show_buildings_on_map"
 
@@ -58,5 +61,29 @@ object GPSPreferences {
 
     fun getShowBuildingsOnMap(): Boolean {
         return getSharedPreferences().getBoolean(showBuilding, false)
+    }
+
+    fun setMapZoom(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(mapZoom, value).apply()
+    }
+
+    fun getMapZoom(): Float {
+        return getSharedPreferences().getFloat(mapZoom, 15F)
+    }
+
+    fun setMapTilt(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(mapTilt, value).apply()
+    }
+
+    fun getMapTilt(): Float {
+        return getSharedPreferences().getFloat(mapTilt, 15F)
+    }
+
+    fun setMapAutoCenter(boolean: Boolean) {
+        getSharedPreferences().edit().putBoolean(mapAutoCenter, boolean).apply()
+    }
+
+    fun getMapAutoCenter(): Boolean {
+        return getSharedPreferences().getBoolean(mapAutoCenter, false)
     }
 }
