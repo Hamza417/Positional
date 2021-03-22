@@ -13,8 +13,6 @@ object MainPreferences {
     private const val showAgain = "show_permission_dialog_again"
     private const val showPlayServicesAgain = "show_play_services_dialog_again"
     private const val licenseStatus = "license_status"
-    const val unit = "all_measurement_unit"
-    const val theme = "current_theme"
     private const val notifications = "is_push_notifications_on"
     private const val isCustomCoordinate = "is_custom_coordinate_set"
     private const val latitude = "custom_latitude"
@@ -25,6 +23,8 @@ object MainPreferences {
     private const val appLanguage = "current_language_locale"
     private const val appCornerRadius = "corner_radius"
     const val locationProvider = "location_provider"
+    const val unit = "all_measurement_unit"
+    const val theme = "current_theme"
 
     fun setLaunchCount(value: Int) {
         getSharedPreferences().edit().putInt(launchCount, value).apply()
@@ -175,6 +175,6 @@ object MainPreferences {
     }
 
     fun getLocationProvider(): String {
-        return getSharedPreferences().getString(locationProvider, "fused")!!
+        return getSharedPreferences().getString(locationProvider, "android")!!
     }
 }

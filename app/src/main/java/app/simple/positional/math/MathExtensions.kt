@@ -91,4 +91,12 @@ object MathExtensions {
             Double.NaN
         }
     }
+
+    fun Float.toNegative(): Float {
+        return this * -1F
+    }
+
+    fun Int.toNegative(): Float {
+        return this * -1F
+    }
 }

@@ -14,6 +14,7 @@ object GPSPreferences {
     const val GPSSatellite = "gps_satellite_mode"
     const val highContrastMap = "high_contrast_map"
     const val showBuilding = "show_buildings_on_map"
+    const val useVolumeKeys = "use_volume_keys_to_zoom"
 
     fun isLabelOn(): Boolean {
         return getSharedPreferences().getBoolean(GPSLabelMode, true)
@@ -85,5 +86,13 @@ object GPSPreferences {
 
     fun getMapAutoCenter(): Boolean {
         return getSharedPreferences().getBoolean(mapAutoCenter, false)
+    }
+
+    fun setUseVolumeKeys(boolean: Boolean) {
+        getSharedPreferences().edit().putBoolean(useVolumeKeys, boolean).apply()
+    }
+
+    fun isUsingVolumeKeys(): Boolean {
+        return getSharedPreferences().getBoolean(useVolumeKeys, false)
     }
 }

@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -35,6 +36,7 @@ import app.simple.positional.dialogs.gps.GPSMenu
 import app.simple.positional.dialogs.gps.LocationExpansion
 import app.simple.positional.dialogs.gps.MovementExpansion
 import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.MathExtensions.toNegative
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.UnitConverter.toKilometers
@@ -110,6 +112,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private lateinit var cameraPosition: CameraPosition
 
     private var isMetric = true
+    private var isFullScreen = false
     private var isCustomCoordinate = false
 
     private var customLatitude = 0.0
@@ -168,8 +171,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
         }
 
-        distanceSingleton.isMapPanelVisible = true
-
         lastLatitude = GPSPreferences.getLastCoordinates()[0].toDouble()
         lastLongitude = GPSPreferences.getLastCoordinates()[1].toDouble()
 
@@ -192,8 +193,10 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // view.isFocusableInTouchMode = true
-        // view.requestFocus()
+        if (GPSPreferences.isUsingVolumeKeys()) {
+            view.isFocusableInTouchMode = true
+            view.requestFocus()
+        }
 
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
@@ -318,6 +321,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
                                     if (!isCustomCoordinate) {
                                         updateViews(location!!.latitude, location!!.longitude)
+                                        addMarker(LatLng(location!!.latitude, location!!.longitude))
                                     }
                                 }
                             }
@@ -349,8 +353,10 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                 expandUp.alpha = 1 - slideOffset
                 expandUp.rotationX = -180 * slideOffset
                 dim.alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                toolbar.translationY = toolbar.height * -slideOffset
+                if (!isFullScreen) {
+                    bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                    toolbar.translationY = toolbar.height * -slideOffset
+                }
             }
         })
 
@@ -489,13 +495,13 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             if (event.action == KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
                     KeyEvent.KEYCODE_VOLUME_UP -> {
-                        googleMap!!.cameraPosition.zoom.apply {
-                            this + 6F
-                        }
-                        println("Volume Up")
+                        googleMap?.animateCamera(CameraUpdateFactory.zoomIn())
                     }
                     KeyEvent.KEYCODE_VOLUME_DOWN -> {
-
+                        googleMap?.animateCamera(CameraUpdateFactory.zoomOut())
+                    }
+                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
+                        locationIndicator.callOnClick()
                     }
                 }
             }
@@ -525,7 +531,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     override fun onDestroy() {
         super.onDestroy()
         mapView?.onDestroy()
-        distanceSingleton.isMapPanelVisible = false
     }
 
     override fun onStop() {
@@ -595,6 +600,18 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         this.googleMap?.setOnCameraIdleListener {
             handler.postDelayed(mapMoved, 10000)
         }
+
+        this.googleMap?.setOnMapClickListener {
+            if (isFullScreen) {
+                toolbar.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
+                bottomSheetSlide.onMapClicked(fullScreen = true)
+            } else {
+                toolbar.animate().translationY(toolbar.height.toNegative()).setInterpolator(DecelerateInterpolator(1.5F)).start()
+                bottomSheetSlide.onMapClicked(fullScreen = false)
+            }
+
+            isFullScreen = !isFullScreen
+        }
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {
@@ -640,7 +657,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
     private val mapMoved = Runnable {
         if (GPSPreferences.getMapAutoCenter()) {
-            val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(lastLatitude, lastLongitude)
+            val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(location!!.latitude, location!!.longitude)
             moveMapCamera(latLng, 0F)
         }
     }
@@ -766,6 +783,14 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             }
             GPSPreferences.showBuilding -> {
                 setBuildings(GPSPreferences.getShowBuildingsOnMap())
+            }
+            GPSPreferences.useVolumeKeys -> {
+                view?.isFocusableInTouchMode = GPSPreferences.isUsingVolumeKeys()
+                if (GPSPreferences.isUsingVolumeKeys()) {
+                    view?.requestFocus()
+                } else {
+                    view?.clearFocus()
+                }
             }
         }
     }

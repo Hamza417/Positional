@@ -75,6 +75,10 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
                         downloadChangeLogs()
                     }
                 }
+
+                "Media Keys" -> {
+                    webView.loadUrl("file:///android_asset/html/media_keys.html")
+                }
             }
         }
     }

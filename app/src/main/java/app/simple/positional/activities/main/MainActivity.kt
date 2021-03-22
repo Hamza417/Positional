@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.PixelFormat
 import android.os.Bundle
 import android.view.WindowManager
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.os.ConfigurationCompat
@@ -214,6 +215,14 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide, andr
 
     override fun onBottomSheetSliding(slideOffset: Float) {
         bottomBarWrapper.translationY = bottomBarWrapper.height * slideOffset
+    }
+
+    override fun onMapClicked(fullScreen: Boolean) {
+        if (fullScreen) {
+            bottomBarWrapper.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
+        } else {
+            bottomBarWrapper.animate().translationY(bottomBarWrapper.height.toFloat()).setInterpolator(DecelerateInterpolator(1.5F)).start()
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: android.content.SharedPreferences?, key: String?) {
