@@ -124,6 +124,7 @@
     <string name="units">unidades</string>
     <string name="location_provider">Location Provider</string>
     <string name="language">Idiomas</string>
+    <string name="skip_splash_screen">Skip Splash Screen</string>
     <string name="specified_location">Usar código de ubicación específico</string>
     <string name="keep_screen_on">Mantener pantalla activa</string>
     <string name="push_notification">Notificación automatizada</string>
@@ -132,6 +133,7 @@
     <string name="development_status">Estado del desarrollo</string>
     <string name="change_logs">Change Logs</string>
     <string name="found_an_issue">¿Encontró un problema?</string>
+    <string name="join_on_telegram">Join Telegram group</string>
     <string name="translate">Traducido</string>
     <string name="buy_full">Comprar versión completa</string>
     <!-- Settings Description -->
@@ -141,6 +143,7 @@
     <string name="theme_auto">Auto (Day/Night)</string>
     <string name="desc_icon">Icono principal de la aplicación en launcher</string>
     <string name="desc_radius">Radio de esquina redondeada de la app</string>
+    <string name="desc_skip_splash_Screen">Skip Splash Screen when app launches and go to main screen directly</string>
     <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
     <string name="desc_screen_on">Evita que el dispositivo duerma mientras la aplicación sea visible</string>
     <string name="desc_push">Recibir notificación no intrusiva sobre actualizaciones y otra información</string>
@@ -261,4 +264,5 @@
     <string name="desc_android_location_provider">Default Android\'s Location API, highly accurate but is limited to only one location provider at a time and indoor location requests can impact its accuracy, requires a powerful GPS sensor to update location quickly.</string>
     <string name="desc_fused_location_provider">Google\'s Fused Location API that triangulates location data from various location providers and averages out the result into a series of locations. Can give varying results but uses less battery.</string>
     <string name="desc_location_provider_note">Note: Using any of the APIs can give different results depending on the various factors and none of them are a proof of accuracy for one another, test the APIs and keep the one selected that works best within your region.</string>
+    <string name="use_media_keys">Use Media Keys</string>
 </resources>
