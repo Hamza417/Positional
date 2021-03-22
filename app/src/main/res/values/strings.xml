@@ -136,6 +136,7 @@
     <string name="units">Units</string>
     <string name="location_provider">Location Provider</string>
     <string name="language">Language</string>
+    <string name="skip_splash_screen">Skip Splash Screen</string>
     <string name="specified_location">Use Specified Location</string>
     <string name="keep_screen_on">Keep Screen On</string>
     <string name="push_notification">Push Notification</string>
@@ -144,6 +145,7 @@
     <string name="development_status">Development Status</string>
     <string name="change_logs">Change Logs</string>
     <string name="found_an_issue">Found an issue?</string>
+    <string name="join_on_telegram">Join Telegram group</string>
     <string name="translate">Translation</string>
     <string name="buy_full">Buy Full Version</string>
 
@@ -154,6 +156,7 @@
     <string name="theme_auto">Auto (Day/Night)</string>
     <string name="desc_icon">Main icon of the app in launcher</string>
     <string name="desc_radius">Rounded corner radius of the app</string>
+    <string name="desc_skip_splash_Screen">Skip Splash Screen when app launches and go to main screen directly</string>
     <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
     <string name="desc_push">Receive non intrusive notification about updates and other information</string>

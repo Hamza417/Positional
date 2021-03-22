@@ -87,7 +87,7 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/specified_location_text"
+            android:id="@+id/skip_splash_screen_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
@@ -112,7 +112,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/toggle_custom_location"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/specified_location_text" />
+            app:layout_constraintTop_toBottomOf="@+id/skip_splash_screen_text" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/toggle_custom_location"

@@ -368,9 +368,10 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             if (isCustomCoordinate) {
                 updateViews(customLatitude, customLongitude)
                 addMarker(LatLng(customLatitude, customLongitude))
+                moveMapCamera(LatLng(customLatitude, customLongitude))
             } else
                 if (location != null) {
-                    moveMapCamera(LatLng(location!!.latitude, location!!.longitude), location!!.bearing)
+                    moveMapCamera(LatLng(location!!.latitude, location!!.longitude))
                     addMarker(LatLng(location!!.latitude, location!!.longitude))
                     handler.removeCallbacks(mapMoved)
                 }
@@ -503,6 +504,9 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
                         locationIndicator.callOnClick()
                     }
+                    KeyEvent.KEYCODE_BACK -> {
+                        requireActivity().onBackPressed()
+                    }
                 }
             }
 
@@ -585,7 +589,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         this.googleMap = googleMap
 
-        moveMapCamera(latLng, 0F)
+        moveMapCamera(latLng)
         addMarker(latLng)
         showLabel(GPSPreferences.isLabelOn())
         setSatellite(GPSPreferences.isSatelliteOn())
@@ -658,7 +662,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private val mapMoved = Runnable {
         if (GPSPreferences.getMapAutoCenter()) {
             val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(location!!.latitude, location!!.longitude)
-            moveMapCamera(latLng, 0F)
+            moveMapCamera(latLng)
         }
     }
 
@@ -671,14 +675,14 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         }
     }
 
-    private fun moveMapCamera(latLng: LatLng, bearing: Float) {
+    private fun moveMapCamera(latLng: LatLng) {
         if (googleMap.isNull()) return
 
         cameraPosition = CameraPosition.builder()
                 .target(latLng)
                 .tilt(GPSPreferences.getMapTilt())
                 .zoom(GPSPreferences.getMapZoom())
-                .bearing(bearing).build()
+                .bearing(0F).build()
 
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
     }
@@ -783,6 +787,10 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             }
             GPSPreferences.showBuilding -> {
                 setBuildings(GPSPreferences.getShowBuildingsOnMap())
+            }
+            GPSPreferences.mapAutoCenter -> {
+                handler.removeCallbacks(mapMoved)
+                handler.post(mapMoved)
             }
             GPSPreferences.useVolumeKeys -> {
                 view?.isFocusableInTouchMode = GPSPreferences.isUsingVolumeKeys()

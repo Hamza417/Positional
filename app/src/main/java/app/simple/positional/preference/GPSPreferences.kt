@@ -9,7 +9,7 @@ object GPSPreferences {
     private const val lastLongitude = "last_longitude"
     private const val mapZoom = "map_zoom_value"
     private const val mapTilt = "map_tilt_value"
-    private const val mapAutoCenter = "auto_center_map"
+    const val mapAutoCenter = "auto_center_map"
     const val GPSLabelMode = "gps_label_mode"
     const val GPSSatellite = "gps_satellite_mode"
     const val highContrastMap = "high_contrast_map"

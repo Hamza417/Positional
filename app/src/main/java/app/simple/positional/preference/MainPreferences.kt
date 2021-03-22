@@ -22,6 +22,7 @@ object MainPreferences {
     private const val screenOn = "keep_the_screen_on"
     private const val appLanguage = "current_language_locale"
     private const val appCornerRadius = "corner_radius"
+    private const val skipSplashScreen = "skip_splash_screen"
     const val locationProvider = "location_provider"
     const val unit = "all_measurement_unit"
     const val theme = "current_theme"
@@ -176,5 +177,13 @@ object MainPreferences {
 
     fun getLocationProvider(): String {
         return getSharedPreferences().getString(locationProvider, "android")!!
+    }
+
+    fun setSkipSplashScreen(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(skipSplashScreen, value).apply()
+    }
+
+    fun getSkipSplashScreen(): Boolean {
+        return getSharedPreferences().getBoolean(skipSplashScreen, false)
     }
 }

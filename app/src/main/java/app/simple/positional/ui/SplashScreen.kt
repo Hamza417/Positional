@@ -19,7 +19,6 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.main.MainActivity
 import app.simple.positional.constants.*
-import app.simple.positional.preference.FragmentPreferences.setCurrentPage
 import app.simple.positional.util.BitmapHelper.addLinearGradient
 import app.simple.positional.util.BitmapHelper.addRadialGradient
 import app.simple.positional.util.BitmapHelper.toBitmap
@@ -57,8 +56,6 @@ class SplashScreen : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setShortcutScreen()
 
         if (BuildConfig.FLAVOR == "full") {
             randomDayValue = LauncherBackground.vectorBackground.indices.random()
@@ -116,28 +113,6 @@ class SplashScreen : Fragment() {
 
             true
         }
-    }
-
-    private fun setShortcutScreen() {
-        if (requireActivity().intent.action == null) return
-        when (requireActivity().intent.action) {
-            "open_clock" -> {
-                setScreenValue(0)
-            }
-            "open_compass" -> {
-                setScreenValue(1)
-            }
-            "open_gps" -> {
-                setScreenValue(2)
-            }
-            "open_level" -> {
-                setScreenValue(3)
-            }
-        }
-    }
-
-    private fun setScreenValue(value: Int) {
-        setCurrentPage(value)
     }
 
     private fun runPostDelayed(delay: Long) {

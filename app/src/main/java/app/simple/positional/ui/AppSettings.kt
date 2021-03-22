@@ -48,6 +48,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     private lateinit var theme: LinearLayout
     private lateinit var icon: LinearLayout
     private lateinit var corner: LinearLayout
+    private lateinit var skipSplashScreenContainer: ConstraintLayout
     private lateinit var customLocation: ConstraintLayout
     private lateinit var pushNotification: ConstraintLayout
     private lateinit var appVersion: LinearLayout
@@ -55,19 +56,21 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     private lateinit var developmentStatus: LinearLayout
     private lateinit var changeLogs: LinearLayout
     private lateinit var github: LinearLayout
-    private lateinit var foundIssues: LinearLayout
     private lateinit var translate: LinearLayout
     private lateinit var keepScreenOn: ConstraintLayout
 
     private lateinit var toggleNotification: SwitchCompat
     private lateinit var toggleKeepScreenOn: SwitchCompat
     private lateinit var toggleCustomLocation: SwitchCompat
+    private lateinit var toggleSkipSplashScreen: SwitchCompat
 
     private lateinit var specifiedLocationText: TextView
     private lateinit var currentTheme: TextView
     private lateinit var currentUnit: TextView
     private lateinit var currentLanguage: TextView
     private lateinit var currentLocationProvider: TextView
+    private lateinit var foundIssues: TextView
+    private lateinit var joinTelegram: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
@@ -79,6 +82,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         theme = view.findViewById(R.id.settings_theme)
         icon = view.findViewById(R.id.settings_icons)
         corner = view.findViewById(R.id.settings_corner_radius)
+        skipSplashScreenContainer = view.findViewById(R.id.setting_skip_splash_screen_container)
         customLocation = view.findViewById(R.id.setting_custom_location)
         pushNotification = view.findViewById(R.id.setting_notification)
         appVersion = view.findViewById(R.id.current_app_version)
@@ -93,12 +97,14 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         toggleNotification = view.findViewById(R.id.toggle_notifications)
         toggleKeepScreenOn = view.findViewById(R.id.toggle_screen_on)
         toggleCustomLocation = view.findViewById(R.id.toggle_custom_location)
+        toggleSkipSplashScreen = view.findViewById(R.id.toggle_skip_splash_screen)
 
-        specifiedLocationText = view.findViewById(R.id.specified_location_text)
+        specifiedLocationText = view.findViewById(R.id.skip_splash_screen_text)
         currentTheme = view.findViewById(R.id.current_theme)
         currentUnit = view.findViewById(R.id.current_unit)
         currentLanguage = view.findViewById(R.id.current_language)
         currentLocationProvider = view.findViewById(R.id.current_location_provider)
+        joinTelegram = view.findViewById(R.id.join_telegram_group)
 
         return view
     }
@@ -122,6 +128,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         setCurrentLocation()
         toggleNotification.isChecked = MainPreferences.isNotificationOn()
         toggleKeepScreenOn.isChecked = MainPreferences.isScreenOn()
+        toggleSkipSplashScreen.isChecked = MainPreferences.getSkipSplashScreen()
         isCoordinatesSet(MainPreferences.isCustomCoordinate())
 
         for (i in localeList.indices) {
@@ -269,6 +276,20 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
 
         buyFull.setOnClickListener {
             HtmlViewer.newInstance("Buy").show(childFragmentManager, "buy")
+        }
+
+        toggleSkipSplashScreen.setOnCheckedChangeListener { _, isChecked ->
+            MainPreferences.setSkipSplashScreen(isChecked)
+        }
+
+        skipSplashScreenContainer.setOnClickListener {
+            toggleSkipSplashScreen.isChecked = !toggleSkipSplashScreen.isChecked
+        }
+
+        joinTelegram.setOnClickListener {
+            val uri: Uri = Uri.parse("https://t.me/joinchat/MfsSpZEPAVJkOTli")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
         }
     }
 
