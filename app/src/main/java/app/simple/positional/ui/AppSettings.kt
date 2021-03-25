@@ -99,7 +99,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         toggleCustomLocation = view.findViewById(R.id.toggle_custom_location)
         toggleSkipSplashScreen = view.findViewById(R.id.toggle_skip_splash_screen)
 
-        specifiedLocationText = view.findViewById(R.id.skip_splash_screen_text)
+        specifiedLocationText = view.findViewById(R.id.specified_location_text)
         currentTheme = view.findViewById(R.id.current_theme)
         currentUnit = view.findViewById(R.id.current_unit)
         currentLanguage = view.findViewById(R.id.current_language)

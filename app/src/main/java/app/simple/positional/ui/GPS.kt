@@ -106,7 +106,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
     private var marker: Bitmap? = null
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
+    private lateinit var bottomSheetInfoPanel: BottomSheetBehavior<CoordinatorLayout>
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
     private lateinit var cameraPosition: CameraPosition
@@ -119,6 +119,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private var customLongitude = 0.0
     private var lastLatitude = 0.0
     private var lastLongitude = 0.0
+    private var peekHeight = 0
 
     private var distanceSingleton = DistanceSingleton
     private var mapView: MapView? = null
@@ -138,7 +139,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         save = view.findViewById(R.id.gps_save)
         movementReset = view.findViewById(R.id.movement_reset)
         expandUp = view.findViewById(R.id.expand_up_gps_sheet)
-        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
+        bottomSheetInfoPanel = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
 
         locationBox = view.findViewById(R.id.gps_panel_location)
         movementBox = view.findViewById(R.id.gps_panel_movement)
@@ -186,6 +187,8 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             mapView?.onCreate(savedInstanceState)
             mapView?.getMapAsync(callback)
         }, 500)
+
+        peekHeight = bottomSheetInfoPanel.peekHeight
 
         return view
     }
@@ -336,7 +339,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             }
         }
 
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     backPressed(true)
@@ -368,13 +371,27 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             if (isCustomCoordinate) {
                 updateViews(customLatitude, customLongitude)
                 addMarker(LatLng(customLatitude, customLongitude))
-                moveMapCamera(LatLng(customLatitude, customLongitude))
+                moveMapCamera(LatLng(customLatitude, customLongitude), GPSPreferences.getMapZoom())
             } else
                 if (location != null) {
-                    moveMapCamera(LatLng(location!!.latitude, location!!.longitude))
+                    moveMapCamera(LatLng(location!!.latitude, location!!.longitude), GPSPreferences.getMapZoom())
                     addMarker(LatLng(location!!.latitude, location!!.longitude))
                     handler.removeCallbacks(mapMoved)
                 }
+        }
+
+        locationIndicator.setOnLongClickListener {
+            if (isCustomCoordinate) {
+                updateViews(customLatitude, customLongitude)
+                addMarker(LatLng(customLatitude, customLongitude))
+                moveMapCamera(LatLng(customLatitude, customLongitude), 18F)
+            } else
+                if (location != null) {
+                    moveMapCamera(LatLng(location!!.latitude, location!!.longitude), 18F)
+                    addMarker(LatLng(location!!.latitude, location!!.longitude))
+                    handler.removeCallbacks(mapMoved)
+                }
+            true
         }
 
         save.setOnClickListener {
@@ -572,7 +589,8 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     }
 
     private val callback = OnMapReadyCallback { googleMap ->
-        MapsInitializer.initialize(requireContext())
+        if (context.isNull()) return@OnMapReadyCallback
+        MapsInitializer.initialize(context)
         mapView?.onResume()
 
         /**
@@ -589,19 +607,25 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         this.googleMap = googleMap
 
-        moveMapCamera(latLng)
         addMarker(latLng)
         showLabel(GPSPreferences.isLabelOn())
         setSatellite(GPSPreferences.isSatelliteOn())
         setBuildings(GPSPreferences.getShowBuildingsOnMap())
 
+        this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
+                latLng,
+                GPSPreferences.getMapZoom(),
+                GPSPreferences.getMapTilt(),
+                0F)))
+
         this.googleMap?.setOnCameraMoveListener {
-            GPSPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
-            GPSPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
             handler.removeCallbacks(mapMoved)
         }
 
         this.googleMap?.setOnCameraIdleListener {
+            GPSPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
+            GPSPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
+            handler.removeCallbacks(mapMoved)
             handler.postDelayed(mapMoved, 10000)
         }
 
@@ -609,9 +633,11 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             if (isFullScreen) {
                 toolbar.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
                 bottomSheetSlide.onMapClicked(fullScreen = true)
+                bottomSheetInfoPanel.peekHeight = peekHeight
             } else {
                 toolbar.animate().translationY(toolbar.height.toNegative()).setInterpolator(DecelerateInterpolator(1.5F)).start()
                 bottomSheetSlide.onMapClicked(fullScreen = false)
+                bottomSheetInfoPanel.peekHeight = 0
             }
 
             isFullScreen = !isFullScreen
@@ -659,10 +685,13 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         }
     }
 
-    private val mapMoved = Runnable {
-        if (GPSPreferences.getMapAutoCenter()) {
-            val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(location!!.latitude, location!!.longitude)
-            moveMapCamera(latLng)
+    private val mapMoved = object : Runnable {
+        override fun run() {
+            if (GPSPreferences.getMapAutoCenter()) {
+                val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(location!!.latitude, location!!.longitude)
+                moveMapCamera(latLng, GPSPreferences.getMapZoom())
+            }
+            handler.postDelayed(this, 6000L)
         }
     }
 
@@ -675,13 +704,13 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         }
     }
 
-    private fun moveMapCamera(latLng: LatLng) {
+    private fun moveMapCamera(latLng: LatLng, zoom: Float) {
         if (googleMap.isNull()) return
 
         cameraPosition = CameraPosition.builder()
                 .target(latLng)
                 .tilt(GPSPreferences.getMapTilt())
-                .zoom(GPSPreferences.getMapZoom())
+                .zoom(zoom)
                 .bearing(0F).build()
 
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
@@ -764,8 +793,8 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
          */
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                if (bottomSheetInfoPanel.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetInfoPanel.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
 
                 /**
