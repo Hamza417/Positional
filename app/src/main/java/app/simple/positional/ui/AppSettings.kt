@@ -11,7 +11,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
@@ -20,6 +19,7 @@ import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.popup.MainListPopupMenu
 import app.simple.positional.decorations.popup.PopupMenuCallback
+import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
@@ -59,10 +59,10 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     private lateinit var translate: LinearLayout
     private lateinit var keepScreenOn: ConstraintLayout
 
-    private lateinit var toggleNotification: SwitchCompat
-    private lateinit var toggleKeepScreenOn: SwitchCompat
-    private lateinit var toggleCustomLocation: SwitchCompat
-    private lateinit var toggleSkipSplashScreen: SwitchCompat
+    private lateinit var toggleNotification: SwitchView
+    private lateinit var toggleKeepScreenOn: SwitchView
+    private lateinit var toggleCustomLocation: SwitchView
+    private lateinit var toggleSkipSplashScreen: SwitchView
 
     private lateinit var specifiedLocationText: TextView
     private lateinit var currentTheme: TextView
@@ -70,7 +70,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     private lateinit var currentLanguage: TextView
     private lateinit var currentLocationProvider: TextView
     private lateinit var foundIssues: TextView
-    private lateinit var joinTelegram: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
@@ -104,7 +103,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         currentUnit = view.findViewById(R.id.current_unit)
         currentLanguage = view.findViewById(R.id.current_language)
         currentLocationProvider = view.findViewById(R.id.current_location_provider)
-        joinTelegram = view.findViewById(R.id.join_telegram_group)
 
         return view
     }
@@ -172,7 +170,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
             }
         }
 
-        toggleCustomLocation.setOnCheckedChangeListener { _, isChecked ->
+        toggleCustomLocation.setOnCheckedChangeListener { isChecked ->
             if (BuildConfig.FLAVOR == "full") {
                 if (toggleCustomLocation.isPressed) {
                     if (isChecked) {
@@ -193,7 +191,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
             toggleKeepScreenOn.isChecked = !toggleKeepScreenOn.isChecked
         }
 
-        toggleKeepScreenOn.setOnCheckedChangeListener { _, isChecked ->
+        toggleKeepScreenOn.setOnCheckedChangeListener { isChecked ->
             MainPreferences.setScreenOn(isChecked)
 
             if (isChecked) {
@@ -207,7 +205,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
             toggleNotification.isChecked = !toggleNotification.isChecked
         }
 
-        toggleNotification.setOnCheckedChangeListener { _, isChecked ->
+        toggleNotification.setOnCheckedChangeListener { isChecked ->
             if (isChecked) {
                 FirebaseMessaging.getInstance().subscribeToTopic("push_notification")
             } else {
@@ -234,7 +232,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
             }
         }
 
-        legalNotes.setOnTouchListener { v, event ->
+        legalNotes.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     xOff = event.x
@@ -278,18 +276,12 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
             HtmlViewer.newInstance("Buy").show(childFragmentManager, "buy")
         }
 
-        toggleSkipSplashScreen.setOnCheckedChangeListener { _, isChecked ->
+        toggleSkipSplashScreen.setOnCheckedChangeListener { isChecked ->
             MainPreferences.setSkipSplashScreen(isChecked)
         }
 
         skipSplashScreenContainer.setOnClickListener {
             toggleSkipSplashScreen.isChecked = !toggleSkipSplashScreen.isChecked
-        }
-
-        joinTelegram.setOnClickListener {
-            val uri: Uri = Uri.parse("https://t.me/joinchat/MfsSpZEPAVJkOTli")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(intent)
         }
     }
 

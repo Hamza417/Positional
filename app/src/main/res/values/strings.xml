@@ -145,7 +145,6 @@
     <string name="development_status">Development Status</string>
     <string name="change_logs">Change Logs</string>
     <string name="found_an_issue">Found an issue?</string>
-    <string name="join_on_telegram">Join Telegram group</string>
     <string name="translate">Translation</string>
     <string name="buy_full">Buy Full Version</string>
 
@@ -292,4 +291,5 @@
     <string name="desc_fused_location_provider">Google\'s Fused Location API that triangulates location data from various location providers and averages out the result into a series of locations. Can give varying results but uses less battery.</string>
     <string name="desc_location_provider_note">Note: Using any of the APIs can give different results depending on the various factors and none of them are a proof of accuracy for one another, test the APIs and keep the one selected that works best within your region.</string>
     <string name="use_media_keys">Use Media Keys</string>
+    <string name="auto_center_map">Auto Center Map</string>
 </resources>

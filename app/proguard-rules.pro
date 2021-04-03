@@ -22,6 +22,7 @@
 
 # Keep activity aliases from getting obfuscated
 # Will throw IllegalArgumentException otherwise with reason component class not exist
+-dontobfuscate
 -keep class app.simple.positional.activities.alias.IconOneAlias
 -keep class app.simple.positional.activities.alias.IconTwoAlias
 -keep class app.simple.positional.activities.alias.IconThreeAlias

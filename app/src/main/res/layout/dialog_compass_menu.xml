@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/options_container_horizontal_padding"
         android:backgroundTint="@color/toolbarBackground"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:elevation="40dp"
         android:orientation="vertical"
         android:padding="@dimen/options_container_horizontal_padding">
@@ -23,6 +25,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
@@ -42,12 +46,10 @@
                 app:drawableStartCompat="@drawable/ic_bloom"
                 app:drawableTint="@color/iconRegular" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_flower"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/options_icon_size"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -78,6 +80,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
@@ -96,13 +100,10 @@
                 app:drawableStartCompat="@drawable/ic_direction_code"
                 app:drawableTint="@color/iconRegular" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_code"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/options_icon_size"
-                android:checked="true"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

@@ -198,7 +198,7 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide, andr
             }
             2 -> {
                 return supportFragmentManager.findFragmentByTag("gps") as GPS?
-                        ?: GPS().newInstance()
+                        ?: GPS.newInstance()
             }
             3 -> {
                 return supportFragmentManager.findFragmentByTag("level") as Level?

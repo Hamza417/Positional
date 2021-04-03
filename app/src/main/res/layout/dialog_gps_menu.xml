@@ -11,6 +11,8 @@
         android:layout_margin="@dimen/options_container_horizontal_padding"
         android:backgroundTint="@color/toolbarBackground"
         android:elevation="40dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:orientation="vertical"
         android:padding="@dimen/options_container_horizontal_padding">
 
@@ -20,6 +22,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
@@ -38,13 +42,10 @@
                 app:drawableStartCompat="@drawable/ic_label"
                 app:drawableTint="@color/iconRegular" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_label"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -54,6 +55,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
@@ -72,12 +75,10 @@
                 app:drawableLeftCompat="@drawable/ic_filter_b_and_w"
                 app:drawableTint="@color/iconRegular" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_high_contrast"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -87,6 +88,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
@@ -105,12 +108,10 @@
                 app:drawableLeftCompat="@drawable/ic_home"
                 app:drawableTint="@color/iconRegular" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_buildings"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -126,6 +127,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
@@ -144,12 +147,10 @@
                 app:drawableLeftCompat="@drawable/ic_satellite"
                 app:drawableTint="@color/iconRegular" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_satellite"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -165,6 +166,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
@@ -177,18 +180,16 @@
                 android:drawablePadding="@dimen/options_text_margin_start"
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
-                android:text="Auto Center Map"
+                android:text="@string/auto_center_map"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:drawableLeftCompat="@drawable/ic_gps_fixed"
                 app:drawableTint="@color/iconRegular" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_auto_center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -198,6 +199,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/options_item_padding">
@@ -216,12 +219,10 @@
                 app:drawableLeftCompat="@drawable/ic_zoom_in"
                 app:drawableTint="@color/iconRegular" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_use_volume_keys"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

@@ -11,24 +11,26 @@
     <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
         android:backgroundTint="@color/toolbarBackground"
-        android:padding="@dimen/options_container_horizontal_padding"
-        android:orientation="vertical"
         android:elevation="40dp"
-        android:translationZ="20dp"
-        android:layout_margin="@dimen/options_container_horizontal_padding">
+        android:orientation="vertical"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:padding="@dimen/options_container_horizontal_padding"
+        android:translationZ="20dp">
 
         <TextView
             android:id="@+id/clock_needle_theme_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:background="@drawable/ripple_btn"
             android:drawablePadding="@dimen/options_text_margin_start"
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
             android:padding="@dimen/options_sub_item_padding"
             android:text="@string/needles"
-            android:background="@drawable/ripple_btn"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:drawableStartCompat="@drawable/ic_navigation"
@@ -37,19 +39,19 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/dividerColor"
-            android:layout_marginVertical="@dimen/options_sub_item_padding" />
+            android:layout_marginVertical="@dimen/options_sub_item_padding"
+            android:background="@color/dividerColor" />
 
         <TextView
             android:id="@+id/clock_motion_type_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:background="@drawable/ripple_btn"
             android:drawablePadding="@dimen/options_text_margin_start"
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
             android:padding="@dimen/options_sub_item_padding"
-            android:background="@drawable/ripple_btn"
             android:text="@string/motion_type"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
@@ -62,6 +64,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_btn"
             android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="horizontal"
             android:padding="@dimen/options_sub_item_padding">
@@ -80,13 +84,10 @@
                 app:drawableStartCompat="@drawable/ic_twenty_four_hours"
                 app:drawableTint="@color/iconRegular" />
 
-            <androidx.appcompat.widget.SwitchCompat
+            <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_default_time_format"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/options_icon_size"
-                android:checked="true"
-                android:thumb="@drawable/switch_thumb"
-                app:track="@drawable/switch_track" />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 

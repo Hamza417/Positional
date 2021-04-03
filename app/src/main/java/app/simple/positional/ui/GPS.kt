@@ -65,13 +65,6 @@ import java.util.*
 
 class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    fun newInstance(): GPS {
-        val args = Bundle()
-        val fragment = GPS()
-        fragment.arguments = args
-        return fragment
-    }
-
     private lateinit var expandUp: ImageView
 
     private lateinit var scrollView: NestedScrollView
@@ -829,6 +822,15 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                     view?.clearFocus()
                 }
             }
+        }
+    }
+
+    companion object {
+        fun newInstance(): GPS {
+            val args = Bundle()
+            val fragment = GPS()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

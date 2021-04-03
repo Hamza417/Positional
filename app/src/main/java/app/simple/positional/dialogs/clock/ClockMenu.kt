@@ -8,16 +8,16 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.ClockPreferences
 
 class ClockMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var defaultTimeFormatContainer: LinearLayout
-    private lateinit var defaultTimeFormatSwitch: SwitchCompat
+    private lateinit var defaultTimeFormatSwitch: SwitchView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_clock_menu, container, false)
@@ -41,7 +41,7 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
             defaultTimeFormatSwitch.isChecked = !defaultTimeFormatSwitch.isChecked
         }
 
-        defaultTimeFormatSwitch.setOnCheckedChangeListener { _, isChecked ->
+        defaultTimeFormatSwitch.setOnCheckedChangeListener { isChecked ->
             ClockPreferences.setDefaultClockTime(isChecked)
         }
 

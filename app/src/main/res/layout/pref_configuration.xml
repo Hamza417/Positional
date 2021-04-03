@@ -82,6 +82,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ripple"
         android:clickable="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:focusable="true"
         android:orientation="horizontal"
         android:padding="15dp">
@@ -114,16 +116,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/specified_location_text" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <app.simple.positional.decorations.switchview.SwitchView
             android:id="@+id/toggle_custom_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:thumb="@drawable/switch_thumb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:track="@drawable/switch_track" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -133,6 +133,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ripple"
         android:clickable="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:focusable="true"
         android:orientation="horizontal"
         android:padding="15dp">
@@ -165,17 +167,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView7" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <app.simple.positional.decorations.switchview.SwitchView
             android:id="@+id/toggle_screen_on"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:checked="false"
-            android:thumb="@drawable/switch_thumb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:track="@drawable/switch_track" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -185,6 +184,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ripple"
         android:clickable="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:focusable="true"
         android:orientation="horizontal"
         android:padding="15dp">
@@ -217,16 +218,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <app.simple.positional.decorations.switchview.SwitchView
             android:id="@+id/toggle_notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:thumb="@drawable/switch_thumb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:track="@drawable/switch_track" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

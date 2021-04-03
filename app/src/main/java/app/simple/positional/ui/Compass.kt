@@ -44,7 +44,7 @@ import app.simple.positional.math.Vector3
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.AsyncImageLoader.loadImage
-import app.simple.positional.util.ColorAnimator.animateColorChange
+import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml

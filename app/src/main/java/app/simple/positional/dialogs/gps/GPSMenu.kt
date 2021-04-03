@@ -6,20 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
-import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.R
+import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.preference.GPSPreferences
 
 class GPSMenu : CustomBottomSheetDialogFragment() {
 
-    private lateinit var toggleLabel: SwitchCompat
-    private lateinit var toggleSatellite: SwitchCompat
-    private lateinit var toggleHighContrast: SwitchCompat
-    private lateinit var toggleBuilding: SwitchCompat
-    private lateinit var toggleAutoCenter: SwitchCompat
-    private lateinit var toggleVolumeKeys: SwitchCompat
+    private lateinit var toggleLabel: SwitchView
+    private lateinit var toggleSatellite: SwitchView
+    private lateinit var toggleHighContrast: SwitchView
+    private lateinit var toggleBuilding: SwitchView
+    private lateinit var toggleAutoCenter: SwitchView
+    private lateinit var toggleVolumeKeys: SwitchView
 
     private lateinit var toggleLabelContainer: LinearLayout
     private lateinit var toggleSatelliteContainer: LinearLayout
@@ -62,11 +62,11 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
             satelliteOverrides(0.4F, isChecked = true)
         }
 
-        toggleLabel.setOnCheckedChangeListener { _, isChecked ->
+        toggleLabel.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setLabelMode(isChecked)
         }
 
-        toggleSatellite.setOnCheckedChangeListener { _, isChecked ->
+        toggleSatellite.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setSatelliteMode(isChecked)
             if (isChecked) {
                 satelliteOverrides(0.4F, isChecked)
@@ -75,19 +75,19 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
             }
         }
 
-        toggleHighContrast.setOnCheckedChangeListener { _, isChecked ->
+        toggleHighContrast.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setHighContrastMap(isChecked)
         }
 
-        toggleBuilding.setOnCheckedChangeListener { _, isChecked ->
+        toggleBuilding.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setShowBuildingsOnMap(isChecked)
         }
 
-        toggleAutoCenter.setOnCheckedChangeListener { _, isChecked ->
+        toggleAutoCenter.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setMapAutoCenter(isChecked)
         }
 
-        toggleVolumeKeys.setOnCheckedChangeListener { _, isChecked ->
+        toggleVolumeKeys.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setUseVolumeKeys(isChecked)
         }
 
@@ -123,15 +123,11 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
 
     private fun satelliteOverrides(alpha: Float, isChecked: Boolean) {
 
-        toggleLabel.isClickable = !isChecked
         toggleBuilding.isClickable = !isChecked
         toggleHighContrast.isClickable = !isChecked
 
         toggleBuildingContainer.animate().alpha(alpha).setInterpolator(DecelerateInterpolator(1.5F)).start()
         toggleBuildingContainer.isClickable = !isChecked
-
-        toggleLabelContainer.animate().alpha(alpha).setInterpolator(DecelerateInterpolator(1.5F)).start()
-        toggleLabelContainer.isClickable = !isChecked
 
         toggleHighContrastContainer.animate().alpha(alpha).setInterpolator(DecelerateInterpolator(1.5F)).start()
         toggleHighContrastContainer.isClickable = !isChecked

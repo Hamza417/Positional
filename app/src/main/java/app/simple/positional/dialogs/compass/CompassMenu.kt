@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.SwitchCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.CompassPreference.isFlowerBloomOn
 import app.simple.positional.preference.CompassPreference.setDirectionCode
@@ -18,8 +18,8 @@ import app.simple.positional.preference.CompassPreference.setFlowerBloom
 
 class CompassMenu : CustomBottomSheetDialogFragment() {
 
-    private lateinit var toggleFlower: SwitchCompat
-    private lateinit var toggleCode: SwitchCompat
+    private lateinit var toggleFlower: SwitchView
+    private lateinit var toggleCode: SwitchView
     private lateinit var bloomText: TextView
     private lateinit var blooms: TextView
     private lateinit var bloomSwitchContainer: LinearLayout
@@ -50,7 +50,7 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
             blooms.setTextColor(Color.GRAY)
         }
 
-        toggleFlower.setOnCheckedChangeListener { _, isChecked ->
+        toggleFlower.setOnCheckedChangeListener { isChecked ->
             if (BuildConfig.FLAVOR != "lite") {
                 setFlowerBloom(isChecked)
             } else {
@@ -81,7 +81,7 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
             toggleCode.isChecked = !toggleCode.isChecked
         }
 
-        toggleCode.setOnCheckedChangeListener { _, isChecked ->
+        toggleCode.setOnCheckedChangeListener { isChecked ->
             setDirectionCode(isChecked)
         }
 

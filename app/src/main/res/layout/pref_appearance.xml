@@ -111,6 +111,8 @@
         android:background="@drawable/ripple"
         android:clickable="true"
         android:focusable="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:orientation="horizontal"
         android:padding="15dp">
 
@@ -142,16 +144,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/skip_splash_screen_text" />
 
-        <androidx.appcompat.widget.SwitchCompat
+        <app.simple.positional.decorations.switchview.SwitchView
             android:id="@+id/toggle_skip_splash_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:thumb="@drawable/switch_thumb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:track="@drawable/switch_track" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
