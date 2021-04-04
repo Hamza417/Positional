@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/options_container_horizontal_padding"
         android:backgroundTint="@color/toolbarBackground"
-        android:elevation="40dp"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:elevation="40dp"
         android:orientation="vertical"
         android:padding="@dimen/options_container_horizontal_padding">
 
@@ -110,6 +110,39 @@
 
             <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_buildings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/gps_menu_us_smaller_icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="@string/use_smaller_icon"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableLeftCompat="@drawable/ic_place_notification"
+                app:drawableTint="@color/iconRegular" />
+
+            <app.simple.positional.decorations.switchview.SwitchView
+                android:id="@+id/toggle_use_smaller_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

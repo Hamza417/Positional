@@ -52,6 +52,7 @@ import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
+import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -197,9 +198,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
             divider.isVisible = true
-            marker = R.drawable.ic_place_custom.toBitmap(requireContext(), 400)
-        } else {
-            marker = R.drawable.ic_place.toBitmap(requireContext(), 400)
         }
 
         providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
@@ -544,6 +542,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
     override fun onDestroy() {
         super.onDestroy()
+        mapView?.removeCallbacks { }
         mapView?.onDestroy()
     }
 
@@ -681,7 +680,16 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private val mapMoved = object : Runnable {
         override fun run() {
             if (GPSPreferences.getMapAutoCenter()) {
-                val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(location!!.latitude, location!!.longitude)
+                val latLng = if (isCustomCoordinate) {
+                    LatLng(customLatitude, customLongitude)
+                } else {
+                    if (location.isNotNull()) {
+                        LatLng(location!!.latitude, location!!.longitude)
+                    } else {
+                        LatLng(lastLatitude, lastLongitude)
+                    }
+                }
+
                 moveMapCamera(latLng, GPSPreferences.getMapZoom())
             }
             handler.postDelayed(this, 6000L)
@@ -710,9 +718,32 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     }
 
     private fun addMarker(latLng: LatLng) {
-        if (googleMap.isNull()) return
-        googleMap?.clear()
-        googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker)))
+        launch {
+            withContext(Dispatchers.Default) {
+
+                val size = if (GPSPreferences.isUsingSmallerIcon()) {
+                    200
+                } else {
+                    400
+                }
+
+                if (context.isNotNull())
+                    marker = if (isCustomCoordinate) {
+                        R.drawable.ic_place_custom.toBitmap(requireContext(), size)
+                    } else {
+                        if (location.isNotNull()) {
+                            R.drawable.ic_place.toBitmap(requireContext(), size)
+                        } else {
+                            R.drawable.ic_place_historical.toBitmap(requireContext(), size)
+                        }
+                    }
+            }
+
+            if (googleMap.isNotNull()) {
+                googleMap?.clear()
+                googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker)))
+            }
+        }
     }
 
     private fun showLabel(value: Boolean) {

@@ -12,6 +12,7 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.preference.CompassPreference
 import app.simple.positional.preference.CompassPreference.isFlowerBloomOn
 import app.simple.positional.preference.CompassPreference.setDirectionCode
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
@@ -42,6 +43,8 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        toggleCode.isChecked = CompassPreference.getDirectionCode()
 
         if (BuildConfig.FLAVOR != "lite") {
             toggleFlower.isChecked = isFlowerBloomOn()
