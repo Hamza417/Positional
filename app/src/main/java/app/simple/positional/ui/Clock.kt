@@ -157,15 +157,7 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
         }
 
-        timezone = if (isCustomCoordinate) {
-            if (MainPreferences.getTimeZone() != "") {
-                MainPreferences.getTimeZone()
-            } else {
-                Calendar.getInstance().timeZone.id
-            }
-        } else {
-            Calendar.getInstance().timeZone.id
-        }
+        timezone = ClockPreferences.getTimeZone()
 
         setSkins()
 
@@ -526,6 +518,9 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
             }
             ClockPreferences.clockNeedle -> {
                 setNeedle(ClockPreferences.getClockNeedleTheme())
+            }
+            ClockPreferences.timezone -> {
+                timezone = ClockPreferences.getTimeZone()
             }
         }
     }

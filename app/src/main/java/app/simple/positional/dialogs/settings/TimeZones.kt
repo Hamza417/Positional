@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.EdgeEffect
 import android.widget.EditText
@@ -16,9 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.adapters.TimeZoneAdapter
-import app.simple.positional.callbacks.TimeZoneSelected
 import app.simple.positional.callbacks.TimeZonesCallback
-import app.simple.positional.decorations.views.CustomDialogFragment
+import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.util.flingTranslationMagnitude
 import app.simple.positional.util.forEachVisibleHolder
 import app.simple.positional.util.overscrollRotationMagnitude
@@ -30,9 +29,8 @@ import kotlinx.coroutines.withContext
 import java.time.ZoneOffset
 import java.util.*
 
-class TimeZones : CustomDialogFragment(), TimeZonesCallback {
+class TimeZones : CustomBottomSheetDialogFragment(), TimeZonesCallback {
 
-    lateinit var timeZoneSelected: TimeZoneSelected
     lateinit var timeZoneAdapter: TimeZoneAdapter
     private var timeZones: MutableList<String> = ZoneOffset.getAvailableZoneIds().toList() as MutableList<String>
 
@@ -61,12 +59,10 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // This will prevent the underlying dialog from dimming preventing a flashy animation that can cause some issues to some users
-        this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
-
         timeZoneAdapter = TimeZoneAdapter(timeZones, this as TimeZonesCallback, "")
         timezonesRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         timezonesRecyclerView.adapter = timeZoneAdapter
+        timezonesRecyclerView.scrollToPosition(ClockPreferences.getTimezoneSelectedPosition())
 
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -185,12 +181,21 @@ class TimeZones : CustomDialogFragment(), TimeZonesCallback {
     }
 
     override fun itemClicked(p1: String) {
-        timeZoneSelected.onTimeZoneSelected(p1)
+        ClockPreferences.setTimeZone(p1)
         this.dialog?.dismiss()
     }
 
     override fun onPause() {
         super.onPause()
         nothingFound.clearAnimation()
+    }
+
+    companion object {
+        fun newInstance(): TimeZones {
+            val args = Bundle()
+            val fragment = TimeZones()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

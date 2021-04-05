@@ -156,7 +156,7 @@
     <string name="desc_icon">Main icon of the app in launcher</string>
     <string name="desc_radius">Rounded corner radius of the app</string>
     <string name="desc_skip_splash_Screen">Skip Splash Screen when app launches and go to main screen directly</string>
-    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
+    <string name="desc_specified_location">Specify custom Latitude and Longitude and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
     <string name="desc_push">Receive non intrusive notification about updates and other information</string>
     <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>

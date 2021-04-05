@@ -15,14 +15,14 @@ import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.ViewUtils
 
 @SuppressLint("ClickableViewAccessibility")
-class SwitchView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
-) : SwitchFrameLayout(context, attrs, defStyleAttr) {
+class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+    : SwitchFrameLayout(context, attrs, defStyleAttr) {
 
     private var thumb: ImageView
     private var track: SwitchFrameLayout
     private var switchCallbacks: SwitchCallbacks? = null
 
+    var isCheckable = true
     var isChecked: Boolean = false
         set(value) {
             if (value) {
@@ -90,6 +90,8 @@ class SwitchView @JvmOverloads constructor(
     }
 
     private fun animateChecked() {
+
+        if (!isCheckable) return
 
         val w = context.resources.getDimensionPixelOffset(R.dimen.switch_width)
         val p = context.resources.getDimensionPixelOffset(R.dimen.switch_padding)

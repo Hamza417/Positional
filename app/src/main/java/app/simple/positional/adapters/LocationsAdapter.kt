@@ -15,8 +15,6 @@ import app.simple.positional.util.DMSConverter.latitudeAsDMS
 import app.simple.positional.util.DMSConverter.longitudeAsDMS
 import app.simple.positional.util.bouncyValue
 import app.simple.positional.util.stiffnessValue
-import java.text.SimpleDateFormat
-import java.util.*
 
 class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
 
@@ -31,8 +29,6 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
         holder.address.text = locations[position].address
         holder.latitude.text = latitudeAsDMS(locations[position].latitude, 2, holder.itemView.context)
         holder.longitude.text = longitudeAsDMS(locations[position].longitude, 2, holder.itemView.context)
-        holder.timeZone.text = locations[position].timeZone
-        holder.dateAdded.text = getFormattedDate(position)
 
         holder.container.setOnClickListener {
             locationsAdapterCallback?.onLocationItemClicked(locations = locations[position])
@@ -48,8 +44,6 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
         val address: TextView = itemView.findViewById(R.id.adapter_locations_address)
         val latitude: TextView = itemView.findViewById(R.id.adapter_locations_latitude)
         val longitude: TextView = itemView.findViewById(R.id.adapter_locations_longitude)
-        val timeZone: TextView = itemView.findViewById(R.id.adapter_locations_timezone)
-        val dateAdded: TextView = itemView.findViewById(R.id.adapter_locations_date_added)
 
         private var currentVelocity = 0f
 
@@ -71,11 +65,6 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
                                 .setDampingRatio(bouncyValue)
                                 .setStiffness(stiffnessValue)
                 )
-    }
-
-    private fun getFormattedDate(position: Int): String {
-        val sdf = SimpleDateFormat("hh:mm a dd MMM, yyyy", Locale.ROOT)
-        return sdf.format(Date(locations[position].date))
     }
 
     fun setList(locations: MutableList<Locations>) {

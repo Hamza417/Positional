@@ -146,55 +146,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/timezone_container"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:animateLayoutChanges="true"
-                android:hint="@string/specified_hint_timezone"
-                app:boxStrokeColor="@color/iconColor"
-                app:boxStrokeWidth="1px"
-                app:boxStrokeWidthFocused="2px"
-                app:errorEnabled="false"
-                app:errorIconTint="@android:color/holo_red_dark"
-                app:errorTextColor="@android:color/holo_red_dark"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true"
-                app:endIconTint="@color/iconColor"
-                app:hintTextColor="@color/textSecondary"
-                tools:ignore="PxUsage">
-
-                <AutoCompleteTextView
-                    android:id="@+id/timezone_input"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/textSecondary"
-                    android:maxLines="1"
-                    tools:ignore="LabelFor" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <ImageButton
-                android:id="@+id/timezone_list"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2.5dp"
-                android:background="@drawable/ripple_btn"
-                android:contentDescription="@string/open_timezones"
-                android:src="@drawable/ic_folder"
-                android:tint="@color/iconColor" />
-        </LinearLayout>
-
-        <LinearLayout
             style="?android:attr/buttonBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

@@ -17,30 +17,39 @@ import androidx.dynamicanimation.animation.SpringForce
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.TimeZonesCallback
+import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.util.bouncyValue
 import app.simple.positional.util.stiffnessValue
 import java.util.*
 
-class TimeZoneAdapter(
-        var timeZones: MutableList<String>,
-        private val timeZonesCallback: TimeZonesCallback,
-        var searchText: String
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TimeZoneAdapter(var timeZones: MutableList<String>, private val timeZonesCallback: TimeZonesCallback, var searchText: String)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var context: Context
+    private var currentSelectedTimezone = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         timeZones.sort()
         context = parent.context
+        currentSelectedTimezone = ClockPreferences.getTimeZone()
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_timezone, parent, false))
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is Holder) {
+
             holder.timeZone.text = timeZones[position]
             searchTimeZones(holder.timeZone, timeZones[position])
             timeZonesCallback.itemSubstring(timeZones[position].substring(0, 2))
+
+            holder.timeZone.setTextColor(if (timeZones[position] == currentSelectedTimezone) {
+                ContextCompat.getColor(holder.itemView.context, R.color.switch_on_end_color)
+            } else {
+                ContextCompat.getColor(holder.itemView.context, R.color.textPrimary)
+            })
+
             holder.layout.setOnClickListener {
+                ClockPreferences.setTimezoneSelectedPosition(position)
                 timeZonesCallback.itemClicked(timeZones[position])
             }
         }

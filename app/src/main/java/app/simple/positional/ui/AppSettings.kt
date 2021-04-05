@@ -114,6 +114,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         if (BuildConfig.FLAVOR == "lite") {
             buyFull.visibility = View.VISIBLE
             specifiedLocationText.setTextColor(Color.GRAY)
+            toggleCustomLocation.isCheckable = false
         }
 
         if (MainPreferences.isDayNightOn()) {
@@ -183,7 +184,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
                 }
             } else {
                 Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
-                toggleCustomLocation.isChecked = false
             }
         }
 

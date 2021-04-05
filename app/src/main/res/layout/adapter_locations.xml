@@ -15,7 +15,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginEnd="15dp"
-        android:src="@drawable/ic_place"
+        android:src="@drawable/ic_place_custom"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
@@ -46,26 +46,6 @@
 
         <TextView
             android:id="@+id/adapter_locations_longitude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/regular"
-            android:maxLines="1"
-            android:textColor="@color/textSecondary"
-            android:textSize="5pt" />
-
-        <TextView
-            android:id="@+id/adapter_locations_timezone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/regular"
-            android:maxLines="1"
-            android:textColor="@color/textSecondary"
-            android:textSize="5pt" />
-
-        <TextView
-            android:id="@+id/adapter_locations_date_added"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"

@@ -5,9 +5,12 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.location.Location
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
 import app.simple.positional.preference.GPSPreferences
+import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.NullSafety.isNotNull
@@ -17,20 +20,47 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
-class Maps(context: Context?, attributeSet: AttributeSet?, i: Int) : MapView(context, attributeSet, i),
-                                                                     OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener {
+class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, attributeSet),
+                                                            OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
+                                                            CoroutineScope {
     private var googleMap: GoogleMap? = null
-    private var location: Location? = null
+    var location: Location? = null
     private var mapsCallbacks: MapsCallbacks? = null
     private var marker: Bitmap? = null
+    private val viewHandler = Handler(Looper.getMainLooper())
 
     private var isCustomCoordinate = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
+    val lastLatitude = GPSPreferences.getLastCoordinates()[0].toDouble()
+    val lastLongitude = GPSPreferences.getLastCoordinates()[1].toDouble()
+
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     init {
-        getMapAsync(this)
+        isCustomCoordinate = MainPreferences.isCustomCoordinate()
+        if (isCustomCoordinate) {
+            customLatitude = MainPreferences.getCoordinates()[0].toDouble()
+            customLongitude = MainPreferences.getCoordinates()[1].toDouble()
+        }
+
+        if (GPSPreferences.isUsingVolumeKeys()) {
+            this.isFocusableInTouchMode = true
+            this.requestFocus()
+        }
+
+        viewHandler.postDelayed({
+            /**
+             * This prevents the lag when fragment is switched
+             */
+            this.alpha = 0F
+            getMapAsync(this)
+        }, 500)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -73,19 +103,23 @@ class Maps(context: Context?, attributeSet: AttributeSet?, i: Int) : MapView(con
                 0F)))
 
         this.googleMap?.setOnCameraMoveListener {
-            handler.removeCallbacks(mapMoved)
+            viewHandler.removeCallbacks(mapMoved)
         }
 
         this.googleMap?.setOnCameraIdleListener {
             GPSPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
             GPSPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
-            handler.removeCallbacks(mapMoved)
-            handler.postDelayed(mapMoved, 10000)
+            viewHandler.removeCallbacks(mapMoved)
+            viewHandler.postDelayed(mapMoved, 6000)
         }
 
         this.googleMap?.setOnMapClickListener {
             mapsCallbacks?.onMapClicked(this)
         }
+    }
+
+    fun pause() {
+        onPause()
     }
 
     fun lowMemory() {
@@ -98,9 +132,23 @@ class Maps(context: Context?, attributeSet: AttributeSet?, i: Int) : MapView(con
     }
 
     fun destroy() {
+        onDestroy()
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         clearAnimation()
-        onDestroy()
+        viewHandler.removeCallbacks(mapMoved)
+        job.cancel()
+    }
+
+    fun resetCamera(zoom: Float) {
+        if (isCustomCoordinate) {
+            addMarker(LatLng(customLatitude, customLongitude))
+            moveMapCamera(LatLng(customLatitude, customLongitude), zoom)
+        } else
+            if (location != null) {
+                moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
+                addMarker(LatLng(location!!.latitude, location!!.longitude))
+                viewHandler.removeCallbacks(mapMoved)
+            }
     }
 
     private fun setSatellite() {
@@ -160,19 +208,59 @@ class Maps(context: Context?, attributeSet: AttributeSet?, i: Int) : MapView(con
         }
     }
 
-    private fun addMarker(latLng: LatLng) {
-        if (googleMap.isNull()) return
-        googleMap?.clear()
-        googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker)))
+    fun zoomIn() {
+        googleMap?.animateCamera(CameraUpdateFactory.zoomIn())
+    }
+
+    fun zoomOut() {
+        googleMap?.animateCamera(CameraUpdateFactory.zoomOut())
+    }
+
+    fun addMarker(latLng: LatLng) {
+        launch {
+            withContext(Dispatchers.Default) {
+
+                val size = if (GPSPreferences.isUsingSmallerIcon()) {
+                    200
+                } else {
+                    400
+                }
+
+                if (context.isNotNull())
+                    marker = if (isCustomCoordinate) {
+                        R.drawable.ic_place_custom.toBitmap(context, size)
+                    } else {
+                        if (location.isNotNull()) {
+                            R.drawable.ic_place.toBitmap(context, size)
+                        } else {
+                            R.drawable.ic_place_historical.toBitmap(context, size)
+                        }
+                    }
+            }
+
+            if (googleMap.isNotNull()) {
+                googleMap?.clear()
+                googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker)))
+            }
+        }
     }
 
     private val mapMoved = object : Runnable {
         override fun run() {
             if (GPSPreferences.getMapAutoCenter()) {
-                val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(location!!.latitude, location!!.longitude)
+                val latLng = if (isCustomCoordinate) {
+                    LatLng(customLatitude, customLongitude)
+                } else {
+                    if (location.isNotNull()) {
+                        LatLng(location!!.latitude, location!!.longitude)
+                    } else {
+                        LatLng(lastLatitude, lastLongitude)
+                    }
+                }
+
                 moveMapCamera(latLng, GPSPreferences.getMapZoom())
             }
-            handler.postDelayed(this, 6000L)
+            viewHandler.postDelayed(this, 6000L)
         }
     }
 
@@ -202,16 +290,8 @@ class Maps(context: Context?, attributeSet: AttributeSet?, i: Int) : MapView(con
                 setBuildings(GPSPreferences.getShowBuildingsOnMap())
             }
             GPSPreferences.mapAutoCenter -> {
-                handler.removeCallbacks(mapMoved)
-                handler.post(mapMoved)
-            }
-            GPSPreferences.useVolumeKeys -> {
-                this.isFocusableInTouchMode = GPSPreferences.isUsingVolumeKeys()
-                if (GPSPreferences.isUsingVolumeKeys()) {
-                    this.requestFocus()
-                } else {
-                    this.clearFocus()
-                }
+                viewHandler.removeCallbacks(mapMoved)
+                viewHandler.post(mapMoved)
             }
         }
     }

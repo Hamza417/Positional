@@ -18,7 +18,4 @@ class Locations {
 
     @ColumnInfo(name = "address")
     var address = ""
-
-    @ColumnInfo(name = "time_zone")
-    var timeZone = ""
 }

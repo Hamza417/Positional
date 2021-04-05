@@ -17,7 +17,6 @@ object MainPreferences {
     private const val isCustomCoordinate = "is_custom_coordinate_set"
     private const val latitude = "custom_latitude"
     private const val longitude = "custom_longitude"
-    private const val timezone = "custom_timezone"
     private const val address = "specified_address"
     private const val screenOn = "keep_the_screen_on"
     private const val appLanguage = "current_language_locale"
@@ -133,14 +132,6 @@ object MainPreferences {
                 getSharedPreferences().getFloat(latitude, 0f),
                 getSharedPreferences().getFloat(longitude, 0f)
         )
-    }
-
-    fun setTimeZone(@NotNull value: String) {
-        getSharedPreferences().edit().putString(timezone, value).apply()
-    }
-
-    fun getTimeZone(): String? {
-        return getSharedPreferences().getString(timezone, "")
     }
 
     fun setAddress(@NotNull value: String) {

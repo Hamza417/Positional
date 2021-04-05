@@ -1,8 +1,6 @@
 package app.simple.positional.ui
 
 import android.content.*
-import android.content.res.Configuration
-import android.graphics.Bitmap
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -30,6 +28,8 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
+import app.simple.positional.decorations.maps.Maps
+import app.simple.positional.decorations.maps.MapsCallbacks
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
@@ -48,11 +48,9 @@ import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.*
-import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
-import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -99,11 +97,9 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private lateinit var handler: Handler
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
-    private var marker: Bitmap? = null
     private lateinit var bottomSheetInfoPanel: BottomSheetBehavior<CoordinatorLayout>
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
-    private lateinit var cameraPosition: CameraPosition
 
     private var isMetric = true
     private var isFullScreen = false
@@ -116,8 +112,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private var peekHeight = 0
 
     private var distanceSingleton = DistanceSingleton
-    private var mapView: MapView? = null
-    private var googleMap: GoogleMap? = null
+    private var mapView: Maps? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.frag_gps, container, false)
@@ -155,6 +150,27 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         handler = Handler(Looper.getMainLooper())
 
+        handler.postDelayed({
+            mapView = view.findViewById(R.id.map)
+            mapView?.onCreate(savedInstanceState)
+
+            mapView?.setOnMapsCallbackListener(object : MapsCallbacks {
+                override fun onMapClicked(view: MapView?) {
+                    if (isFullScreen) {
+                        toolbar.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
+                        bottomSheetSlide.onMapClicked(fullScreen = true)
+                        bottomSheetInfoPanel.peekHeight = peekHeight
+                    } else {
+                        toolbar.animate().translationY(toolbar.height.toNegative()).setInterpolator(DecelerateInterpolator(1.5F)).start()
+                        bottomSheetSlide.onMapClicked(fullScreen = false)
+                        bottomSheetInfoPanel.peekHeight = 0
+                    }
+
+                    isFullScreen = !isFullScreen
+                }
+            })
+        }, 500L)
+
         filter.addAction("location")
         filter.addAction("provider")
 
@@ -172,16 +188,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
 
-        handler.postDelayed({
-            /**
-             * This prevents the lag when fragment is switched
-             */
-            mapView = view.findViewById(R.id.map)
-            mapView?.alpha = 0F
-            mapView?.onCreate(savedInstanceState)
-            mapView?.getMapAsync(callback)
-        }, 500)
-
         peekHeight = bottomSheetInfoPanel.peekHeight
 
         return view
@@ -189,11 +195,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (GPSPreferences.isUsingVolumeKeys()) {
-            view.isFocusableInTouchMode = true
-            view.requestFocus()
-        }
 
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
@@ -315,7 +316,8 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
                                     if (!isCustomCoordinate) {
                                         updateViews(location!!.latitude, location!!.longitude)
-                                        addMarker(LatLng(location!!.latitude, location!!.longitude))
+                                        mapView?.location = location
+                                        mapView?.addMarker(LatLng(location!!.latitude, location!!.longitude))
                                     }
                                 }
                             }
@@ -359,29 +361,12 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         }
 
         locationIndicator.setOnClickListener {
-            if (isCustomCoordinate) {
-                updateViews(customLatitude, customLongitude)
-                addMarker(LatLng(customLatitude, customLongitude))
-                moveMapCamera(LatLng(customLatitude, customLongitude), GPSPreferences.getMapZoom())
-            } else
-                if (location != null) {
-                    moveMapCamera(LatLng(location!!.latitude, location!!.longitude), GPSPreferences.getMapZoom())
-                    addMarker(LatLng(location!!.latitude, location!!.longitude))
-                    handler.removeCallbacks(mapMoved)
-                }
+            updateViews(customLatitude, customLongitude)
+            mapView?.resetCamera(GPSPreferences.getMapZoom())
         }
 
         locationIndicator.setOnLongClickListener {
-            if (isCustomCoordinate) {
-                updateViews(customLatitude, customLongitude)
-                addMarker(LatLng(customLatitude, customLongitude))
-                moveMapCamera(LatLng(customLatitude, customLongitude), 18F)
-            } else
-                if (location != null) {
-                    moveMapCamera(LatLng(location!!.latitude, location!!.longitude), 18F)
-                    addMarker(LatLng(location!!.latitude, location!!.longitude))
-                    handler.removeCallbacks(mapMoved)
-                }
+            mapView?.resetCamera(18F)
             true
         }
 
@@ -405,7 +390,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                         locations.latitude = location?.latitude!!
                         locations.longitude = location?.longitude!!
                         locations.address = address.text.toString()
-                        locations.timeZone = Calendar.getInstance().timeZone.id
                         locations.date = System.currentTimeMillis()
 
                         db.locationDao()?.insetLocation(locations)
@@ -504,13 +488,13 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             if (event.action == KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
                     KeyEvent.KEYCODE_VOLUME_UP -> {
-                        googleMap?.animateCamera(CameraUpdateFactory.zoomIn())
+                        mapView?.zoomIn()
                     }
                     KeyEvent.KEYCODE_VOLUME_DOWN -> {
-                        googleMap?.animateCamera(CameraUpdateFactory.zoomOut())
+                        mapView?.zoomOut()
                     }
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
-                        locationIndicator.callOnClick()
+                        mapView?.resetCamera(GPSPreferences.getMapZoom())
                     }
                     KeyEvent.KEYCODE_BACK -> {
                         requireActivity().onBackPressed()
@@ -528,10 +512,9 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
     override fun onPause() {
         super.onPause()
-        mapView?.onPause()
+        mapView?.pause()
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
-        handler.removeCallbacks(mapMoved)
         handler.removeCallbacks(textAnimationRunnable)
         handler.removeCallbacks(customDataUpdater)
         infoText.clearAnimation()
@@ -543,12 +526,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     override fun onDestroy() {
         super.onDestroy()
         mapView?.removeCallbacks { }
-        mapView?.onDestroy()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mapView?.onStop()
+        mapView?.destroy()
     }
 
     override fun onResume() {
@@ -557,13 +535,13 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         if (isCustomCoordinate) {
             handler.post(customDataUpdater)
         }
-        mapView?.onResume()
+        mapView?.resume()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView?.onLowMemory()
+        mapView?.lowMemory()
     }
 
     private val customDataUpdater: Runnable = object : Runnable {
@@ -578,62 +556,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude_, 3, requireContext())}")
         longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, 3, requireContext())}")
-    }
-
-    private val callback = OnMapReadyCallback { googleMap ->
-        if (context.isNull()) return@OnMapReadyCallback
-        MapsInitializer.initialize(context)
-        mapView?.onResume()
-
-        /**
-         * Workaround for flashing of view when map is
-         * Initialized
-         */
-        mapView?.animate()?.alpha(1F)?.setDuration(500)?.start()
-
-        val latLng = if (isCustomCoordinate) LatLng(customLatitude, customLongitude) else LatLng(lastLatitude, lastLongitude)
-
-        googleMap.uiSettings.isCompassEnabled = false
-        googleMap.uiSettings.isMapToolbarEnabled = false
-        googleMap.uiSettings.isMyLocationButtonEnabled = false
-
-        this.googleMap = googleMap
-
-        addMarker(latLng)
-        showLabel(GPSPreferences.isLabelOn())
-        setSatellite(GPSPreferences.isSatelliteOn())
-        setBuildings(GPSPreferences.getShowBuildingsOnMap())
-
-        this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
-                latLng,
-                GPSPreferences.getMapZoom(),
-                GPSPreferences.getMapTilt(),
-                0F)))
-
-        this.googleMap?.setOnCameraMoveListener {
-            handler.removeCallbacks(mapMoved)
-        }
-
-        this.googleMap?.setOnCameraIdleListener {
-            GPSPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
-            GPSPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
-            handler.removeCallbacks(mapMoved)
-            handler.postDelayed(mapMoved, 10000)
-        }
-
-        this.googleMap?.setOnMapClickListener {
-            if (isFullScreen) {
-                toolbar.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
-                bottomSheetSlide.onMapClicked(fullScreen = true)
-                bottomSheetInfoPanel.peekHeight = peekHeight
-            } else {
-                toolbar.animate().translationY(toolbar.height.toNegative()).setInterpolator(DecelerateInterpolator(1.5F)).start()
-                bottomSheetSlide.onMapClicked(fullScreen = false)
-                bottomSheetInfoPanel.peekHeight = 0
-            }
-
-            isFullScreen = !isFullScreen
-        }
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {
@@ -677,25 +599,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         }
     }
 
-    private val mapMoved = object : Runnable {
-        override fun run() {
-            if (GPSPreferences.getMapAutoCenter()) {
-                val latLng = if (isCustomCoordinate) {
-                    LatLng(customLatitude, customLongitude)
-                } else {
-                    if (location.isNotNull()) {
-                        LatLng(location!!.latitude, location!!.longitude)
-                    } else {
-                        LatLng(lastLatitude, lastLongitude)
-                    }
-                }
-
-                moveMapCamera(latLng, GPSPreferences.getMapZoom())
-            }
-            handler.postDelayed(this, 6000L)
-        }
-    }
-
     private fun locationIconStatusUpdates() {
         if (getLocationStatus(requireContext())) {
             locationIndicator.setImageResource(R.drawable.ic_gps_not_fixed)
@@ -703,99 +606,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             locationIndicator.setImageResource(R.drawable.ic_gps_off)
             locationIndicator.isClickable = false
         }
-    }
-
-    private fun moveMapCamera(latLng: LatLng, zoom: Float) {
-        if (googleMap.isNull()) return
-
-        cameraPosition = CameraPosition.builder()
-                .target(latLng)
-                .tilt(GPSPreferences.getMapTilt())
-                .zoom(zoom)
-                .bearing(0F).build()
-
-        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null)
-    }
-
-    private fun addMarker(latLng: LatLng) {
-        launch {
-            withContext(Dispatchers.Default) {
-
-                val size = if (GPSPreferences.isUsingSmallerIcon()) {
-                    200
-                } else {
-                    400
-                }
-
-                if (context.isNotNull())
-                    marker = if (isCustomCoordinate) {
-                        R.drawable.ic_place_custom.toBitmap(requireContext(), size)
-                    } else {
-                        if (location.isNotNull()) {
-                            R.drawable.ic_place.toBitmap(requireContext(), size)
-                        } else {
-                            R.drawable.ic_place_historical.toBitmap(requireContext(), size)
-                        }
-                    }
-            }
-
-            if (googleMap.isNotNull()) {
-                googleMap?.clear()
-                googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker)))
-            }
-        }
-    }
-
-    private fun showLabel(value: Boolean) {
-        if (!googleMap.isNull()) {
-            if (GPSPreferences.getHighContrastMap()) {
-                googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
-                        requireContext(),
-                        if (value) {
-                            R.raw.map_high_contrast_labelled
-                        } else {
-                            R.raw.map_high_contrast_non_labelled
-                        }
-                ))
-
-            } else {
-                googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
-                        requireContext(),
-                        when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-                            Configuration.UI_MODE_NIGHT_YES -> {
-                                if (value) {
-                                    R.raw.maps_dark_labelled
-                                } else {
-                                    R.raw.maps_dark_no_label
-                                }
-                            }
-                            Configuration.UI_MODE_NIGHT_NO -> {
-                                if (value) {
-                                    R.raw.maps_light_labelled
-                                } else {
-                                    R.raw.maps_no_label
-                                }
-                            }
-                            else -> 0
-                        }
-                ))
-            }
-        }
-
-        GPSPreferences.setLabelMode(value)
-    }
-
-    private fun setSatellite(value: Boolean) {
-        if (!googleMap.isNull())
-            googleMap?.mapType = if (value) {
-                GoogleMap.MAP_TYPE_SATELLITE
-            } else {
-                GoogleMap.MAP_TYPE_NORMAL
-            }
-    }
-
-    private fun setBuildings(value: Boolean) {
-        googleMap!!.isBuildingsEnabled = value
     }
 
     private fun checkGooglePlayServices(): Boolean {
@@ -830,21 +640,17 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         })
     }
 
+    companion object {
+        fun newInstance(): GPS {
+            val args = Bundle()
+            val fragment = GPS()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            GPSPreferences.highContrastMap, GPSPreferences.GPSLabelMode -> {
-                showLabel(GPSPreferences.isLabelOn())
-            }
-            GPSPreferences.GPSSatellite -> {
-                setSatellite(GPSPreferences.isSatelliteOn())
-            }
-            GPSPreferences.showBuilding -> {
-                setBuildings(GPSPreferences.getShowBuildingsOnMap())
-            }
-            GPSPreferences.mapAutoCenter -> {
-                handler.removeCallbacks(mapMoved)
-                handler.post(mapMoved)
-            }
             GPSPreferences.useVolumeKeys -> {
                 view?.isFocusableInTouchMode = GPSPreferences.isUsingVolumeKeys()
                 if (GPSPreferences.isUsingVolumeKeys()) {
@@ -853,15 +659,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                     view?.clearFocus()
                 }
             }
-        }
-    }
-
-    companion object {
-        fun newInstance(): GPS {
-            val args = Bundle()
-            val fragment = GPS()
-            fragment.arguments = args
-            return fragment
         }
     }
 }

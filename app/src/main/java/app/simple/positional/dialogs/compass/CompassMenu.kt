@@ -51,6 +51,8 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
         } else {
             bloomText.setTextColor(Color.GRAY)
             blooms.setTextColor(Color.GRAY)
+            toggleFlower.isChecked = false
+            toggleFlower.isCheckable = false
         }
 
         toggleFlower.setOnCheckedChangeListener { isChecked ->
@@ -58,7 +60,6 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
                 setFlowerBloom(isChecked)
             } else {
                 Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
-                toggleFlower.isChecked = false
             }
         }
 
