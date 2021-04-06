@@ -13,7 +13,6 @@ object MainPreferences {
     private const val showAgain = "show_permission_dialog_again"
     private const val showPlayServicesAgain = "show_play_services_dialog_again"
     private const val licenseStatus = "license_status"
-    private const val notifications = "is_push_notifications_on"
     private const val isCustomCoordinate = "is_custom_coordinate_set"
     private const val latitude = "custom_latitude"
     private const val longitude = "custom_longitude"
@@ -100,14 +99,6 @@ object MainPreferences {
      */
     fun getUnit(): Boolean {
         return getSharedPreferences().getBoolean(unit, true)
-    }
-
-    fun setNotifications(@NotNull value: Boolean) {
-        getSharedPreferences().edit().putBoolean(notifications, value).apply()
-    }
-
-    fun isNotificationOn(): Boolean {
-        return getSharedPreferences().getBoolean(notifications, true)
     }
 
     // Coordinates

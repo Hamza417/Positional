@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="20dp"
+    android:clipToPadding="false"
+    android:clipChildren="false"
     android:orientation="vertical">
 
     <TextView
@@ -169,57 +171,6 @@
 
         <app.simple.positional.decorations.switchview.SwitchView
             android:id="@+id/toggle_screen_on"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/setting_notification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ripple"
-        android:clickable="true"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:focusable="true"
-        android:orientation="horizontal"
-        android:padding="15dp">
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/medium"
-            android:text="@string/push_notification"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/settings_primary_text_size"
-            app:layout_constraintBottom_toTopOf="@id/textView8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="30dp"
-            android:fontFamily="@font/regular"
-            android:text="@string/desc_push"
-            android:textColor="@color/textTertiary"
-            android:textSize="@dimen/settings_secondary_text_size"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/toggle_notifications"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-        <app.simple.positional.decorations.switchview.SwitchView
-            android:id="@+id/toggle_notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

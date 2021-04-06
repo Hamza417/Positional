@@ -127,13 +127,11 @@
     <string name="skip_splash_screen">سپلیش اسکرین نہ دکھائیں</string>
     <string name="specified_location">مخصوص مقام استعمال کریں</string>
     <string name="keep_screen_on">اسکرین آون رکھیں</string>
-    <string name="push_notification">پش اطلاع</string>
     <string name="legal_notes">قانونی نوٹ</string>
     <string name="app_version">ایپ ورژن</string>
     <string name="development_status">ترقی کی حیثیت</string>
     <string name="change_logs">چینج لوگص</string>
     <string name="found_an_issue">ایک مسئلہ ملا؟</string>
-    <string name="join_on_telegram">ٹیلیگرام گروپ جوائن کریں</string>
     <string name="translate">ترجمہ کریں</string>
     <string name="buy_full">مکمل ورژن خریدیں</string>
     <!-- Settings Description -->
@@ -144,9 +142,8 @@
     <string name="desc_icon">لانچر میں موجود ایپ کا مین آئکن</string>
     <string name="desc_radius">ایپ کا گول کونے کا رداس</string>
     <string name="desc_skip_splash_Screen">جب ایپ لانچ ہوتی ہے تو سپلاش سکرین نہ دکھائیں اورمین اسکرین پر جائیں</string>
-    <string name="desc_specified_location">عرض البلد ، طول البلد اور ٹائم زون کی وضاحت کریں اور معلومات لانے کیلئے اس کا استعمال کریں۔ کوئی بھی معلومات جو صرف GPS استعمال کرتی ہے وہ متاثر نہیں ہوگی۔</string>
+    <string name="desc_specified_location">عرض البلد اور طول البلد کی وضاحت کریں اور معلومات لانے کیلئے اس کا استعمال کریں۔ کوئی بھی معلومات جو صرف GPS استعمال کرتی ہے وہ متاثر نہیں ہوگی۔</string>
     <string name="desc_screen_on">ایپ کے مرئی ہونے کے دوران آلے کو آف کرنے سے روکتا ہے</string>
-    <string name="desc_push">اپ ڈیٹس اور دیگر معلومات کے بارے میں عدم مداخلت کی اطلاعات موصول کریں</string>
     <string name="desc_legal">ایپ کی دستبرداری ، رازداری کی پالیسی اور استعمال کی شرائط پڑھیں</string>
     <string name="desc_status">آئندہ تعمیر کیلئے ایپ کی موجودہ ترقیاتی حیثیت حاصل کریں</string>
     <string name="desc_changes">اس ورژن میں تبدیلیوں کی فہرست۔</string>
@@ -265,4 +262,6 @@
     <string name="desc_fused_location_provider">گوگل کا فیوزڈ لوکیشن API جو مختلف مقام فراہم کرنے والے سے محل وقوع کے ڈیٹا کو مثلث بناتا ہے اور اس کا نتیجہ مقامات کی ایک سیریز میں اوسط سے نکالتا ہے۔ مختلف نتائج دے سکتے ہیں لیکن بیٹری کم استعمال کرتی ہے۔</string>
     <string name="desc_location_provider_note">نوٹ: کسی بھی API کا استعمال مختلف عوامل پر انحصار کرتے ہوئے مختلف نتائج دے سکتا ہے اور ان میں سے کوئی بھی ایک دوسرے کے لئے درستگی کا ثبوت نہیں ہے ، APIs کی جانچ کریں اور منتخب کردہ کو منتخب کریں جو آپ کے علاقے میں بہترین کام کرتا ہے۔</string>
     <string name="use_media_keys">میڈیا کیز کا استعمال کریں</string>
+    <string name="auto_center_map">آٹو سینٹر</string>
+    <string name="use_smaller_icon">چھوٹے شبیہیں استعمال کریں</string>
 </resources>

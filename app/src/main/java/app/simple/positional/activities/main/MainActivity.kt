@@ -11,13 +11,11 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.dialogs.app.PermissionDialogFragment
-import app.simple.positional.firebase.MessagingService
 import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.services.FusedLocationService
@@ -31,7 +29,6 @@ import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 import app.simple.positional.util.NullSafety.isNull
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
-import com.google.firebase.messaging.FirebaseMessaging
 import java.util.*
 
 class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide, android.content.SharedPreferences.OnSharedPreferenceChangeListener {
@@ -63,11 +60,6 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide, andr
 
         bottomBar = findViewById(R.id.bottom_bar)
         bottomBarWrapper = findViewById(R.id.bottom_bar_wrapper)
-
-        if (MainPreferences.isNotificationOn() && !BuildConfig.DEBUG) {
-            FirebaseMessaging.getInstance().subscribeToTopic("push_notification")
-            startService(Intent(applicationContext, MessagingService::class.java))
-        }
 
         if (savedInstanceState.isNull()) {
             openFragment(FragmentPreferences.getCurrentPage())

@@ -3,6 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="20dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:orientation="vertical">
 
     <TextView
@@ -110,9 +112,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/ripple"
         android:clickable="true"
-        android:focusable="true"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:focusable="true"
         android:orientation="horizontal"
         android:padding="15dp">
 
@@ -144,7 +146,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/skip_splash_screen_text" />
 
-        <app.simple.switchview.views.SwitchView
+        <app.simple.positional.decorations.switchview.SwitchView
             android:id="@+id/toggle_skip_splash_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

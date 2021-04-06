@@ -27,7 +27,6 @@ import app.simple.positional.util.LocaleHelper.localeList
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.firebase.messaging.FirebaseMessaging
 
 class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -50,7 +49,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     private lateinit var corner: LinearLayout
     private lateinit var skipSplashScreenContainer: ConstraintLayout
     private lateinit var customLocation: ConstraintLayout
-    private lateinit var pushNotification: ConstraintLayout
     private lateinit var appVersion: LinearLayout
     private lateinit var legalNotes: LinearLayout
     private lateinit var developmentStatus: LinearLayout
@@ -59,7 +57,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     private lateinit var translate: LinearLayout
     private lateinit var keepScreenOn: ConstraintLayout
 
-    private lateinit var toggleNotification: SwitchView
     private lateinit var toggleKeepScreenOn: SwitchView
     private lateinit var toggleCustomLocation: SwitchView
     private lateinit var toggleSkipSplashScreen: SwitchView
@@ -83,7 +80,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         corner = view.findViewById(R.id.settings_corner_radius)
         skipSplashScreenContainer = view.findViewById(R.id.setting_skip_splash_screen_container)
         customLocation = view.findViewById(R.id.setting_custom_location)
-        pushNotification = view.findViewById(R.id.setting_notification)
         appVersion = view.findViewById(R.id.current_app_version)
         legalNotes = view.findViewById(R.id.legal_notes)
         developmentStatus = view.findViewById(R.id.development_status)
@@ -93,7 +89,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         translate = view.findViewById(R.id.translate)
         keepScreenOn = view.findViewById(R.id.setting_keep_screen_on)
 
-        toggleNotification = view.findViewById(R.id.toggle_notifications)
         toggleKeepScreenOn = view.findViewById(R.id.toggle_screen_on)
         toggleCustomLocation = view.findViewById(R.id.toggle_custom_location)
         toggleSkipSplashScreen = view.findViewById(R.id.toggle_skip_splash_screen)
@@ -125,7 +120,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
 
         setCurrentUnit(MainPreferences.getUnit())
         setCurrentLocation()
-        toggleNotification.isChecked = MainPreferences.isNotificationOn()
         toggleKeepScreenOn.isChecked = MainPreferences.isScreenOn()
         toggleSkipSplashScreen.isChecked = MainPreferences.getSkipSplashScreen()
         isCoordinatesSet(MainPreferences.isCustomCoordinate())
@@ -199,20 +193,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
             } else {
                 requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             }
-        }
-
-        pushNotification.setOnClickListener {
-            toggleNotification.isChecked = !toggleNotification.isChecked
-        }
-
-        toggleNotification.setOnCheckedChangeListener { isChecked ->
-            if (isChecked) {
-                FirebaseMessaging.getInstance().subscribeToTopic("push_notification")
-            } else {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic("push_notification")
-            }
-
-            MainPreferences.setNotifications(isChecked)
         }
 
         appVersion.setOnClickListener {

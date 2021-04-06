@@ -139,7 +139,6 @@
     <string name="skip_splash_screen">Skip Splash Screen</string>
     <string name="specified_location">Use Specified Location</string>
     <string name="keep_screen_on">Keep Screen On</string>
-    <string name="push_notification">Push Notification</string>
     <string name="legal_notes">Legal Notes</string>
     <string name="app_version">App Version</string>
     <string name="development_status">Development Status</string>
@@ -158,7 +157,6 @@
     <string name="desc_skip_splash_Screen">Skip Splash Screen when app launches and go to main screen directly</string>
     <string name="desc_specified_location">Specify custom Latitude and Longitude and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
-    <string name="desc_push">Receive non intrusive notification about updates and other information</string>
     <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>
     <string name="desc_status">Get the app\'s current development status for the upcoming build</string>
     <string name="desc_changes">List of changes for this build</string>

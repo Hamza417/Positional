@@ -127,13 +127,11 @@
     <string name="skip_splash_screen">Пропускане на заглавен екран</string>
     <string name="specified_location">Използвай указано местоположение</string>
     <string name="keep_screen_on">Поддържане на екрана включен</string>
-    <string name="push_notification">Известия</string>
     <string name="legal_notes">Правни бележки</string>
     <string name="app_version">Версия на приложението</string>
     <string name="development_status">Статус на разработка</string>
     <string name="change_logs">Списък с промени</string>
     <string name="found_an_issue">Намерихте проблем?</string>
-    <string name="join_on_telegram">Присъединете се в Telegram групата ни</string>
     <string name="translate">Превод</string>
     <string name="buy_full">Купете пълната версия</string>
     <!-- Settings Description -->
@@ -144,9 +142,8 @@
     <string name="desc_icon">Главна икона на приложението</string>
     <string name="desc_radius">Радиус на заоблените ъгли на приложението</string>
     <string name="desc_skip_splash_Screen">Пропуснете началния екран, когато приложението стартира, и отидете директно на главния екран</string>
-    <string name="desc_specified_location">Посочете персонализирана ширина, дължина и часова зона и ги използвайте за извличане на информация. Всяка информация, която използва само GPS, ще остане незасегната</string>
+    <string name="desc_specified_location">Посочете персонализирана ширина и дължина и я използвайте за извличане на информация. Всяка информация, която използва GPS, ще остане незасегната</string>
     <string name="desc_screen_on">Предотвратяване заспиването на устройството, докато се използва приложението</string>
-    <string name="desc_push">Получавайте ненатрапчиви известия за актуализации и друга информация</string>
     <string name="desc_legal">Прочетете Отказ от отговорност, Политика за поверителност и Условия за използване на приложението</string>
     <string name="desc_status">Получете текущото състояние на разработката на приложението за предстоящата компилация</string>
     <string name="desc_changes">Списък на промените за тази компилация</string>
@@ -265,4 +262,6 @@
     <string name="desc_fused_location_provider">API на Google Fused Location, който триангулира данните за местоположението от различни доставчици на местоположение и осреднява резултата в поредица от местоположения. Може да даде различни резултати, но използва по-малко батерия.</string>
     <string name="desc_location_provider_note">Забележка: Използването на който и да е от API може да даде различни резултати в зависимост от различните фактори и нито един от тях не е доказателство за точност един за друг, тествайте API и запазете избрания, който работи най-добре във вашия регион.</string>
     <string name="use_media_keys">Използвай мултимедийни бутони</string>
+    <string name="auto_center_map">Центрирай картата</string>
+    <string name="use_smaller_icon">Използвайте по-малка икона</string>
 </resources>

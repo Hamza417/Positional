@@ -127,13 +127,11 @@
     <string name="skip_splash_screen">स्पलैश स्क्रीन न दिखाएँ</string>
     <string name="specified_location">निर्दिष्ट स्थान का उपयोग करें</string>
     <string name="keep_screen_on">स्क्रीन चालू रखें</string>
-    <string name="push_notification">संभर अधिसूचना</string>
     <string name="legal_notes">कानूनी नोट्स</string>
     <string name="app_version">ऐप का वर्श़न</string>
     <string name="development_status">विकास की स्थिति</string>
     <string name="change_logs">चेंज लॉग</string>
     <string name="found_an_issue">एक मुद्दा मिला?</string>
-    <string name="join_on_telegram">टेलीग्राम ग्रुप ज्वाइन करें</string>
     <string name="translate">अनुवाद करें</string>
     <string name="buy_full">फुल वर्जन खरीदें</string>
     <!-- Settings Description -->
@@ -144,9 +142,8 @@
     <string name="desc_icon">लॉन्चर में ऐप का मुख्य आइकन</string>
     <string name="desc_radius">एप का गोल कोना</string>
     <string name="desc_skip_splash_Screen">एप्लिकेशन लॉन्च होने पर स्प्लैश स्क्रीन न दिखाएं और सीधे मुख्य स्क्रीन पर जाएं</string>
-    <string name="desc_specified_location">कस्टम अक्षांश, देशांतर और टाइमज़ोन निर्दिष्ट करें और जानकारी प्राप्त करने के लिए इसका उपयोग करें। कोई भी जानकारी जो केवल GPS का उपयोग करती है अप्रभावित रहेगी</string>
+    <string name="desc_specified_location">कस्टम अक्षांश और देशांतर निर्दिष्ट करें और जानकारी प्राप्त करने के लिए इसका उपयोग करें। कोई भी जानकारी जो केवल GPS का उपयोग करती है अप्रभावित रहेगी।</string>
     <string name="desc_screen_on">ऐप दिखाई देने पर डिवाइस को सोने से रोकता है</string>
-    <string name="desc_push">अद्यतन और अन्य जानकारी के बारे में गैर दखल देने वाली अधिसूचना प्राप्त करें</string>
     <string name="desc_legal">ऐप की अस्वीकृति, गोपनीयता नीति और उपयोग की शर्तें पढ़ें</string>
     <string name="desc_status">आगामी निर्माण के लिए ऐप्लिकेशन के वर्तमान विकास की स्थिति प्राप्त करें|</string>
     <string name="desc_changes">पिछले निर्माण के बाद हुए परिवर्तनों की सूची</string>
@@ -265,4 +262,6 @@
     <string name="desc_fused_location_provider">गूगल की फ़्यूज़्ड लोकेशन एपीआई जो विभिन्न लोकेशन प्रोवाइडर से लोकेशन डेटा को ट्राईऍंगुलेट करती है और रिजल्ट को कई स्थानों पर एवरेज करती है। ये अलग-अलग परिणाम दे सकती है लेकिन कम बैटरी का उपयोग करती है।</string>
     <string name="desc_location_provider_note">नोट: किसी भी एपीआई का उपयोग विभिन्न कारकों के आधार पर अलग-अलग परिणाम दे सकती है और उनमें से कोई भी एक दूसरे के लिए सटीकता का प्रमाण नहीं है, एपीआई का परीक्षण करें और आपके क्षेत्र में सबसे अच्छा काम करने वाले चयनितों को रखें।</string>
     <string name="use_media_keys">मीडिया कुंजियों का उपयोग करें</string>
+    <string name="auto_center_map">ऑटो सेंटर</string>
+    <string name="use_smaller_icon">छोटे चिह्न का उपयोग करें</string>
 </resources>

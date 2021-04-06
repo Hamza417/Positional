@@ -18,25 +18,27 @@
         android:src="@drawable/ic_place_custom"
         tools:ignore="ContentDescription" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/adapter_locations_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="15dp"
         android:layout_weight="1"
+        android:ellipsize="end"
+        android:fontFamily="@font/medium"
+        android:textColor="@color/textPrimary"
+        android:textSize="7pt" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/adapter_locations_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:fontFamily="@font/medium"
-            android:maxLines="2"
-            android:textColor="@color/textPrimary"
-            android:textSize="7pt" />
-
-        <TextView
             android:id="@+id/adapter_locations_latitude"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="@font/regular"
@@ -46,7 +48,7 @@
 
         <TextView
             android:id="@+id/adapter_locations_longitude"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:fontFamily="@font/regular"
