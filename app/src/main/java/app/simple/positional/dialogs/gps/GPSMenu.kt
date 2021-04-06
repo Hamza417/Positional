@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.LinearLayout
 import app.simple.positional.R
-import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.preference.GPSPreferences
+import app.simple.switchview.views.SwitchView
 
 class GPSMenu : CustomBottomSheetDialogFragment() {
 

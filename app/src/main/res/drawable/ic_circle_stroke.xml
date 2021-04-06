@@ -5,7 +5,7 @@
             <gradient
                 android:angle="45"
                 android:endColor="@color/switch_on_end_color"
-                android:startColor="@color/switcher_on_start_color" />
+                android:startColor="@color/switch_on" />
             <stroke
                 android:width="4dp"
                 android:color="#00F0F0F0" />

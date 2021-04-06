@@ -23,12 +23,6 @@
     <color name="iconRegular">#9A9A9A</color>
     <color name="indicator">#F3F3F3</color>
 
-    <!-- Switch -->
-    <color name="switcher_on_start_color">#2196F3</color>
-    <color name="switch_on_end_color">@color/switcher_on_start_color</color>
-    <color name="switch_off">#EAEAEA</color>
-    <color name="switcher_icon_color">@android:color/white</color>
-
     <color name="animated_text_background">#402196F3</color>
     <color name="notification_icon_color">#D60044</color>
     <color name="valid_input">#10D609</color>

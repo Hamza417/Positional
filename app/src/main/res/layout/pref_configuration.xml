@@ -116,7 +116,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/specified_location_text" />
 
-        <app.simple.positional.decorations.switchview.SwitchView
+        <app.simple.switchview.views.SwitchView
             android:id="@+id/toggle_custom_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textView7" />
 
-        <app.simple.positional.decorations.switchview.SwitchView
+        <app.simple.switchview.views.SwitchView
             android:id="@+id/toggle_screen_on"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-        <app.simple.positional.decorations.switchview.SwitchView
+        <app.simple.switchview.views.SwitchView
             android:id="@+id/toggle_notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

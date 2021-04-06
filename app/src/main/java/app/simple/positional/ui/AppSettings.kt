@@ -19,11 +19,11 @@ import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.popup.MainListPopupMenu
 import app.simple.positional.decorations.popup.PopupMenuCallback
-import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.LocaleHelper.localeList
+import app.simple.switchview.views.SwitchView
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
