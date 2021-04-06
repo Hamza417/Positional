@@ -103,3 +103,5 @@ license, see the [LICENSE](./LICENSE) file in the project root for the full lice
 * on [Telegram](https://t.me/Hamza417)
 
   [1]: http://www.inf.ufrgs.br
+"# SwitchView" 
+"# SwitchView" 

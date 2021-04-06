@@ -23,12 +23,20 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private var switchCallbacks: SwitchCallbacks? = null
 
     var isCheckable = true
+
+    /**
+     *
+     */
     var isChecked: Boolean = false
         set(value) {
             if (value) {
                 animateChecked()
+                if (isCheckable) {
+                    switchCallbacks?.onCheckedChanged(true)
+                }
             } else {
                 animateUnchecked()
+                switchCallbacks?.onCheckedChanged(false)
             }
             field = value
         }
@@ -42,13 +50,7 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         ViewUtils.addShadow(track)
 
         view.setOnClickListener {
-            isChecked = if (isChecked) {
-                animateUnchecked()
-                false
-            } else {
-                animateChecked()
-                true
-            }
+            isChecked = !isChecked
         }
     }
 
@@ -85,7 +87,6 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 .start()
 
         track.animateColorChange(ContextCompat.getColor(context, R.color.switch_off))
-        switchCallbacks?.onCheckedChanged(false)
         animateElevation(0F)
     }
 
@@ -104,7 +105,6 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 .start()
 
         track.animateColorChange(ContextCompat.getColor(context, R.color.switch_on_end_color))
-        switchCallbacks?.onCheckedChanged(true)
         animateElevation(25F)
     }
 
