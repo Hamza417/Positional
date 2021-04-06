@@ -10,10 +10,10 @@ import android.widget.TextView
 import android.widget.Toast
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.dialogs.settings.TimeZones
 import app.simple.positional.preference.ClockPreferences
-import app.simple.switchview.views.SwitchView
 
 class ClockMenu : CustomBottomSheetDialogFragment() {
 

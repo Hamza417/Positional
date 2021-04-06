@@ -201,6 +201,11 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
             divider.isVisible = true
         }
 
+        if (GPSPreferences.isUsingVolumeKeys()) {
+            view.isFocusableInTouchMode = true
+            view.requestFocus()
+        }
+
         providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
 
         locationIconStatusUpdates()

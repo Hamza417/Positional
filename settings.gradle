@@ -1,3 +1,2 @@
-include ':SwitchView'
 include ':app'
 rootProject.name = "Positional"

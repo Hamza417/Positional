@@ -43,7 +43,7 @@ class TimeZoneAdapter(var timeZones: MutableList<String>, private val timeZonesC
             timeZonesCallback.itemSubstring(timeZones[position].substring(0, 2))
 
             holder.timeZone.setTextColor(if (timeZones[position] == currentSelectedTimezone) {
-                ContextCompat.getColor(holder.itemView.context, R.color.switch_on_end_color)
+                ContextCompat.getColor(holder.itemView.context, R.color.switch_on)
             } else {
                 ContextCompat.getColor(holder.itemView.context, R.color.textPrimary)
             })
@@ -92,7 +92,7 @@ class TimeZoneAdapter(var timeZones: MutableList<String>, private val timeZonesC
         val endPos = startPos + searchText.length
 
         if (startPos != -1) {
-            val colorKeyword = ColorStateList(arrayOf(intArrayOf()), intArrayOf(ContextCompat.getColor(context, R.color.switch_on_end_color)))
+            val colorKeyword = ColorStateList(arrayOf(intArrayOf()), intArrayOf(ContextCompat.getColor(context, R.color.switch_on)))
             val highlightSpan = TextAppearanceSpan(null, Typeface.NORMAL, -1, colorKeyword, null)
             sb.setSpan(highlightSpan, startPos, endPos, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         }

@@ -10,12 +10,12 @@ import android.widget.TextView
 import android.widget.Toast
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.preference.CompassPreference.isFlowerBloomOn
 import app.simple.positional.preference.CompassPreference.setDirectionCode
 import app.simple.positional.preference.CompassPreference.setFlowerBloom
-import app.simple.switchview.views.SwitchView
 
 class CompassMenu : CustomBottomSheetDialogFragment() {
 

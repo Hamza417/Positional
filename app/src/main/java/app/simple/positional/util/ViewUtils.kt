@@ -32,8 +32,8 @@ object ViewUtils {
      */
     fun addShadow(contentView: View) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            contentView.outlineAmbientShadowColor = ContextCompat.getColor(contentView.context, R.color.switch_on_end_color)
-            contentView.outlineSpotShadowColor = ContextCompat.getColor(contentView.context, R.color.switch_on_end_color)
+            contentView.outlineAmbientShadowColor = ContextCompat.getColor(contentView.context, R.color.switch_on)
+            contentView.outlineSpotShadowColor = ContextCompat.getColor(contentView.context, R.color.switch_on)
         }
     }
 

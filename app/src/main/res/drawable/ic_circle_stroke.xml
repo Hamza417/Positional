@@ -4,7 +4,7 @@
         <shape android:shape="oval">
             <gradient
                 android:angle="45"
-                android:endColor="@color/switch_on_end_color"
+                android:endColor="@color/graph_location_line_color_first"
                 android:startColor="@color/switch_on" />
             <stroke
                 android:width="4dp"
