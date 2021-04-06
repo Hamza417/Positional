@@ -23,6 +23,7 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private var switchCallbacks: SwitchCallbacks? = null
 
     var isCheckable = true
+
     var isChecked: Boolean = false
         set(value) {
             if (value) {
@@ -42,13 +43,7 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         ViewUtils.addShadow(track)
 
         view.setOnClickListener {
-            isChecked = if (isChecked) {
-                animateUnchecked()
-                false
-            } else {
-                animateChecked()
-                true
-            }
+            isChecked = !isChecked
         }
     }
 
