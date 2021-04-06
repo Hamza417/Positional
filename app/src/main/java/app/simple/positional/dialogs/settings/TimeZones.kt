@@ -16,23 +16,24 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.adapters.TimeZoneAdapter
 import app.simple.positional.callbacks.TimeZonesCallback
-import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.preference.ClockPreferences
-import app.simple.positional.util.flingTranslationMagnitude
-import app.simple.positional.util.forEachVisibleHolder
-import app.simple.positional.util.overscrollRotationMagnitude
-import app.simple.positional.util.overscrollTranslationMagnitude
+import app.simple.positional.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Instant
+import java.time.ZoneId
 import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
-class TimeZones : CustomBottomSheetDialogFragment(), TimeZonesCallback {
+class TimeZones : CustomDialogFragment(), TimeZonesCallback {
 
     lateinit var timeZoneAdapter: TimeZoneAdapter
-    private var timeZones: MutableList<String> = ZoneOffset.getAvailableZoneIds().toList() as MutableList<String>
+    private var timeZones: MutableList<Pair<String, String>> = mutableListOf()
 
     private var animateCount = 1
 
@@ -53,6 +54,12 @@ class TimeZones : CustomBottomSheetDialogFragment(), TimeZonesCallback {
         currentItemSubstring = view.findViewById(R.id.current_item_substring)
         nothingFound = view.findViewById(R.id.nothing_found)
 
+        val p0 = ZoneOffset.getAvailableZoneIds().toList()
+
+        for (i in p0.indices) {
+            timeZones.add(Pair(p0[i], getOffset(p0[i])))
+        }
+
         return view
     }
 
@@ -71,12 +78,13 @@ class TimeZones : CustomBottomSheetDialogFragment(), TimeZonesCallback {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 CoroutineScope(Dispatchers.Default).launch {
-                    var filtered: MutableList<String> = arrayListOf()
+                    var filtered: MutableList<Pair<String, String>> = arrayListOf()
 
                     if (count > 0) {
                         try {
                             for (str in timeZones) {
-                                if (str.toLowerCase(Locale.getDefault()).contains(s.toString().toLowerCase(Locale.getDefault()))) {
+                                if (str.first.toLowerCase(Locale.getDefault()).contains(s.toString().toLowerCase(Locale.getDefault())) ||
+                                        str.second.toLowerCase(Locale.getDefault()).contains(s.toString().toLowerCase(Locale.getDefault()))) {
                                     filtered.add(str)
                                 }
                             }
@@ -88,7 +96,7 @@ class TimeZones : CustomBottomSheetDialogFragment(), TimeZonesCallback {
                         filtered = timeZones
                     }
 
-                    filtered.sort()
+                    filtered.sortBy { it.first }
 
                     withContext(Dispatchers.Main) {
                         if (filtered.size == 0) {
@@ -188,6 +196,12 @@ class TimeZones : CustomBottomSheetDialogFragment(), TimeZonesCallback {
     override fun onPause() {
         super.onPause()
         nothingFound.clearAnimation()
+    }
+
+    private fun getOffset(timezone: String): String {
+        val zoneId = ZoneId.of(timezone)
+        val zonedDateTime: ZonedDateTime = Instant.now().atZone(zoneId)
+        return zonedDateTime.format(DateTimeFormatter.ofPattern("XXX").withLocale(LocaleHelper.getAppLocale())).replace("Z", "+00:00")
     }
 
     companion object {

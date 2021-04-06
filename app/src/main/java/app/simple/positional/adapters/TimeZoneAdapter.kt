@@ -22,14 +22,14 @@ import app.simple.positional.util.bouncyValue
 import app.simple.positional.util.stiffnessValue
 import java.util.*
 
-class TimeZoneAdapter(var timeZones: MutableList<String>, private val timeZonesCallback: TimeZonesCallback, var searchText: String)
+class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, private val timeZonesCallback: TimeZonesCallback, var searchText: String)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     lateinit var context: Context
     private var currentSelectedTimezone = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        timeZones.sort()
+        timeZones.sortBy { it.first }
         context = parent.context
         currentSelectedTimezone = ClockPreferences.getTimeZone()
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_timezone, parent, false))
@@ -38,11 +38,15 @@ class TimeZoneAdapter(var timeZones: MutableList<String>, private val timeZonesC
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is Holder) {
 
-            holder.timeZone.text = timeZones[position]
-            searchTimeZones(holder.timeZone, timeZones[position])
-            timeZonesCallback.itemSubstring(timeZones[position].substring(0, 2))
+            holder.timeZone.text = timeZones[position].first
+            holder.offset.text = timeZones[position].second
 
-            holder.timeZone.setTextColor(if (timeZones[position] == currentSelectedTimezone) {
+            searchTimeZones(holder.timeZone, timeZones[position].first)
+            searchTimeZones(holder.offset, timeZones[position].second)
+
+            timeZonesCallback.itemSubstring(timeZones[position].first.substring(0, 2))
+
+            holder.timeZone.setTextColor(if (timeZones[position].first == currentSelectedTimezone) {
                 ContextCompat.getColor(holder.itemView.context, R.color.switch_on)
             } else {
                 ContextCompat.getColor(holder.itemView.context, R.color.textPrimary)
@@ -50,7 +54,7 @@ class TimeZoneAdapter(var timeZones: MutableList<String>, private val timeZonesC
 
             holder.layout.setOnClickListener {
                 ClockPreferences.setTimezoneSelectedPosition(position)
-                timeZonesCallback.itemClicked(timeZones[position])
+                timeZonesCallback.itemClicked(timeZones[position].first)
             }
         }
     }
@@ -59,8 +63,9 @@ class TimeZoneAdapter(var timeZones: MutableList<String>, private val timeZonesC
         return timeZones.size
     }
 
-    class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val timeZone: TextView = itemView.findViewById(R.id.time_zone_adapter_text)
+        val offset: TextView = itemView.findViewById(R.id.time_zone_adapter_offset)
         val layout: LinearLayout = itemView.findViewById(R.id.time_zone_adapter_item_container)
 
         private var currentVelocity = 0f

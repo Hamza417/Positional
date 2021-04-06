@@ -161,7 +161,6 @@
     <string name="bloom_skins">Дизайн на цветенцата</string>
     <string name="show_code">Показване на кода</string>
     <string name="sensor_speed">Скорост на сензора</string>
-    <string name="sensor_noise_filter">Филтър за шум на сензора</string>
     <string name="sensor_speed_normal">Нормално</string>
     <string name="sensor_speed_fast">Бързо</string>
     <!-- GPS Menu -->
@@ -183,7 +182,6 @@
     <string name="specified_data_list_locations">Местоположения</string>
     <string name="specified_hint_latitude">Географска ширина (±90)</string>
     <string name="specified_hint_longitude">Географска дължина (±180)</string>
-    <string name="specified_hint_timezone">Часова зона (Континент / Регион)</string>
     <!-- Info -->
     <string name="compass_calibration_notice">Точността на сензора на компаса на вашето устройство е ниска, движете устройство във фигура осем за калибриране на сензорите.</string>
     <string name="specified_location_notice">Информацията, показана по-долу, се актуализира за посочените координати на местоположението.</string>
@@ -200,7 +198,6 @@
     <string name="button_set">Задай</string>
     <string name="button_close">Затвори</string>
     <string name="button_grant">Разреши</string>
-    <string name="button_ok">ОК</string>
     <string name="button_copy">Копирай</string>
     <string name="button_reset">Изчисти</string>
     <!-- Button Descriptions -->
@@ -211,7 +208,6 @@
     <string name="delete_all">Изтрий всичко</string>
     <string name="open_saved_locations">Отвори запазени локации</string>
     <string name="open_specified_location_documentation">Отворете документацията за определено местоположение</string>
-    <string name="open_timezones">Отвори часовите зони</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Отказване от права</string>
     <string name="privacy_policy">Политика за Поверителност</string>

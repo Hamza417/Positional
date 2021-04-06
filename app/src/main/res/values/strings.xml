@@ -176,7 +176,6 @@
     <string name="bloom_skins">Bloom Skins</string>
     <string name="show_code">Show Code</string>
     <string name="sensor_speed">Sensor Speed</string>
-    <string name="sensor_noise_filter">Sensor Noise Filter</string>
     <string name="sensor_speed_normal">Normal</string>
     <string name="sensor_speed_fast">Fast</string>
 
@@ -201,7 +200,6 @@
     <string name="specified_data_list_locations">Locations</string>
     <string name="specified_hint_latitude">Latitude (±90)</string>
     <string name="specified_hint_longitude">Longitude (±180)</string>
-    <string name="specified_hint_timezone">Timezone (Continent/Region)</string>
 
     <!-- Info -->
     <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your device in figure eight direction to calibrate the sensors.</string>
@@ -220,7 +218,6 @@
     <string name="button_set">Set</string>
     <string name="button_close">Close</string>
     <string name="button_grant">Grant</string>
-    <string name="button_ok">OK</string>
     <string name="button_copy">Copy</string>
     <string name="button_reset">Reset</string>
 
@@ -232,7 +229,6 @@
     <string name="delete_all">Delete all</string>
     <string name="open_saved_locations">Open saved locations</string>
     <string name="open_specified_location_documentation">Open specified location documentation</string>
-    <string name="open_timezones">Open time zones</string>
 
     <!-- Legal Menu -->
     <string name="disclaimer">Disclaimer</string>

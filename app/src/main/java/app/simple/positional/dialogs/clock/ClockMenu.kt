@@ -12,7 +12,6 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.dialogs.settings.TimeZones
 import app.simple.positional.preference.ClockPreferences
 
 class ClockMenu : CustomBottomSheetDialogFragment() {
@@ -57,15 +56,6 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
 
         view.findViewById<TextView>(R.id.clock_motion_type_text).setOnClickListener {
             ClockMotionType.newInstance().show(parentFragmentManager, "null")
-        }
-
-        view.findViewById<TextView>(R.id.clock_timezone).setOnClickListener {
-            if (BuildConfig.FLAVOR == "lite") {
-                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
-            } else {
-                TimeZones.newInstance()
-                        .show(childFragmentManager, "time_zone")
-            }
         }
     }
 

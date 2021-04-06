@@ -66,8 +66,6 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
 
-        this.onResume()
-
         /**
          * Workaround for flashing of view when map is
          * Initialized

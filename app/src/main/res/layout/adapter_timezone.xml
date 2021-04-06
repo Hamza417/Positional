@@ -19,13 +19,28 @@
         android:src="@drawable/ic_circle_stroke"
         tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/time_zone_adapter_text"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/textSecondary"
-        android:fontFamily="@font/regular"
-        android:layout_gravity="center_vertical"
-        android:textSize="7pt" />
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/time_zone_adapter_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/textSecondary"
+            android:textSize="7pt" />
+
+        <TextView
+            android:id="@+id/time_zone_adapter_offset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/textTertiary"
+            android:textSize="5pt" />
+
+    </LinearLayout>
 </LinearLayout>

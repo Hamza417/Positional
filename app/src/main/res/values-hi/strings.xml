@@ -161,7 +161,6 @@
     <string name="bloom_skins">ब्लूम की थीम</string>
     <string name="show_code">कोड दिखाएं</string>
     <string name="sensor_speed">सेंसर की गति</string>
-    <string name="sensor_noise_filter">सेंसर नॉइज़ फ़िल्टर</string>
     <string name="sensor_speed_normal">समान्य</string>
     <string name="sensor_speed_fast">तेज</string>
     <!-- GPS Menu -->
@@ -183,7 +182,6 @@
     <string name="specified_data_list_locations">स्थान</string>
     <string name="specified_hint_latitude">अक्षांश (±90)</string>
     <string name="specified_hint_longitude">देशान्तर (±180)</string>
-    <string name="specified_hint_timezone">समयक्षेत्र (महाद्वीप / क्षेत्र)</string>
     <!-- Info -->
     <string name="compass_calibration_notice">आपकी डिवाइस कम्पास सेंसर की सटीकता कम है, इसको कैलिब्रेट करने के लिए अपनी डिवाइस को आठ नंबर के तरीके से घुमाएं |</string>
     <string name="specified_location_notice">नीचे दी गई जानकारी निर्दिष्ट स्थान निर्देशांक के लिए अपडेट की जा रही है|</string>
@@ -200,7 +198,6 @@
     <string name="button_set">सेट करें</string>
     <string name="button_close">बंद करें</string>
     <string name="button_grant">अनुदान</string>
-    <string name="button_ok">ठीक है</string>
     <string name="button_copy">कॉपी करें</string>
     <string name="button_reset">रीसेट करें</string>
     <!-- Button Descriptions -->
@@ -211,7 +208,6 @@
     <string name="delete_all">सब मिटाएं</string>
     <string name="open_saved_locations">सहेजे गए स्थान खोलें</string>
     <string name="open_specified_location_documentation">निर्दिष्ट स्थान प्रलेखन खोलें</string>
-    <string name="open_timezones">समय क्षेत्र खोलें</string>
     <!-- Legal Menu -->
     <string name="disclaimer">अस्वीकरण</string>
     <string name="privacy_policy">गोपनीयता नीति</string>

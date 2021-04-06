@@ -1,90 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.corners.DynamicCornerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/options_container_horizontal_padding"
-    android:clipChildren="true"
-    android:background="@android:color/transparent"
-    android:orientation="vertical">
+    android:layout_height="@dimen/dialog_height"
+    android:backgroundTint="@color/toolbarBackground">
 
-    <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
+    <ImageView
+        android:id="@+id/nothing_found"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:alpha="0"
+        android:src="@drawable/ic_sentiment_very_dissatisfied"
+        app:tint="@color/indicator"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dialog_height"
-        android:backgroundTint="@color/toolbarBackground"
-        android:layout_margin="@dimen/options_container_horizontal_padding">
-
-        <ImageView
-            android:id="@+id/nothing_found"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:alpha="0"
-            android:src="@drawable/ic_sentiment_very_dissatisfied"
-            app:tint="@color/indicator"
-            tools:ignore="ContentDescription" />
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:orientation="vertical"
-            tools:ignore="UselessParent">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:elevation="3dp"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:elevation="3dp"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <EditText
-                    android:id="@+id/search_timezone"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_pill"
-                    android:hint="@string/search_timezone"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:maxLength="15"
-                    android:paddingHorizontal="15dp"
-                    android:textColor="@color/textSecondary"
-                    android:textColorHint="@color/dividerColor" />
-
-                <TextView
-                    android:id="@+id/current_item_substring"
-                    android:layout_width="40dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:fontFamily="@font/light"
-                    android:gravity="center"
-                    android:textAlignment="center"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="8pt" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/dividerColor" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/timezones_rv"
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/search_timezone"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:fadeScrollbars="true"
-                android:layoutAnimation="@anim/list_animation_controller"
-                android:overScrollMode="always"
-                android:paddingTop="10dp"
-                android:paddingBottom="@dimen/all_corner_radius"
-                android:scrollbarDefaultDelayBeforeFade="1500"
-                android:scrollbars="vertical" />
-        </LinearLayout>
-    </app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_pill"
+                android:hint="@string/search_timezone"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLength="15"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/textSecondary"
+                android:textColorHint="@color/dividerColor" />
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/current_item_substring"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/light"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/textPrimary"
+                android:textSize="8pt" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/dividerColor" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/timezones_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fadeScrollbars="true"
+            android:layoutAnimation="@anim/list_animation_controller"
+            android:overScrollMode="always"
+            android:paddingTop="10dp"
+            android:paddingBottom="@dimen/all_corner_radius"
+            android:scrollbarDefaultDelayBeforeFade="1500"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+</app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
+

@@ -13,9 +13,7 @@ object TimeConverter {
     }
 
     fun getMinutesInDegrees(zonedDateTime: ZonedDateTime): Float {
-        val value = zonedDateTime.second / 60f
-        println(value)
-        return (zonedDateTime.minute + value) * 6f
+        return (zonedDateTime.minute + zonedDateTime.second / 60f) * 6f
     }
 
     fun getHoursInDegrees(zonedDateTime: ZonedDateTime): Float {

@@ -91,22 +91,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/clock_timezone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/ripple_btn"
-            android:drawablePadding="@dimen/options_text_margin_start"
-            android:fontFamily="@font/regular"
-            android:gravity="center_vertical"
-            android:padding="@dimen/options_sub_item_padding"
-            android:text="@string/specified_hint_timezone"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/options_item_text_size"
-            app:drawableStartCompat="@drawable/ic_public_black"
-            app:drawableTint="@color/iconRegular" />
-
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
 </LinearLayout>

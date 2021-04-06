@@ -153,6 +153,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         handler.postDelayed({
             mapView = view.findViewById(R.id.map)
             mapView?.onCreate(savedInstanceState)
+            mapView?.resume()
 
             mapView?.setOnMapsCallbackListener(object : MapsCallbacks {
                 override fun onMapClicked(view: MapView?) {

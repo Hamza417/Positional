@@ -127,13 +127,11 @@
     <string name="skip_splash_screen">Skip Splash Screen</string>
     <string name="specified_location">Usar código de ubicación específico</string>
     <string name="keep_screen_on">Mantener pantalla activa</string>
-    <string name="push_notification">Notificación automatizada</string>
     <string name="legal_notes">Notas legales</string>
     <string name="app_version">Versión de aplicación</string>
     <string name="development_status">Estado del desarrollo</string>
     <string name="change_logs">Change Logs</string>
     <string name="found_an_issue">¿Encontró un problema?</string>
-    <string name="join_on_telegram">Join Telegram group</string>
     <string name="translate">Traducido</string>
     <string name="buy_full">Comprar versión completa</string>
     <!-- Settings Description -->
@@ -146,7 +144,6 @@
     <string name="desc_skip_splash_Screen">Skip Splash Screen when app launches and go to main screen directly</string>
     <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
     <string name="desc_screen_on">Evita que el dispositivo duerma mientras la aplicación sea visible</string>
-    <string name="desc_push">Recibir notificación no intrusiva sobre actualizaciones y otra información</string>
     <string name="desc_legal">Leer el aviso de responsabilidad de la aplicación, la política de privacidad y los términos de uso</string>
     <string name="desc_status">Get the app\'s current development status for the upcoming build</string>
     <string name="desc_changes">List of changes for this build</string>
@@ -164,7 +161,6 @@
     <string name="bloom_skins">Aspectos de Bloom</string>
     <string name="show_code">Ver código</string>
     <string name="sensor_speed">Velocidad sensor</string>
-    <string name="sensor_noise_filter">Sensor Noise Filter</string>
     <string name="sensor_speed_normal">Media</string>
     <string name="sensor_speed_fast">Rápido</string>
     <!-- GPS Menu -->
@@ -186,7 +182,6 @@
     <string name="specified_data_list_locations">Localizaciones</string>
     <string name="specified_hint_latitude">Latitud, (±90)</string>
     <string name="specified_hint_longitude">Largitud (±180)</string>
-    <string name="specified_hint_timezone">Zona horaria (Continuar / Región)</string>
     <!-- Info -->
     <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your device in figure eight direction to calibrate the sensors.</string>
     <string name="specified_location_notice">La información mostrada a continuación está siendo actualizada para las coordenadas de ubicación especificadas.</string>
@@ -203,7 +198,6 @@
     <string name="button_set">Establecer</string>
     <string name="button_close">Cerrar</string>
     <string name="button_grant">Permitir</string>
-    <string name="button_ok">Aceptar</string>
     <string name="button_copy">Copiar</string>
     <string name="button_reset">Reiniciar</string>
     <!-- Button Descriptions -->
@@ -214,7 +208,6 @@
     <string name="delete_all">Borrar todo</string>
     <string name="open_saved_locations">Abrir ubicaciones guardadas</string>
     <string name="open_specified_location_documentation">Abrir la documentación de ubicación especificada</string>
-    <string name="open_timezones">Abrir zonas horarias</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Aviso legal</string>
     <string name="privacy_policy">Política de privacidad</string>

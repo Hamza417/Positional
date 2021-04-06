@@ -9,9 +9,7 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -25,6 +23,7 @@ import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
 import app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.dialogs.clock.ClockMenu
+import app.simple.positional.dialogs.settings.TimeZones
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
@@ -77,6 +76,7 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
     private lateinit var menu: ImageButton
     private lateinit var copyButton: ImageButton
+    private lateinit var timezoneButton: ImageButton
     private lateinit var divider: View
     private lateinit var clockMainLayout: CustomCoordinatorLayout
     private lateinit var scrollView: NestedScrollView
@@ -123,6 +123,7 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
         menu = view.findViewById(R.id.clock_menu)
         copyButton = view.findViewById(R.id.clock_copy)
+        timezoneButton = view.findViewById(R.id.clock_timezone)
         divider = view.findViewById(R.id.clock_divider)
         clockMainLayout = view.findViewById(R.id.clock_main_layout)
 
@@ -260,6 +261,15 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
             if (clipboard.hasPrimaryClip()) {
                 clockInfoText.setTextAnimation(getString(R.string.info_copied), 300)
                 handler.postDelayed(textAnimationRunnable, 3000)
+            }
+        }
+
+        timezoneButton.setOnClickListener {
+            if (BuildConfig.FLAVOR == "lite") {
+                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
+            } else {
+                TimeZones.newInstance()
+                        .show(childFragmentManager, "time_zone")
             }
         }
     }
@@ -465,7 +475,7 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
                     digitalTime = getTime(zonedDateTime)
 
-                    utcTimeData = fromHtml("<b>${getString(R.string.utc_local_time_offset)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("XXX").withLocale(patternLocale))}<br>" +
+                    utcTimeData = fromHtml("<b>${getString(R.string.utc_local_time_offset)}</b> ${zonedDateTime.format(DateTimeFormatter.ofPattern("XXX").withLocale(patternLocale)).replace("Z", "+00:00")}<br>" +
                             "<b>${getString(R.string.utc_current_time)}</b> ${getTimeWithSeconds(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())))}<br>" +
                             "<b>${getString(R.string.utc_current_date)}</b> ${ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString())).format(DateTimeFormatter.ofPattern("dd MMMM, yyyy").withLocale(patternLocale))}")
                 } catch (ignored: ParseException) {
