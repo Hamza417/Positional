@@ -20,6 +20,9 @@
 
 [![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
 [![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
+
+<br/>
+
 [![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Download%20Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build84/app-lite-release.apk)
 
 [![Intro](https://img.shields.io/badge/App%20Intro-YouTube-E74C3C?style=flat&logo=youtube)](https://youtu.be/QU-ZLQShu_A)
@@ -104,5 +107,3 @@ license, see the [LICENSE](./LICENSE) file in the project root for the full lice
 * on [Telegram](https://t.me/Hamza417)
 
   [1]: http://www.inf.ufrgs.br
-"# SwitchView" 
-"# SwitchView" 
