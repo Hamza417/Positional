@@ -3,13 +3,10 @@ package app.simple.positional.activities.main
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.PixelFormat
 import android.os.Bundle
-import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
@@ -23,7 +20,6 @@ import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.*
-import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 import app.simple.positional.util.NullSafety.isNull
@@ -31,7 +27,8 @@ import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
 import java.util.*
 
-class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide, android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+class MainActivity
+    : BaseActivity(), PermissionCallbacks, BottomSheetSlide, android.content.SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val defaultPermissionRequestCode = 123
     private var reviewInfo: ReviewInfo? = null
@@ -42,21 +39,6 @@ class MainActivity : BaseActivity(), PermissionCallbacks, BottomSheetSlide, andr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        window.setFormat(PixelFormat.RGBA_8888)
-
-        try {
-            SharedPreferences.getSharedPreferences()
-        } catch (e: UninitializedPropertyAccessException) {
-            SharedPreferences.init(applicationContext)
-        } catch (e: NullPointerException) {
-            SharedPreferences.init(applicationContext)
-        }
-
-        if (MainPreferences.isScreenOn()) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        }
-
-        LocaleHelper.setAppLocale(ConfigurationCompat.getLocales(resources.configuration)[0])
 
         bottomBar = findViewById(R.id.bottom_bar)
         bottomBarWrapper = findViewById(R.id.bottom_bar_wrapper)

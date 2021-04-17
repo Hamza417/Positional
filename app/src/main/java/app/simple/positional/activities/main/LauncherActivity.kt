@@ -12,7 +12,6 @@ import app.simple.positional.preference.FragmentPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getLicenceStatus
 import app.simple.positional.preference.MainPreferences.isDayNightOn
-import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.ui.License
 import app.simple.positional.ui.SplashScreen
 import app.simple.positional.util.ThemeSetter
@@ -20,8 +19,6 @@ import app.simple.positional.util.ThemeSetter
 class LauncherActivity : BaseActivity(), LicenceStatusCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        SharedPreferences.init(context = applicationContext)
 
         if (isDayNightOn()) {
             ThemeSetter.setAppTheme(4)
