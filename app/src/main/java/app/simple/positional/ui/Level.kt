@@ -27,13 +27,6 @@ import app.simple.positional.util.HtmlHelper.fromHtml
 
 class Level : Fragment(), SensorEventListener {
 
-    fun newInstance(): Level {
-        val args = Bundle()
-        val fragment = Level()
-        fragment.arguments = args
-        return fragment
-    }
-
     private lateinit var levelIndicator: ImageView
     private lateinit var levelDot: ImageView
     private lateinit var boundingBox: FrameLayout
@@ -194,5 +187,14 @@ class Level : Fragment(), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         /* no-op */
+    }
+
+    companion object {
+        fun newInstance(): Level {
+            val args = Bundle()
+            val fragment = Level()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

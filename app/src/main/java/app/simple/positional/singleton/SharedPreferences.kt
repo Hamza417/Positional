@@ -2,6 +2,7 @@ package app.simple.positional.singleton
 
 import android.content.Context
 import android.content.SharedPreferences
+import app.simple.positional.util.NullSafety.isNull
 
 object SharedPreferences {
 
@@ -9,7 +10,9 @@ object SharedPreferences {
     private var sharedPreferences: SharedPreferences? = null
 
     fun init(context: Context) {
-        sharedPreferences = context.getSharedPreferences(preferences, Context.MODE_PRIVATE)
+        if (sharedPreferences.isNull()) {
+            sharedPreferences = context.getSharedPreferences(preferences, Context.MODE_PRIVATE)
+        }
     }
 
     /**

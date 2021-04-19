@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <app.simple.positional.decorations.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clock_main_layout"
     android:layout_width="match_parent"
@@ -8,49 +7,7 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
-    <app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
-        android:id="@+id/clock_appbar"
-        style="@style/Widget.MaterialComponents.Toolbar.Surface"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/top_bar_height"
-        android:backgroundTint="@color/toolbarBackground"
-        android:elevation="@dimen/top_bar_elevation"
-        app:contentInsetEnd="10dp"
-        app:contentInsetStart="10dp"
-        app:roundBottomCorners="true">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:fontFamily="@font/heading"
-            android:textStyle="bold"
-            android:text="@string/clock"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/top_bar_text_size" />
-
-        <ImageButton
-            android:id="@+id/clock_menu"
-            android:layout_width="@dimen/top_bar_button_size"
-            android:layout_height="@dimen/top_bar_button_size"
-            android:layout_gravity="center_vertical|end"
-            android:background="@drawable/ripple_btn"
-            android:contentDescription="@string/clock_options"
-            android:src="@drawable/ic_menu"
-            android:tint="@color/iconColor" />
-
-        <ImageButton
-            android:id="@+id/clock_timezone"
-            android:layout_width="@dimen/top_bar_button_size"
-            android:layout_height="@dimen/top_bar_button_size"
-            android:layout_gravity="center_vertical|end"
-            android:background="@drawable/ripple_btn"
-            android:contentDescription="@string/clock_options"
-            android:src="@drawable/ic_globe"
-            android:layout_marginEnd="20dp"
-            android:tint="@color/iconColor" />
-
-    </app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar>
+    <include layout="@layout/toolbar_clock" />
 
     <LinearLayout
         android:layout_width="match_parent"

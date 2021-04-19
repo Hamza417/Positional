@@ -164,11 +164,11 @@ class MainActivity
         when (position) {
             0 -> {
                 return supportFragmentManager.findFragmentByTag("clock") as Clock?
-                        ?: Clock().newInstance()
+                        ?: Clock.newInstance()
             }
             1 -> {
                 return supportFragmentManager.findFragmentByTag("compass") as Compass?
-                        ?: Compass().newInstance()
+                        ?: Compass.newInstance()
             }
             2 -> {
                 return supportFragmentManager.findFragmentByTag("gps") as GPS?
@@ -176,11 +176,11 @@ class MainActivity
             }
             3 -> {
                 return supportFragmentManager.findFragmentByTag("level") as Level?
-                        ?: Level().newInstance()
+                        ?: Level.newInstance()
             }
             4 -> {
                 return supportFragmentManager.findFragmentByTag("settings") as AppSettings?
-                        ?: AppSettings().newInstance()
+                        ?: AppSettings.newInstance()
             }
         }
 

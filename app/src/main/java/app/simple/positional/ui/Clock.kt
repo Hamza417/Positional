@@ -55,13 +55,6 @@ import java.util.*
 
 class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    fun newInstance(): Clock {
-        val args = Bundle()
-        val fragment = Clock()
-        fragment.arguments = args
-        return fragment
-    }
-
     private lateinit var toolbar: DynamicCornerMaterialToolbar
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
@@ -265,12 +258,8 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
         }
 
         timezoneButton.setOnClickListener {
-            if (BuildConfig.FLAVOR == "lite") {
-                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
-            } else {
-                TimeZones.newInstance()
-                        .show(childFragmentManager, "time_zone")
-            }
+            TimeZones.newInstance()
+                    .show(childFragmentManager, "time_zone")
         }
     }
 
@@ -532,6 +521,15 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
             ClockPreferences.timezone -> {
                 timezone = ClockPreferences.getTimeZone()
             }
+        }
+    }
+
+    companion object {
+        fun newInstance(): Clock {
+            val args = Bundle()
+            val fragment = Clock()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

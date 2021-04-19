@@ -3,7 +3,6 @@ package app.simple.positional.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -13,7 +12,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
@@ -29,13 +27,6 @@ import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 
 class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPreferences.OnSharedPreferenceChangeListener {
-
-    fun newInstance(): AppSettings {
-        val args = Bundle()
-        val fragment = AppSettings()
-        fragment.arguments = args
-        return fragment
-    }
 
     private var xOff = 0F
     private var yOff = 0F
@@ -106,12 +97,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (BuildConfig.FLAVOR == "lite") {
-            buyFull.visibility = View.VISIBLE
-            specifiedLocationText.setTextColor(Color.GRAY)
-            toggleCustomLocation.isCheckable = false
-        }
-
         if (MainPreferences.isDayNightOn()) {
             setCurrentThemeValue(4)
         } else {
@@ -155,29 +140,21 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         }
 
         customLocation.setOnClickListener {
-            if (BuildConfig.FLAVOR == "full") {
-                toggleCustomLocation.isChecked = true
-                val coordinates = Coordinates().newInstance()
-                coordinates.coordinatesCallback = this
-                coordinates.show(childFragmentManager, "coordinates")
-            } else {
-                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
-            }
+            toggleCustomLocation.isChecked = true
+            val coordinates = Coordinates().newInstance()
+            coordinates.coordinatesCallback = this
+            coordinates.show(childFragmentManager, "coordinates")
         }
 
         toggleCustomLocation.setOnCheckedChangeListener { isChecked ->
-            if (BuildConfig.FLAVOR == "full") {
-                if (toggleCustomLocation.isPressed) {
-                    if (isChecked) {
-                        val coordinates = Coordinates().newInstance()
-                        coordinates.coordinatesCallback = this
-                        coordinates.show(childFragmentManager, "coordinates")
-                    } else {
-                        MainPreferences.setCustomCoordinates(isChecked)
-                    }
+            if (toggleCustomLocation.isPressed) {
+                if (isChecked) {
+                    val coordinates = Coordinates().newInstance()
+                    coordinates.coordinatesCallback = this
+                    coordinates.show(childFragmentManager, "coordinates")
+                } else {
+                    MainPreferences.setCustomCoordinates(isChecked)
                 }
-            } else {
-                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -326,5 +303,14 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     override fun onPause() {
         super.onPause()
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    companion object {
+        fun newInstance(): AppSettings {
+            val args = Bundle()
+            val fragment = AppSettings()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

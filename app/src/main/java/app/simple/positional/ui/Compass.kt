@@ -56,13 +56,6 @@ import kotlin.math.abs
 
 class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    fun newInstance(): Compass {
-        val args = Bundle()
-        val fragment = Compass()
-        fragment.arguments = args
-        return fragment
-    }
-
     private var handler = Handler(Looper.getMainLooper())
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var bottomSheetSlide: BottomSheetSlide
@@ -75,6 +68,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
+    private var hasRotationMatrixSensor = false
     private var showDirectionCode = true
     private var isUserRotatingDial = false
 
@@ -101,6 +95,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
     private var flowerBloom = 0
     private var lastDialAngle = 0F
     private var startAngle = 0F
+    private var sensorType = "combined"
 
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
@@ -164,7 +159,8 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         try {
-            if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD).isNull() && sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER).isNull()) {
+            if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD).isNull()
+                    && sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER).isNull()) {
                 haveAccelerometerSensor = false
                 haveMagnetometerSensor = false
 
@@ -307,12 +303,14 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
 
     override fun onResume() {
         super.onResume()
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
         register()
     }
 
     override fun onPause() {
         super.onPause()
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         handler.removeCallbacks(compassDialAnimationRunnable)
         objectAnimator?.removeAllListeners()
@@ -324,8 +322,6 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
     }
 
     private fun register() {
-        if (context == null) return
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
             sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
@@ -333,8 +329,6 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
     }
 
     private fun unregister() {
-        if (context == null) return
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             sensorManager.unregisterListener(this, sensorAccelerometer)
             sensorManager.unregisterListener(this, sensorMagneticField)
@@ -537,6 +531,25 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
             CompassPreference.flowerBloom -> {
                 setFlower(CompassPreference.isFlowerBloomOn())
             }
+            CompassPreference.sensorMode -> {
+                when (CompassPreference.getSensorType()) {
+                    "combined" -> {
+
+                    }
+                    "gyro" -> {
+
+                    }
+                }
+            }
+        }
+    }
+
+    companion object {
+        fun newInstance(): Compass {
+            val args = Bundle()
+            val fragment = Compass()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

@@ -1,14 +1,11 @@
 package app.simple.positional.dialogs.compass
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
@@ -45,40 +42,18 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         toggleCode.isChecked = CompassPreference.getDirectionCode()
-
-        if (BuildConfig.FLAVOR != "lite") {
-            toggleFlower.isChecked = isFlowerBloomOn()
-        } else {
-            bloomText.setTextColor(Color.GRAY)
-            blooms.setTextColor(Color.GRAY)
-            toggleFlower.isChecked = false
-            toggleFlower.isCheckable = false
-        }
+        toggleFlower.isChecked = isFlowerBloomOn()
 
         toggleFlower.setOnCheckedChangeListener { isChecked ->
-            if (BuildConfig.FLAVOR != "lite") {
-                setFlowerBloom(isChecked)
-            } else {
-                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
-            }
+            setFlowerBloom(isChecked)
         }
 
         blooms.setOnClickListener {
-            if (BuildConfig.FLAVOR != "lite") {
-                CompassBloom().show(parentFragmentManager, "null")
-            } else {
-                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
-                toggleFlower.isChecked = false
-            }
+            CompassBloom().show(parentFragmentManager, "null")
         }
 
         bloomSwitchContainer.setOnClickListener {
-            if (BuildConfig.FLAVOR != "lite") {
-                toggleFlower.isChecked = !toggleFlower.isChecked
-            } else {
-                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
-                toggleFlower.isChecked = false
-            }
+            toggleFlower.isChecked = !toggleFlower.isChecked
         }
 
         codeSwitchContainer.setOnClickListener {

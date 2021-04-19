@@ -13,13 +13,16 @@ import app.simple.positional.util.LocaleHelper
 
 open class BaseActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun attachBaseContext(newBaseContext: Context) {
         /**
          * Initialize [SharedPreferences] singleton here
          */
-        SharedPreferences.init(applicationContext)
+        SharedPreferences.init(newBaseContext)
+        super.attachBaseContext(ContextUtils.updateLocale(newBaseContext, MainPreferences.getAppLanguage()!!))
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
         /**
          * Sets the graphics to 8bit by default
@@ -38,9 +41,5 @@ open class BaseActivity : AppCompatActivity() {
          * Keeps the instance of current locale of the app
          */
         LocaleHelper.setAppLocale(ConfigurationCompat.getLocales(resources.configuration)[0])
-    }
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(ContextUtils.updateLocale(newBase, MainPreferences.getAppLanguage()!!))
     }
 }

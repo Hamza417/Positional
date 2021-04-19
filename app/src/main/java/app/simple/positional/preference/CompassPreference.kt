@@ -9,6 +9,7 @@ object CompassPreference {
     const val flowerBloom = "flower"
     const val flowerBloomTheme = "flower_theme"
     const val compassSpeed = "compass_speed"
+    const val sensorMode = "sensor_for_compass"
     private const val noSensorAlertCompass = "no_sensor_alert_compass_dialog_show"
 
     // Parallax
@@ -53,5 +54,13 @@ object CompassPreference {
 
     fun setNoSensorAlert(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(noSensorAlertCompass, value).apply()
+    }
+
+    fun setSensorType(value: String) {
+        getSharedPreferences().edit().putString(sensorMode, value).apply()
+    }
+
+    fun getSensorType(): String {
+        return getSharedPreferences().getString(sensorMode, "combined")!!
     }
 }
