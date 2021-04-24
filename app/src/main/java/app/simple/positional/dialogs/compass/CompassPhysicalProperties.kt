@@ -35,7 +35,7 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
 
         dampingCoefficient.max = 50
         rotationalInertia.max = 50
-        magneticCoefficient.max = 5000
+        magneticCoefficient.max = 15000
 
         dampingCoefficient.progress = CompassPreference.getDampingCoefficient().toInt()
         rotationalInertia.progress = CompassPreference.getRotationalInertia().toInt()
@@ -92,7 +92,7 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
         reset.setOnClickListener {
             updateSeekbar(dampingCoefficient, 10)
             updateSeekbar(rotationalInertia, 0)
-            updateSeekbar(magneticCoefficient, 1000)
+            updateSeekbar(magneticCoefficient, 3000)
         }
 
         help.setOnClickListener {

@@ -207,5 +207,19 @@
                 android:resource="@xml/suntime_widget_info" />
         </receiver>
 
+        <receiver
+            android:name=".widgets.SunTimeWidgetArt"
+            android:icon="@drawable/ic_sunrise"
+            android:label="@string/sun_time">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/suntime_widget_info_art" />
+        </receiver>
+
     </application>
 </manifest>

@@ -62,7 +62,7 @@ object CompassPreference {
     }
 
     fun getMagneticCoefficient(): Float {
-        return getSharedPreferences().getFloat(magneticCoefficient, 1000f)
+        return getSharedPreferences().getFloat(magneticCoefficient, 3000f)
     }
 
     fun isNoSensorAlertON(): Boolean {
