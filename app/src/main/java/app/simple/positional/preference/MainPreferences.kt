@@ -14,8 +14,6 @@ object MainPreferences {
     private const val showPlayServicesAgain = "show_play_services_dialog_again"
     private const val licenseStatus = "license_status"
     private const val isCustomCoordinate = "is_custom_coordinate_set"
-    private const val latitude = "custom_latitude"
-    private const val longitude = "custom_longitude"
     private const val address = "specified_address"
     private const val screenOn = "keep_the_screen_on"
     private const val appLanguage = "current_language_locale"
@@ -24,6 +22,8 @@ object MainPreferences {
     const val locationProvider = "location_provider"
     const val unit = "all_measurement_unit"
     const val theme = "current_theme"
+    const val latitude = "custom_latitude"
+    const val longitude = "custom_longitude"
 
     fun setLaunchCount(value: Int) {
         getSharedPreferences().edit().putInt(launchCount, value).apply()

@@ -1,82 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clipToPadding="false"
-    android:clipChildren="false"
     android:background="@drawable/widget_bg_suntime"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:orientation="vertical"
-    android:padding="15dp">
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="@dimen/info_graphics_dimension"
-        android:layout_height="@dimen/info_graphics_dimension"
-        android:layout_gravity="bottom|end"
-        android:src="@drawable/ic_sunrise"
-        tools:ignore="ContentDescription" />
+    android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="10dp"
+        tools:ignore="UseCompoundDrawables">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/widget_suntime_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_place_notification"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/widget_suntime_heading"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/medium"
+            android:text="@string/app_name"
+            android:textColor="@color/textTertiary" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_place"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/medium"
-                android:text="@string/app_name"
-                android:textColor="@color/textSecondary" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView2"
-            style="@style/PrimaryTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/sun_time"
-            android:textSize="@dimen/info_text_primary_size"
-            app:layout_constraintBottom_toTopOf="@id/sun_time_data"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/sun_time_data_widget"
-            style="@style/SecondaryTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-            android:lineSpacingExtra="10dp"
-            android:layout_marginTop="5dp"
-            android:lines="4"
-            android:textSize="@dimen/info_text_secondary_size"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/logo"
+            android:text="@string/app_name"
+            android:textColor="@color/dividerColor" />
 
     </LinearLayout>
 
-</FrameLayout>
+    <!-- Compound Drawables are not supported by
+            AppWidget class and RemoteViews -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp"
+        android:baselineAligned="false">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_widget_sunrise"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/widget_sunrise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textColor="@color/textTertiary"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/regular" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_widget_sun_noon"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/widget_sun_noon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/textTertiary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_widget_sun_set"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/widget_sunset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/textTertiary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_widget_sun_nadir"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/widget_sun_nadir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/regular"
+                android:textColor="@color/textTertiary" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+

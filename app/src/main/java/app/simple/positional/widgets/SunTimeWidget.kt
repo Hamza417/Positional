@@ -8,8 +8,9 @@ import android.widget.RemoteViews
 import app.simple.positional.R
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.GPSPreferences
+import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.SharedPreferences
-import app.simple.positional.util.HtmlHelper
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.LocaleHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.shredzone.commons.suncalc.SunTimes
 import java.time.Instant
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -35,24 +37,48 @@ class SunTimeWidget : AppWidgetProvider() {
     private fun onWidgetUpdate(context: Context) {
         CoroutineScope(Dispatchers.Default).launch {
 
-            val latitude = SharedPreferences.getSharedPreferences(context).getFloat(GPSPreferences.lastLatitude, 0.0F).toDouble()
-            val longitude = SharedPreferences.getSharedPreferences(context).getFloat(GPSPreferences.lastLongitude, 0.0F).toDouble()
+            SharedPreferences.init(context)
+
+            val latitude = if (MainPreferences.isCustomCoordinate()) {
+                getSharedPreferences().getFloat(MainPreferences.latitude, 0.0F).toDouble()
+            } else {
+                getSharedPreferences().getFloat(GPSPreferences.lastLatitude, 0.0F).toDouble()
+            }
+
+            val longitude = if (MainPreferences.isCustomCoordinate()) {
+                getSharedPreferences().getFloat(MainPreferences.longitude, 0.0F).toDouble()
+            } else {
+                getSharedPreferences().getFloat(GPSPreferences.lastLongitude, 0.0F).toDouble()
+            }
 
             val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTime()) {
-                DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(LocaleHelper.getAppLocale())
+                DateTimeFormatter.ofPattern("hh:mm a").withLocale(LocaleHelper.getAppLocale())
             } else {
-                DateTimeFormatter.ofPattern("HH:mm:ss")
+                DateTimeFormatter.ofPattern("HH:mm")
             }
 
             val sunTimes = SunTimes.compute().timezone(Calendar.getInstance().timeZone.id).on(Instant.now()).latitude(latitude).longitude(longitude).execute()
-            val sunTimeData = HtmlHelper.fromHtml("<b>${context.getString(R.string.sun_sunrise)}</b> ${pattern.format(sunTimes.rise)}<br>" +
-                    "<b>${context.getString(R.string.sun_sunset)}</b> ${pattern.format(sunTimes.set)}<br>" +
-                    "<b>${context.getString(R.string.sun_noon)}</b> ${pattern.format(sunTimes.noon)}<br>" +
-                    "<b>${context.getString(R.string.sun_nadir)}</b> ${pattern.format(sunTimes.nadir)}")
+            val sunRise = pattern.format(sunTimes.rise)
+            val sunNoon = pattern.format(sunTimes.noon)
+            val sunSet = pattern.format(sunTimes.set)
+            val sunNadir = pattern.format(sunTimes.nadir)
+
+            val updateTime = context.getString(R.string.last_updated) + " • " + pattern.format(ZonedDateTime.now())
 
             withContext(Dispatchers.Main) {
                 val views = RemoteViews(context.packageName, R.layout.widget_suntime)
-                views.setTextViewText(R.id.sun_time_data_widget, sunTimeData)
+                views.setTextViewText(R.id.widget_sunrise, sunRise)
+                views.setTextViewText(R.id.widget_sun_noon, sunNoon)
+                views.setTextViewText(R.id.widget_sunset, sunSet)
+                views.setTextViewText(R.id.widget_sun_nadir, sunNadir)
+
+                views.setTextViewText(R.id.widget_suntime_heading, updateTime)
+
+                if (MainPreferences.isCustomCoordinate()) {
+                    views.setImageViewResource(R.id.widget_suntime_icon, R.drawable.ic_place_custom)
+                } else {
+                    views.setImageViewResource(R.id.widget_suntime_icon, R.drawable.ic_place)
+                }
 
                 val componentName = ComponentName(context, SunTimeWidget::class.java)
                 val manager = AppWidgetManager.getInstance(context)
