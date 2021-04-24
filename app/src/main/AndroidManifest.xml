@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="app.simple.positional">
 
     <!--
@@ -29,7 +30,8 @@
         android:roundIcon="@mipmap/ic_launcher_01_round"
         android:supportsRtl="true"
         android:theme="@style/LightTheme"
-        android:windowSoftInputMode="adjustPan">
+        android:windowSoftInputMode="adjustPan"
+        tools:ignore="AllowBackup">
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -175,15 +177,6 @@
             android:name=".services.ClockWidgetService"
             android:enabled="true" />
 
-        <service
-            android:name=".firebase.MessagingService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
         <!-- Widgets -->
 
         <receiver
@@ -198,6 +191,20 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/clock_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.SunTimeWidget"
+            android:icon="@drawable/ic_sunrise"
+            android:label="@string/sun_time">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/suntime_widget_info" />
         </receiver>
 
     </application>

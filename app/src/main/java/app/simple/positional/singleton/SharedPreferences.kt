@@ -26,4 +26,12 @@ object SharedPreferences {
     fun getSharedPreferences(): SharedPreferences {
         return sharedPreferences ?: throw NullPointerException()
     }
+
+    fun getSharedPreferences(context: Context): SharedPreferences {
+        return if (sharedPreferences.isNull()) {
+            context.getSharedPreferences(preferences, Context.MODE_PRIVATE)
+        } else {
+            sharedPreferences!!
+        }
+    }
 }

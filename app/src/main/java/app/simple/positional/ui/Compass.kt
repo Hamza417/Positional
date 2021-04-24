@@ -68,7 +68,6 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
-    private var hasRotationMatrixSensor = false
     private var showDirectionCode = true
     private var isUserRotatingDial = false
 
@@ -95,7 +94,6 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
     private var flowerBloom = 0
     private var lastDialAngle = 0F
     private var startAngle = 0F
-    private var sensorType = "combined"
 
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
