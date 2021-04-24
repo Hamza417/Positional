@@ -160,9 +160,6 @@
     <string name="bloom">Bloom</string>
     <string name="bloom_skins">Bloom Skins</string>
     <string name="show_code">Show Code</string>
-    <string name="sensor_speed">Sensor Speed</string>
-    <string name="sensor_speed_normal">Normal</string>
-    <string name="sensor_speed_fast">Fast</string>
     <!-- GPS Menu -->
     <string name="show_label">Show Label</string>
     <string name="satellite_mode">Satellite Mode</string>

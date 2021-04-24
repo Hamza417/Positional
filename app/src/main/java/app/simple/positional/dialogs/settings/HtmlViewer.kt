@@ -75,7 +75,9 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
                         downloadChangeLogs()
                     }
                 }
-
+                getString(R.string.physical_properties) -> {
+                    webView.loadUrl("file:///android_asset/html/physical_properties.html")
+                }
                 "Media Keys" -> {
                     webView.loadUrl("file:///android_asset/html/media_keys.html")
                 }

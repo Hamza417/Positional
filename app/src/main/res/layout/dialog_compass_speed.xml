@@ -18,78 +18,108 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
+            android:layout_marginBottom="10dp"
+            android:padding="@dimen/options_text_margin_start">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
                 android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/sensor_speed_smooth"
+                android:fontFamily="@font/medium"
+                android:layout_gravity="center_vertical"
+                android:text="@string/physical_properties"
                 android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
-            <RadioButton
-                android:id="@+id/speed_smooth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/iconColor" />
+            <ImageButton
+                android:id="@+id/reset_physical_properties"
+                android:layout_width="@dimen/top_bar_button_size"
+                android:layout_height="@dimen/top_bar_button_size"
+                android:src="@drawable/ic_reset"
+                android:background="@drawable/ripple_btn"
+                android:contentDescription="@string/button_reset" />
+
+            <ImageButton
+                android:id="@+id/help_physical_properties"
+                android:layout_width="@dimen/top_bar_button_size"
+                android:layout_height="@dimen/top_bar_button_size"
+                android:src="@drawable/ic_help_outline"
+                android:background="@drawable/ripple_btn"
+                android:contentDescription="@string/help" />
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:fontFamily="@font/regular"
+            android:text="@string/rotational_inertia"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/options_item_text_size" />
+
+        <SeekBar
+            android:id="@+id/compass_rotational_inertia_seekbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/options_text_margin_start"
+            android:layout_marginTop="@dimen/options_text_margin_start"
+            android:layout_marginBottom="20dp"
+            android:maxHeight="4dp"
+            android:progressDrawable="@drawable/seek_bar"
+            android:progressTint="@color/seek_bar"
+            android:splitTrack="true"
+            android:thumb="@drawable/seekbar_thumb"
+            android:translationZ="8dp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/sensor_speed_normal"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:fontFamily="@font/regular"
+            android:text="@string/damping_coefficient"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/options_item_text_size" />
 
-            <RadioButton
-                android:id="@+id/speed_normal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/iconColor" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <SeekBar
+            android:id="@+id/compass_damping_coefficient_seekbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/options_text_margin_start"
+            android:layout_marginTop="@dimen/options_text_margin_start"
+            android:layout_marginBottom="20dp"
+            android:maxHeight="4dp"
+            android:progressDrawable="@drawable/seek_bar"
+            android:progressTint="@color/seek_bar"
+            android:splitTrack="true"
+            android:thumb="@drawable/seekbar_thumb"
+            android:translationZ="8dp" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/sensor_speed_fast"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/options_text_margin_start"
+            android:fontFamily="@font/regular"
+            android:text="@string/coefficient_of_magnetic_field"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/options_item_text_size" />
 
-            <RadioButton
-                android:id="@+id/speed_fast"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/iconColor" />
-
-        </LinearLayout>
+        <SeekBar
+            android:id="@+id/compass_magnetic_coefficient_seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/options_text_margin_start"
+            android:layout_marginTop="@dimen/options_text_margin_start"
+            android:maxHeight="4dp"
+            android:progressDrawable="@drawable/seek_bar"
+            android:progressTint="@color/seek_bar"
+            android:splitTrack="true"
+            android:thumb="@drawable/seekbar_thumb" />
 
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 

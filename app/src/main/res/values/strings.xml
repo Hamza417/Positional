@@ -175,9 +175,6 @@
     <string name="bloom">Bloom</string>
     <string name="bloom_skins">Bloom Skins</string>
     <string name="show_code">Show Code</string>
-    <string name="sensor_speed">Sensor Speed</string>
-    <string name="sensor_speed_normal">Normal</string>
-    <string name="sensor_speed_fast">Fast</string>
 
     <!-- GPS Menu -->
     <string name="show_label">Show Label</string>
@@ -288,4 +285,9 @@
     <string name="auto_center_map">Auto Center Map</string>
     <string name="use_smaller_icon">Use Smaller Icon</string>
     <string name="last_updated">Last Updated</string>
+    <string name="coefficient_of_magnetic_field">Coefficient of Magnetic Field</string>
+    <string name="damping_coefficient">Damping Coefficient</string>
+    <string name="rotational_inertia">Rotational Inertia</string>
+    <string name="physical_properties">Physical Properties</string>
+    <string name="help">Help</string>
 </resources>

@@ -160,9 +160,6 @@
     <string name="bloom">ब्लूम</string>
     <string name="bloom_skins">ब्लूम की थीम</string>
     <string name="show_code">कोड दिखाएं</string>
-    <string name="sensor_speed">सेंसर की गति</string>
-    <string name="sensor_speed_normal">समान्य</string>
-    <string name="sensor_speed_fast">तेज</string>
     <!-- GPS Menu -->
     <string name="show_label">लेबल दिखाएं</string>
     <string name="satellite_mode">सैटेलाइट मोड</string>

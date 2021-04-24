@@ -160,9 +160,6 @@
     <string name="bloom">Цветенца</string>
     <string name="bloom_skins">Дизайн на цветенцата</string>
     <string name="show_code">Показване на кода</string>
-    <string name="sensor_speed">Скорост на сензора</string>
-    <string name="sensor_speed_normal">Нормално</string>
-    <string name="sensor_speed_fast">Бързо</string>
     <!-- GPS Menu -->
     <string name="show_label">Покажи етикетите</string>
     <string name="satellite_mode">Сателит</string>

@@ -24,13 +24,13 @@
             app:tint="@color/iconColor"
             tools:ignore="ContentDescription" />
 
-        <ImageView
+        <app.simple.positional.decorations.views.CompassView
             android:id="@+id/dial"
             android:layout_width="@dimen/compass_dial"
             android:layout_height="@dimen/compass_dial"
             tools:ignore="ContentDescription" />
 
-        <ImageView
+        <app.simple.positional.decorations.views.CompassView
             android:id="@+id/flower_one"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/compass_bloom_dimension"
@@ -38,7 +38,7 @@
             android:adjustViewBounds="true"
             tools:ignore="ContentDescription" />
 
-        <ImageView
+        <app.simple.positional.decorations.views.CompassView
             android:id="@+id/flower_two"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/compass_bloom_dimension"
@@ -46,7 +46,7 @@
             android:adjustViewBounds="true"
             tools:ignore="ContentDescription,MissingPrefix" />
 
-        <ImageView
+        <app.simple.positional.decorations.views.CompassView
             android:id="@+id/flower_three"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/compass_bloom_dimension"
@@ -54,7 +54,7 @@
             android:adjustViewBounds="true"
             tools:ignore="ContentDescription" />
 
-        <ImageView
+        <app.simple.positional.decorations.views.CompassView
             android:id="@+id/flower_four"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/compass_bloom_dimension"

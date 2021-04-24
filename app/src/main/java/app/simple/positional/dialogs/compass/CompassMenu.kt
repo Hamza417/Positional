@@ -65,7 +65,7 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
         }
 
         speed.setOnClickListener {
-            CompassSpeed().show(parentFragmentManager, "null")
+            CompassPhysicalProperties().show(parentFragmentManager, "null")
         }
     }
 }

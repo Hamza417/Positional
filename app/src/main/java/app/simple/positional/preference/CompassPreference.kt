@@ -8,8 +8,9 @@ object CompassPreference {
     const val direction_code = "direction_code"
     const val flowerBloom = "flower"
     const val flowerBloomTheme = "flower_theme"
-    const val compassSpeed = "compass_speed"
-    const val sensorMode = "sensor_for_compass"
+    const val dampingCoefficient = "damping_coefficient"
+    const val magneticCoefficient = "magnetic_coefficient"
+    const val rotationalInertia = "rotational_inertia"
     private const val noSensorAlertCompass = "no_sensor_alert_compass_dialog_show"
 
     // Parallax
@@ -40,12 +41,28 @@ object CompassPreference {
     }
 
     // Compass Sensor Speed
-    fun setCompassSpeed(@NotNull value: Float) {
-        getSharedPreferences().edit().putFloat(compassSpeed, value).apply()
+    fun setDampingCoefficient(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(dampingCoefficient, value).apply()
     }
 
-    fun getCompassSpeed(): Float {
-        return getSharedPreferences().getFloat(compassSpeed, 0.06f)
+    fun getDampingCoefficient(): Float {
+        return getSharedPreferences().getFloat(dampingCoefficient, 10F)
+    }
+
+    fun setRotationalInertia(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(rotationalInertia, value).apply()
+    }
+
+    fun getRotationalInertia(): Float {
+        return getSharedPreferences().getFloat(rotationalInertia, 0.1f)
+    }
+
+    fun setMagneticCoefficient(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(magneticCoefficient, value).apply()
+    }
+
+    fun getMagneticCoefficient(): Float {
+        return getSharedPreferences().getFloat(magneticCoefficient, 1000f)
     }
 
     fun isNoSensorAlertON(): Boolean {
@@ -54,13 +71,5 @@ object CompassPreference {
 
     fun setNoSensorAlert(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(noSensorAlertCompass, value).apply()
-    }
-
-    fun setSensorType(value: String) {
-        getSharedPreferences().edit().putString(sensorMode, value).apply()
-    }
-
-    fun getSensorType(): String {
-        return getSharedPreferences().getString(sensorMode, "combined")!!
     }
 }

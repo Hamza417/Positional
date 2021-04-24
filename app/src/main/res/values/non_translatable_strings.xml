@@ -7,11 +7,10 @@
     <string name="moon_azimuth" translatable="false">@string/sun_azimuth</string>
     <string name="moon_distance" translatable="false">@string/sun_distance</string>
     <string name="moon_altitude" translatable="false">@string/sun_altitude</string>
-    <string name="sensor_speed_smooth" translatable="false">@string/motion_type_smooth</string>
     <string name="specified_hint_address" translatable="false">@string/gps_address</string>
     <string name="fused_location_provider" translatable="false">Fused Location Provider</string>
     <string name="android_location_provider" translatable="false">Android Location Provider</string>
 
     <!-- Bottom Bar -->
-    <string name="ellipsis">&#8230;</string>
+    <string name="ellipsis" translatable="false">&#8230;</string>
 </resources>

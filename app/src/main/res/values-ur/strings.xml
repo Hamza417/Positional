@@ -160,9 +160,6 @@
     <string name="bloom">بلوم</string>
     <string name="bloom_skins">بلوم تھیم</string>
     <string name="show_code">صرف کوڈ دکھائیں</string>
-    <string name="sensor_speed">سینسر کی رفتار</string>
-    <string name="sensor_speed_normal">عام</string>
-    <string name="sensor_speed_fast">تیز</string>
     <!-- GPS Menu -->
     <string name="show_label">لیبل دکھائیں</string>
     <string name="satellite_mode">سیٹلائٹ وضع</string>

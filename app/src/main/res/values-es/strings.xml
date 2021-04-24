@@ -160,9 +160,6 @@
     <string name="bloom">Efecto Bloom</string>
     <string name="bloom_skins">Aspectos de Bloom</string>
     <string name="show_code">Ver código</string>
-    <string name="sensor_speed">Velocidad sensor</string>
-    <string name="sensor_speed_normal">Media</string>
-    <string name="sensor_speed_fast">Rápido</string>
     <!-- GPS Menu -->
     <string name="show_label">Ver etiqueta</string>
     <string name="satellite_mode">Modo Satellite</string>

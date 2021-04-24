@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="file:///android_asset/css/html_decoration.css" rel="stylesheet">
+</head>
+
+<body>
+
+<h4>Documentation</h4>
+<h1>Physical Properties of Compass</h1>
+
+<p>
+    Earlier versions of Positional uses a relatively simple formula to adjust compass motion, it was
+    working fine except the problems it poses were severe. The current method uses angular motion
+    equation of magnetic dipole in magnetic field to implement such movement to the dial. It mimics
+    the real-life compass movements based on various physical factors and this panel is for
+    manipulating those factors and create a life-like compass motion.
+
+    <br>
+    <br>
+
+    There are three sliders given in the panel, they adjust oscillation, damping and responsiveness
+    of the compass dial and the behavior varies as the value changes.
+</p>
+
+<br>
+<h3>Rotational Inertia</h3>
+
+<p>
+    Its range is 0.1F - 50F, creates oscillation effect and the slider value is directly
+    proportional to the peak amplitude of oscillation means higher the value greater the
+    oscillations will be.
+</p>
+
+<br>
+<h3>Damping Coefficient</h3>
+
+<p>
+    Its range is same as of the rotational inertia and it adjusts the amount of time it is going to
+    take to move the dial. The slider value is inversely proportional to the amount of time taken.
+    Set the higher value to achieve smoother movements.
+</p>
+
+<br>
+<h3>Coefficient of Magnetic Field</h3>
+
+<p>
+    Its range is 0.1 to 5000 and it adjusts the magnetic susceptibility of the compass, higher
+    values will make the compass more responsive to the external field changes.
+</p>
+
+<br>
+
+<p>
+    If the values messes up use the reset button to restore the default properties of the compass.
+</p>
+
+</body>

@@ -31,6 +31,7 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
 import app.simple.positional.constants.CompassBloom.compassBloomTextColor
 import app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
+import app.simple.positional.decorations.views.CompassView
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
@@ -77,19 +78,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
 
-    /**
-     *  [readingsAlpha]
-     *
-     *  this variable acts as a noise filter for sensor values, higher result will give results faster
-     *  but will also generate heavier noise on compass movements but movements will be instantaneous
-     *  while the lower values will make filter the noise but also acts as a decelerate interpolator
-     *  and make the movement smoother and pleasant
-     *
-     *  0.03F is the somewhat default value, 0.05f is smoother, 0.15 is faster
-     *
-     *  see [smoothAndSetReadings] for its implementation
-     */
-    private var readingsAlpha = 0.06f
+    private var readingsAlpha = 0.03f
     private var rotationAngle = 0f
     private var flowerBloom = 0
     private var lastDialAngle = 0F
@@ -109,11 +98,11 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
     private lateinit var direction: TextView
 
     private lateinit var expandUp: ImageView
-    private lateinit var dial: ImageView
-    private lateinit var flowerOne: ImageView
-    private lateinit var flowerTwo: ImageView
-    private lateinit var flowerThree: ImageView
-    private lateinit var flowerFour: ImageView
+    private lateinit var dial: CompassView
+    private lateinit var flowerOne: CompassView
+    private lateinit var flowerTwo: CompassView
+    private lateinit var flowerThree: CompassView
+    private lateinit var flowerFour: CompassView
 
     private lateinit var copy: ImageButton
     private lateinit var menu: ImageButton
@@ -178,7 +167,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
         }
 
         flowerBloom = CompassPreference.getFlowerBloomTheme()
-        setSpeed(CompassPreference.getCompassSpeed())
+        setPhysicalProperties()
         setFlower(CompassPreference.isFlowerBloomOn())
 
         return view
@@ -352,7 +341,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
                 MotionEvent.ACTION_MOVE -> {
                     val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     val finalAngle = currentAngle - startAngle + lastDialAngle
-                    viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)))
+                    viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)), false)
                     return true
                 }
                 MotionEvent.ACTION_UP -> {
@@ -381,7 +370,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
 
         if (!isUserRotatingDial) {
             rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
-            viewRotation(rotationAngle)
+            viewRotation(rotationAngle, true)
         }
     }
 
@@ -432,17 +421,17 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
         }
     }
 
-    private fun viewRotation(rotationAngle: Float) {
-        dial.rotation = rotationAngle * -1
+    private fun viewRotation(rotationAngle: Float, animate: Boolean) {
+        dial.rotationUpdate(rotationAngle * -1, animate)
 
         if (CompassPreference.isFlowerBloomOn()) {
-            flowerOne.rotation = rotationAngle * 2
-            flowerTwo.rotation = rotationAngle * -3 + 45
-            flowerThree.rotation = rotationAngle * 1 + 90
-            flowerFour.rotation = rotationAngle * -4 + 135
+            flowerOne.rotationUpdate(rotationAngle * 2, animate)
+            flowerTwo.rotationUpdate(rotationAngle * -3 + 45, animate)
+            flowerThree.rotationUpdate(rotationAngle * 1 + 90, animate)
+            flowerFour.rotationUpdate(rotationAngle * -4 + 135, animate)
         }
 
-        degrees.text = StringBuilder().append(abs(rotationAngle.toInt())).append("°")
+        degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append("°")
 
         direction.text = if (showDirectionCode) {
             getDirectionCodeFromAzimuth(requireContext(), azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
@@ -451,8 +440,18 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
         }
     }
 
-    private fun setSpeed(value: Float) {
-        readingsAlpha = value
+    private fun setPhysicalProperties() {
+        val inertia = CompassPreference.getRotationalInertia()
+        val damping = CompassPreference.getDampingCoefficient()
+        val magnetic = CompassPreference.getMagneticCoefficient()
+
+        println("$inertia, $damping, $magnetic")
+
+        dial.setPhysical(inertia, damping, magnetic)
+        flowerOne.setPhysical(inertia, damping, magnetic)
+        flowerTwo.setPhysical(inertia, damping, magnetic)
+        flowerThree.setPhysical(inertia, damping, magnetic)
+        flowerFour.setPhysical(inertia, damping, magnetic)
     }
 
     private fun setFlower(value: Boolean) {
@@ -496,7 +495,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
         objectAnimator!!.duration = 1000L
         objectAnimator!!.interpolator = DecelerateInterpolator()
         objectAnimator!!.setAutoCancel(true)
-        objectAnimator!!.addUpdateListener { animation -> viewRotation(abs(animation.getAnimatedValue("rotation") as Float)) }
+        objectAnimator!!.addUpdateListener { animation -> viewRotation(abs(animation.getAnimatedValue("rotation") as Float), false) }
         objectAnimator!!.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {}
             override fun onAnimationCancel(animation: Animator?) {}
@@ -517,8 +516,10 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            CompassPreference.compassSpeed -> {
-                setSpeed(CompassPreference.getCompassSpeed())
+            CompassPreference.dampingCoefficient,
+            CompassPreference.magneticCoefficient,
+            CompassPreference.rotationalInertia -> {
+                setPhysicalProperties()
             }
             CompassPreference.direction_code -> {
                 showDirectionCode = CompassPreference.getDirectionCode()
@@ -528,16 +529,6 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
             }
             CompassPreference.flowerBloom -> {
                 setFlower(CompassPreference.isFlowerBloomOn())
-            }
-            CompassPreference.sensorMode -> {
-                when (CompassPreference.getSensorType()) {
-                    "combined" -> {
-
-                    }
-                    "gyro" -> {
-
-                    }
-                }
             }
         }
     }
