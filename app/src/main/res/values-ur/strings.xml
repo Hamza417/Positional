@@ -257,4 +257,12 @@
     <string name="use_media_keys">میڈیا کیز کا استعمال کریں</string>
     <string name="auto_center_map">آٹو سینٹر</string>
     <string name="use_smaller_icon">چھوٹے شبیہیں استعمال کریں</string>
+    <string name="last_updated">آخری تازہ کاری</string>
+    <string name="coefficient_of_magnetic_field">مقناطیسی فیلڈ کا قابلیت</string>
+    <string name="damping_coefficient">ڈمپنگ کے گتانک</string>
+    <string name="rotational_inertia">گھماؤ اور جڑنا</string>
+    <string name="physical_properties">جسمانی خواص</string>
+    <string name="help">مدد</string>
+    <string name="tick_smooth">ٹک سموتھ</string>
+    <string name="tick_oscillate">ٹک ؤسکلیت</string>
 </resources>

@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <!-- Theme -->
-        <item name="android:statusBarColor">@color/toolbarBackground</item>
+        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:navigationBarColor">@color/toolbarBackground</item>
         <item name="rippleColor">@color/rippleColor</item>
         <item name="android:windowLightStatusBar">false</item>

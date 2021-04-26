@@ -39,7 +39,7 @@
     <dimen name="description_text_size">5pt</dimen>
 
     <!-- Top Bar -->
-    <dimen name="top_bar_elevation">2dp</dimen>
+    <dimen name="top_bar_elevation">10dp</dimen>
     <dimen name="top_bar_text_size">14pt</dimen>
     <dimen name="top_bar_height">70dp</dimen>
     <dimen name="top_bar_button_size">40dp</dimen>

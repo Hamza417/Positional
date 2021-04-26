@@ -1,105 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<app.simple.positional.decorations.padding.PaddingAwareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/indicator_bounding_box"
     android:layout_width="match_parent"
+    android:clipToPadding="false"
+    android:paddingVertical="16dp"
+    android:layout_marginBottom="@dimen/bottom_nav_height"
     android:layout_height="match_parent">
 
-    <app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
-        android:id="@+id/materialToolbar"
-        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+    <TextView
+        android:id="@+id/tv01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_gravity="top|start"
+        android:fontFamily="@font/heading"
+        android:text="@string/level"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/top_bar_text_size"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/level_indicator"
+        tools:ignore="ContentDescription"
+        android:layout_width="@dimen/level_indicator"
+        android:layout_height="@dimen/level_indicator"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY" />
+
+    <ImageView
+        android:id="@+id/level_dot"
+        tools:ignore="ContentDescription"
+        android:layout_width="@dimen/level_dot"
+        android:layout_height="@dimen/level_dot"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/top_bar_height"
-        android:backgroundTint="@color/toolbarBackground"
-        android:elevation="@dimen/top_bar_elevation"
-        app:contentInsetEnd="10dp"
-        app:contentInsetStart="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:roundBottomCorners="true">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:fontFamily="@font/heading"
-            android:textStyle="bold"
-            android:text="@string/level"
+            android:id="@+id/level_x"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/light"
+            android:gravity="center"
+            android:textAlignment="center"
             android:textColor="@color/textPrimary"
-            android:textSize="@dimen/top_bar_text_size" />
+            android:textSize="@dimen/level_text_size" />
 
-        <ImageButton
-            android:layout_width="@dimen/top_bar_button_size"
-            android:layout_height="@dimen/top_bar_button_size"
-            android:layout_gravity="center_vertical|end"
-            android:background="@drawable/ripple_btn"
-            android:src="@drawable/ic_more_horiz"
-            android:tint="@color/iconColor"
-            android:visibility="gone"
-            tools:ignore="ContentDescription" />
+        <TextView
+            android:id="@+id/level_y"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fontFamily="@font/light"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/level_text_size" />
 
-    </app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar>
+    </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/indicator_bounding_box"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="@dimen/bottom_nav_height"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar">
+</app.simple.positional.decorations.padding.PaddingAwareFrameLayout>
 
-        <ImageView
-            android:id="@+id/level_indicator"
-            android:layout_width="@dimen/level_indicator"
-            android:layout_height="@dimen/level_indicator"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            tools:ignore="ContentDescription" />
-
-        <ImageView
-            android:id="@+id/level_dot"
-            android:layout_width="@dimen/level_dot"
-            android:layout_height="@dimen/level_dot"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            tools:ignore="ContentDescription" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/level_x"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/light"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/level_text_size" />
-
-            <TextView
-                android:id="@+id/level_y"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/light"
-                android:gravity="center"
-                android:textAlignment="center"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/level_text_size" />
-
-        </LinearLayout>
-
-    </FrameLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>

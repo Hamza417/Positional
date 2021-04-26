@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:behavior_hideable="false"
+    android:elevation="200dp"
     app:behavior_peekHeight="@dimen/peek_height"
     app:layout_behavior="@string/bottom_sheet_behavior">
 

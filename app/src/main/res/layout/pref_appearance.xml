@@ -5,6 +5,7 @@
     android:layout_marginVertical="20dp"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:paddingHorizontal="16dp"
     android:orientation="vertical">
 
     <TextView

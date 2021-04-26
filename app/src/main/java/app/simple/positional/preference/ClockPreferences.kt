@@ -8,7 +8,7 @@ object ClockPreferences {
 
     private const val clockDefaultTimeFormat = "is_clock_time_type_am_pm"
     private const val timeZoneScrollPosition = "last_selected_timezone_position"
-    const val clockNeedleMovementType = "clock_needle_movement_type"
+    const val clockNeedleMovementType = "clock_needle_movement_type_updated"
     const val clockNeedle = "clock_needle_res_value"
     const val timezone = "custom_timezone"
 
@@ -28,12 +28,12 @@ object ClockPreferences {
         return getSharedPreferences().getInt(clockNeedle, 1)
     }
 
-    fun setMovementType(@NotNull value: Boolean) {
-        getSharedPreferences().edit().putBoolean(clockNeedleMovementType, value).apply()
+    fun setMovementType(@NotNull value: String) {
+        getSharedPreferences().edit().putString(clockNeedleMovementType, value).apply()
     }
 
-    fun getMovementType(): Boolean {
-        return getSharedPreferences().getBoolean(clockNeedleMovementType, true)
+    fun getMovementType(): String {
+        return getSharedPreferences().getString(clockNeedleMovementType, "smooth")!!
     }
 
     fun setTimeZone(@NotNull value: String) {

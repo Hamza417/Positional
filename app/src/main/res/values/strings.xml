@@ -290,4 +290,6 @@
     <string name="rotational_inertia">Rotational Inertia</string>
     <string name="physical_properties">Physical Properties</string>
     <string name="help">Help</string>
+    <string name="tick_smooth">Tick Smooth</string>
+    <string name="tick_oscillate">Tick Oscillate</string>
 </resources>

@@ -142,7 +142,7 @@
     <string name="desc_icon">Icono principal de la aplicación en launcher</string>
     <string name="desc_radius">Radio de esquina redondeada de la app</string>
     <string name="desc_skip_splash_Screen">Skip Splash Screen when app launches and go to main screen directly</string>
-    <string name="desc_specified_location">Specify custom Latitude, Longitude and Timezone and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
+    <string name="desc_specified_location">Specify custom Latitude and Longitude and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
     <string name="desc_screen_on">Evita que el dispositivo duerma mientras la aplicación sea visible</string>
     <string name="desc_legal">Leer el aviso de responsabilidad de la aplicación, la política de privacidad y los términos de uso</string>
     <string name="desc_status">Get the app\'s current development status for the upcoming build</string>
@@ -255,4 +255,14 @@
     <string name="desc_fused_location_provider">Google\'s Fused Location API that triangulates location data from various location providers and averages out the result into a series of locations. Can give varying results but uses less battery.</string>
     <string name="desc_location_provider_note">Note: Using any of the APIs can give different results depending on the various factors and none of them are a proof of accuracy for one another, test the APIs and keep the one selected that works best within your region.</string>
     <string name="use_media_keys">Use Media Keys</string>
+    <string name="auto_center_map">Auto Center Map</string>
+    <string name="use_smaller_icon">Use Smaller Icon</string>
+    <string name="last_updated">Last Updated</string>
+    <string name="coefficient_of_magnetic_field">Coefficient of Magnetic Field</string>
+    <string name="damping_coefficient">Damping Coefficient</string>
+    <string name="rotational_inertia">Rotational Inertia</string>
+    <string name="physical_properties">Physical Properties</string>
+    <string name="help">Help</string>
+    <string name="tick_smooth">Tick Smooth</string>
+    <string name="tick_oscillate">Tick Oscillate</string>
 </resources>

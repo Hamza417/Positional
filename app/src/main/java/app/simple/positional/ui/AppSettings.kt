@@ -22,6 +22,8 @@ import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.LocaleHelper.localeList
+import app.simple.positional.util.StatusBarHeight
+import com.factor.bouncy.BouncyNestedScrollView
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
@@ -31,6 +33,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     private var xOff = 0F
     private var yOff = 0F
 
+    private lateinit var scrollView: BouncyNestedScrollView
     private lateinit var buyFull: LinearLayout
     private lateinit var unit: LinearLayout
     private lateinit var locationProvider: LinearLayout
@@ -62,6 +65,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_settings, container, false)
 
+        scrollView = view.findViewById(R.id.settings_scroll_view)
         buyFull = view.findViewById(R.id.buy_full)
         unit = view.findViewById(R.id.settings_units)
         locationProvider = view.findViewById(R.id.settings_location_provider)
@@ -89,6 +93,13 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         currentUnit = view.findViewById(R.id.current_unit)
         currentLanguage = view.findViewById(R.id.current_language)
         currentLocationProvider = view.findViewById(R.id.current_location_provider)
+
+        scrollView.setPadding(
+                scrollView.paddingLeft,
+                scrollView.paddingTop + StatusBarHeight.getStatusBarHeight(resources),
+                scrollView.paddingRight,
+                scrollView.paddingBottom
+        )
 
         return view
     }
@@ -201,7 +212,7 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         }
 
         legalNotes.setOnClickListener {
-            val popupMenu = MainListPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.menu_legal_notes,
+            val popupMenu = MainListPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.menu_notes,
                     DynamicCornerLinearLayout(context, null),
                     true), legalNotes, xOff, yOff)
             popupMenu.popupMenuCallback = this

@@ -20,8 +20,8 @@ public class CompassView extends androidx.appcompat.widget.AppCompatImageView {
     static final public float ANGLE_DELTA_THRESHOLD = 0.1f; // minimum rotation change to be redrawn, deg
     
     static final public float INERTIA_MOMENT_DEFAULT = 0.1f;    // default physical properties
-    static final public float ALPHA_DEFAULT = 10;
-    static final public float MB_DEFAULT = 1000;
+    static final public float ALPHA_DEFAULT = 10f;
+    static final public float MB_DEFAULT = 1000f;
     
     long time1, time2;              // timestamps of previous iterations--used in numerical integration
     float angle1, angle2, angle0;   // angles of previous iterations

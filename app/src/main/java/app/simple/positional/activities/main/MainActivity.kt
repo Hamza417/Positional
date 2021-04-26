@@ -28,7 +28,10 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import java.util.*
 
 class MainActivity
-    : BaseActivity(), PermissionCallbacks, BottomSheetSlide, android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+    : BaseActivity(),
+      PermissionCallbacks,
+      BottomSheetSlide,
+      android.content.SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val defaultPermissionRequestCode = 123
     private var reviewInfo: ReviewInfo? = null
@@ -43,9 +46,6 @@ class MainActivity
         bottomBar = findViewById(R.id.bottom_bar)
         bottomBarWrapper = findViewById(R.id.bottom_bar_wrapper)
 
-        if (savedInstanceState.isNull()) {
-            openFragment(FragmentPreferences.getCurrentPage())
-        }
         bottomBar.itemActiveIndex = FragmentPreferences.getCurrentPage()
 
         checkRunTimePermission()
@@ -54,6 +54,10 @@ class MainActivity
         bottomBar.setOnItemSelectedListener {
             openFragment(it)
             FragmentPreferences.setCurrentPage(it)
+        }
+
+        if (savedInstanceState.isNull()) {
+            openFragment(FragmentPreferences.getCurrentPage())
         }
     }
 

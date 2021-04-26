@@ -257,4 +257,12 @@
     <string name="use_media_keys">Използвай мултимедийни бутони</string>
     <string name="auto_center_map">Центрирай картата</string>
     <string name="use_smaller_icon">Използвайте по-малка икона</string>
+    <string name="last_updated">Последно обновен</string>
+    <string name="coefficient_of_magnetic_field">Коефициент на магнитно поле</string>
+    <string name="damping_coefficient">Степен на заглушаване</string>
+    <string name="rotational_inertia">Ротационна инерция</string>
+    <string name="physical_properties">Физически свойства</string>
+    <string name="help">Помощ</string>
+    <string name="tick_smooth">Tick Smooth</string>
+    <string name="tick_oscillate">Tick Oscillate</string>
 </resources>

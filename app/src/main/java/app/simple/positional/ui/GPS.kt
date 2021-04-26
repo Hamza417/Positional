@@ -13,7 +13,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -27,16 +26,15 @@ import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.database.LocationDatabase
-import app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.decorations.maps.Maps
 import app.simple.positional.decorations.maps.MapsCallbacks
+import app.simple.positional.decorations.views.MapToolbar
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
 import app.simple.positional.dialogs.gps.LocationExpansion
 import app.simple.positional.dialogs.gps.MovementExpansion
 import app.simple.positional.math.MathExtensions.round
-import app.simple.positional.math.MathExtensions.toNegative
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.UnitConverter.toKilometers
@@ -51,6 +49,7 @@ import app.simple.positional.util.*
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
+import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -67,15 +66,13 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     private lateinit var expandUp: ImageView
 
     private lateinit var scrollView: NestedScrollView
-    private lateinit var toolbar: DynamicCornerMaterialToolbar
+    private lateinit var toolbar: MapToolbar
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
     private lateinit var dim: View
     private lateinit var locationBox: LinearLayout
     private lateinit var movementBox: LinearLayout
     private lateinit var coordinatesBox: FrameLayout
-    private lateinit var locationIndicator: ImageButton
-    private lateinit var menu: ImageButton
     private lateinit var copy: ImageButton
     private lateinit var save: ImageButton
     private lateinit var movementReset: ImageButton
@@ -117,13 +114,13 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.frag_gps, container, false)
 
-        toolbar = view.findViewById(R.id.gps_appbar)
+        //isFullScreen = savedInstanceState?.getBoolean("full_screen") ?: false
+
+        toolbar = view.findViewById(R.id.map_toolbar)
         scrollView = view.findViewById(R.id.gps_list_scroll_view)
         scrollView.alpha = 0f
         divider = view.findViewById(R.id.gps_divider)
         dim = view.findViewById(R.id.gps_dim)
-        locationIndicator = view.findViewById(R.id.gps_location_indicator)
-        menu = view.findViewById(R.id.gps_menu)
         copy = view.findViewById(R.id.gps_copy)
         save = view.findViewById(R.id.gps_save)
         movementReset = view.findViewById(R.id.movement_reset)
@@ -148,6 +145,12 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         specifiedLocationTextView = view.findViewById(R.id.specified_location_notice_gps)
         infoText = view.findViewById(R.id.gps_info_text)
 
+        val params = toolbar.layoutParams as ViewGroup.MarginLayoutParams
+        params.setMargins(params.leftMargin,
+                StatusBarHeight.getStatusBarHeight(resources) + params.topMargin,
+                params.rightMargin,
+                params.bottomMargin)
+
         handler = Handler(Looper.getMainLooper())
 
         handler.postDelayed({
@@ -157,19 +160,17 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
             mapView?.setOnMapsCallbackListener(object : MapsCallbacks {
                 override fun onMapClicked(view: MapView?) {
-                    if (isFullScreen) {
-                        toolbar.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
-                        bottomSheetSlide.onMapClicked(fullScreen = true)
-                        bottomSheetInfoPanel.peekHeight = peekHeight
-                    } else {
-                        toolbar.animate().translationY(toolbar.height.toNegative()).setInterpolator(DecelerateInterpolator(1.5F)).start()
-                        bottomSheetSlide.onMapClicked(fullScreen = false)
-                        bottomSheetInfoPanel.peekHeight = 0
-                    }
-
-                    isFullScreen = !isFullScreen
+                    setFullScreen()
                 }
             })
+
+            if (requireActivity().intent.isNotNull()) {
+                if (requireActivity().intent.action == "action_map_panel_full") {
+                    isFullScreen = false
+                    setFullScreen()
+                    requireActivity().intent.action = null
+                }
+            }
         }, 500L)
 
         filter.addAction("location")
@@ -194,6 +195,20 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         return view
     }
 
+    private fun setFullScreen() {
+        if (isFullScreen) {
+            toolbar.show()
+            bottomSheetSlide.onMapClicked(fullScreen = true)
+            bottomSheetInfoPanel.peekHeight = peekHeight
+        } else {
+            toolbar.hide()
+            bottomSheetSlide.onMapClicked(fullScreen = false)
+            bottomSheetInfoPanel.peekHeight = 0
+        }
+
+        isFullScreen = !isFullScreen
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -209,7 +224,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
         providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
 
-        locationIconStatusUpdates()
         checkGooglePlayServices()
 
         movementReset.setOnClickListener {
@@ -309,8 +323,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                                 }
 
                                 withContext(Dispatchers.Main) {
-                                    this@GPS.locationIndicator.setImageResource(R.drawable.ic_gps_fixed)
-                                    this@GPS.locationIndicator.isClickable = true
+                                    this@GPS.toolbar.locationIndicatorUpdate(true)
                                     this@GPS.providerSource.text = providerSource
                                     this@GPS.providerStatus.text = providerStatus
                                     this@GPS.altitude.text = altitude
@@ -332,7 +345,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                     "provider" -> {
                         providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
                         providerSource.text = fromHtml("<b>${getString(R.string.gps_source)}</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
-                        locationIconStatusUpdates()
+                        toolbar.locationIconStatusUpdates()
                     }
                 }
             }
@@ -357,24 +370,24 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                 dim.alpha = slideOffset
                 if (!isFullScreen) {
                     bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                    toolbar.translationY = toolbar.height * -slideOffset
                 }
             }
         })
 
-        menu.setOnClickListener {
-            GPSMenu().show(parentFragmentManager, "gps_menu")
-        }
+        toolbar.setOnMapToolbarCallbacks(object : MapToolbar.MapToolbarCallbacks {
+            override fun onLocationReset(view: View?) {
+                updateViews(customLatitude, customLongitude)
+                mapView?.resetCamera(GPSPreferences.getMapZoom())
+            }
 
-        locationIndicator.setOnClickListener {
-            updateViews(customLatitude, customLongitude)
-            mapView?.resetCamera(GPSPreferences.getMapZoom())
-        }
+            override fun onMenuClicked(view: View?) {
+                GPSMenu().show(parentFragmentManager, "gps_menu")
+            }
 
-        locationIndicator.setOnLongClickListener {
-            mapView?.resetCamera(18F)
-            true
-        }
+            override fun onLocationLongPressed() {
+                mapView?.resetCamera(18F)
+            }
+        })
 
         save.setOnClickListener {
             if (BuildConfig.FLAVOR == "lite") {
@@ -605,14 +618,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         }
     }
 
-    private fun locationIconStatusUpdates() {
-        if (getLocationStatus(requireContext())) {
-            locationIndicator.setImageResource(R.drawable.ic_gps_not_fixed)
-        } else {
-            locationIndicator.setImageResource(R.drawable.ic_gps_off)
-            locationIndicator.isClickable = false
-        }
-    }
+
 
     private fun checkGooglePlayServices(): Boolean {
         val availability = GoogleApiAvailability.getInstance()
@@ -646,13 +652,9 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
         })
     }
 
-    companion object {
-        fun newInstance(): GPS {
-            val args = Bundle()
-            val fragment = GPS()
-            fragment.arguments = args
-            return fragment
-        }
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("full_screen", isFullScreen)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -665,6 +667,15 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                     view?.clearFocus()
                 }
             }
+        }
+    }
+
+    companion object {
+        fun newInstance(): GPS {
+            val args = Bundle()
+            val fragment = GPS()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

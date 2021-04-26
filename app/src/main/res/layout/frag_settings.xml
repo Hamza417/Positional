@@ -1,60 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.factor.bouncy.BouncyNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settings_scroll_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/bottom_nav_height"
+    app:damping_ratio="DAMPING_RATIO_NO_BOUNCY"
+    app:fling_animation_size="0.75"
+    android:overScrollMode="always"
+    app:overscroll_animation_size="0.75"
+    app:stiffness="STIFFNESS_LOW">
 
-    <app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
-        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/top_bar_height"
-        android:backgroundTint="@color/toolbarBackground"
-        android:elevation="@dimen/top_bar_elevation"
-        app:contentInsetEnd="10dp"
-        app:contentInsetStart="10dp"
-        app:roundBottomCorners="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="16dp"
             android:fontFamily="@font/heading"
             android:text="@string/settings"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/top_bar_text_size"
             android:textStyle="bold" />
 
-    </app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar>
+        <include layout="@layout/pref_appearance" />
 
-    <com.factor.bouncy.BouncyNestedScrollView
-        android:id="@+id/settings_scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingHorizontal="25dp"
-        android:paddingTop="@dimen/top_bar_height"
-        android:paddingBottom="@dimen/bottom_nav_height"
-        app:damping_ratio="DAMPING_RATIO_NO_BOUNCY"
-        app:fling_animation_size="0.75"
-        app:overscroll_animation_size="0.75"
-        app:stiffness="STIFFNESS_LOW">
+        <include layout="@layout/pref_configuration" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <include layout="@layout/pref_about" />
 
-            <include layout="@layout/pref_appearance" />
+        <include layout="@layout/pref_contribute" />
 
-            <include layout="@layout/pref_configuration" />
+    </LinearLayout>
 
-            <include layout="@layout/pref_about" />
+</com.factor.bouncy.BouncyNestedScrollView>
 
-            <include layout="@layout/pref_contribute" />
-
-        </LinearLayout>
-
-    </com.factor.bouncy.BouncyNestedScrollView>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>

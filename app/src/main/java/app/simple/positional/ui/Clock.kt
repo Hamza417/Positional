@@ -20,7 +20,7 @@ import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
-import app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
+import app.simple.positional.decorations.views.CompassView
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.dialogs.settings.TimeZones
@@ -55,15 +55,15 @@ import java.util.*
 
 class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private lateinit var toolbar: DynamicCornerMaterialToolbar
+    private lateinit var toolbar: LinearLayout
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
     private lateinit var hour: ImageView
     private lateinit var minutes: ImageView
-    private lateinit var seconds: ImageView
+    private lateinit var seconds: CompassView
     private lateinit var face: ImageView
     private lateinit var expandUp: ImageView
-    private lateinit var sweepSeconds: ImageView
+    private lateinit var sweepSeconds: CompassView
     private lateinit var dayNightIndicator: ImageView
     private lateinit var moonPhaseGraphics: ImageView
 
@@ -99,10 +99,14 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
     private var isCustomCoordinate = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
-    private var timezone: String? = "Asia/Tokyo"
+    private var timezone: String = "Asia/Tokyo"
+    private var movementType = "smooth"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.frag_clock, container, false)
+
+        timezone = ClockPreferences.getTimeZone()
+        movementType = ClockPreferences.getMovementType()
 
         handler = Handler(Looper.getMainLooper())
         filter.addAction("location")
@@ -151,8 +155,6 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
         }
 
-        timezone = ClockPreferences.getTimeZone()
-
         setSkins()
 
         return view
@@ -189,7 +191,9 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     backPressed(true)
+                    copyButton.isClickable = true
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    copyButton.isClickable = false
                     backPressed(false)
                     if (backPress!!.hasEnabledCallbacks()) {
                         backPress?.onBackPressed()
@@ -202,7 +206,6 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
                 expandUp.alpha = 1 - slideOffset
                 view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                toolbar.translationY = toolbar.height * -slideOffset
             }
         })
 
@@ -272,12 +275,30 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
             hour.rotation = getHoursInDegrees(getCurrentTimeData())
             minutes.rotation = getMinutesInDegrees(getCurrentTimeData())
 
-            seconds.rotation = if (delay < 1000) {
-                getSecondsInDegreesWithDecimalPrecision(getCurrentTimeData())
-            } else {
-                getSecondsInDegrees(getCurrentTimeData())
+            when (movementType) {
+                "oscillate" -> {
+                    seconds.setPhysical(1F, -1F, 25000F)
+                    seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData()), true)
+                    sweepSeconds.setPhysical(1F, -1F, 25000F)
+                    sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData()) - 90F, true)
+                }
+                "tick_smooth" -> {
+                    seconds.setPhysical(-1F, 5F, 5000F)
+                    seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData()), true)
+                    sweepSeconds.setPhysical(-1F, 5F, 5000F)
+                    sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData()) - 90F, true)
+                }
+                "smooth",
+                "tick" -> {
+                    seconds.rotation = if (delay < 1000) {
+                        getSecondsInDegreesWithDecimalPrecision(getCurrentTimeData())
+                    } else {
+                        getSecondsInDegrees(getCurrentTimeData())
+                    }
+
+                    sweepSeconds.rotation = seconds.rotation - 90
+                }
             }
-            sweepSeconds.rotation = seconds.rotation - 90
 
             if (dayNightIndicatorImageCountViolation != 0) {
                 val calendar = getCurrentTimeData().hour
@@ -343,9 +364,9 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
         loadImage(clockNeedleSkins[value][2], seconds, requireContext(), 200)
     }
 
-    private fun setMotionDelay(value: Boolean) {
+    private fun setMotionDelay(value: String) {
         handler.removeCallbacks(clock)
-        delay = if (value) {
+        delay = if (value == "smooth") {
             (1000 / getDisplayRefreshRate(requireContext(), requireActivity())!!).toLong()
         } else {
             1000
@@ -513,6 +534,7 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             ClockPreferences.clockNeedleMovementType -> {
+                movementType = ClockPreferences.getMovementType()
                 setMotionDelay(ClockPreferences.getMovementType())
             }
             ClockPreferences.clockNeedle -> {

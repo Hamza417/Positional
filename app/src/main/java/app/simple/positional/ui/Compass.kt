@@ -21,6 +21,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -30,7 +31,6 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
 import app.simple.positional.constants.CompassBloom.compassBloomTextColor
-import app.simple.positional.decorations.corners.DynamicCornerMaterialToolbar
 import app.simple.positional.decorations.views.CompassView
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.dialogs.app.ErrorDialog
@@ -109,7 +109,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
     private lateinit var dialContainer: FrameLayout
     private lateinit var compassListScrollView: NestedScrollView
     private lateinit var dim: View
-    private lateinit var toolbar: DynamicCornerMaterialToolbar
+    private lateinit var toolbar: ConstraintLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.frag_compass, container, false)
@@ -244,7 +244,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
                 expandUp.alpha = 1 - slideOffset
                 dim.alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                toolbar.translationY = toolbar.height * -slideOffset
+                //toolbar.translationY = toolbar.height * -slideOffset
             }
         })
 
