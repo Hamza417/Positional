@@ -374,7 +374,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
         }
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
 
         if (!haveMagnetometerSensor && !haveAccelerometerSensor) {
             accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.not_available)}")
@@ -382,7 +382,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
             return
         }
 
-        if (sensor == sensorAccelerometer) {
+        if (sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
                     accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
@@ -401,7 +401,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
             }
         }
 
-        if (sensor == sensorAccelerometer) {
+        if (sensor.type == Sensor.TYPE_ACCELEROMETER) {
             when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
                     accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
