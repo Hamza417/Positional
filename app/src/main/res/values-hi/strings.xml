@@ -129,7 +129,6 @@
     <string name="keep_screen_on">स्क्रीन चालू रखें</string>
     <string name="legal_notes">कानूनी नोट्स</string>
     <string name="app_version">ऐप का वर्श़न</string>
-    <string name="development_status">विकास की स्थिति</string>
     <string name="change_logs">चेंज लॉग</string>
     <string name="found_an_issue">एक मुद्दा मिला?</string>
     <string name="translate">अनुवाद करें</string>
@@ -145,7 +144,6 @@
     <string name="desc_specified_location">कस्टम अक्षांश और देशांतर निर्दिष्ट करें और जानकारी प्राप्त करने के लिए इसका उपयोग करें। कोई भी जानकारी जो केवल GPS का उपयोग करती है अप्रभावित रहेगी।</string>
     <string name="desc_screen_on">ऐप दिखाई देने पर डिवाइस को सोने से रोकता है</string>
     <string name="desc_legal">ऐप की अस्वीकृति, गोपनीयता नीति और उपयोग की शर्तें पढ़ें</string>
-    <string name="desc_status">आगामी निर्माण के लिए ऐप्लिकेशन के वर्तमान विकास की स्थिति प्राप्त करें|</string>
     <string name="desc_changes">पिछले निर्माण के बाद हुए परिवर्तनों की सूची</string>
     <string name="desc_git">ऐप का रिपॉजिटरी खोलें</string>
     <string name="desc_translate">अपनी मूल भाषा में एप्लिकेशन का अनुवाद करने में सहायता करें I</string>

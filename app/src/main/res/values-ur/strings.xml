@@ -129,7 +129,6 @@
     <string name="keep_screen_on">اسکرین آون رکھیں</string>
     <string name="legal_notes">قانونی نوٹ</string>
     <string name="app_version">ایپ ورژن</string>
-    <string name="development_status">ترقی کی حیثیت</string>
     <string name="change_logs">چینج لوگص</string>
     <string name="found_an_issue">ایک مسئلہ ملا؟</string>
     <string name="translate">ترجمہ کریں</string>
@@ -145,7 +144,6 @@
     <string name="desc_specified_location">عرض البلد اور طول البلد کی وضاحت کریں اور معلومات لانے کیلئے اس کا استعمال کریں۔ کوئی بھی معلومات جو صرف GPS استعمال کرتی ہے وہ متاثر نہیں ہوگی۔</string>
     <string name="desc_screen_on">ایپ کے مرئی ہونے کے دوران آلے کو آف کرنے سے روکتا ہے</string>
     <string name="desc_legal">ایپ کی دستبرداری ، رازداری کی پالیسی اور استعمال کی شرائط پڑھیں</string>
-    <string name="desc_status">آئندہ تعمیر کیلئے ایپ کی موجودہ ترقیاتی حیثیت حاصل کریں</string>
     <string name="desc_changes">اس ورژن میں تبدیلیوں کی فہرست۔</string>
     <string name="desc_git">ایپ کا ذخیرہ کھولیں</string>
     <string name="desc_translate">اپنی مادری زبان میں ایپ کا ترجمہ کرنے میں مدد کریں</string>

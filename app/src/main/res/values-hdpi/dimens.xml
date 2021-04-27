@@ -68,7 +68,6 @@
     <dimen name="touch_indicator_size">100dp</dimen>
     <dimen name="license_text_size">22sp</dimen>
     <dimen name="license_check_indicator_dimen">30dp</dimen>
-    <dimen name="button_text_size">11sp</dimen>
     <dimen name="popup_text_size">12sp</dimen>
 
     <!-- Switch -->

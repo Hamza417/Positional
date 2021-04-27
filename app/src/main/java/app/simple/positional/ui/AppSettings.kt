@@ -45,7 +45,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
     private lateinit var customLocation: ConstraintLayout
     private lateinit var appVersion: LinearLayout
     private lateinit var legalNotes: LinearLayout
-    private lateinit var developmentStatus: LinearLayout
     private lateinit var changeLogs: LinearLayout
     private lateinit var github: LinearLayout
     private lateinit var translate: LinearLayout
@@ -77,7 +76,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
         customLocation = view.findViewById(R.id.setting_custom_location)
         appVersion = view.findViewById(R.id.current_app_version)
         legalNotes = view.findViewById(R.id.legal_notes)
-        developmentStatus = view.findViewById(R.id.development_status)
         changeLogs = view.findViewById(R.id.change_logs)
         github = view.findViewById(R.id.github)
         foundIssues = view.findViewById(R.id.found_issues)
@@ -218,12 +216,9 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
             popupMenu.popupMenuCallback = this
         }
 
-        developmentStatus.setOnClickListener {
-            HtmlViewer.newInstance("Development Status").show(childFragmentManager, "development_status")
-        }
-
         changeLogs.setOnClickListener {
-            HtmlViewer.newInstance("Change Logs").show(childFragmentManager, "change_logs")
+            HtmlViewer.newInstance("Change Logs")
+                    .show(childFragmentManager, "change_logs")
         }
 
         github.setOnClickListener {

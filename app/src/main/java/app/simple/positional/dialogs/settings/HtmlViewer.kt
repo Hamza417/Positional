@@ -69,6 +69,11 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
                 getString(R.string.internet_uses) -> {
                     webView.loadUrl("file:///android_asset/html/internet_uses.html")
                 }
+                /**
+                 * Not used anymore as it can send many requests to GitHub.
+                 *
+                 * Although reserved until I managed to get a private server
+                 */
                 "Development Status" -> {
                     webView.loadUrl("file:///android_asset/html/loading.html")
                     launch {

@@ -129,7 +129,6 @@
     <string name="keep_screen_on">Поддържане на екрана включен</string>
     <string name="legal_notes">Правни бележки</string>
     <string name="app_version">Версия на приложението</string>
-    <string name="development_status">Статус на разработка</string>
     <string name="change_logs">Списък с промени</string>
     <string name="found_an_issue">Намерихте проблем?</string>
     <string name="translate">Превод</string>
@@ -145,7 +144,6 @@
     <string name="desc_specified_location">Посочете персонализирана ширина и дължина и я използвайте за извличане на информация. Всяка информация, която използва GPS, ще остане незасегната</string>
     <string name="desc_screen_on">Предотвратяване заспиването на устройството, докато се използва приложението</string>
     <string name="desc_legal">Прочетете Отказ от отговорност, Политика за поверителност и Условия за използване на приложението</string>
-    <string name="desc_status">Получете текущото състояние на разработката на приложението за предстоящата компилация</string>
     <string name="desc_changes">Списък на промените за тази компилация</string>
     <string name="desc_git">Отворете хранилището на приложението</string>
     <string name="desc_translate">Помогнете за превода на приложението на вашия роден език</string>

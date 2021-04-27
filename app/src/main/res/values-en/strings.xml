@@ -129,7 +129,6 @@
     <string name="keep_screen_on">Keep Screen On</string>
     <string name="legal_notes">Legal Notes</string>
     <string name="app_version">App Version</string>
-    <string name="development_status">Development Status</string>
     <string name="change_logs">Change Logs</string>
     <string name="found_an_issue">Found an issue?</string>
     <string name="translate">Translation</string>
@@ -145,7 +144,6 @@
     <string name="desc_specified_location">Specify custom Latitude and Longitude and use it to fetch information. Any information that only uses GPS will stay unaffected.</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
     <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>
-    <string name="desc_status">Get the app\'s current development status for the upcoming build</string>
     <string name="desc_changes">List of changes for this build</string>
     <string name="desc_git">Open app\'s repository</string>
     <string name="desc_translate">Help translating the app in your native language</string>
