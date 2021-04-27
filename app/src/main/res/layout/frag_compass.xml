@@ -37,11 +37,11 @@
             android:contentDescription="@string/compass_options"
             android:src="@drawable/ic_menu"
             android:tint="@color/iconColor"
-            app:layout_constraintBottom_toTopOf="@id/direction"
+            app:layout_constraintBottom_toBottomOf="@+id/textView8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView8"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/textView8" />
 
         <TextView
             android:id="@+id/direction"

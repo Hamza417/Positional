@@ -70,7 +70,7 @@
             <Button
                 android:id="@+id/close"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/ripple_btn"
                 android:fontFamily="@font/medium"
                 android:text="@string/button_close"
@@ -79,11 +79,12 @@
             <Button
                 android:id="@+id/grant"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="@drawable/ripple_btn"
                 android:fontFamily="@font/medium"
                 android:text="@string/button_grant"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/textPrimary" />
 
         </LinearLayout>

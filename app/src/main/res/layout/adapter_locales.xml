@@ -20,7 +20,7 @@
         android:fontFamily="@font/medium"
         android:layout_weight="1"
         android:textColor="@color/textSecondary"
-        android:textSize="7pt" />
+        android:textSize="@dimen/options_item_text_size" />
 
     <ImageView
         android:id="@+id/locale_indicator"

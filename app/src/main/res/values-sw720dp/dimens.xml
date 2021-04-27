@@ -13,8 +13,8 @@
     <dimen name="info_text_item_margin_vertical">5dp</dimen>
     <dimen name="peek_height">200dp</dimen>
     <dimen name="expand_up_image_size">50dp</dimen>
-    <dimen name="info_text_primary_size">30pt</dimen>
-    <dimen name="info_text_secondary_size">12pt</dimen>
+    <dimen name="info_text_primary_size">67sp</dimen>
+    <dimen name="info_text_secondary_size">27sp</dimen>
     <dimen name="copy_button_dimensions">70dp</dimen>
     <dimen name="notification_button_padding">10dp</dimen>
     <dimen name="info_graphics_dimension">200dp</dimen>
@@ -22,42 +22,48 @@
     <!-- Dialog Menus -->
     <dimen name="options_text_margin_start">10dp</dimen>
     <dimen name="options_item_padding">20dp</dimen>
-    <dimen name="options_item_text_size">10pt</dimen>
+    <dimen name="options_item_text_size">22sp</dimen>
     <dimen name="options_container_horizontal_padding">15dp</dimen>
     <dimen name="options_container_vertical_padding">10dp</dimen>
     <dimen name="options_sub_item_padding">10dp</dimen>
     <dimen name="dialog_height">700dp</dimen>
-    <dimen name="description_text_size">8pt</dimen>
+    <dimen name="description_text_size">18sp</dimen>
 
     <!-- Top Bar -->
-    <dimen name="top_bar_text_size">24pt</dimen>
+    <dimen name="top_bar_text_size">53sp</dimen>
     <dimen name="top_bar_button_size">60dp</dimen>
 
     <!-- Compass -->
     <dimen name="compass_dial">500dp</dimen>
-    <dimen name="compass_degrees_text_size">40pt</dimen>
+    <dimen name="compass_degrees_text_size">89sp</dimen>
     <dimen name="degree_indicator_margin_top">80dp</dimen>
     <dimen name="degrees_indicator_dimension">50dp</dimen>
     <dimen name="compass_bloom_dimension">400dp</dimen>
-    <dimen name="compass_direction_text_size">20pt</dimen>
+    <dimen name="compass_direction_text_size">44sp</dimen>
 
     <!-- Level -->
     <dimen name="level_indicator">250dp</dimen>
     <dimen name="level_dot">50dp</dimen>
-    <dimen name="level_text_size">10pt</dimen>
+    <dimen name="level_text_size">22sp</dimen>
 
     <!-- Settings -->
-    <dimen name="settings_primary_text_size">12pt</dimen>
-    <dimen name="settings_secondary_text_size">10pt</dimen>
+    <dimen name="settings_category_text_size">44sp</dimen>
+    <dimen name="settings_primary_text_size">27sp</dimen>
+    <dimen name="settings_secondary_text_size">22sp</dimen>
 
     <!-- Miscellaneous/Main Base Activity -->
     <dimen name="bottom_nav_height">100dp</dimen>
     <dimen name="all_corner_radius">20dp</dimen>
-    <dimen name="launcher_app_title">30pt</dimen>
+    <dimen name="launcher_app_title">67sp</dimen>
     <dimen name="launcher_app_icon_dimen">250dp</dimen>
     <dimen name="touch_indicator_size">100dp</dimen>
-    <dimen name="license_text_size">26pt</dimen>
+    <dimen name="license_text_size">58sp</dimen>
     <dimen name="license_check_indicator_dimen">100dp</dimen>
-    <dimen name="button_text_size">5pt</dimen>
-    <dimen name="popup_text_size">8pt</dimen>
+    <dimen name="button_text_size">11sp</dimen>
+    <dimen name="popup_text_size">18sp</dimen>
+
+    <!-- Switch -->
+    <dimen name="switch_width">50dp</dimen>
+    <dimen name="switch_padding">5dp</dimen>
+    <dimen name="switch_thumb_dimensions">20dp</dimen>
 </resources>

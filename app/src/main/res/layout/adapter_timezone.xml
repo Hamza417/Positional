@@ -31,7 +31,7 @@
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/regular"
             android:textColor="@color/textSecondary"
-            android:textSize="7pt" />
+            android:textSize="@dimen/options_item_text_size" />
 
         <TextView
             android:id="@+id/time_zone_adapter_offset"
@@ -40,7 +40,7 @@
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/regular"
             android:textColor="@color/textTertiary"
-            android:textSize="5pt" />
+            android:textSize="@dimen/description_text_size" />
 
     </LinearLayout>
 </LinearLayout>

@@ -44,7 +44,7 @@
             android:lines="3"
             android:paddingHorizontal="5dp"
             android:textColor="@color/textPrimary"
-            android:textSize="6pt" />
+            android:textSize="@dimen/description_text_size" />
 
         <app.simple.positional.sparkline.SparkLineLayout
             android:id="@+id/location_accuracy_chart"

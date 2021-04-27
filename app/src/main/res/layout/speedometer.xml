@@ -1,4 +1,5 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="20dp">
@@ -8,12 +9,14 @@
         android:layout_width="@dimen/clock_image_dimensions"
         android:layout_height="@dimen/clock_image_dimensions"
         android:layout_gravity="center"
-        android:src="@drawable/speedometer_dial_normal_range" />
+        android:src="@drawable/speedometer_dial_normal_range"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/speedometer_needle"
         android:layout_width="@dimen/clock_image_dimensions"
         android:layout_height="@dimen/clock_image_dimensions"
         android:layout_gravity="center"
-        android:src="@drawable/speedometer_needle" />
+        android:src="@drawable/speedometer_needle"
+        tools:ignore="ContentDescription" />
 </merge>

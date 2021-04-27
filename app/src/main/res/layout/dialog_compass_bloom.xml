@@ -25,7 +25,7 @@
             android:layout_marginBottom="15dp"
             android:fontFamily="@font/regular"
             android:textColor="@color/textPrimary"
-            android:textSize="6pt" />
+            android:textSize="@dimen/options_item_text_size" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/bloom_skin_view_pager"

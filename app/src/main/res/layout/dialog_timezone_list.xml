@@ -55,7 +55,7 @@
                 android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@color/textPrimary"
-                android:textSize="8pt" />
+                android:textSize="@dimen/options_item_text_size" />
         </LinearLayout>
 
         <View

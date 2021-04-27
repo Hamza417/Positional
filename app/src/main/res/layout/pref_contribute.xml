@@ -13,7 +13,7 @@
         android:fontFamily="@font/medium"
         android:text="@string/contribute"
         android:textColor="@color/textSecondary"
-        android:textSize="10pt" />
+        android:textSize="@dimen/settings_category_text_size" />
 
     <View
         android:layout_width="match_parent"

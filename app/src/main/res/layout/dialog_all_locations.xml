@@ -41,7 +41,7 @@
                 android:fontFamily="@font/medium"
                 android:text="@string/specified_data_list_locations"
                 android:textColor="@color/textPrimary"
-                android:textSize="8pt" />
+                android:textSize="@dimen/info_text_secondary_size" />
 
             <ImageButton
                 android:id="@+id/delete_locations"

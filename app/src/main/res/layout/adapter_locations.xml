@@ -28,7 +28,7 @@
         android:ellipsize="end"
         android:fontFamily="@font/medium"
         android:textColor="@color/textPrimary"
-        android:textSize="7pt" />
+        android:textSize="@dimen/options_item_text_size" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
             android:fontFamily="@font/regular"
             android:maxLines="1"
             android:textColor="@color/textSecondary"
-            android:textSize="5pt" />
+            android:textSize="@dimen/description_text_size" />
 
         <TextView
             android:id="@+id/adapter_locations_longitude"
@@ -54,7 +54,7 @@
             android:fontFamily="@font/regular"
             android:maxLines="1"
             android:textColor="@color/textSecondary"
-            android:textSize="5pt" />
+            android:textSize="@dimen/description_text_size" />
 
     </LinearLayout>
 </LinearLayout>
