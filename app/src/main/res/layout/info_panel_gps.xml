@@ -43,6 +43,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ripple_btn"
                 android:src="@drawable/ic_save"
+                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/button_copy"
                 app:tint="@color/iconColor" />
 

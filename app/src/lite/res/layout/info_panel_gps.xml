@@ -1,4 +1,4 @@
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.padding.PaddingAwareNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/gps_list_scroll_view"
@@ -339,4 +339,4 @@
 
     </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+</app.simple.positional.decorations.padding.PaddingAwareNestedScrollView>

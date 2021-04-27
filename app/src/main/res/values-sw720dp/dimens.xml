@@ -30,7 +30,7 @@
     <dimen name="description_text_size">18sp</dimen>
 
     <!-- Top Bar -->
-    <dimen name="top_bar_text_size">53sp</dimen>
+    <dimen name="top_bar_text_size">60sp</dimen>
     <dimen name="top_bar_button_size">60dp</dimen>
 
     <!-- Compass -->

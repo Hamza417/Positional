@@ -45,8 +45,8 @@
 
             <ImageButton
                 android:id="@+id/delete_locations"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/top_bar_button_size"
+                android:layout_height="@dimen/top_bar_button_size"
                 android:layout_gravity="end"
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/delete_all"
