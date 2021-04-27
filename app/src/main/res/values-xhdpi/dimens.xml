@@ -30,9 +30,7 @@
     <dimen name="description_text_size">5pt</dimen>
 
     <!-- Top Bar -->
-    <dimen name="top_bar_elevation">2dp</dimen>
     <dimen name="top_bar_text_size">10pt</dimen>
-    <dimen name="top_bar_height">60dp</dimen>
     <dimen name="top_bar_button_size">30dp</dimen>
 
     <!-- Compass -->

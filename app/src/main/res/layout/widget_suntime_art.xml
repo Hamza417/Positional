@@ -177,7 +177,7 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:layout_gravity="bottom"
-        android:src="@drawable/launcher_day_06"
+        android:src="@drawable/launcher_day_07"
         tools:ignore="ContentDescription" />
 
 </FrameLayout>

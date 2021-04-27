@@ -5,7 +5,6 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.widget.RemoteViews
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.constants.LauncherBackground
 import app.simple.positional.preference.ClockPreferences
@@ -27,13 +26,16 @@ import java.util.*
 class SunTimeWidgetArt : AppWidgetProvider() {
 
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+
         onWidgetUpdate(context)
+
         super.onUpdate(context, appWidgetManager, appWidgetIds)
     }
 
     override fun onEnabled(context: Context) {
-        onWidgetUpdate(context)
         super.onEnabled(context)
+
+        onWidgetUpdate(context)
     }
 
     private fun onWidgetUpdate(context: Context) {
@@ -76,11 +78,8 @@ class SunTimeWidgetArt : AppWidgetProvider() {
 
                 views.setTextViewText(R.id.widget_suntime_heading, updateTime)
 
-                views.setImageViewResource(R.id.widget_suntime_art, if (BuildConfig.FLAVOR == "lite") {
-                    R.drawable.launcher_day_06
-                } else {
-                    LauncherBackground.vectorBackground[LauncherBackground.vectorBackground.indices.random()]
-                })
+                views.setImageViewResource(R.id.widget_suntime_art,
+                        LauncherBackground.vectorBackground[LauncherBackground.vectorBackground.indices.random()])
 
                 if (MainPreferences.isCustomCoordinate()) {
                     views.setImageViewResource(R.id.widget_suntime_icon, R.drawable.ic_place_custom)

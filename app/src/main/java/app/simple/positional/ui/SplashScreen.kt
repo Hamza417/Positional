@@ -15,7 +15,6 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.main.MainActivity
 import app.simple.positional.constants.*
@@ -57,13 +56,8 @@ class SplashScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (BuildConfig.FLAVOR == "full") {
-            randomDayValue = LauncherBackground.vectorBackground.indices.random()
-            randomNightValue = LauncherBackground.vectorBackgroundNight.indices.random()
-        } else {
-            randomDayValue = 5
-            randomNightValue = 0
-        }
+        randomDayValue = LauncherBackground.vectorBackground.indices.random()
+        randomNightValue = LauncherBackground.vectorBackgroundNight.indices.random()
 
         when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {

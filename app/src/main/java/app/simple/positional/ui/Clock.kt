@@ -55,7 +55,6 @@ import java.util.*
 
 class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private lateinit var toolbar: LinearLayout
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
     private lateinit var hour: ImageView
@@ -142,7 +141,6 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         scrollView = view.findViewById(R.id.clock_panel_scrollview)
         scrollView.alpha = 0f
-        toolbar = view.findViewById(R.id.clock_appbar)
         expandUp = view.findViewById(R.id.expand_up_clock_sheet)
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
         backPress = requireActivity().onBackPressedDispatcher

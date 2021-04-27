@@ -1,6 +1,6 @@
 package app.simple.positional.constants
 
-import android.graphics.Color
+import android.graphics.Color.parseColor
 import app.simple.positional.R
 
 object LauncherBackground {
@@ -176,8 +176,4 @@ object LauncherBackground {
             intArrayOf(parseColor("#FF35556f"), parseColor("#FF5492c2")),
             intArrayOf(parseColor("#FF0096FF"), parseColor("#FF1A47A2"))
     )
-
-    private fun parseColor(value: String): Int {
-        return Color.parseColor(value)
-    }
 }

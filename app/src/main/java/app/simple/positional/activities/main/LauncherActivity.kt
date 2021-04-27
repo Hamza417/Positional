@@ -38,6 +38,7 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
             "open_compass" -> {
                 setScreenValue(1)
             }
+            "action_map_panel_full",
             "open_gps" -> {
                 setScreenValue(2)
             }
@@ -45,8 +46,6 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
                 setScreenValue(3)
             }
         }
-
-        println(intent.action)
     }
 
     private fun setScreenValue(value: Int) {

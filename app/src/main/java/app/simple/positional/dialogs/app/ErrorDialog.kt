@@ -12,6 +12,7 @@ import app.simple.positional.decorations.views.CustomWebView
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.preference.LevelPreferences
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preference.WidgetPreferences
 
 class ErrorDialog : CustomBottomSheetDialogFragment() {
 
@@ -41,6 +42,10 @@ class ErrorDialog : CustomBottomSheetDialogFragment() {
             "Level Sensor" -> {
                 webView.loadUrl("file:///android_asset/html/error_level_sensor.html")
             }
+
+            "Widget" -> {
+                webView.loadUrl("file:///android_asset/html/widget_alert.html")
+            }
         }
 
         showAgainCheckBox.setOnCheckedChangeListener { _, isChecked ->
@@ -53,6 +58,9 @@ class ErrorDialog : CustomBottomSheetDialogFragment() {
                 }
                 "Level Sensor" -> {
                     LevelPreferences.setNoSensorAlert(isChecked)
+                }
+                "Widget" -> {
+                    WidgetPreferences.setWidgetAlertShowAgain(isChecked)
                 }
             }
         }
