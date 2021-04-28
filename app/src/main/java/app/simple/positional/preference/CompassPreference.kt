@@ -11,9 +11,9 @@ object CompassPreference {
     const val dampingCoefficient = "damping_coefficient"
     const val magneticCoefficient = "magnetic_coefficient"
     const val rotationalInertia = "rotational_inertia"
+    const val usePhysicalProperties = "use_physical_properties"
     private const val noSensorAlertCompass = "no_sensor_alert_compass_dialog_show"
 
-    // Parallax
     fun setDirectionCode(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(direction_code, value).apply()
     }
@@ -71,5 +71,13 @@ object CompassPreference {
 
     fun setNoSensorAlert(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(noSensorAlertCompass, value).apply()
+    }
+
+    fun setUsePhysicalProperties(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(usePhysicalProperties, value).apply()
+    }
+
+    fun isUsingPhysicalProperties(): Boolean {
+        return getSharedPreferences().getBoolean(usePhysicalProperties, true)
     }
 }

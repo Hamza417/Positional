@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.SeekBar
 import app.simple.positional.R
+import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.preference.CompassPreference
@@ -21,17 +23,21 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
     private lateinit var magneticCoefficient: SeekBar
     private lateinit var reset: ImageButton
     private lateinit var help: ImageButton
+    private lateinit var toggle: SwitchView
+    private lateinit var toggleContainer: LinearLayout
 
     private var objectAnimator: ObjectAnimator? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.dialog_compass_speed, container, false)
+        val view = inflater.inflate(R.layout.dialog_compass_physical_properties, container, false)
 
         dampingCoefficient = view.findViewById(R.id.compass_damping_coefficient_seekbar)
         rotationalInertia = view.findViewById(R.id.compass_rotational_inertia_seekbar)
         magneticCoefficient = view.findViewById(R.id.compass_magnetic_coefficient_seekbar)
         reset = view.findViewById(R.id.reset_physical_properties)
         help = view.findViewById(R.id.help_physical_properties)
+        toggle = view.findViewById(R.id.compass_physical_properties)
+        toggleContainer = view.findViewById(R.id.compass_toggle_physical_properties)
 
         dampingCoefficient.max = 50
         rotationalInertia.max = 50
@@ -46,6 +52,9 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        toggle.isChecked = CompassPreference.isUsingPhysicalProperties()
+        isChecked(toggle.isChecked)
 
         dampingCoefficient.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -99,6 +108,25 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
             HtmlViewer.newInstance(getString(R.string.physical_properties))
                     .show(childFragmentManager, "help")
         }
+
+        toggleContainer.setOnClickListener {
+            toggle.isChecked = !toggle.isChecked
+        }
+
+        toggle.setOnCheckedChangeListener {
+            CompassPreference.setUsePhysicalProperties(it)
+            isChecked(it)
+        }
+    }
+
+    private fun isChecked(boolean: Boolean) {
+        rotationalInertia.isEnabled = !boolean
+        dampingCoefficient.isEnabled = !boolean
+        magneticCoefficient.isEnabled = !boolean
+
+        rotationalInertia.animate().alpha(if (boolean) 0.5F else 1F).setInterpolator(DecelerateInterpolator(1.5F)).start()
+        dampingCoefficient.animate().alpha(if (boolean) 0.5F else 1F).setInterpolator(DecelerateInterpolator(1.5F)).start()
+        magneticCoefficient.animate().alpha(if (boolean) 0.5F else 1F).setInterpolator(DecelerateInterpolator(1.5F)).start()
     }
 
     override fun onDismiss(dialog: DialogInterface) {

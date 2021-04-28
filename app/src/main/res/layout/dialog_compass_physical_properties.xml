@@ -13,6 +13,8 @@
         android:layout_margin="@dimen/options_container_horizontal_padding"
         android:backgroundTint="@color/toolbarBackground"
         android:elevation="40dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         android:orientation="vertical"
         android:padding="@dimen/options_container_horizontal_padding">
 
@@ -20,15 +22,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="10dp"
             android:padding="@dimen/options_text_margin_start">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:fontFamily="@font/medium"
-                android:layout_gravity="center_vertical"
                 android:text="@string/physical_properties"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
@@ -37,17 +38,47 @@
                 android:id="@+id/reset_physical_properties"
                 android:layout_width="@dimen/top_bar_button_size"
                 android:layout_height="@dimen/top_bar_button_size"
-                android:src="@drawable/ic_reset"
                 android:background="@drawable/ripple_btn"
-                android:contentDescription="@string/button_reset" />
+                android:contentDescription="@string/button_reset"
+                android:src="@drawable/ic_reset" />
 
             <ImageButton
                 android:id="@+id/help_physical_properties"
                 android:layout_width="@dimen/top_bar_button_size"
                 android:layout_height="@dimen/top_bar_button_size"
-                android:src="@drawable/ic_help_outline"
                 android:background="@drawable/ripple_btn"
-                android:contentDescription="@string/help" />
+                android:contentDescription="@string/help"
+                android:src="@drawable/ic_help_outline" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/compass_toggle_physical_properties"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="@string/use_physical_properties"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
+
+            <app.simple.positional.decorations.switchview.SwitchView
+                android:id="@+id/compass_physical_properties"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -56,6 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="@dimen/options_text_margin_start"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/regular"
             android:text="@string/rotational_inertia"
             android:textColor="@color/textPrimary"

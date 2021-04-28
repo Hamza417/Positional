@@ -71,6 +71,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
     private var haveMagnetometerSensor = false
     private var showDirectionCode = true
     private var isUserRotatingDial = false
+    private var isAnimated = true
 
     private var accelerometer = Vector3.zero
     private var magnetometer = Vector3.zero
@@ -167,6 +168,7 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
         }
 
         flowerBloom = CompassPreference.getFlowerBloomTheme()
+        isAnimated = CompassPreference.isUsingPhysicalProperties()
         setPhysicalProperties()
         setFlower(CompassPreference.isFlowerBloomOn())
 
@@ -370,16 +372,18 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
 
         if (!isUserRotatingDial) {
             rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
-            viewRotation(rotationAngle, true)
+            viewRotation(rotationAngle, isAnimated)
         }
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
 
-        if (!haveMagnetometerSensor && !haveAccelerometerSensor) {
+        if (!haveMagnetometerSensor) {
             accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.not_available)}")
+        }
+
+        if (!haveAccelerometerSensor) {
             accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.not_available)}")
-            return
         }
 
         if (sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
@@ -444,8 +448,6 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
         val inertia = CompassPreference.getRotationalInertia()
         val damping = CompassPreference.getDampingCoefficient()
         val magnetic = CompassPreference.getMagneticCoefficient()
-
-        println("$inertia, $damping, $magnetic")
 
         dial.setPhysical(inertia, damping, magnetic)
         flowerOne.setPhysical(inertia, damping, magnetic)
@@ -529,6 +531,9 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
             }
             CompassPreference.flowerBloom -> {
                 setFlower(CompassPreference.isFlowerBloomOn())
+            }
+            CompassPreference.usePhysicalProperties -> {
+                isAnimated = CompassPreference.isUsingPhysicalProperties()
             }
         }
     }
