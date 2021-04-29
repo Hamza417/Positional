@@ -2,6 +2,9 @@ package app.simple.positional.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
+import android.content.res.ColorStateList
+import android.graphics.Color.parseColor
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -14,24 +17,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import app.simple.positional.R
+import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.preference.LevelPreferences
 import app.simple.positional.preference.LevelPreferences.isNoSensorAlertON
-import app.simple.positional.util.AsyncImageLoader.loadImageResourcesWithoutAnimation
+import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.HtmlHelper.fromHtml
 
-class Level : Fragment(), SensorEventListener {
+class Level : ScopedFragment(), SensorEventListener {
 
     private lateinit var levelIndicator: ImageView
     private lateinit var levelDot: ImageView
     private lateinit var boundingBox: FrameLayout
     private lateinit var levelX: TextView
     private lateinit var levelY: TextView
+    private lateinit var styleButton: ImageButton
 
     private lateinit var gravity: Sensor
     private lateinit var sensorManager: SensorManager
@@ -56,6 +62,7 @@ class Level : Fragment(), SensorEventListener {
         boundingBox = view.findViewById(R.id.indicator_bounding_box)
         levelX = view.findViewById(R.id.level_x)
         levelY = view.findViewById(R.id.level_y)
+        styleButton = view.findViewById(R.id.level_circle)
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         if (sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY) != null) {
@@ -91,8 +98,8 @@ class Level : Fragment(), SensorEventListener {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadImageResourcesWithoutAnimation(R.drawable.level_indicator, levelIndicator, requireContext())
-        loadImageResourcesWithoutAnimation(R.drawable.level_dot, levelDot, requireContext())
+
+        setStyle()
 
         boundingBox.setOnTouchListener { _, event ->
             when (event.action) {
@@ -129,6 +136,10 @@ class Level : Fragment(), SensorEventListener {
             }
             true
         }
+
+        styleButton.setOnClickListener {
+            LevelPreferences.setSquareStyle(!LevelPreferences.isSquareStyle())
+        }
     }
 
     override fun onResume() {
@@ -161,9 +172,9 @@ class Level : Fragment(), SensorEventListener {
             // level_dot.scaleY = 2 - ((gravityReadings[0] + gravityReadings[1]) / 2)
 
             if (gravityReadings[0] in -0.2..0.2 && gravityReadings[1] in -0.2..0.2) {
-                levelDot.setImageResource(R.drawable.level_dot_in_range)
+                levelDot.imageTintList = ColorStateList.valueOf(parseColor("#37A4CF"))
             } else {
-                levelDot.setImageResource(R.drawable.level_dot)
+                levelDot.imageTintList = ColorStateList.valueOf(parseColor("#BF4848"))
             }
 
             if (gravityReadings[0] * gravityWidthMotionCompensator - levelIndicator.width / 2
@@ -187,6 +198,26 @@ class Level : Fragment(), SensorEventListener {
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
         /* no-op */
+    }
+
+    private fun setStyle() {
+        if (LevelPreferences.isSquareStyle()) {
+            loadImage(R.drawable.level_indicator_square, levelIndicator, requireContext(), 0)
+            loadImage(R.drawable.level_dot_square, levelDot, requireContext(), 100)
+            loadImage(R.drawable.ic_square, styleButton, requireContext(), 0)
+        } else {
+            loadImage(R.drawable.level_indicator, levelIndicator, requireContext(), 0)
+            loadImage(R.drawable.level_dot, levelDot, requireContext(), 100)
+            loadImage(R.drawable.ic_circle, styleButton, requireContext(), 0)
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            LevelPreferences.isSquareStyle -> {
+                setStyle()
+            }
+        }
     }
 
     companion object {

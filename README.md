@@ -21,7 +21,7 @@
 [![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
 [![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
 
-[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build88/app-lite-release.apk)
+[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build89/app-lite-release.apk)
 
 [![Intro](https://img.shields.io/badge/App%20Intro-YouTube-E74C3C?style=flat&logo=youtube)](https://youtu.be/QU-ZLQShu_A)
 
@@ -34,6 +34,7 @@
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visits&edge_flat=false)](https://hits.seeyoufarm.com)
 [![Release](https://img.shields.io/github/v/release/Hamza417/Positional?color=212F3D&label=Release)](https://github.com/Hamza417/Positional/releases)
 ![Status](https://img.shields.io/badge/Status-Stable-orange)
+![Size](https://img.shields.io/github/repo-size/Hamza417/Positional?color=teal&label=Repo%20Size&logo=github)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional) [![CodeFactor](https://www.codefactor.io/repository/github/hamza417/positional/badge)](https://www.codefactor.io/repository/github/hamza417/positional)
 
 <br/>

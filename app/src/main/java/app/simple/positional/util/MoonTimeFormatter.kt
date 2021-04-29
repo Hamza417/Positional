@@ -29,9 +29,17 @@ object MoonTimeFormatter {
 
     private fun getMoonTimePattern(): String {
         return if (ClockPreferences.getDefaultClockTime()) {
-            "dd MMM, yyyy, hh:mm:ss a"
+            if (ClockPreferences.isUsingSecondsPrecision()) {
+                "dd MMM, yyyy, hh:mm:ss a"
+            } else {
+                "dd MMM, yyyy, hh:mm a"
+            }
         } else {
-            "dd MMM, yyyy, HH:mm:ss"
+            if (ClockPreferences.isUsingSecondsPrecision()) {
+                "dd MMM, yyyy, HH:mm:ss"
+            } else {
+                "dd MMM, yyyy, HH:mm"
+            }
         }
     }
 }

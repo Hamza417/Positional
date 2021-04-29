@@ -43,7 +43,6 @@ import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.Vector3
 import app.simple.positional.preference.CompassPreference
-import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
@@ -55,7 +54,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import java.util.*
 import kotlin.math.abs
 
-class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnSharedPreferenceChangeListener {
+class Compass : ScopedFragment(), SensorEventListener {
 
     private var handler = Handler(Looper.getMainLooper())
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
@@ -293,14 +292,12 @@ class Compass : ScopedFragment(), SensorEventListener, SharedPreferences.OnShare
     override fun onResume() {
         super.onResume()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
-        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
         register()
     }
 
     override fun onPause() {
         super.onPause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
-        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         handler.removeCallbacks(compassDialAnimationRunnable)
         objectAnimator?.removeAllListeners()
         objectAnimator?.cancel()

@@ -263,4 +263,6 @@
     <string name="help">Help</string>
     <string name="tick_smooth">Tick Smooth</string>
     <string name="tick_oscillate">Tick Oscillate</string>
+    <string name="use_physical_properties">Use Physical Properties</string>
+    <string name="seconds_precision">\"Seconds\" Precision</string>
 </resources>

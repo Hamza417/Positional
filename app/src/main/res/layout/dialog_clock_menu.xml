@@ -91,6 +91,39 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/clock_menu_remove_seconds_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_sub_item_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="@string/seconds_precision"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableStartCompat="@drawable/ic_precision"
+                app:drawableTint="@color/iconRegular" />
+
+            <app.simple.positional.decorations.switchview.SwitchView
+                android:id="@+id/toggle_remove_seconds_precision"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
 </LinearLayout>

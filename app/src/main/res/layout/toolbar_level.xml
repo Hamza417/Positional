@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.padding.PaddingAwareLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clock_appbar"
     style="@style/Widget.MaterialComponents.Toolbar.Surface"
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/heading"
-        android:text="@string/clock"
+        android:text="@string/level"
         android:paddingStart="10dp"
         android:textColor="@color/textPrimary"
         android:layout_gravity="center_vertical"
@@ -20,24 +20,13 @@
         tools:ignore="RtlSymmetry" />
 
     <ImageButton
-        android:id="@+id/clock_timezone"
+        android:id="@+id/level_circle"
         android:layout_width="@dimen/top_bar_button_size"
         android:layout_height="@dimen/top_bar_button_size"
         android:layout_gravity="center_vertical|end"
         android:background="@drawable/ripple_btn"
         android:contentDescription="@string/clock_options"
-        android:src="@drawable/ic_globe"
-        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_circle"
         android:tint="@color/iconColor" />
 
-    <ImageButton
-        android:id="@+id/clock_menu"
-        android:layout_width="@dimen/top_bar_button_size"
-        android:layout_height="@dimen/top_bar_button_size"
-        android:layout_gravity="center_vertical|end"
-        android:background="@drawable/ripple_btn"
-        android:contentDescription="@string/clock_options"
-        android:src="@drawable/ic_menu"
-        android:tint="@color/iconColor" />
-
-</LinearLayout>
+</app.simple.positional.decorations.padding.PaddingAwareLinearLayout>

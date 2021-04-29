@@ -1,6 +1,8 @@
 package app.simple.positional.activities.fragment
 
+import android.content.SharedPreferences
 import androidx.fragment.app.Fragment
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -12,7 +14,7 @@ import kotlin.coroutines.CoroutineContext
  * the given fragment. All [Fragment] classes must extend
  * this class instead
  */
-open class ScopedFragment : Fragment(), CoroutineScope {
+open class ScopedFragment : Fragment(), CoroutineScope, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * Get the job instance here, must be a final value
@@ -27,6 +29,11 @@ open class ScopedFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
+    override fun onResume() {
+        super.onResume()
+        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
+    }
+
     /**
      * Cancel the job instance here, since
      * we have attached the [Job] with [Dispatchers.Main]
@@ -37,5 +44,10 @@ open class ScopedFragment : Fragment(), CoroutineScope {
     override fun onDestroy() {
         job.cancel()
         super.onDestroy()
+        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+
     }
 }

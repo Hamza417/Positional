@@ -120,13 +120,13 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
     }
 
     private fun isChecked(boolean: Boolean) {
-        rotationalInertia.isEnabled = !boolean
-        dampingCoefficient.isEnabled = !boolean
-        magneticCoefficient.isEnabled = !boolean
+        rotationalInertia.isEnabled = boolean
+        dampingCoefficient.isEnabled = boolean
+        magneticCoefficient.isEnabled = boolean
 
-        rotationalInertia.animate().alpha(if (boolean) 0.5F else 1F).setInterpolator(DecelerateInterpolator(1.5F)).start()
-        dampingCoefficient.animate().alpha(if (boolean) 0.5F else 1F).setInterpolator(DecelerateInterpolator(1.5F)).start()
-        magneticCoefficient.animate().alpha(if (boolean) 0.5F else 1F).setInterpolator(DecelerateInterpolator(1.5F)).start()
+        rotationalInertia.animate().alpha(if (boolean) 1F else 0.5F).setInterpolator(DecelerateInterpolator(1.5F)).start()
+        dampingCoefficient.animate().alpha(if (boolean) 1F else 0.5F).setInterpolator(DecelerateInterpolator(1.5F)).start()
+        magneticCoefficient.animate().alpha(if (boolean) 1F else 0.5F).setInterpolator(DecelerateInterpolator(1.5F)).start()
     }
 
     override fun onDismiss(dialog: DialogInterface) {

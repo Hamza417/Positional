@@ -10,7 +10,7 @@
     <color name="textPrimary">#FFFFFF</color>
     <color name="dividerColor">#BDBDBD</color>
     <color name="toolbarBackground">#303030</color>
-    <color name="rippleColor">#8E8E8E</color>
+    <color name="rippleColor">#515151</color>
     <color name="edgeEffect">#EAEAEA</color>
 
     <!-- Bottom Bar Color -->

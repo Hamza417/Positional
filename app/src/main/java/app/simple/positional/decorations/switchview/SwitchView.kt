@@ -116,4 +116,8 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     fun setOnCheckedChangeListener(switchCallbacks: SwitchCallbacks) {
         this.switchCallbacks = switchCallbacks
     }
+
+    fun invertIsChecked() {
+        isChecked = !isChecked
+    }
 }

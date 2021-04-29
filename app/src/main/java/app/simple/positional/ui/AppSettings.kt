@@ -11,8 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.Fragment
 import app.simple.positional.R
+import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.popup.MainListPopupMenu
@@ -20,7 +20,6 @@ import app.simple.positional.decorations.popup.PopupMenuCallback
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.LocaleHelper.localeList
 import app.simple.positional.util.StatusBarHeight
 import com.factor.bouncy.BouncyNestedScrollView
@@ -28,7 +27,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 
-class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPreferences.OnSharedPreferenceChangeListener {
+class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
     private var xOff = 0F
     private var yOff = 0F
@@ -299,16 +298,6 @@ class AppSettings : Fragment(), CoordinatesCallback, PopupMenuCallback, SharedPr
                 setCurrentThemeValue(MainPreferences.getTheme())
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
     }
 
     companion object {

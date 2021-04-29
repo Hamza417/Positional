@@ -263,4 +263,6 @@
     <string name="help">सहायता</string>
     <string name="tick_smooth">टिक स्मूथ</string>
     <string name="tick_oscillate">टिक ऑसिलेट</string>
+    <string name="use_physical_properties">भौतिक गुणों का उपयोग करें</string>
+    <string name="seconds_precision">\"सेकंड्स\" परिशुद्धता</string>
 </resources>

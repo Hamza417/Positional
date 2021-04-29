@@ -67,6 +67,8 @@ object LauncherBackground {
             R.drawable.launcher_day_60,
             R.drawable.launcher_day_61,
             R.drawable.launcher_day_62,
+            R.drawable.launcher_day_63,
+            R.drawable.launcher_day_64,
     )
 
     val vectorBackgroundNight = intArrayOf(
@@ -156,24 +158,26 @@ object LauncherBackground {
             intArrayOf(parseColor("#FFee8e50"), parseColor("#FFfcc647")), // 60
             intArrayOf(parseColor("#FF355872"), parseColor("#FF3b71a3")), // 61
             intArrayOf(parseColor("#FF918047"), parseColor("#FFc4a847")), // 62
+            intArrayOf(parseColor("#FF008F9F"), parseColor("#FF47FAB0")), // 63
+            intArrayOf(parseColor("#FF67381b"), parseColor("#FFb29983")), // 64
     )
 
     val vectorNightColors: Array<IntArray> = arrayOf(
-            intArrayOf(parseColor("#FFffa32a"), parseColor("#FFcb555b")),
-            intArrayOf(parseColor("#FF3664A6"), parseColor("#FF56ABBB")),
-            intArrayOf(parseColor("#FF4c355e"), parseColor("#FF311b3f")),
-            intArrayOf(parseColor("#FF527AAA"), parseColor("#FF20344A")),
-            intArrayOf(parseColor("#FF3392B1"), parseColor("#FF1B2A65")),
-            intArrayOf(parseColor("#FF212B4F"), parseColor("#FF131E3A")),
-            intArrayOf(parseColor("#FF2d4383"), parseColor("#FFae4aa0")),
-            intArrayOf(parseColor("#FF9fb0cc"), parseColor("#FF121c33")),
-            intArrayOf(parseColor("#FF030B26"), parseColor("#FF463959")),
-            intArrayOf(parseColor("#FF608396"), parseColor("#FFf88063")),
-            intArrayOf(parseColor("#FF554686"), parseColor("#FF6e51c9")),
-            intArrayOf(parseColor("#FFf0a87f"), parseColor("#FF415262")),
-            intArrayOf(parseColor("#FFFFEC84"), parseColor("#FFFF8B88")),
-            intArrayOf(parseColor("#FF225664"), parseColor("#FF65CBBF")),
-            intArrayOf(parseColor("#FF35556f"), parseColor("#FF5492c2")),
-            intArrayOf(parseColor("#FF0096FF"), parseColor("#FF1A47A2"))
+            intArrayOf(parseColor("#FFffa32a"), parseColor("#FFcb555b")), // 01
+            intArrayOf(parseColor("#FF3664A6"), parseColor("#FF56ABBB")), // 02
+            intArrayOf(parseColor("#FF4c355e"), parseColor("#FF311b3f")), // 03
+            intArrayOf(parseColor("#FF527AAA"), parseColor("#FF20344A")), // 04
+            intArrayOf(parseColor("#FF3392B1"), parseColor("#FF1B2A65")), // 05
+            intArrayOf(parseColor("#FF212B4F"), parseColor("#FF131E3A")), // 06
+            intArrayOf(parseColor("#FF2d4383"), parseColor("#FFae4aa0")), // 07
+            intArrayOf(parseColor("#FF9fb0cc"), parseColor("#FF121c33")), // 08
+            intArrayOf(parseColor("#FF030B26"), parseColor("#FF463959")), // 09
+            intArrayOf(parseColor("#FF608396"), parseColor("#FFf88063")), // 10
+            intArrayOf(parseColor("#FF554686"), parseColor("#FF6e51c9")), // 11
+            intArrayOf(parseColor("#FFf0a87f"), parseColor("#FF415262")), // 12
+            intArrayOf(parseColor("#FFFFEC84"), parseColor("#FFFF8B88")), // 13
+            intArrayOf(parseColor("#FF225664"), parseColor("#FF65CBBF")), // 14
+            intArrayOf(parseColor("#FF35556f"), parseColor("#FF5492c2")), // 15
+            intArrayOf(parseColor("#FF0096FF"), parseColor("#FF1A47A2")), // 16
     )
 }

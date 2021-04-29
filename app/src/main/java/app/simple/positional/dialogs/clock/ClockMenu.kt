@@ -15,12 +15,16 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var defaultTimeFormatContainer: LinearLayout
     private lateinit var defaultTimeFormatSwitch: SwitchView
+    private lateinit var secondsPrecisionSwitchView: SwitchView
+    private lateinit var secondsPrecisionContainer: LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_clock_menu, container, false)
 
         defaultTimeFormatContainer = view.findViewById(R.id.clock_menu_default_time_format)
         defaultTimeFormatSwitch = view.findViewById(R.id.toggle_default_time_format)
+        secondsPrecisionSwitchView = view.findViewById(R.id.toggle_remove_seconds_precision)
+        secondsPrecisionContainer = view.findViewById(R.id.clock_menu_remove_seconds_container)
 
         return view
     }
@@ -29,13 +33,22 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         defaultTimeFormatSwitch.isChecked = ClockPreferences.getDefaultClockTime()
+        secondsPrecisionSwitchView.isChecked = ClockPreferences.isUsingSecondsPrecision()
 
         defaultTimeFormatContainer.setOnClickListener {
-            defaultTimeFormatSwitch.isChecked = !defaultTimeFormatSwitch.isChecked
+            defaultTimeFormatSwitch.invertIsChecked()
         }
 
         defaultTimeFormatSwitch.setOnCheckedChangeListener { isChecked ->
             ClockPreferences.setDefaultClockTime(isChecked)
+        }
+
+        secondsPrecisionContainer.setOnClickListener {
+            secondsPrecisionSwitchView.invertIsChecked()
+        }
+
+        secondsPrecisionSwitchView.setOnCheckedChangeListener {
+            ClockPreferences.setUseSecondsPrecision(it)
         }
 
         view.findViewById<TextView>(R.id.clock_needle_theme_text).setOnClickListener {

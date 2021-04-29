@@ -129,6 +129,7 @@ class SplashScreen : Fragment() {
     private fun runIntent() {
         val intent = Intent(requireActivity(), MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        intent.action = requireActivity().intent.action
         startActivity(intent)
         requireActivity().finish()
     }

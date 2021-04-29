@@ -44,7 +44,6 @@ import app.simple.positional.model.Locations
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
-import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.*
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
@@ -61,7 +60,7 @@ import java.io.IOException
 import java.lang.Runnable
 import java.util.*
 
-class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class GPS : ScopedFragment() {
 
     private lateinit var expandUp: ImageView
 
@@ -171,7 +170,7 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
                     requireActivity().intent.action = null
                 }
             }
-        }, 500L)
+        }, 250L)
 
         filter.addAction("location")
         filter.addAction("provider")
@@ -532,7 +531,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
     override fun onPause() {
         super.onPause()
         mapView?.pause()
-        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(textAnimationRunnable)
         handler.removeCallbacks(customDataUpdater)
@@ -550,7 +548,6 @@ class GPS : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener
 
     override fun onResume() {
         super.onResume()
-        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
         if (isCustomCoordinate) {
             handler.post(customDataUpdater)
         }

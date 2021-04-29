@@ -32,7 +32,6 @@ import app.simple.positional.math.TimeConverter.getSecondsInDegreesWithDecimalPr
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
-import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.*
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.AsyncImageLoader.loadImageResourcesWithoutAnimation
@@ -53,7 +52,7 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.IsoFields
 import java.util.*
 
-class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class Clock : ScopedFragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
@@ -330,7 +329,6 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
     override fun onPause() {
         super.onPause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
-        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         handler.removeCallbacks(clock)
         handler.removeCallbacks(calender)
         handler.removeCallbacks(textAnimationRunnable)
@@ -343,7 +341,6 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
     override fun onResume() {
         super.onResume()
-        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         handler.post(clock)
         handler.post(calender)
@@ -388,9 +385,17 @@ class Clock : ScopedFragment(), SharedPreferences.OnSharedPreferenceChangeListen
 
             withContext(Dispatchers.Default) {
                 val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTime()) {
-                    DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(LocaleHelper.getAppLocale())
+                    if (ClockPreferences.isUsingSecondsPrecision()) {
+                        DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(LocaleHelper.getAppLocale())
+                    } else {
+                        DateTimeFormatter.ofPattern("hh:mm a").withLocale(LocaleHelper.getAppLocale())
+                    }
                 } else {
-                    DateTimeFormatter.ofPattern("HH:mm:ss")
+                    if (ClockPreferences.isUsingSecondsPrecision()) {
+                        DateTimeFormatter.ofPattern("HH:mm:ss")
+                    } else {
+                        DateTimeFormatter.ofPattern("HH:mm")
+                    }
                 }
 
                 val sunTimes = SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()

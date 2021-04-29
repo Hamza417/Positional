@@ -70,7 +70,8 @@ class License : Fragment(), LicenseCheckerCallback {
         handler.post {
             try {
                 licenseStatus.setTextAnimation(getString(R.string.license_successful), 500)
-                runHandler(true)
+                runHandler()
+                setLicenseStatus(true)
             } catch (ignored: NullPointerException) {
             }
         }
@@ -103,7 +104,7 @@ class License : Fragment(), LicenseCheckerCallback {
             try {
                 if (requireContext().packageName == packageName.replace("\\s".toRegex(), "")) {
                     licenseStatus.setTextAnimation(getString(R.string.error), 500)
-                    runHandler(false)
+                    runHandler()
                 } else {
                     showDoNotAllowScreen("package mismatched")
                 }
@@ -112,9 +113,8 @@ class License : Fragment(), LicenseCheckerCallback {
         }
     }
 
-    private fun runHandler(value: Boolean) {
+    private fun runHandler() {
         handler.postDelayed({
-            setLicenseStatus(value)
             licenceStatusCallback.onLicenseCheckCompletion()
         }, 2000)
     }

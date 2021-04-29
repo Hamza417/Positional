@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <app.simple.positional.decorations.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/compass_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -19,6 +20,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/heading"
             android:text="@string/compass"
+            android:paddingStart="10dp"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/top_bar_text_size"
             android:textStyle="bold"
@@ -26,7 +28,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlSymmetry" />
 
         <ImageButton
             android:id="@+id/compass_menu"
@@ -52,6 +55,7 @@
             android:fontFamily="@font/light"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/compass_direction_text_size"
+            android:gravity="center_horizontal"
             android:drawablePadding="10dp"
             app:drawableTopCompat="@drawable/ic_navigation"
             app:layout_constraintBottom_toBottomOf="parent"

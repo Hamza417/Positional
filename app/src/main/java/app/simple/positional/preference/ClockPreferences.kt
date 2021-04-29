@@ -8,6 +8,7 @@ object ClockPreferences {
 
     private const val clockDefaultTimeFormat = "is_clock_time_type_am_pm"
     private const val timeZoneScrollPosition = "last_selected_timezone_position"
+    private const val isUsingSecondsPrecision = "is_using_seconds_precision"
     const val clockNeedleMovementType = "clock_needle_movement_type_updated"
     const val clockNeedle = "clock_needle_res_value"
     const val timezone = "custom_timezone"
@@ -50,5 +51,13 @@ object ClockPreferences {
 
     fun getTimezoneSelectedPosition(): Int {
         return getSharedPreferences().getInt(timeZoneScrollPosition, 0)
+    }
+
+    fun setUseSecondsPrecision(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(isUsingSecondsPrecision, value).apply()
+    }
+
+    fun isUsingSecondsPrecision(): Boolean {
+        return getSharedPreferences().getBoolean(isUsingSecondsPrecision, true)
     }
 }
