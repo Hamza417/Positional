@@ -19,10 +19,7 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     : SwitchFrameLayout(context, attrs, defStyleAttr) {
 
     private var thumb: ImageView
-    private var track: SwitchFrameLayout
     private var switchCallbacks: SwitchCallbacks? = null
-
-    var isCheckable = true
 
     var isChecked: Boolean = false
         set(value) {
@@ -38,13 +35,18 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         val view = LayoutInflater.from(context).inflate(R.layout.switch_view, this, true)
 
         thumb = view.findViewById(R.id.switch_thumb)
-        track = view.findViewById(R.id.switch_track)
 
-        ViewUtils.addShadow(track)
+        clipChildren = false
+        clipToPadding = false
+        clipToOutline = false
+
+        ViewUtils.addShadow(this)
 
         view.setOnClickListener {
             isChecked = !isChecked
         }
+
+        requestLayout()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -79,14 +81,12 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 .setDuration(500)
                 .start()
 
-        track.animateColorChange(ContextCompat.getColor(context, R.color.switch_off))
+        animateColorChange(ContextCompat.getColor(context, R.color.switch_off))
         switchCallbacks?.onCheckedChanged(false)
         animateElevation(0F)
     }
 
     private fun animateChecked() {
-
-        if (!isCheckable) return
 
         val w = context.resources.getDimensionPixelOffset(R.dimen.switch_width)
         val p = context.resources.getDimensionPixelOffset(R.dimen.switch_padding)
@@ -98,17 +98,17 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 .setDuration(500)
                 .start()
 
-        track.animateColorChange(ContextCompat.getColor(context, R.color.switch_on))
+        animateColorChange(ContextCompat.getColor(context, R.color.switch_on))
         switchCallbacks?.onCheckedChanged(true)
         animateElevation(25F)
     }
 
     private fun animateElevation(elevation: Float) {
-        val valueAnimator = ValueAnimator.ofFloat(track.elevation, elevation)
+        val valueAnimator = ValueAnimator.ofFloat(this.elevation, elevation)
         valueAnimator.duration = 500L
         valueAnimator.interpolator = DecelerateInterpolator(1.5F)
         valueAnimator.addUpdateListener {
-            track.elevation = it.animatedValue as Float
+            this.elevation = it.animatedValue as Float
         }
         valueAnimator.start()
     }
@@ -117,7 +117,11 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         this.switchCallbacks = switchCallbacks
     }
 
-    fun invertIsChecked() {
+    /**
+     * Inverts the switch's checked status. If the switch is checked then
+     * it will be unchecked and vice-versa
+     */
+    fun invertCheckedStatus() {
         isChecked = !isChecked
     }
 }

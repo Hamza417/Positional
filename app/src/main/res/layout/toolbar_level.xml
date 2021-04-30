@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:fontFamily="@font/heading"
         android:text="@string/level"
-        android:paddingStart="10dp"
+        android:paddingStart="@dimen/toolbar_title_padding"
         android:textColor="@color/textPrimary"
         android:layout_gravity="center_vertical"
         android:textSize="@dimen/top_bar_text_size"

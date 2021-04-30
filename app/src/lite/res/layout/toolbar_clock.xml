@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clock_appbar"
     style="@style/Widget.MaterialComponents.Toolbar.Surface"
     android:layout_width="match_parent"
@@ -11,9 +12,11 @@
         android:layout_weight="1"
         android:fontFamily="@font/heading"
         android:text="@string/clock"
+        android:paddingStart="@dimen/toolbar_title_padding"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/top_bar_text_size"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="RtlSymmetry" />
 
     <ImageButton
         android:id="@+id/clock_timezone"

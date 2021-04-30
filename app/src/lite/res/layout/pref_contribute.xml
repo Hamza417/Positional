@@ -61,7 +61,6 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/settings_primary_text_size" />
 
-
     <LinearLayout
         android:id="@+id/translate"
         android:layout_width="match_parent"

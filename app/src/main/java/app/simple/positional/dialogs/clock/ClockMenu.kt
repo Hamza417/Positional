@@ -36,7 +36,7 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
         secondsPrecisionSwitchView.isChecked = ClockPreferences.isUsingSecondsPrecision()
 
         defaultTimeFormatContainer.setOnClickListener {
-            defaultTimeFormatSwitch.invertIsChecked()
+            defaultTimeFormatSwitch.invertCheckedStatus()
         }
 
         defaultTimeFormatSwitch.setOnCheckedChangeListener { isChecked ->
@@ -44,7 +44,7 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
         }
 
         secondsPrecisionContainer.setOnClickListener {
-            secondsPrecisionSwitchView.invertIsChecked()
+            secondsPrecisionSwitchView.invertCheckedStatus()
         }
 
         secondsPrecisionSwitchView.setOnCheckedChangeListener {

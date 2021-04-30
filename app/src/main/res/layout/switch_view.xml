@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.switchview.SwitchFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/switch_track"
     android:layout_width="@dimen/switch_width"
@@ -8,7 +8,8 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:elevation="10dp"
-    android:padding="@dimen/switch_padding">
+    android:padding="@dimen/switch_padding"
+    tools:parentTag="app.simple.positional.decorations.switchview.SwitchFrameLayout">
 
     <ImageView
         android:id="@+id/switch_thumb"
@@ -18,7 +19,7 @@
         android:src="@drawable/switch_thumb"
         tools:ignore="ContentDescription" />
 
-</app.simple.positional.decorations.switchview.SwitchFrameLayout>
+</merge>
 
 
 

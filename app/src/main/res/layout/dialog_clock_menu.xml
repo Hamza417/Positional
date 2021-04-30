@@ -86,7 +86,7 @@
 
             <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_default_time_format"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
