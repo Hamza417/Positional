@@ -264,5 +264,6 @@
     <string name="tick_smooth">Плавно тиктакане</string>
     <string name="tick_oscillate">Трептящо тиктакане</string>
     <string name="use_physical_properties">Използвайте физически свойства</string>
-    <string name="seconds_precision">\"Seconds\" Precision</string>
+    <string name="seconds_precision">\"Секунди\" Прецизност</string>
+    <string name="bearing_rotation">Bearing Rotation</string>
 </resources>

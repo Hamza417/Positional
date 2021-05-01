@@ -265,4 +265,5 @@
     <string name="tick_oscillate">टिक ऑसिलेट</string>
     <string name="use_physical_properties">भौतिक गुणों का उपयोग करें</string>
     <string name="seconds_precision">\"सेकंड्स\" परिशुद्धता</string>
+    <string name="bearing_rotation">असर रोटेशन</string>
 </resources>

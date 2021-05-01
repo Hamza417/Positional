@@ -77,7 +77,7 @@
 
             <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/compass_physical_properties"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

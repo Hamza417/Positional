@@ -8,6 +8,7 @@ object GPSPreferences {
     private const val mapZoom = "map_zoom_value"
     private const val mapTilt = "map_tilt_value"
     private const val useSmallerIcon = "use_smaller_icon"
+    const val useBearingRotation = "use_bearing_rotation"
     const val mapAutoCenter = "auto_center_map"
     const val GPSLabelMode = "gps_label_mode"
     const val GPSSatellite = "gps_satellite_mode"
@@ -103,5 +104,13 @@ object GPSPreferences {
 
     fun isUsingSmallerIcon(): Boolean {
         return getSharedPreferences().getBoolean(useSmallerIcon, false)
+    }
+
+    fun setUseBearingRotation(boolean: Boolean) {
+        getSharedPreferences().edit().putBoolean(useBearingRotation, boolean).apply()
+    }
+
+    fun isBearingRotationOn(): Boolean {
+        return getSharedPreferences().getBoolean(useBearingRotation, true)
     }
 }

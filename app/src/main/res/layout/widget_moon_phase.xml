@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/widget_bg_suntime"
+    tools:ignore="UseCompoundDrawables">
+
+    <ImageView
+        android:id="@+id/widget_moon_phase_art"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/moon_phase_02"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/widget_moon_phase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:textColor="@color/textSecondary" />
+
+</LinearLayout>

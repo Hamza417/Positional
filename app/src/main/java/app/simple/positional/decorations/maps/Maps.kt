@@ -33,6 +33,7 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
     private val viewHandler = Handler(Looper.getMainLooper())
 
     private var isCustomCoordinate = false
+    private var isBearingRotation = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
     val lastLatitude = GPSPreferences.getLastCoordinates()[0].toDouble()
@@ -44,6 +45,8 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
 
     init {
         isCustomCoordinate = MainPreferences.isCustomCoordinate()
+        isBearingRotation = GPSPreferences.isBearingRotationOn()
+
         if (isCustomCoordinate) {
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
@@ -140,10 +143,10 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
     fun resetCamera(zoom: Float) {
         if (isCustomCoordinate) {
             addMarker(LatLng(customLatitude, customLongitude))
-            moveMapCamera(LatLng(customLatitude, customLongitude), zoom)
+            moveMapCamera(LatLng(customLatitude, customLongitude), zoom, 0F)
         } else
             if (location != null) {
-                moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
+                moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, location!!.bearing)
                 addMarker(LatLng(location!!.latitude, location!!.longitude))
                 viewHandler.removeCallbacks(mapMoved)
             }
@@ -246,30 +249,34 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
     private val mapMoved = object : Runnable {
         override fun run() {
             if (GPSPreferences.getMapAutoCenter()) {
+                val bearing: Float
                 val latLng = if (isCustomCoordinate) {
+                    bearing = 0F
                     LatLng(customLatitude, customLongitude)
                 } else {
                     if (location.isNotNull()) {
+                        bearing = location!!.bearing
                         LatLng(location!!.latitude, location!!.longitude)
                     } else {
+                        bearing = 0F
                         LatLng(lastLatitude, lastLongitude)
                     }
                 }
 
-                moveMapCamera(latLng, GPSPreferences.getMapZoom())
+                moveMapCamera(latLng, GPSPreferences.getMapZoom(), bearing)
             }
             viewHandler.postDelayed(this, 6000L)
         }
     }
 
-    private fun moveMapCamera(latLng: LatLng, zoom: Float) {
+    private fun moveMapCamera(latLng: LatLng, zoom: Float, bearing: Float) {
         if (googleMap.isNull()) return
 
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder()
                 .target(latLng)
                 .tilt(GPSPreferences.getMapTilt())
                 .zoom(zoom)
-                .bearing(0F).build()), 3000, null)
+                .bearing(if (isBearingRotation) bearing else 0F).build()), 3000, null)
     }
 
     fun setOnMapsCallbackListener(mapsCallbacks: MapsCallbacks) {
@@ -290,6 +297,9 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
             GPSPreferences.mapAutoCenter -> {
                 viewHandler.removeCallbacks(mapMoved)
                 viewHandler.post(mapMoved)
+            }
+            GPSPreferences.useBearingRotation -> {
+                isBearingRotation = GPSPreferences.isBearingRotationOn()
             }
         }
     }

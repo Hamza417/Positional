@@ -21,6 +21,7 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
     private lateinit var toggleAutoCenter: SwitchView
     private lateinit var toggleVolumeKeys: SwitchView
     private lateinit var toggleUseSmallIcon: SwitchView
+    private lateinit var toggleUseBearing: SwitchView
 
     private lateinit var toggleLabelContainer: LinearLayout
     private lateinit var toggleSatelliteContainer: LinearLayout
@@ -29,6 +30,7 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
     private lateinit var toggleAutoCenterContainer: LinearLayout
     private lateinit var toggleVolumeKeysContainer: LinearLayout
     private lateinit var toggleUseSmallIconContainer: LinearLayout
+    private lateinit var toggleUseBearingContainer: LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_gps_menu, container, false)
@@ -40,6 +42,7 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleAutoCenter = view.findViewById(R.id.toggle_auto_center)
         toggleVolumeKeys = view.findViewById(R.id.toggle_use_volume_keys)
         toggleUseSmallIcon = view.findViewById(R.id.toggle_use_smaller_icon)
+        toggleUseBearing = view.findViewById(R.id.toggle_bearing_rotation)
 
         toggleLabelContainer = view.findViewById(R.id.gps_menu_show_label_container)
         toggleSatelliteContainer = view.findViewById(R.id.gps_menu_satellite_mode_container)
@@ -48,6 +51,7 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleAutoCenterContainer = view.findViewById(R.id.gps_menu_auto_center_container)
         toggleVolumeKeysContainer = view.findViewById(R.id.gps_menu_volume_keys_container)
         toggleUseSmallIconContainer = view.findViewById(R.id.gps_menu_us_smaller_icon)
+        toggleUseBearingContainer = view.findViewById(R.id.gps_menu_bearing_rotation)
 
         return view
     }
@@ -62,6 +66,7 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleAutoCenter.isChecked = GPSPreferences.getMapAutoCenter()
         toggleVolumeKeys.isChecked = GPSPreferences.isUsingVolumeKeys()
         toggleUseSmallIcon.isChecked = GPSPreferences.isUsingSmallerIcon()
+        toggleUseBearing.isChecked = GPSPreferences.isBearingRotationOn()
 
         if (toggleSatellite.isChecked) {
             satelliteOverrides(0.4F, isChecked = true)
@@ -80,48 +85,52 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
             }
         }
 
-        toggleHighContrast.setOnCheckedChangeListener { isChecked ->
-            GPSPreferences.setHighContrastMap(isChecked)
+        toggleHighContrast.setOnCheckedChangeListener {
+            GPSPreferences.setHighContrastMap(it)
         }
 
-        toggleBuilding.setOnCheckedChangeListener { isChecked ->
-            GPSPreferences.setShowBuildingsOnMap(isChecked)
+        toggleBuilding.setOnCheckedChangeListener {
+            GPSPreferences.setShowBuildingsOnMap(it)
         }
 
-        toggleAutoCenter.setOnCheckedChangeListener { isChecked ->
-            GPSPreferences.setMapAutoCenter(isChecked)
+        toggleAutoCenter.setOnCheckedChangeListener {
+            GPSPreferences.setMapAutoCenter(it)
         }
 
-        toggleVolumeKeys.setOnCheckedChangeListener { isChecked ->
-            GPSPreferences.setUseVolumeKeys(isChecked)
+        toggleVolumeKeys.setOnCheckedChangeListener {
+            GPSPreferences.setUseVolumeKeys(it)
         }
 
-        toggleUseSmallIcon.setOnCheckedChangeListener { isChecked ->
-            GPSPreferences.setUseSmallerIcon(isChecked)
+        toggleUseSmallIcon.setOnCheckedChangeListener {
+            GPSPreferences.setUseSmallerIcon(it)
+        }
+
+        toggleUseBearing.setOnCheckedChangeListener {
+            GPSPreferences.setUseBearingRotation(it)
         }
 
         toggleLabelContainer.setOnClickListener {
-            toggleLabel.isChecked = !toggleLabel.isChecked
+            toggleLabel.invertCheckedStatus()
         }
 
         toggleSatelliteContainer.setOnClickListener {
-            toggleSatellite.isChecked = !toggleSatellite.isChecked
+            toggleSatellite.invertCheckedStatus()
         }
 
         toggleHighContrastContainer.setOnClickListener {
-            toggleHighContrast.isChecked = !toggleHighContrast.isChecked
+            toggleHighContrast.invertCheckedStatus()
         }
 
         toggleBuildingContainer.setOnClickListener {
-            toggleBuilding.isChecked = !toggleBuilding.isChecked
+            toggleBuilding.invertCheckedStatus()
         }
 
         toggleAutoCenterContainer.setOnClickListener {
-            toggleAutoCenter.isChecked = !toggleAutoCenter.isChecked
+            toggleAutoCenter.invertCheckedStatus()
         }
 
         toggleVolumeKeysContainer.setOnClickListener {
-            toggleVolumeKeys.isChecked = !toggleVolumeKeys.isChecked
+            toggleVolumeKeys.invertCheckedStatus()
         }
 
         toggleVolumeKeysContainer.setOnLongClickListener {
@@ -130,7 +139,11 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         }
 
         toggleUseSmallIconContainer.setOnClickListener {
-            toggleUseSmallIcon.isChecked = !toggleUseSmallIcon.isChecked
+            toggleUseSmallIcon.invertCheckedStatus()
+        }
+
+        toggleUseBearingContainer.setOnClickListener {
+            toggleUseBearing.invertCheckedStatus()
         }
     }
 

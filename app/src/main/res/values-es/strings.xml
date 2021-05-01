@@ -35,7 +35,7 @@
     <string name="local_time_12hr">Tiempo 24hr:</string>
     <string name="local_day">Días</string>
     <string name="local_date">Date:</string>
-    <string name="local_day_of_year">Día del año:</string>
+    <string name="local_day_of_year">Dia del año:</string>
     <string name="local_week_of_year">Semana del Año:</string>
     <string name="utc_local_time_offset">Oferta de hora local:</string>
     <string name="utc_current_time">Hora:</string>
@@ -263,4 +263,7 @@
     <string name="help">Help</string>
     <string name="tick_smooth">Tick Smooth</string>
     <string name="tick_oscillate">Tick Oscillate</string>
+    <string name="use_physical_properties">Use Physical Properties</string>
+    <string name="seconds_precision">\"Seconds\" Precision</string>
+    <string name="bearing_rotation">Bearing Rotation</string>
 </resources>

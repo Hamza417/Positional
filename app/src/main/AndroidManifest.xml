@@ -256,5 +256,19 @@
                 android:resource="@xml/suntime_widget_info_art" />
         </receiver>
 
+        <receiver
+            android:name=".widgets.MoonPhaseWidget"
+            android:icon="@drawable/ic_moon_phase"
+            android:label="@string/moon_illumination">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/moon_phase_widget_info" />
+        </receiver>
+
     </application>
 </manifest>
