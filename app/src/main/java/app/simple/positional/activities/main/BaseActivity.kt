@@ -7,8 +7,10 @@ import android.text.format.DateFormat
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
 import app.simple.positional.BuildConfig
+import app.simple.positional.R
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.preference.MainPreferences
@@ -67,11 +69,58 @@ open class BaseActivity : AppCompatActivity() {
         if (BuildConfig.FLAVOR == "lite") {
             resetLitePrefs()
         }
+
+        setTheme()
     }
 
     private fun resetLitePrefs() {
         CompassPreference.setFlowerBloom(false)
         ClockPreferences.setClockNeedleTheme(1)
         MainPreferences.setCustomCoordinates(false)
+    }
+
+    private fun setTheme() {
+        when (MainPreferences.getAccentColor()) {
+            ContextCompat.getColor(baseContext, R.color.positional) -> {
+                setTheme(R.style.Positional)
+            }
+            ContextCompat.getColor(baseContext, R.color.blue) -> {
+                setTheme(R.style.Blue)
+            }
+            ContextCompat.getColor(baseContext, R.color.blueGrey) -> {
+                setTheme(R.style.BlueGrey)
+            }
+            ContextCompat.getColor(baseContext, R.color.darkBlue) -> {
+                setTheme(R.style.DarkBlue)
+            }
+            ContextCompat.getColor(baseContext, R.color.red) -> {
+                setTheme(R.style.Red)
+            }
+            ContextCompat.getColor(baseContext, R.color.green) -> {
+                setTheme(R.style.Green)
+            }
+            ContextCompat.getColor(baseContext, R.color.orange) -> {
+                setTheme(R.style.Orange)
+            }
+            ContextCompat.getColor(baseContext, R.color.purple) -> {
+                setTheme(R.style.Purple)
+            }
+            ContextCompat.getColor(baseContext, R.color.yellow) -> {
+                setTheme(R.style.Yellow)
+            }
+            ContextCompat.getColor(baseContext, R.color.caribbeanGreen) -> {
+                setTheme(R.style.CaribbeanGreen)
+            }
+            ContextCompat.getColor(baseContext, R.color.persianGreen) -> {
+                setTheme(R.style.PersianGreen)
+            }
+            ContextCompat.getColor(baseContext, R.color.amaranth) -> {
+                setTheme(R.style.Amaranth)
+            }
+            else -> {
+                setTheme(R.style.Positional)
+                MainPreferences.setAccentColor(ContextCompat.getColor(baseContext, R.color.positional))
+            }
+        }
     }
 }

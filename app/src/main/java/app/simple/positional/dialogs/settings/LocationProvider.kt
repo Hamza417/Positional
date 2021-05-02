@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomRadioButton
 import app.simple.positional.preference.MainPreferences
 
 class LocationProvider : CustomBottomSheetDialogFragment() {
 
-    private lateinit var androidRadioButton: RadioButton
-    private lateinit var fusedRadioButton: RadioButton
+    private lateinit var androidRadioButton: CustomRadioButton
+    private lateinit var fusedRadioButton: CustomRadioButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_location_provider, container, false)

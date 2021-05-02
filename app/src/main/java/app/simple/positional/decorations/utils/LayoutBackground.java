@@ -125,7 +125,45 @@ public class LayoutBackground {
                     .setAllCorners(CornerFamily.ROUNDED, MainPreferences.INSTANCE.getCornerRadius())
                     .build();
         }
-        
+    
         appCompatButton.setBackground(new MaterialShapeDrawable(shapeAppearanceModel));
+    }
+    
+    public static void setBackground(Context context, ViewGroup viewGroup, AttributeSet attrs, float factor) {
+        TypedArray theme = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DynamicCornerLayout, 0, 0);
+        
+        boolean roundTopCorners = theme.getBoolean(R.styleable.DynamicCornerLayout_roundTopCorners, false);
+        boolean roundBottomCorners = theme.getBoolean(R.styleable.DynamicCornerLayout_roundBottomCorners, false);
+        
+        ShapeAppearanceModel shapeAppearanceModel;
+        
+        if (roundBottomCorners && roundTopCorners) {
+            shapeAppearanceModel = new ShapeAppearanceModel()
+                    .toBuilder()
+                    .setAllCorners(CornerFamily.ROUNDED, MainPreferences.INSTANCE.getCornerRadius() / factor)
+                    .build();
+        }
+        else if (roundTopCorners) {
+            shapeAppearanceModel = new ShapeAppearanceModel()
+                    .toBuilder()
+                    .setTopLeftCorner(CornerFamily.ROUNDED, MainPreferences.INSTANCE.getCornerRadius() / factor)
+                    .setTopRightCorner(CornerFamily.ROUNDED, MainPreferences.INSTANCE.getCornerRadius() / factor)
+                    .build();
+        }
+        else if (roundBottomCorners) {
+            shapeAppearanceModel = new ShapeAppearanceModel()
+                    .toBuilder()
+                    .setBottomLeftCorner(CornerFamily.ROUNDED, MainPreferences.INSTANCE.getCornerRadius() / factor)
+                    .setBottomRightCorner(CornerFamily.ROUNDED, MainPreferences.INSTANCE.getCornerRadius() / factor)
+                    .build();
+        }
+        else {
+            shapeAppearanceModel = new ShapeAppearanceModel()
+                    .toBuilder()
+                    .setAllCorners(CornerFamily.ROUNDED, MainPreferences.INSTANCE.getCornerRadius() / factor)
+                    .build();
+        }
+        
+        viewGroup.setBackground(new MaterialShapeDrawable(shapeAppearanceModel));
     }
 }

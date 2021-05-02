@@ -24,6 +24,7 @@ object MainPreferences {
     const val theme = "current_theme"
     const val latitude = "custom_latitude"
     const val longitude = "custom_longitude"
+    const val accentColor = "app_accent_color"
 
     fun setLaunchCount(value: Int) {
         getSharedPreferences().edit().putInt(launchCount, value).apply()
@@ -167,5 +168,15 @@ object MainPreferences {
 
     fun getSkipSplashScreen(): Boolean {
         return getSharedPreferences().getBoolean(skipSplashScreen, false)
+    }
+
+    // ---------------------------------------------------------------------------------------------------------- //
+
+    fun setAccentColor(int: Int) {
+        getSharedPreferences().edit().putInt(accentColor, int).apply()
+    }
+
+    fun getAccentColor(): Int {
+        return getSharedPreferences().getInt(accentColor, 0)
     }
 }

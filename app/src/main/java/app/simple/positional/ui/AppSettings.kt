@@ -3,6 +3,7 @@ package app.simple.positional.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -14,10 +15,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.CoordinatesCallback
+import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.popup.MainListPopupMenu
 import app.simple.positional.decorations.popup.PopupMenuCallback
 import app.simple.positional.decorations.switchview.SwitchView
+import app.simple.positional.dialogs.app.AccentColor
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.LocaleHelper.localeList
@@ -38,6 +41,8 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var locationProvider: LinearLayout
     private lateinit var language: LinearLayout
     private lateinit var theme: LinearLayout
+    private lateinit var accent: LinearLayout
+    private lateinit var currentAccent: DynamicCornerFrameLayout
     private lateinit var icon: LinearLayout
     private lateinit var corner: LinearLayout
     private lateinit var skipSplashScreenContainer: ConstraintLayout
@@ -69,6 +74,8 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         locationProvider = view.findViewById(R.id.settings_location_provider)
         language = view.findViewById(R.id.settings_languages)
         theme = view.findViewById(R.id.settings_theme)
+        accent = view.findViewById(R.id.settings_accent)
+        currentAccent = view.findViewById(R.id.current_accent)
         icon = view.findViewById(R.id.settings_icons)
         corner = view.findViewById(R.id.settings_corner_radius)
         skipSplashScreenContainer = view.findViewById(R.id.setting_skip_splash_screen_container)
@@ -116,6 +123,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         toggleKeepScreenOn.isChecked = MainPreferences.isScreenOn()
         toggleSkipSplashScreen.isChecked = MainPreferences.getSkipSplashScreen()
         isCoordinatesSet(MainPreferences.isCustomCoordinate())
+        currentAccent.backgroundTintList = ColorStateList.valueOf(MainPreferences.getAccentColor())
 
         for (i in localeList.indices) {
             if (MainPreferences.getAppLanguage() == localeList[i].localeCode) {
@@ -125,6 +133,11 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         theme.setOnClickListener {
             Theme().show(parentFragmentManager, "null")
+        }
+
+        accent.setOnClickListener {
+            AccentColor.newInstance()
+                    .show(childFragmentManager, "accent")
         }
 
         icon.setOnClickListener {

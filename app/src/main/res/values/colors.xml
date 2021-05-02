@@ -26,6 +26,8 @@
 
     <color name="clock_needle_stroke_color">#FFFFFF</color>
     <color name="clock_needle_fill_color">#202020</color>
+    <color name="clock_element_fill">#464646</color>
+    <color name="clock_face_color">#fff</color>
 
     <!-- Graph -->
     <color name="graph_location_line_color_first">#43cea2</color>

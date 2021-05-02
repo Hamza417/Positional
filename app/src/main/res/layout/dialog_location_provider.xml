@@ -55,7 +55,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-            <RadioButton
+            <app.simple.positional.decorations.views.CustomRadioButton
                 android:id="@+id/radio_button_android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textView11" />
 
-            <RadioButton
+            <app.simple.positional.decorations.views.CustomRadioButton
                 android:id="@+id/radio_button_fused"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -10,9 +10,9 @@ import android.view.MotionEvent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.content.ContextCompat;
 import app.simple.positional.R;
 import app.simple.positional.decorations.utils.LayoutBackground;
+import app.simple.positional.util.ColorUtils;
 
 import static app.simple.positional.decorations.utils.Utils.animateBackground;
 
@@ -27,7 +27,7 @@ public class AnimatedBackgroundTextView extends AppCompatTextView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            animateBackground(ContextCompat.getColor(getContext(), R.color.animated_text_background), this);
+            animateBackground(ColorUtils.INSTANCE.resolveAttrColor(getContext(), R.attr.colorAppAccent), this);
         }
         else {
             animateBackground(Color.TRANSPARENT, this);

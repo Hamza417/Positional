@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="colorAppAccent" format="color" />
+    <attr name="colorAppAccentLight" format="color" />
+    <attr name="colorAccentRipple" format="color" />
+
     <declare-styleable name="SmoothBottomBar">
         <attr name="menu" format="reference" />
         <attr name="backgroundColor" format="color" />

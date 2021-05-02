@@ -6,5 +6,5 @@
     <stroke
         android:color="@color/indicator"
         android:width="4dp" />
-    <solid android:color="@color/seek_bar" />
+    <solid android:color="?attr/colorAppAccent" />
 </shape>

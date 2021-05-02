@@ -1,10 +1,8 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="LightTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="Positional" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorAppAccent">@color/positional</item>
+        <item name="colorAppAccentLight">@color/positional_light</item>
 
         <!-- Theme -->
         <item name="rippleColor">@color/rippleColor</item>

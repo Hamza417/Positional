@@ -15,7 +15,7 @@ object AsyncImageLoader {
     fun loadImage(resourceValue: Int, imageView: ImageView, context: Context, delay: Int) {
         CoroutineScope(Dispatchers.Default).launch {
             val drawable = if (resourceValue != 0) context.resources?.let {
-                ResourcesCompat.getDrawable(it, resourceValue, null)
+                ResourcesCompat.getDrawable(it, resourceValue, context.theme)
             }!! else null
 
             withContext(Dispatchers.Main) {
@@ -61,7 +61,7 @@ object AsyncImageLoader {
     fun loadImageResourcesWithoutAnimation(resourceValue: Int, imageView: ImageView, context: Context) {
         CoroutineScope(Dispatchers.Default).launch {
             val drawable = if (resourceValue != 0) context.resources?.let {
-                ResourcesCompat.getDrawable(it, resourceValue, null)
+                ResourcesCompat.getDrawable(it, resourceValue, context.theme)
             }!! else null
 
             withContext(Dispatchers.Main) {

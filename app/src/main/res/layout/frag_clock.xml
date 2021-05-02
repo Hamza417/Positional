@@ -42,6 +42,7 @@
                 android:layout_width="@dimen/clock_image_dimensions"
                 android:layout_height="@dimen/clock_image_dimensions"
                 android:layout_gravity="center"
+                android:src="@drawable/clock_face"
                 tools:ignore="ContentDescription" />
 
             <ImageView

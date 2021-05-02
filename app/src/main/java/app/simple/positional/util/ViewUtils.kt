@@ -3,8 +3,8 @@ package app.simple.positional.util
 import android.content.Context
 import android.view.View
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
 import app.simple.positional.R
+import app.simple.positional.util.ColorUtils.resolveAttrColor
 
 object ViewUtils {
     /**
@@ -32,8 +32,8 @@ object ViewUtils {
      */
     fun addShadow(contentView: View) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            contentView.outlineAmbientShadowColor = ContextCompat.getColor(contentView.context, R.color.switch_on)
-            contentView.outlineSpotShadowColor = ContextCompat.getColor(contentView.context, R.color.switch_on)
+            contentView.outlineAmbientShadowColor = contentView.context.resolveAttrColor(R.attr.colorAppAccent)
+            contentView.outlineSpotShadowColor = contentView.context.resolveAttrColor(R.attr.colorAppAccent)
         }
     }
 

@@ -45,7 +45,7 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
-                <RadioButton
+                <app.simple.positional.decorations.views.CustomRadioButton
                     android:id="@+id/icon_one_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
-                <RadioButton
+                <app.simple.positional.decorations.views.CustomRadioButton
                     android:id="@+id/icon_two_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
-                <RadioButton
+                <app.simple.positional.decorations.views.CustomRadioButton
                     android:id="@+id/icon_three_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
-                <RadioButton
+                <app.simple.positional.decorations.views.CustomRadioButton
                     android:id="@+id/icon_four_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
-                <RadioButton
+                <app.simple.positional.decorations.views.CustomRadioButton
                     android:id="@+id/icon_five_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
                     android:textColor="@color/textPrimary"
                     android:textSize="@dimen/options_item_text_size" />
 
-                <RadioButton
+                <app.simple.positional.decorations.views.CustomRadioButton
                     android:id="@+id/icon_six_radio_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

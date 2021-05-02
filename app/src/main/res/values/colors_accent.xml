@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Accent Colors -->
+    <color name="positional">#2ac4d4</color>
+    <color name="blue">#2980B9</color>
+    <color name="blueGrey">#2C3E50</color>
+    <color name="darkBlue">#154360</color>
+    <color name="red">#C0392B</color>
+    <color name="green">#16A085</color>
+    <color name="orange">#D35400</color>
+    <color name="purple">#6C3483</color>
+    <color name="yellow">#F39C12</color>
+    <color name="caribbeanGreen">#00D390</color>
+    <color name="persianGreen">#00B2AA</color>
+    <color name="amaranth">#E4354A</color>
+
+    <color name="positional_light">#6DDCE8</color>
+    <color name="blue_light">#85C1E9</color>
+    <color name="blueGrey_light">#34495E</color>
+    <color name="darkBlue_light">#5D6D7E</color>
+    <color name="red_light">#E74C3C</color>
+    <color name="green_light">#1ABC9C</color>
+    <color name="orange_light">#E67E22</color>
+    <color name="purple_light">#A569BD</color>
+    <color name="yellow_light">#F8C471</color>
+    <color name="caribbeanGreenLight">#65FFCE</color>
+    <color name="persianGreen_light">#38D9D2</color>
+    <color name="amaranth_light">#F75D70</color>
+</resources>

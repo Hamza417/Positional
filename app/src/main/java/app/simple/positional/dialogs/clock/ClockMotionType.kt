@@ -4,17 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomRadioButton
 import app.simple.positional.preference.ClockPreferences
 
 class ClockMotionType : CustomBottomSheetDialogFragment() {
 
-    private lateinit var smooth: RadioButton
-    private lateinit var tick: RadioButton
-    private lateinit var oscillate: RadioButton
-    private lateinit var tickSmooth: RadioButton
+    private lateinit var smooth: CustomRadioButton
+    private lateinit var tick: CustomRadioButton
+    private lateinit var oscillate: CustomRadioButton
+    private lateinit var tickSmooth: CustomRadioButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_clock_motion_type, container, false)

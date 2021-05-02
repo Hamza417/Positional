@@ -12,6 +12,7 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.util.ColorUtils.animateColorChange
+import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ViewUtils
 
 @SuppressLint("ClickableViewAccessibility")
@@ -98,7 +99,7 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 .setDuration(500)
                 .start()
 
-        animateColorChange(ContextCompat.getColor(context, R.color.switch_on))
+        animateColorChange(context.resolveAttrColor(R.attr.colorAppAccent))
         switchCallbacks?.onCheckedChanged(true)
         animateElevation(25F)
     }

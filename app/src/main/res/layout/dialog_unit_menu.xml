@@ -32,7 +32,7 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
-            <RadioButton
+            <app.simple.positional.decorations.views.CustomRadioButton
                 android:id="@+id/unit_metric"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
-            <RadioButton
+            <app.simple.positional.decorations.views.CustomRadioButton
                 android:id="@+id/unit_imperial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

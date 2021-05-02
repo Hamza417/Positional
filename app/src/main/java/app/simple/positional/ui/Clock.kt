@@ -34,7 +34,6 @@ import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.*
 import app.simple.positional.util.AsyncImageLoader.loadImage
-import app.simple.positional.util.AsyncImageLoader.loadImageResourcesWithoutAnimation
 import app.simple.positional.util.DigitalTimeFormatter.getTime
 import app.simple.positional.util.DigitalTimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
@@ -166,9 +165,6 @@ class Clock : ScopedFragment() {
         }
 
         clockMainLayout.setProxyView(view)
-
-        loadImageResourcesWithoutAnimation(R.drawable.clock_face, face, requireContext())
-        loadImageResourcesWithoutAnimation(R.drawable.clock_trail, sweepSeconds, requireContext())
 
         locationBroadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {

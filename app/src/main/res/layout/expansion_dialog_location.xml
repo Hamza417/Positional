@@ -52,10 +52,10 @@
             android:layout_height="200dp"
             app:s_gradient_line="true"
             app:s_line_bezier="0.5"
-            app:s_line_color="@color/graph_location_line_color_first"
-            app:s_line_second_color="@color/graph_location_line_color_second"
+            app:s_line_color="?attr/colorAppAccent"
+            app:s_line_second_color="?attr/colorAppAccent"
             app:s_line_thickness="4dp"
-            app:s_marker_background_color="@color/graph_location_circle_color"
+            app:s_marker_background_color="?attr/colorAppAccent"
             app:s_marker_circle_style="false"
             app:s_marker_width="8dp" />
 
@@ -86,10 +86,10 @@
             android:layout_height="200dp"
             app:s_gradient_line="true"
             app:s_line_bezier="0.5"
-            app:s_line_color="@color/graph_location_line_color_first"
-            app:s_line_second_color="@color/graph_location_line_color_second"
+            app:s_line_color="?attr/colorAppAccent"
+            app:s_line_second_color="?attr/colorAppAccent"
             app:s_line_thickness="4dp"
-            app:s_marker_background_color="@color/graph_location_circle_color"
+            app:s_marker_background_color="?attr/colorAppAccent"
             app:s_marker_circle_style="false"
             app:s_marker_width="8dp" />
 

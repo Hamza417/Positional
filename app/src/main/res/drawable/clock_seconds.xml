@@ -4,10 +4,10 @@
     android:viewportWidth="1000"
     android:viewportHeight="1000">
     <path
-        android:fillColor="#2ac4d4"
+        android:fillColor="?attr/colorAppAccent"
         android:pathData="M493,528L507,528A2,2 0,0 1,509 530L509,596A2,2 0,0 1,507 598L493,598A2,2 0,0 1,491 596L491,530A2,2 0,0 1,493 528z" />
     <path
-        android:fillColor="#2ac4d4"
+        android:fillColor="?attr/colorAppAccent"
         android:pathData="M500,202L500,202A4,4 0,0 1,504 206L504,528A4,4 0,0 1,500 532L500,532A4,4 0,0 1,496 528L496,206A4,4 0,0 1,500 202z" />
     <path
         android:fillColor="#fff"

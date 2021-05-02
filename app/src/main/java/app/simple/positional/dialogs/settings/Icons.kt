@@ -10,15 +10,16 @@ import android.widget.RadioButton
 import app.simple.positional.R
 import app.simple.positional.activities.alias.*
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomRadioButton
 
 class Icons : CustomBottomSheetDialogFragment() {
 
-    private lateinit var iconOne: RadioButton
-    private lateinit var iconTwo: RadioButton
-    private lateinit var iconThree: RadioButton
-    private lateinit var iconFour: RadioButton
-    private lateinit var iconFive: RadioButton
-    private lateinit var iconSix: RadioButton
+    private lateinit var iconOne: CustomRadioButton
+    private lateinit var iconTwo: CustomRadioButton
+    private lateinit var iconThree: CustomRadioButton
+    private lateinit var iconFour: CustomRadioButton
+    private lateinit var iconFive: CustomRadioButton
+    private lateinit var iconSix: CustomRadioButton
 
     fun newInstance(): Icons {
         val args = Bundle()

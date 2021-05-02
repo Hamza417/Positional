@@ -80,6 +80,36 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/settings_accent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/accent_color"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
+            android:id="@+id/current_accent"
+            android:layout_width="@dimen/top_bar_button_size"
+            android:layout_height="@dimen/top_bar_button_size"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/settings_corner_radius"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

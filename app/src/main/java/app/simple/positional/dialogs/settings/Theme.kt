@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomRadioButton
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.ThemeSetter
 
 class Theme : CustomBottomSheetDialogFragment() {
 
-    private lateinit var light: RadioButton
-    private lateinit var dark: RadioButton
-    private lateinit var followSystem: RadioButton
-    private lateinit var dayNight: RadioButton
+    private lateinit var light: CustomRadioButton
+    private lateinit var dark: CustomRadioButton
+    private lateinit var followSystem: CustomRadioButton
+    private lateinit var dayNight: CustomRadioButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_app_theme, container, false)
