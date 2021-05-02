@@ -23,7 +23,7 @@
 
 [![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build92/app-lite-release.apk)
 
-[![Intro](https://img.shields.io/badge/App%20Intro-YouTube-E74C3C?style=flat&logo=youtube)](https://youtu.be/QU-ZLQShu_A)
+[![Intro](https://img.shields.io/badge/App%20Intro-YouTube-E74C3C?style=flat&logo=youtube)](https://youtu.be/H9UT8gCuvgk)
 
 [![Legacy](https://img.shields.io/github/downloads/Hamza417/Positional/1.7-beta/total?color=229954&label=Download%20Legacy%20Version)](https://github.com/Hamza417/Positional/releases/download/1.7-beta/1.7-beta.apk)
 
