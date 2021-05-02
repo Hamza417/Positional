@@ -12,6 +12,8 @@
 
     <app.simple.positional.decorations.views.MapToolbar
         android:id="@+id/map_toolbar"
+        android:elevation="5dp"
+        android:backgroundTint="@color/mainBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="top" />
@@ -21,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
+        android:translationZ="20dp"
         android:background="#7E000000" />
 
     <include layout="@layout/bottom_sheet_gps" />

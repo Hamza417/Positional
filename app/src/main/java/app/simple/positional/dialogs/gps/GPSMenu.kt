@@ -68,10 +68,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleUseSmallIcon.isChecked = GPSPreferences.isUsingSmallerIcon()
         toggleUseBearing.isChecked = GPSPreferences.isBearingRotationOn()
 
-        if (toggleSatellite.isChecked) {
-            satelliteOverrides(0.4F, isChecked = true)
-        }
-
         toggleLabel.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setLabelMode(isChecked)
         }
@@ -145,10 +141,17 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleUseBearingContainer.setOnClickListener {
             toggleUseBearing.invertCheckedStatus()
         }
+
+        /**
+         * Calling this here because adding click event listeners
+         * resets the [View.isClickable] state to true
+         */
+        if (toggleSatellite.isChecked) {
+            satelliteOverrides(0.4F, isChecked = true)
+        }
     }
 
     private fun satelliteOverrides(alpha: Float, isChecked: Boolean) {
-
         toggleBuilding.isClickable = !isChecked
         toggleHighContrast.isClickable = !isChecked
 

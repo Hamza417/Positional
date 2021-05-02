@@ -144,12 +144,6 @@ class GPS : ScopedFragment() {
         specifiedLocationTextView = view.findViewById(R.id.specified_location_notice_gps)
         infoText = view.findViewById(R.id.gps_info_text)
 
-        val params = toolbar.layoutParams as ViewGroup.MarginLayoutParams
-        params.setMargins(params.leftMargin,
-                StatusBarHeight.getStatusBarHeight(resources) + params.topMargin,
-                params.rightMargin,
-                params.bottomMargin)
-
         handler = Handler(Looper.getMainLooper())
 
         handler.postDelayed({

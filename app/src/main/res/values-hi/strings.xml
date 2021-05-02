@@ -22,7 +22,7 @@
     <string name="moon_dates">चाँद की तारीखें</string>
     <!-- GPS Informatin Headers -->
     <string name="gps_provider">प्रदाता</string>
-    <string name="gps_location">स्थान</string>
+    <string name="gps_location">लोकेशन</string>
     <string name="gps_movement">चाल</string>
     <string name="gps_coordinates">निर्देशांक</string>
     <string name="gps_address">पता</string>
@@ -30,9 +30,9 @@
     <string name="compass_accuracy">सटीकता</string>
     <string name="compass_field">चुम्बकीय क्षेत्र</string>
     <!-- Clock Information Items-->
-    <string name="local_timezone">समय क्षेत्र:</string>
-    <string name="local_time_24hr">समय 24 घंटे:</string>
-    <string name="local_time_12hr">समय 12 घंटे</string>
+    <string name="local_timezone">समयक्षेत्र:</string>
+    <string name="local_time_24hr">समय २४ घंटे:</string>
+    <string name="local_time_12hr">समय १२ घंटे</string>
     <string name="local_day">दिन:</string>
     <string name="local_date">तिथि:</string>
     <string name="local_day_of_year">साल का दिन:</string>
@@ -264,6 +264,7 @@
     <string name="tick_smooth">टिक स्मूथ</string>
     <string name="tick_oscillate">टिक ऑसिलेट</string>
     <string name="use_physical_properties">भौतिक गुणों का उपयोग करें</string>
-    <string name="seconds_precision">\"सेकंड्स\" परिशुद्धता</string>
+    <string name="seconds_precision">सेकंड्स परिशुद्धता</string>
     <string name="bearing_rotation">असर रोटेशन</string>
+    <string name="accent_color">एक्सेंट रंग</string>
 </resources>

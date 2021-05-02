@@ -291,7 +291,7 @@
     <string name="tick_smooth">Tick Smooth</string>
     <string name="tick_oscillate">Tick Oscillate</string>
     <string name="use_physical_properties">Use Physical Properties</string>
-    <string name="seconds_precision">\"Seconds\" Precision</string>
+    <string name="seconds_precision">Seconds Precision</string>
     <string name="bearing_rotation">Bearing Rotation</string>
     <string name="accent_color">Accent Color</string>
 </resources>

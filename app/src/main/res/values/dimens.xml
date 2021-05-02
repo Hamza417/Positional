@@ -75,4 +75,5 @@
     <dimen name="switch_padding">5dp</dimen>
     <dimen name="switch_thumb_dimensions">20dp</dimen>
     <dimen name="toolbar_title_padding">8dp</dimen>
+    <dimen name="toolbar_padding">16dp</dimen>
 </resources>

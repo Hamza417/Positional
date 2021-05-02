@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="app.simple.positional.decorations.corners.DynamicCornerLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingHorizontal="12dp"
+    android:paddingHorizontal="16dp"
     android:paddingVertical="8dp"
     android:elevation="10dp"
-    android:backgroundTint="@color/mainBackground"
-    android:layout_margin="8dp">
+    android:backgroundTint="@color/mainBackground">
 
     <TextView
         android:layout_width="0dp"
@@ -41,4 +42,4 @@
         android:src="@drawable/ic_menu"
         android:tint="@color/iconColor" />
 
-</app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+</merge>

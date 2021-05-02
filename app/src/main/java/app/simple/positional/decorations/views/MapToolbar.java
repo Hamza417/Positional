@@ -7,14 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import app.simple.positional.R;
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout;
 import app.simple.positional.util.LocationExtension;
-import app.simple.positional.util.ViewUtils;
+import app.simple.positional.util.StatusBarHeight;
 
-public class MapToolbar extends LinearLayout {
+public class MapToolbar extends DynamicCornerLinearLayout {
     
     private MapToolbarCallbacks mapToolbarCallbacks;
     private ImageButton location;
@@ -33,16 +33,20 @@ public class MapToolbar extends LinearLayout {
     
     private void setProperties() {
         initViews();
-        ViewUtils.INSTANCE.addShadow(this);
         setLayoutTransition(new LayoutTransition());
     }
     
     private void initViews() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.toolbar_map_panel, this, true);
-        
+    
+        setPadding(getResources().getDimensionPixelOffset(R.dimen.toolbar_padding),
+                getResources().getDimensionPixelOffset(R.dimen.toolbar_padding) + StatusBarHeight.getStatusBarHeight(getResources()),
+                getResources().getDimensionPixelOffset(R.dimen.toolbar_padding),
+                getResources().getDimensionPixelOffset(R.dimen.toolbar_padding));
+    
         location = view.findViewById(R.id.gps_location_indicator);
         menu = view.findViewById(R.id.gps_menu);
-        
+    
         location.setOnClickListener(it -> mapToolbarCallbacks.onLocationReset(it));
         location.setOnLongClickListener(v -> {
             mapToolbarCallbacks.onLocationLongPressed();

@@ -123,12 +123,12 @@ class ClockWidgetService : Service() {
 
     private fun getDayNightIndicator(): Int {
         if (ZonedDateTime.now().hour < 7 || ZonedDateTime.now().hour > 18) {
-            return R.drawable.ic_night
+            return R.drawable.widget_ic_night
         } else if (ZonedDateTime.now().hour < 18 || ZonedDateTime.now().hour > 6) {
-            return R.drawable.ic_day
+            return R.drawable.widget_ic_day
         }
 
-        return R.drawable.ic_day
+        return R.drawable.widget_ic_day
     }
 
     private fun widgetNotification() {

@@ -4,7 +4,7 @@
     style="@style/Widget.MaterialComponents.Toolbar.Surface"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="@dimen/toolbar_padding">
 
     <TextView
         android:layout_width="0dp"
