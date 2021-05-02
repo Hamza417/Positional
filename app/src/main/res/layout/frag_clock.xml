@@ -35,6 +35,7 @@
                 android:layout_gravity="center"
                 android:padding="5dp"
                 android:rotation="-90"
+                android:src="@drawable/clock_trail"
                 tools:ignore="ContentDescription" />
 
             <ImageView

@@ -95,7 +95,7 @@ class ClockWidgetService : Service() {
                 val hour = rotateBitmap(R.drawable.widget_needle_hour.toBitmap(applicationContext, imageSize), getHoursInDegrees(zonedDateTime))
                 val minute = rotateBitmap(R.drawable.widget_needle_minute.toBitmap(applicationContext, imageSize), getMinutesInDegrees(zonedDateTime))
                 val second = rotateBitmap(R.drawable.widget_needle_seconds.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime))
-                val trail = rotateBitmap(R.drawable.clock_trail.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime))
+                val trail = rotateBitmap(R.drawable.widget_clock_trail.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime))
                 val dayNight = getDayNightIndicator()
 
                 withContext(Dispatchers.Main) {
