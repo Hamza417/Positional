@@ -170,7 +170,7 @@ class GPS : ScopedFragment() {
                     requireActivity().intent.action = null
                 }
             }
-        }, 250L)
+        }, 500L)
 
         filter.addAction("location")
         filter.addAction("provider")
