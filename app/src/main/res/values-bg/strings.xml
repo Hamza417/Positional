@@ -138,8 +138,6 @@
     <string name="theme_day">Светла</string>
     <string name="theme_night">Тъмна</string>
     <string name="theme_auto">Автоматично (Ден/Нощ)</string>
-    <string name="desc_icon">Главна икона на приложението</string>
-    <string name="desc_radius">Радиус на заоблените ъгли на приложението</string>
     <string name="desc_skip_splash_Screen">Пропуснете началния екран, когато приложението стартира, и отидете директно на главния екран</string>
     <string name="desc_specified_location">Посочете персонализирана ширина и дължина и я използвайте за извличане на информация. Всяка информация, която използва GPS, ще остане незасегната</string>
     <string name="desc_screen_on">Предотвратяване заспиването на устройството, докато се използва приложението</string>

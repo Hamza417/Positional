@@ -43,8 +43,8 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var theme: LinearLayout
     private lateinit var accent: LinearLayout
     private lateinit var currentAccent: DynamicCornerFrameLayout
-    private lateinit var icon: LinearLayout
-    private lateinit var corner: LinearLayout
+    private lateinit var icon: TextView
+    private lateinit var corner: TextView
     private lateinit var skipSplashScreenContainer: ConstraintLayout
     private lateinit var customLocation: ConstraintLayout
     private lateinit var appVersion: LinearLayout

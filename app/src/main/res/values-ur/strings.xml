@@ -138,8 +138,6 @@
     <string name="theme_day">روشنی</string>
     <string name="theme_night">گہرا</string>
     <string name="theme_auto">آٹو (دن / رات)</string>
-    <string name="desc_icon">لانچر میں موجود ایپ کا مین آئکن</string>
-    <string name="desc_radius">ایپ کا گول کونے کا رداس</string>
     <string name="desc_skip_splash_Screen">جب ایپ لانچ ہوتی ہے تو سپلاش سکرین نہ دکھائیں اورمین اسکرین پر جائیں</string>
     <string name="desc_specified_location">عرض البلد اور طول البلد کی وضاحت کریں اور معلومات لانے کیلئے اس کا استعمال کریں۔ کوئی بھی معلومات جو صرف GPS استعمال کرتی ہے وہ متاثر نہیں ہوگی۔</string>
     <string name="desc_screen_on">ایپ کے مرئی ہونے کے دوران آلے کو آف کرنے سے روکتا ہے</string>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#000000</color>
 
     <color name="mainBackground">#FFFFFF</color>
@@ -13,13 +11,11 @@
     <color name="toolbarBackground">#FFFFFF</color>
     <color name="rippleColor">#9FDADADA</color>
     <color name="edgeEffect">#717171</color>
-    <color name="seek_bar">#2196F3</color>
 
     <!-- Bottom Bar Color -->
     <color name="iconRegular">#9A9A9A</color>
     <color name="indicator">#F3F3F3</color>
 
-    <color name="animated_text_background">#402196F3</color>
     <color name="notification_icon_color">#D60044</color>
     <color name="valid_input">#10D609</color>
     <color name="invalid_input">#B60000</color>
@@ -30,9 +26,6 @@
     <color name="clock_face_color">#fff</color>
 
     <!-- Graph -->
-    <color name="graph_location_line_color_first">#43cea2</color>
-    <color name="graph_location_line_color_second">#185a9d</color>
-    <color name="graph_location_circle_color">#00AC4D</color>
 
     <!-- Speedometer -->
     <color name="speedometer_needle_start">#C30C00</color>

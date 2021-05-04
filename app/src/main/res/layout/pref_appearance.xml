@@ -1,12 +1,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="20dp"
     android:clipChildren="false"
     android:clipToPadding="false"
+    android:orientation="vertical"
     android:paddingHorizontal="16dp"
-    android:orientation="vertical">
+    tools:parentTag="android.widget.LinearLayout">
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,33 +53,16 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
         android:id="@+id/settings_icons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical"
-        android:padding="15dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/medium"
-            android:text="@string/icon"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/settings_primary_text_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text="@string/desc_icon"
-            android:textColor="@color/textTertiary"
-            android:textSize="@dimen/settings_secondary_text_size" />
-
-    </LinearLayout>
+        android:fontFamily="@font/medium"
+        android:padding="15dp"
+        android:text="@string/icon"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/settings_primary_text_size" />
 
     <LinearLayout
         android:id="@+id/settings_accent"
@@ -91,11 +76,11 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:fontFamily="@font/medium"
             android:text="@string/accent_color"
-            android:layout_gravity="center_vertical"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size" />
 
@@ -109,33 +94,16 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
         android:id="@+id/settings_corner_radius"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="vertical"
-        android:padding="15dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/medium"
-            android:text="@string/corner_radius"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/settings_primary_text_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text="@string/desc_radius"
-            android:textColor="@color/textTertiary"
-            android:textSize="@dimen/settings_secondary_text_size" />
-
-    </LinearLayout>
+        android:fontFamily="@font/medium"
+        android:padding="15dp"
+        android:text="@string/corner_radius"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/settings_primary_text_size" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/setting_skip_splash_screen_container"

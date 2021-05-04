@@ -138,8 +138,6 @@
     <string name="theme_day">Hell</string>
     <string name="theme_night">Dunkel</string>
     <string name="theme_auto">Auto (Tag/Nacht)</string>
-    <string name="desc_icon">Hauptsymbol der App im Launcher</string>
-    <string name="desc_radius">Radius der abgerundeten Ecke der App</string>
     <string name="desc_skip_splash_Screen">Startschirm überspringen und direkt zum Hauptbildschirm gehen</string>
     <string name="desc_specified_location">Geben Sie benutzerdefinierte Breitengrad und Längengrad ein und verwenden Sie diese. Alle Informationen, die nur GPS verwenden, bleiben unberührt</string>
     <string name="desc_screen_on">Schirm eingeschaltet lassen wenn App im Vordergrund</string>

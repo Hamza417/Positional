@@ -138,8 +138,6 @@
     <string name="theme_day">Luz</string>
     <string name="theme_night">Oscura</string>
     <string name="theme_auto">Auto (Day/Night)</string>
-    <string name="desc_icon">Icono principal de la aplicación en launcher</string>
-    <string name="desc_radius">Radio de esquina redondeada de la app</string>
     <string name="desc_skip_splash_Screen">Skip Splash Screen when app launches and go to main screen directly</string>
     <string name="desc_specified_location">Specify custom Latitude and Longitude and use it to fetch information. Any information that only uses GPS will stay unaffected</string>
     <string name="desc_screen_on">Evita que el dispositivo duerma mientras la aplicación sea visible</string>
