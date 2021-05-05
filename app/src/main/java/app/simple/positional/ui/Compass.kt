@@ -30,7 +30,6 @@ import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
-import app.simple.positional.constants.CompassBloom.compassBloomTextColor
 import app.simple.positional.decorations.views.CompassView
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.dialogs.app.ErrorDialog
@@ -45,6 +44,7 @@ import app.simple.positional.math.Vector3
 import app.simple.positional.preference.CompassPreference
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.ColorUtils.animateColorChange
+import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
@@ -467,7 +467,7 @@ class Compass : ScopedFragment(), SensorEventListener {
             loadImage(0, flowerTwo, requireContext(), 100)
             loadImage(0, flowerThree, requireContext(), 50)
             loadImage(0, flowerFour, requireContext(), 0)
-            degrees.animateColorChange(compassBloomTextColor[CompassPreference.getFlowerBloomTheme()])
+            degrees.animateColorChange(requireContext().resolveAttrColor(R.attr.colorAppAccent))
         }
     }
 

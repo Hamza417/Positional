@@ -138,13 +138,13 @@
     <string name="theme_day">Light</string>
     <string name="theme_night">Dark</string>
     <string name="theme_auto">Auto (Day/Night)</string>
-    <string name="desc_skip_splash_Screen">Skip Splash Screen when app launches and go to main screen directly</string>
+    <string name="desc_skip_splash_Screen">Skip splash screen when app launches and go to main screen directly</string>
     <string name="desc_specified_location">Specify custom Latitude and Longitude and use it to fetch information. Any information that only uses GPS will stay unaffected.</string>
     <string name="desc_screen_on">Prevents the device from sleeping while the app is visible</string>
     <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>
     <string name="desc_changes">List of changes for this build</string>
     <string name="desc_git">Open app\'s repository</string>
-    <string name="desc_translate">Help translating the app in your native language</string>
+    <string name="desc_translate">Help translating the app into your native language</string>
     <string name="desc_buy_full_version">Support development by buying full version</string>
     <!-- Clock Menu -->
     <string name="needles">Needle</string>

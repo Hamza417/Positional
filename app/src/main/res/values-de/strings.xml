@@ -59,7 +59,7 @@
     <string name="moon_fraction">Bruchteil:</string>
     <string name="moon_angle">Winkel:</string>
     <string name="moon_angle_state">Angle State:</string>
-    <string name="moon_phase">Phase:</string>
+    <string name="moon_phase">Mondphase:</string>
     <string name="moon_phase_angle">Phase Angle:</string>
     <string name="moon_full_moon">Vollmond:</string>
     <string name="moon_new_moon">Neumond:</string>
@@ -83,7 +83,7 @@
     <string name="gps_latitude">Breite:</string>
     <string name="gps_longitude">Länge:</string>
     <!-- Sensor Accuracy -->
-    <string name="sensor_accuracy_unreliable">Unreliable</string>
+    <string name="sensor_accuracy_unreliable">Unzuverlässig</string>
     <string name="sensor_accuracy_low">Niedrig</string>
     <string name="sensor_accuracy_medium">Mittel</string>
     <string name="sensor_accuracy_high">Hoch</string>
@@ -138,7 +138,7 @@
     <string name="theme_day">Hell</string>
     <string name="theme_night">Dunkel</string>
     <string name="theme_auto">Auto (Tag/Nacht)</string>
-    <string name="desc_skip_splash_Screen">Startschirm überspringen und direkt zum Hauptbildschirm gehen</string>
+    <string name="desc_skip_splash_Screen">Skip splash screen when app launches and go to main screen directly</string>
     <string name="desc_specified_location">Geben Sie benutzerdefinierte Breitengrad und Längengrad ein und verwenden Sie diese. Alle Informationen, die nur GPS verwenden, bleiben unberührt</string>
     <string name="desc_screen_on">Schirm eingeschaltet lassen wenn App im Vordergrund</string>
     <string name="desc_legal">Haftungsausschluss, Datenschutzrichtlinien und Nutzungsbedingungen der App lesen</string>
@@ -264,5 +264,5 @@
     <string name="use_physical_properties">Physikalische Eigenschaften verwenden</string>
     <string name="seconds_precision">Seconds Precision</string>
     <string name="bearing_rotation">Karte entsprechend Bewegungsrichtung rotieren</string>
-    <string name="accent_color">Accent Color</string>
+    <string name="accent_color">Akzentfarbe</string>
 </resources>

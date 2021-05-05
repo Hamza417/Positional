@@ -7,11 +7,10 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.widget.ImageViewCompat
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
 import app.simple.positional.constants.SpeedometerConstants
 import app.simple.positional.util.AsyncImageLoader.loadImage
@@ -111,7 +110,7 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
     private fun rotateNeedle(value: Float) {
         objectAnimator = ObjectAnimator.ofFloat(needle, "rotation", needle.rotation, value.reifyNeedleAngle())
         objectAnimator!!.duration = 1000L
-        objectAnimator!!.interpolator = DecelerateInterpolator(1.5F)
+        objectAnimator!!.interpolator = LinearOutSlowInInterpolator()
         objectAnimator!!.setAutoCancel(true)
         objectAnimator!!.start()
 
@@ -128,7 +127,7 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
     private fun animateColorChange(value: Float) {
         colorAnimation = ValueAnimator.ofObject(ArgbEvaluatorCompat(), lastColor, SpeedometerConstants.getSpeedometerColor(value / 2.0))
         colorAnimation!!.duration = 1000L
-        colorAnimation!!.interpolator = AccelerateDecelerateInterpolator()
+        colorAnimation!!.interpolator = LinearOutSlowInInterpolator()
         colorAnimation!!.addUpdateListener { animation ->
             lastColor = animation.animatedValue as Int
             if (isGradientNeedle) {

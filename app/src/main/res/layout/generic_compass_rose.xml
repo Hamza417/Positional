@@ -69,6 +69,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/degrees"
-        android:textColor="@color/indicator"
+        android:textColor="?attr/colorAppAccent"
         android:textSize="@dimen/compass_degrees_text_size" />
 </merge>
