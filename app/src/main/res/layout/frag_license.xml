@@ -8,6 +8,15 @@
     android:orientation="vertical"
     tools:ignore="UseCompoundDrawables">
 
+    <ImageView
+        android:id="@+id/launcher_expression_icon"
+        android:layout_width="@dimen/launcher_app_icon_dimen"
+        android:layout_height="@dimen/launcher_app_icon_dimen"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/icon_cute_quiet"
+        tools:ignore="ContentDescription" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/licence_status"
         android:layout_width="wrap_content"
