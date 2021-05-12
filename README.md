@@ -83,8 +83,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 <br/>
 
 ## Translate
-This app is currently only available in Bulgarian, English, Hindi and Urdu language. If you want to translate the app in your native language
-you can do so on [Crowdin](https://crowdin.com/project/positional/)
+This app is currently only available in Bulgarian, German, English, Hindi and Urdu language. Contribute translating app into your native language on [Crowdin](https://crowdin.com/project/positional/)
 
 <br/>
 
@@ -94,7 +93,7 @@ you can do so on [Crowdin](https://crowdin.com/project/positional/)
 <br/>
 
 ## License
-**Positional** Copyright © 2020 - Hamza Rizwan
+**Positional** Copyright © 2021 - Hamza Rizwan
 
 **Positional** is released as open source software under the [GPL v3](https://opensource.org/licenses/gpl-3.0.html) 
 license, see the [LICENSE](./LICENSE) file in the project root for the full license text.
