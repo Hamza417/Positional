@@ -18,7 +18,7 @@
         android:textStyle="bold"
         tools:ignore="RtlSymmetry" />
 
-    <ImageButton
+    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
         android:id="@+id/clock_timezone"
         android:layout_width="@dimen/top_bar_button_size"
         android:layout_height="@dimen/top_bar_button_size"
@@ -31,7 +31,7 @@
         android:layout_marginEnd="10dp"
         android:tint="@color/iconColor" />
 
-    <ImageButton
+    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
         android:id="@+id/clock_menu"
         android:layout_width="@dimen/top_bar_button_size"
         android:layout_height="@dimen/top_bar_button_size"

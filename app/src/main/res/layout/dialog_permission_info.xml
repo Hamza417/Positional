@@ -67,7 +67,7 @@
                 android:textColor="@color/textSecondary"
                 android:textSize="@dimen/options_item_text_size" />
 
-            <Button
+            <app.simple.positional.decorations.ripple.DynamicRippleButton
                 android:id="@+id/close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                 android:text="@string/button_close"
                 android:textColor="@color/textPrimary" />
 
-            <Button
+            <app.simple.positional.decorations.ripple.DynamicRippleButton
                 android:id="@+id/grant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

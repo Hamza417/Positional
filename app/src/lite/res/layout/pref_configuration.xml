@@ -23,7 +23,7 @@
         android:layout_marginHorizontal="15dp"
         android:background="@color/dividerColor" />
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/settings_units"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,9 +49,9 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/settings_location_provider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,9 +77,9 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
         android:id="@+id/setting_custom_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -129,9 +129,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
         android:id="@+id/setting_keep_screen_on"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -180,9 +180,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/settings_languages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -208,6 +208,6 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
 </LinearLayout>

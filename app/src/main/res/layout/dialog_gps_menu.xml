@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:padding="@dimen/options_container_horizontal_padding">
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_menu_show_label_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,9 +47,9 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_menu_high_contrast_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,9 +80,9 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_menu_show_building_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,9 +113,9 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_menu_us_smaller_icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,9 +146,9 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_menu_bearing_rotation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -179,7 +179,7 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -187,7 +187,7 @@
             android:layout_marginVertical="@dimen/options_sub_item_padding"
             android:background="@color/dividerColor" />
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_menu_satellite_mode_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -226,7 +226,7 @@
             android:layout_marginVertical="@dimen/options_sub_item_padding"
             android:background="@color/dividerColor" />
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_menu_auto_center_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -257,9 +257,9 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_menu_volume_keys_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -290,7 +290,7 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 

@@ -34,7 +34,7 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-            <ImageButton
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/reset_physical_properties"
                 android:layout_width="@dimen/top_bar_button_size"
                 android:layout_height="@dimen/top_bar_button_size"
@@ -42,7 +42,7 @@
                 android:contentDescription="@string/button_reset"
                 android:src="@drawable/ic_reset" />
 
-            <ImageButton
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/help_physical_properties"
                 android:layout_width="@dimen/top_bar_button_size"
                 android:layout_height="@dimen/top_bar_button_size"
@@ -52,7 +52,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/compass_toggle_physical_properties"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

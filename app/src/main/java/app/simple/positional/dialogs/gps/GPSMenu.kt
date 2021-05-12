@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.widget.LinearLayout
 import app.simple.positional.R
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.dialogs.settings.HtmlViewer
@@ -23,14 +23,14 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
     private lateinit var toggleUseSmallIcon: SwitchView
     private lateinit var toggleUseBearing: SwitchView
 
-    private lateinit var toggleLabelContainer: LinearLayout
-    private lateinit var toggleSatelliteContainer: LinearLayout
-    private lateinit var toggleHighContrastContainer: LinearLayout
-    private lateinit var toggleBuildingContainer: LinearLayout
-    private lateinit var toggleAutoCenterContainer: LinearLayout
-    private lateinit var toggleVolumeKeysContainer: LinearLayout
-    private lateinit var toggleUseSmallIconContainer: LinearLayout
-    private lateinit var toggleUseBearingContainer: LinearLayout
+    private lateinit var toggleLabelContainer: DynamicRippleLinearLayout
+    private lateinit var toggleSatelliteContainer: DynamicRippleLinearLayout
+    private lateinit var toggleHighContrastContainer: DynamicRippleLinearLayout
+    private lateinit var toggleBuildingContainer: DynamicRippleLinearLayout
+    private lateinit var toggleAutoCenterContainer: DynamicRippleLinearLayout
+    private lateinit var toggleVolumeKeysContainer: DynamicRippleLinearLayout
+    private lateinit var toggleUseSmallIconContainer: DynamicRippleLinearLayout
+    private lateinit var toggleUseBearingContainer: DynamicRippleLinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_gps_menu, container, false)

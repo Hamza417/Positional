@@ -17,11 +17,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
@@ -37,7 +37,7 @@ class Level : ScopedFragment(), SensorEventListener {
     private lateinit var boundingBox: FrameLayout
     private lateinit var levelX: TextView
     private lateinit var levelY: TextView
-    private lateinit var styleButton: ImageButton
+    private lateinit var styleButton: DynamicRippleImageButton
 
     private lateinit var gravity: Sensor
     private lateinit var sensorManager: SensorManager

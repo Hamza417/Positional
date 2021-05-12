@@ -16,7 +16,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
@@ -30,6 +29,7 @@ import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CompassView
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.dialogs.app.ErrorDialog
@@ -104,8 +104,8 @@ class Compass : ScopedFragment(), SensorEventListener {
     private lateinit var flowerThree: CompassView
     private lateinit var flowerFour: CompassView
 
-    private lateinit var copy: ImageButton
-    private lateinit var menu: ImageButton
+    private lateinit var copy: DynamicRippleImageButton
+    private lateinit var menu: DynamicRippleImageButton
     private lateinit var dialContainer: FrameLayout
     private lateinit var compassListScrollView: NestedScrollView
     private lateinit var dim: View

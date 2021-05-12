@@ -43,7 +43,7 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-            <ImageButton
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/delete_locations"
                 android:layout_width="@dimen/top_bar_button_size"
                 android:layout_height="@dimen/top_bar_button_size"

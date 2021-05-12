@@ -28,6 +28,9 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.decorations.maps.Maps
 import app.simple.positional.decorations.maps.MapsCallbacks
+import app.simple.positional.decorations.ripple.DynamicRippleFrameLayout
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.views.MapToolbar
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
@@ -69,12 +72,12 @@ class GPS : ScopedFragment() {
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
     private lateinit var dim: View
-    private lateinit var locationBox: LinearLayout
-    private lateinit var movementBox: LinearLayout
-    private lateinit var coordinatesBox: FrameLayout
-    private lateinit var copy: ImageButton
-    private lateinit var save: ImageButton
-    private lateinit var movementReset: ImageButton
+    private lateinit var locationBox: DynamicRippleLinearLayout
+    private lateinit var movementBox: DynamicRippleLinearLayout
+    private lateinit var coordinatesBox: DynamicRippleFrameLayout
+    private lateinit var copy: DynamicRippleImageButton
+    private lateinit var save: DynamicRippleImageButton
+    private lateinit var movementReset: DynamicRippleImageButton
 
     private lateinit var accuracy: TextView
     private lateinit var address: TextView

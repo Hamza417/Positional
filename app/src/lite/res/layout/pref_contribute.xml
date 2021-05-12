@@ -21,7 +21,7 @@
         android:layout_marginHorizontal="15dp"
         android:background="@color/dividerColor" />
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/github"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,9 +48,9 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-    <TextView
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/found_issues"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/settings_primary_text_size" />
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/translate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,9 +87,9 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/buy_full"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,6 +116,6 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
 </LinearLayout>

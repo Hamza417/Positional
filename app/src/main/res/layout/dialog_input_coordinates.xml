@@ -154,7 +154,7 @@
             android:animateLayoutChanges="true"
             android:orientation="horizontal">
 
-            <Button
+            <app.simple.positional.decorations.ripple.DynamicRippleButton
                 android:id="@+id/cancel_coordinate_input"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
@@ -164,7 +164,7 @@
                 android:text="@string/button_cancel"
                 android:textColor="@color/textPrimary" />
 
-            <Button
+            <app.simple.positional.decorations.ripple.DynamicRippleButton
                 android:id="@+id/set_coordinates"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"

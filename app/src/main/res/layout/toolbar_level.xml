@@ -19,7 +19,7 @@
         android:textStyle="bold"
         tools:ignore="RtlSymmetry" />
 
-    <ImageButton
+    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
         android:id="@+id/level_circle"
         android:layout_width="@dimen/top_bar_button_size"
         android:layout_height="@dimen/top_bar_button_size"

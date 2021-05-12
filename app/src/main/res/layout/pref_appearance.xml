@@ -25,7 +25,7 @@
         android:layout_marginHorizontal="15dp"
         android:background="@color/dividerColor" />
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/settings_theme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,9 +51,9 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-    <TextView
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/settings_icons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/settings_primary_text_size" />
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/settings_accent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -92,9 +92,9 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-    <TextView
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/settings_corner_radius"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/settings_primary_text_size" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
         android:id="@+id/setting_skip_splash_screen_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -154,6 +154,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>
 
 </LinearLayout>

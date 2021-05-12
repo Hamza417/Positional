@@ -9,11 +9,11 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.DMSConverter
@@ -44,7 +44,7 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
     private lateinit var utmNorthing: TextView
     private lateinit var utmMeridian: TextView
 
-    private lateinit var copyImageButton: ImageButton
+    private lateinit var copyImageButton: DynamicRippleImageButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.expansion_dialog_coordinates, container, false)

@@ -38,7 +38,7 @@
             app:drawableStartCompat="@drawable/ic_navigation"
             app:drawableTint="@color/iconRegular" />
 
-        <TextView
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
             android:id="@+id/clock_motion_type_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -54,7 +54,13 @@
             app:drawableStartCompat="@drawable/ic_motion_type"
             app:drawableTint="@color/iconRegular" />
 
-        <LinearLayout
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginVertical="@dimen/options_sub_item_padding"
+            android:background="@color/dividerColor" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/clock_menu_default_time_format"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,9 +91,9 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/clock_menu_remove_seconds_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -118,7 +124,7 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 

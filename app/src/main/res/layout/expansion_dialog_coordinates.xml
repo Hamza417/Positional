@@ -40,7 +40,7 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-            <ImageButton
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/coordinates_copy"
                 android:layout_width="@dimen/copy_button_dimensions"
                 android:layout_height="@dimen/copy_button_dimensions"

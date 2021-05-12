@@ -39,7 +39,7 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-            <ImageButton
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/gps_save"
                 android:layout_width="@dimen/copy_button_dimensions"
                 android:layout_height="@dimen/copy_button_dimensions"
@@ -51,7 +51,7 @@
                 android:visibility="gone"
                 app:tint="@color/iconColor" />
 
-            <ImageButton
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/gps_copy"
                 android:layout_width="@dimen/copy_button_dimensions"
                 android:layout_height="@dimen/copy_button_dimensions"
@@ -104,7 +104,7 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_panel_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -145,9 +145,9 @@
                 android:text="@string/gps_altitude"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_panel_movement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
                     android:text="@string/gps_movement"
                     android:textSize="@dimen/info_text_primary_size" />
 
-                <ImageButton
+                <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                     android:id="@+id/movement_reset"
                     android:layout_width="@dimen/copy_button_dimensions"
                     android:layout_height="@dimen/copy_button_dimensions"
@@ -231,7 +231,7 @@
                 android:text="@string/gps_speed"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
         <View
             android:id="@+id/gps_divider"
@@ -254,7 +254,7 @@
             android:textColor="@color/textSecondary"
             android:visibility="gone" />
 
-        <FrameLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleFrameLayout
             android:id="@+id/gps_panel_coordinates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -307,7 +307,7 @@
                     android:textSize="@dimen/info_text_secondary_size" />
 
             </LinearLayout>
-        </FrameLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleFrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

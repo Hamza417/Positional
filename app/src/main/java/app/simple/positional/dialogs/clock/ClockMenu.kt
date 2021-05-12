@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import app.simple.positional.R
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.ClockPreferences
 
 class ClockMenu : CustomBottomSheetDialogFragment() {
 
-    private lateinit var defaultTimeFormatContainer: LinearLayout
+    private lateinit var defaultTimeFormatContainer: DynamicRippleLinearLayout
     private lateinit var defaultTimeFormatSwitch: SwitchView
     private lateinit var secondsPrecisionSwitchView: SwitchView
-    private lateinit var secondsPrecisionContainer: LinearLayout
+    private lateinit var secondsPrecisionContainer: DynamicRippleLinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_clock_menu, container, false)

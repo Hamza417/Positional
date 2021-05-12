@@ -20,6 +20,7 @@ import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CompassView
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.dialogs.clock.ClockMenu
@@ -64,9 +65,9 @@ class Clock : ScopedFragment() {
     private lateinit var dayNightIndicator: ImageView
     private lateinit var moonPhaseGraphics: ImageView
 
-    private lateinit var menu: ImageButton
-    private lateinit var copyButton: ImageButton
-    private lateinit var timezoneButton: ImageButton
+    private lateinit var menu: DynamicRippleImageButton
+    private lateinit var copyButton: DynamicRippleImageButton
+    private lateinit var timezoneButton: DynamicRippleImageButton
     private lateinit var divider: View
     private lateinit var clockMainLayout: CustomCoordinatorLayout
     private lateinit var scrollView: NestedScrollView

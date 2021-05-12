@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/menu_disclaimer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/popup_text_size" />
 
-    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/menu_privacy_policy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/popup_text_size" />
 
-    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/menu_terms_of_use"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/popup_text_size" />
 
-    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/menu_permissions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/popup_text_size" />
 
-    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/menu_credits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/popup_text_size" />
 
-    <app.simple.positional.decorations.views.AnimatedBackgroundTextView
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/menu_internet_uses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

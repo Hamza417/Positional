@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import app.simple.positional.R
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.CompassPreference
@@ -18,10 +19,9 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var toggleFlower: SwitchView
     private lateinit var toggleCode: SwitchView
-    private lateinit var bloomText: TextView
-    private lateinit var blooms: TextView
-    private lateinit var bloomSwitchContainer: LinearLayout
-    private lateinit var codeSwitchContainer: LinearLayout
+    private lateinit var bloomSkins: DynamicRippleTextView
+    private lateinit var bloomSwitchContainer: DynamicRippleLinearLayout
+    private lateinit var codeSwitchContainer: DynamicRippleLinearLayout
     private lateinit var speed: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,8 +29,7 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
 
         toggleFlower = view.findViewById(R.id.toggle_flower)
         toggleCode = view.findViewById(R.id.toggle_code)
-        bloomText = view.findViewById(R.id.compass_bloom_text)
-        blooms = view.findViewById(R.id.compass_bloom_skins_text)
+        bloomSkins = view.findViewById(R.id.compass_bloom_skins_text)
         bloomSwitchContainer = view.findViewById(R.id.bloom_switch_container)
         codeSwitchContainer = view.findViewById(R.id.compass_menu_show_code)
         speed = view.findViewById(R.id.compass_speed)
@@ -48,7 +47,7 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
             setFlowerBloom(isChecked)
         }
 
-        blooms.setOnClickListener {
+        bloomSkins.setOnClickListener {
             CompassBloom().show(parentFragmentManager, "null")
         }
 

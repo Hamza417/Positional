@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.PopupWindow
-import android.widget.TextView
 import app.simple.positional.R
+import app.simple.positional.decorations.ripple.DynamicRippleTextView
 
 /**
  * A customised version of popup menu that uses [PopupWindow]
@@ -34,12 +34,12 @@ class MainListPopupMenu(contentView: View,
         isFocusable = true
         elevation = 100F
 
-        contentView.findViewById<TextView>(R.id.menu_disclaimer).onClick()
-        contentView.findViewById<TextView>(R.id.menu_privacy_policy).onClick()
-        contentView.findViewById<TextView>(R.id.menu_terms_of_use).onClick()
-        contentView.findViewById<TextView>(R.id.menu_permissions).onClick()
-        contentView.findViewById<TextView>(R.id.menu_credits).onClick()
-        contentView.findViewById<TextView>(R.id.menu_internet_uses).onClick()
+        contentView.findViewById<DynamicRippleTextView>(R.id.menu_disclaimer).onClick()
+        contentView.findViewById<DynamicRippleTextView>(R.id.menu_privacy_policy).onClick()
+        contentView.findViewById<DynamicRippleTextView>(R.id.menu_terms_of_use).onClick()
+        contentView.findViewById<DynamicRippleTextView>(R.id.menu_permissions).onClick()
+        contentView.findViewById<DynamicRippleTextView>(R.id.menu_credits).onClick()
+        contentView.findViewById<DynamicRippleTextView>(R.id.menu_internet_uses).onClick()
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             overlapAnchor = false
@@ -58,7 +58,7 @@ class MainListPopupMenu(contentView: View,
         dimBehind()
     }
 
-    private fun TextView.onClick() {
+    private fun DynamicRippleTextView.onClick() {
         this.setOnClickListener {
             popupMenuCallback.onMenuItemClicked(this.text.toString())
             dismiss()

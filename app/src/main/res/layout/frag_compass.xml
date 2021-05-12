@@ -31,7 +31,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlSymmetry" />
 
-        <ImageButton
+        <app.simple.positional.decorations.ripple.DynamicRippleImageButton
             android:id="@+id/compass_menu"
             android:layout_width="@dimen/top_bar_button_size"
             android:layout_height="@dimen/top_bar_button_size"

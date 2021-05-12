@@ -7,11 +7,9 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.constraintlayout.widget.ConstraintLayout
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.CoordinatesCallback
@@ -19,6 +17,9 @@ import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.popup.MainListPopupMenu
 import app.simple.positional.decorations.popup.PopupMenuCallback
+import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.app.AccentColor
 import app.simple.positional.dialogs.settings.*
@@ -36,23 +37,23 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private var yOff = 0F
 
     private lateinit var scrollView: BouncyNestedScrollView
-    private lateinit var buyFull: LinearLayout
-    private lateinit var unit: LinearLayout
-    private lateinit var locationProvider: LinearLayout
-    private lateinit var language: LinearLayout
-    private lateinit var theme: LinearLayout
-    private lateinit var accent: LinearLayout
+    private lateinit var buyFull: DynamicRippleLinearLayout
+    private lateinit var unit: DynamicRippleLinearLayout
+    private lateinit var locationProvider: DynamicRippleLinearLayout
+    private lateinit var language: DynamicRippleLinearLayout
+    private lateinit var theme: DynamicRippleLinearLayout
+    private lateinit var accent: DynamicRippleLinearLayout
     private lateinit var currentAccent: DynamicCornerFrameLayout
-    private lateinit var icon: TextView
-    private lateinit var corner: TextView
-    private lateinit var skipSplashScreenContainer: ConstraintLayout
-    private lateinit var customLocation: ConstraintLayout
-    private lateinit var appVersion: LinearLayout
-    private lateinit var legalNotes: LinearLayout
-    private lateinit var changeLogs: LinearLayout
-    private lateinit var github: LinearLayout
-    private lateinit var translate: LinearLayout
-    private lateinit var keepScreenOn: ConstraintLayout
+    private lateinit var icon: DynamicRippleTextView
+    private lateinit var corner: DynamicRippleTextView
+    private lateinit var skipSplashScreenContainer: DynamicRippleConstraintLayout
+    private lateinit var customLocation: DynamicRippleConstraintLayout
+    private lateinit var appVersion: DynamicRippleLinearLayout
+    private lateinit var legalNotes: DynamicRippleLinearLayout
+    private lateinit var changeLogs: DynamicRippleLinearLayout
+    private lateinit var github: DynamicRippleLinearLayout
+    private lateinit var translate: DynamicRippleLinearLayout
+    private lateinit var keepScreenOn: DynamicRippleConstraintLayout
 
     private lateinit var toggleKeepScreenOn: SwitchView
     private lateinit var toggleCustomLocation: SwitchView

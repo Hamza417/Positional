@@ -20,7 +20,7 @@
         android:layout_marginHorizontal="15dp"
         android:background="@color/dividerColor" />
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/legal_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,9 +46,9 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/current_app_version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,9 +74,9 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-    <LinearLayout
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/change_logs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -103,5 +103,5 @@
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 </LinearLayout>

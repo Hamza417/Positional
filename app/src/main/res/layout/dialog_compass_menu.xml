@@ -19,11 +19,10 @@
         android:orientation="vertical"
         android:padding="@dimen/options_container_horizontal_padding">
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/bloom_switch_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple_btn"
             android:clickable="true"
             android:clipChildren="false"
             android:clipToPadding="false"
@@ -32,7 +31,6 @@
             android:padding="@dimen/options_item_padding">
 
             <TextView
-                android:id="@+id/compass_bloom_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -51,9 +49,9 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <TextView
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
             android:id="@+id/compass_bloom_skins_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +72,7 @@
             android:layout_marginVertical="@dimen/options_sub_item_padding"
             android:background="@color/dividerColor" />
 
-        <LinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/compass_menu_show_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,9 +103,9 @@
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <TextView
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
             android:id="@+id/compass_speed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

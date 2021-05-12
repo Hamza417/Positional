@@ -12,14 +12,15 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.DecelerateInterpolator
 import androidx.annotation.ColorInt
 import androidx.annotation.Dimension
 import androidx.annotation.FontRes
 import androidx.annotation.XmlRes
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
+import app.simple.positional.preference.MainPreferences
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -101,8 +102,8 @@ class SmoothBottomBar @JvmOverloads constructor(
             invalidate()
         }
 
-    private var barIndicatorRadius: Float
-        @Dimension get() = _barIndicatorRadius
+    var barIndicatorRadius: Float
+        @Dimension get() = MainPreferences.getCornerRadius().toFloat()
         set(@Dimension value) {
             _barIndicatorRadius = value
             invalidate()
@@ -515,7 +516,7 @@ class SmoothBottomBar @JvmOverloads constructor(
 
             ValueAnimator.ofFloat(indicatorLocation, items[itemActiveIndex].rect.left).apply {
                 duration = itemAnimDuration
-                interpolator = DecelerateInterpolator(1.5f)
+                interpolator = LinearOutSlowInInterpolator()
                 addUpdateListener { animation ->
                     indicatorLocation = animation.animatedValue as Float
                 }
