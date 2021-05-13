@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.CheckBox
 import app.simple.positional.R
 import app.simple.positional.callbacks.PermissionCallbacks
+import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomWebView
 import app.simple.positional.preference.MainPreferences.setShowPermissionDialog
@@ -40,8 +40,8 @@ class PermissionDialogFragment : CustomBottomSheetDialogFragment() {
 
         webView = view.findViewById(R.id.permissions_webview)
 
-        val grant: Button = view.findViewById(R.id.grant)
-        val close: Button = view.findViewById(R.id.close)
+        val grant: DynamicRippleButton = view.findViewById(R.id.grant)
+        val close: DynamicRippleButton = view.findViewById(R.id.close)
 
         webView.loadUrl("file:///android_asset/html/required_permissions.html")
 

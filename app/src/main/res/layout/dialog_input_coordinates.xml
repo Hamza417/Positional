@@ -43,7 +43,7 @@
                 android:indeterminateTint="@color/iconColor"
                 android:progressTint="@color/iconColor" />
 
-            <ImageButton
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/open_saved_locations"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -53,7 +53,7 @@
                 android:src="@drawable/ic_list"
                 android:tint="@color/iconColor" />
 
-            <ImageButton
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/help_custom_coordinates"
                 android:layout_width="40dp"
                 android:layout_height="40dp"

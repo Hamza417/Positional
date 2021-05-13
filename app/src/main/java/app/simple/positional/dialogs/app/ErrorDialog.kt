@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.CheckBox
 import app.simple.positional.R
+import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomWebView
 import app.simple.positional.preference.CompassPreference
@@ -17,7 +17,7 @@ import app.simple.positional.preference.WidgetPreferences
 class ErrorDialog : CustomBottomSheetDialogFragment() {
 
     private lateinit var webView: CustomWebView
-    private lateinit var closeButton: Button
+    private lateinit var closeButton: DynamicRippleButton
     private lateinit var showAgainCheckBox: CheckBox
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

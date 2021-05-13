@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getCornerRadius
@@ -24,8 +24,8 @@ class RoundedCorner : CustomBottomSheetDialogFragment() {
 
     private lateinit var radiusValue: TextView
     private lateinit var radiusSeekBar: SeekBar
-    private lateinit var cancel: Button
-    private lateinit var set: Button
+    private lateinit var cancel: DynamicRippleButton
+    private lateinit var set: DynamicRippleButton
     private lateinit var cornerFrameLayout: DynamicCornerLinearLayout
 
     private var objectAnimator: ObjectAnimator? = null

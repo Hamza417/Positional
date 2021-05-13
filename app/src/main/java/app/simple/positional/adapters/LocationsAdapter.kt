@@ -3,13 +3,13 @@ package app.simple.positional.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.LocationAdapterCallback
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.model.Locations
 import app.simple.positional.util.DMSConverter.latitudeAsDMS
 import app.simple.positional.util.DMSConverter.longitudeAsDMS
@@ -40,7 +40,7 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val container: LinearLayout = itemView.findViewById(R.id.adapter_locations_container)
+        val container: DynamicRippleLinearLayout = itemView.findViewById(R.id.adapter_locations_container)
         val address: TextView = itemView.findViewById(R.id.adapter_locations_address)
         val latitude: TextView = itemView.findViewById(R.id.adapter_locations_latitude)
         val longitude: TextView = itemView.findViewById(R.id.adapter_locations_longitude)

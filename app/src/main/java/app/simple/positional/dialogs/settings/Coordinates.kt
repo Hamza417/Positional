@@ -13,8 +13,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.room.Room
@@ -22,6 +20,8 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.callbacks.LocationAdapterCallback
 import app.simple.positional.database.LocationDatabase
+import app.simple.positional.decorations.ripple.DynamicRippleButton
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.model.Locations
 import app.simple.positional.preference.MainPreferences
@@ -41,10 +41,10 @@ class Coordinates : CustomDialogFragment(), LocationAdapterCallback {
     }
 
     private lateinit var addressIndicator: ContentLoadingProgressBar
-    private lateinit var savedLocations: ImageButton
-    private lateinit var help: ImageButton
-    private lateinit var setCoordinatesButton: Button
-    private lateinit var cancel: Button
+    private lateinit var savedLocations: DynamicRippleImageButton
+    private lateinit var help: DynamicRippleImageButton
+    private lateinit var setCoordinatesButton: DynamicRippleButton
+    private lateinit var cancel: DynamicRippleButton
     private lateinit var addressInputEditText: TextInputEditText
     private lateinit var latitudeInputEditText: TextInputEditText
     private lateinit var longitudeInputEditText: TextInputEditText

@@ -50,7 +50,7 @@
                 android:id="@+id/app_corner_radius_cancel"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/options_item_padding"
                 android:background="@drawable/ripple_btn"
                 android:text="@string/button_cancel"
@@ -60,7 +60,7 @@
                 android:id="@+id/app_corner_radius_set"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/ripple_btn"
                 android:text="@string/button_set"
                 android:textColor="@color/textSecondary" />

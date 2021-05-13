@@ -9,7 +9,6 @@ import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.dynamicanimation.animation.SpringAnimation
@@ -17,6 +16,7 @@ import androidx.dynamicanimation.animation.SpringForce
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.TimeZonesCallback
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.util.bouncyValue
 import app.simple.positional.util.stiffnessValue
@@ -66,7 +66,7 @@ class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, private 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val timeZone: TextView = itemView.findViewById(R.id.time_zone_adapter_text)
         val offset: TextView = itemView.findViewById(R.id.time_zone_adapter_offset)
-        val layout: LinearLayout = itemView.findViewById(R.id.time_zone_adapter_item_container)
+        val layout: DynamicRippleLinearLayout = itemView.findViewById(R.id.time_zone_adapter_item_container)
 
         private var currentVelocity = 0f
 

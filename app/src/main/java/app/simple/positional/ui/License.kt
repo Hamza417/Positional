@@ -1,6 +1,7 @@
 package app.simple.positional.ui
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -46,6 +47,10 @@ class License : Fragment(), LicenseCheckerCallback {
         licenseLoader = view.findViewById(R.id.licence_loader)
         licenseStatus = view.findViewById(R.id.licence_status)
         expression = view.findViewById(R.id.launcher_expression_icon)
+
+        if (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+            expression.visibility = View.GONE
+        }
 
         return view
     }
@@ -111,7 +116,7 @@ class License : Fragment(), LicenseCheckerCallback {
                     licenseStatus.setTextAnimation(getString(R.string.error), 500)
                     runHandler()
                 } else {
-                    showDoNotAllowScreen("package mismatched")
+                    showDoNotAllowScreen("package mismatched: ${requireContext().packageName}")
                 }
             } catch (ignored: NullPointerException) {
             }

@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.LocaleCallback
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.model.Locales
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.util.LocaleHelper
@@ -44,6 +44,6 @@ class LocaleAdapter : RecyclerView.Adapter<LocaleAdapter.Holder>() {
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val indicator: ImageView = itemView.findViewById(R.id.locale_indicator)
         val locale: TextView = itemView.findViewById(R.id.locales_adapter_text)
-        val container: LinearLayout = itemView.findViewById(R.id.locales_adapter_item_container)
+        val container: DynamicRippleLinearLayout = itemView.findViewById(R.id.locales_adapter_item_container)
     }
 }

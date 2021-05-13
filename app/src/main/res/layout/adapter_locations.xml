@@ -40,8 +40,10 @@
             android:id="@+id/adapter_locations_latitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:ellipsize="end"
             android:fontFamily="@font/regular"
+            android:gravity="end"
             android:maxLines="1"
             android:textColor="@color/textSecondary"
             android:textSize="@dimen/description_text_size" />
@@ -50,8 +52,10 @@
             android:id="@+id/adapter_locations_longitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:ellipsize="end"
             android:fontFamily="@font/regular"
+            android:gravity="end"
             android:maxLines="1"
             android:textColor="@color/textSecondary"
             android:textSize="@dimen/description_text_size" />

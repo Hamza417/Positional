@@ -23,7 +23,7 @@ object ColorUtils {
 
     fun TextView.animateColorChange(endColor: Int) {
         val colorAnim = ValueAnimator.ofObject(ArgbEvaluatorCompat(), this.currentTextColor, endColor)
-        colorAnim.duration = 1000
+        colorAnim.duration = 1000L
         colorAnim.interpolator = DecelerateInterpolator(1.5F)
         colorAnim.addUpdateListener { animation -> this.setTextColor(animation.animatedValue as Int) }
         colorAnim.start()
