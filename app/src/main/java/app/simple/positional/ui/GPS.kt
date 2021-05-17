@@ -542,6 +542,7 @@ class GPS : ScopedFragment() {
         super.onDestroy()
         mapView?.removeCallbacks { }
         mapView?.destroy()
+        handler.removeCallbacksAndMessages(null)
     }
 
     override fun onResume() {
