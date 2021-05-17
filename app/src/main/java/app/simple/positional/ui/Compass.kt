@@ -10,6 +10,7 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -23,6 +24,7 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
@@ -51,6 +53,9 @@ import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.setTextAnimation
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.math.abs
 
@@ -254,34 +259,48 @@ class Compass : ScopedFragment(), SensorEventListener {
                 if (intent != null) {
                     when (intent.action) {
                         "location" -> {
-                            val location: Location = intent.getParcelableExtra("location") ?: return
-                            val geomagneticField = GeomagneticField(
-                                    location.latitude.toFloat(),
-                                    location.longitude.toFloat(),
-                                    location.altitude.toFloat(),
-                                    location.time
-                            )
 
-                            declination.text = fromHtml("<b>${getString(R.string.compass_declination)}</b> ${
-                                round(
-                                        geomagneticField.declination.toDouble(),
-                                        2
-                                )
-                            }°")
+                            var declination: Spanned
+                            var inclination: Spanned
+                            var fieldStrength: Spanned
 
-                            inclinationTextView.text = fromHtml("<b>${getString(R.string.compass_inclination)}</b> ${
-                                round(
-                                        geomagneticField.inclination.toDouble(),
-                                        2
+                            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+                                val location: Location = intent.getParcelableExtra("location")
+                                        ?: return@launch
+                                val geomagneticField = GeomagneticField(
+                                        location.latitude.toFloat(),
+                                        location.longitude.toFloat(),
+                                        location.altitude.toFloat(),
+                                        location.time
                                 )
-                            }°")
 
-                            fieldStrength.text = fromHtml("<b>${getString(R.string.compass_field_strength)}</b> ${
-                                round(
-                                        geomagneticField.fieldStrength.toDouble(),
-                                        2
-                                )
-                            } nT")
+                                declination = fromHtml("<b>${getString(R.string.compass_declination)}</b> ${
+                                    round(
+                                            geomagneticField.declination.toDouble(),
+                                            2
+                                    )
+                                }°")
+
+                                inclination = fromHtml("<b>${getString(R.string.compass_inclination)}</b> ${
+                                    round(
+                                            geomagneticField.inclination.toDouble(),
+                                            2
+                                    )
+                                }°")
+
+                                fieldStrength = fromHtml("<b>${getString(R.string.compass_field_strength)}</b> ${
+                                    round(
+                                            geomagneticField.fieldStrength.toDouble(),
+                                            2
+                                    )
+                                } nT")
+
+                                withContext(Dispatchers.Main) {
+                                    this@Compass.declination.text = declination
+                                    this@Compass.inclinationTextView.text = inclination
+                                    this@Compass.fieldStrength.text = fieldStrength
+                                }
+                            }
                         }
                     }
                 }

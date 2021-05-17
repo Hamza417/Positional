@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
@@ -145,7 +146,7 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
     }
 
     private fun formatCoordinates(latitude: Double, longitude: Double) {
-        launch {
+        viewLifecycleOwner.lifecycleScope.launch {
 
             val dmsLatitude: Spanned
             val dmsLongitude: Spanned

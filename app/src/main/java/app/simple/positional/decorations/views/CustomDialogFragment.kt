@@ -7,17 +7,8 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.DialogFragment
 import app.simple.positional.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlin.coroutines.CoroutineContext
 
-open class CustomDialogFragment : DialogFragment(), CoroutineScope {
-
-    private val job = Job()
-
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+open class CustomDialogFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +28,5 @@ open class CustomDialogFragment : DialogFragment(), CoroutineScope {
         window.setDimAmount(0.5f)
         window.attributes.gravity = Gravity.CENTER
         window.attributes.width = (displayMetrics.widthPixels * 1f / 100f * 85f).toInt()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        job.cancel()
     }
 }

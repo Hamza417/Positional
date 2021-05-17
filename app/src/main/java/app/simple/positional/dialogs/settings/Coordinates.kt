@@ -15,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ContentLoadingProgressBar
+import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import app.simple.positional.R
 import app.simple.positional.callbacks.CoordinatesCallback
@@ -197,7 +198,7 @@ class Coordinates : CustomDialogFragment(), LocationAdapterCallback {
     }
 
     private fun getCoordinatesFromAddress(address: String) {
-        launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             addressIndicator.show()
 
             val geocoder = Geocoder(context)
@@ -265,7 +266,7 @@ class Coordinates : CustomDialogFragment(), LocationAdapterCallback {
     }
 
     private fun finish() {
-        launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             withContext(Dispatchers.Default) {
                 if (isCoordinateSet) {
                     if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty()) {

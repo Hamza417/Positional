@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomWebView
@@ -76,7 +77,7 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
                  */
                 "Development Status" -> {
                     webView.loadUrl("file:///android_asset/html/loading.html")
-                    launch {
+                    viewLifecycleOwner.lifecycleScope.launch {
                         downloadChangeLogs()
                     }
                 }

@@ -6,17 +6,8 @@ import android.view.View
 import app.simple.positional.R
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlin.coroutines.CoroutineContext
 
-open class CustomBottomSheetDialogFragment : BottomSheetDialogFragment(), CoroutineScope, SharedPreferences.OnSharedPreferenceChangeListener {
-
-    private val job = Job()
-
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+open class CustomBottomSheetDialogFragment : BottomSheetDialogFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +27,6 @@ open class CustomBottomSheetDialogFragment : BottomSheetDialogFragment(), Corout
 
     override fun onDestroy() {
         super.onDestroy()
-        job.cancel()
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
     }
 

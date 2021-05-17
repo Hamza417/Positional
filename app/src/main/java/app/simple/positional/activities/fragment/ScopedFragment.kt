@@ -4,9 +4,6 @@ import android.content.SharedPreferences
 import androidx.fragment.app.Fragment
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlin.coroutines.CoroutineContext
 
 /**
  * [ScopedFragment] is lifecycle aware [CoroutineScope] fragment
@@ -14,40 +11,17 @@ import kotlin.coroutines.CoroutineContext
  * the given fragment. All [Fragment] classes must extend
  * this class instead
  */
-open class ScopedFragment : Fragment(), CoroutineScope, SharedPreferences.OnSharedPreferenceChangeListener {
-
-    /**
-     * Get the job instance here, must be a final value
-     */
-    private val job = Job()
-
-    /**
-     * Use the job instance and attach it the [Dispatchers.Main]
-     * which will be the main thread of the given app
-     * instance
-     */
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+open class ScopedFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun onResume() {
         super.onResume()
         getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
     }
 
-    /**
-     * Cancel the job instance here, since
-     * we have attached the [Job] with [Dispatchers.Main]
-     * it will cancel all the coroutines of the given instance
-     * and this way coroutines won't last more than the
-     * lifecycle itself
-     */
     override fun onDestroy() {
-        job.cancel()
         super.onDestroy()
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-
-    }
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {}
 }

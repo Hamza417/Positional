@@ -14,6 +14,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
@@ -367,7 +368,7 @@ class Clock : ScopedFragment() {
     }
 
     private fun calculateAndUpdateData(latitude: Double, longitude: Double) {
-        launch {
+        viewLifecycleOwner.lifecycleScope.launch {
 
             val sunTimeData: Spanned
             val moonTimeData: Spanned
@@ -464,7 +465,7 @@ class Clock : ScopedFragment() {
     }
 
     private fun updateTimeData() {
-        launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             var localTimeData: Spanned? = null
             var digitalTime: Spanned? = null
             var utcTimeData: Spanned? = null

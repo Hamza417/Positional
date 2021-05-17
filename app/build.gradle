@@ -161,6 +161,7 @@ dependencies {
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     implementation 'androidx.webkit:webkit:1.4.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
@@ -169,6 +170,7 @@ dependencies {
     // Google Firebase, Services and Default android libs
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.android.gms:play-services-analytics:17.0.0'
     implementation 'com.google.android.gms:play-services-basement:17.6.0'
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'

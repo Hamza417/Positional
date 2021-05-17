@@ -19,6 +19,7 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.room.Room
 import app.simple.positional.BuildConfig
@@ -238,7 +239,7 @@ class GPS : ScopedFragment() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 when (intent!!.action) {
                     "location" -> {
-                        launch {
+                        viewLifecycleOwner.lifecycleScope.launch {
                             withContext(Dispatchers.Default) {
                                 location = intent.getParcelableExtra("location")
                                         ?: return@withContext
@@ -572,7 +573,7 @@ class GPS : ScopedFragment() {
     }
 
     private fun getAddress(latitude: Double, longitude: Double) {
-        launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             var address: String = getString(R.string.not_available)
 
             withContext(Dispatchers.IO) {
