@@ -15,7 +15,6 @@ object LocaleHelper {
     val localeList = arrayListOf(
             Locales("autoSystemLanguageString" /* Placeholder */, "default"),
             Locales("English", "en"),
-            Locales("Español", "es"),
             Locales("български", "bg"),
             Locales("Deutsch", "de"),
             Locales("हिन्दी", "hi"),

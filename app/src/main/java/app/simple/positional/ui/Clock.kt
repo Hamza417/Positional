@@ -205,7 +205,7 @@ class Clock : ScopedFragment() {
         })
 
         menu.setOnClickListener {
-            ClockMenu.newInstance().show(parentFragmentManager, "null")
+            ClockMenu.newInstance().show(parentFragmentManager, "clock_menu")
         }
 
         copyButton.setOnClickListener {
