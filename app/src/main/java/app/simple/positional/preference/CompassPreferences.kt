@@ -3,7 +3,10 @@ package app.simple.positional.preference
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import org.jetbrains.annotations.NotNull
 
-object CompassPreference {
+/**
+ * Only preference related to Compass
+ */
+object CompassPreferences {
 
     const val direction_code = "direction_code"
     const val flowerBloom = "flower"
@@ -14,6 +17,8 @@ object CompassPreference {
     const val usePhysicalProperties = "use_physical_properties"
     private const val noSensorAlertCompass = "no_sensor_alert_compass_dialog_show"
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setDirectionCode(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(direction_code, value).apply()
     }
@@ -22,7 +27,8 @@ object CompassPreference {
         return getSharedPreferences().getBoolean(direction_code, true)
     }
 
-    // Flower Bloom
+    //--------------------------------------------------------------------------------------------------//
+
     fun setFlowerBloom(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(flowerBloom, value).apply()
     }
@@ -31,7 +37,8 @@ object CompassPreference {
         return getSharedPreferences().getBoolean(flowerBloom, false)
     }
 
-    // Flower Bloom Theme
+    //--------------------------------------------------------------------------------------------------//
+
     fun setFlowerBloom(@NotNull value: Int) {
         getSharedPreferences().edit().putInt(flowerBloomTheme, value).apply()
     }
@@ -40,7 +47,8 @@ object CompassPreference {
         return getSharedPreferences().getInt(flowerBloomTheme, 0)
     }
 
-    // Compass Sensor Speed
+    //--------------------------------------------------------------------------------------------------//
+
     fun setDampingCoefficient(@NotNull value: Float) {
         getSharedPreferences().edit().putFloat(dampingCoefficient, value).apply()
     }
@@ -48,6 +56,8 @@ object CompassPreference {
     fun getDampingCoefficient(): Float {
         return getSharedPreferences().getFloat(dampingCoefficient, 10F)
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setRotationalInertia(@NotNull value: Float) {
         getSharedPreferences().edit().putFloat(rotationalInertia, value).apply()
@@ -57,6 +67,8 @@ object CompassPreference {
         return getSharedPreferences().getFloat(rotationalInertia, 0.1f)
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setMagneticCoefficient(@NotNull value: Float) {
         getSharedPreferences().edit().putFloat(magneticCoefficient, value).apply()
     }
@@ -65,6 +77,8 @@ object CompassPreference {
         return getSharedPreferences().getFloat(magneticCoefficient, 10000f)
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun isNoSensorAlertON(): Boolean {
         return getSharedPreferences().getBoolean(noSensorAlertCompass, true)
     }
@@ -72,6 +86,8 @@ object CompassPreference {
     fun setNoSensorAlert(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(noSensorAlertCompass, value).apply()
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setUsePhysicalProperties(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(usePhysicalProperties, value).apply()

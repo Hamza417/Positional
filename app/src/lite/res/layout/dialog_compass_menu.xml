@@ -114,6 +114,7 @@
             android:fontFamily="@font/regular"
             android:gravity="center_vertical"
             android:padding="@dimen/options_item_padding"
+            android:drawableEnd="@drawable/ic_arrow_right"
             android:text="@string/physical_properties"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"

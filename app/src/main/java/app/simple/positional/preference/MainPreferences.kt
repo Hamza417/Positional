@@ -26,6 +26,8 @@ object MainPreferences {
     const val longitude = "custom_longitude"
     const val accentColor = "app_accent_color"
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setLaunchCount(value: Int) {
         getSharedPreferences().edit().putInt(launchCount, value).apply()
     }
@@ -34,6 +36,8 @@ object MainPreferences {
         return getSharedPreferences().getInt(launchCount, 0)
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setScreenOn(value: Boolean) {
         getSharedPreferences().edit().putBoolean(screenOn, value).apply()
     }
@@ -41,6 +45,8 @@ object MainPreferences {
     fun isScreenOn(): Boolean {
         return getSharedPreferences().getBoolean(screenOn, false)
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     /**
      * @param value for storing theme preferences
@@ -57,7 +63,8 @@ object MainPreferences {
         return getSharedPreferences().getInt(theme, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 
-    // Day/Night Auto
+    //--------------------------------------------------------------------------------------------------//
+
     fun setDayNight(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(dayNightMode, value).apply()
     }
@@ -65,6 +72,8 @@ object MainPreferences {
     fun isDayNightOn(): Boolean {
         return getSharedPreferences().getBoolean(dayNightMode, false)
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setShowPermissionDialog(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(showAgain, value).apply()
@@ -74,6 +83,8 @@ object MainPreferences {
         return getSharedPreferences().getBoolean(showAgain, true)
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setShowPlayServiceDialog(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(showPlayServicesAgain, value).apply()
     }
@@ -82,6 +93,8 @@ object MainPreferences {
         return getSharedPreferences().getBoolean(showPlayServicesAgain, true)
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setLicenseStatus(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(licenseStatus, value).apply()
     }
@@ -89,6 +102,8 @@ object MainPreferences {
     fun getLicenceStatus(): Boolean {
         return getSharedPreferences().getBoolean(licenseStatus, false)
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setUnit(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(unit, value).apply()
@@ -102,7 +117,8 @@ object MainPreferences {
         return getSharedPreferences().getBoolean(unit, true)
     }
 
-    // Coordinates
+    //--------------------------------------------------------------------------------------------------//
+
     fun setCustomCoordinates(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(isCustomCoordinate, value).apply()
     }
@@ -110,6 +126,8 @@ object MainPreferences {
     fun isCustomCoordinate(): Boolean {
         return getSharedPreferences().getBoolean(isCustomCoordinate, false)
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setLatitude(@NotNull value: Float) {
         getSharedPreferences().edit().putFloat(latitude, value).apply()
@@ -126,6 +144,8 @@ object MainPreferences {
         )
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setAddress(@NotNull value: String) {
         getSharedPreferences().edit().putString(address, value).apply()
     }
@@ -133,6 +153,8 @@ object MainPreferences {
     fun getAddress(): String? {
         return getSharedPreferences().getString(address, "")
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setAppLanguage(@NonNull locale: String) {
         getSharedPreferences().edit().putString(appLanguage, locale).apply()
@@ -142,6 +164,8 @@ object MainPreferences {
         return getSharedPreferences().getString(appLanguage, "default")
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setCornerRadius(@IntRange(from = 25, to = 400) radius: Int) {
         getSharedPreferences().edit().putInt(appCornerRadius, radius / 5).apply()
     }
@@ -149,6 +173,8 @@ object MainPreferences {
     fun getCornerRadius(): Int {
         return getSharedPreferences().getInt(appCornerRadius, 30)
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     /**
      * @param value - Use "fused" for Fused Location Provider and
@@ -161,6 +187,8 @@ object MainPreferences {
     fun getLocationProvider(): String {
         return getSharedPreferences().getString(locationProvider, "android")!!
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setSkipSplashScreen(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(skipSplashScreen, value).apply()

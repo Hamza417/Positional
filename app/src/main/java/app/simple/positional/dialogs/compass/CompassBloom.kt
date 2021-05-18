@@ -10,7 +10,7 @@ import app.simple.positional.R
 import app.simple.positional.adapters.BloomSkinAdapter
 import app.simple.positional.constants.CompassBloom
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.CompassPreference
+import app.simple.positional.preference.CompassPreferences
 import app.simple.positional.util.LocaleHelper
 
 class CompassBloom : CustomBottomSheetDialogFragment() {
@@ -31,7 +31,7 @@ class CompassBloom : CustomBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewPager.adapter = BloomSkinAdapter(requireContext())
-        viewPager.currentItem = CompassPreference.getFlowerBloomTheme()
+        viewPager.currentItem = CompassPreferences.getFlowerBloomTheme()
 
         textView.text = String.format(
                 locale = LocaleHelper.getAppLocale(),
@@ -52,7 +52,7 @@ class CompassBloom : CustomBottomSheetDialogFragment() {
 
             override fun onPageScrollStateChanged(state: Int) {
                 if (state == ViewPager.SCROLL_STATE_SETTLING) {
-                    CompassPreference.setFlowerBloom(viewPager.currentItem)
+                    CompassPreferences.setFlowerBloom(viewPager.currentItem)
                 }
             }
         })

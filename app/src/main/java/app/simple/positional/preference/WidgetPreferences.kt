@@ -4,7 +4,9 @@ import app.simple.positional.singleton.SharedPreferences
 import org.jetbrains.annotations.NotNull
 
 object WidgetPreferences {
-    private val showAgain = "show_widget_alert_again"
+    private const val showAgain = "show_widget_alert_again"
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun isWidgetAlertShowAgain(): Boolean {
         return SharedPreferences.getSharedPreferences().getBoolean(showAgain, true)

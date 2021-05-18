@@ -4,6 +4,9 @@ import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import org.jetbrains.annotations.NotNull
 import java.util.*
 
+/**
+ * Only preferences related to Clock panel
+ */
 object ClockPreferences {
 
     private const val clockDefaultTimeFormat = "is_clock_time_type_am_pm"
@@ -13,6 +16,8 @@ object ClockPreferences {
     const val clockNeedle = "clock_needle_res_value"
     const val timezone = "custom_timezone"
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setDefaultClockTime(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(clockDefaultTimeFormat, value).apply()
     }
@@ -20,6 +25,8 @@ object ClockPreferences {
     fun getDefaultClockTime(): Boolean {
         return getSharedPreferences().getBoolean(clockDefaultTimeFormat, true)
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setClockNeedleTheme(@NotNull value: Int) {
         getSharedPreferences().edit().putInt(clockNeedle, value).apply()
@@ -29,6 +36,8 @@ object ClockPreferences {
         return getSharedPreferences().getInt(clockNeedle, 1)
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setMovementType(@NotNull value: String) {
         getSharedPreferences().edit().putString(clockNeedleMovementType, value).apply()
     }
@@ -36,6 +45,8 @@ object ClockPreferences {
     fun getMovementType(): String {
         return getSharedPreferences().getString(clockNeedleMovementType, "smooth")!!
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setTimeZone(@NotNull value: String) {
         getSharedPreferences().edit().putString(timezone, value).apply()
@@ -45,6 +56,8 @@ object ClockPreferences {
         return getSharedPreferences().getString(timezone, Calendar.getInstance().timeZone.id)!!
     }
 
+    //--------------------------------------------------------------------------------------------------//
+
     fun setTimezoneSelectedPosition(@NotNull value: Int) {
         getSharedPreferences().edit().putInt(timeZoneScrollPosition, value).apply()
     }
@@ -52,6 +65,8 @@ object ClockPreferences {
     fun getTimezoneSelectedPosition(): Int {
         return getSharedPreferences().getInt(timeZoneScrollPosition, 0)
     }
+
+    //--------------------------------------------------------------------------------------------------//
 
     fun setUseSecondsPrecision(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(isUsingSecondsPrecision, value).apply()

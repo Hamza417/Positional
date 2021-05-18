@@ -15,13 +15,13 @@ import com.google.android.material.animation.ArgbEvaluatorCompat;
 
 import java.util.Arrays;
 
-import androidx.core.content.ContextCompat;
 import app.simple.positional.R;
 import app.simple.positional.preference.MainPreferences;
+import app.simple.positional.util.ColorUtils;
 
 public class Utils {
     
-    static final int alpha = 70;
+    static final int alpha = 40;
     
     static void animateBackground(int endColor, View view) {
         view.clearAnimation();
@@ -50,15 +50,15 @@ public class Utils {
         float[] innerRadii = new float[8];
         Arrays.fill(outerRadii, MainPreferences.INSTANCE.getCornerRadius());
         Arrays.fill(innerRadii, MainPreferences.INSTANCE.getCornerRadius());
-        
+    
         RoundRectShape shape = new RoundRectShape(outerRadii, null, innerRadii);
         ShapeDrawable mask = new ShapeDrawable(shape);
-        
-        ColorStateList stateList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.rippleColor));
-        
+    
+        ColorStateList stateList = ColorStateList.valueOf(ColorUtils.INSTANCE.resolveAttrColor(context, R.attr.colorAppAccent));
+    
         RippleDrawable rippleDrawable = new RippleDrawable(stateList, backgroundDrawable, mask);
         rippleDrawable.setAlpha(alpha);
-        
+    
         return rippleDrawable;
     }
     
@@ -67,15 +67,15 @@ public class Utils {
         float[] innerRadii = new float[8];
         Arrays.fill(outerRadii, MainPreferences.INSTANCE.getCornerRadius() / divisiveFactor);
         Arrays.fill(innerRadii, MainPreferences.INSTANCE.getCornerRadius() / divisiveFactor);
-        
+    
         RoundRectShape shape = new RoundRectShape(outerRadii, null, innerRadii);
         ShapeDrawable mask = new ShapeDrawable(shape);
-        
-        ColorStateList stateList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.rippleColor));
-        
+    
+        ColorStateList stateList = ColorStateList.valueOf(ColorUtils.INSTANCE.resolveAttrColor(context, R.attr.colorAppAccent));
+    
         RippleDrawable rippleDrawable = new RippleDrawable(stateList, backgroundDrawable, mask);
         rippleDrawable.setAlpha(alpha);
-        
+    
         return rippleDrawable;
     }
 }

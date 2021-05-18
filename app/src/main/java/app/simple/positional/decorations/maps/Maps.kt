@@ -23,11 +23,12 @@ import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, attributeSet),
-                                                            OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
-                                                            CoroutineScope {
+class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
+                                                           OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
+                                                           CoroutineScope {
     private var googleMap: GoogleMap? = null
     var location: Location? = null
+    private var latLng: LatLng? = null
     private var mapsCallbacks: MapsCallbacks? = null
     private var marker: Bitmap? = null
     private val viewHandler = Handler(Looper.getMainLooper())
@@ -75,13 +76,7 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
          */
         this.animate().alpha(1F).setDuration(500).start()
 
-        marker = if (isCustomCoordinate) {
-            R.drawable.ic_place_custom.toBitmap(context, 400)
-        } else {
-            R.drawable.ic_place.toBitmap(context, 400)
-        }
-
-        val latLng = if (isCustomCoordinate)
+        latLng = if (isCustomCoordinate)
             LatLng(customLatitude, customLongitude)
         else
             LatLng(GPSPreferences.getLastCoordinates()[0].toDouble(), GPSPreferences.getLastCoordinates()[1].toDouble())
@@ -92,13 +87,13 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
 
         this.googleMap = googleMap
 
-        addMarker(latLng)
+        addMarker(latLng!!)
         setMapStyle(GPSPreferences.isLabelOn())
         setSatellite()
         setBuildings(GPSPreferences.getShowBuildingsOnMap())
 
         this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
-                latLng,
+                latLng!!,
                 GPSPreferences.getMapZoom(),
                 GPSPreferences.getMapTilt(),
                 0F)))
@@ -221,27 +216,21 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
         launch {
             withContext(Dispatchers.Default) {
 
-                val size = if (GPSPreferences.isUsingSmallerIcon()) {
-                    200
-                } else {
-                    400
-                }
-
                 if (context.isNotNull())
                     marker = if (isCustomCoordinate) {
-                        R.drawable.ic_place_custom.toBitmap(context, size)
+                        R.drawable.ic_place_custom.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                     } else {
                         if (location.isNotNull()) {
-                            R.drawable.ic_place.toBitmap(context, size)
+                            R.drawable.ic_place.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                         } else {
-                            R.drawable.ic_place_historical.toBitmap(context, size)
+                            R.drawable.ic_place_historical.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                         }
                     }
             }
 
             if (googleMap.isNotNull()) {
                 googleMap?.clear()
-                googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker)))
+                googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker!!)))
             }
         }
     }
@@ -300,6 +289,12 @@ class Maps(context: Context?, attributeSet: AttributeSet) : MapView(context, att
             }
             GPSPreferences.useBearingRotation -> {
                 isBearingRotation = GPSPreferences.isBearingRotationOn()
+            }
+            GPSPreferences.pinSize,
+            GPSPreferences.pinOpacity -> {
+                if (latLng.isNotNull()) {
+                    addMarker(latLng!!)
+                }
             }
         }
     }

@@ -9,7 +9,7 @@ import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomWebView
-import app.simple.positional.preference.CompassPreference
+import app.simple.positional.preference.CompassPreferences
 import app.simple.positional.preference.LevelPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.WidgetPreferences
@@ -54,7 +54,7 @@ class ErrorDialog : CustomBottomSheetDialogFragment() {
                     MainPreferences.setShowPlayServiceDialog(isChecked)
                 }
                 "Compass Sensor" -> {
-                    CompassPreference.setNoSensorAlert(isChecked)
+                    CompassPreferences.setNoSensorAlert(isChecked)
                 }
                 "Level Sensor" -> {
                     LevelPreferences.setNoSensorAlert(isChecked)

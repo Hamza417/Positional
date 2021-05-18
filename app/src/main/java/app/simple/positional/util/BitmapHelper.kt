@@ -70,11 +70,36 @@ object BitmapHelper {
         return rotatedBitmap
     }
 
+    /**
+     * Convert vector resource into Bitmap
+     *
+     * @param context [Context]
+     * @param size Resolution/Dimension of the output bitmap
+     * @return [Bitmap]
+     */
     fun Int.toBitmap(context: Context, size: Int): Bitmap {
         val drawable = ContextCompat.getDrawable(context, this)
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         drawable?.setBounds(0, 0, canvas.width, canvas.height)
+        drawable?.draw(canvas)
+        return bitmap
+    }
+
+    /**
+     * Convert vector resource into Bitmap
+     *
+     * @param context [Context]
+     * @param size Resolution/Dimension of the output bitmap
+     * @param alpha 0 - 255 opacity of output bitmap
+     * @return [Bitmap]
+     */
+    fun Int.toBitmap(context: Context, size: Int, alpha: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(context, this)
+        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable?.setBounds(0, 0, canvas.width, canvas.height)
+        drawable?.alpha = alpha
         drawable?.draw(canvas)
         return bitmap
     }

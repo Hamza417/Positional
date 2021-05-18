@@ -12,7 +12,7 @@ import androidx.core.os.ConfigurationCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.preference.ClockPreferences
-import app.simple.positional.preference.CompassPreference
+import app.simple.positional.preference.CompassPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.util.ContextUtils
@@ -74,7 +74,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     private fun resetLitePrefs() {
-        CompassPreference.setFlowerBloom(false)
+        CompassPreferences.setFlowerBloom(false)
         ClockPreferences.setClockNeedleTheme(1)
         MainPreferences.setCustomCoordinates(false)
     }

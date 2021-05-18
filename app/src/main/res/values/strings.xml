@@ -292,4 +292,7 @@
     <string name="seconds_precision">Seconds Precision</string>
     <string name="bearing_rotation">Bearing Rotation</string>
     <string name="accent_color">Accent Color</string>
+    <string name="opacity">Opacity</string>
+    <string name="size">Size</string>
+    <string name="customize_pin">Customize Pin</string>
 </resources>

@@ -14,7 +14,7 @@ import app.simple.positional.R
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.dialogs.settings.HtmlViewer
-import app.simple.positional.preference.CompassPreference
+import app.simple.positional.preference.CompassPreferences
 
 class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
 
@@ -43,9 +43,9 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
         rotationalInertia.max = 50
         magneticCoefficient.max = 15000
 
-        dampingCoefficient.progress = CompassPreference.getDampingCoefficient().toInt()
-        rotationalInertia.progress = CompassPreference.getRotationalInertia().toInt()
-        magneticCoefficient.progress = CompassPreference.getMagneticCoefficient().toInt()
+        dampingCoefficient.progress = CompassPreferences.getDampingCoefficient().toInt()
+        rotationalInertia.progress = CompassPreferences.getRotationalInertia().toInt()
+        magneticCoefficient.progress = CompassPreferences.getMagneticCoefficient().toInt()
 
         return view
     }
@@ -53,12 +53,12 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toggle.isChecked = CompassPreference.isUsingPhysicalProperties()
+        toggle.isChecked = CompassPreferences.isUsingPhysicalProperties()
         isChecked(toggle.isChecked)
 
         dampingCoefficient.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                CompassPreference.setDampingCoefficient(if (progress == 0) 0.1F else progress.toFloat())
+                CompassPreferences.setDampingCoefficient(if (progress == 0) 0.1F else progress.toFloat())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -72,7 +72,7 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
 
         rotationalInertia.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                CompassPreference.setRotationalInertia(if (progress == 0) 0.1F else progress.toFloat())
+                CompassPreferences.setRotationalInertia(if (progress == 0) 0.1F else progress.toFloat())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -86,7 +86,7 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
 
         magneticCoefficient.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                CompassPreference.setMagneticCoefficient(if (progress == 0) 0.1F else progress.toFloat())
+                CompassPreferences.setMagneticCoefficient(if (progress == 0) 0.1F else progress.toFloat())
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -114,7 +114,7 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
         }
 
         toggle.setOnCheckedChangeListener {
-            CompassPreference.setUsePhysicalProperties(it)
+            CompassPreferences.setUsePhysicalProperties(it)
             isChecked(it)
         }
     }

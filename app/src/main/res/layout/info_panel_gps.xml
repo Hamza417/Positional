@@ -264,7 +264,7 @@
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_coordinate_route"
+                android:src="@drawable/ic_place"
                 tools:ignore="ContentDescription" />
 
             <LinearLayout

@@ -10,10 +10,10 @@ import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.CompassPreference
-import app.simple.positional.preference.CompassPreference.isFlowerBloomOn
-import app.simple.positional.preference.CompassPreference.setDirectionCode
-import app.simple.positional.preference.CompassPreference.setFlowerBloom
+import app.simple.positional.preference.CompassPreferences
+import app.simple.positional.preference.CompassPreferences.isFlowerBloomOn
+import app.simple.positional.preference.CompassPreferences.setDirectionCode
+import app.simple.positional.preference.CompassPreferences.setFlowerBloom
 
 class CompassMenu : CustomBottomSheetDialogFragment() {
 
@@ -40,7 +40,7 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toggleCode.isChecked = CompassPreference.getDirectionCode()
+        toggleCode.isChecked = CompassPreferences.getDirectionCode()
         toggleFlower.isChecked = isFlowerBloomOn()
 
         toggleFlower.setOnCheckedChangeListener { isChecked ->

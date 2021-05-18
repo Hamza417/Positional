@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.dialogs.settings.HtmlViewer
@@ -20,8 +21,8 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
     private lateinit var toggleBuilding: SwitchView
     private lateinit var toggleAutoCenter: SwitchView
     private lateinit var toggleVolumeKeys: SwitchView
-    private lateinit var toggleUseSmallIcon: SwitchView
     private lateinit var toggleUseBearing: SwitchView
+    private lateinit var togglePinCustomization: DynamicRippleTextView
 
     private lateinit var toggleLabelContainer: DynamicRippleLinearLayout
     private lateinit var toggleSatelliteContainer: DynamicRippleLinearLayout
@@ -41,7 +42,7 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleBuilding = view.findViewById(R.id.toggle_buildings)
         toggleAutoCenter = view.findViewById(R.id.toggle_auto_center)
         toggleVolumeKeys = view.findViewById(R.id.toggle_use_volume_keys)
-        toggleUseSmallIcon = view.findViewById(R.id.toggle_use_smaller_icon)
+        togglePinCustomization = view.findViewById(R.id.gps_pin_customization)
         toggleUseBearing = view.findViewById(R.id.toggle_bearing_rotation)
 
         toggleLabelContainer = view.findViewById(R.id.gps_menu_show_label_container)
@@ -50,7 +51,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleBuildingContainer = view.findViewById(R.id.gps_menu_show_building_container)
         toggleAutoCenterContainer = view.findViewById(R.id.gps_menu_auto_center_container)
         toggleVolumeKeysContainer = view.findViewById(R.id.gps_menu_volume_keys_container)
-        toggleUseSmallIconContainer = view.findViewById(R.id.gps_menu_us_smaller_icon)
         toggleUseBearingContainer = view.findViewById(R.id.gps_menu_bearing_rotation)
 
         return view
@@ -65,7 +65,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleBuilding.isChecked = GPSPreferences.getShowBuildingsOnMap()
         toggleAutoCenter.isChecked = GPSPreferences.getMapAutoCenter()
         toggleVolumeKeys.isChecked = GPSPreferences.isUsingVolumeKeys()
-        toggleUseSmallIcon.isChecked = GPSPreferences.isUsingSmallerIcon()
         toggleUseBearing.isChecked = GPSPreferences.isBearingRotationOn()
 
         toggleLabel.setOnCheckedChangeListener { isChecked ->
@@ -97,8 +96,9 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
             GPSPreferences.setUseVolumeKeys(it)
         }
 
-        toggleUseSmallIcon.setOnCheckedChangeListener {
-            GPSPreferences.setUseSmallerIcon(it)
+        togglePinCustomization.setOnClickListener {
+            PinCustomization.newInstance()
+                    .show(childFragmentManager, "pin_customization")
         }
 
         toggleUseBearing.setOnCheckedChangeListener {
@@ -132,10 +132,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleVolumeKeysContainer.setOnLongClickListener {
             HtmlViewer.newInstance("Media Keys").show(childFragmentManager, "html_viewer")
             true
-        }
-
-        toggleUseSmallIconContainer.setOnClickListener {
-            toggleUseSmallIcon.invertCheckedStatus()
         }
 
         toggleUseBearingContainer.setOnClickListener {

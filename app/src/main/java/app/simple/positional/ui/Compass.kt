@@ -43,7 +43,7 @@ import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.Vector3
-import app.simple.positional.preference.CompassPreference
+import app.simple.positional.preference.CompassPreferences
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.ColorUtils.resolveAttrColor
@@ -144,7 +144,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         toolbar = view.findViewById(R.id.compass_appbar)
 
         filter.addAction("location")
-        showDirectionCode = CompassPreference.getDirectionCode()
+        showDirectionCode = CompassPreferences.getDirectionCode()
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))
@@ -156,7 +156,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                 haveAccelerometerSensor = false
                 haveMagnetometerSensor = false
 
-                if (CompassPreference.isNoSensorAlertON()) {
+                if (CompassPreferences.isNoSensorAlertON()) {
                     ErrorDialog.newInstance("Compass Sensor")
                             .show(childFragmentManager, "error_dialog")
                 }
@@ -171,10 +171,10 @@ class Compass : ScopedFragment(), SensorEventListener {
             haveMagnetometerSensor = false
         }
 
-        flowerBloom = CompassPreference.getFlowerBloomTheme()
-        isAnimated = CompassPreference.isUsingPhysicalProperties()
+        flowerBloom = CompassPreferences.getFlowerBloomTheme()
+        isAnimated = CompassPreferences.isUsingPhysicalProperties()
         setPhysicalProperties()
-        setFlower(CompassPreference.isFlowerBloomOn())
+        setFlower(CompassPreferences.isFlowerBloomOn())
 
         return view
     }
@@ -444,7 +444,7 @@ class Compass : ScopedFragment(), SensorEventListener {
     private fun viewRotation(rotationAngle: Float, animate: Boolean) {
         dial.rotationUpdate(rotationAngle * -1, animate)
 
-        if (CompassPreference.isFlowerBloomOn()) {
+        if (CompassPreferences.isFlowerBloomOn()) {
             flowerOne.rotationUpdate(rotationAngle * 2, animate)
             flowerTwo.rotationUpdate(rotationAngle * -3 + 45, animate)
             flowerThree.rotationUpdate(rotationAngle * 1 + 90, animate)
@@ -461,9 +461,9 @@ class Compass : ScopedFragment(), SensorEventListener {
     }
 
     private fun setPhysicalProperties() {
-        val inertia = CompassPreference.getRotationalInertia()
-        val damping = CompassPreference.getDampingCoefficient()
-        val magnetic = CompassPreference.getMagneticCoefficient()
+        val inertia = CompassPreferences.getRotationalInertia()
+        val damping = CompassPreferences.getDampingCoefficient()
+        val magnetic = CompassPreferences.getMagneticCoefficient()
 
         dial.setPhysical(inertia, damping, magnetic)
         flowerOne.setPhysical(inertia, damping, magnetic)
@@ -473,8 +473,8 @@ class Compass : ScopedFragment(), SensorEventListener {
     }
 
     private fun setFlower(value: Boolean) {
-        CompassPreference.setFlowerBloom(value)
-        val x = compassBloomRes[CompassPreference.getFlowerBloomTheme()]
+        CompassPreferences.setFlowerBloom(value)
+        val x = compassBloomRes[CompassPreferences.getFlowerBloomTheme()]
         if (value) {
             loadImage(x, flowerOne, requireContext(), 0)
             loadImage(x, flowerTwo, requireContext(), 50)
@@ -491,8 +491,8 @@ class Compass : ScopedFragment(), SensorEventListener {
     }
 
     private fun setFlowerTheme(value: Int) {
-        CompassPreference.setFlowerBloom(value)
-        setFlower(value = CompassPreference.isFlowerBloomOn())
+        CompassPreferences.setFlowerBloom(value)
+        setFlower(value = CompassPreferences.isFlowerBloomOn())
         flowerBloom = value
     }
 
@@ -534,22 +534,22 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            CompassPreference.dampingCoefficient,
-            CompassPreference.magneticCoefficient,
-            CompassPreference.rotationalInertia -> {
+            CompassPreferences.dampingCoefficient,
+            CompassPreferences.magneticCoefficient,
+            CompassPreferences.rotationalInertia -> {
                 setPhysicalProperties()
             }
-            CompassPreference.direction_code -> {
-                showDirectionCode = CompassPreference.getDirectionCode()
+            CompassPreferences.direction_code -> {
+                showDirectionCode = CompassPreferences.getDirectionCode()
             }
-            CompassPreference.flowerBloomTheme -> {
-                setFlowerTheme(CompassPreference.getFlowerBloomTheme())
+            CompassPreferences.flowerBloomTheme -> {
+                setFlowerTheme(CompassPreferences.getFlowerBloomTheme())
             }
-            CompassPreference.flowerBloom -> {
-                setFlower(CompassPreference.isFlowerBloomOn())
+            CompassPreferences.flowerBloom -> {
+                setFlower(CompassPreferences.isFlowerBloomOn())
             }
-            CompassPreference.usePhysicalProperties -> {
-                isAnimated = CompassPreference.isUsingPhysicalProperties()
+            CompassPreferences.usePhysicalProperties -> {
+                isAnimated = CompassPreferences.isUsingPhysicalProperties()
             }
         }
     }
