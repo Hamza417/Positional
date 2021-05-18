@@ -146,6 +146,6 @@ object GPSPreferences {
     }
 
     fun getPinOpacity(): Int {
-        return getSharedPreferences().getInt(pinOpacity, 100)
+        return getSharedPreferences().getInt(pinOpacity, 255)
     }
 }
