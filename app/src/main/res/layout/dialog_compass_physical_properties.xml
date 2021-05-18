@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:backgroundTint="@android:color/transparent"
     android:clipChildren="false"
-    android:clipToPadding="false"
-    android:padding="@dimen/options_container_horizontal_padding">
+    android:clipToPadding="false">
 
     <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
@@ -40,6 +39,7 @@
                 android:layout_height="@dimen/top_bar_button_size"
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/button_reset"
+                android:tint="@color/iconColor"
                 android:src="@drawable/ic_reset" />
 
             <app.simple.positional.decorations.ripple.DynamicRippleImageButton
@@ -48,6 +48,7 @@
                 android:layout_height="@dimen/top_bar_button_size"
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/help"
+                android:tint="@color/iconColor"
                 android:src="@drawable/ic_help_outline" />
 
         </LinearLayout>

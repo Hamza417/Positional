@@ -135,6 +135,9 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
         dampingCoefficient.clearAnimation()
         rotationalInertia.clearAnimation()
         magneticCoefficient.clearAnimation()
+        if (!requireActivity().isDestroyed) {
+            CompassMenu().show(parentFragmentManager, "compass_menu")
+        }
     }
 
     private fun updateSeekbar(seekBar: SeekBar, value: Int) {

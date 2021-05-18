@@ -5,8 +5,7 @@
     android:backgroundTint="@android:color/transparent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:orientation="vertical"
-    android:padding="@dimen/options_container_horizontal_padding">
+    android:orientation="vertical">
 
     <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"

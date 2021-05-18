@@ -57,4 +57,11 @@ class CompassBloom : CustomBottomSheetDialogFragment() {
             }
         })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!requireActivity().isDestroyed) {
+            CompassMenu().show(parentFragmentManager, "compass_menu")
+        }
+    }
 }

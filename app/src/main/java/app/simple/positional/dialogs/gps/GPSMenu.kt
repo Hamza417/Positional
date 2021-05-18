@@ -98,7 +98,8 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
 
         togglePinCustomization.setOnClickListener {
             PinCustomization.newInstance()
-                    .show(childFragmentManager, "pin_customization")
+                    .show(requireActivity().supportFragmentManager, "pin_customization")
+            dismiss()
         }
 
         toggleUseBearing.setOnCheckedChangeListener {

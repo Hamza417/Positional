@@ -52,11 +52,13 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
         }
 
         view.findViewById<TextView>(R.id.clock_needle_theme_text).setOnClickListener {
-            ClockNeedle.newInstance().show(parentFragmentManager, "null")
+            ClockNeedle.newInstance().show(parentFragmentManager, "clock_menu")
+            dismiss()
         }
 
         view.findViewById<TextView>(R.id.clock_motion_type_text).setOnClickListener {
-            ClockMotionType.newInstance().show(parentFragmentManager, "null")
+            ClockMotionType.newInstance().show(parentFragmentManager, "clock_menu")
+            dismiss()
         }
     }
 

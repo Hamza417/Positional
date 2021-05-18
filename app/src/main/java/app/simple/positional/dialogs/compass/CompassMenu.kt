@@ -48,7 +48,8 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
         }
 
         bloomSkins.setOnClickListener {
-            CompassBloom().show(parentFragmentManager, "null")
+            CompassBloom().show(parentFragmentManager, "compass_bloom")
+            dismiss()
         }
 
         bloomSwitchContainer.setOnClickListener {
@@ -64,7 +65,8 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
         }
 
         speed.setOnClickListener {
-            CompassPhysicalProperties().show(parentFragmentManager, "null")
+            CompassPhysicalProperties().show(parentFragmentManager, "compass_properties")
+            dismiss()
         }
     }
 }

@@ -58,6 +58,13 @@ class ClockMotionType : CustomBottomSheetDialogFragment() {
         ClockPreferences.setMovementType(value)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!requireActivity().isDestroyed) {
+            ClockMenu.newInstance().show(parentFragmentManager, "clock_menu")
+        }
+    }
+
     companion object {
         fun newInstance(): ClockMotionType {
             val args = Bundle()

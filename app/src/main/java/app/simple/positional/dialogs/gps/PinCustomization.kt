@@ -91,6 +91,13 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
         objectAnimator?.cancel()
         opacity.clearAnimation()
         size.clearAnimation()
+        if (!requireActivity().isDestroyed) {
+            GPSMenu().show(parentFragmentManager, "gps_menu")
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+
     }
 
     companion object {

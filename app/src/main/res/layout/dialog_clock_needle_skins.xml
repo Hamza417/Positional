@@ -2,20 +2,19 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:clipChildren="false"
-    android:clipToPadding="false"
-    android:padding="@dimen/options_container_horizontal_padding"
-    android:layout_height="wrap_content">
+    android:clipToPadding="false">
 
     <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:orientation="vertical"
-        android:elevation="40dp"
-        android:translationZ="20dp"
-        android:backgroundTint="@color/toolbarBackground"
         android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:backgroundTint="@color/toolbarBackground"
+        android:elevation="40dp"
+        android:orientation="vertical"
         android:padding="@dimen/options_container_horizontal_padding"
+        android:translationZ="20dp"
         tools:ignore="UselessParent">
 
         <TextView
