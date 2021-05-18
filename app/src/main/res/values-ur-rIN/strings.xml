@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Panels -->
+    <string name="clock">گھڑی</string>
+    <string name="compass">کمپاس</string>
+    <string name="gps">مقام</string>
+    <string name="level">سطح</string>
+    <string name="settings">ملاحظہ کریں</string>
+    <!-- Info Headers -->
+    <string name="clock_info">گھڑی کی معلومات</string>
+    <string name="compass_info">کمپاس کی معلومات</string>
+    <string name="gps_info">مقام کی معلومات</string>
+    <!-- Clock Information Headers-->
+    <string name="local_time">مقامی وقت</string>
+    <string name="utc_time">آفاقی مربوط وقت</string>
+    <string name="sun_position">سورج کی پوزیشن</string>
+    <string name="sun_time">سورج کا وقت</string>
+    <string name="twilight">گودھولی</string>
+    <string name="moon_position">چاند کی پوزیشن</string>
+    <string name="moon_time">چاند کا وقت</string>
+    <string name="moon_illumination">چاند کی روشنی</string>
+    <string name="moon_dates">چاند کی تاریخیں</string>
+    <!-- GPS Informatin Headers -->
+    <string name="gps_provider">ذریعہ</string>
+    <string name="gps_location">مقام</string>
+    <string name="gps_movement">حرکت</string>
+    <string name="gps_coordinates">نقاط</string>
+    <string name="gps_address">پتہ</string>
+    <!--Compass Information Header -->
+    <string name="compass_accuracy">قطعیت</string>
+    <string name="compass_field">مقناطیسی میدان</string>
+    <!-- Clock Information Items-->
+    <string name="local_timezone">ٹائم زون:</string>
+    <string name="local_time_24hr">وقت 24 گھنٹے:</string>
+    <string name="local_time_12hr">وقت 12 گھنٹے:</string>
+    <string name="local_day">دن:</string>
+    <string name="local_date">تاریخ:</string>
+    <string name="local_day_of_year">سال کا دن:</string>
+    <string name="local_week_of_year">سال کا ہفتہ:</string>
+    <string name="utc_local_time_offset">مقامی وقت آفسیٹ:</string>
+    <string name="utc_current_time">وقت:</string>
+    <string name="utc_current_date">تاریخ:</string>
+    <string name="sun_azimuth">عزیموت:</string>
+    <string name="sun_distance">دوری:</string>
+    <string name="sun_altitude">بلندی:</string>
+    <string name="sun_sunrise">طلوع آفتاب:</string>
+    <string name="sun_noon">دوپہر:</string>
+    <string name="sun_sunset">غروب آفتاب:</string>
+    <string name="sun_nadir">نادر:</string>
+    <string name="twilight_astronomical_dawn">فلکیات طلوع فجر:</string>
+    <string name="twilight_nautical_dawn">سمندری صبح:</string>
+    <string name="twilight_civil_dawn">سول فجر:</string>
+    <string name="twilight_civil_dusk">سول شام:</string>
+    <string name="twilight_nautical_dusk">سمندری شام:</string>
+    <string name="twilight_astronomical_dusk">فلکیاتی شام:</string>
+    <string name="moon_parallactic_angle">لمبائی زاویہ:</string>
+    <string name="moon_moonrise">چاند طلوع:</string>
+    <string name="moon_moonset">چاند سیٹ:</string>
+    <string name="moon_fraction">کسر:</string>
+    <string name="moon_angle">زاویہ:</string>
+    <string name="moon_angle_state">زاویہ کی حالت:</string>
+    <string name="moon_phase">مرحلہ:</string>
+    <string name="moon_phase_angle">مرحلہ زاویہ:</string>
+    <string name="moon_full_moon">پورا چاند:</string>
+    <string name="moon_new_moon">نیا چاند:</string>
+    <string name="moon_first_quarter">پہلا کوارٹر:</string>
+    <string name="moon_last_quarter">آخری کوارٹر:</string>
+    <!-- Compass information items -->
+    <string name="accelerometer_accuracy">ایکسیلیومیٹر:</string>
+    <string name="magnetometer_accuracy">مقناطیسی میٹر:</string>
+    <string name="compass_inclination">جھکاو:</string>
+    <string name="compass_declination">تخفیف:</string>
+    <string name="compass_field_strength">میدان کی طاقت:</string>
+    <!-- GPS Information Panel -->
+    <string name="gps_status">حالت:</string>
+    <string name="gps_source">ذریعہ:</string>
+    <string name="gps_accuracy">قطعیت:</string>
+    <string name="gps_altitude">بلندی:</string>
+    <string name="gps_bearing">اثر:</string>
+    <string name="gps_displacement">نقل مکانی:</string>
+    <string name="gps_direction">سمت:</string>
+    <string name="gps_speed">رفتار:</string>
+    <string name="gps_latitude">طول:</string>
+    <string name="gps_longitude">طول البلد:</string>
+    <!-- Sensor Accuracy -->
+    <string name="sensor_accuracy_unreliable">ناقابل اعتبار</string>
+    <string name="sensor_accuracy_low">کم</string>
+    <string name="sensor_accuracy_medium">متوسط</string>
+    <string name="sensor_accuracy_high">اعلی</string>
+    <!-- GPS Source Status -->
+    <string name="gps_enabled">فعال</string>
+    <string name="gps_disabled">بند</string>
+    <!-- Units -->
+    <string name="meter">م</string>
+    <string name="kilometer">کلومیٹر</string>
+    <string name="feet">فوٹ</string>
+    <string name="miles">میل</string>
+    <string name="kilometer_hour">کلومیٹر فی گھنٹہ</string>
+    <string name="miles_hour">میل فی گھنٹہ</string>
+    <!-- Alert -->
+    <string name="info_copied">کلپ بورڈ میں کاپی ہو گیا ہے</string>
+    <string name="info_error">کاپی نہیں ہوسکی!!</string>
+    <string name="reset_complete">ری سیٹ مکمل</string>
+    <string name="invalid_coordinates">غلط نقاط</string>
+    <string name="internet_connection_alert">انٹرنیٹ کنکشن دستیاب نہیں ہے</string>
+    <string name="error">خرابی واقع ہوئی</string>
+    <string name="not_available">دستیاب نہیں ہے</string>
+    <string name="no_address_found">موجودہ مقام کے لئے کوئی پتہ نہیں ملا</string>
+    <string name="location_saved">کامیابی سے محفوظ کیا گیا</string>
+    <string name="already_saved">پہلے ہی محفوظ!</string>
+    <string name="location_not_saved">محفوظ نہیں ہو سکتا!</string>
+    <string name="no_update">کوئی اپ ڈیٹ دستیاب نہیں ہے</string>
+    <string name="only_full_version">یہ خصوصیت صرف مکمل ورژن میں دستیاب ہے۔</string>
+    <string name="location_not_available">مقام ابھی دستیاب نہیں ہے</string>
+    <!-- Settings Categories -->
+    <string name="appearance">ظہور</string>
+    <string name="configuration">تشکیل</string>
+    <string name="about">ایپ کے بارے میں</string>
+    <string name="contribute">حصہ ڈالیں</string>
+    <!-- Settings Heading -->
+    <string name="theme">تھیم</string>
+    <string name="icon">آئیکن</string>
+    <string name="corner_radius">کارنر رداس</string>
+    <string name="units">یونٹ</string>
+    <string name="location_provider">مقام فراہم کرنے والا</string>
+    <string name="language">زبان</string>
+    <string name="skip_splash_screen">سپلیش اسکرین نہ دکھائیں</string>
+    <string name="specified_location">مخصوص مقام استعمال کریں</string>
+    <string name="keep_screen_on">اسکرین آون رکھیں</string>
+    <string name="legal_notes">قانونی نوٹ</string>
+    <string name="app_version">ایپ ورژن</string>
+    <string name="change_logs">چینج لوگص</string>
+    <string name="found_an_issue">ایک مسئلہ ملا؟</string>
+    <string name="translate">ترجمہ کریں</string>
+    <string name="buy_full">مکمل ورژن خریدیں</string>
+    <!-- Settings Description -->
+    <string name="theme_follow_system">سسٹم پر عمل کریں</string>
+    <string name="theme_day">روشنی</string>
+    <string name="theme_night">گہرا</string>
+    <string name="theme_auto">آٹو (دن / رات)</string>
+    <string name="desc_skip_splash_Screen">جب ایپ لانچ ہوتی ہے تو سپلاش سکرین نہ دکھائیں اورمین اسکرین پر جائیں</string>
+    <string name="desc_specified_location">عرض البلد اور طول البلد کی وضاحت کریں اور معلومات لانے کیلئے اس کا استعمال کریں۔ کوئی بھی معلومات جو صرف GPS استعمال کرتی ہے وہ متاثر نہیں ہوگی۔</string>
+    <string name="desc_screen_on">ایپ کے مرئی ہونے کے دوران آلے کو آف کرنے سے روکتا ہے</string>
+    <string name="desc_legal">ایپ کی دستبرداری ، رازداری کی پالیسی اور استعمال کی شرائط پڑھیں</string>
+    <string name="desc_changes">اس ورژن میں تبدیلیوں کی فہرست۔</string>
+    <string name="desc_git">ایپ کا ذخیرہ کھولیں</string>
+    <string name="desc_translate">اپنی مادری زبان میں ایپ کا ترجمہ کرنے میں مدد کریں</string>
+    <string name="desc_buy_full_version">مکمل ورژن خرید کر ترقی کی حمایت کریں</string>
+    <!-- Clock Menu -->
+    <string name="needles">سوئی</string>
+    <string name="motion_type">حرکت کی قسم</string>
+    <string name="time_format">12 گھنٹے کا فارمیٹ استعمال کریں</string>
+    <string name="motion_type_smooth">ہموار</string>
+    <string name="motion_type_tick">روک روک کر</string>
+    <!-- Compass Menu -->
+    <string name="bloom">بلوم</string>
+    <string name="bloom_skins">بلوم تھیم</string>
+    <string name="show_code">صرف کوڈ دکھائیں</string>
+    <!-- GPS Menu -->
+    <string name="show_label">لیبل دکھائیں</string>
+    <string name="satellite_mode">سیٹلائٹ وضع</string>
+    <string name="high_contrast_mode">اعلی کنٹراسٹ نقشہ</string>
+    <string name="show_building">عمارتیں دکھائیں</string>
+    <!-- Settings Menus -->
+    <string name="icon_default">طے شدہ</string>
+    <string name="icon_legacy">میراث</string>
+    <string name="icon_simple">ساده</string>
+    <string name="icon_simple_no_shadow">سادہ (سایہ نہیں)</string>
+    <string name="icon_simple_teal">سادہ (ٹیل)</string>
+    <string name="icon_simple_pink">سادہ (گلابی)</string>
+    <string name="unit_metric">میٹرک</string>
+    <string name="unit_imperial">امپیریل</string>
+    <!-- Specified Coordinates Menu -->
+    <string name="specified_hint_header">مقام کا ڈیٹا درج کریں</string>
+    <string name="specified_data_list_locations">مقام</string>
+    <string name="specified_hint_latitude">طول بلد (90±)</string>
+    <string name="specified_hint_longitude">طول البلد (180±)</string>
+    <!-- Info -->
+    <string name="compass_calibration_notice">آپ کے آلے کمپاس سینسر کی درستگی کم ہے، اسے کیلیبریٹ کرنے کے لیے ، اپنے آلے کو آٹھ نمبر والے انداز میں گھمائیں۔.</string>
+    <string name="specified_location_notice">ذیل میں دکھائی گئی معلومات کو مخصوص مقام کوآرڈینیٹ کیلئے تازہ کاری کی جارہی ہے۔</string>
+    <string name="show_again">دوبارہ دکھائیں</string>
+    <string name="search_timezone">ٹائم زونز تلاش کریں</string>
+    <string name="verifying_license">تصدیق لائسنس</string>
+    <string name="license_successful">کامیاب :)</string>
+    <string name="license_failed">لائسنس کی توثیق ناکام</string>
+    <string name="auto_system_default_language">آٹو (سسٹم ڈیفالٹ)</string>
+    <string name="location_permission_denied">"مقام کی اجازت سے انکار!"</string>
+    <string name="no_location_permission_alert">کچھ خصوصیات مقام کی اجازت کے بغیر کام نہیں کرسکتی ہیں۔</string>
+    <!-- Button Text -->
+    <string name="button_cancel">منسوخ کریں</string>
+    <string name="button_set">سیٹ کریں</string>
+    <string name="button_close">بند کریں</string>
+    <string name="button_grant">عطا</string>
+    <string name="button_copy">کاپی</string>
+    <string name="button_reset">ری سیٹ کریں</string>
+    <!-- Button Descriptions -->
+    <string name="clock_options">گھڑی مینو</string>
+    <string name="compass_options">کمپاس مینو</string>
+    <string name="gps_options">GPS مینو</string>
+    <string name="gps_reset_location">مقام کو دوبارہ ترتیب دیںمقام کو دوبارہ ترتیب دیں</string>
+    <string name="delete_all">تمام حذف کریں</string>
+    <string name="open_saved_locations">محفوظ جگہیں کھولیں</string>
+    <string name="open_specified_location_documentation">مخصوص مقام کی دستاویزات کو کھولیں</string>
+    <!-- Legal Menu -->
+    <string name="disclaimer">دستبرداری</string>
+    <string name="privacy_policy">رازداری کی پالیسی</string>
+    <string name="terms_of_use">استعمال کی شرائط</string>
+    <string name="permissions">اجازت</string>
+    <string name="credits">کریڈٹ</string>
+    <string name="internet_uses">انٹرنیٹ کے استعمال</string>
+    <!-- Moon Illumination -->
+    <string name="waning">وانگ</string>
+    <string name="waning_gibbous">وانگ گبائوس</string>
+    <string name="waning_crescent">وانگ کریسنٹ</string>
+    <string name="waxing">موم</string>
+    <string name="waxing_gibbous">ویکسنگ گیبس</string>
+    <string name="waxing_crescent">ویکسنگ کریسنٹ</string>
+    <string name="full_moon">پورا چاند</string>
+    <string name="new_moon">نیا چاند</string>
+    <string name="third_quarter">تیسرا چوتھائی</string>
+    <string name="first_quarter">پہلا چوتھائی</string>
+    <!-- Directions -->
+    <string name="north">شمال</string>
+    <string name="north_west">شمال مغرب</string>
+    <string name="west">مغرب</string>
+    <string name="south_west">جنوب مغرب</string>
+    <string name="south">جنوب</string>
+    <string name="south_east">جنوب مشرق</string>
+    <string name="east">مشرق</string>
+    <string name="north_east">شمال مشرق</string>
+    <string name="north_N">شمال</string>
+    <string name="north_west_NW">ش۔مغ</string>
+    <string name="west_W">مغرب</string>
+    <string name="south_west_SW">ج۔مغ</string>
+    <string name="south_S">ج</string>
+    <string name="south_east_SE">ج مش</string>
+    <string name="east_E">مش</string>
+    <string name="north_east_NE">ش۔مش</string>
+    <!-- Graph -->
+    <string name="location_details">مقام کی تفصیلات</string>
+    <string name="min">کم سے کم:</string>
+    <string name="max">زیادہ سے زیادہ:</string>
+    <string name="avg">اوسط:</string>
+    <!-- UTM -->
+    <string name="utm_zone">زون:</string>
+    <string name="utm_easting">مشرق:</string>
+    <string name="utm_northing">شمالی:</string>
+    <string name="utm_meridian">وسطی میریڈیئن:</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">ڈیفالٹ اینڈروئیڈ کا لوکیشن API ، انتہائی درست لیکن ایک وقت میں صرف ایک مقام فراہم کرنے والے تک محدود ہے اور اندرونی مقام کی درخواستیں اس کی درستگی کو متاثر کرسکتی ہیں ، مقام کو جلدی سے اپ ڈیٹ کرنے کیلئے ایک طاقتور GPS سینسر کی ضرورت ہوتی ہے۔</string>
+    <string name="desc_fused_location_provider">گوگل کا فیوزڈ لوکیشن API جو مختلف مقام فراہم کرنے والے سے محل وقوع کے ڈیٹا کو مثلث بناتا ہے اور اس کا نتیجہ مقامات کی ایک سیریز میں اوسط سے نکالتا ہے۔ مختلف نتائج دے سکتے ہیں لیکن بیٹری کم استعمال کرتی ہے۔</string>
+    <string name="desc_location_provider_note">نوٹ: کسی بھی API کا استعمال مختلف عوامل پر انحصار کرتے ہوئے مختلف نتائج دے سکتا ہے اور ان میں سے کوئی بھی ایک دوسرے کے لئے درستگی کا ثبوت نہیں ہے ، APIs کی جانچ کریں اور منتخب کردہ کو منتخب کریں جو آپ کے علاقے میں بہترین کام کرتا ہے۔</string>
+    <string name="use_media_keys">میڈیا کیز کا استعمال کریں</string>
+    <string name="auto_center_map">آٹو سینٹر</string>
+    <string name="use_smaller_icon">چھوٹے شبیہیں استعمال کریں</string>
+    <string name="last_updated">آخری تازہ کاری</string>
+    <string name="coefficient_of_magnetic_field">مقناطیسی فیلڈ کا قابلیت</string>
+    <string name="damping_coefficient">ڈمپنگ کے گتانک</string>
+    <string name="rotational_inertia">گھماؤ اور جڑنا</string>
+    <string name="physical_properties">جسمانی خواص</string>
+    <string name="help">مدد</string>
+    <string name="tick_smooth">ٹک سموتھ</string>
+    <string name="tick_oscillate">ٹک ؤسکلیت</string>
+    <string name="use_physical_properties">طبیعیات کی خصوصیات کو استعمال کریں</string>
+    <string name="seconds_precision">\"سیکنڈز\" پریسجن</string>
+    <string name="bearing_rotation">بیئرنگ گھماؤ</string>
+    <string name="accent_color">لہجہ رنگین</string>
+    <string name="opacity">شفافیت</string>
+    <string name="size">سائز</string>
+    <string name="customize_pin">پن کو اپنی مرضی کے مطابق بنائیں</string>
+</resources>

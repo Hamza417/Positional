@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Panels -->
+    <string name="clock">क्लॉक</string>
+    <string name="compass">दिशा-सूचक</string>
+    <string name="gps">लोकेशन</string>
+    <string name="level">स्तर</string>
+    <string name="settings">सेटिंग्स</string>
+    <!-- Info Headers -->
+    <string name="clock_info">समय की जानकारी</string>
+    <string name="compass_info">कम्पास की जानकारी</string>
+    <string name="gps_info">स्थिति सूचना</string>
+    <!-- Clock Information Headers-->
+    <string name="local_time">स्थानीय समय</string>
+    <string name="utc_time">UTC समय</string>
+    <string name="sun_position">सूरज की स्थिति</string>
+    <string name="sun_time">सूर्य समय</string>
+    <string name="twilight">ट्वाईलाईट</string>
+    <string name="moon_position">चंद्रमा की स्थिति</string>
+    <string name="moon_time">चाँद का समय</string>
+    <string name="moon_illumination">चाँद प्रदीप्ति</string>
+    <string name="moon_dates">चाँद की तारीखें</string>
+    <!-- GPS Informatin Headers -->
+    <string name="gps_provider">प्रदाता</string>
+    <string name="gps_location">लोकेशन</string>
+    <string name="gps_movement">चाल</string>
+    <string name="gps_coordinates">निर्देशांक</string>
+    <string name="gps_address">पता</string>
+    <!--Compass Information Header -->
+    <string name="compass_accuracy">सटीकता</string>
+    <string name="compass_field">चुम्बकीय क्षेत्र</string>
+    <!-- Clock Information Items-->
+    <string name="local_timezone">समयक्षेत्र:</string>
+    <string name="local_time_24hr">समय २४ घंटे:</string>
+    <string name="local_time_12hr">समय १२ घंटे</string>
+    <string name="local_day">दिन:</string>
+    <string name="local_date">तिथि:</string>
+    <string name="local_day_of_year">साल का दिन:</string>
+    <string name="local_week_of_year">साल का सप्ताह:</string>
+    <string name="utc_local_time_offset">स्थानीय समय ऑफसेट:</string>
+    <string name="utc_current_time">समय:</string>
+    <string name="utc_current_date">तिथि:</string>
+    <string name="sun_azimuth">दिगंश:</string>
+    <string name="sun_distance">दूरी:</string>
+    <string name="sun_altitude">उन्नतांश:</string>
+    <string name="sun_sunrise">सूर्योदय:</string>
+    <string name="sun_noon">दोपहर:</string>
+    <string name="sun_sunset">सूर्यास्त:</string>
+    <string name="sun_nadir">पतन:</string>
+    <string name="twilight_astronomical_dawn">खगोलीय सुबह:</string>
+    <string name="twilight_nautical_dawn">समुद्री सुबह:</string>
+    <string name="twilight_civil_dawn">नागरिक सुबह:</string>
+    <string name="twilight_civil_dusk">नागरिक शाम:</string>
+    <string name="twilight_nautical_dusk">समुद्री शाम:</string>
+    <string name="twilight_astronomical_dusk">खगोलीय शाम:</string>
+    <string name="moon_parallactic_angle">लंबन कोण:</string>
+    <string name="moon_moonrise">चंद्रोदय:</string>
+    <string name="moon_moonset">चन्द्रास्त:</string>
+    <string name="moon_fraction">भिन्न संख्या:</string>
+    <string name="moon_angle">कोण:</string>
+    <string name="moon_angle_state">कोण की स्थिति:</string>
+    <string name="moon_phase">चरण:</string>
+    <string name="moon_phase_angle">अवस्था कोण:</string>
+    <string name="moon_full_moon">पूर्णिमा:</string>
+    <string name="moon_new_moon">अमावस्या:</string>
+    <string name="moon_first_quarter">अर्धचन्द्र:</string>
+    <string name="moon_last_quarter">अंतिम तिमाही:</string>
+    <!-- Compass information items -->
+    <string name="accelerometer_accuracy">एक्सेलेरोमीटर:</string>
+    <string name="magnetometer_accuracy">मैग्नेटोमीटर:</string>
+    <string name="compass_inclination">झुकाव:</string>
+    <string name="compass_declination">घोषणा:</string>
+    <string name="compass_field_strength">फील्ड की छमता:</string>
+    <!-- GPS Information Panel -->
+    <string name="gps_status">स्थिति:</string>
+    <string name="gps_source">स्रोत:</string>
+    <string name="gps_accuracy">सटीकता:</string>
+    <string name="gps_altitude">उन्नतांश:</string>
+    <string name="gps_bearing">वहन:</string>
+    <string name="gps_displacement">विस्थापन:</string>
+    <string name="gps_direction">दिशा:</string>
+    <string name="gps_speed">गति:</string>
+    <string name="gps_latitude">अक्षांश:</string>
+    <string name="gps_longitude">देशांतर</string>
+    <!-- Sensor Accuracy -->
+    <string name="sensor_accuracy_unreliable">अविश्वसनीय</string>
+    <string name="sensor_accuracy_low">निम्न</string>
+    <string name="sensor_accuracy_medium">मध्यम</string>
+    <string name="sensor_accuracy_high">उच्च</string>
+    <!-- GPS Source Status -->
+    <string name="gps_enabled">सक्षम</string>
+    <string name="gps_disabled">निष्क्रिय</string>
+    <!-- Units -->
+    <string name="meter">मि.</string>
+    <string name="kilometer">कि. मी.</string>
+    <string name="feet">फ़ीट</string>
+    <string name="miles">मील</string>
+    <string name="kilometer_hour">किमी/घं</string>
+    <string name="miles_hour">मील/घं</string>
+    <!-- Alert -->
+    <string name="info_copied">क्लिपबोर्ड पर कॉपी किया गया</string>
+    <string name="info_error">जानकारी कॉपी नहीं की जा सकी!</string>
+    <string name="reset_complete">रीसेट</string>
+    <string name="invalid_coordinates">अमान्य निर्देशांक</string>
+    <string name="internet_connection_alert">इंटरनेट कनेक्शन उपलब्ध नहीं</string>
+    <string name="error">एरर!</string>
+    <string name="not_available">अनुपलब्ध</string>
+    <string name="no_address_found">वर्तमान स्थान के लिए कोई पता नहीं मिला</string>
+    <string name="location_saved">सफलतापूर्वक सहेजा गया।</string>
+    <string name="already_saved">पहले ही सहेजा गया</string>
+    <string name="location_not_saved">सहेजा नहीं जा सका</string>
+    <string name="no_update">कोई अद्यतन उपलब्ध नहीं है</string>
+    <string name="only_full_version">यह सुविधा केवल पूर्ण संस्करण में उपलब्ध है|</string>
+    <string name="location_not_available">स्थान उपलब्ध नहीं है</string>
+    <!-- Settings Categories -->
+    <string name="appearance">दिखावट</string>
+    <string name="configuration">विन्यास</string>
+    <string name="about">विवरण</string>
+    <string name="contribute">योगदान दें</string>
+    <!-- Settings Heading -->
+    <string name="theme">थीम</string>
+    <string name="icon">आइकॉन</string>
+    <string name="corner_radius">कोने की त्रिज्या</string>
+    <string name="units">इकाई</string>
+    <string name="location_provider">स्थान प्रदाता</string>
+    <string name="language">भाषा</string>
+    <string name="skip_splash_screen">स्पलैश स्क्रीन न दिखाएँ</string>
+    <string name="specified_location">निर्दिष्ट स्थान का उपयोग करें</string>
+    <string name="keep_screen_on">स्क्रीन चालू रखें</string>
+    <string name="legal_notes">कानूनी नोट्स</string>
+    <string name="app_version">ऐप का वर्श़न</string>
+    <string name="change_logs">चेंज लॉग</string>
+    <string name="found_an_issue">एक मुद्दा मिला?</string>
+    <string name="translate">अनुवाद करें</string>
+    <string name="buy_full">फुल वर्जन खरीदें</string>
+    <!-- Settings Description -->
+    <string name="theme_follow_system">सिस्टम का पालन करें</string>
+    <string name="theme_day">उजाला</string>
+    <string name="theme_night">डार्क</string>
+    <string name="theme_auto">ऑटो (दिन / रात)</string>
+    <string name="desc_skip_splash_Screen">एप्लिकेशन लॉन्च होने पर स्प्लैश स्क्रीन न दिखाएं और सीधे मुख्य स्क्रीन पर जाएं</string>
+    <string name="desc_specified_location">कस्टम अक्षांश और देशांतर निर्दिष्ट करें और जानकारी प्राप्त करने के लिए इसका उपयोग करें। कोई भी जानकारी जो केवल GPS का उपयोग करती है अप्रभावित रहेगी।</string>
+    <string name="desc_screen_on">ऐप दिखाई देने पर डिवाइस को सोने से रोकता है</string>
+    <string name="desc_legal">ऐप की अस्वीकृति, गोपनीयता नीति और उपयोग की शर्तें पढ़ें</string>
+    <string name="desc_changes">पिछले निर्माण के बाद हुए परिवर्तनों की सूची</string>
+    <string name="desc_git">ऐप का रिपॉजिटरी खोलें</string>
+    <string name="desc_translate">अपनी मूल भाषा में एप्लिकेशन का अनुवाद करने में सहायता करें I</string>
+    <string name="desc_buy_full_version">पूर्ण संस्करण खरीदकर विकास का समर्थन करें</string>
+    <!-- Clock Menu -->
+    <string name="needles">सुई</string>
+    <string name="motion_type">मोशन टाइप</string>
+    <string name="time_format">12-घंटे वाली घड़ी का इस्तेमाल करें</string>
+    <string name="motion_type_smooth">स्मूथ</string>
+    <string name="motion_type_tick">टिक</string>
+    <!-- Compass Menu -->
+    <string name="bloom">ब्लूम</string>
+    <string name="bloom_skins">ब्लूम की थीम</string>
+    <string name="show_code">कोड दिखाएं</string>
+    <!-- GPS Menu -->
+    <string name="show_label">लेबल दिखाएं</string>
+    <string name="satellite_mode">सैटेलाइट मोड</string>
+    <string name="high_contrast_mode">उच्च कंट्रास्ट नक्शा</string>
+    <string name="show_building">भवन दिखाएं</string>
+    <!-- Settings Menus -->
+    <string name="icon_default">पूर्व निर्धारित</string>
+    <string name="icon_legacy">विरासत</string>
+    <string name="icon_simple">साधारण</string>
+    <string name="icon_simple_no_shadow">सरल (कोई छाया नहीं)</string>
+    <string name="icon_simple_teal">सरल (चैती)</string>
+    <string name="icon_simple_pink">सिंपल (पिंक)</string>
+    <string name="unit_metric">मीट्रिक</string>
+    <string name="unit_imperial">इम्पीरियल</string>
+    <!-- Specified Coordinates Menu -->
+    <string name="specified_hint_header">स्थान डेटा दर्ज करें</string>
+    <string name="specified_data_list_locations">स्थान</string>
+    <string name="specified_hint_latitude">अक्षांश (±90)</string>
+    <string name="specified_hint_longitude">देशान्तर (±180)</string>
+    <!-- Info -->
+    <string name="compass_calibration_notice">आपकी डिवाइस कम्पास सेंसर की सटीकता कम है, इसको कैलिब्रेट करने के लिए अपनी डिवाइस को आठ नंबर के तरीके से घुमाएं |</string>
+    <string name="specified_location_notice">नीचे दी गई जानकारी निर्दिष्ट स्थान निर्देशांक के लिए अपडेट की जा रही है|</string>
+    <string name="show_again">फिर से दिखाएँ</string>
+    <string name="search_timezone">समय क्षेत्र खोजें</string>
+    <string name="verifying_license">लाइसेंस का सत्यापन</string>
+    <string name="license_successful">सफल :)</string>
+    <string name="license_failed">लाइसेंस सत्यापन विफल रहा</string>
+    <string name="auto_system_default_language">ऑटो (सिस्टम डिफ़ॉल्ट)</string>
+    <string name="location_permission_denied">"स्थान अनुमति अस्वीकृत!"</string>
+    <string name="no_location_permission_alert">कुछ सुविधाएं बिना स्थान की अनुमति के काम नहीं कर सकती हैं|</string>
+    <!-- Button Text -->
+    <string name="button_cancel">रद्द करें</string>
+    <string name="button_set">सेट करें</string>
+    <string name="button_close">बंद करें</string>
+    <string name="button_grant">अनुदान</string>
+    <string name="button_copy">कॉपी करें</string>
+    <string name="button_reset">रीसेट करें</string>
+    <!-- Button Descriptions -->
+    <string name="clock_options">Clock Menu</string>
+    <string name="compass_options">Compass Menu</string>
+    <string name="gps_options">GPS Menu</string>
+    <string name="gps_reset_location">स्थान रीसेट करें</string>
+    <string name="delete_all">सब मिटाएं</string>
+    <string name="open_saved_locations">सहेजे गए स्थान खोलें</string>
+    <string name="open_specified_location_documentation">निर्दिष्ट स्थान प्रलेखन खोलें</string>
+    <!-- Legal Menu -->
+    <string name="disclaimer">अस्वीकरण</string>
+    <string name="privacy_policy">गोपनीयता नीति</string>
+    <string name="terms_of_use">नियम व शर्तें</string>
+    <string name="permissions">अनुमतियां</string>
+    <string name="credits">क्रेडिट्स</string>
+    <string name="internet_uses">इंटरनेट उपयोग</string>
+    <!-- Moon Illumination -->
+    <string name="waning">कृष्ण</string>
+    <string name="waning_gibbous">ढलते अर्द्धचंद्र</string>
+    <string name="waning_crescent">वैक्सिंग वर्धमान</string>
+    <string name="waxing">शुक्ल</string>
+    <string name="waxing_gibbous">वैक्सिंग गिब्बस</string>
+    <string name="waxing_crescent">ढलते अर्द्धचंद्र</string>
+    <string name="full_moon">पूर्णचंद्र</string>
+    <string name="new_moon">अमावस्या</string>
+    <string name="third_quarter">तीसरा क्वार्टर</string>
+    <string name="first_quarter">अर्धचन्द्र</string>
+    <!-- Directions -->
+    <string name="north">उत्तर</string>
+    <string name="north_west">उत्तर पश्चिम</string>
+    <string name="west">पश्चिम</string>
+    <string name="south_west">दक्षिण पश्चिम</string>
+    <string name="south">दक्षिण</string>
+    <string name="south_east">दक्षिण पूर्व</string>
+    <string name="east">पूर्व</string>
+    <string name="north_east">उत्तर पूर्व</string>
+    <string name="north_N">उ</string>
+    <string name="north_west_NW">उ-प</string>
+    <string name="west_W">प</string>
+    <string name="south_west_SW">द-प</string>
+    <string name="south_S">द</string>
+    <string name="south_east_SE">द-पू</string>
+    <string name="east_E">पू</string>
+    <string name="north_east_NE">उ-पू</string>
+    <!-- Graph -->
+    <string name="location_details">स्थान का विवरण</string>
+    <string name="min">न्यूनतम:</string>
+    <string name="max">अधिकत्तम:</string>
+    <string name="avg">औसत:</string>
+    <!-- UTM -->
+    <string name="utm_zone">क्षेत्र:</string>
+    <string name="utm_easting">पूरब का:</string>
+    <string name="utm_northing">नोर्थिंग:</string>
+    <string name="utm_meridian">सेंट्रल मेरिडियन:</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">डिफ़ॉल्ट एंड्रॉइड लोकेशन एपीआई, बेहद सटीक है लेकिन एक समय में केवल एक स्थान प्रदाता तक सीमित है और इनडोर स्थान अनुरोध इसकी सटीकता को प्रभावित कर सकती हैं, कम समय में स्थान को अपडेट करने के लिए एक शक्तिशाली जीपीएस सेंसर की आवश्यकता होगी।</string>
+    <string name="desc_fused_location_provider">गूगल की फ़्यूज़्ड लोकेशन एपीआई जो विभिन्न लोकेशन प्रोवाइडर से लोकेशन डेटा को ट्राईऍंगुलेट करती है और रिजल्ट को कई स्थानों पर एवरेज करती है। ये अलग-अलग परिणाम दे सकती है लेकिन कम बैटरी का उपयोग करती है।</string>
+    <string name="desc_location_provider_note">नोट: किसी भी एपीआई का उपयोग विभिन्न कारकों के आधार पर अलग-अलग परिणाम दे सकती है और उनमें से कोई भी एक दूसरे के लिए सटीकता का प्रमाण नहीं है, एपीआई का परीक्षण करें और आपके क्षेत्र में सबसे अच्छा काम करने वाले चयनितों को रखें।</string>
+    <string name="use_media_keys">मीडिया कुंजियों का उपयोग करें</string>
+    <string name="auto_center_map">ऑटो सेंटर</string>
+    <string name="use_smaller_icon">छोटे चिह्न का उपयोग करें</string>
+    <string name="last_updated">आखरी अपडेट</string>
+    <string name="coefficient_of_magnetic_field">चुंबकीय क्षेत्र का गुणांक</string>
+    <string name="damping_coefficient">भिगोना गुणांक</string>
+    <string name="rotational_inertia">घूर्णन जड़त्व</string>
+    <string name="physical_properties">भौतिक गुण</string>
+    <string name="help">सहायता</string>
+    <string name="tick_smooth">टिक स्मूथ</string>
+    <string name="tick_oscillate">टिक ऑसिलेट</string>
+    <string name="use_physical_properties">भौतिक गुणों का उपयोग करें</string>
+    <string name="seconds_precision">सेकंड्स परिशुद्धता</string>
+    <string name="bearing_rotation">असर रोटेशन</string>
+    <string name="accent_color">एक्सेंट रंग</string>
+    <string name="opacity">अपारदर्शिता</string>
+    <string name="size">आकार</string>
+    <string name="customize_pin">पिन अनुकूलित करें</string>
+</resources>
