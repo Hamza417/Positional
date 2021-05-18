@@ -62,7 +62,7 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
         } else {
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                    .replace(R.id.launcher_act, SplashScreen().newInstance(), "launcher")
+                    .replace(R.id.launcher_act, SplashScreen.newInstance(), "launcher")
                     .commit()
         }
     }

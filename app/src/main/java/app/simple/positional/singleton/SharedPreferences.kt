@@ -2,11 +2,12 @@ package app.simple.positional.singleton
 
 import android.content.Context
 import android.content.SharedPreferences
+import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
 
 object SharedPreferences {
 
-    const val preferences = "Preferences"
+    private const val preferences = "Preferences"
     private var sharedPreferences: SharedPreferences? = null
 
     fun init(context: Context) {
@@ -32,6 +33,12 @@ object SharedPreferences {
             context.getSharedPreferences(preferences, Context.MODE_PRIVATE)
         } else {
             sharedPreferences!!
+        }
+    }
+
+    fun clearSharedPreferences() {
+        if (sharedPreferences.isNotNull()) {
+            getSharedPreferences().edit().clear().apply()
         }
     }
 }

@@ -15,6 +15,7 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.main.MainActivity
 import app.simple.positional.constants.*
@@ -23,10 +24,6 @@ import app.simple.positional.util.BitmapHelper.addRadialGradient
 import app.simple.positional.util.BitmapHelper.toBitmap
 
 class SplashScreen : Fragment() {
-
-    fun newInstance(): SplashScreen {
-        return SplashScreen()
-    }
 
     private lateinit var launcherBackground: ImageView
     private lateinit var touchIndicator: ImageView
@@ -55,6 +52,15 @@ class SplashScreen : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (BuildConfig.DEBUG) {
+            @Suppress("SetTextI18n")
+            if (BuildConfig.FLAVOR == "lite") {
+                text.text = "Positional Lite (Debug)"
+            } else {
+                text.text = "Positional (Debug)"
+            }
+        }
 
         randomDayValue = LauncherBackground.vectorBackground.indices.random()
         randomNightValue = LauncherBackground.vectorBackgroundNight.indices.random()
@@ -153,5 +159,11 @@ class SplashScreen : Fragment() {
     override fun onDestroy() {
         handler.removeCallbacksAndMessages(null)
         super.onDestroy()
+    }
+
+    companion object {
+        fun newInstance(): SplashScreen {
+            return SplashScreen()
+        }
     }
 }

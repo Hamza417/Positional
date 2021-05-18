@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- These strings are not to be translated and should be used as is -->
-
-    <string name="app_name" translatable="false">Positional (Debug)</string>
-</resources>

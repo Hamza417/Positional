@@ -33,12 +33,16 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        updateSeekbar(opacity, GPSPreferences.getPinOpacity())
-        updateSeekbar(size, GPSPreferences.getPinSize())
+        opacity.progress = GPSPreferences.getPinOpacity()
+        size.progress = GPSPreferences.getPinSize()
 
         opacity.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                /* no-op */
+                if (progress == 0) {
+                    GPSPreferences.setPinOpacity(5)
+                } else {
+                    GPSPreferences.setPinOpacity(progress)
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -46,17 +50,17 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                if (seekBar.progress == 0) {
-                    GPSPreferences.setPinOpacity(5)
-                } else {
-                    GPSPreferences.setPinOpacity(seekBar.progress)
-                }
+                /* no-op */
             }
         })
 
         size.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                /* no-op */
+                if (progress == 0) {
+                    GPSPreferences.setPinSize(40)
+                } else {
+                    GPSPreferences.setPinSize(progress)
+                }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -64,11 +68,7 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                if (seekBar.progress == 0) {
-                    GPSPreferences.setPinSize(40)
-                } else {
-                    GPSPreferences.setPinSize(seekBar.progress)
-                }
+                /* no-op */
             }
         })
 
