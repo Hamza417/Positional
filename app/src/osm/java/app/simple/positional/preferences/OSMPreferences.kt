@@ -16,6 +16,6 @@ object OSMPreferences {
     }
 
     fun getMapTileProvider(): String {
-        return getSharedPreferences().getString(mapTileProvider, "DEFAULT_TILE_SOURCE")
+        return getSharedPreferences().getString(mapTileProvider, "DEFAULT_TILE_SOURCE")!!
     }
 }

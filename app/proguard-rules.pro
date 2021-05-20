@@ -22,11 +22,7 @@
 
 # Keep activity aliases from getting obfuscated
 # Will throw IllegalArgumentException otherwise with reason component class not exist
--dontobfuscate
+-dontobfuscate -optimizations !code/allocation/variable
 -keep class app.simple.positional.activities.alias.IconOneAlias
 -keep class app.simple.positional.activities.alias.IconTwoAlias
--keep class app.simple.positional.activities.alias.IconThreeAlias
--keep class app.simple.positional.activities.alias.IconFourAlias
--keep class app.simple.positional.activities.alias.IconFiveAlias
--keep class app.simple.positional.activities.alias.IconSixAlias
 -keep class kotlin.KotlinNullPointerException

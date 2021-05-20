@@ -157,14 +157,9 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt'
 
     // Google Services and Default android libs
-    fullImplementation 'com.google.android.gms:play-services-location:18.0.0'
-    fullImplementation 'com.google.android.play:core-ktx:1.8.1'
-    fullImplementation 'com.google.android.gms:play-services-maps:17.0.1'
-
-    liteImplementation 'com.google.android.gms:play-services-location:18.0.0'
-    liteImplementation 'com.google.android.play:core-ktx:1.8.1'
-    liteImplementation 'com.google.android.gms:play-services-maps:17.0.1'
-
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.play:core-ktx:1.8.1'
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'com.google.android.material:material:1.3.0'
 
     // OSM
