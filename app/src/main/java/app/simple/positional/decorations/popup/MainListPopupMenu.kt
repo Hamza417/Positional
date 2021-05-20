@@ -32,7 +32,7 @@ class MainListPopupMenu(contentView: View,
         animationStyle = R.style.DialogAnimation
         isClippingEnabled = false
         isFocusable = true
-        elevation = 100F
+        elevation = 10F
 
         contentView.findViewById<DynamicRippleTextView>(R.id.menu_disclaimer).onClick()
         contentView.findViewById<DynamicRippleTextView>(R.id.menu_privacy_policy).onClick()

@@ -45,6 +45,13 @@ object ViewUtils {
     }
 
     /**
+     * Makes the view go away
+     */
+    fun View.makeInvisible() {
+        this.visibility = View.INVISIBLE
+    }
+
+    /**
      * Makes the view come back
      */
     fun View.makeVisible() {

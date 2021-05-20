@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
@@ -13,24 +12,26 @@ import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.preference.GPSPreferences
 
-class OsmMenu : CustomBottomSheetDialogFragment() {
+class GPSMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var toggleAutoCenter: SwitchView
     private lateinit var toggleVolumeKeys: SwitchView
     private lateinit var toggleUseBearing: SwitchView
-    private lateinit var togglePinCustomization: DynamicRippleTextView
+    private lateinit var pinCustomization: DynamicRippleTextView
+    private lateinit var tileSource: DynamicRippleTextView
 
     private lateinit var toggleAutoCenterContainer: DynamicRippleLinearLayout
     private lateinit var toggleVolumeKeysContainer: DynamicRippleLinearLayout
     private lateinit var toggleUseBearingContainer: DynamicRippleLinearLayout
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.dialog_gps_menu, container, false)
 
         toggleAutoCenter = view.findViewById(R.id.toggle_auto_center)
         toggleVolumeKeys = view.findViewById(R.id.toggle_use_volume_keys)
-        togglePinCustomization = view.findViewById(R.id.gps_pin_customization)
         toggleUseBearing = view.findViewById(R.id.toggle_bearing_rotation)
+        pinCustomization = view.findViewById(R.id.gps_pin_customization)
+        tileSource = view.findViewById(R.id.gps_tile_source)
 
         toggleAutoCenterContainer = view.findViewById(R.id.gps_menu_auto_center_container)
         toggleVolumeKeysContainer = view.findViewById(R.id.gps_menu_volume_keys_container)
@@ -54,14 +55,20 @@ class OsmMenu : CustomBottomSheetDialogFragment() {
             GPSPreferences.setUseVolumeKeys(it)
         }
 
-        togglePinCustomization.setOnClickListener {
+        toggleUseBearing.setOnCheckedChangeListener {
+            GPSPreferences.setUseBearingRotation(it)
+        }
+
+        pinCustomization.setOnClickListener {
             PinCustomization.newInstance()
                     .show(requireActivity().supportFragmentManager, "pin_customization")
             dismiss()
         }
 
-        toggleUseBearing.setOnCheckedChangeListener {
-            GPSPreferences.setUseBearingRotation(it)
+        tileSource.setOnClickListener {
+            MapTiles.newInstance()
+                    .show(parentFragmentManager, "map_tiles")
+            dismiss()
         }
 
         toggleAutoCenterContainer.setOnClickListener {
@@ -79,6 +86,15 @@ class OsmMenu : CustomBottomSheetDialogFragment() {
 
         toggleUseBearingContainer.setOnClickListener {
             toggleUseBearing.invertCheckedStatus()
+        }
+    }
+
+    companion object {
+        fun newInstance(): GPSMenu {
+            val args = Bundle()
+            val fragment = GPSMenu()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

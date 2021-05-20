@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.simple.positional.decorations.ripple.DynamicRippleLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tiles_adapter_item_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:background="@drawable/ripple_btn"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/adapter_tiles_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/medium"
+        android:layout_weight="1"
+        android:textColor="@color/textSecondary"
+        android:textSize="@dimen/options_item_text_size" />
+
+    <ImageView
+        android:id="@+id/tiles_indicator"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:visibility="invisible"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="@dimen/options_item_padding"
+        android:src="@drawable/ic_check"
+        tools:ignore="ContentDescription"
+        app:tint="?attr/colorAppAccent" />
+
+</app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>

@@ -7,19 +7,23 @@ import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.Log
+import android.view.MotionEvent
 import android.widget.Toast
+import androidx.constraintlayout.helper.widget.Layer
 import androidx.core.content.res.ResourcesCompat
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.adapters.MapTilesAdapter
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.OSMPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.NullSafety.isNotNull
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.*
 import org.osmdroid.config.Configuration
-import org.osmdroid.events.MapEventsReceiver
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.events.*
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.MapEventsOverlay
@@ -54,11 +58,13 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
     private var mapsCallbacks: OsmMapsCallbacks? = null
     private var marker: Drawable? = null
     private val viewHandler = Handler(Looper.getMainLooper())
+    private var mapViewListener: MapListener
 
     private var isCustomCoordinate = false
     private var isBearingRotation = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
+    private var bearing = 0F
     val lastLatitude = GPSPreferences.getLastCoordinates()[0].toDouble()
     val lastLongitude = GPSPreferences.getLastCoordinates()[1].toDouble()
 
@@ -80,8 +86,13 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
             latLng = LatLng(customLatitude, customLongitude)
-            moveMap(0F)
+            moveMap()
             addMarker()
+        } else {
+            controller.animateTo(GeoPoint(lastLatitude, lastLongitude),
+                    GPSPreferences.getMapZoom().toDouble(),
+                    0,
+                    bearing)
         }
 
         if (GPSPreferences.isUsingVolumeKeys()) {
@@ -98,12 +109,13 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         }, 500)
 
         Configuration.getInstance().userAgentValue = BuildConfig.APPLICATION_ID
-        setTileSource(TileSourceFactory.DEFAULT_TILE_SOURCE)
+        setTileSource()
         setMultiTouchControls(true)
         setDestroyMode(true)
         overlays.add(RotationGestureOverlay(this))
+        setLayerType(Layer.LAYER_TYPE_HARDWARE, null)
+        controller.setZoom(GPSPreferences.getMapZoom().toDouble())
         onResume()
-
 
         val mReceive: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
@@ -117,16 +129,66 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             }
         }
 
+        mapViewListener = DelayedMapListener(object : MapListener {
+            override fun onScroll(event: ScrollEvent): Boolean {
+                Log.d("MapTouchEvent", "Scrolled")
+                handler.removeCallbacks(mapMoved)
+                return true
+            }
+
+            override fun onZoom(event: ZoomEvent): Boolean {
+                GPSPreferences.setMapZoom(event.zoomLevel.toFloat())
+                return true
+            }
+        }, 0L)
+
+        this.addMapListener(mapViewListener)
+
         overlays.add(MapEventsOverlay(mReceive))
     }
 
-    fun moveMap(bearing: Float) {
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                Log.d("MapTouchEvent", "Down")
+                handler.removeCallbacks(mapMoved)
+            }
+            MotionEvent.ACTION_UP -> {
+                Log.d("MapTouchEvent", "Up")
+                if (GPSPreferences.getMapAutoCenter()) {
+                    handler.postDelayed({ mapMoved }, 6000L)
+                }
+            }
+        }
+
+        return super.dispatchTouchEvent(event)
+    }
+
+    fun moveMap() {
+        /**
+         * Treat Speed as duration
+         */
+        controller.animateTo(
+                GeoPoint(latLng!!.latitude, latLng!!.longitude),
+                GPSPreferences.getMapZoom().toDouble(),
+                3000,
+                bearing
+        )
+    }
+
+    fun resetCamera() {
+        /**
+         * Treat Speed as duration
+         */
         controller.animateTo(
                 GeoPoint(latLng!!.latitude, latLng!!.longitude),
                 15.0,
-                0,
+                3000,
                 if (isBearingRotation) bearing else 0F
         )
+
+        GPSPreferences.setMapZoom(15.0F)
     }
 
     fun addMarker() {
@@ -135,11 +197,12 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             // TODO - implement pin customization
 
             val startMarker = Marker(this@OsmMaps).apply {
-                remove(this@OsmMaps)
                 icon = marker
                 position = GeoPoint(latLng!!.latitude, latLng!!.longitude)
                 setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             }
+
+            startMarker.remove(this@OsmMaps)
 
             launch {
                 withContext(Dispatchers.Main) {
@@ -156,7 +219,6 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
     private val mapMoved = object : Runnable {
         override fun run() {
             if (GPSPreferences.getMapAutoCenter()) {
-                val bearing: Float
                 latLng = if (isCustomCoordinate) {
                     bearing = 0F
                     LatLng(customLatitude, customLongitude)
@@ -170,7 +232,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                     }
                 }
 
-                moveMap(bearing)
+                moveMap()
             }
             viewHandler.postDelayed(this, 6000L)
         }
@@ -179,6 +241,19 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
     fun postCallbacks() {
         if (GPSPreferences.getMapAutoCenter()) {
             viewHandler.post(mapMoved)
+        }
+    }
+
+    fun setFullScreenTools(boolean: Boolean) {
+
+    }
+
+    private fun setTileSource() {
+        val x = OSMPreferences.getMapTileProvider()
+        for (i in MapTilesAdapter.list) {
+            if (i.second == x) {
+                setTileSource(i.first)
+            }
         }
     }
 
@@ -191,6 +266,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         super.onDetach()
         job.cancel()
         viewHandler.removeCallbacks(mapMoved)
+        removeMapListener(mapViewListener)
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
     }
 
@@ -208,6 +284,9 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                 if (latLng.isNotNull()) {
                     addMarker()
                 }
+            }
+            OSMPreferences.mapTileProvider -> {
+                setTileSource()
             }
         }
     }

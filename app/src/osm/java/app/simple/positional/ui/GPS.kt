@@ -366,15 +366,15 @@ class GPS : ScopedFragment() {
         toolbar.setOnMapToolbarCallbacks(object : MapToolbar.MapToolbarCallbacks {
             override fun onLocationReset(view: View?) {
                 updateViews(customLatitude, customLongitude)
-                mapView!!.moveMap(0F)
+                mapView!!.moveMap()
             }
 
             override fun onMenuClicked(view: View?) {
-                OsmMenu().show(parentFragmentManager, "gps_menu")
+                GPSMenu().show(parentFragmentManager, "gps_menu")
             }
 
             override fun onLocationLongPressed() {
-
+                mapView!!.resetCamera()
             }
         })
 
@@ -508,7 +508,7 @@ class GPS : ScopedFragment() {
                         mapView!!.controller.zoomOut()
                     }
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
-                        mapView!!.moveMap(0F)
+                        mapView!!.moveMap()
                     }
                     KeyEvent.KEYCODE_BACK -> {
                         requireActivity().onBackPressed()
@@ -624,9 +624,6 @@ class GPS : ScopedFragment() {
     }
 
     private fun backPressed(value: Boolean) {
-        /**
-         * @see Clock.backPressed
-         */
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
                 if (bottomSheetInfoPanel.state == BottomSheetBehavior.STATE_EXPANDED) {
