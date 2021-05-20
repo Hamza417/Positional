@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "903712155198",
+    "firebase_url": "https://positional-4d87a.firebaseio.com",
+    "project_id": "positional-4d87a",
+    "storage_bucket": "positional-4d87a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903712155198:android:af4c7964f6011731ccd36f",
+        "android_client_info": {
+          "package_name": "app.simple.positional.osm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903712155198-mm3fsrd2b0s25kf0b7murup4quc4nqmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsZfBuF_RFvI7zLX1Uy7qkUL-wRivRMfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903712155198-mm3fsrd2b0s25kf0b7murup4quc4nqmb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

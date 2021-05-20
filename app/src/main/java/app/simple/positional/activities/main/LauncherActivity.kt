@@ -6,7 +6,6 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
 import app.simple.positional.preference.FragmentPreferences
-import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preference.MainPreferences.getLicenceStatus
 import app.simple.positional.ui.License
 import app.simple.positional.ui.SplashScreen
@@ -19,7 +18,7 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
 
         setContentView(R.layout.activity_launcher)
 
-        if (getLicenceStatus() || BuildConfig.FLAVOR == "lite" || BuildConfig.DEBUG) {
+        if (getLicenceStatus() || BuildConfig.FLAVOR == "osm" || BuildConfig.DEBUG) {
             onLicenseCheckCompletion()
         } else {
             supportFragmentManager.beginTransaction()
@@ -53,7 +52,7 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
     }
 
     override fun onLicenseCheckCompletion() {
-        if (MainPreferences.getSkipSplashScreen()) {
+        if (true) {
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.action = this.intent.action

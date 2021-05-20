@@ -92,7 +92,8 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
         opacity.clearAnimation()
         size.clearAnimation()
         if (!requireActivity().isDestroyed) {
-            GPSMenu().show(parentFragmentManager, "gps_menu")
+            // TODO - fix menus here
+            //GPSMenu().show(parentFragmentManager, "gps_menu")
         }
     }
 
