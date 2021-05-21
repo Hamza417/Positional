@@ -8,7 +8,7 @@
         <intent
             android:action="open_clock"
             android:targetClass="app.simple.positional.activities.main.LauncherActivity"
-            android:targetPackage="app.simple.positional" />
+            android:targetPackage="app.simple.positional.osm" />
     </shortcut>
 
     <shortcut
@@ -20,7 +20,7 @@
         <intent
             android:action="open_compass"
             android:targetClass="app.simple.positional.activities.main.LauncherActivity"
-            android:targetPackage="app.simple.positional" />
+            android:targetPackage="app.simple.positional.osm" />
     </shortcut>
 
     <shortcut
@@ -32,7 +32,7 @@
         <intent
             android:action="open_gps"
             android:targetClass="app.simple.positional.activities.main.LauncherActivity"
-            android:targetPackage="app.simple.positional" />
+            android:targetPackage="app.simple.positional.osm" />
     </shortcut>
 
     <shortcut
@@ -44,6 +44,6 @@
         <intent
             android:action="open_level"
             android:targetClass="app.simple.positional.activities.main.LauncherActivity"
-            android:targetPackage="app.simple.positional" />
+            android:targetPackage="app.simple.positional.osm" />
     </shortcut>
 </shortcuts>

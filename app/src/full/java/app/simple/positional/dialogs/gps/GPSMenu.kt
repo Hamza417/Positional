@@ -157,4 +157,13 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleHighContrastContainer.animate().alpha(alpha).setInterpolator(DecelerateInterpolator(1.5F)).start()
         toggleHighContrastContainer.isClickable = !isChecked
     }
+
+    companion object {
+        fun newInstance(): GPSMenu {
+            val args = Bundle()
+            val fragment = GPSMenu()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 }

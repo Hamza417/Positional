@@ -99,7 +99,7 @@ android {
 
         osm {
             dimension "version"
-            versionCode = 2
+            versionCode = 3
             versionName = "OSM_Build$versionCode"
             applicationIdSuffix ".osm"
         }
