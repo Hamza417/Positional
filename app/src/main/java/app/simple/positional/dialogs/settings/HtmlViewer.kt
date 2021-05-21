@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomWebView
@@ -65,7 +66,11 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
                     webView.loadUrl("file:///android_asset/html/translators.html")
                 }
                 "Change Logs" -> {
-                    webView.loadUrl("file:///android_asset/html/local_changelogs.html")
+                    if (BuildConfig.FLAVOR == "osm") {
+                        webView.loadUrl("file:///android_asset/html/osm_changelogs.html")
+                    } else {
+                        webView.loadUrl("file:///android_asset/html/local_changelogs.html")
+                    }
                 }
                 getString(R.string.internet_uses) -> {
                     webView.loadUrl("file:///android_asset/html/internet_uses.html")

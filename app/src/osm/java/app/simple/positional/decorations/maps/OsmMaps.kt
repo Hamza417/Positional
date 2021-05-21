@@ -16,6 +16,7 @@ import androidx.core.graphics.drawable.toDrawable
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.adapters.MapTilesAdapter
+import app.simple.positional.constants.LocationPins
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preferences.OSMPreferences
@@ -82,7 +83,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         marker = if (isCustomCoordinate) {
             ResourcesCompat.getDrawable(resources, R.drawable.ic_place_custom, context.theme)
         } else {
-            ResourcesCompat.getDrawable(resources, R.drawable.ic_place, context.theme)
+            ResourcesCompat.getDrawable(resources, LocationPins.locationsPins[GPSPreferences.getPinSkin()], null)
         }
 
         if (isCustomCoordinate) {
@@ -208,7 +209,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                 R.drawable.ic_place_custom.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
             } else {
                 if (location.isNotNull()) {
-                    R.drawable.ic_place.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
+                    LocationPins.locationsPins[GPSPreferences.getPinSkin()].toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                 } else {
                     R.drawable.ic_place_historical.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                 }
@@ -302,7 +303,8 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                 isBearingRotation = GPSPreferences.isBearingRotationOn()
             }
             GPSPreferences.pinSize,
-            GPSPreferences.pinOpacity -> {
+            GPSPreferences.pinOpacity,
+            GPSPreferences.pinSkin -> {
                 if (latLng.isNotNull()) {
                     addMarker()
                 }

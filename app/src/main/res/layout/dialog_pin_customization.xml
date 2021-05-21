@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/options_container_horizontal_padding"
         android:backgroundTint="@color/toolbarBackground"
-        android:clipChildren="false"
-        android:clipToPadding="false"
+        android:clipChildren="true"
+        android:clipToPadding="true"
         android:elevation="40dp"
         android:orientation="vertical"
         android:padding="@dimen/options_container_horizontal_padding">
@@ -94,6 +94,11 @@
             android:splitTrack="true"
             android:thumb="@drawable/seekbar_thumb"
             android:translationZ="8dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pins_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
 
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 

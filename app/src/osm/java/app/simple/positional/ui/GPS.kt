@@ -4,6 +4,7 @@ import android.content.*
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.media.Image
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -181,6 +182,8 @@ class GPS : ScopedFragment() {
         backPress = requireActivity().onBackPressedDispatcher
 
         peekHeight = bottomSheetInfoPanel.peekHeight
+
+        setLocationPin()
 
         return view
     }
@@ -379,11 +382,6 @@ class GPS : ScopedFragment() {
         })
 
         save.setOnClickListener {
-            if (BuildConfig.FLAVOR == "lite") {
-                Toast.makeText(requireContext(), R.string.only_full_version, Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
             CoroutineScope(Dispatchers.Default).launch {
                 val isLocationSaved: Boolean
                 val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
@@ -455,11 +453,6 @@ class GPS : ScopedFragment() {
                 stringBuilder.append("${longitude.text}\n\n")
 
                 stringBuilder.append("${getString(R.string.gps_address)}: ${address.text}")
-
-                if (BuildConfig.FLAVOR == "lite") {
-                    stringBuilder.append("\n\nInformation is copied using Positional Lite\n")
-                    stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
-                }
 
                 val clip: ClipData = ClipData.newPlainText("GPS Data", stringBuilder)
                 clipboard.setPrimaryClip(clip)
@@ -609,6 +602,9 @@ class GPS : ScopedFragment() {
         }
     }
 
+    private fun setLocationPin() {
+        view?.findViewById<ImageView>(R.id.coordinates_icon)
+    }
 
     private fun checkGooglePlayServices(): Boolean {
         val availability = GoogleApiAvailability.getInstance()
@@ -653,6 +649,9 @@ class GPS : ScopedFragment() {
                 } else {
                     view?.clearFocus()
                 }
+            }
+            GPSPreferences.pinSkin -> {
+                setLocationPin()
             }
         }
     }

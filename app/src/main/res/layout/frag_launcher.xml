@@ -37,7 +37,7 @@
             android:layout_height="@dimen/launcher_app_icon_dimen"
             android:layout_gravity="center"
             android:layout_margin="20dp"
-            android:src="@drawable/ic_place"
+            android:src="@drawable/ic_pin_01"
             tools:ignore="ContentDescription" />
     </LinearLayout>
 

@@ -6,6 +6,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.widget.RemoteViews
 import app.simple.positional.R
+import app.simple.positional.constants.LocationPins
 import app.simple.positional.preference.ClockPreferences
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
@@ -77,7 +78,7 @@ class SunTimeWidget : AppWidgetProvider() {
                 if (MainPreferences.isCustomCoordinate()) {
                     views.setImageViewResource(R.id.widget_suntime_icon, R.drawable.ic_place_custom)
                 } else {
-                    views.setImageViewResource(R.id.widget_suntime_icon, R.drawable.ic_place)
+                    views.setImageViewResource(R.id.widget_suntime_icon, LocationPins.locationsPins[GPSPreferences.getPinSkin()])
                 }
 
                 val componentName = ComponentName(context, SunTimeWidget::class.java)

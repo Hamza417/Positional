@@ -21,6 +21,7 @@ object GPSPreferences {
     const val useVolumeKeys = "use_volume_keys_to_zoom"
     const val lastLatitude = "last_latitude"
     const val lastLongitude = "last_longitude"
+    const val pinSkin = "current_pin_skin"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -147,5 +148,15 @@ object GPSPreferences {
 
     fun getPinOpacity(): Int {
         return getSharedPreferences().getInt(pinOpacity, 255)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setPinSkin(value: Int) {
+        getSharedPreferences().edit().putInt(pinSkin, value).apply()
+    }
+
+    fun getPinSkin(): Int {
+        return getSharedPreferences().getInt(pinSkin, 0)
     }
 }

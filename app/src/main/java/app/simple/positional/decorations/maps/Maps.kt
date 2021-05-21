@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
+import app.simple.positional.constants.LocationPins
 import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
@@ -221,7 +222,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                         R.drawable.ic_place_custom.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                     } else {
                         if (location.isNotNull()) {
-                            R.drawable.ic_place.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
+                            LocationPins.locationsPins[GPSPreferences.getPinSkin()].toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                         } else {
                             R.drawable.ic_place_historical.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                         }
