@@ -84,8 +84,8 @@ class SplashScreen : Fragment() {
             }
         }
 
-        touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator.toBitmap(context = requireContext(), size = 400).let { addRadialGradient(it, colorTwo) })
-        icon.setImageBitmap(R.drawable.ic_place.toBitmap(context = requireContext(), size = 400).let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
+        touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator.toBitmap(context = requireContext(), size = 400, 255).let { addRadialGradient(it, colorTwo) })
+        icon.setImageBitmap(R.drawable.ic_place.toBitmap(context = requireContext(), size = 400, 255).let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
         icon.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.launcher_icon))
         text.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.image_in))
 

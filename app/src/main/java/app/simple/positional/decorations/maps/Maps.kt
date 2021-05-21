@@ -231,6 +231,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             if (googleMap.isNotNull()) {
                 googleMap?.clear()
                 googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker!!)))
+                invalidate()
             }
         }
     }

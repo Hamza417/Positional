@@ -12,6 +12,7 @@ import android.view.MotionEvent
 import android.widget.Toast
 import androidx.constraintlayout.helper.widget.Layer
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toDrawable
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.adapters.MapTilesAdapter
@@ -19,6 +20,8 @@ import app.simple.positional.preference.GPSPreferences
 import app.simple.positional.preference.MainPreferences
 import app.simple.positional.preferences.OSMPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
+import app.simple.positional.util.BitmapHelper.toBitmap
+import app.simple.positional.util.ColorUtils
 import app.simple.positional.util.NullSafety.isNotNull
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.*
@@ -112,6 +115,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         setTileSource()
         setMultiTouchControls(true)
         setDestroyMode(true)
+        setMapStyle()
         overlays.add(RotationGestureOverlay(this))
         setLayerType(Layer.LAYER_TYPE_HARDWARE, null)
         controller.setZoom(GPSPreferences.getMapZoom().toDouble())
@@ -194,19 +198,33 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
     fun addMarker() {
         launch {
 
-            // TODO - implement pin customization
+            overlays.forEach {
+                if (it is Marker && it.id == "marker") {
+                    overlays.remove(it)
+                }
+            }
+
+            marker = if (isCustomCoordinate) {
+                R.drawable.ic_place_custom.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
+            } else {
+                if (location.isNotNull()) {
+                    R.drawable.ic_place.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
+                } else {
+                    R.drawable.ic_place_historical.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
+                }
+            }.toDrawable(resources)
 
             val startMarker = Marker(this@OsmMaps).apply {
                 icon = marker
+                id = "marker"
                 position = GeoPoint(latLng!!.latitude, latLng!!.longitude)
                 setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             }
 
-            startMarker.remove(this@OsmMaps)
-
             launch {
                 withContext(Dispatchers.Main) {
                     overlays.add(startMarker)
+                    invalidate()
                 }
             }
         }
@@ -244,15 +262,19 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         }
     }
 
-    fun setFullScreenTools(boolean: Boolean) {
-
-    }
-
     private fun setTileSource() {
         val x = OSMPreferences.getMapTileProvider()
         for (i in MapTilesAdapter.list) {
             if (i.second == x) {
                 setTileSource(i.first)
+            }
+        }
+    }
+
+    private fun setMapStyle() {
+        when (this.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) {
+            android.content.res.Configuration.UI_MODE_NIGHT_YES -> {
+                overlayManager.tilesOverlay.setColorFilter(ColorUtils.getMapColorFilter())
             }
         }
     }
