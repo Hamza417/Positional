@@ -20,7 +20,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 import kotlin.math.abs
 import kotlin.math.roundToInt
 

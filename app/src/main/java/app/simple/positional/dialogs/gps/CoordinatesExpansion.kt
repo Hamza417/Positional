@@ -16,7 +16,7 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.UTMConverter

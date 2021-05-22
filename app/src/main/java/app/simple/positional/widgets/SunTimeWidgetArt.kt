@@ -8,9 +8,9 @@ import android.widget.RemoteViews
 import app.simple.positional.R
 import app.simple.positional.constants.LauncherBackground
 import app.simple.positional.constants.LocationPins
-import app.simple.positional.preference.ClockPreferences
-import app.simple.positional.preference.GPSPreferences
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.ClockPreferences
+import app.simple.positional.preferences.GPSPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.LocaleHelper

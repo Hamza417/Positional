@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.bottombar.BottomBarCallbacks
 import app.simple.positional.decorations.bottombar.BottomBarModel
-import app.simple.positional.preference.FragmentPreferences
+import app.simple.positional.preferences.FragmentPreferences
 
 class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
 

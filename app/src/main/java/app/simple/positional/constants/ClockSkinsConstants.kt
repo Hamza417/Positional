@@ -32,6 +32,11 @@ object ClockSkinsConstants {
                     R.drawable.clock_hour,
                     R.drawable.clock_minute,
                     R.drawable.clock_seconds
+            ),
+            intArrayOf( // 5
+                    R.drawable.clock_hollow_needle_hour,
+                    R.drawable.clock_hollow_needle_minute,
+                    R.drawable.clock_hollow_needle_second
             )
     )
 }

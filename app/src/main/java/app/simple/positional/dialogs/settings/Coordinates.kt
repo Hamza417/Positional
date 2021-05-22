@@ -25,7 +25,7 @@ import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.model.Locations
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers

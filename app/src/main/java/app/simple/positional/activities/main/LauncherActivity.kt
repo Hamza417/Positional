@@ -5,9 +5,9 @@ import android.os.Bundle
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
-import app.simple.positional.preference.FragmentPreferences
-import app.simple.positional.preference.MainPreferences
-import app.simple.positional.preference.MainPreferences.getLicenceStatus
+import app.simple.positional.preferences.FragmentPreferences
+import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.preferences.MainPreferences.getLicenceStatus
 import app.simple.positional.ui.License
 import app.simple.positional.ui.SplashScreen
 

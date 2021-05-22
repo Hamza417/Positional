@@ -10,7 +10,7 @@ import app.simple.positional.R
 import app.simple.positional.adapters.BloomSkinAdapter
 import app.simple.positional.constants.CompassBloom
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.CompassPreferences
+import app.simple.positional.preferences.CompassPreferences
 import app.simple.positional.util.LocaleHelper
 
 class CompassBloom : CustomBottomSheetDialogFragment() {

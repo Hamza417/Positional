@@ -17,7 +17,7 @@ import app.simple.positional.decorations.views.Speedometer
 import app.simple.positional.math.MathExtensions
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.UnitConverter.toMilesPerHour
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.HtmlHelper
 
 class MovementExpansion : CustomBottomSheetDialogFragment() {

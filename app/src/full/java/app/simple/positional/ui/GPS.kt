@@ -46,8 +46,8 @@ import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.model.Locations
-import app.simple.positional.preference.GPSPreferences
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.GPSPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth

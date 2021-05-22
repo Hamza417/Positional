@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerAccentColor
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 import org.jetbrains.annotations.NotNull
 
 class AccentColorAdapter : RecyclerView.Adapter<AccentColorAdapter.Holder>() {

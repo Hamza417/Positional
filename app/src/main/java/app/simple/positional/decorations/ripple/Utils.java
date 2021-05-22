@@ -16,7 +16,7 @@ import com.google.android.material.animation.ArgbEvaluatorCompat;
 import java.util.Arrays;
 
 import app.simple.positional.R;
-import app.simple.positional.preference.MainPreferences;
+import app.simple.positional.preferences.MainPreferences;
 import app.simple.positional.util.ColorUtils;
 
 public class Utils {

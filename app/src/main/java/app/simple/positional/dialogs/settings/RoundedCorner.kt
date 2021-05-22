@@ -13,8 +13,8 @@ import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.MainPreferences
-import app.simple.positional.preference.MainPreferences.getCornerRadius
+import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.preferences.MainPreferences.getCornerRadius
 import app.simple.positional.util.SpannableStringBuilder.buildSpannableString
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable

@@ -12,7 +12,7 @@ import com.google.android.material.shape.ShapeAppearanceModel;
 
 import androidx.appcompat.widget.AppCompatButton;
 import app.simple.positional.R;
-import app.simple.positional.preference.MainPreferences;
+import app.simple.positional.preferences.MainPreferences;
 
 public class LayoutBackground {
     public static void setBackground(Context context, ViewGroup viewGroup, AttributeSet attrs) {

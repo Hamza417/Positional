@@ -25,8 +25,8 @@ import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
-import app.simple.positional.preference.LevelPreferences
-import app.simple.positional.preference.LevelPreferences.isNoSensorAlertON
+import app.simple.positional.preferences.LevelPreferences
+import app.simple.positional.preferences.LevelPreferences.isNoSensorAlertON
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.HtmlHelper.fromHtml
 

@@ -290,4 +290,6 @@
     <string name="size">Size</string>
     <string name="customize_pin">Customize Pin</string>
     <string name="map_tile_source">Map Tile Source</string>
+    <string name="maps_provider">Maps Provider</string>
+    <string name="open_source_maps">Open Source Maps</string>
 </resources>

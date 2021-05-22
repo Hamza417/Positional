@@ -10,7 +10,7 @@ import app.simple.positional.R
 import app.simple.positional.adapters.ClockNeedleSkinsAdapter
 import app.simple.positional.constants.ClockSkinsConstants
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.ClockPreferences
+import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.util.LocaleHelper
 
 class ClockNeedle : CustomBottomSheetDialogFragment() {

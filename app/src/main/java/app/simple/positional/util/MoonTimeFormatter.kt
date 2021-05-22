@@ -1,6 +1,6 @@
 package app.simple.positional.util
 
-import app.simple.positional.preference.ClockPreferences
+import app.simple.positional.preferences.ClockPreferences
 import java.text.ParseException
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter

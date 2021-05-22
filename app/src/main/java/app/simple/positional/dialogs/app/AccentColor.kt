@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.adapters.AccentColorAdapter
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 
 class AccentColor : CustomBottomSheetDialogFragment() {
 

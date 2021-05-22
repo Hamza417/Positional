@@ -10,8 +10,8 @@ import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
-import app.simple.positional.preference.GPSPreferences
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.GPSPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.NullSafety.isNotNull

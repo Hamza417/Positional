@@ -13,12 +13,11 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
 import app.simple.positional.dialogs.settings.HtmlViewer
 import app.simple.positional.licensing.*
-import app.simple.positional.preference.MainPreferences.setLicenseStatus
+import app.simple.positional.preferences.MainPreferences.setLicenseStatus
 import app.simple.positional.util.AsyncImageLoader
 import app.simple.positional.util.setTextAnimation
 
@@ -29,11 +28,7 @@ class License : Fragment(), LicenseCheckerCallback {
     private lateinit var licenseStatus: AppCompatTextView
 
     private var base64PublicKey = ""
-    private var packageName = if (BuildConfig.FLAVOR == "osm") {
-        "a p p . s i m p l e . p o s i t i o n a l . o s m"
-    } else {
-        "a p p . s i m p l e . p o s i t i o n a l"
-    }
+    private var packageName = "a p p . s i m p l e . p o s i t i o n a l"
 
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var licenceStatusCallback: LicenceStatusCallback
@@ -62,7 +57,7 @@ class License : Fragment(), LicenseCheckerCallback {
 
         licenceStatusCallback = requireActivity() as LicenceStatusCallback
         licenseLoader.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_infinte))
-        base64PublicKey = if (BuildConfig.FLAVOR == "osm") getString(R.string.osmLicensingKey) else getString(R.string.licensing_key)
+        base64PublicKey = getString(R.string.licensing_key)
         val deviceId: String = Settings.Secure.getString(requireActivity().contentResolver, Settings.Secure.ANDROID_ID)
 
         mLicenseCheckerCallback = this

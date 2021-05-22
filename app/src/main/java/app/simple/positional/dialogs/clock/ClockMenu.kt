@@ -9,7 +9,7 @@ import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.ClockPreferences
+import app.simple.positional.preferences.ClockPreferences
 
 class ClockMenu : CustomBottomSheetDialogFragment() {
 

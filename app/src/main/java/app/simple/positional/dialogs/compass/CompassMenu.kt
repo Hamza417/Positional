@@ -10,10 +10,10 @@ import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.CompassPreferences
-import app.simple.positional.preference.CompassPreferences.isFlowerBloomOn
-import app.simple.positional.preference.CompassPreferences.setDirectionCode
-import app.simple.positional.preference.CompassPreferences.setFlowerBloom
+import app.simple.positional.preferences.CompassPreferences
+import app.simple.positional.preferences.CompassPreferences.isFlowerBloomOn
+import app.simple.positional.preferences.CompassPreferences.setDirectionCode
+import app.simple.positional.preferences.CompassPreferences.setFlowerBloom
 
 class CompassMenu : CustomBottomSheetDialogFragment() {
 

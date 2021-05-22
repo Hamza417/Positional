@@ -162,12 +162,6 @@
     <string name="high_contrast_mode">Karte mit hohem Kontrast</string>
     <string name="show_building">Gebäude zeigen</string>
     <!-- Settings Menus -->
-    <string name="icon_default">Standardwert</string>
-    <string name="icon_legacy">Veraltet</string>
-    <string name="icon_simple">Einfach</string>
-    <string name="icon_simple_no_shadow">Einfach (ohne Schatten)</string>
-    <string name="icon_simple_teal">Einfach (blaugrün)</string>
-    <string name="icon_simple_pink">Einfach (rosa)</string>
     <string name="unit_metric">Metrisch</string>
     <string name="unit_imperial">US-Maße</string>
     <!-- Specified Coordinates Menu -->

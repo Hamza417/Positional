@@ -2,7 +2,7 @@ package app.simple.positional.activities.main
 
 import android.os.Bundle
 import app.simple.positional.dialogs.app.ErrorDialog
-import app.simple.positional.preference.WidgetPreferences
+import app.simple.positional.preferences.WidgetPreferences
 import app.simple.positional.singleton.SharedPreferences
 
 class WidgetDialogActivity : BaseActivity() {

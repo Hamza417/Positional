@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="20dp"
-    android:paddingHorizontal="16dp"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,6 +71,35 @@
 
         <TextView
             android:id="@+id/current_location_provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+        android:id="@+id/settings_map_provider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="false"
+        android:focusable="false"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/maps_provider"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <TextView
+            android:id="@+id/current_map_provider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/regular"

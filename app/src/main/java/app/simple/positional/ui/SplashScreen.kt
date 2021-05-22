@@ -19,7 +19,7 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.main.MainActivity
 import app.simple.positional.constants.*
-import app.simple.positional.preference.GPSPreferences
+import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.util.BitmapHelper.addLinearGradient
 import app.simple.positional.util.BitmapHelper.addRadialGradient
 import app.simple.positional.util.BitmapHelper.toBitmap

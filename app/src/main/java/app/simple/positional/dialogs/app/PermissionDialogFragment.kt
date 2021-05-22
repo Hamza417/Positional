@@ -10,7 +10,7 @@ import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomWebView
-import app.simple.positional.preference.MainPreferences.setShowPermissionDialog
+import app.simple.positional.preferences.MainPreferences.setShowPermissionDialog
 
 class PermissionDialogFragment : CustomBottomSheetDialogFragment() {
 

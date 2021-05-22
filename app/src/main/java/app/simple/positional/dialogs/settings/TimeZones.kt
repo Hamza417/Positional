@@ -17,7 +17,7 @@ import app.simple.positional.R
 import app.simple.positional.adapters.TimeZoneAdapter
 import app.simple.positional.callbacks.TimeZonesCallback
 import app.simple.positional.decorations.views.CustomDialogFragment
-import app.simple.positional.preference.ClockPreferences
+import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.util.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

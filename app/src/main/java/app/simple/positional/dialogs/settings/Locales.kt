@@ -10,7 +10,7 @@ import app.simple.positional.R
 import app.simple.positional.adapters.LocaleAdapter
 import app.simple.positional.callbacks.LocaleCallback
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 
 class Locales : CustomBottomSheetDialogFragment(), LocaleCallback {
 

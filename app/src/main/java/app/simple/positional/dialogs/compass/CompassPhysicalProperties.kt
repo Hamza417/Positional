@@ -14,7 +14,7 @@ import app.simple.positional.R
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.dialogs.settings.HtmlViewer
-import app.simple.positional.preference.CompassPreferences
+import app.simple.positional.preferences.CompassPreferences
 
 class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
 

@@ -11,7 +11,7 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.LocaleCallback
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.model.Locales
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.LocaleHelper
 import java.util.*
 

@@ -32,8 +32,8 @@ import app.simple.positional.math.TimeConverter.getMinutesInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegreesWithDecimalPrecision
 import app.simple.positional.math.UnitConverter.toMiles
-import app.simple.positional.preference.ClockPreferences
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.ClockPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.*
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.DigitalTimeFormatter.getTime

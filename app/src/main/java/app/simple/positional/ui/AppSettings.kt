@@ -23,7 +23,7 @@ import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.app.AccentColor
 import app.simple.positional.dialogs.settings.*
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.LocaleHelper.localeList
 import app.simple.positional.util.StatusBarHeight
 import com.factor.bouncy.BouncyNestedScrollView
@@ -40,6 +40,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var buyFull: DynamicRippleLinearLayout
     private lateinit var unit: DynamicRippleLinearLayout
     private lateinit var locationProvider: DynamicRippleLinearLayout
+    private lateinit var mapsProvider: DynamicRippleLinearLayout
     private lateinit var language: DynamicRippleLinearLayout
     private lateinit var theme: DynamicRippleLinearLayout
     private lateinit var accent: DynamicRippleLinearLayout
@@ -64,6 +65,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var currentUnit: TextView
     private lateinit var currentLanguage: TextView
     private lateinit var currentLocationProvider: TextView
+    private lateinit var currentMapsProvider: TextView
     private lateinit var foundIssues: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -73,6 +75,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         buyFull = view.findViewById(R.id.buy_full)
         unit = view.findViewById(R.id.settings_units)
         locationProvider = view.findViewById(R.id.settings_location_provider)
+        mapsProvider = view.findViewById(R.id.settings_map_provider)
         language = view.findViewById(R.id.settings_languages)
         theme = view.findViewById(R.id.settings_theme)
         accent = view.findViewById(R.id.settings_accent)
@@ -98,6 +101,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         currentUnit = view.findViewById(R.id.current_unit)
         currentLanguage = view.findViewById(R.id.current_language)
         currentLocationProvider = view.findViewById(R.id.current_location_provider)
+        currentMapsProvider = view.findViewById(R.id.current_map_provider)
 
         scrollView.setPadding(
                 scrollView.paddingLeft,
@@ -121,6 +125,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         setCurrentUnit(MainPreferences.getUnit())
         setCurrentLocation()
+        setCurrentMapsProvider()
         toggleKeepScreenOn.isChecked = MainPreferences.isScreenOn()
         toggleSkipSplashScreen.isChecked = MainPreferences.getSkipSplashScreen()
         isCoordinatesSet(MainPreferences.isCustomCoordinate())
@@ -155,6 +160,11 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         locationProvider.setOnClickListener {
             LocationProvider.newInstance().show(childFragmentManager, "location_provider")
+        }
+
+        mapsProvider.setOnClickListener {
+            MapProvider.newInstance()
+                    .show(parentFragmentManager, "map_provider")
         }
 
         language.setOnClickListener {
@@ -287,6 +297,14 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         currentUnit.text = if (value) getString(R.string.unit_metric) else getString(R.string.unit_imperial)
     }
 
+    private fun setCurrentMapsProvider() {
+        currentMapsProvider.text = if (MainPreferences.getMapPanelType()) {
+            "Open Source Maps"
+        } else {
+            "Google Maps"
+        }
+    }
+
     override fun isCoordinatesSet(boolean: Boolean) {
         try {
             toggleCustomLocation.isChecked = boolean
@@ -310,6 +328,9 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             }
             MainPreferences.theme -> {
                 setCurrentThemeValue(MainPreferences.getTheme())
+            }
+            MainPreferences.isOSMPanel -> {
+                setCurrentMapsProvider()
             }
         }
     }

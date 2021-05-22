@@ -43,7 +43,7 @@ import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.Vector3
-import app.simple.positional.preference.CompassPreferences
+import app.simple.positional.preferences.CompassPreferences
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.ColorUtils.resolveAttrColor

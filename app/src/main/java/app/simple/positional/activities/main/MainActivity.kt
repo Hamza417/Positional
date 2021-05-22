@@ -8,13 +8,14 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.dialogs.app.PermissionDialogFragment
-import app.simple.positional.preference.FragmentPreferences
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.FragmentPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.services.FusedLocationService
 import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
@@ -175,8 +176,13 @@ class MainActivity
                         ?: Compass.newInstance()
             }
             2 -> {
-                return supportFragmentManager.findFragmentByTag("gps") as GPS?
-                        ?: GPS.newInstance()
+                return if (MainPreferences.getMapPanelType() && BuildConfig.FLAVOR != "lite") {
+                    supportFragmentManager.findFragmentByTag("osm") as OSM?
+                            ?: OSM.newInstance()
+                } else {
+                    supportFragmentManager.findFragmentByTag("gps") as GPS?
+                            ?: GPS.newInstance()
+                }
             }
             3 -> {
                 return supportFragmentManager.findFragmentByTag("level") as Level?
@@ -204,21 +210,26 @@ class MainActivity
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: android.content.SharedPreferences?, key: String?) {
-        try {
-            if (key == MainPreferences.locationProvider) {
-                when (MainPreferences.getLocationProvider()) {
-                    "fused" -> {
-                        stopService(Intent(applicationContext, LocationService::class.java))
-                        startService(Intent(applicationContext, FusedLocationService::class.java))
+        when (key) {
+            MainPreferences.locationProvider -> {
+                try {
+                    when (MainPreferences.getLocationProvider()) {
+                        "fused" -> {
+                            stopService(Intent(applicationContext, LocationService::class.java))
+                            startService(Intent(applicationContext, FusedLocationService::class.java))
+                        }
+                        "android" -> {
+                            stopService(Intent(applicationContext, FusedLocationService::class.java))
+                            startService(Intent(applicationContext, LocationService::class.java))
+                        }
                     }
-                    "android" -> {
-                        stopService(Intent(applicationContext, FusedLocationService::class.java))
-                        startService(Intent(applicationContext, LocationService::class.java))
-                    }
+                } catch (e: IllegalStateException) {
+                    Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
                 }
             }
-        } catch (e: IllegalStateException) {
-            Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
+            MainPreferences.isOSMPanel -> {
+
+            }
         }
     }
 }

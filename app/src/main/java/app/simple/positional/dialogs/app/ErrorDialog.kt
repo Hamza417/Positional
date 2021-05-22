@@ -9,10 +9,10 @@ import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomWebView
-import app.simple.positional.preference.CompassPreferences
-import app.simple.positional.preference.LevelPreferences
-import app.simple.positional.preference.MainPreferences
-import app.simple.positional.preference.WidgetPreferences
+import app.simple.positional.preferences.CompassPreferences
+import app.simple.positional.preferences.LevelPreferences
+import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.preferences.WidgetPreferences
 
 class ErrorDialog : CustomBottomSheetDialogFragment() {
 

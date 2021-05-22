@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import app.simple.positional.R
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomRadioButton
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.MainPreferences
 
 class LocationProvider : CustomBottomSheetDialogFragment() {
 

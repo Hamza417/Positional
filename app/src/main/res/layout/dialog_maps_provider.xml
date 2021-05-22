@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@android:color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="vertical">
+
+    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:backgroundTint="@color/toolbarBackground"
+        android:orientation="vertical"
+        android:padding="@dimen/options_container_horizontal_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="Google Maps"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                tools:ignore="HardcodedText" />
+
+            <app.simple.positional.decorations.views.CustomRadioButton
+                android:id="@+id/radio_button_google"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/iconColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/regular"
+                android:text="@string/open_source_maps"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:layout_constraintBottom_toTopOf="@id/description_fused"
+                app:layout_constraintEnd_toStartOf="@+id/radio_button_osm"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <app.simple.positional.decorations.views.CustomRadioButton
+                android:id="@+id/radio_button_osm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/iconColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+
+</FrameLayout>

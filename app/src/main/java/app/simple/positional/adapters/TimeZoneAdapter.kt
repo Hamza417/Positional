@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.TimeZonesCallback
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
-import app.simple.positional.preference.ClockPreferences
+import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.util.bouncyValue
 import app.simple.positional.util.stiffnessValue
 import java.util.*
