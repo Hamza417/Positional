@@ -25,6 +25,7 @@ import androidx.room.Room
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.decorations.maps.OsmMaps
 import app.simple.positional.decorations.maps.OsmMapsCallbacks
@@ -180,27 +181,13 @@ class OSM : ScopedFragment() {
 
         peekHeight = bottomSheetInfoPanel.peekHeight
 
-        setLocationPin()
-
         return view
-    }
-
-    private fun setFullScreen() {
-        if (isFullScreen) {
-            toolbar.show()
-            bottomSheetSlide.onMapClicked(fullScreen = true)
-            bottomSheetInfoPanel.peekHeight = peekHeight
-        } else {
-            toolbar.hide()
-            bottomSheetSlide.onMapClicked(fullScreen = false)
-            bottomSheetInfoPanel.peekHeight = 0
-        }
-
-        isFullScreen = !isFullScreen
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setLocationPin()
 
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
@@ -510,6 +497,20 @@ class OSM : ScopedFragment() {
         }
     }
 
+    private fun setFullScreen() {
+        if (isFullScreen) {
+            toolbar.show()
+            bottomSheetSlide.onMapClicked(fullScreen = true)
+            bottomSheetInfoPanel.peekHeight = peekHeight
+        } else {
+            toolbar.hide()
+            bottomSheetSlide.onMapClicked(fullScreen = false)
+            bottomSheetInfoPanel.peekHeight = 0
+        }
+
+        isFullScreen = !isFullScreen
+    }
+
     private val textAnimationRunnable: Runnable = Runnable {
         infoText.setTextAnimation(getString(R.string.gps_info), 300)
     }
@@ -596,7 +597,8 @@ class OSM : ScopedFragment() {
     }
 
     private fun setLocationPin() {
-        view?.findViewById<ImageView>(R.id.coordinates_icon)
+        view?.findViewById<ImageView>(R.id.coordinates_icon)!!
+                .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
     }
 
     private fun checkGooglePlayServices(): Boolean {

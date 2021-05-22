@@ -30,9 +30,6 @@ import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.decorations.maps.Maps
 import app.simple.positional.decorations.maps.MapsCallbacks
-import app.simple.positional.decorations.ripple.DynamicRippleFrameLayout
-import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.views.MapToolbar
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
@@ -46,8 +43,8 @@ import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.model.Locations
-import app.simple.positional.preference.GPSPreferences
-import app.simple.positional.preference.MainPreferences
+import app.simple.positional.preferences.GPSPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
@@ -74,13 +71,12 @@ class GPS : ScopedFragment() {
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
     private lateinit var dim: View
-    private lateinit var coordinatesIcon: ImageView
-    private lateinit var locationBox: DynamicRippleLinearLayout
-    private lateinit var movementBox: DynamicRippleLinearLayout
-    private lateinit var coordinatesBox: DynamicRippleFrameLayout
-    private lateinit var copy: DynamicRippleImageButton
-    private lateinit var save: DynamicRippleImageButton
-    private lateinit var movementReset: DynamicRippleImageButton
+    private lateinit var locationBox: LinearLayout
+    private lateinit var movementBox: LinearLayout
+    private lateinit var coordinatesBox: FrameLayout
+    private lateinit var copy: ImageButton
+    private lateinit var save: ImageButton
+    private lateinit var movementReset: ImageButton
 
     private lateinit var accuracy: TextView
     private lateinit var address: TextView
@@ -126,7 +122,6 @@ class GPS : ScopedFragment() {
         scrollView.alpha = 0f
         divider = view.findViewById(R.id.gps_divider)
         dim = view.findViewById(R.id.gps_dim)
-        coordinatesIcon = view.findViewById(R.id.coordinates_icon)
         copy = view.findViewById(R.id.gps_copy)
         save = view.findViewById(R.id.gps_save)
         movementReset = view.findViewById(R.id.movement_reset)
@@ -192,13 +187,13 @@ class GPS : ScopedFragment() {
 
         peekHeight = bottomSheetInfoPanel.peekHeight
 
-        setLocationPin()
-
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setLocationPin()
 
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
@@ -377,6 +372,48 @@ class GPS : ScopedFragment() {
             }
         })
 
+        save.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+                val isLocationSaved: Boolean
+                val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
+                val locations = Locations()
+
+                if (MainPreferences.isCustomCoordinate()) {
+                    isLocationSaved = false
+                } else {
+                    if (location.isNull()) {
+                        isLocationSaved = false
+                    } else {
+                        locations.latitude = location?.latitude!!
+                        locations.longitude = location?.longitude!!
+                        locations.address = address.text.toString()
+                        locations.date = System.currentTimeMillis()
+
+                        db.locationDao()?.insetLocation(locations)
+                        db.close()
+
+                        isLocationSaved = true
+                    }
+                }
+
+                withContext(Dispatchers.Main) {
+                    handler.removeCallbacks(textAnimationRunnable)
+                    if (MainPreferences.isCustomCoordinate()) {
+                        infoText.setTextAnimation(getString(R.string.already_saved), 300)
+                        handler.postDelayed(textAnimationRunnable, 3000)
+                    } else {
+                        if (isLocationSaved) {
+                            infoText.setTextAnimation(getString(R.string.location_saved), 300)
+                            handler.postDelayed(textAnimationRunnable, 3000)
+                        } else {
+                            infoText.setTextAnimation(getString(R.string.location_not_saved), 300)
+                            handler.postDelayed(textAnimationRunnable, 3000)
+                        }
+                    }
+                }
+            }
+        }
+
         copy.setOnClickListener {
             handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -408,8 +445,10 @@ class GPS : ScopedFragment() {
 
                 stringBuilder.append("${getString(R.string.gps_address)}: ${address.text}")
 
-                stringBuilder.append("\n\nInformation is copied using Positional Lite\n")
-                stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
+                if (BuildConfig.FLAVOR == "lite") {
+                    stringBuilder.append("\n\nInformation is copied using Positional Lite\n")
+                    stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
+                }
 
                 val clip: ClipData = ClipData.newPlainText("GPS Data", stringBuilder)
                 clipboard.setPrimaryClip(clip)
@@ -464,10 +503,6 @@ class GPS : ScopedFragment() {
         }
     }
 
-    private fun setLocationPin() {
-        coordinatesIcon.setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
-    }
-
     private fun setFullScreen() {
         if (isFullScreen) {
             toolbar.show()
@@ -502,7 +537,6 @@ class GPS : ScopedFragment() {
         super.onDestroy()
         mapView?.removeCallbacks { }
         mapView?.destroy()
-        handler.removeCallbacksAndMessages(null)
     }
 
     override fun onResume() {
@@ -574,6 +608,10 @@ class GPS : ScopedFragment() {
         }
     }
 
+    private fun setLocationPin() {
+        view?.findViewById<ImageView>(R.id.coordinates_icon)!!
+                .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
+    }
 
     private fun checkGooglePlayServices(): Boolean {
         val availability = GoogleApiAvailability.getInstance()
