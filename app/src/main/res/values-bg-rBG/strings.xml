@@ -162,12 +162,6 @@
     <string name="high_contrast_mode">Висок контраст на картата</string>
     <string name="show_building">Показване на сградите</string>
     <!-- Settings Menus -->
-    <string name="icon_default">Основен</string>
-    <string name="icon_legacy">Завещание</string>
-    <string name="icon_simple">Опростено</string>
-    <string name="icon_simple_no_shadow">Обикновено (Без сянка)</string>
-    <string name="icon_simple_teal">Обикновено (Циан)</string>
-    <string name="icon_simple_pink">Обикновено (Розово)</string>
     <string name="unit_metric">Метрични</string>
     <string name="unit_imperial">Британски</string>
     <!-- Specified Coordinates Menu -->
@@ -268,4 +262,5 @@
     <string name="opacity">Прозрачност</string>
     <string name="size">Размер</string>
     <string name="customize_pin">Персонализиран Пин</string>
+    <string name="map_tile_source">Източник на плочки на картата</string>
 </resources>
