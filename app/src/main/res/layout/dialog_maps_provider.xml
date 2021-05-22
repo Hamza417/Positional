@@ -61,13 +61,14 @@
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
-                android:text="@string/open_source_maps"
+                android:text="Open Source Maps (alpha_)"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:layout_constraintBottom_toTopOf="@id/description_fused"
                 app:layout_constraintEnd_toStartOf="@+id/radio_button_osm"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
 
             <app.simple.positional.decorations.views.CustomRadioButton
                 android:id="@+id/radio_button_osm"

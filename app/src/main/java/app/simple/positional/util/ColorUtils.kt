@@ -67,7 +67,7 @@ object ColorUtils {
         ))
 
         val destinationColor: Int = Color.parseColor("#FF2A2A2A")
-        val lr: Float = (255.0f - Color.red(destinationColor)) / 255.0f
+        val lr: Float = (255.0f - Color.red(destinationColor)) / 150.0f
         val lg: Float = (255.0f - Color.green(destinationColor)) / 255.0f
         val lb: Float = (255.0f - Color.blue(destinationColor)) / 255.0f
         val grayscaleMatrix = ColorMatrix(floatArrayOf(
@@ -84,12 +84,27 @@ object ColorUtils {
         val tintMatrix = ColorMatrix(floatArrayOf(
                 drf, 0f, 0f, 0f, 0f, 0f, dgf, 0f, 0f, 0f, 0f, 0f, dbf, 0f, 0f, 0f, 0f, 0f, 1f, 0f))
         tintMatrix.preConcat(grayscaleMatrix)
+
+        /**
+         * Change contrast here, increasing scale value
+         * will increase the contrast and decreasing will
+         * decrease the contrast
+         */
         val lDestination = drf * lr + dgf * lg + dbf * lb
-        val scale = 1f - lDestination
-        val translate = 1 - scale * 0.5f
+        val scale = 1f + lDestination
+        val translate = 1.5F - scale * 0.9f
         val scaleMatrix = ColorMatrix(floatArrayOf(
                 scale, 0f, 0f, 0f, dr * translate, 0f, scale, 0f, 0f, dg * translate, 0f, 0f, scale, 0f, db * translate, 0f, 0f, 0f, 1f, 0f))
         scaleMatrix.preConcat(tintMatrix)
         return ColorMatrixColorFilter(scaleMatrix)
+    }
+
+    fun createContrast(contrast: Float): ColorMatrixColorFilter {
+        val scale: Float = contrast + 1f
+        val translate = (-.5f * scale + .5f) * 255f
+        val array = floatArrayOf(
+                scale, 0f, 0f, 0f, translate, 0f, scale, 0f, 0f, translate, 0f, 0f, scale, 0f, translate, 0f, 0f, 0f, 1f, 0f)
+        val matrix = ColorMatrix(array)
+        return ColorMatrixColorFilter(matrix)
     }
 }

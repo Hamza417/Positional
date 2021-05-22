@@ -590,6 +590,7 @@ class OSM : ScopedFragment() {
 
             try {
                 this@OSM.address.text = address
+                this@OSM.mapView!!.address = address
             } catch (ignored: NullPointerException) {
             } catch (ignored: UninitializedPropertyAccessException) {
             }

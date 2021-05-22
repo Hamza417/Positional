@@ -2,14 +2,14 @@ package app.simple.positional.decorations.maps
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
+import android.util.DisplayMetrics
 import android.view.MotionEvent
-import android.widget.Toast
 import androidx.constraintlayout.helper.widget.Layer
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toDrawable
@@ -24,14 +24,18 @@ import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.ColorUtils
 import app.simple.positional.util.NullSafety.isNotNull
+import app.simple.positional.util.StatusBarHeight
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.*
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.CopyrightOverlay
 import org.osmdroid.views.overlay.MapEventsOverlay
 import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.ScaleBarOverlay
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import kotlin.coroutines.CoroutineContext
 
@@ -57,6 +61,8 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             addMarker()
             field = value
         }
+
+    var address: String = ""
 
     private var latLng: LatLng? = null
     private var mapsCallbacks: OsmMapsCallbacks? = null
@@ -116,15 +122,21 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         setTileSource()
         setMultiTouchControls(true)
         setDestroyMode(true)
+        zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
+        maxZoomLevel = 15.0
+        minZoomLevel = 9.0
         setMapStyle()
         overlays.add(RotationGestureOverlay(this))
         setLayerType(Layer.LAYER_TYPE_HARDWARE, null)
         controller.setZoom(GPSPreferences.getMapZoom().toDouble())
+        this.overlayManager.tilesOverlay.loadingLineColor = Color.DKGRAY
+        showScaleBar()
+        showCopyrightNotice()
         onResume()
 
         val mReceive: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
-                Toast.makeText(context, p.latitude.toString() + " - " + p.longitude, Toast.LENGTH_LONG).show()
+                // Toast.makeText(context, p.latitude.toString() + " - " + p.longitude, Toast.LENGTH_LONG).show()
                 mapsCallbacks!!.onMapClicked(this@OsmMaps)
                 return false
             }
@@ -136,8 +148,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
 
         mapViewListener = DelayedMapListener(object : MapListener {
             override fun onScroll(event: ScrollEvent): Boolean {
-                Log.d("MapTouchEvent", "Scrolled")
-                handler.removeCallbacks(mapMoved)
+                viewHandler.removeCallbacks(mapMoved)
                 return true
             }
 
@@ -145,10 +156,9 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                 GPSPreferences.setMapZoom(event.zoomLevel.toFloat())
                 return true
             }
-        }, 0L)
+        }, 500L)
 
-        this.addMapListener(mapViewListener)
-
+        addMapListener(mapViewListener)
         overlays.add(MapEventsOverlay(mReceive))
     }
 
@@ -156,14 +166,11 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                Log.d("MapTouchEvent", "Down")
-                handler.removeCallbacks(mapMoved)
+                controller.stopAnimation(false)
+                viewHandler.removeCallbacks(mapMoved)
             }
             MotionEvent.ACTION_UP -> {
-                Log.d("MapTouchEvent", "Up")
-                if (GPSPreferences.getMapAutoCenter()) {
-                    handler.postDelayed({ mapMoved }, 6000L)
-                }
+                postCallbacks()
             }
         }
 
@@ -180,6 +187,8 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                 3000,
                 bearing
         )
+
+        // controller.setCenter(GeoPoint(latLng!!.latitude, latLng!!.longitude))
     }
 
     fun resetCamera() {
@@ -196,7 +205,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         GPSPreferences.setMapZoom(15.0F)
     }
 
-    fun addMarker() {
+    private fun addMarker() {
         launch {
 
             overlays.forEach {
@@ -218,6 +227,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             val startMarker = Marker(this@OsmMaps).apply {
                 icon = marker
                 id = "marker"
+                title = address
                 position = GeoPoint(latLng!!.latitude, latLng!!.longitude)
                 setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             }
@@ -259,7 +269,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
 
     fun postCallbacks() {
         if (GPSPreferences.getMapAutoCenter()) {
-            viewHandler.post(mapMoved)
+            viewHandler.postDelayed(mapMoved, 6000L)
         }
     }
 
@@ -270,6 +280,21 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                 setTileSource(i.first)
             }
         }
+    }
+
+    private fun showScaleBar() {
+        val dm: DisplayMetrics = context.resources.displayMetrics
+        val scaleBarOverlay = ScaleBarOverlay(this)
+        scaleBarOverlay.setCentred(true)
+        scaleBarOverlay.setScaleBarOffset(dm.widthPixels / 2, StatusBarHeight.getStatusBarHeight(resources) + 50)
+        overlays.add(scaleBarOverlay)
+    }
+
+    private fun showCopyrightNotice() {
+        val copyrightNotice: String = tileProvider.tileSource.copyrightNotice
+        val copyrightOverlay = CopyrightOverlay(context)
+        copyrightOverlay.setCopyrightNotice(copyrightNotice)
+        overlays.add(copyrightOverlay)
     }
 
     private fun setMapStyle() {
