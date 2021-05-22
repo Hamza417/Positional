@@ -20,9 +20,17 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+-dontobfuscate
+-optimizations !code/allocation/variable
+
 # Keep activity aliases from getting obfuscated
-# Will throw IllegalArgumentException otherwise with reason component class not exist
--dontobfuscate -optimizations !code/allocation/variable
+# Will throw IllegalArgumentException otherwise with reason "component class not exist"
+
 -keep class app.simple.positional.activities.alias.IconOneAlias
 -keep class app.simple.positional.activities.alias.IconTwoAlias
+-keep class app.simple.positional.activities.alias.IconThreeAlias
+-keep class app.simple.positional.activities.alias.IconFourAlias
+-keep class app.simple.positional.activities.alias.IconFiveAlias
+-keep class app.simple.positional.activities.alias.IconSixAlias
+-keep class app.simple.positional.activities.alias.IconLegacyAlias
 -keep class kotlin.KotlinNullPointerException

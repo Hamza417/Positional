@@ -142,7 +142,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         icon.setOnClickListener {
-            Icons().newInstance().show(childFragmentManager, "app_icons")
+            Icons.newInstance().show(childFragmentManager, "app_icons")
         }
 
         corner.setOnClickListener {

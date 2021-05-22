@@ -1,90 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:layout_height="match_parent"
-    android:backgroundTint="@android:color/transparent"
-    android:clipChildren="true"
-    android:clipToPadding="true"
     android:padding="@dimen/options_container_horizontal_padding">
 
-    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+    <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/toolbarBackground"
+        android:backgroundTint="@color/mainBackground"
         android:clipToPadding="false"
-        android:orientation="vertical"
-        android:padding="@dimen/options_container_horizontal_padding"
-        app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
+        android:clipChildren="true"
+        android:elevation="40dp">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:padding="@dimen/options_container_horizontal_padding"
+            android:id="@+id/icon_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="@dimen/options_item_padding"
-                android:contentDescription="@string/icon_default"
-                android:src="@mipmap/ic_launcher_default" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/icon_default"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
-
-            <app.simple.positional.decorations.views.CustomRadioButton
-                android:id="@+id/icon_one_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:buttonTint="@color/iconColor"
-                android:gravity="center" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="@dimen/options_item_padding"
-                android:contentDescription="@string/icon_legacy"
-                android:src="@mipmap/ic_launcher_legacy" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/options_text_margin_start"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/icon_legacy"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size" />
-
-            <app.simple.positional.decorations.views.CustomRadioButton
-                android:id="@+id/icon_two_radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:buttonTint="@color/iconColor" />
-
-        </LinearLayout>
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            android:layoutAnimation="@anim/grid_list_animation_controller" />
 
 
-    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+    </app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>
