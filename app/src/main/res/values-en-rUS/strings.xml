@@ -162,12 +162,6 @@
     <string name="high_contrast_mode">High Contrast Map</string>
     <string name="show_building">Show Buildings</string>
     <!-- Settings Menus -->
-    <string name="icon_default">Default</string>
-    <string name="icon_legacy">Legacy</string>
-    <string name="icon_simple">Simple</string>
-    <string name="icon_simple_no_shadow">Simple (No Shadow)</string>
-    <string name="icon_simple_teal">Simple (Teal)</string>
-    <string name="icon_simple_pink">Simple (Pink)</string>
     <string name="unit_metric">Metric</string>
     <string name="unit_imperial">Imperial</string>
     <!-- Specified Coordinates Menu -->
@@ -268,4 +262,5 @@
     <string name="opacity">Opacity</string>
     <string name="size">Size</string>
     <string name="customize_pin">Customize Pin</string>
+    <string name="map_tile_source">Map Tile Source</string>
 </resources>
