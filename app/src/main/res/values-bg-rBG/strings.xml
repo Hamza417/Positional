@@ -263,4 +263,6 @@
     <string name="size">Размер</string>
     <string name="customize_pin">Персонализиран Пин</string>
     <string name="map_tile_source">Източник на плочки на картата</string>
+    <string name="maps_provider">Доставчик на карти</string>
+    <string name="open_source_maps">Карти с отворен код</string>
 </resources>
