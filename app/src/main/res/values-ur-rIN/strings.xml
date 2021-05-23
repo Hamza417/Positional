@@ -162,12 +162,6 @@
     <string name="high_contrast_mode">اعلی کنٹراسٹ نقشہ</string>
     <string name="show_building">عمارتیں دکھائیں</string>
     <!-- Settings Menus -->
-    <string name="icon_default">طے شدہ</string>
-    <string name="icon_legacy">میراث</string>
-    <string name="icon_simple">ساده</string>
-    <string name="icon_simple_no_shadow">سادہ (سایہ نہیں)</string>
-    <string name="icon_simple_teal">سادہ (ٹیل)</string>
-    <string name="icon_simple_pink">سادہ (گلابی)</string>
     <string name="unit_metric">میٹرک</string>
     <string name="unit_imperial">امپیریل</string>
     <!-- Specified Coordinates Menu -->
@@ -268,4 +262,6 @@
     <string name="opacity">شفافیت</string>
     <string name="size">سائز</string>
     <string name="customize_pin">پن کو اپنی مرضی کے مطابق بنائیں</string>
+    <string name="map_tile_source">نقشہ کا ٹائل ماخذ</string>
+    <string name="maps_provider">نقشہ جات فراہم کرنے والا</string>
 </resources>
