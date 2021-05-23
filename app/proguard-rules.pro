@@ -21,7 +21,7 @@
 #-renamesourcefileattribute SourceFile
 
 -dontobfuscate
--optimizations !code/allocation/variable
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*,!code/allocation/variable
 
 # Keep activity aliases from getting obfuscated
 # Will throw IllegalArgumentException otherwise with reason "component class not exist"
@@ -32,5 +32,8 @@
 -keep class app.simple.positional.activities.alias.IconFourAlias
 -keep class app.simple.positional.activities.alias.IconFiveAlias
 -keep class app.simple.positional.activities.alias.IconSixAlias
+-keep class app.simple.positional.activities.alias.IconSevenAlias
+-keep class app.simple.positional.activities.alias.IconEightAlias
+-keep class app.simple.positional.activities.alias.IconNineAlias
 -keep class app.simple.positional.activities.alias.IconLegacyAlias
 -keep class kotlin.KotlinNullPointerException

@@ -68,6 +68,15 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
             context.packageManager.getComponentEnabledSetting(ComponentName(context, IconSixAlias::class.java)) -> {
                 6
             }
+            context.packageManager.getComponentEnabledSetting(ComponentName(context, IconSevenAlias::class.java)) -> {
+                7
+            }
+            context.packageManager.getComponentEnabledSetting(ComponentName(context, IconEightAlias::class.java)) -> {
+                8
+            }
+            context.packageManager.getComponentEnabledSetting(ComponentName(context, IconNineAlias::class.java)) -> {
+                9
+            }
             else -> {
                 0
             }
@@ -82,6 +91,9 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconFourAlias::class.java), getStatusFromPosition(position == 4), PackageManager.DONT_KILL_APP)
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconFiveAlias::class.java), getStatusFromPosition(position == 5), PackageManager.DONT_KILL_APP)
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconSixAlias::class.java), getStatusFromPosition(position == 6), PackageManager.DONT_KILL_APP)
+        context.packageManager.setComponentEnabledSetting(ComponentName(context, IconSevenAlias::class.java), getStatusFromPosition(position == 7), PackageManager.DONT_KILL_APP)
+        context.packageManager.setComponentEnabledSetting(ComponentName(context, IconEightAlias::class.java), getStatusFromPosition(position == 8), PackageManager.DONT_KILL_APP)
+        context.packageManager.setComponentEnabledSetting(ComponentName(context, IconNineAlias::class.java), getStatusFromPosition(position == 9), PackageManager.DONT_KILL_APP)
     }
 
     private fun getStatusFromPosition(position: Boolean): Int {
@@ -100,7 +112,10 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
                 R.mipmap.ic_launcher_three,
                 R.mipmap.ic_launcher_four,
                 R.mipmap.ic_launcher_five,
-                R.mipmap.ic_launcher_six
+                R.mipmap.ic_launcher_six,
+                R.mipmap.ic_launcher_seven,
+                R.mipmap.ic_launcher_eight,
+                R.mipmap.ic_launcher_nine
         )
     }
 }
