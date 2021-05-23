@@ -162,12 +162,6 @@
     <string name="high_contrast_mode">उच्च कंट्रास्ट नक्शा</string>
     <string name="show_building">भवन दिखाएं</string>
     <!-- Settings Menus -->
-    <string name="icon_default">पूर्व निर्धारित</string>
-    <string name="icon_legacy">विरासत</string>
-    <string name="icon_simple">साधारण</string>
-    <string name="icon_simple_no_shadow">सरल (कोई छाया नहीं)</string>
-    <string name="icon_simple_teal">सरल (चैती)</string>
-    <string name="icon_simple_pink">सिंपल (पिंक)</string>
     <string name="unit_metric">मीट्रिक</string>
     <string name="unit_imperial">इम्पीरियल</string>
     <!-- Specified Coordinates Menu -->
@@ -268,4 +262,6 @@
     <string name="opacity">अपारदर्शिता</string>
     <string name="size">आकार</string>
     <string name="customize_pin">पिन अनुकूलित करें</string>
+    <string name="map_tile_source">मानचित्र का टाइल स्रोत</string>
+    <string name="maps_provider">नक्शा प्रदाता</string>
 </resources>
