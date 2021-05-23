@@ -262,4 +262,6 @@
     <string name="opacity">अपारदर्शिता</string>
     <string name="size">आकार</string>
     <string name="customize_pin">पिन अनुकूलित करें</string>
+    <string name="map_tile_source">मानचित्र का टाइल स्रोत</string>
+    <string name="maps_provider">नक्शा प्रदाता</string>
 </resources>

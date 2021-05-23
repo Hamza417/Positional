@@ -262,4 +262,6 @@
     <string name="opacity">Прозрачност</string>
     <string name="size">Размер</string>
     <string name="customize_pin">Персонализиран Пин</string>
+    <string name="map_tile_source">Източник на плочки на картата</string>
+    <string name="maps_provider">Доставчик на карти</string>
 </resources>
