@@ -5,7 +5,7 @@
 
 body {
 	 background: rgba(0, 0, 0, 0);
-	 display: flex;
+	 display: justify;
 	 align-items: center;
 	 justify-content: center;
 	 min-height: 100vh;

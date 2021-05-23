@@ -10,13 +10,15 @@ object LocaleHelper {
 
     /**
      * List of languages currently supported by
-     * the app
+     * the app.
+     *
+     * Do not include incomplete translations.
      */
     val localeList = arrayListOf(
             Locales("autoSystemLanguageString" /* Placeholder */, "default"),
             Locales("English", "en"),
             Locales("български", "bg"),
-            Locales("Deutsch", "de"),
+            // Locales("Deutsch", "de"),
             Locales("हिन्दी", "hi"),
             Locales("اردو", "ur"))
 
