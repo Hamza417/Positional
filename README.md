@@ -83,7 +83,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 <br/>
 
 ## Translate
-This app is currently only available in Bulgarian, German, English, Hindi and Urdu language. Contribute translating app into your native language on [Crowdin](https://crowdin.com/project/positional/)
+This app is currently only available in Bulgarian, English, Hindi and Urdu language. Contribute translating app into your native language on [Crowdin](https://crowdin.com/project/positional/)
 
 <br/>
 
