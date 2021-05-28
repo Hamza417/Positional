@@ -4,6 +4,12 @@ import android.content.Context
 import android.location.LocationManager
 
 object LocationExtension {
+
+    /**
+     * Checks if location is turned on in the device.
+     *
+     * @return true if on else false
+     */
     fun getLocationStatus(context: Context): Boolean {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {

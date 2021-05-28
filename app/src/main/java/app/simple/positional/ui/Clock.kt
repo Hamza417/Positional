@@ -33,6 +33,7 @@ import app.simple.positional.math.TimeConverter.getSecondsInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegreesWithDecimalPrecision
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preferences.ClockPreferences
+import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.*
 import app.simple.positional.util.AsyncImageLoader.loadImage
@@ -154,6 +155,8 @@ class Clock : ScopedFragment() {
         }
 
         setSkins()
+        calculateAndUpdateData(GPSPreferences.getLastCoordinates()[0].toDouble(),
+                GPSPreferences.getLastCoordinates()[1].toDouble())
 
         return view
     }
@@ -310,14 +313,14 @@ class Clock : ScopedFragment() {
         }
     }
 
-    private val calender: Runnable = object : Runnable {
+    private val calender = object : Runnable {
         override fun run() {
             updateTimeData()
             handler.postDelayed(this, 1000)
         }
     }
 
-    private val customDataUpdater: Runnable = object : Runnable {
+    private val customDataUpdater = object : Runnable {
         override fun run() {
             calculateAndUpdateData(customLatitude, customLongitude)
             handler.postDelayed(this, 2500)

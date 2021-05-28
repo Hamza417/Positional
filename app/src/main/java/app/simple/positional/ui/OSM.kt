@@ -180,6 +180,7 @@ class OSM : ScopedFragment() {
         backPress = requireActivity().onBackPressedDispatcher
 
         peekHeight = bottomSheetInfoPanel.peekHeight
+        toolbar.locationIndicatorUpdate(false)
 
         return view
     }

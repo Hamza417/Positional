@@ -89,21 +89,21 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         marker = if (isCustomCoordinate) {
             ResourcesCompat.getDrawable(resources, R.drawable.ic_place_custom, context.theme)
         } else {
-            ResourcesCompat.getDrawable(resources, LocationPins.locationsPins[GPSPreferences.getPinSkin()], null)
+            ResourcesCompat.getDrawable(resources, LocationPins.locationsPins[GPSPreferences.getPinSkin()], context.theme)
         }
+
+        latLng = if (isCustomCoordinate)
+            LatLng(customLatitude, customLongitude)
+        else
+            LatLng(GPSPreferences.getLastCoordinates()[0].toDouble(), GPSPreferences.getLastCoordinates()[1].toDouble())
 
         if (isCustomCoordinate) {
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
-            latLng = LatLng(customLatitude, customLongitude)
-            moveMap()
-            addMarker()
-        } else {
-            controller.animateTo(GeoPoint(lastLatitude, lastLongitude),
-                    GPSPreferences.getMapZoom().toDouble(),
-                    0,
-                    bearing)
         }
+
+        moveMap()
+        addMarker()
 
         if (GPSPreferences.isUsingVolumeKeys()) {
             this.isFocusableInTouchMode = true

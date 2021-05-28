@@ -74,7 +74,6 @@ public class MapToolbar extends DynamicCornerLinearLayout {
         
         if (isFixed) {
             location.setImageResource(R.drawable.ic_gps_fixed);
-            location.setClickable(true);
         }
         else {
             locationIconStatusUpdates();
@@ -87,7 +86,6 @@ public class MapToolbar extends DynamicCornerLinearLayout {
         }
         else {
             location.setImageResource(R.drawable.ic_gps_off);
-            location.setClickable(false);
         }
     }
     

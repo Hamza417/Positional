@@ -186,6 +186,7 @@ class GPS : ScopedFragment() {
         backPress = requireActivity().onBackPressedDispatcher
 
         peekHeight = bottomSheetInfoPanel.peekHeight
+        toolbar.locationIndicatorUpdate(false)
 
         return view
     }
