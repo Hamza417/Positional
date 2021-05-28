@@ -53,29 +53,59 @@
   * Easy to use</br>
   * Smooth, with fluid animations</br>
   * Minimal UI</br>
+  * Many Accent Colors<br/>
   * Customizable with various options to choose from</br>
   * Magnetic Compass</br>
   * Compass Sensor Speed</br>
+  * Compass Physics properties<br/>
+  * Compass bloom
   * Minimal Map (with and without labels)</br>
+  * Google and Open Source Maps Support<br/>
+  * Dark mode for maps<br/>
+  * High contrast map<br/>
+  * Satellite map<br/>
+  * Many pin styles for the whole app<br/>
+  * Various tiles servers for Open Maps including OpenTopo and Mapnik<br/>
+  * Media keys support for map<br/>
   * GPS information</br>
   * Speedometer</br>
   * Altitude</br>
   * Distance<br/>
   * Displacement<br/>
+  * Address of the current location<br/>
+  * UTM, MGRS coordinat formatting<br/>
+  * DMS coordinates support<br/>
   * Movement direction<br/>
   * Clock</br>
-  * Clock motion types</br>
-  * Local Timezone</br>
-  * UTC Timezone</br>
-  * Sun Position, Time etc</br>
-  * Moon Position, Time, Phase Angles</br>
-  * Twilight (Astronomical, Nautical and Civil)
+  * Clock motion types (both linear and inertia induced motion)</br>
+  * Clock needle styles<br/>
+  * Custom timezone support<br/>
+  * UTC and Local Time references</br>
+  * Sun Position/Location<br/>
+  * Sun Azimuth<br/>
+  * Sun Distance and Sun Altitude<br/>
+  * Sunset and Sunrise time<br/>
+  * Astronomical, Nautical, Civil twilights<br/>
+  * Moon Position/Location</br>
+  * Moonrise and Moonset time<br/>
+  * Moon Altitude<br/>
+  * Moon Phases<br/>
+  * Moon Angle and Fraction<br/>
+  * Moon states (Waning and Waxing)<br/>
+  * Upcoming moon dates i.e.  New Moon, Full Moon, Third and First Quarter<br/>
   * Moon Illumination</br>
   * Dark Mode</br>
   * Level </br>
+  * Custom location mode for manually fetching information of any part of the world<br/>
   * Completely Ad-Free</br>
 
 <br/>
+
+## Road Map
+  * Add a custom date mode along with specified coordinates
+  * Move specified coordinates into a separate activity
+  * Add a timeline view for moon dates upto a few years in the future and past
+  * Solar and Lunar Eclipse dates
 
 ## Contribution
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
