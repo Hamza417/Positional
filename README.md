@@ -97,6 +97,10 @@
   * Dark Mode</br>
   * Level </br>
   * Custom location mode for manually fetching information of any part of the world<br/>
+  * Sun time widgets
+  * Sun time widget with splash arts
+  * Clock widget
+  * Moon phase widget
   * Completely Ad-Free</br>
 
 <br/>
