@@ -29,7 +29,7 @@ class MapProvider : CustomBottomSheetDialogFragment() {
         osm.isChecked = MainPreferences.getMapPanelType()
         google.isChecked = !MainPreferences.getMapPanelType()
 
-        osm.setOnCheckedChangeListener { buttonView, isChecked ->
+        osm.setOnCheckedChangeListener { _, isChecked ->
             setButtons(isChecked)
         }
 

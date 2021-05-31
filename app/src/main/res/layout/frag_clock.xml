@@ -54,7 +54,7 @@
                 android:layout_marginBottom="60dp"
                 tools:ignore="ContentDescription" />
 
-            <app.simple.positional.decorations.views.CompassView
+            <ImageView
                 android:id="@+id/hour"
                 android:layout_width="@dimen/clock_needle_dimensions"
                 android:layout_height="@dimen/clock_needle_dimensions"

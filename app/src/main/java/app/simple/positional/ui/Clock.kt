@@ -28,7 +28,6 @@ import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.dialogs.settings.TimeZones
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
-import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegreesWithDecimalPrecision
@@ -59,7 +58,7 @@ class Clock : ScopedFragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
-    private lateinit var hour: CompassView
+    private lateinit var hour: ImageView
     private lateinit var minutes: ImageView
     private lateinit var seconds: CompassView
     private lateinit var face: ImageView
@@ -97,7 +96,6 @@ class Clock : ScopedFragment() {
     var delay: Long = 1000
     private var dayNightIndicatorImageCountViolation = 1
     private var isMetric = true
-    private var isAmPm = true
     private var isCustomCoordinate = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
@@ -150,13 +148,7 @@ class Clock : ScopedFragment() {
 
         setMotionDelay(ClockPreferences.getMovementType())
         isMetric = MainPreferences.getUnit()
-        isAmPm = if (ClockPreferences.getDefaultClockTimeFormat()) {
-            face.setImageResource(R.drawable.clock_face)
-            true
-        } else {
-            face.setImageResource(R.drawable.clock_face_24)
-            false
-        }
+
         if (MainPreferences.isCustomCoordinate()) {
             isCustomCoordinate = true
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
@@ -280,14 +272,7 @@ class Clock : ScopedFragment() {
     private val clock = object : Runnable {
         override fun run() {
             minutes.rotation = getMinutesInDegrees(getCurrentTimeData())
-
-            if (isAmPm) {
-                hour.setPhysical(0.5F, 8F, 5000F)
-                hour.rotationUpdate(getHoursInDegrees(getCurrentTimeData()), true)
-            } else {
-                hour.setPhysical(0.5F, 8F, 5000F)
-                hour.rotationUpdate(getHoursInDegreesFor24(getCurrentTimeData()), true)
-            }
+            hour.rotation = getHoursInDegrees(getCurrentTimeData())
 
             when (movementType) {
                 "oscillate" -> {
@@ -464,7 +449,7 @@ class Clock : ScopedFragment() {
                 moonDatesData = fromHtml("<b>${getString(R.string.moon_full_moon)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FULL_MOON).execute().time)}<br>" +
                         "<b>${getString(R.string.moon_new_moon)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.NEW_MOON).execute().time)}<br>" +
                         "<b>${getString(R.string.moon_first_quarter)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.FIRST_QUARTER).execute().time)}<br>" +
-                        "<b>${getString(R.string.moon_last_quarter)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.LAST_QUARTER).execute().time)}")
+                        "<b>${getString(R.string.moon_last_quarter)}</b> ${formatMoonDate(MoonPhase.compute().timezone(timezone).on(Instant.now()).phase(MoonPhase.Phase.LAST_QUARTER).execute().time)}<br>")
             }
 
             try {
@@ -562,15 +547,6 @@ class Clock : ScopedFragment() {
             }
             ClockPreferences.timezone -> {
                 timezone = ClockPreferences.getTimeZone()
-            }
-            ClockPreferences.isUsingAmPm -> {
-                isAmPm = if (ClockPreferences.getDefaultClockTimeFormat()) {
-                    face.setImageResource(R.drawable.clock_face)
-                    true
-                } else {
-                    face.setImageResource(R.drawable.clock_face_24)
-                    false
-                }
             }
         }
     }
