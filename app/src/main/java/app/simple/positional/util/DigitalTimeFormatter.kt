@@ -14,7 +14,7 @@ object DigitalTimeFormatter {
      * @return Localized time (15:24 or 3:24 PM).
      */
     fun getTime(zoneDateTime: ZonedDateTime): SpannableString {
-        return if (ClockPreferences.getDefaultClockTime()) {
+        return if (ClockPreferences.getDefaultClockTimeFormat()) {
 
 
             buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("hh:mm a").withLocale(LocaleHelper.getAppLocale())))
@@ -24,7 +24,7 @@ object DigitalTimeFormatter {
     }
 
     fun getTimeWithSeconds(zoneDateTime: ZonedDateTime): SpannableString {
-        return if (ClockPreferences.getDefaultClockTime()) {
+        return if (ClockPreferences.getDefaultClockTimeFormat()) {
             buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(LocaleHelper.getAppLocale())))
         } else {
             buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss").withLocale(LocaleHelper.getAppLocale())))

@@ -28,6 +28,7 @@ import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.dialogs.settings.TimeZones
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
+import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegreesWithDecimalPrecision
@@ -58,7 +59,7 @@ class Clock : ScopedFragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
-    private lateinit var hour: ImageView
+    private lateinit var hour: CompassView
     private lateinit var minutes: ImageView
     private lateinit var seconds: CompassView
     private lateinit var face: ImageView
@@ -96,6 +97,7 @@ class Clock : ScopedFragment() {
     var delay: Long = 1000
     private var dayNightIndicatorImageCountViolation = 1
     private var isMetric = true
+    private var isAmPm = true
     private var isCustomCoordinate = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
@@ -148,6 +150,13 @@ class Clock : ScopedFragment() {
 
         setMotionDelay(ClockPreferences.getMovementType())
         isMetric = MainPreferences.getUnit()
+        isAmPm = if (ClockPreferences.getDefaultClockTimeFormat()) {
+            face.setImageResource(R.drawable.clock_face)
+            true
+        } else {
+            face.setImageResource(R.drawable.clock_face_24)
+            false
+        }
         if (MainPreferences.isCustomCoordinate()) {
             isCustomCoordinate = true
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
@@ -270,8 +279,15 @@ class Clock : ScopedFragment() {
 
     private val clock = object : Runnable {
         override fun run() {
-            hour.rotation = getHoursInDegrees(getCurrentTimeData())
             minutes.rotation = getMinutesInDegrees(getCurrentTimeData())
+
+            if (isAmPm) {
+                hour.setPhysical(0.5F, 8F, 5000F)
+                hour.rotationUpdate(getHoursInDegrees(getCurrentTimeData()), true)
+            } else {
+                hour.setPhysical(0.5F, 8F, 5000F)
+                hour.rotationUpdate(getHoursInDegreesFor24(getCurrentTimeData()), true)
+            }
 
             when (movementType) {
                 "oscillate" -> {
@@ -385,7 +401,7 @@ class Clock : ScopedFragment() {
             val moonPosition: MoonPosition
 
             withContext(Dispatchers.Default) {
-                val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTime()) {
+                val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTimeFormat()) {
                     if (ClockPreferences.isUsingSecondsPrecision()) {
                         DateTimeFormatter.ofPattern("hh:mm:ss a").withLocale(LocaleHelper.getAppLocale())
                     } else {
@@ -546,6 +562,15 @@ class Clock : ScopedFragment() {
             }
             ClockPreferences.timezone -> {
                 timezone = ClockPreferences.getTimeZone()
+            }
+            ClockPreferences.isUsingAmPm -> {
+                isAmPm = if (ClockPreferences.getDefaultClockTimeFormat()) {
+                    face.setImageResource(R.drawable.clock_face)
+                    true
+                } else {
+                    face.setImageResource(R.drawable.clock_face_24)
+                    false
+                }
             }
         }
     }

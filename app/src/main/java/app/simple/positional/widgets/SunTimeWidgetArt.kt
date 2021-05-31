@@ -56,7 +56,7 @@ class SunTimeWidgetArt : AppWidgetProvider() {
                 getSharedPreferences().getFloat(GPSPreferences.lastLongitude, 0.0F).toDouble()
             }
 
-            val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTime()) {
+            val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTimeFormat()) {
                 DateTimeFormatter.ofPattern("hh:mm a").withLocale(LocaleHelper.getAppLocale())
             } else {
                 DateTimeFormatter.ofPattern("HH:mm")

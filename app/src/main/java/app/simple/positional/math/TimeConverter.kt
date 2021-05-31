@@ -17,6 +17,10 @@ object TimeConverter {
     }
 
     fun getHoursInDegrees(zonedDateTime: ZonedDateTime): Float {
-        return 0.5f * (60f * zonedDateTime.hour + zonedDateTime.minute)
+        return zonedDateTime.hour * (360.0F / 12F) + zonedDateTime.minute * (360.0F / 12F / 60F)
+    }
+
+    fun getHoursInDegreesFor24(zonedDateTime: ZonedDateTime): Float {
+        return zonedDateTime.hour * (360.0F / 24F) + zonedDateTime.minute * (360.0F / 24F / 60F)
     }
 }

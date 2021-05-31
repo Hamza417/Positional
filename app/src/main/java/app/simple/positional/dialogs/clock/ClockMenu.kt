@@ -32,7 +32,7 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        defaultTimeFormatSwitch.isChecked = ClockPreferences.getDefaultClockTime()
+        defaultTimeFormatSwitch.isChecked = ClockPreferences.getDefaultClockTimeFormat()
         secondsPrecisionSwitchView.isChecked = ClockPreferences.isUsingSecondsPrecision()
 
         defaultTimeFormatContainer.setOnClickListener {

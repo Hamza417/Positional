@@ -23,6 +23,8 @@
 -dontobfuscate
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*,!code/allocation/variable
 
+-keepattributes LineNumberTable,SourceFile
+
 # Keep activity aliases from getting obfuscated
 # Will throw IllegalArgumentException otherwise with reason "component class not exist"
 
