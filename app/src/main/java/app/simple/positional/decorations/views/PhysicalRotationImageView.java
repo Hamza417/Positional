@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 
 /**
- * Class CompassView extends Android ImageView to perform cool, real-life animation of objects
+ * Class PhysicalRotationImageView extends Android ImageView to perform cool, real-life animation of objects
  * such compass needle in magnetic field. Rotation is performed relative to the center of image.
  * <p>
  * It uses angular motion equation of magnetic dipole in magnetic field to implement such animation.
@@ -14,7 +14,7 @@ import android.util.AttributeSet;
  * Use `setPhysical()` to vary physical properties.
  * Use `rotationUpdate()` to change angle of "magnetic field" at which image should rotate.
  */
-public class CompassView extends androidx.appcompat.widget.AppCompatImageView {
+public class PhysicalRotationImageView extends androidx.appcompat.widget.AppCompatImageView {
     
     static final public float TIME_DELTA_THRESHOLD = 0.25f; // maximum time difference between iterations, s
     static final public float ANGLE_DELTA_THRESHOLD = 0.1f; // minimum rotation change to be redrawn, deg
@@ -37,7 +37,7 @@ public class CompassView extends androidx.appcompat.widget.AppCompatImageView {
      *
      * @param context context
      */
-    public CompassView(Context context) {
+    public PhysicalRotationImageView(Context context) {
         super(context);
     }
     
@@ -47,7 +47,7 @@ public class CompassView extends androidx.appcompat.widget.AppCompatImageView {
      * @param context context
      * @param attrs   attributes
      */
-    public CompassView(Context context, AttributeSet attrs) {
+    public PhysicalRotationImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
     
@@ -58,7 +58,7 @@ public class CompassView extends androidx.appcompat.widget.AppCompatImageView {
      * @param attrs    attributes
      * @param defStyle defaultStyle
      */
-    public CompassView(Context context, AttributeSet attrs, int defStyle) {
+    public PhysicalRotationImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
     
@@ -77,7 +77,9 @@ public class CompassView extends androidx.appcompat.widget.AppCompatImageView {
         else {
             this.setRotation(angle1);
         }
+    
         super.onDraw(canvas);
+    
         if (animationOn) {
             this.invalidate();
         }

@@ -28,7 +28,7 @@
                 android:src="@drawable/ic_clock_shadow"
                 tools:ignore="ContentDescription" />
 
-            <app.simple.positional.decorations.views.CompassView
+            <app.simple.positional.decorations.views.PhysicalRotationImageView
                 android:id="@+id/sweep_seconds"
                 android:layout_width="@dimen/clock_image_dimensions"
                 android:layout_height="@dimen/clock_image_dimensions"
@@ -53,7 +53,7 @@
                 android:layout_marginBottom="60dp"
                 tools:ignore="ContentDescription" />
 
-            <app.simple.positional.decorations.views.CompassView
+            <app.simple.positional.decorations.views.PhysicalRotationImageView
                 android:id="@+id/hour"
                 android:layout_width="@dimen/clock_needle_dimensions"
                 android:layout_height="@dimen/clock_needle_dimensions"
@@ -67,7 +67,7 @@
                 android:layout_gravity="center"
                 tools:ignore="ContentDescription" />
 
-            <app.simple.positional.decorations.views.CompassView
+            <app.simple.positional.decorations.views.PhysicalRotationImageView
                 android:id="@+id/seconds"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/clock_needle_dimensions"

@@ -22,8 +22,8 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.decorations.views.CompassView
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
+import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.dialogs.settings.TimeZones
 import app.simple.positional.math.MathExtensions.round
@@ -59,12 +59,12 @@ class Clock : ScopedFragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
-    private lateinit var hour: CompassView
+    private lateinit var hour: PhysicalRotationImageView
     private lateinit var minutes: ImageView
-    private lateinit var seconds: CompassView
+    private lateinit var seconds: PhysicalRotationImageView
     private lateinit var face: ImageView
     private lateinit var expandUp: ImageView
-    private lateinit var sweepSeconds: CompassView
+    private lateinit var sweepSeconds: PhysicalRotationImageView
     private lateinit var dayNightIndicator: ImageView
     private lateinit var moonPhaseGraphics: ImageView
 

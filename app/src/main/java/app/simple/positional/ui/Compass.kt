@@ -15,7 +15,6 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,6 +23,7 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
@@ -32,8 +32,8 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.decorations.views.CompassView
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
+import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
@@ -103,11 +103,11 @@ class Compass : ScopedFragment(), SensorEventListener {
     private lateinit var direction: TextView
 
     private lateinit var expandUp: ImageView
-    private lateinit var dial: CompassView
-    private lateinit var flowerOne: CompassView
-    private lateinit var flowerTwo: CompassView
-    private lateinit var flowerThree: CompassView
-    private lateinit var flowerFour: CompassView
+    private lateinit var dial: PhysicalRotationImageView
+    private lateinit var flowerOne: PhysicalRotationImageView
+    private lateinit var flowerTwo: PhysicalRotationImageView
+    private lateinit var flowerThree: PhysicalRotationImageView
+    private lateinit var flowerFour: PhysicalRotationImageView
 
     private lateinit var copy: DynamicRippleImageButton
     private lateinit var menu: DynamicRippleImageButton
@@ -342,35 +342,6 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private val textAnimationRunnable: Runnable = Runnable { compassInfoText.setTextAnimation(getString(R.string.compass_info), 300) }
 
-    private inner class MyOnTouchListener : View.OnTouchListener {
-        @SuppressLint("ClickableViewAccessibility")
-        override fun onTouch(v: View?, event: MotionEvent): Boolean {
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    isUserRotatingDial = true
-                    objectAnimator?.removeAllListeners()
-                    objectAnimator?.cancel()
-                    dial.clearAnimation()
-                    handler.removeCallbacks(compassDialAnimationRunnable)
-                    lastDialAngle = dial.rotation //if (dial.rotation < -180) abs(dial.rotation) else dial.rotation
-                    startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
-                    return true
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
-                    val finalAngle = currentAngle - startAngle + lastDialAngle
-                    viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)), false)
-                    return true
-                }
-                MotionEvent.ACTION_UP -> {
-                    handler.postDelayed(compassDialAnimationRunnable, 1000)
-                    return true
-                }
-            }
-            return true
-        }
-    }
-
     override fun onSensorChanged(event: SensorEvent?) {
 
         if (event == null) return
@@ -508,21 +479,54 @@ class Compass : ScopedFragment(), SensorEventListener {
         })
     }
 
-    private val compassDialAnimationRunnable = Runnable {
-        objectAnimator = ObjectAnimator.ofFloat(dial, "rotation", dial.rotation, rotationAngle * -1)
-        objectAnimator!!.duration = 1000L
-        objectAnimator!!.interpolator = DecelerateInterpolator()
-        objectAnimator!!.setAutoCancel(true)
-        objectAnimator!!.addUpdateListener { animation -> viewRotation(abs(animation.getAnimatedValue("rotation") as Float), false) }
-        objectAnimator!!.addListener(object : Animator.AnimatorListener {
-            override fun onAnimationStart(animation: Animator?) {}
-            override fun onAnimationCancel(animation: Animator?) {}
-            override fun onAnimationRepeat(animation: Animator?) {}
-            override fun onAnimationEnd(animation: Animator?) {
-                isUserRotatingDial = false
+    private inner class MyOnTouchListener : View.OnTouchListener {
+        @SuppressLint("ClickableViewAccessibility")
+        override fun onTouch(v: View?, event: MotionEvent): Boolean {
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    isUserRotatingDial = true
+                    objectAnimator?.removeAllListeners()
+                    objectAnimator?.cancel()
+                    dial.clearAnimation()
+                    handler.removeCallbacks(compassDialAnimationRunnable)
+                    lastDialAngle = dial.rotation //if (dial.rotation < -180) abs(dial.rotation) else dial.rotation
+                    startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
+                    return true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
+                    val finalAngle = currentAngle - startAngle + lastDialAngle
+                    viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)), false)
+                    return true
+                }
+                MotionEvent.ACTION_UP -> {
+                    handler.postDelayed(compassDialAnimationRunnable, 1000)
+                    return true
+                }
             }
-        })
-        objectAnimator!!.start()
+            return true
+        }
+    }
+
+    private val compassDialAnimationRunnable = Runnable {
+        if (isAnimated) {
+            isUserRotatingDial = false
+        } else {
+            objectAnimator = ObjectAnimator.ofFloat(dial, "rotation", dial.rotation, rotationAngle * -1)
+            objectAnimator!!.duration = 1000L
+            objectAnimator!!.interpolator = LinearOutSlowInInterpolator()
+            objectAnimator!!.setAutoCancel(true)
+            objectAnimator!!.addUpdateListener { animation -> viewRotation(abs(animation.getAnimatedValue("rotation") as Float), false) }
+            objectAnimator!!.addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator?) {}
+                override fun onAnimationCancel(animation: Animator?) {}
+                override fun onAnimationRepeat(animation: Animator?) {}
+                override fun onAnimationEnd(animation: Animator?) {
+                    isUserRotatingDial = false
+                }
+            })
+            objectAnimator!!.start()
+        }
     }
 
     private fun openCalibrationDialog() {
