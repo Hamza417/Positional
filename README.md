@@ -21,7 +21,7 @@
 [![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
 [![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
 
-[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build105/app-lite-release.apk)
+[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build106/app-lite-release.apk)
 
 [![Intro](https://img.shields.io/badge/App%20Intro-YouTube-E74C3C?style=flat&logo=youtube)](https://youtu.be/H9UT8gCuvgk)
 
@@ -57,7 +57,8 @@
   * Customizable with various options to choose from</br>
   * Magnetic Compass</br>
   * Compass Sensor Speed</br>
-  * Compass Physics properties<br/>
+  * Compass physics properties<br/>
+  * Compass manual rotation
   * Compass bloom
   * Minimal Map (with and without labels)</br>
   * Google and Open Source Maps Support<br/>
@@ -73,7 +74,7 @@
   * Distance<br/>
   * Displacement<br/>
   * Address of the current location<br/>
-  * UTM, MGRS coordinat formatting<br/>
+  * UTM, MGRS coordinate formatting<br/>
   * DMS coordinates support<br/>
   * Movement direction<br/>
   * Clock</br>
@@ -110,6 +111,8 @@
   * Move specified coordinates into a separate activity
   * Add a timeline view for moon dates upto a few years in the future and past
   * Solar and Lunar Eclipse dates
+
+<br/>
 
 ## Contribution
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

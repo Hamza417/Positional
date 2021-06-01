@@ -50,8 +50,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 105
-    def appVersionName = "build_${appVersionCode}"
+    def appVersionCode = 106
+    def appVersionName = "positional_build_${appVersionCode}"
 
     defaultConfig {
         applicationId "app.simple.positional"
@@ -84,7 +84,7 @@ android {
         lite {
             dimension "version"
             applicationIdSuffix ".lite"
-            versionNameSuffix "_lite"
+            versionNameSuffix "/lite"
         }
 
         full {
