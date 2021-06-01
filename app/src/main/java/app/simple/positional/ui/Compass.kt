@@ -480,10 +480,14 @@ class Compass : ScopedFragment(), SensorEventListener {
     }
 
     private inner class MyOnTouchListener : View.OnTouchListener {
+
+        var animate = false
+
         @SuppressLint("ClickableViewAccessibility")
         override fun onTouch(v: View?, event: MotionEvent): Boolean {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    animate = CompassPreferences.isUsingPhysicalProperties()
                     isUserRotatingDial = true
                     objectAnimator?.removeAllListeners()
                     objectAnimator?.cancel()
@@ -496,7 +500,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                 MotionEvent.ACTION_MOVE -> {
                     val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     val finalAngle = currentAngle - startAngle + lastDialAngle
-                    viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)), false)
+                    viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)), animate)
                     return true
                 }
                 MotionEvent.ACTION_UP -> {
