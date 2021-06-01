@@ -262,4 +262,5 @@
     <string name="customize_pin">پن کو اپنی مرضی کے مطابق بنائیں</string>
     <string name="map_tile_source">نقشہ کا ٹائل ماخذ</string>
     <string name="maps_provider">نقشہ جات فراہم کرنے والا</string>
+    <string name="twenty_four_hours_clock">24 گھنٹے کی گھڑی</string>
 </resources>
