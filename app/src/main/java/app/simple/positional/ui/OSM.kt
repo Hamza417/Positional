@@ -33,7 +33,6 @@ import app.simple.positional.decorations.ripple.DynamicRippleFrameLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.views.MapToolbar
-import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.*
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
@@ -51,8 +50,6 @@ import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -201,8 +198,6 @@ class OSM : ScopedFragment() {
         }
 
         providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
-
-        checkGooglePlayServices()
 
         movementReset.setOnClickListener {
             it.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.button_pressed_scale))
@@ -601,19 +596,6 @@ class OSM : ScopedFragment() {
     private fun setLocationPin() {
         view?.findViewById<ImageView>(R.id.coordinates_icon)!!
                 .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
-    }
-
-    private fun checkGooglePlayServices(): Boolean {
-        val availability = GoogleApiAvailability.getInstance()
-        val resultCode = availability.isGooglePlayServicesAvailable(requireContext())
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (MainPreferences.getShowPlayServiceDialog()) {
-                ErrorDialog.newInstance("Play Services")
-                        .show(childFragmentManager, "error_dialog")
-            }
-            return false
-        }
-        return true
     }
 
     private fun backPressed(value: Boolean) {

@@ -13,9 +13,11 @@ import app.simple.positional.preferences.ClockPreferences
 
 class ClockMenu : CustomBottomSheetDialogFragment() {
 
-    private lateinit var defaultTimeFormatContainer: DynamicRippleLinearLayout
     private lateinit var defaultTimeFormatSwitch: SwitchView
     private lateinit var secondsPrecisionSwitchView: SwitchView
+    private lateinit var clock24HourFace: SwitchView
+    private lateinit var defaultTimeFormatContainer: DynamicRippleLinearLayout
+    private lateinit var clock24HourFaceContainer: DynamicRippleLinearLayout
     private lateinit var secondsPrecisionContainer: DynamicRippleLinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -23,8 +25,10 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
 
         defaultTimeFormatContainer = view.findViewById(R.id.clock_menu_default_time_format)
         defaultTimeFormatSwitch = view.findViewById(R.id.toggle_default_time_format)
+        clock24HourFace = view.findViewById(R.id.toggle_24_hours_clock)
         secondsPrecisionSwitchView = view.findViewById(R.id.toggle_remove_seconds_precision)
         secondsPrecisionContainer = view.findViewById(R.id.clock_menu_remove_seconds_container)
+        clock24HourFaceContainer = view.findViewById(R.id.clock_menu_24_hours_clock)
 
         return view
     }
@@ -34,6 +38,7 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
 
         defaultTimeFormatSwitch.isChecked = ClockPreferences.getDefaultClockTimeFormat()
         secondsPrecisionSwitchView.isChecked = ClockPreferences.isUsingSecondsPrecision()
+        clock24HourFace.isChecked = ClockPreferences.isClockFace24Hour()
 
         defaultTimeFormatContainer.setOnClickListener {
             defaultTimeFormatSwitch.invertCheckedStatus()
@@ -43,12 +48,20 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
             ClockPreferences.setDefaultClockTime(isChecked)
         }
 
+        clock24HourFace.setOnCheckedChangeListener {
+            ClockPreferences.setClockFaceType(it)
+        }
+
         secondsPrecisionContainer.setOnClickListener {
             secondsPrecisionSwitchView.invertCheckedStatus()
         }
 
         secondsPrecisionSwitchView.setOnCheckedChangeListener {
             ClockPreferences.setUseSecondsPrecision(it)
+        }
+
+        clock24HourFaceContainer.setOnClickListener {
+            clock24HourFace.isChecked = !clock24HourFace.isChecked
         }
 
         view.findViewById<TextView>(R.id.clock_needle_theme_text).setOnClickListener {

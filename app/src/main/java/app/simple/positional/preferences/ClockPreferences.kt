@@ -11,10 +11,11 @@ object ClockPreferences {
 
     private const val timeZoneScrollPosition = "last_selected_timezone_position"
     private const val isUsingSecondsPrecision = "is_using_seconds_precision"
+    private const val isUsingAmPm = "is_clock_time_type_am_pm"
     const val clockNeedleMovementType = "clock_needle_movement_type_updated"
-    const val isUsingAmPm = "is_clock_time_type_am_pm"
     const val clockNeedle = "clock_needle_res_value"
     const val timezone = "custom_timezone"
+    const val is24HourFace = "is_clock_face_24_hour"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -74,5 +75,15 @@ object ClockPreferences {
 
     fun isUsingSecondsPrecision(): Boolean {
         return getSharedPreferences().getBoolean(isUsingSecondsPrecision, true)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setClockFaceType(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(is24HourFace, value).apply()
+    }
+
+    fun isClockFace24Hour(): Boolean {
+        return getSharedPreferences().getBoolean(is24HourFace, false)
     }
 }

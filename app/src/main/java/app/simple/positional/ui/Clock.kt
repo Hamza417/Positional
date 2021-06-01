@@ -28,6 +28,7 @@ import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.dialogs.settings.TimeZones
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
+import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegreesWithDecimalPrecision
@@ -58,7 +59,7 @@ class Clock : ScopedFragment() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
-    private lateinit var hour: ImageView
+    private lateinit var hour: CompassView
     private lateinit var minutes: ImageView
     private lateinit var seconds: CompassView
     private lateinit var face: ImageView
@@ -96,6 +97,7 @@ class Clock : ScopedFragment() {
     var delay: Long = 1000
     private var dayNightIndicatorImageCountViolation = 1
     private var isMetric = true
+    private var is24HourFace = false
     private var isCustomCoordinate = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
@@ -148,7 +150,13 @@ class Clock : ScopedFragment() {
 
         setMotionDelay(ClockPreferences.getMovementType())
         isMetric = MainPreferences.getUnit()
-
+        is24HourFace = if (ClockPreferences.isClockFace24Hour()) {
+            face.setImageResource(R.drawable.clock_face_24)
+            true
+        } else {
+            face.setImageResource(R.drawable.clock_face)
+            false
+        }
         if (MainPreferences.isCustomCoordinate()) {
             isCustomCoordinate = true
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
@@ -272,7 +280,14 @@ class Clock : ScopedFragment() {
     private val clock = object : Runnable {
         override fun run() {
             minutes.rotation = getMinutesInDegrees(getCurrentTimeData())
-            hour.rotation = getHoursInDegrees(getCurrentTimeData())
+
+            if (is24HourFace) {
+                hour.setPhysical(0.5F, 8F, 5000F)
+                hour.rotationUpdate(getHoursInDegreesFor24(getCurrentTimeData()), true)
+            } else {
+                hour.setPhysical(0.5F, 8F, 5000F)
+                hour.rotationUpdate(getHoursInDegrees(getCurrentTimeData()), true)
+            }
 
             when (movementType) {
                 "oscillate" -> {
@@ -547,6 +562,19 @@ class Clock : ScopedFragment() {
             }
             ClockPreferences.timezone -> {
                 timezone = ClockPreferences.getTimeZone()
+            }
+            ClockPreferences.is24HourFace -> {
+                is24HourFace = if (ClockPreferences.isClockFace24Hour()) {
+                    face.setImageResource(R.drawable.clock_face_24)
+                    hour.setPhysical(0.5F, 8F, 5000F)
+                    hour.rotationUpdate(getHoursInDegreesFor24(getCurrentTimeData()), true)
+                    true
+                } else {
+                    face.setImageResource(R.drawable.clock_face)
+                    hour.setPhysical(0.5F, 8F, 5000F)
+                    hour.rotationUpdate(getHoursInDegrees(getCurrentTimeData()), true)
+                    false
+                }
             }
         }
     }

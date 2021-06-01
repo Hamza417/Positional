@@ -34,8 +34,8 @@
             android:text="@string/needles"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
-            app:drawableStartCompat="@drawable/ic_navigation"
-            app:drawableTint="@color/iconRegular" />
+            android:drawableStart="@drawable/ic_navigation"
+            android:drawableTint="@color/iconRegular" />
 
         <app.simple.positional.decorations.ripple.DynamicRippleTextView
             android:id="@+id/clock_motion_type_text"
@@ -51,8 +51,41 @@
             android:text="@string/motion_type"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
-            app:drawableStartCompat="@drawable/ic_motion_type"
-            app:drawableTint="@color/iconRegular" />
+            android:drawableStart="@drawable/ic_motion_type"
+            android:drawableTint="@color/iconRegular" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+            android:id="@+id/clock_menu_24_hours_clock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_sub_item_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="@string/twenty_four_hours_clock"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableStartCompat="@drawable/ic_clock"
+                app:drawableTint="@color/iconRegular" />
+
+            <app.simple.positional.decorations.switchview.SwitchView
+                android:id="@+id/toggle_24_hours_clock"
+                android:layout_width="@dimen/switch_width"
+                android:layout_height="wrap_content" />
+
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
         <View
             android:layout_width="match_parent"

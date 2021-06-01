@@ -51,7 +51,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var customLocation: DynamicRippleConstraintLayout
     private lateinit var appVersion: DynamicRippleLinearLayout
     private lateinit var legalNotes: DynamicRippleLinearLayout
-    private lateinit var changeLogs: DynamicRippleLinearLayout
     private lateinit var github: DynamicRippleLinearLayout
     private lateinit var translate: DynamicRippleLinearLayout
     private lateinit var keepScreenOn: DynamicRippleConstraintLayout
@@ -86,7 +85,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         customLocation = view.findViewById(R.id.setting_custom_location)
         appVersion = view.findViewById(R.id.current_app_version)
         legalNotes = view.findViewById(R.id.legal_notes)
-        changeLogs = view.findViewById(R.id.change_logs)
         github = view.findViewById(R.id.github)
         foundIssues = view.findViewById(R.id.found_issues)
         translate = view.findViewById(R.id.translate)
@@ -237,11 +235,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
                     DynamicCornerLinearLayout(context, null),
                     true), legalNotes, xOff, yOff)
             popupMenu.popupMenuCallback = this
-        }
-
-        changeLogs.setOnClickListener {
-            HtmlViewer.newInstance("Change Logs")
-                    .show(childFragmentManager, "change_logs")
         }
 
         github.setOnClickListener {

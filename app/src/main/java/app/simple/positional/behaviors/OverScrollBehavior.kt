@@ -10,6 +10,7 @@ import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 
 @Suppress("unused")
+@Deprecated("This behavior does not execute any scroll event if the view is still animating")
 class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
 
     companion object {
