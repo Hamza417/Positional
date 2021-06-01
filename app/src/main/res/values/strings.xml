@@ -289,5 +289,5 @@
     <string name="customize_pin">Customize Pin</string>
     <string name="map_tile_source">Map Tile Source</string>
     <string name="maps_provider">Maps Provider</string>
-    <string name="twenty_four_hours_clock">24 Hours Clock</string>
+    <string name="twenty_four_hours_clock">24 Hour Clock</string>
 </resources>

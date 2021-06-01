@@ -110,7 +110,6 @@
     <string name="already_saved">Вече запазено!</string>
     <string name="location_not_saved">Не може да бъде запазено!</string>
     <string name="no_update">Няма нови актуализации</string>
-    <string name="only_full_version">Тази функция е налична само в пълната версия.</string>
     <string name="location_not_available">Местоположението все още не е налично</string>
     <!-- Settings Categories -->
     <string name="appearance">Външен вид</string>
@@ -129,7 +128,6 @@
     <string name="keep_screen_on">Поддържане на екрана включен</string>
     <string name="legal_notes">Правни бележки</string>
     <string name="app_version">Версия на приложението</string>
-    <string name="change_logs">Списък с промени</string>
     <string name="found_an_issue">Намерихте проблем?</string>
     <string name="translate">Превод</string>
     <string name="buy_full">Купете пълната версия</string>
@@ -142,7 +140,6 @@
     <string name="desc_specified_location">Посочете персонализирана ширина и дължина и я използвайте за извличане на информация. Всяка информация, която използва GPS, ще остане незасегната</string>
     <string name="desc_screen_on">Предотвратяване заспиването на устройството, докато се използва приложението</string>
     <string name="desc_legal">Прочетете Отказ от отговорност, Политика за поверителност и Условия за използване на приложението</string>
-    <string name="desc_changes">Списък на промените за тази компилация</string>
     <string name="desc_git">Отворете хранилището на приложението</string>
     <string name="desc_translate">Помогнете за превода на приложението на вашия роден език</string>
     <string name="desc_buy_full_version">Подкрепете развитието на приложението чрез закупуване на пълната му версия</string>
@@ -246,7 +243,6 @@
     <string name="desc_location_provider_note">Забележка: Използването на който и да е от API може да даде различни резултати в зависимост от различните фактори и нито един от тях не е доказателство за точност един за друг, тествайте API и запазете избрания, който работи най-добре във вашия регион.</string>
     <string name="use_media_keys">Използвай мултимедийни бутони</string>
     <string name="auto_center_map">Центрирай картата</string>
-    <string name="use_smaller_icon">Използвайте по-малка икона</string>
     <string name="last_updated">Последно обновен</string>
     <string name="coefficient_of_magnetic_field">Коефициент на магнитно поле</string>
     <string name="damping_coefficient">Степен на заглушаване</string>
