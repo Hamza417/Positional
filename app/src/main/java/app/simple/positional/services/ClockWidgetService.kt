@@ -1,9 +1,6 @@
 package app.simple.positional.services
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.Service
+import android.app.*
 import android.appwidget.AppWidgetManager
 import android.content.*
 import android.graphics.Color
@@ -18,8 +15,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import app.simple.positional.R
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
+import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegrees
+import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.util.BitmapHelper.rotateBitmap
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.widgets.ClockWidget
@@ -28,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.ZonedDateTime
+
 
 class ClockWidgetService : Service() {
 
@@ -88,11 +88,18 @@ class ClockWidgetService : Service() {
     }
 
     private val clockWidgetRunnable = object : Runnable {
+        @Suppress("SameParameterValue")
         override fun run() {
             CoroutineScope(Dispatchers.Default).launch {
                 val zonedDateTime = ZonedDateTime.now()
 
-                val hour = rotateBitmap(R.drawable.widget_needle_hour.toBitmap(applicationContext, imageSize), getHoursInDegrees(zonedDateTime))
+                val hour = rotateBitmap(
+                        R.drawable.widget_needle_hour.toBitmap(applicationContext, imageSize), if (ClockPreferences.isClockFace24Hour()) {
+                    getHoursInDegreesFor24(zonedDateTime)
+                } else {
+                    getHoursInDegrees(zonedDateTime)
+                })
+
                 val minute = rotateBitmap(R.drawable.widget_needle_minute.toBitmap(applicationContext, imageSize), getMinutesInDegrees(zonedDateTime))
                 val second = rotateBitmap(R.drawable.widget_needle_seconds.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime))
                 val trail = rotateBitmap(R.drawable.widget_clock_trail.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime))
@@ -100,11 +107,17 @@ class ClockWidgetService : Service() {
 
                 withContext(Dispatchers.Main) {
                     val views = RemoteViews(applicationContext.packageName, R.layout.widget_clock)
+
                     views.setImageViewBitmap(R.id.widget_hour, hour)
                     views.setImageViewBitmap(R.id.widget_minutes, minute)
                     views.setImageViewBitmap(R.id.widget_seconds, second)
                     views.setImageViewBitmap(R.id.widget_sweep_seconds, trail)
                     views.setImageViewResource(R.id.widget_day_night_indicator, dayNight)
+                    views.setImageViewResource(
+                            R.id.widget_clock_face,
+                            if (ClockPreferences.isClockFace24Hour()) R.drawable.widget_clock_face_24 else R.drawable.widget_clock_face)
+
+                    views.setOnClickPendingIntent(R.id.clock_widget_wrapper, getPendingSelfIntent(applicationContext, "open_clock"))
 
                     val componentName = ComponentName(applicationContext, ClockWidget::class.java)
                     val manager = AppWidgetManager.getInstance(applicationContext)
@@ -138,7 +151,7 @@ class ClockWidgetService : Service() {
                     .setSmallIcon(R.drawable.ic_place_notification)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
                     .setCategory(Notification.CATEGORY_SERVICE)
-                    .setSubText("Clock widget is running")
+                    .setContentText(getString(R.string.notification_desc))
                     .build()
             startForeground(101, notification)
         }
@@ -171,5 +184,11 @@ class ClockWidgetService : Service() {
     private fun postCallbacks() {
         removeCallbacks()
         handler.post(clockWidgetRunnable)
+    }
+
+    private fun getPendingSelfIntent(context: Context, @Suppress("SameParameterValue") action: String): PendingIntent? {
+        val intent = Intent(context, ClockWidget::class.java)
+        intent.action = action
+        return PendingIntent.getBroadcast(context, 0, intent, 0)
     }
 }

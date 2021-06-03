@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clock_widget_wrapper"
     android:layout_width="@dimen/clock_image_dimensions"
     android:layout_height="@dimen/clock_image_dimensions">
 
@@ -34,8 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"
         android:layout_margin="25dp"
+        android:adjustViewBounds="true"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -43,8 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"
         android:layout_margin="25dp"
+        android:adjustViewBounds="true"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -52,8 +53,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"
         android:layout_margin="25dp"
+        android:adjustViewBounds="true"
         tools:ignore="ContentDescription" />
 
 </FrameLayout>

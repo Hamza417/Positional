@@ -291,4 +291,5 @@
     <string name="maps_provider">Maps Provider</string>
     <string name="twenty_four_hours_clock">24 Hour Clock</string>
     <string name="gimbal_lock">Gimbal Lock</string>
+    <string name="notification_desc">Clock widget is running. Turn off widget channel from the notification settings to hide this notification.</string>
 </resources>

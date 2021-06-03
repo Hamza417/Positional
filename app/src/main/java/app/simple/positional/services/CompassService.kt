@@ -43,7 +43,6 @@ class CompassService : Service(), SensorEventListener {
     private lateinit var mSensorThread: HandlerThread
     private lateinit var mSensorHandler: Handler
 
-
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
@@ -69,9 +68,6 @@ class CompassService : Service(), SensorEventListener {
         unregister()
     }
 
-    /**
-     *
-     */
     override  fun onSensorChanged(event: SensorEvent) {
         when (event.sensor.type) {
             Sensor.TYPE_ACCELEROMETER -> smoothAndSetReadings(accelerometerReadings, event.values)
