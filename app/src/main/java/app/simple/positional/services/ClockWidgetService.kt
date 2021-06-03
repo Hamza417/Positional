@@ -151,6 +151,7 @@ class ClockWidgetService : Service() {
                     .setSmallIcon(R.drawable.ic_place_notification)
                     .setPriority(NotificationCompat.PRIORITY_MIN)
                     .setCategory(Notification.CATEGORY_SERVICE)
+                    .setSubText(getString(R.string.clock_widget_notification))
                     .setContentText(getString(R.string.notification_desc))
                     .build()
             startForeground(101, notification)

@@ -269,6 +269,8 @@
     <string name="desc_android_location_provider">Default Android\'s Location API, highly accurate but is limited to only one location provider at a time and indoor location requests can impact its accuracy, requires a powerful GPS sensor to update location quickly.</string>
     <string name="desc_fused_location_provider">Google\'s Fused Location API that triangulates location data from various location providers and averages out the result into a series of locations. Can give varying results but uses less battery.</string>
     <string name="desc_location_provider_note">Note: Using any of the APIs can give different results depending on the various factors and none of them are a proof of accuracy for one another, test the APIs and keep the one selected that works best within your region.</string>
+
+    /* Unorganized strings that were added later */
     <string name="use_media_keys">Use Media Keys</string>
     <string name="auto_center_map">Auto Center Map</string>
     <string name="use_smaller_icon">Use Smaller Icon</string>
@@ -291,5 +293,6 @@
     <string name="maps_provider">Maps Provider</string>
     <string name="twenty_four_hours_clock">24 Hour Clock</string>
     <string name="gimbal_lock">Gimbal Lock</string>
-    <string name="notification_desc">Clock widget is running. Turn off widget channel from the notification settings to hide this notification.</string>
+    <string name="clock_widget_notification">Clock widget is running.</string>
+    <string name="notification_desc">Turn off \"Widget Channel\" from the notification settings to hide this notification.</string>
 </resources>
