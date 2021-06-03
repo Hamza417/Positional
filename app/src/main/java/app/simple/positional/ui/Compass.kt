@@ -70,12 +70,15 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
+    private val rotation = FloatArray(9)
+    private val inclination = FloatArray(9)
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
     private var showDirectionCode = true
     private var isUserRotatingDial = false
     private var isAnimated = true
+    private var isGimbalLock = true
 
     private var accelerometer = Vector3.zero
     private var magnetometer = Vector3.zero
@@ -88,6 +91,8 @@ class Compass : ScopedFragment(), SensorEventListener {
     private var flowerBloom = 0
     private var lastDialAngle = 0F
     private var startAngle = 0F
+    private val degreesPerRadian = 180 / Math.PI
+    private val twoTimesPi = 2.0 * Math.PI
 
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
@@ -357,8 +362,27 @@ class Compass : ScopedFragment(), SensorEventListener {
             }
         }
 
+        val angle = if (isGimbalLock) {
+            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+        } else {
+            val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(
+                    rotation,
+                    inclination,
+                    accelerometerReadings,
+                    magnetometerReadings
+            )
+
+            if (successfullyCalculatedRotationMatrix) {
+                val orientation = FloatArray(3)
+                SensorManager.getOrientation(rotation, orientation)
+                (((orientation[0] + twoTimesPi) % twoTimesPi) * degreesPerRadian).toFloat()
+            } else {
+                0F
+            }
+        }
+
         if (!isUserRotatingDial) {
-            rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+            rotationAngle = angle
             viewRotation(rotationAngle, isAnimated)
         }
     }
@@ -558,6 +582,9 @@ class Compass : ScopedFragment(), SensorEventListener {
             }
             CompassPreferences.usePhysicalProperties -> {
                 isAnimated = CompassPreferences.isUsingPhysicalProperties()
+            }
+            CompassPreferences.useGimbalLock -> {
+                isGimbalLock = CompassPreferences.isUsingGimbalLock()
             }
         }
     }

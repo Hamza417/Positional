@@ -15,6 +15,7 @@ object CompassPreferences {
     const val magneticCoefficient = "magnetic_coefficient"
     const val rotationalInertia = "rotational_inertia"
     const val usePhysicalProperties = "use_physical_properties"
+    const val useGimbalLock = "use_gimbal_lock"
     private const val noSensorAlertCompass = "no_sensor_alert_compass_dialog_show"
 
     //--------------------------------------------------------------------------------------------------//
@@ -95,5 +96,15 @@ object CompassPreferences {
 
     fun isUsingPhysicalProperties(): Boolean {
         return getSharedPreferences().getBoolean(usePhysicalProperties, true)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setUseGimbalLock(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(useGimbalLock, value).apply()
+    }
+
+    fun isUsingGimbalLock(): Boolean {
+        return getSharedPreferences().getBoolean(useGimbalLock, true)
     }
 }

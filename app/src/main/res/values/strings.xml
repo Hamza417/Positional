@@ -290,4 +290,5 @@
     <string name="map_tile_source">Map Tile Source</string>
     <string name="maps_provider">Maps Provider</string>
     <string name="twenty_four_hours_clock">24 Hour Clock</string>
+    <string name="gimbal_lock">Gimbal Lock</string>
 </resources>

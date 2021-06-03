@@ -19,9 +19,11 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var toggleFlower: SwitchView
     private lateinit var toggleCode: SwitchView
+    private lateinit var toggleGimbalLock: SwitchView
     private lateinit var bloomSkins: DynamicRippleTextView
     private lateinit var bloomSwitchContainer: DynamicRippleLinearLayout
     private lateinit var codeSwitchContainer: DynamicRippleLinearLayout
+    private lateinit var gimbalLockSwitchContainer: DynamicRippleLinearLayout
     private lateinit var speed: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -30,8 +32,10 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
         toggleFlower = view.findViewById(R.id.toggle_flower)
         toggleCode = view.findViewById(R.id.toggle_code)
         bloomSkins = view.findViewById(R.id.compass_bloom_skins_text)
+        toggleGimbalLock = view.findViewById(R.id.toggle_gimbal_lock)
         bloomSwitchContainer = view.findViewById(R.id.bloom_switch_container)
         codeSwitchContainer = view.findViewById(R.id.compass_menu_show_code)
+        gimbalLockSwitchContainer = view.findViewById(R.id.compass_menu_gimbal_lock)
         speed = view.findViewById(R.id.compass_speed)
 
         return view
@@ -42,6 +46,7 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
 
         toggleCode.isChecked = CompassPreferences.getDirectionCode()
         toggleFlower.isChecked = isFlowerBloomOn()
+        toggleGimbalLock.isChecked = CompassPreferences.isUsingGimbalLock()
 
         toggleFlower.setOnCheckedChangeListener { isChecked ->
             setFlowerBloom(isChecked)
@@ -62,6 +67,14 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
 
         toggleCode.setOnCheckedChangeListener { isChecked ->
             setDirectionCode(isChecked)
+        }
+
+        toggleGimbalLock.setOnCheckedChangeListener {
+            CompassPreferences.setUseGimbalLock(it)
+        }
+
+        gimbalLockSwitchContainer.setOnClickListener {
+            toggleGimbalLock.isChecked = !toggleGimbalLock.isChecked
         }
 
         speed.setOnClickListener {
