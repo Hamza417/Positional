@@ -375,7 +375,7 @@ class Compass : ScopedFragment(), SensorEventListener {
             if (successfullyCalculatedRotationMatrix) {
                 val orientation = FloatArray(3)
                 SensorManager.getOrientation(rotation, orientation)
-                (((orientation[0] + twoTimesPi) % twoTimesPi) * degreesPerRadian).toFloat()
+                ((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat()
             } else {
                 0F
             }
