@@ -263,4 +263,7 @@
     <string name="map_tile_source">نقشہ کا ٹائل ماخذ</string>
     <string name="maps_provider">نقشہ جات فراہم کرنے والا</string>
     <string name="twenty_four_hours_clock">24 گھنٹے کی گھڑی</string>
+    <string name="gimbal_lock">جیمبل لاک</string>
+    <string name="clock_widget_notification">گھڑی ویجیٹ چل رہا ہے۔</string>
+    <string name="notification_desc">اس اطلاع کو چھپانے کے لئے نوٹیفیکیشن کی ترتیبات سے \"ویجیٹ چینل\" کو بند کردیں۔</string>
 </resources>

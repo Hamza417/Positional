@@ -263,4 +263,7 @@
     <string name="map_tile_source">मानचित्र का टाइल स्रोत</string>
     <string name="maps_provider">नक्शा प्रदाता</string>
     <string name="twenty_four_hours_clock">24 घंटे की घड़ी</string>
+    <string name="gimbal_lock">जिम्बल लॉक</string>
+    <string name="clock_widget_notification">घड़ी विजेट चल रहा है।</string>
+    <string name="notification_desc">इस अधिसूचना को छिपाने के लिए अधिसूचना सेटिंग्स से \"विजेट चैनल\" को बंद करें।</string>
 </resources>
