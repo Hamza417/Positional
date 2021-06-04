@@ -263,4 +263,7 @@
     <string name="map_tile_source">Източник на плочки на картата</string>
     <string name="maps_provider">Доставчик на карти</string>
     <string name="twenty_four_hours_clock">24 часов часовник</string>
+    <string name="gimbal_lock">Стабилизация</string>
+    <string name="clock_widget_notification">Приспособлението за часовник работи.</string>
+    <string name="notification_desc">Изключете „Widget Channel“ от настройките за известяване, за да скриете това известие.</string>
 </resources>
