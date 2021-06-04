@@ -60,6 +60,7 @@
   * Compass physics properties<br/>
   * Compass manual rotation
   * Compass bloom
+  * Gimbal lock
   * Minimal Map (with and without labels)</br>
   * Google and Open Source Maps Support<br/>
   * Dark mode for maps<br/>
