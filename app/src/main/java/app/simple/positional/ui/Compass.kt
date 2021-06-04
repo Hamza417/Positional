@@ -149,7 +149,10 @@ class Compass : ScopedFragment(), SensorEventListener {
         toolbar = view.findViewById(R.id.compass_appbar)
 
         filter.addAction("location")
+
         showDirectionCode = CompassPreferences.getDirectionCode()
+        isGimbalLock = CompassPreferences.isUsingGimbalLock()
+
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))

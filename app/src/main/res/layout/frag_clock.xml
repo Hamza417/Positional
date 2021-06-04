@@ -60,7 +60,7 @@
                 android:layout_gravity="center"
                 tools:ignore="ContentDescription" />
 
-            <ImageView
+            <app.simple.positional.decorations.views.PhysicalRotationImageView
                 android:id="@+id/minutes"
                 android:layout_width="@dimen/clock_needle_dimensions"
                 android:layout_height="@dimen/clock_needle_dimensions"

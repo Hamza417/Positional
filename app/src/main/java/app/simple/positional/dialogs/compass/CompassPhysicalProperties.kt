@@ -101,7 +101,7 @@ class CompassPhysicalProperties : CustomBottomSheetDialogFragment() {
         reset.setOnClickListener {
             updateSeekbar(dampingCoefficient, 10)
             updateSeekbar(rotationalInertia, 0)
-            updateSeekbar(magneticCoefficient, 3000)
+            updateSeekbar(magneticCoefficient, 10000)
         }
 
         help.setOnClickListener {

@@ -60,7 +60,7 @@ class Clock : ScopedFragment() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
 
     private lateinit var hour: PhysicalRotationImageView
-    private lateinit var minutes: ImageView
+    private lateinit var minutes: PhysicalRotationImageView
     private lateinit var seconds: PhysicalRotationImageView
     private lateinit var face: ImageView
     private lateinit var expandUp: ImageView
@@ -279,7 +279,7 @@ class Clock : ScopedFragment() {
 
     private val clock = object : Runnable {
         override fun run() {
-            minutes.rotation = getMinutesInDegrees(getCurrentTimeData())
+            minutes.setPhysical(getMinutesInDegrees(getCurrentTimeData()), 8F, 5000F)
 
             if (is24HourFace) {
                 hour.setPhysical(0.5F, 8F, 5000F)
