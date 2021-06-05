@@ -15,7 +15,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
-import app.simple.positional.dialogs.settings.HtmlViewer
+import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.licensing.*
 import app.simple.positional.preferences.MainPreferences.setLicenseStatus
 import app.simple.positional.util.AsyncImageLoader

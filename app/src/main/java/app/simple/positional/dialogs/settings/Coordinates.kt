@@ -24,6 +24,7 @@ import app.simple.positional.database.LocationDatabase
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
+import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.model.Locations
 import app.simple.positional.preferences.MainPreferences
 import com.google.android.material.textfield.TextInputEditText

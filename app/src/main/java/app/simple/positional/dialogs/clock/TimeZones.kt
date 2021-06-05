@@ -1,4 +1,4 @@
-package app.simple.positional.dialogs.settings
+package app.simple.positional.dialogs.clock
 
 import android.os.Bundle
 import android.text.Editable

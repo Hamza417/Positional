@@ -25,7 +25,7 @@ import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.clock.ClockMenu
-import app.simple.positional.dialogs.settings.TimeZones
+import app.simple.positional.dialogs.clock.TimeZones
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
 import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
