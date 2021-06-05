@@ -164,6 +164,10 @@ class Clock : ScopedFragment() {
         }
 
         setSkins()
+
+        hour.setPhysical(0.5F, 8F, 5000F)
+        minutes.setPhysical(0.5F, 8F, 5000F)
+
         calculateAndUpdateData(GPSPreferences.getLastCoordinates()[0].toDouble(),
                 GPSPreferences.getLastCoordinates()[1].toDouble())
 
@@ -279,13 +283,11 @@ class Clock : ScopedFragment() {
 
     private val clock = object : Runnable {
         override fun run() {
-            minutes.setPhysical(getMinutesInDegrees(getCurrentTimeData()), 8F, 5000F)
+            minutes.rotationUpdate(getMinutesInDegrees(getCurrentTimeData()), true)
 
             if (is24HourFace) {
-                hour.setPhysical(0.5F, 8F, 5000F)
                 hour.rotationUpdate(getHoursInDegreesFor24(getCurrentTimeData()), true)
             } else {
-                hour.setPhysical(0.5F, 8F, 5000F)
                 hour.rotationUpdate(getHoursInDegrees(getCurrentTimeData()), true)
             }
 
