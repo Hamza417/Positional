@@ -1,7 +1,6 @@
 package app.simple.positional.ui
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,13 +17,11 @@ import app.simple.positional.callbacks.LicenceStatusCallback
 import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.licensing.*
 import app.simple.positional.preferences.MainPreferences.setLicenseStatus
-import app.simple.positional.util.AsyncImageLoader
 import app.simple.positional.util.setTextAnimation
 
 class License : Fragment(), LicenseCheckerCallback {
 
     private lateinit var licenseLoader: ImageView
-    private lateinit var expression: ImageView
     private lateinit var licenseStatus: AppCompatTextView
 
     private var base64PublicKey = ""
@@ -42,11 +39,6 @@ class License : Fragment(), LicenseCheckerCallback {
 
         licenseLoader = view.findViewById(R.id.licence_loader)
         licenseStatus = view.findViewById(R.id.licence_status)
-        expression = view.findViewById(R.id.launcher_expression_icon)
-
-        if (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-            expression.visibility = View.GONE
-        }
 
         return view
     }
@@ -73,7 +65,6 @@ class License : Fragment(), LicenseCheckerCallback {
     override fun allow(reason: Int) {
         handler.post {
             try {
-                AsyncImageLoader.loadImage(R.drawable.icon_cute_blush, expression, requireContext(), 0)
                 licenseStatus.setTextAnimation(getString(R.string.license_successful), 500)
                 runHandler()
                 setLicenseStatus(true)
@@ -96,7 +87,6 @@ class License : Fragment(), LicenseCheckerCallback {
     private fun showDoNotAllowScreen(error: String) {
         handler.post {
             try {
-                AsyncImageLoader.loadImage(R.drawable.icon_cute_disappointed, expression, requireContext(), 0)
                 licenseStatus.setTextAnimation(error, 500)
                 licenseLoader.visibility = View.GONE
                 HtmlViewer.newInstance("license_failed").show(childFragmentManager, "license_failed")
@@ -122,7 +112,7 @@ class License : Fragment(), LicenseCheckerCallback {
     private fun runHandler() {
         handler.postDelayed({
             licenceStatusCallback.onLicenseCheckCompletion()
-        }, 3000)
+        }, 2000)
     }
 
     override fun onPause() {
@@ -131,6 +121,7 @@ class License : Fragment(), LicenseCheckerCallback {
     }
 
     override fun onDestroy() {
+        mChecker!!.onDestroy()
         handler.removeCallbacksAndMessages(null)
         super.onDestroy()
     }
