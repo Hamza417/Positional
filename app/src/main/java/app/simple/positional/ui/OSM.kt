@@ -514,9 +514,6 @@ class OSM : ScopedFragment() {
     override fun onPause() {
         super.onPause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
-        handler.removeCallbacks(textAnimationRunnable)
-        handler.removeCallbacks(customDataUpdater)
-        infoText.clearAnimation()
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
         }
@@ -525,6 +522,9 @@ class OSM : ScopedFragment() {
     override fun onDestroy() {
         super.onDestroy()
         mapView!!.onDetach()
+        handler.removeCallbacks(textAnimationRunnable)
+        handler.removeCallbacks(customDataUpdater)
+        infoText.clearAnimation()
         handler.removeCallbacksAndMessages(null)
     }
 

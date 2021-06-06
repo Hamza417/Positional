@@ -526,9 +526,6 @@ class GPS : ScopedFragment() {
         super.onPause()
         mapView?.pause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
-        handler.removeCallbacks(textAnimationRunnable)
-        handler.removeCallbacks(customDataUpdater)
-        infoText.clearAnimation()
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
         }
@@ -538,6 +535,10 @@ class GPS : ScopedFragment() {
         super.onDestroy()
         mapView?.removeCallbacks { }
         mapView?.destroy()
+        handler.removeCallbacks(textAnimationRunnable)
+        handler.removeCallbacks(customDataUpdater)
+        infoText.clearAnimation()
+        handler.removeCallbacksAndMessages(null)
     }
 
     override fun onResume() {
