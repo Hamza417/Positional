@@ -34,8 +34,8 @@
     <dimen name="top_bar_button_size">30dp</dimen>
 
     <!-- Compass -->
-    <dimen name="compass_dial">250dp</dimen>
-    <dimen name="compass_degrees_text_size">44sp</dimen>
+    <dimen name="compass_dial">300dp</dimen>
+    <dimen name="compass_degrees_text_size">33sp</dimen>
     <dimen name="degree_indicator_margin_top">40dp</dimen>
     <dimen name="degrees_indicator_dimension">40dp</dimen>
     <dimen name="compass_bloom_dimension">170dp</dimen>

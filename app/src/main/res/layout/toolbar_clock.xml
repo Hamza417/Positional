@@ -12,6 +12,7 @@
         android:fontFamily="@font/heading"
         android:text="@string/clock"
         android:paddingStart="@dimen/toolbar_title_padding"
+        android:layout_marginEnd="10dp"
         android:textColor="@color/textPrimary"
         android:layout_gravity="center_vertical"
         android:textSize="@dimen/top_bar_text_size"

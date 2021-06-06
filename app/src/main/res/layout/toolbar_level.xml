@@ -1,6 +1,6 @@
 <app.simple.positional.decorations.padding.PaddingAwareLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clock_appbar"
+    android:id="@+id/level_appbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/toolbar_padding">
