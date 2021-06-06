@@ -1,4 +1,4 @@
-package app.simple.positional.ui
+package app.simple.positional.ui.panels
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -15,7 +15,6 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
-import app.simple.positional.decorations.popup.MainListPopupMenu
 import app.simple.positional.decorations.popup.PopupMenuCallback
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
@@ -24,6 +23,7 @@ import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.app.AccentColor
 import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.dialogs.settings.*
+import app.simple.positional.popups.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.LocaleHelper.localeList
 import app.simple.positional.util.StatusBarHeight
@@ -232,7 +232,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         legalNotes.setOnClickListener {
-            val popupMenu = MainListPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.menu_notes,
+            val popupMenu = LegalNotesPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.menu_notes,
                     DynamicCornerLinearLayout(context, null),
                     true), legalNotes, xOff, yOff)
             popupMenu.popupMenuCallback = this

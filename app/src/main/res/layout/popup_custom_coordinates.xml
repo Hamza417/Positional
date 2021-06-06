@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.simple.positional.decorations.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/mainBackground"
+    android:clipChildren="true"
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
+        android:id="@+id/menu_custom_locations_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/save"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
+        android:id="@+id/menu_custom_locations_set_and_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/set_and_save"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dividerColor"
+        android:layout_marginVertical="10dp" />
+
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
+        android:id="@+id/menu_custom_locations_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/help"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+</app.simple.positional.decorations.corners.DynamicCornerLinearLayout>

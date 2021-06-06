@@ -21,6 +21,7 @@ import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.*
+import app.simple.positional.ui.panels.*
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 import app.simple.positional.util.NullSafety.isNull

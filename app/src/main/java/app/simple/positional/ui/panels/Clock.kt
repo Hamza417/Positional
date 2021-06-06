@@ -1,4 +1,4 @@
-package app.simple.positional.ui
+package app.simple.positional.ui.panels
 
 import android.content.*
 import android.location.Location
@@ -19,13 +19,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.activities.subactivity.TimezonePickerActivity
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.clock.ClockMenu
-import app.simple.positional.dialogs.clock.TimeZones
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
 import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
@@ -272,8 +272,7 @@ class Clock : ScopedFragment() {
         }
 
         timezoneButton.setOnClickListener {
-            TimeZones.newInstance()
-                    .show(childFragmentManager, "time_zone")
+            requireContext().startActivity(Intent(requireActivity(), TimezonePickerActivity::class.java))
         }
     }
 

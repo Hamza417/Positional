@@ -8,8 +8,8 @@ import app.simple.positional.callbacks.LicenceStatusCallback
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.MainPreferences.getLicenceStatus
-import app.simple.positional.ui.License
-import app.simple.positional.ui.SplashScreen
+import app.simple.positional.ui.launcher.License
+import app.simple.positional.ui.launcher.SplashScreen
 
 class LauncherActivity : BaseActivity(), LicenceStatusCallback {
     override fun onCreate(savedInstanceState: Bundle?) {

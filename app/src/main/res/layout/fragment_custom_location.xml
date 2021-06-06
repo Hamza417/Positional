@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.simple.positional.decorations.padding.PaddingAwareLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/options_container_horizontal_padding"
+        android:paddingTop="@dimen/options_container_horizontal_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/medium"
+                android:text="@string/specified_hint_header"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/address_indicator"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="10dp"
+                android:indeterminateBehavior="repeat"
+                android:indeterminateDuration="100"
+                android:indeterminateOnly="true"
+                android:indeterminateTint="@color/iconColor"
+                android:progressTint="@color/iconColor" />
+
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+                android:id="@+id/options_custom_coordinates"
+                android:layout_width="@dimen/top_bar_button_size"
+                android:layout_height="@dimen/top_bar_button_size"
+                android:contentDescription="@string/open_specified_location_documentation"
+                android:src="@drawable/ic_menu"
+                android:tint="@color/iconColor" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:animateLayoutChanges="true"
+            android:hint="@string/specified_hint_address"
+            app:boxStrokeColor="@color/iconColor"
+            app:boxStrokeWidth="1px"
+            app:boxStrokeWidthFocused="2px"
+            app:errorEnabled="false"
+            app:errorIconTint="@android:color/holo_red_dark"
+            app:errorTextColor="@android:color/holo_red_dark"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:hintTextColor="@color/textSecondary"
+            tools:ignore="PxUsage">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/address_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:maxLines="4"
+                android:textColor="@color/textSecondary" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/latitude_container"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_weight="1"
+                android:animateLayoutChanges="true"
+                android:hint="@string/specified_hint_latitude"
+                app:boxStrokeColor="@color/iconColor"
+                app:boxStrokeWidth="1px"
+                app:boxStrokeWidthFocused="2px"
+                app:errorEnabled="false"
+                app:errorIconTint="@android:color/holo_red_dark"
+                app:errorTextColor="@android:color/holo_red_dark"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/textSecondary"
+                tools:ignore="PxUsage">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/latitude_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/textSecondary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/longitude_container"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:layout_marginStart="@dimen/options_container_horizontal_padding"
+                android:layout_weight="1"
+                android:animateLayoutChanges="true"
+                android:hint="@string/specified_hint_longitude"
+                app:boxStrokeColor="@color/iconColor"
+                app:boxStrokeWidth="1px"
+                app:boxStrokeWidthFocused="2px"
+                app:errorEnabled="false"
+                app:errorIconTint="@android:color/holo_red_dark"
+                app:errorTextColor="@android:color/holo_red_dark"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:hintTextColor="@color/textSecondary"
+                tools:ignore="PxUsage">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/longitude_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/textSecondary" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <app.simple.positional.decorations.views.CustomRecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="10dp"
+        android:scrollIndicators="none"
+        android:overScrollMode="never"
+        android:requiresFadingEdge="vertical"
+        android:paddingHorizontal="@dimen/options_container_horizontal_padding"
+        app:statusBarPaddingRequired="false" />
+
+</app.simple.positional.decorations.padding.PaddingAwareLinearLayout>

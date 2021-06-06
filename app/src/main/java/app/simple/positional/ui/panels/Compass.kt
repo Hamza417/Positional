@@ -1,4 +1,4 @@
-package app.simple.positional.ui
+package app.simple.positional.ui.panels
 
 import android.animation.Animator
 import android.animation.ObjectAnimator

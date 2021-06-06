@@ -17,4 +17,9 @@ public class DynamicCornerLinearLayout extends LinearLayout {
         super(context, attrs, defStyleAttr);
         LayoutBackground.setBackground(context, this, attrs);
     }
+    
+    public DynamicCornerLinearLayout(Context context) {
+        super(context);
+        LayoutBackground.setBackground(context, this, null);
+    }
 }

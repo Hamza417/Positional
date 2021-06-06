@@ -61,4 +61,8 @@
         <attr name="roundBottomCorners" format="boolean" />
         <attr name="roundAllCorners" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="CustomRecyclerView">
+        <attr name="statusBarPaddingRequired" format="boolean" />
+    </declare-styleable>
 </resources>

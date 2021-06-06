@@ -1,4 +1,4 @@
-package app.simple.positional.ui
+package app.simple.positional.ui.panels
 
 import android.annotation.SuppressLint
 import android.content.Context

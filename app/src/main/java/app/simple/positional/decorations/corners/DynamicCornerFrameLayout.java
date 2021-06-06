@@ -18,4 +18,9 @@ public class DynamicCornerFrameLayout extends FrameLayout {
         super(context, attrs, defStyleAttr);
         LayoutBackground.setBackground(context, this, attrs);
     }
+    
+    public DynamicCornerFrameLayout(Context context) {
+        super(context);
+        LayoutBackground.setBackground(context, this, null);
+    }
 }

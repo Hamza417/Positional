@@ -4,17 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.dynamicanimation.animation.SpringAnimation
-import androidx.dynamicanimation.animation.SpringForce
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.callbacks.LocationAdapterCallback
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.model.Locations
 import app.simple.positional.util.DMSConverter.latitudeAsDMS
 import app.simple.positional.util.DMSConverter.longitudeAsDMS
-import app.simple.positional.util.bouncyValue
-import app.simple.positional.util.stiffnessValue
 
 class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
 
@@ -39,32 +36,11 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
         return locations.size
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
         val container: DynamicRippleLinearLayout = itemView.findViewById(R.id.adapter_locations_container)
         val address: TextView = itemView.findViewById(R.id.adapter_locations_address)
         val latitude: TextView = itemView.findViewById(R.id.adapter_locations_latitude)
         val longitude: TextView = itemView.findViewById(R.id.adapter_locations_longitude)
-
-        private var currentVelocity = 0f
-
-        val rotation: SpringAnimation = SpringAnimation(itemView, SpringAnimation.ROTATION)
-                .setSpring(
-                        SpringForce()
-                                .setFinalPosition(0f)
-                                .setDampingRatio(bouncyValue)
-                                .setStiffness(stiffnessValue)
-                )
-                .addUpdateListener { _, _, velocity ->
-                    currentVelocity = velocity
-                }
-
-        val translationY: SpringAnimation = SpringAnimation(itemView, SpringAnimation.TRANSLATION_Y)
-                .setSpring(
-                        SpringForce()
-                                .setFinalPosition(0f)
-                                .setDampingRatio(bouncyValue)
-                                .setStiffness(stiffnessValue)
-                )
     }
 
     fun setList(locations: MutableList<Locations>) {

@@ -7,7 +7,7 @@
         <!-- Theme -->
         <item name="rippleColor">@color/rippleColor</item>
         <item name="android:navigationBarColor">@color/toolbarBackground</item>
-        <item name="android:colorEdgeEffect">@color/edgeEffect</item>
+        <item name="android:colorEdgeEffect">?attr/colorAppAccent</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
@@ -56,6 +56,11 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="PopupAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_in</item>
+        <item name="android:windowExitAnimation">@anim/dialog_out</item>
     </style>
 
 </resources>

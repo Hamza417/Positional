@@ -8,10 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.EdgeEffect
 import android.widget.ImageView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import app.simple.positional.R
@@ -20,11 +19,8 @@ import app.simple.positional.callbacks.LocationAdapterCallback
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
+import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.model.Locations
-import app.simple.positional.util.flingTranslationMagnitude
-import app.simple.positional.util.forEachVisibleHolder
-import app.simple.positional.util.overscrollRotationMagnitude
-import app.simple.positional.util.overscrollTranslationMagnitude
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +35,7 @@ class SavedLocations : CustomDialogFragment(), LocationAdapterCallback {
     }
 
     var locationAdapterCallback: LocationAdapterCallback? = null
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: CustomRecyclerView
     private lateinit var clear: DynamicRippleImageButton
     private lateinit var art: ImageView
     private lateinit var locationsAdapter: LocationsAdapter
@@ -66,10 +62,7 @@ class SavedLocations : CustomDialogFragment(), LocationAdapterCallback {
 
         this.dialog?.window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        recyclerView.setHasFixedSize(true)
-
-        CoroutineScope(Dispatchers.Default).launch {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
             val db = Room.databaseBuilder(
                     requireContext(),
                     LocationDatabase::class.java,
@@ -94,7 +87,7 @@ class SavedLocations : CustomDialogFragment(), LocationAdapterCallback {
         }
 
         clear.setOnClickListener {
-            CoroutineScope(Dispatchers.Default).launch {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
                 val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").build()
                 db.locationDao()?.nukeTable()
                 val list = db.locationDao()!!.getAllLocations()
@@ -105,66 +98,6 @@ class SavedLocations : CustomDialogFragment(), LocationAdapterCallback {
                         art.animate().alpha(1f).start()
                         clear.isClickable = false
                         clear.isEnabled = false
-                    }
-                }
-            }
-        }
-
-        recyclerView.edgeEffectFactory = object : RecyclerView.EdgeEffectFactory() {
-            override fun createEdgeEffect(recyclerView: RecyclerView, direction: Int): EdgeEffect {
-                return object : EdgeEffect(recyclerView.context) {
-
-                    override fun onPull(deltaDistance: Float) {
-                        super.onPull(deltaDistance)
-                        handlePull(deltaDistance)
-                    }
-
-                    override fun onPull(deltaDistance: Float, displacement: Float) {
-                        super.onPull(deltaDistance, displacement)
-                        handlePull(deltaDistance)
-                    }
-
-                    private fun handlePull(deltaDistance: Float) {
-                        // This is called on every touch event while the list is scrolled with a finger.
-                        // We simply update the view properties without animation.
-                        val sign = if (direction == DIRECTION_BOTTOM) -1 else 1
-                        val rotationDelta = sign * deltaDistance * overscrollRotationMagnitude
-                        val translationYDelta =
-                                sign * recyclerView.width * deltaDistance * overscrollTranslationMagnitude
-                        recyclerView.forEachVisibleHolder { holder: RecyclerView.ViewHolder ->
-                            if (holder is LocationsAdapter.Holder) {
-                                holder.rotation.cancel()
-                                holder.translationY.cancel()
-                                holder.itemView.rotation += rotationDelta
-                                holder.itemView.translationY += translationYDelta
-                            }
-                        }
-                    }
-
-                    override fun onRelease() {
-                        super.onRelease()
-                        // The finger is lifted. This is when we should start the animations to bring
-                        // the view property values back to their resting states.
-                        recyclerView.forEachVisibleHolder { holder: RecyclerView.ViewHolder ->
-                            if (holder is LocationsAdapter.Holder) {
-                                holder.rotation.start()
-                                holder.translationY.start()
-                            }
-                        }
-                    }
-
-                    override fun onAbsorb(velocity: Int) {
-                        super.onAbsorb(velocity)
-                        val sign = if (direction == DIRECTION_BOTTOM) -1 else 1
-                        // The list has reached the edge on fling.
-                        val translationVelocity = sign * velocity * flingTranslationMagnitude
-                        recyclerView.forEachVisibleHolder { holder: RecyclerView.ViewHolder ->
-                            if (holder is LocationsAdapter.Holder) {
-                                holder.translationY
-                                        .setStartVelocity(translationVelocity)
-                                        .start()
-                            }
-                        }
                     }
                 }
             }
@@ -190,7 +123,7 @@ class SavedLocations : CustomDialogFragment(), LocationAdapterCallback {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
             //Remove swiped item from list and notify the RecyclerView
-            val p0 = locationsAdapter.removeItem(viewHolder.adapterPosition)
+            val p0 = locationsAdapter.removeItem(viewHolder.absoluteAdapterPosition)
 
             CoroutineScope(Dispatchers.Default).launch {
                 val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").build()
