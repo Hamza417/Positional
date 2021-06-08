@@ -105,7 +105,7 @@ class Clock : ScopedFragment() {
     private var movementType = "smooth"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view: View = inflater.inflate(R.layout.frag_clock, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_clock, container, false)
 
         timezone = ClockPreferences.getTimeZone()
         movementType = ClockPreferences.getMovementType()

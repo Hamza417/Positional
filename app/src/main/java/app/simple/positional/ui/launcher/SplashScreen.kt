@@ -39,7 +39,7 @@ class SplashScreen : Fragment() {
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.frag_launcher, container, false)
+        val view = inflater.inflate(R.layout.fragment_launcher, container, false)
 
         launcherBackground = view.findViewById(R.id.launcher_background)
         touchIndicator = view.findViewById(R.id.touch_indicator)

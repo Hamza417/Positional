@@ -35,8 +35,8 @@
 
             <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/reset_pin_customization"
-                android:layout_width="@dimen/top_bar_button_size"
-                android:layout_height="@dimen/top_bar_button_size"
+                android:layout_width="@dimen/app_button_size"
+                android:layout_height="@dimen/app_button_size"
                 android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/button_reset"
                 android:src="@drawable/ic_reset"

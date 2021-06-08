@@ -14,10 +14,13 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.util.ColorUtils.resolveAttrColor
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var searchText: String)
@@ -50,6 +53,8 @@ class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var sear
                 ContextCompat.getColor(holder.itemView.context, R.color.textPrimary)
             })
 
+            holder.format.text = formattedTime(timeZones[position].first)
+
             holder.layout.setOnClickListener {
                 ClockPreferences.setTimezoneSelectedPosition(position)
                 ClockPreferences.setTimeZone(timeZones[position].first)
@@ -67,7 +72,13 @@ class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var sear
         val timeZone: TextView = itemView.findViewById(R.id.time_zone_adapter_text)
         val offset: TextView = itemView.findViewById(R.id.time_zone_adapter_offset)
         val indicator: ImageView = itemView.findViewById(R.id.time_zone_indicator)
-        val layout: DynamicRippleLinearLayout = itemView.findViewById(R.id.time_zone_adapter_item_container)
+        val format: TextView = itemView.findViewById(R.id.time_zone_adapter_format)
+        val layout: DynamicRippleConstraintLayout = itemView.findViewById(R.id.time_zone_adapter_item_container)
+    }
+
+    private fun formattedTime(timezone: String): String {
+        return Instant.now().atZone(ZoneId.of(timezone))
+                .format(DateTimeFormatter.ofPattern("hh:mm a"))
     }
 
     private fun searchTimeZones(textView: TextView, string: String) {
@@ -77,10 +88,11 @@ class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var sear
         val endPos = startPos + searchText.length
 
         if (startPos != -1) {
-            val colorKeyword = ColorStateList(arrayOf(intArrayOf()), intArrayOf(ContextCompat.getColor(context, R.color.switch_on)))
+            val colorKeyword = ColorStateList(arrayOf(intArrayOf()), intArrayOf(ContextCompat.getColor(context, R.color.iconRegular)))
             val highlightSpan = TextAppearanceSpan(null, Typeface.NORMAL, -1, colorKeyword, null)
             sb.setSpan(highlightSpan, startPos, endPos, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
         }
+
         textView.text = sb
     }
 }

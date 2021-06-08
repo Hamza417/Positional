@@ -28,6 +28,7 @@ class TimeZones : ScopedFragment() {
     private lateinit var timeZoneAdapter: TimeZoneAdapter
     private lateinit var recyclerView: CustomRecyclerView
     private lateinit var searchView: SearchView
+
     private var timeZones: MutableList<Pair<String, String>> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -78,8 +79,6 @@ class TimeZones : ScopedFragment() {
                     } catch (ignored: IndexOutOfBoundsException) {
                     } catch (ignored: NullPointerException) {
                     }
-
-                    SearchPreferences.setLastSearchKeyword(keywords)
                 } else {
                     filtered = timeZones
                 }

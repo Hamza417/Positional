@@ -122,7 +122,7 @@ class Compass : ScopedFragment(), SensorEventListener {
     private lateinit var toolbar: ConstraintLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.frag_compass, container, false)
+        val view = inflater.inflate(R.layout.fragment_compass, container, false)
 
         accuracyAccelerometer = view.findViewById(R.id.compass_accuracy_accelerometer)
         accuracyMagnetometer = view.findViewById(R.id.compass_accuracy_magnetometer)

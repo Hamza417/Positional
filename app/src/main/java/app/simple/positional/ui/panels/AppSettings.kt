@@ -69,7 +69,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var foundIssues: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.frag_settings, container, false)
+        val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
         scrollView = view.findViewById(R.id.settings_scroll_view)
         buyFull = view.findViewById(R.id.buy_full)

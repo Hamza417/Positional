@@ -40,7 +40,7 @@
 
     <!-- Top Bar -->
     <dimen name="top_bar_text_size">22sp</dimen>
-    <dimen name="top_bar_button_size">20dp</dimen>
+    <dimen name="app_button_size">20dp</dimen>
 
     <!-- Compass -->
     <dimen name="compass_dial">180dp</dimen>

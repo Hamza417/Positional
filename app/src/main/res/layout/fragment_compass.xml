@@ -32,8 +32,8 @@
 
         <app.simple.positional.decorations.ripple.DynamicRippleImageButton
             android:id="@+id/compass_menu"
-            android:layout_width="@dimen/top_bar_button_size"
-            android:layout_height="@dimen/top_bar_button_size"
+            android:layout_width="@dimen/app_button_size"
+            android:layout_height="@dimen/app_button_size"
             android:layout_gravity="center_vertical|end"
             android:background="@drawable/ripple_btn"
             android:contentDescription="@string/compass_options"

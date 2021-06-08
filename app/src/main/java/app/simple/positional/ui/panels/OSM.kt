@@ -110,7 +110,7 @@ class OSM : ScopedFragment() {
     private var mapView: OsmMaps? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view: View = inflater.inflate(R.layout.frag_osm, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_osm, container, false)
 
         //isFullScreen = savedInstanceState?.getBoolean("full_screen") ?: false
 

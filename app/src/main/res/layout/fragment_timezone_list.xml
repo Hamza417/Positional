@@ -10,7 +10,7 @@
     <app.simple.positional.decorations.searchview.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_margin="15dp" />
 
     <app.simple.positional.decorations.views.CustomRecyclerView

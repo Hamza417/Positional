@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.ripple.DynamicRippleLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/time_zone_adapter_item_container"
     android:layout_width="match_parent"
@@ -13,35 +14,53 @@
 
     <ImageView
         android:id="@+id/time_zone_indicator"
-        android:visibility="invisible"
         android:layout_width="8dp"
         android:layout_height="8dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="25dp"
         android:src="@drawable/ic_circle_stroke"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/time_zone_adapter_text"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical">
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/medium"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/info_text_secondary_size"
+        app:layout_constraintBottom_toTopOf="@+id/time_zone_adapter_offset"
+        app:layout_constraintEnd_toStartOf="@+id/time_zone_adapter_format"
+        app:layout_constraintStart_toEndOf="@+id/time_zone_indicator"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/time_zone_adapter_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/medium"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/info_text_secondary_size" />
+    <TextView
+        android:id="@+id/time_zone_adapter_offset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/settings_primary_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/time_zone_adapter_format"
+        app:layout_constraintStart_toEndOf="@+id/time_zone_indicator"
+        app:layout_constraintTop_toBottomOf="@id/time_zone_adapter_text" />
 
-        <TextView
-            android:id="@+id/time_zone_adapter_offset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:textColor="@color/textTertiary"
-            android:textSize="@dimen/settings_primary_text_size" />
+    <TextView
+        android:id="@+id/time_zone_adapter_format"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/settings_primary_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
-</app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+</app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>

@@ -35,7 +35,7 @@ class License : Fragment(), LicenseCheckerCallback {
     private val salt = byteArrayOf(-46, 65, 30, -128, -103, -57, 74, -64, 51, 88, -95, -45, 77, -117, -36, -113, -11, 32, -64, 89)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.frag_license, container, false)
+        val view = inflater.inflate(R.layout.fragment_license, container, false)
 
         licenseLoader = view.findViewById(R.id.licence_loader)
         licenseStatus = view.findViewById(R.id.licence_status)

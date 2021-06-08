@@ -32,7 +32,7 @@
 
     <!-- Top Bar -->
     <dimen name="top_bar_text_size">40sp</dimen>
-    <dimen name="top_bar_button_size">60dp</dimen>
+    <dimen name="app_button_size">60dp</dimen>
 
     <!-- Compass -->
     <dimen name="compass_dial">400dp</dimen>
