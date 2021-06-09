@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.callbacks.LocationAdapterCallback
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.model.Locations
@@ -16,7 +15,7 @@ import app.simple.positional.util.DMSConverter.longitudeAsDMS
 class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
 
     private var locations: MutableList<Locations> = arrayListOf()
-    var locationsAdapterCallback: LocationAdapterCallback? = null
+    var locationsAdapterCallback: LocationsCallback? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_locations, parent, false))
@@ -28,19 +27,12 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
         holder.longitude.text = longitudeAsDMS(locations[position].longitude, 2, holder.itemView.context)
 
         holder.container.setOnClickListener {
-            locationsAdapterCallback?.onLocationItemClicked(locations = locations[position])
+            locationsAdapterCallback?.onLocationClicked(locations = locations[position])
         }
     }
 
     override fun getItemCount(): Int {
         return locations.size
-    }
-
-    inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
-        val container: DynamicRippleLinearLayout = itemView.findViewById(R.id.adapter_locations_container)
-        val address: TextView = itemView.findViewById(R.id.adapter_locations_address)
-        val latitude: TextView = itemView.findViewById(R.id.adapter_locations_latitude)
-        val longitude: TextView = itemView.findViewById(R.id.adapter_locations_longitude)
     }
 
     fun setList(locations: MutableList<Locations>) {
@@ -60,5 +52,20 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
         notifyItemRemoved(position)
         notifyItemRangeChanged(0, locations.size)
         return p0
+    }
+
+    fun setOnLocationsCallbackListener(locationsCallback: LocationsCallback) {
+        this.locationsAdapterCallback = locationsCallback
+    }
+
+    inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
+        val container: DynamicRippleLinearLayout = itemView.findViewById(R.id.adapter_locations_container)
+        val address: TextView = itemView.findViewById(R.id.adapter_locations_address)
+        val latitude: TextView = itemView.findViewById(R.id.adapter_locations_latitude)
+        val longitude: TextView = itemView.findViewById(R.id.adapter_locations_longitude)
+    }
+
+    interface LocationsCallback {
+        fun onLocationClicked(locations: Locations)
     }
 }

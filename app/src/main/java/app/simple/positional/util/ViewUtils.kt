@@ -3,6 +3,8 @@ package app.simple.positional.util
 import android.content.Context
 import android.view.View
 import android.view.WindowManager
+import android.view.animation.AccelerateInterpolator
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 
@@ -47,14 +49,34 @@ object ViewUtils {
     /**
      * Makes the view go away
      */
-    fun View.makeInvisible() {
+    fun View.makeInvisible(animate: Boolean) {
+        if (animate) {
+            this.animate()
+                    .scaleY(0F)
+                    .scaleX(0F)
+                    .alpha(0F)
+                    .setInterpolator(AccelerateInterpolator())
+                    .setDuration(400L)
+                    .start()
+        }
+
         this.visibility = View.INVISIBLE
     }
 
     /**
      * Makes the view come back
      */
-    fun View.makeVisible() {
+    fun View.makeVisible(animate: Boolean) {
+        if (animate) {
+            this.animate()
+                    .scaleY(1F)
+                    .scaleX(1F)
+                    .alpha(1F)
+                    .setInterpolator(LinearOutSlowInInterpolator())
+                    .setDuration(400L)
+                    .start()
+        }
+
         this.visibility = View.VISIBLE
     }
 }

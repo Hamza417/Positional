@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.activities.subactivity.CustomLocationsActivity
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
@@ -171,18 +172,21 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         customLocation.setOnClickListener {
-            toggleCustomLocation.isChecked = true
-            val coordinates = Coordinates().newInstance()
-            coordinates.coordinatesCallback = this
-            coordinates.show(childFragmentManager, "coordinates")
+            toggleCustomLocation.isChecked = !toggleCustomLocation.isChecked
+
+            if (toggleCustomLocation.isChecked && !MainPreferences.isCustomCoordinate()) {
+                startActivity(Intent(requireActivity(), CustomLocationsActivity::class.java))
+            }
+
+            if (!toggleCustomLocation.isChecked) {
+                MainPreferences.setCustomCoordinates(false)
+            }
         }
 
         toggleCustomLocation.setOnCheckedChangeListener { isChecked ->
             if (toggleCustomLocation.isPressed) {
                 if (isChecked) {
-                    val coordinates = Coordinates().newInstance()
-                    coordinates.coordinatesCallback = this
-                    coordinates.show(childFragmentManager, "coordinates")
+                    startActivity(Intent(requireActivity(), CustomLocationsActivity::class.java))
                 } else {
                     MainPreferences.setCustomCoordinates(isChecked)
                 }
@@ -312,6 +316,11 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         legalNotes.show(childFragmentManager, "legal_notes")
     }
 
+    override fun onResume() {
+        super.onResume()
+        toggleCustomLocation.isChecked = MainPreferences.isCustomCoordinate()
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             MainPreferences.locationProvider -> {
@@ -325,6 +334,9 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             }
             MainPreferences.isOSMPanel -> {
                 setCurrentMapsProvider()
+            }
+            MainPreferences.isCustomCoordinate -> {
+                toggleCustomLocation.isChecked = MainPreferences.isCustomCoordinate()
             }
         }
     }

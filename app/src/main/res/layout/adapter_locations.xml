@@ -4,11 +4,12 @@
     android:id="@+id/adapter_locations_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/options_container_horizontal_padding"
     android:background="@drawable/ripple"
     android:clickable="true"
     android:focusable="true"
     android:orientation="horizontal"
-    android:padding="15dp">
+    android:padding="@dimen/options_container_horizontal_padding">
 
     <ImageView
         android:layout_width="30dp"

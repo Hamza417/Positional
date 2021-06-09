@@ -25,9 +25,9 @@ class MapTilesAdapter : RecyclerView.Adapter<MapTilesAdapter.Holder>() {
         holder.name.text = list[position].second
 
         if (list[position].second == OSMPreferences.getMapTileProvider()) {
-            holder.indicator.makeVisible()
+            holder.indicator.makeVisible(false)
         } else {
-            holder.indicator.makeInvisible()
+            holder.indicator.makeInvisible(false)
         }
 
         holder.container.setOnClickListener {

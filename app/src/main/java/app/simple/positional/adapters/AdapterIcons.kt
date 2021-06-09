@@ -24,9 +24,9 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
         holder.icon.setImageResource(list[position])
 
         if (position == getIconStatus(holder.itemView.context)) {
-            holder.tick.makeVisible()
+            holder.tick.makeVisible(false)
         } else {
-            holder.tick.makeInvisible()
+            holder.tick.makeInvisible(false)
         }
 
         holder.container.setOnClickListener {

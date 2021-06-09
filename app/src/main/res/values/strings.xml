@@ -297,4 +297,6 @@
     <string name="notification_desc">Turn off \"Widget Channel\" from the notification settings to hide this notification.</string>
     <string name="save">Save</string>
     <string name="set_and_save">Set and Save</string>
+    <string name="failed">Failed!</string>
+    <string name="set_only">Set Only</string>
 </resources>

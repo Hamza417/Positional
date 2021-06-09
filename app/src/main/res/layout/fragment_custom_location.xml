@@ -146,16 +146,34 @@
 
     </LinearLayout>
 
-    <app.simple.positional.decorations.views.CustomRecyclerView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fadingEdge="vertical"
-        android:fadingEdgeLength="10dp"
-        android:scrollIndicators="none"
-        android:overScrollMode="never"
-        android:requiresFadingEdge="vertical"
-        android:paddingHorizontal="@dimen/options_container_horizontal_padding"
-        app:statusBarPaddingRequired="false" />
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="@color/dividerColor" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/art_empty"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/art_empty"
+            tools:ignore="ContentDescription" />
+
+        <app.simple.positional.decorations.views.CustomRecyclerView
+            android:id="@+id/custom_locations_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadingEdge="vertical"
+            android:background="@android:color/transparent"
+            android:fadingEdgeLength="10dp"
+            android:requiresFadingEdge="vertical"
+            app:statusBarPaddingRequired="false" />
+
+    </FrameLayout>
 
 </app.simple.positional.decorations.padding.PaddingAwareLinearLayout>

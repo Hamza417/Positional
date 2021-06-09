@@ -18,4 +18,12 @@ object LocationExtension {
             locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         }
     }
+
+    fun isValidLongitude(longitude: Double): Boolean {
+        return longitude >= -180 && longitude <= 180
+    }
+
+    fun isValidLatitude(latitude: Double): Boolean {
+        return latitude >= -90 && latitude <= 90
+    }
 }

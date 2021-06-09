@@ -13,12 +13,12 @@ object MainPreferences {
     private const val showAgain = "show_permission_dialog_again"
     private const val showPlayServicesAgain = "show_play_services_dialog_again"
     private const val licenseStatus = "license_status"
-    private const val isCustomCoordinate = "is_custom_coordinate_set"
     private const val address = "specified_address"
     private const val screenOn = "keep_the_screen_on"
     private const val appLanguage = "current_language_locale"
     private const val appCornerRadius = "corner_radius"
     private const val skipSplashScreen = "skip_splash_screen"
+    const val isCustomCoordinate = "is_custom_coordinate_set"
     const val locationProvider = "location_provider"
     const val unit = "all_measurement_unit"
     const val theme = "current_theme"
@@ -151,8 +151,8 @@ object MainPreferences {
         getSharedPreferences().edit().putString(address, value).apply()
     }
 
-    fun getAddress(): String? {
-        return getSharedPreferences().getString(address, "")
+    fun getAddress(): String {
+        return getSharedPreferences().getString(address, "")!!
     }
 
     //--------------------------------------------------------------------------------------------------//
