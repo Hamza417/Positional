@@ -266,4 +266,8 @@
     <string name="gimbal_lock">جیمبل لاک</string>
     <string name="clock_widget_notification">گھڑی ویجیٹ چل رہا ہے۔</string>
     <string name="notification_desc">اس اطلاع کو چھپانے کے لئے نوٹیفیکیشن کی ترتیبات سے \"ویجیٹ چینل\" کو بند کردیں۔</string>
+    <string name="save">محفوظ کریں</string>
+    <string name="set_and_save">سیٹ اور محفوظ کریں</string>
+    <string name="failed">ناکام!</string>
+    <string name="set_only">صرف سیٹ کریں</string>
 </resources>
