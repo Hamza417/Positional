@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/peek_height"
+        android:paddingBottom="25dp"
         android:orientation="vertical">
 
         <app.simple.positional.decorations.padding.PaddingAwareFrameLayout
@@ -84,10 +85,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="25dp"
             android:fontFamily="@font/light"
             android:textColor="@color/textPrimary"
-            android:textSize="16pt" />
+            android:textSize="@dimen/info_text_primary_size" />
 
     </LinearLayout>
 
