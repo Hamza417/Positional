@@ -88,8 +88,8 @@
 
         <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
             android:id="@+id/current_accent"
-            android:layout_width="@dimen/top_bar_button_size"
-            android:layout_height="@dimen/top_bar_button_size"
+            android:layout_width="@dimen/app_button_size"
+            android:layout_height="@dimen/app_button_size"
             android:fontFamily="@font/regular"
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_secondary_text_size" />
