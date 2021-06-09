@@ -1,4 +1,4 @@
-package app.simple.positional.dialogs.miscellaneous
+package app.simple.positional.ui.subpanels
 
 import android.net.Uri
 import android.os.Bundle
@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import app.simple.positional.R
-import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.decorations.views.CustomWebView
+import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.isNetworkAvailable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,12 +20,12 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.net.URL
 
-class HtmlViewer : CustomBottomSheetDialogFragment() {
+class HtmlViewer : ScopedFragment() {
 
     private lateinit var webView: CustomWebView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_html, container, false)
+        return inflater.inflate(R.layout.fragment_webpage, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,7 +33,7 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
 
         webView = view.findViewById(R.id.web_view)
 
-        if (this.arguments != null) {
+        if (this.arguments != null && savedInstanceState.isNull()) {
             when (this.requireArguments().get("source")) {
                 getString(R.string.privacy_policy) -> {
                     webView.loadUrl("file:///android_asset/html/privacy_policy.html")
@@ -87,8 +88,18 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
                 "Media Keys" -> {
                     webView.loadUrl("file:///android_asset/html/media_keys.html")
                 }
+                "null" -> {
+                    webView.loadUrl("file:///android_asset/html/null.html")
+                }
             }
+        } else {
+            webView.restoreState(savedInstanceState!!)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        webView.saveState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     private suspend fun downloadChangeLogs() {
@@ -112,11 +123,9 @@ class HtmlViewer : CustomBottomSheetDialogFragment() {
 
             } else {
                 Toast.makeText(requireContext(), R.string.internet_connection_alert, Toast.LENGTH_SHORT).show()
-                this@HtmlViewer.dismiss()
             }
         } catch (e: FileNotFoundException) {
             Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
-            this@HtmlViewer.dismiss()
         }
     }
 

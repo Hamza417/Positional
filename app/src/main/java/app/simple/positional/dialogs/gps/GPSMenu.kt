@@ -1,16 +1,17 @@
 package app.simple.positional.dialogs.gps
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import app.simple.positional.R
+import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
-import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.preferences.GPSPreferences
 
 class GPSMenu : CustomBottomSheetDialogFragment() {
@@ -130,7 +131,9 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         }
 
         toggleVolumeKeysContainer.setOnLongClickListener {
-            HtmlViewer.newInstance("Media Keys").show(childFragmentManager, "html_viewer")
+            val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
+            intent.putExtra("source", "Media Keys")
+            startActivity(intent)
             true
         }
 

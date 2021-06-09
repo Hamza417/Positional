@@ -24,7 +24,7 @@ class CustomLocationsActivity : BaseActivity() {
         if (savedInstanceState.isNull()) {
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                    .replace(R.id.timezone_container, CustomLocation.newInstance(), "custom_location")
+                    .replace(R.id.sub_container, CustomLocation.newInstance(), "custom_location")
                     .commit()
         }
     }

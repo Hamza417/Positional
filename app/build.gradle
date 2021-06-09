@@ -155,7 +155,6 @@ dependencies {
     // Third Party Implementations
     implementation 'org.shredzone.commons:commons-suncalc:3.4'
     implementation 'com.github.Berico-Technologies:Geo-Coordinate-Conversion-Java:360781e5be'
-    implementation 'com.factor:bouncy:1.8'
 
     // Room components
     implementation "androidx.room:room-ktx:2.3.0"

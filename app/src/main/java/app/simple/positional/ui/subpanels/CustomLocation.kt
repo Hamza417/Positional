@@ -1,5 +1,6 @@
 package app.simple.positional.ui.subpanels
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.location.Address
 import android.location.Geocoder
@@ -21,11 +22,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.adapters.LocationsAdapter
 import app.simple.positional.database.LocationDatabase
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.model.Locations
 import app.simple.positional.popups.CustomLocationPopupMenu
 import app.simple.positional.preferences.MainPreferences
@@ -238,8 +239,9 @@ class CustomLocation : ScopedFragment() {
                         }
                     }
                     getString(R.string.help) -> {
-                        HtmlViewer.newInstance("Custom Coordinates Help")
-                                .show(parentFragmentManager, "custom_coordinates_help")
+                        val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
+                        intent.putExtra("source", "Custom Coordinates Help")
+                        startActivity(intent)
                     }
                 }
             }

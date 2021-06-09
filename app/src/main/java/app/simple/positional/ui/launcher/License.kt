@@ -1,6 +1,7 @@
 package app.simple.positional.ui.launcher
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,8 +14,8 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import app.simple.positional.R
+import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.callbacks.LicenceStatusCallback
-import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.licensing.*
 import app.simple.positional.preferences.MainPreferences.setLicenseStatus
 import app.simple.positional.util.TextViewUtils.setTextAnimation
@@ -89,7 +90,9 @@ class License : Fragment(), LicenseCheckerCallback {
             try {
                 licenseStatus.setTextAnimation(error, 500)
                 licenseLoader.visibility = View.GONE
-                HtmlViewer.newInstance("license_failed").show(childFragmentManager, "license_failed")
+                val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
+                intent.putExtra("source", "license_failed")
+                startActivity(intent)
             } catch (ignored: NullPointerException) {
             }
         }

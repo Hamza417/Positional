@@ -8,14 +8,15 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
+import app.simple.positional.util.NullSafety.isNotNull
 
-@Suppress("unused")
-@Deprecated("This behavior does not execute any scroll event if the view is still animating")
 class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
 
+    private var springAnimation: SpringAnimation? = null
+
     companion object {
-        private const val OVER_SCROLL_AREA = 2
-        private var overScrollY = 0
+        private const val OVER_SCROLL_AREA = 1.5F
+        private var overScrollY = 0F
     }
 
     constructor(context: Context, attributeSet: AttributeSet) : this() {
@@ -40,7 +41,14 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
             axes: Int,
             type: Int
     ): Boolean {
-        overScrollY = 0
+        overScrollY = 0F
+        val group = target as ViewGroup
+        val count = group.childCount
+        if (springAnimation.isNotNull()) springAnimation!!.cancel()
+        for (i in 0 until count) {
+            val view = group.getChildAt(i)
+            view.clearAnimation()
+        }
         return true
     }
 
@@ -61,7 +69,7 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
         val count = group.childCount
         for (i in 0 until count) {
             val view = group.getChildAt(i)
-            view.translationY = overScrollY.toFloat()
+            view.translationY = overScrollY
         }
     }
 
@@ -83,7 +91,7 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
             velocityY: Float
     ): Boolean {
         // Scroll view by inertia when current position equals to 0
-        if (overScrollY == 0) {
+        if (overScrollY == 0F) {
             return false
         }
         // Smooth animate to 0 when user fling view
@@ -104,13 +112,13 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
         for (i in 0 until count) {
             val view = group.getChildAt(i)
 
-            val springAnimation = SpringAnimation(view, DynamicAnimation.TRANSLATION_Y)
-            springAnimation.spring = SpringForce()
+            springAnimation = SpringAnimation(view, DynamicAnimation.TRANSLATION_Y)
+            springAnimation!!.spring = SpringForce()
                     .setFinalPosition(0f)
                     .setDampingRatio(SpringForce.DAMPING_RATIO_NO_BOUNCY)
                     .setStiffness(SpringForce.STIFFNESS_LOW)
 
-            springAnimation.start()
+            springAnimation!!.start()
         }
     }
 }

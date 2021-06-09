@@ -259,6 +259,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".activities.subactivity.WebPageViewerActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".activities.main.WidgetDialogActivity"
             android:autoRemoveFromRecents="true"
             android:clearTaskOnLaunch="true"

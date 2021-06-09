@@ -25,7 +25,7 @@ class TimezonePickerActivity : BaseActivity() {
         if (savedInstanceState.isNull()) {
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                    .replace(R.id.timezone_container, TimeZones.newInstance(), "timezone")
+                    .replace(R.id.sub_container, TimeZones.newInstance(), "timezone")
                     .commit()
         }
     }

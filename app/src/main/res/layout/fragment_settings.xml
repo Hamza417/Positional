@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.factor.bouncy.BouncyNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/settings_scroll_view"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:overScrollMode="always"
-    android:paddingBottom="@dimen/bottom_nav_height"
-    app:damping_ratio="DAMPING_RATIO_NO_BOUNCY"
-    app:fling_animation_size="0.75"
-    app:overscroll_animation_size="0.75"
-    app:stiffness="STIFFNESS_LOW">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <app.simple.positional.decorations.padding.PaddingAwareNestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/settings_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/bottom_nav_height"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:overScrollMode="always"
+        app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:fontFamily="@font/heading"
-            android:paddingStart="10dp"
-            android:text="@string/settings"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/top_bar_text_size"
-            android:textStyle="bold"
-            tools:ignore="RtlSymmetry" />
+            android:orientation="vertical">
 
-        <include layout="@layout/pref_appearance" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:fontFamily="@font/heading"
+                android:paddingStart="10dp"
+                android:text="@string/settings"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/top_bar_text_size"
+                android:textStyle="bold"
+                tools:ignore="RtlSymmetry" />
 
-        <include layout="@layout/pref_configuration" />
+            <include layout="@layout/pref_appearance" />
 
-        <include layout="@layout/pref_about" />
+            <include layout="@layout/pref_configuration" />
 
-        <include layout="@layout/pref_contribute" />
+            <include layout="@layout/pref_about" />
 
-    </LinearLayout>
+            <include layout="@layout/pref_contribute" />
 
-</com.factor.bouncy.BouncyNestedScrollView>
+        </LinearLayout>
 
+    </app.simple.positional.decorations.padding.PaddingAwareNestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

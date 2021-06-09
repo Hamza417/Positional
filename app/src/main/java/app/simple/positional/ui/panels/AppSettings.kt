@@ -13,22 +13,22 @@ import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.CustomLocationsActivity
+import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+import app.simple.positional.decorations.padding.PaddingAwareNestedScrollView
 import app.simple.positional.decorations.popup.PopupMenuCallback
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.app.AccentColor
-import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.popups.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.LocaleHelper.localeList
 import app.simple.positional.util.StatusBarHeight
-import com.factor.bouncy.BouncyNestedScrollView
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
@@ -38,7 +38,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private var xOff = 0F
     private var yOff = 0F
 
-    private lateinit var scrollView: BouncyNestedScrollView
+    private lateinit var scrollView: PaddingAwareNestedScrollView
     private lateinit var buyFull: DynamicRippleLinearLayout
     private lateinit var unit: DynamicRippleLinearLayout
     private lateinit var locationProvider: DynamicRippleLinearLayout
@@ -249,15 +249,21 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         translate.setOnClickListener {
-            HtmlViewer.newInstance("translator").show(childFragmentManager, "translator")
+            val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
+            intent.putExtra("source", "translator")
+            startActivity(intent)
         }
 
         foundIssues.setOnClickListener {
-            HtmlViewer.newInstance("Found Issue").show(childFragmentManager, "Found Issue")
+            val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
+            intent.putExtra("source", "Found Issue")
+            startActivity(intent)
         }
 
         buyFull.setOnClickListener {
-            HtmlViewer.newInstance("Buy").show(childFragmentManager, "buy")
+            val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
+            intent.putExtra("source", "Buy")
+            startActivity(intent)
         }
 
         toggleSkipSplashScreen.setOnCheckedChangeListener { isChecked ->
@@ -312,8 +318,9 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     }
 
     override fun onMenuItemClicked(source: String) {
-        val legalNotes = HtmlViewer.newInstance(source)
-        legalNotes.show(childFragmentManager, "legal_notes")
+        val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
+        intent.putExtra("source", source)
+        startActivity(intent)
     }
 
     override fun onResume() {
