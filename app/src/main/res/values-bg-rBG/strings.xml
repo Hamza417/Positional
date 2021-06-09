@@ -268,4 +268,6 @@
     <string name="notification_desc">Изключете „Widget Channel“ от настройките за известяване, за да скриете това известие.</string>
     <string name="save">Запази</string>
     <string name="set_and_save">Задайте и запазете</string>
+    <string name="failed">Неуспешно!</string>
+    <string name="set_only">Приложи</string>
 </resources>
