@@ -1,5 +1,6 @@
 package app.simple.positional.util
 
+import android.animation.Animator
 import android.content.Context
 import android.view.View
 import android.view.WindowManager
@@ -7,6 +8,7 @@ import android.view.animation.AccelerateInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
 import app.simple.positional.util.ColorUtils.resolveAttrColor
+import app.simple.positional.util.ViewUtils.makeInvisible
 
 object ViewUtils {
     /**
@@ -48,6 +50,8 @@ object ViewUtils {
 
     /**
      * Makes the view go away
+     *
+     * @param animate adds animation to the process
      */
     fun View.makeInvisible(animate: Boolean) {
         if (animate) {
@@ -57,14 +61,33 @@ object ViewUtils {
                     .alpha(0F)
                     .setInterpolator(AccelerateInterpolator())
                     .setDuration(400L)
-                    .start()
-        }
+                    .setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(animation: Animator?) {
+                            /* no-op */
+                        }
 
-        this.visibility = View.INVISIBLE
+                        override fun onAnimationEnd(animation: Animator?) {
+                            this@makeInvisible.visibility = View.INVISIBLE
+                        }
+
+                        override fun onAnimationCancel(animation: Animator?) {
+                            /* no-op */
+                        }
+
+                        override fun onAnimationRepeat(animation: Animator?) {
+                            /* no-op */
+                        }
+                    })
+                    .start()
+        } else {
+            this.visibility = View.INVISIBLE
+        }
     }
 
     /**
      * Makes the view come back
+     *
+     * @param animate adds animation to the process
      */
     fun View.makeVisible(animate: Boolean) {
         if (animate) {
@@ -74,9 +97,26 @@ object ViewUtils {
                     .alpha(1F)
                     .setInterpolator(LinearOutSlowInInterpolator())
                     .setDuration(400L)
-                    .start()
-        }
+                    .setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(animation: Animator?) {
+                            this@makeVisible.visibility = View.VISIBLE
+                        }
 
-        this.visibility = View.VISIBLE
+                        override fun onAnimationEnd(animation: Animator?) {
+                            /* no-op */
+                        }
+
+                        override fun onAnimationCancel(animation: Animator?) {
+                            /* no-op */
+                        }
+
+                        override fun onAnimationRepeat(animation: Animator?) {
+                            /* no-op */
+                        }
+                    })
+                    .start()
+        } else {
+            this.visibility = View.VISIBLE
+        }
     }
 }

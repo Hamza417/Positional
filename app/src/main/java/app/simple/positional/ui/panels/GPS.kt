@@ -52,6 +52,7 @@ import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.TextViewUtils.setTextAnimation
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.*

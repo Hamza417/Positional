@@ -45,6 +45,7 @@ import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
+import app.simple.positional.util.TextViewUtils.setTextAnimation
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
 import org.shredzone.commons.suncalc.*

@@ -19,8 +19,8 @@ import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper.fromHtml
+import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.UTMConverter
-import app.simple.positional.util.setTextAnimation
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
 import kotlinx.coroutines.Dispatchers

@@ -51,7 +51,7 @@ import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.NullSafety.isNull
-import app.simple.positional.util.setTextAnimation
+import app.simple.positional.util.TextViewUtils.setTextAnimation
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

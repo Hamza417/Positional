@@ -17,7 +17,7 @@ import app.simple.positional.callbacks.LicenceStatusCallback
 import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.licensing.*
 import app.simple.positional.preferences.MainPreferences.setLicenseStatus
-import app.simple.positional.util.setTextAnimation
+import app.simple.positional.util.TextViewUtils.setTextAnimation
 
 class License : Fragment(), LicenseCheckerCallback {
 

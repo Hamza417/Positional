@@ -29,6 +29,7 @@ import app.simple.positional.dialogs.miscellaneous.HtmlViewer
 import app.simple.positional.model.Locations
 import app.simple.positional.popups.CustomLocationPopupMenu
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.TextViewUtils.capitalizeText
 import app.simple.positional.util.ViewUtils.makeInvisible
 import app.simple.positional.util.ViewUtils.makeVisible
 import com.google.android.material.textfield.TextInputEditText
@@ -39,6 +40,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 
 class CustomLocation : ScopedFragment() {
 
@@ -132,7 +134,11 @@ class CustomLocation : ScopedFragment() {
                                         val locations = Locations()
 
                                         try {
-                                            locations.address = addressInputEditText.text.toString()
+                                            locations.address = if (addressInputEditText.text.isNullOrEmpty()) {
+                                                "----"
+                                            } else {
+                                                addressInputEditText.text.toString().capitalizeText()
+                                            }
                                             locations.latitude = latitudeInputEditText.text.toString().toDouble()
                                             locations.longitude = longitudeInputEditText.text.toString().toDouble()
                                             locations.date = System.currentTimeMillis()
@@ -178,7 +184,11 @@ class CustomLocation : ScopedFragment() {
                                         val locations = Locations()
 
                                         try {
-                                            locations.address = addressInputEditText.text.toString()
+                                            locations.address = if (addressInputEditText.text.isNullOrEmpty()) {
+                                                "----"
+                                            } else {
+                                                addressInputEditText.text.toString().capitalizeText()
+                                            }
                                             locations.latitude = latitudeInputEditText.text.toString().toDouble()
                                             locations.longitude = longitudeInputEditText.text.toString().toDouble()
                                             locations.date = System.currentTimeMillis()
@@ -212,7 +222,7 @@ class CustomLocation : ScopedFragment() {
                                             MainPreferences.setCustomCoordinates(true)
                                             MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
                                             MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
-                                            MainPreferences.setAddress(addressInputEditText.text.toString())
+                                            MainPreferences.setAddress(addressInputEditText.text.toString().capitalizeText())
                                         } catch (e: NumberFormatException) {
                                             MainPreferences.setCustomCoordinates(false)
                                         }
@@ -308,6 +318,9 @@ class CustomLocation : ScopedFragment() {
         })
     }
 
+    /**
+     * Always runs the toast message from the main thread
+     */
     private fun showToast(message: String) {
         handler.post {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
@@ -352,7 +365,9 @@ class CustomLocation : ScopedFragment() {
         }
     }
 
-    private val simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+    private val simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object
+        : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
             return false
         }
