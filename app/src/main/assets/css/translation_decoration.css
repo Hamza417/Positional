@@ -65,7 +65,7 @@ body {
 	 top: 0%;
 	 right: -8px;
 	 z-index: 99;
-	 box-shadow: 0px 2.5px 5px rgba(46, 134, 193, 50%);
+	 box-shadow: 0 2.5px 5px rgba(46, 134, 193, 50%);
 	 animation: scale 1.5s alternate infinite ease-in-out;
 }
  .entry .title h3 {
