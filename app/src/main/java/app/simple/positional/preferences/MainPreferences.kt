@@ -18,6 +18,7 @@ object MainPreferences {
     private const val appLanguage = "current_language_locale"
     private const val appCornerRadius = "corner_radius"
     private const val skipSplashScreen = "skip_splash_screen"
+    private const val ratingDialog = "is_showing_rating_dialog"
     const val isCustomCoordinate = "is_custom_coordinate_set"
     const val locationProvider = "location_provider"
     const val unit = "all_measurement_unit"
@@ -92,6 +93,16 @@ object MainPreferences {
 
     fun getShowPlayServiceDialog(): Boolean {
         return getSharedPreferences().getBoolean(showPlayServicesAgain, true)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setShowRatingDialog(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(ratingDialog, value).apply()
+    }
+
+    fun getShowRatingDialog(): Boolean {
+        return getSharedPreferences().getBoolean(ratingDialog, true)
     }
 
     //--------------------------------------------------------------------------------------------------//

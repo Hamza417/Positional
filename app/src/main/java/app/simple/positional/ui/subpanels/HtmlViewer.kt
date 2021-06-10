@@ -20,6 +20,7 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.net.URL
 
+
 class HtmlViewer : ScopedFragment() {
 
     private lateinit var webView: CustomWebView

@@ -13,21 +13,18 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
-import app.simple.positional.dialogs.app.PermissionDialogFragment
+import app.simple.positional.dialogs.app.Permission
+import app.simple.positional.dialogs.app.Rate
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.services.FusedLocationService
 import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.smoothbottombar.SmoothBottomBar
-import app.simple.positional.ui.*
 import app.simple.positional.ui.panels.*
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 import app.simple.positional.util.NullSafety.isNull
-import com.google.android.play.core.review.ReviewInfo
-import com.google.android.play.core.review.ReviewManagerFactory
-import java.util.*
 
 class MainActivity
     : BaseActivity(),
@@ -36,7 +33,6 @@ class MainActivity
       android.content.SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val defaultPermissionRequestCode = 123
-    private var reviewInfo: ReviewInfo? = null
     private lateinit var bottomBar: SmoothBottomBar
     private lateinit var bottomBarWrapper: DynamicCornerFrameLayout
     private val fragmentTags = arrayOf("clock", "compass", "gps", "level", "settings")
@@ -64,21 +60,12 @@ class MainActivity
     }
 
     private fun showReviewPromptToUser() {
-        if (MainPreferences.getLaunchCount() < 5) {
+        if (MainPreferences.getLaunchCount() < 3) {
             MainPreferences.setLaunchCount(MainPreferences.getLaunchCount() + 1)
             return
-        }
-
-        val manager = ReviewManagerFactory.create(this)
-        manager.requestReviewFlow().addOnCompleteListener { request ->
-            if (request.isSuccessful) {
-                reviewInfo = request.result
-                reviewInfo?.let {
-                    val flow = manager.launchReviewFlow(this@MainActivity, it)
-                    flow.addOnCompleteListener {
-                        /* no-op */
-                    }
-                }
+        } else {
+            if (MainPreferences.getShowRatingDialog()) {
+                Rate().show(supportFragmentManager, "rate")
             }
         }
     }
@@ -99,7 +86,7 @@ class MainActivity
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (MainPreferences.getShowPermissionDialog()) {
-                val permissionDialog = PermissionDialogFragment().newInstance()
+                val permissionDialog = Permission().newInstance()
                 permissionDialog.show(supportFragmentManager, "permission_info")
             } else {
                 Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_LONG).show()
@@ -227,9 +214,6 @@ class MainActivity
                 } catch (e: IllegalStateException) {
                     Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
                 }
-            }
-            MainPreferences.isOSMPanel -> {
-
             }
         }
     }

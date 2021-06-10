@@ -8,11 +8,13 @@ import android.widget.Toast
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 
+
 class CustomWebView(context: Context, attributeSet: AttributeSet) : WebView(context, attributeSet) {
     init {
-        this.setBackgroundColor(0)
-        this.settings.allowContentAccess = true
-        this.settings.allowFileAccess = true
+        setBackgroundColor(0)
+        settings.allowContentAccess = true
+        settings.allowFileAccess = true
+        settings.setSupportZoom(true)
 
         if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
             if (context.resources.configuration.uiMode and

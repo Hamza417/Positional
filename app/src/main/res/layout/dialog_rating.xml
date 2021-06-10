@@ -10,7 +10,7 @@
 
     <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dialog_height"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/toolbarBackground"
         android:elevation="40dp"
         android:orientation="vertical">
@@ -31,7 +31,7 @@
                 app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
                 <app.simple.positional.decorations.views.CustomWebView
-                    android:id="@+id/permissions_webview"
+                    android:id="@+id/rating_webview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -50,7 +50,7 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/show_perm_dialog"
+                android:id="@+id/show_rate_dialog"
                 style="@style/Widget.AppCompat.CompoundButton.CheckBox"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -79,14 +79,14 @@
                 android:textColor="@color/textPrimary" />
 
             <app.simple.positional.decorations.ripple.DynamicRippleButton
-                android:id="@+id/grant"
+                android:id="@+id/rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ripple_btn"
                 android:fontFamily="@font/medium"
-                android:text="@string/button_grant"
+                android:text="@string/sure"
                 android:textColor="@color/textPrimary" />
 
         </LinearLayout>

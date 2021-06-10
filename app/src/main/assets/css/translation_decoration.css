@@ -59,12 +59,14 @@ body {
 	 position: absolute;
 	 width: 8px;
 	 height: 8px;
-	 border: 4px solid salmon;
-	 background-color: #fff;
+	 border: 4px solid rgb(46, 134, 193);
+	 background-color: #FFFFFF;
 	 border-radius: 100%;
-	 top: 7.5%;
+	 top: 0%;
 	 right: -8px;
 	 z-index: 99;
+	 box-shadow: 0px 2.5px 5px rgba(46, 134, 193, 50%);
+	 animation: scale 1.5s alternate infinite ease-in-out;
 }
  .entry .title h3 {
 	 margin: 0;
@@ -98,13 +100,18 @@ body {
 }
 
 h1 {
-	color: salmon;
+	color: rgb(46, 134, 193);
 	font-family: 'main_font';
 	text-align: left;
 }
 
 a:link {
-	color: salmon;
+	color: rgb(46, 134, 193);
 	text-decoration: none;
 	background-color: transparent;
+}
+
+@keyframes scale {
+  0%   {transform: scale(.8);}
+  100% {transform: scale(1.2);}
 }

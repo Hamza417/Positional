@@ -12,10 +12,10 @@ import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomWebView
 import app.simple.positional.preferences.MainPreferences.setShowPermissionDialog
 
-class PermissionDialogFragment : CustomBottomSheetDialogFragment() {
+class Permission : CustomBottomSheetDialogFragment() {
 
-    fun newInstance(): PermissionDialogFragment {
-        return PermissionDialogFragment()
+    fun newInstance(): Permission {
+        return Permission()
     }
 
     private var permissionCallbacks: PermissionCallbacks? = null

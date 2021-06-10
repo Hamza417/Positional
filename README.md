@@ -21,7 +21,7 @@
 [![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
 [![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
 
-[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build111/app-lite-release.apk)
+[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build112/app-lite-release.apk)
 
 [![Intro](https://img.shields.io/youtube/views/H9UT8gCuvgk?label=Watch%20App%20Intro&logo=Youtube&logoColor=red&style=social)](https://youtu.be/H9UT8gCuvgk)
 
