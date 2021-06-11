@@ -135,7 +135,7 @@
     <!-- Settings Description -->
     <string name="theme_follow_system">سسٹم پر عمل کریں</string>
     <string name="theme_day">روشنی</string>
-    <string name="theme_night">گہرا</string>
+    <string name="theme_night">اندھیرا</string>
     <string name="theme_auto">آٹو (دن / رات)</string>
     <string name="desc_skip_splash_Screen">جب ایپ لانچ ہوتی ہے تو سپلاش سکرین نہ دکھائیں اورمین اسکرین پر جائیں</string>
     <string name="desc_specified_location">عرض البلد اور طول البلد کی وضاحت کریں اور معلومات لانے کیلئے اس کا استعمال کریں۔ کوئی بھی معلومات جو صرف GPS استعمال کرتی ہے وہ متاثر نہیں ہوگی۔</string>
@@ -151,8 +151,8 @@
     <string name="motion_type_smooth">ہموار</string>
     <string name="motion_type_tick">روک روک کر</string>
     <!-- Compass Menu -->
-    <string name="bloom">بلوم</string>
-    <string name="bloom_skins">بلوم تھیم</string>
+    <string name="bloom">پھول</string>
+    <string name="bloom_skins">پھول کی تھیم</string>
     <string name="show_code">صرف کوڈ دکھائیں</string>
     <!-- GPS Menu -->
     <string name="show_label">لیبل دکھائیں</string>
@@ -244,7 +244,6 @@
     <string name="desc_location_provider_note">نوٹ: کسی بھی API کا استعمال مختلف عوامل پر انحصار کرتے ہوئے مختلف نتائج دے سکتا ہے اور ان میں سے کوئی بھی ایک دوسرے کے لئے درستگی کا ثبوت نہیں ہے ، APIs کی جانچ کریں اور منتخب کردہ کو منتخب کریں جو آپ کے علاقے میں بہترین کام کرتا ہے۔</string>
     <string name="use_media_keys">میڈیا کیز کا استعمال کریں</string>
     <string name="auto_center_map">آٹو سینٹر</string>
-    <string name="use_smaller_icon">چھوٹے شبیہیں استعمال کریں</string>
     <string name="last_updated">آخری تازہ کاری</string>
     <string name="coefficient_of_magnetic_field">مقناطیسی فیلڈ کا قابلیت</string>
     <string name="damping_coefficient">ڈمپنگ کے گتانک</string>
