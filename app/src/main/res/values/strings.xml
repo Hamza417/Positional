@@ -273,7 +273,6 @@
     /* Unorganized strings that were added later */
     <string name="use_media_keys">Use Media Keys</string>
     <string name="auto_center_map">Auto Center Map</string>
-    <string name="use_smaller_icon">Use Smaller Icon</string>
     <string name="last_updated">Last Updated</string>
     <string name="coefficient_of_magnetic_field">Coefficient of Magnetic Field</string>
     <string name="damping_coefficient">Damping Coefficient</string>
