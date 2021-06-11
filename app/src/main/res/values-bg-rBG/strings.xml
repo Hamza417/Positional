@@ -244,7 +244,6 @@
     <string name="desc_location_provider_note">Забележка: Използването на който и да е от API може да даде различни резултати в зависимост от различните фактори и нито един от тях не е доказателство за точност един за друг, тествайте API и запазете избрания, който работи най-добре във вашия регион.</string>
     <string name="use_media_keys">Използвай мултимедийни бутони</string>
     <string name="auto_center_map">Центрирай картата</string>
-    <string name="use_smaller_icon">Използвайте по-малка икона</string>
     <string name="last_updated">Последно обновен</string>
     <string name="coefficient_of_magnetic_field">Коефициент на магнитно поле</string>
     <string name="damping_coefficient">Степен на заглушаване</string>
