@@ -244,7 +244,6 @@
     <string name="desc_location_provider_note">नोट: किसी भी एपीआई का उपयोग विभिन्न कारकों के आधार पर अलग-अलग परिणाम दे सकती है और उनमें से कोई भी एक दूसरे के लिए सटीकता का प्रमाण नहीं है, एपीआई का परीक्षण करें और आपके क्षेत्र में सबसे अच्छा काम करने वाले चयनितों को रखें।</string>
     <string name="use_media_keys">मीडिया कुंजियों का उपयोग करें</string>
     <string name="auto_center_map">ऑटो सेंटर</string>
-    <string name="use_smaller_icon">छोटे चिह्न का उपयोग करें</string>
     <string name="last_updated">आखरी अपडेट</string>
     <string name="coefficient_of_magnetic_field">चुंबकीय क्षेत्र का गुणांक</string>
     <string name="damping_coefficient">भिगोना गुणांक</string>
