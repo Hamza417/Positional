@@ -244,7 +244,6 @@
     <string name="desc_location_provider_note">Note: Using any of the APIs can give different results depending on the various factors and none of them are a proof of accuracy for one another, test the APIs and keep the one selected that works best within your region.</string>
     <string name="use_media_keys">Use Media Keys</string>
     <string name="auto_center_map">Auto Center Map</string>
-    <string name="use_smaller_icon">Use Smaller Icon</string>
     <string name="last_updated">Last Updated</string>
     <string name="coefficient_of_magnetic_field">Coefficient of Magnetic Field</string>
     <string name="damping_coefficient">Damping Coefficient</string>
@@ -270,4 +269,5 @@
     <string name="set_and_save">Set and Save</string>
     <string name="failed">Failed!</string>
     <string name="set_only">Set Only</string>
+    <string name="sure">Sure</string>
 </resources>
