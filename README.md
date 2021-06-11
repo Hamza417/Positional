@@ -7,11 +7,11 @@
 <br/>
 
 ## What's This ?
-  **Positional** is a location based app that utilises the phone's GPS hardware and fetches various details of the current latitude and longitude data like Altitude, Speed, Address and similar other information and show it in easily understandable format to the user. Along side this main functionality of being a location app, Positional also provides a separate panel for **Compass** and **Clock** and they serve their own purpose based on their name.
-  
-  **Compass** provides info related to direction and **Clock** fetches the time related information based on the current location and timezone and also sun's information like Sunset, Sunrise, Twilight and many other info.
-  
-  On top of all the core functionality Positional is a highly polished app and provides another layer of flexibility to customize the app as per liking including skins for Clock and Compass faces, colors, and many other features that should have been there.
+**Positional** is a location based app that utilizes the device's GPS and fetches various details of the current latitude and longitude data like Altitude, Speed, Address and similar other information and show it in easily understandable format to the user. Alongside this main functionality of being a location app, Positional also provides a separate panel for **Compass** and **Clock**, and they serve their own purpose as their name suggests.
+
+**Compass** provides info related to direction and **Clock** fetches the time related information based on the current location and time zone and also sun's information like Sunset, Sunrise, Twilight and a good deal of other info.
+
+On top of all the core functionality Positional is a highly polished app and provides another layer of flexibility to customize the app as per liking including skins for Clock and Compass faces, colors, and many other features that should have been there.
 
 <br/>
 
@@ -109,8 +109,8 @@
 
 ## Road Map
   * Add a custom date mode along with specified coordinates
-  * Move specified coordinates into a separate activity
   * Add a timeline view for moon dates upto a few years in the future and past
+  * Add a 3D solar data model for visual representation
   * Solar and Lunar Eclipse dates
 
 <br/>
