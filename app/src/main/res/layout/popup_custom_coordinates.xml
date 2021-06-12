@@ -7,7 +7,7 @@
     android:clipChildren="true"
     android:clipToPadding="true"
     android:orientation="vertical"
-    android:padding="@dimen/options_item_padding"
+    android:padding="@dimen/popup_padding"
     tools:parentTag="android.widget.LinearLayout">
 
     <app.simple.positional.decorations.ripple.DynamicRippleTextView

@@ -16,8 +16,8 @@ import app.simple.positional.activities.subactivity.CustomLocationsActivity
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
-import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.padding.PaddingAwareNestedScrollView
+import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.popup.PopupMenuCallback
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
@@ -28,7 +28,6 @@ import app.simple.positional.dialogs.settings.*
 import app.simple.positional.popups.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.LocaleHelper.localeList
-import app.simple.positional.util.StatusBarHeight
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
@@ -102,13 +101,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         currentLanguage = view.findViewById(R.id.current_language)
         currentLocationProvider = view.findViewById(R.id.current_location_provider)
         currentMapsProvider = view.findViewById(R.id.current_map_provider)
-
-        scrollView.setPadding(
-                scrollView.paddingLeft,
-                scrollView.paddingTop + StatusBarHeight.getStatusBarHeight(resources),
-                scrollView.paddingRight,
-                scrollView.paddingBottom
-        )
 
         return view
     }
@@ -236,8 +228,8 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         legalNotes.setOnClickListener {
-            val popupMenu = LegalNotesPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.menu_notes,
-                    DynamicCornerLinearLayout(context, null),
+            val popupMenu = LegalNotesPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.popup_legal_notes,
+                    PopupLinearLayout(context),
                     true), legalNotes, xOff, yOff)
             popupMenu.popupMenuCallback = this
         }

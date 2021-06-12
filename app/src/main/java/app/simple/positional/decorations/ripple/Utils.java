@@ -62,7 +62,7 @@ public class Utils {
         return rippleDrawable;
     }
     
-    static RippleDrawable getRippleDrawable(Context context, Drawable backgroundDrawable, float divisiveFactor) {
+    public static RippleDrawable getRippleDrawable(Context context, Drawable backgroundDrawable, float divisiveFactor) {
         float[] outerRadii = new float[8];
         float[] innerRadii = new float[8];
         Arrays.fill(outerRadii, MainPreferences.INSTANCE.getCornerRadius() / divisiveFactor);

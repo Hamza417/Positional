@@ -102,7 +102,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
         }
 
-        moveMap()
+        moveMap(false)
         addMarker()
 
         if (GPSPreferences.isUsingVolumeKeys()) {
@@ -177,16 +177,19 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         return super.dispatchTouchEvent(event)
     }
 
-    fun moveMap() {
-        /**
-         * Treat Speed as duration
-         */
-        controller.animateTo(
-                GeoPoint(latLng!!.latitude, latLng!!.longitude),
-                GPSPreferences.getMapZoom().toDouble(),
-                3000,
-                bearing
-        )
+    fun moveMap(animate: Boolean) {
+        if (animate) {
+            /**
+             * Treat Speed as duration
+             */
+            controller.animateTo(
+                    GeoPoint(latLng!!.latitude, latLng!!.longitude),
+                    GPSPreferences.getMapZoom().toDouble(),
+                    3000,
+                    bearing)
+        } else {
+            controller.setCenter(GeoPoint(latLng!!.latitude, latLng!!.longitude))
+        }
 
         // controller.setCenter(GeoPoint(latLng!!.latitude, latLng!!.longitude))
     }
@@ -198,7 +201,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         controller.animateTo(
                 GeoPoint(latLng!!.latitude, latLng!!.longitude),
                 15.0,
-                3000,
+                3000L,
                 if (isBearingRotation) bearing else 0F
         )
 
@@ -261,7 +264,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                     }
                 }
 
-                moveMap()
+                moveMap(true)
             }
             viewHandler.postDelayed(this, 6000L)
         }

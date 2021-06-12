@@ -350,7 +350,7 @@ class OSM : ScopedFragment() {
         toolbar.setOnMapToolbarCallbacks(object : MapToolbar.MapToolbarCallbacks {
             override fun onLocationReset(view: View?) {
                 updateViews(customLatitude, customLongitude)
-                mapView!!.moveMap()
+                mapView!!.moveMap(true)
             }
 
             override fun onMenuClicked(view: View?) {
@@ -482,7 +482,7 @@ class OSM : ScopedFragment() {
                         mapView!!.controller.zoomOut()
                     }
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
-                        mapView!!.moveMap()
+                        mapView!!.moveMap(true)
                     }
                     KeyEvent.KEYCODE_BACK -> {
                         requireActivity().onBackPressed()
