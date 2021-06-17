@@ -15,10 +15,12 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.dynamicanimation.animation.DynamicAnimation
+import androidx.dynamicanimation.animation.SpringAnimation
+import androidx.dynamicanimation.animation.SpringForce
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
@@ -54,6 +56,11 @@ class Level : ScopedFragment(), SensorEventListener {
     private var gravityWidthMotionCompensator = 0f
     private var gravityHeightMotionCompensator = 0f
 
+    private var anim1X: SpringAnimation? = null
+    private var anim1Y: SpringAnimation? = null
+    private var anim2X: SpringAnimation? = null
+    private var anim2Y: SpringAnimation? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_level, container, false)
 
@@ -63,6 +70,11 @@ class Level : ScopedFragment(), SensorEventListener {
         levelX = view.findViewById(R.id.level_x)
         levelY = view.findViewById(R.id.level_y)
         styleButton = view.findViewById(R.id.level_circle)
+
+        anim1X = SpringAnimation(levelIndicator, DynamicAnimation.SCALE_X)
+        anim1Y = SpringAnimation(levelIndicator, DynamicAnimation.SCALE_Y)
+        anim2X = SpringAnimation(levelDot, DynamicAnimation.SCALE_X)
+        anim2Y = SpringAnimation(levelDot, DynamicAnimation.SCALE_Y)
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
         if (sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY) != null) {
@@ -102,36 +114,56 @@ class Level : ScopedFragment(), SensorEventListener {
         setStyle()
 
         boundingBox.setOnTouchListener { _, event ->
+
+            val dampingRation = 0.32F
+            val stiffness = SpringForce.STIFFNESS_VERY_LOW
+            val scaleLarge = 1.3F
+            val scaleNormal = 1.0F
+
+            val springForceLarge = SpringForce()
+                    .setDampingRatio(dampingRation)
+                    .setStiffness(stiffness)
+                    .setFinalPosition(scaleLarge)
+
+            val springForceNormal = SpringForce()
+                    .setDampingRatio(dampingRation)
+                    .setStiffness(stiffness)
+                    .setFinalPosition(scaleNormal)
+
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    levelIndicator.animate()
-                            .scaleX(1.3f)
-                            .scaleY(1.3f)
-                            .setDuration(1000)
-                            .setInterpolator(DecelerateInterpolator())
-                            .start()
+                    anim1X?.cancel()
+                    anim1Y?.cancel()
 
-                    levelDot.animate()
-                            .scaleX(1.3f)
-                            .scaleY(1.3f)
-                            .setDuration(1000)
-                            .setInterpolator(DecelerateInterpolator())
-                            .start()
+                    anim1X?.spring = springForceLarge
+                    anim1Y?.spring = springForceLarge
+                    anim1X?.start()
+                    anim1Y?.start()
+
+                    anim2X?.cancel()
+                    anim2Y?.cancel()
+
+                    anim2X?.spring = springForceLarge
+                    anim2Y?.spring = springForceLarge
+                    anim2X?.start()
+                    anim2Y?.start()
                 }
                 MotionEvent.ACTION_UP -> {
-                    levelIndicator.animate()
-                            .scaleX(1f)
-                            .scaleY(1f)
-                            .setDuration(1000)
-                            .setInterpolator(DecelerateInterpolator())
-                            .start()
+                    anim1X?.cancel()
+                    anim1Y?.cancel()
 
-                    levelDot.animate()
-                            .scaleX(1f)
-                            .scaleY(1f)
-                            .setDuration(1000)
-                            .setInterpolator(DecelerateInterpolator())
-                            .start()
+                    anim1X?.spring = springForceNormal
+                    anim1Y?.spring = springForceNormal
+                    anim1X?.start()
+                    anim1Y?.start()
+
+                    anim2X?.cancel()
+                    anim2Y?.cancel()
+
+                    anim2X?.spring = springForceNormal
+                    anim2Y?.spring = springForceNormal
+                    anim2X?.start()
+                    anim2Y?.start()
                 }
             }
             true
@@ -201,14 +233,17 @@ class Level : ScopedFragment(), SensorEventListener {
     }
 
     private fun setStyle() {
-        if (LevelPreferences.isSquareStyle()) {
-            loadImage(R.drawable.level_indicator_square, levelIndicator, requireContext(), 0)
-            loadImage(R.drawable.level_dot_square, levelDot, requireContext(), 100)
-            loadImage(R.drawable.ic_square, styleButton, requireContext(), 0)
-        } else {
-            loadImage(R.drawable.level_indicator, levelIndicator, requireContext(), 0)
-            loadImage(R.drawable.level_dot, levelDot, requireContext(), 100)
-            loadImage(R.drawable.ic_circle, styleButton, requireContext(), 0)
+        when {
+            LevelPreferences.isSquareStyle() -> {
+                loadImage(R.drawable.level_indicator_square, levelIndicator, requireContext(), 0)
+                loadImage(R.drawable.level_dot_square, levelDot, requireContext(), 100)
+                loadImage(R.drawable.ic_circle, styleButton, requireContext(), 0)
+            }
+            else -> {
+                loadImage(R.drawable.level_indicator, levelIndicator, requireContext(), 0)
+                loadImage(R.drawable.level_dot, levelDot, requireContext(), 100)
+                loadImage(R.drawable.ic_square, styleButton, requireContext(), 0)
+            }
         }
     }
 

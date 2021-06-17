@@ -110,7 +110,6 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="10dp"
-                android:lines="7"
                 android:textSize="@dimen/info_text_secondary_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -146,7 +145,6 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:lineSpacingExtra="10dp"
-                android:lines="3"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
@@ -176,7 +174,6 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:lineSpacingExtra="10dp"
-                android:lines="3"
                 android:textSize="@dimen/info_text_secondary_size" />
         </LinearLayout>
 
@@ -219,7 +216,6 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="10dp"
-                android:lines="4"
                 android:textSize="@dimen/info_text_secondary_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -268,7 +264,6 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="10dp"
-                android:lines="6"
                 android:textSize="@dimen/info_text_secondary_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -303,7 +298,6 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:lineSpacingExtra="10dp"
-                android:lines="4"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
@@ -346,7 +340,6 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="10dp"
-                android:lines="2"
                 android:textSize="@dimen/info_text_secondary_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -399,7 +392,6 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="10dp"
-                android:lines="5"
                 android:textSize="@dimen/info_text_secondary_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -434,7 +426,6 @@
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="10dp"
-                android:lines="4"
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
