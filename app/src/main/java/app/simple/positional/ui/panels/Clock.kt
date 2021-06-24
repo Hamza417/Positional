@@ -383,7 +383,7 @@ class Clock : ScopedFragment() {
         delay = if (value == "smooth") {
             (1000 / getDisplayRefreshRate(requireContext(), requireActivity())!!).toLong()
         } else {
-            500
+            1000
         }
         handler.post(clock)
     }
