@@ -259,6 +259,7 @@ public class FastScroller {
         float eventX = event.getX();
         float eventY = event.getY();
         Rect padding = getPadding();
+    
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 
