@@ -30,13 +30,13 @@ import androidx.annotation.StyleRes;
 
 @SuppressLint ("MissingSuperCall")
 public class FastScrollScrollView extends ScrollView implements ViewHelperProvider {
-    
+
     @NonNull
     private final ViewHelper mViewHelper = new ViewHelper();
-    
+
     public FastScrollScrollView(@NonNull Context context) {
         super(context);
-        
+    
         init();
     }
     

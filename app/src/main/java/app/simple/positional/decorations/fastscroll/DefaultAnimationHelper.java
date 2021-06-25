@@ -8,7 +8,7 @@ import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 public class DefaultAnimationHelper implements FastScroller.AnimationHelper {
-    
+
     private static final int SHOW_DURATION_MILLIS = 250;
     private static final int HIDE_DURATION_MILLIS = 250;
     private static final Interpolator SHOW_SCROLLBAR_INTERPOLATOR =

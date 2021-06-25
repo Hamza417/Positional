@@ -12,7 +12,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 @SuppressLint ("RestrictedApi")
 class AutoMirrorDrawable extends DrawableWrapper {
-    
+
     public AutoMirrorDrawable(@NonNull Drawable drawable) {
         super(drawable);
     }

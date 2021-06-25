@@ -47,7 +47,7 @@ public class MapsStateManager {
         float zoom = mapStatePrefs.getFloat(ZOOM, 0);
         float bearing = mapStatePrefs.getFloat(BEARING, 0);
         float tilt = mapStatePrefs.getFloat(TILT, 0);
-        
+    
         return new CameraPosition(target, zoom, tilt, bearing);
     }
     

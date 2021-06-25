@@ -28,11 +28,11 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FixItemDecorationRecyclerView extends RecyclerView {
-    
+
     public FixItemDecorationRecyclerView(@NonNull Context context) {
         super(context);
     }
-    
+
     public FixItemDecorationRecyclerView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }

@@ -15,13 +15,13 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class FixOnItemTouchListenerRecyclerView extends RecyclerView {
-    
+
     @NonNull
     private final OnItemTouchDispatcher mOnItemTouchDispatcher = new OnItemTouchDispatcher();
-    
+
     public FixOnItemTouchListenerRecyclerView(@NonNull Context context) {
         super(context);
-        
+
         init();
     }
     

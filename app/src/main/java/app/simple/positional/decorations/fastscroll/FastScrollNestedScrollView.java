@@ -13,13 +13,13 @@ import androidx.core.widget.NestedScrollView;
 
 @SuppressLint ("MissingSuperCall")
 public class FastScrollNestedScrollView extends NestedScrollView implements ViewHelperProvider {
-    
+
     @NonNull
     private final ViewHelper mViewHelper = new ViewHelper();
-    
+
     public FastScrollNestedScrollView(@NonNull Context context) {
         super(context);
-        
+
         init();
     }
     

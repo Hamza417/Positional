@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public abstract class SimpleViewHelper implements FastScroller.ViewHelper {
-    
+
     @Nullable
     private Runnable mOnPreDrawListener;
     
@@ -18,21 +18,10 @@ public abstract class SimpleViewHelper implements FastScroller.ViewHelper {
     private Predicate <MotionEvent> mOnTouchEventListener;
     private boolean mListenerInterceptingTouchEvent;
     
-    protected abstract void superDraw(@NonNull Canvas canvas);
-    
-    protected abstract void superOnScrollChanged(int left, int top, int oldLeft, int oldTop);
-    
-    protected abstract void scrollTo(int x, int y);
-    
-    protected abstract boolean superOnInterceptTouchEvent(@NonNull MotionEvent event);
-    
-    protected abstract boolean superOnTouchEvent(@NonNull MotionEvent event);
-    
-    protected abstract int computeVerticalScrollRange();
-    
-    protected abstract int computeVerticalScrollOffset();
-    
-    protected abstract int getScrollX();
+    @Override
+    public void addOnPreDrawListener(@Nullable Runnable listener) {
+        mOnPreDrawListener = listener;
+    }
     
     public void draw(@NonNull Canvas canvas) {
         
@@ -43,12 +32,22 @@ public abstract class SimpleViewHelper implements FastScroller.ViewHelper {
         superDraw(canvas);
     }
     
+    @Override
+    public void addOnScrollChangedListener(@Nullable Runnable listener) {
+        mOnScrollChangedListener = listener;
+    }
+    
     public void onScrollChanged(int left, int top, int oldLeft, int oldTop) {
         superOnScrollChanged(left, top, oldLeft, oldTop);
         
         if (mOnScrollChangedListener != null) {
             mOnScrollChangedListener.run();
         }
+    }
+    
+    @Override
+    public void addOnTouchEventListener(@Nullable Predicate <MotionEvent> listener) {
+        mOnTouchEventListener = listener;
     }
     
     public boolean onInterceptTouchEvent(@NonNull MotionEvent event) {
@@ -120,21 +119,6 @@ public abstract class SimpleViewHelper implements FastScroller.ViewHelper {
     }
     
     @Override
-    public void addOnPreDrawListener(@Nullable Runnable listener) {
-        mOnPreDrawListener = listener;
-    }
-    
-    @Override
-    public void addOnScrollChangedListener(@Nullable Runnable listener) {
-        mOnScrollChangedListener = listener;
-    }
-    
-    @Override
-    public void addOnTouchEventListener(@Nullable Predicate <MotionEvent> listener) {
-        mOnTouchEventListener = listener;
-    }
-    
-    @Override
     public int getScrollRange() {
         return computeVerticalScrollRange();
     }
@@ -148,4 +132,20 @@ public abstract class SimpleViewHelper implements FastScroller.ViewHelper {
     public void scrollTo(int offset) {
         scrollTo(getScrollX(), offset);
     }
+    
+    protected abstract void scrollTo(int x, int y);
+    
+    protected abstract void superDraw(@NonNull Canvas canvas);
+    
+    protected abstract void superOnScrollChanged(int left, int top, int oldLeft, int oldTop);
+    
+    protected abstract boolean superOnInterceptTouchEvent(@NonNull MotionEvent event);
+    
+    protected abstract boolean superOnTouchEvent(@NonNull MotionEvent event);
+    
+    protected abstract int computeVerticalScrollRange();
+    
+    protected abstract int computeVerticalScrollOffset();
+    
+    protected abstract int getScrollX();
 }

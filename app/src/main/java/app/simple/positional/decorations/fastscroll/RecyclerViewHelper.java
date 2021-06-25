@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 class RecyclerViewHelper implements FastScroller.ViewHelper {
-    
+
     @NonNull
     private final RecyclerView mView;
     @Nullable
     private final PopupTextProvider mPopupTextProvider;
-    
+
     @NonNull
     private final Rect mTempRect = new Rect();
-    
+
     public RecyclerViewHelper(@NonNull RecyclerView view,
             @Nullable PopupTextProvider popupTextProvider) {
         mView = view;
