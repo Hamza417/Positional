@@ -164,15 +164,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         customLocation.setOnClickListener {
-            toggleCustomLocation.isChecked = !toggleCustomLocation.isChecked
-
-            if (toggleCustomLocation.isChecked && !MainPreferences.isCustomCoordinate()) {
-                startActivity(Intent(requireActivity(), CustomLocationsActivity::class.java))
-            }
-
-            if (!toggleCustomLocation.isChecked) {
-                MainPreferences.setCustomCoordinates(false)
-            }
+            startActivity(Intent(requireActivity(), CustomLocationsActivity::class.java))
         }
 
         toggleCustomLocation.setOnCheckedChangeListener { isChecked ->

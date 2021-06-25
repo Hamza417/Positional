@@ -31,6 +31,7 @@ import app.simple.positional.database.LocationDatabase
 import app.simple.positional.decorations.maps.Maps
 import app.simple.positional.decorations.maps.MapsCallbacks
 import app.simple.positional.decorations.views.MapToolbar
+import app.simple.positional.dialogs.app.CustomLocationParameters
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
@@ -156,14 +157,14 @@ class GPS : ScopedFragment() {
 
             mapView?.setOnMapsCallbackListener(object : MapsCallbacks {
                 override fun onMapClicked(view: MapView?) {
-                    setFullScreen()
+                    setFullScreen(true)
                 }
             })
 
             if (requireActivity().intent.isNotNull()) {
                 if (requireActivity().intent.action == "action_map_panel_full") {
                     isFullScreen = false
-                    setFullScreen()
+                    setFullScreen(true)
                     requireActivity().intent.action = null
                 }
             }
@@ -200,6 +201,7 @@ class GPS : ScopedFragment() {
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
             divider.isVisible = true
+            updateViews(customLatitude, customLongitude)
         }
 
         if (GPSPreferences.isUsingVolumeKeys()) {
@@ -372,6 +374,11 @@ class GPS : ScopedFragment() {
             override fun onLocationLongPressed() {
                 mapView?.resetCamera(18F)
             }
+
+            override fun onCustomLocationClicked(view: View?) {
+                CustomLocationParameters.newInstance()
+                        .show(parentFragmentManager, "location_params")
+            }
         })
 
         save.setOnClickListener {
@@ -505,17 +512,19 @@ class GPS : ScopedFragment() {
         }
     }
 
-    private fun setFullScreen() {
+    private fun setFullScreen(forBottomBar: Boolean) {
+        println(isFullScreen)
         if (isFullScreen) {
             toolbar.show()
-            bottomSheetSlide.onMapClicked(fullScreen = true)
             bottomSheetInfoPanel.peekHeight = peekHeight
         } else {
             toolbar.hide()
-            bottomSheetSlide.onMapClicked(fullScreen = false)
             bottomSheetInfoPanel.peekHeight = 0
         }
 
+        if (forBottomBar) {
+            bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
+        }
         isFullScreen = !isFullScreen
     }
 
@@ -537,16 +546,12 @@ class GPS : ScopedFragment() {
         mapView?.removeCallbacks { }
         mapView?.destroy()
         handler.removeCallbacks(textAnimationRunnable)
-        handler.removeCallbacks(customDataUpdater)
         infoText.clearAnimation()
         handler.removeCallbacksAndMessages(null)
     }
 
     override fun onResume() {
         super.onResume()
-        if (isCustomCoordinate) {
-            handler.post(customDataUpdater)
-        }
         mapView?.resume()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
     }
@@ -556,16 +561,8 @@ class GPS : ScopedFragment() {
         mapView?.lowMemory()
     }
 
-    private val customDataUpdater: Runnable = object : Runnable {
-        override fun run() {
-            updateViews(customLatitude, customLongitude)
-            handler.postDelayed(this, 1000)
-        }
-    }
-
     private fun updateViews(latitude_: Double, longitude_: Double) {
         getAddress(latitude_, longitude_)
-
         latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude_, 3, requireContext())}")
         longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, 3, requireContext())}")
     }
@@ -649,8 +646,17 @@ class GPS : ScopedFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean("full_screen", isFullScreen)
+        outState.putFloat("translation", toolbar.translationY)
+        outState.putBoolean("fullscreen", isFullScreen)
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        if (savedInstanceState.isNotNull()) {
+            isFullScreen = !savedInstanceState!!.getBoolean("fullscreen")
+            setFullScreen(false)
+        }
+        super.onViewStateRestored(savedInstanceState)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

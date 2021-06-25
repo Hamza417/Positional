@@ -1,16 +1,16 @@
 package app.simple.positional.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.model.Locations
-import app.simple.positional.util.DMSConverter.latitudeAsDMS
-import app.simple.positional.util.DMSConverter.longitudeAsDMS
+import app.simple.positional.util.DMSConverter
 
 class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
 
@@ -22,9 +22,10 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        Log.d("Locations:", "${locations[position].latitude} : ${locations[position].longitude}")
         holder.address.text = locations[position].address
-        holder.latitude.text = latitudeAsDMS(locations[position].latitude, 2, holder.itemView.context)
-        holder.longitude.text = longitudeAsDMS(locations[position].longitude, 2, holder.itemView.context)
+        holder.latitude.text = DMSConverter.latitudeAsDMS(locations[position].latitude, 3, holder.itemView.context)
+        holder.longitude.text = DMSConverter.longitudeAsDMS(locations[position].longitude, 3, holder.itemView.context)
 
         holder.container.setOnClickListener {
             locationsAdapterCallback?.onLocationClicked(locations = locations[position])
@@ -59,7 +60,7 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
     }
 
     inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
-        val container: DynamicRippleLinearLayout = itemView.findViewById(R.id.adapter_locations_container)
+        val container: DynamicRippleConstraintLayout = itemView.findViewById(R.id.adapter_locations_container)
         val address: TextView = itemView.findViewById(R.id.adapter_locations_address)
         val latitude: TextView = itemView.findViewById(R.id.adapter_locations_latitude)
         val longitude: TextView = itemView.findViewById(R.id.adapter_locations_longitude)

@@ -14,17 +14,20 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
+import app.simple.positional.decorations.fastscroll.PopupTextProvider
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.util.ColorUtils.resolveAttrColor
+import app.simple.positional.util.LocaleHelper
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var searchText: String)
-    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var searchText: String) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+        PopupTextProvider {
 
     lateinit var context: Context
     private var currentSelectedTimezone = ""
@@ -94,5 +97,9 @@ class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var sear
         }
 
         textView.text = sb
+    }
+
+    override fun getPopupText(position: Int): String {
+        return timeZones[position].first.substring(0, 1).toUpperCase(LocaleHelper.getAppLocale())
     }
 }

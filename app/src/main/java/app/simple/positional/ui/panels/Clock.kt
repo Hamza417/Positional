@@ -25,13 +25,13 @@ import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
+import app.simple.positional.dialogs.app.CustomLocationParameters
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
 import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegrees
-import app.simple.positional.math.TimeConverter.getSecondsInDegreesWithDecimalPrecision
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.GPSPreferences
@@ -46,6 +46,8 @@ import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.util.TextViewUtils.setTextAnimation
+import app.simple.positional.util.ViewUtils.makeGoAway
+import app.simple.positional.util.ViewUtils.makeVisible
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
 import org.shredzone.commons.suncalc.*
@@ -72,7 +74,9 @@ class Clock : ScopedFragment() {
     private lateinit var menu: DynamicRippleImageButton
     private lateinit var copyButton: DynamicRippleImageButton
     private lateinit var timezoneButton: DynamicRippleImageButton
+    private lateinit var customLocationButton: DynamicRippleImageButton
     private lateinit var divider: View
+    private lateinit var customLocationButtonDivider: View
     private lateinit var clockMainLayout: CustomCoordinatorLayout
     private lateinit var scrollView: NestedScrollView
 
@@ -124,7 +128,9 @@ class Clock : ScopedFragment() {
         menu = view.findViewById(R.id.clock_menu)
         copyButton = view.findViewById(R.id.clock_copy)
         timezoneButton = view.findViewById(R.id.clock_timezone)
+        customLocationButton = view.findViewById(R.id.clock_custom_location)
         divider = view.findViewById(R.id.clock_divider)
+        customLocationButtonDivider = view.findViewById(R.id.custom_location_divider)
         clockMainLayout = view.findViewById(R.id.clock_main_layout)
 
         digitalTimeMain = view.findViewById(R.id.digital_time_main)
@@ -162,6 +168,11 @@ class Clock : ScopedFragment() {
             isCustomCoordinate = true
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
+            customLocationButton.makeVisible(false)
+            customLocationButtonDivider.makeVisible(false)
+        } else {
+            customLocationButton.makeGoAway()
+            customLocationButtonDivider.makeGoAway()
         }
 
         setSkins()
@@ -171,6 +182,12 @@ class Clock : ScopedFragment() {
 
         calculateAndUpdateData(GPSPreferences.getLastCoordinates()[0].toDouble(),
                 GPSPreferences.getLastCoordinates()[1].toDouble())
+
+        if (BuildConfig.FLAVOR == "lite") {
+            customLocationButton.makeGoAway()
+            customLocationButtonDivider.makeGoAway()
+            timezoneButton.makeGoAway()
+        }
 
         return view
     }
@@ -275,6 +292,11 @@ class Clock : ScopedFragment() {
         timezoneButton.setOnClickListener {
             requireContext().startActivity(Intent(requireActivity(), TimezonePickerActivity::class.java))
         }
+
+        customLocationButton.setOnClickListener {
+            CustomLocationParameters.newInstance()
+                    .show(parentFragmentManager, "location_parameters")
+        }
     }
 
     private val textAnimationRunnable = Runnable {
@@ -294,22 +316,22 @@ class Clock : ScopedFragment() {
             when (movementType) {
                 "oscillate" -> {
                     seconds.setPhysical(1F, -1F, 25000F)
-                    seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData()), true)
+                    seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false), true)
                     sweepSeconds.setPhysical(1F, -1F, 25000F)
-                    sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData()) - 90F, true)
+                    sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false) - 90F, true)
                 }
                 "tick_smooth" -> {
                     seconds.setPhysical(-1F, 5F, 5000F)
-                    seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData()), true)
+                    seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false), true)
                     sweepSeconds.setPhysical(-1F, 5F, 5000F)
-                    sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData()) - 90F, true)
+                    sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false) - 90F, true)
                 }
                 "smooth",
                 "tick" -> {
                     seconds.rotation = if (delay < 1000) {
-                        getSecondsInDegreesWithDecimalPrecision(getCurrentTimeData())
+                        getSecondsInDegrees(getCurrentTimeData(), true)
                     } else {
-                        getSecondsInDegrees(getCurrentTimeData())
+                        getSecondsInDegrees(getCurrentTimeData(), false)
                     }
 
                     sweepSeconds.rotation = seconds.rotation - 90
@@ -380,11 +402,13 @@ class Clock : ScopedFragment() {
 
     private fun setMotionDelay(value: String) {
         handler.removeCallbacks(clock)
+
         delay = if (value == "smooth") {
             (1000 / getDisplayRefreshRate(requireContext(), requireActivity())!!).toLong()
         } else {
             1000
         }
+
         handler.post(clock)
     }
 

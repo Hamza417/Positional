@@ -9,7 +9,7 @@ import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 
 
-class CustomWebView(context: Context, attributeSet: AttributeSet) : WebView(context, attributeSet) {
+open class CustomWebView(context: Context, attributeSet: AttributeSet) : WebView(context, attributeSet) {
     init {
         setBackgroundColor(0)
         settings.allowContentAccess = true

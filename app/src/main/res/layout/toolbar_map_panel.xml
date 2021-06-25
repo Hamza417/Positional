@@ -42,4 +42,23 @@
         android:src="@drawable/ic_menu"
         android:tint="@color/iconColor" />
 
+    <View
+        android:id="@+id/gps_location_divider"
+        android:layout_width="1px"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:background="@color/dividerColor" />
+
+    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+        android:id="@+id/gps_custom_location"
+        android:layout_width="@dimen/app_button_size"
+        android:layout_height="@dimen/app_button_size"
+        android:layout_gravity="center_vertical|end"
+        android:clickable="true"
+        android:visibility="gone"
+        android:contentDescription="@string/clock_options"
+        android:focusable="true"
+        android:src="@drawable/ic_place_custom" />
+
 </merge>

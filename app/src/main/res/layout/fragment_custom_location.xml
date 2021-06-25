@@ -111,7 +111,7 @@
                     android:layout_height="match_parent"
                     android:maxLines="1"
                     android:inputType="numberDecimal"
-                    android:maxLength="6"
+                    android:maxLength="10"
                     android:layout_gravity="center_vertical"
                     android:textColor="@color/textSecondary" />
 
@@ -143,7 +143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLines="1"
-                    android:maxLength="6"
+                    android:maxLength="11"
                     android:inputType="numberDecimal"
                     android:textColor="@color/textSecondary" />
 

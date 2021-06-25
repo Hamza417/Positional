@@ -19,6 +19,8 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.net.URL
+import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class HtmlViewer : ScopedFragment() {
@@ -64,24 +66,16 @@ class HtmlViewer : ScopedFragment() {
                     webView.loadUrl("file:///android_asset/html/buy_full.html")
                 }
                 "translator" -> {
-                    webView.loadUrl("file:///android_asset/html/translators.html")
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        webView.loadUrl("file:///android_asset/html/loader.html")
+                        downloadTranslationStatus()
+                    }
                 }
                 "Change Logs" -> {
                     webView.loadUrl("file:///android_asset/html/local_changelogs.html")
                 }
                 getString(R.string.internet_uses) -> {
                     webView.loadUrl("file:///android_asset/html/internet_uses.html")
-                }
-                /**
-                 * Not used anymore as it can send many requests to GitHub.
-                 *
-                 * Although reserved until I managed to get a private server
-                 */
-                "Development Status" -> {
-                    webView.loadUrl("file:///android_asset/html/loading.html")
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        downloadChangeLogs()
-                    }
                 }
                 getString(R.string.physical_properties) -> {
                     webView.loadUrl("file:///android_asset/html/physical_properties.html")
@@ -103,30 +97,41 @@ class HtmlViewer : ScopedFragment() {
         super.onSaveInstanceState(outState)
     }
 
-    private suspend fun downloadChangeLogs() {
+    private suspend fun downloadTranslationStatus() {
         try {
             if (isNetworkAvailable(requireContext())) {
                 withContext(Dispatchers.IO) {
                     runCatching {
-                        val url = "https://raw.githubusercontent.com/Hamza417/Positional/master/app/src/main/assets/html/changelogs.html"
+                        val url = "https://raw.githubusercontent.com/Hamza417/Positional/master/app/src/main/assets/html/translators.html"
                         URL(url).openStream().use { input ->
-                            if (File("${context?.cacheDir}/changelogs.html").exists()) {
-                                File("${context?.cacheDir}/changelogs.html").delete()
-                            }
-                            FileOutputStream(File("${context?.cacheDir}/changelogs.html")).use { output ->
-                                input.copyTo(output)
+                            cleanUpOldFiles(File("${context?.cacheDir}/translation.html"), 0)
+
+                            if (!File("${context?.cacheDir}/translation.html").exists()) {
+                                FileOutputStream(File("${context?.cacheDir}/translation.html")).use { output ->
+                                    input.copyTo(output)
+                                }
                             }
                         }
                     }
                 }
 
-                webView.loadUrl(Uri.fromFile(File("${requireContext().cacheDir}/changelogs.html")).toString())
+                webView.loadUrl(Uri.fromFile(File("${requireContext().cacheDir}/translation.html")).toString())
 
             } else {
                 Toast.makeText(requireContext(), R.string.internet_connection_alert, Toast.LENGTH_SHORT).show()
+                requireActivity().onBackPressed()
             }
         } catch (e: FileNotFoundException) {
             Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @Suppress("SameParameterValue")
+    private fun cleanUpOldFiles(file: File, expirationPeriod: Long) {
+        // Granularity = DAYS;
+        val desiredLifespan: Long = TimeUnit.DAYS.toMillis(expirationPeriod)
+        if (Date().time - file.lastModified() > desiredLifespan) {
+            file.delete()
         }
     }
 

@@ -3,9 +3,11 @@ package app.simple.positional.decorations.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.EdgeEffect
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
+import app.simple.positional.decorations.fastscroll.FastScrollerBuilder
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.util.StatusBarHeight
 
@@ -96,6 +98,17 @@ class CustomRecyclerView(context: Context, attrs: AttributeSet?) : RecyclerView(
         super.setAdapter(adapter)
         adapter?.stateRestorationPolicy = Adapter.StateRestorationPolicy.ALLOW
         scheduleLayoutAnimation()
+        if (adapter?.itemCount!! >= 25) {
+            setupFastScroller()
+        }
+    }
+
+    private fun setupFastScroller() {
+        FastScrollerBuilder(this)
+                .useMd2Style()
+                .setTrackDrawable(ResourcesCompat.getDrawable(resources, R.drawable.fs_md2_track, context.theme)!!)
+                .setThumbDrawable(ResourcesCompat.getDrawable(resources, R.drawable.fs_thumb, context.theme)!!)
+                .build()
     }
 
     private inline fun <reified T : VerticalListViewHolder> RecyclerView.forEachVisibleHolder(action: (T) -> Unit) {

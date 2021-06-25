@@ -24,6 +24,7 @@ import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.panels.*
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
+import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
 
 class MainActivity
@@ -190,6 +191,7 @@ class MainActivity
     }
 
     override fun onMapClicked(fullScreen: Boolean) {
+        println(fullScreen)
         if (fullScreen) {
             bottomBarWrapper.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
         } else {
@@ -216,5 +218,17 @@ class MainActivity
                 }
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putFloat("translation", bottomBarWrapper.translationY)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        if (savedInstanceState.isNotNull()) {
+            bottomBarWrapper.translationY = savedInstanceState.getFloat("translation")
+        }
+        super.onRestoreInstanceState(savedInstanceState)
     }
 }

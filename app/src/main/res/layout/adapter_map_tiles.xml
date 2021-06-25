@@ -5,7 +5,6 @@
     android:id="@+id/tiles_adapter_item_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="10dp"
     android:background="@drawable/ripple_btn"
     android:clickable="true"
     android:focusable="true"

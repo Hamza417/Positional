@@ -2,6 +2,7 @@ package app.simple.positional.decorations.maps
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration.*
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.location.Location
@@ -32,10 +33,7 @@ import org.osmdroid.events.*
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.CopyrightOverlay
-import org.osmdroid.views.overlay.MapEventsOverlay
-import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.ScaleBarOverlay
+import org.osmdroid.views.overlay.*
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import kotlin.coroutines.CoroutineContext
 
@@ -92,15 +90,15 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             ResourcesCompat.getDrawable(resources, LocationPins.locationsPins[GPSPreferences.getPinSkin()], context.theme)
         }
 
-        latLng = if (isCustomCoordinate)
-            LatLng(customLatitude, customLongitude)
-        else
-            LatLng(GPSPreferences.getLastCoordinates()[0].toDouble(), GPSPreferences.getLastCoordinates()[1].toDouble())
-
         if (isCustomCoordinate) {
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
         }
+
+        latLng = if (isCustomCoordinate)
+            LatLng(customLatitude, customLongitude)
+        else
+            LatLng(GPSPreferences.getLastCoordinates()[0].toDouble(), GPSPreferences.getLastCoordinates()[1].toDouble())
 
         moveMap(false)
         addMarker()
@@ -124,7 +122,6 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         setDestroyMode(true)
         zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
         maxZoomLevel = 15.0
-        minZoomLevel = 9.0
         setMapStyle()
         overlays.add(RotationGestureOverlay(this))
         setLayerType(Layer.LAYER_TYPE_HARDWARE, null)
@@ -153,7 +150,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             }
 
             override fun onZoom(event: ZoomEvent): Boolean {
-                GPSPreferences.setMapZoom(event.zoomLevel.toFloat())
+                OSMPreferences.setOSMMapZoom(event.zoomLevel.toFloat())
                 return true
             }
         }, 500L)
@@ -184,7 +181,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
              */
             controller.animateTo(
                     GeoPoint(latLng!!.latitude, latLng!!.longitude),
-                    GPSPreferences.getMapZoom().toDouble(),
+                    OSMPreferences.getOSMMapZoom().toDouble(),
                     3000,
                     bearing)
         } else {
@@ -301,11 +298,20 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
     }
 
     private fun setMapStyle() {
-        when (this.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) {
-            android.content.res.Configuration.UI_MODE_NIGHT_YES -> {
-                overlayManager.tilesOverlay.setColorFilter(ColorUtils.getMapColorFilter())
+        if (OSMPreferences.isAlternateColorFilter()) {
+            overlayManager.tilesOverlay.setColorFilter(TilesOverlay.INVERT_COLORS)
+        } else {
+            when (this.resources.configuration.uiMode and UI_MODE_NIGHT_MASK) {
+                UI_MODE_NIGHT_YES -> {
+                    overlayManager.tilesOverlay.setColorFilter(ColorUtils.getMapColorFilter())
+                }
+                UI_MODE_NIGHT_NO -> {
+                    overlayManager.tilesOverlay.setColorFilter(null)
+                }
             }
         }
+
+        invalidate()
     }
 
     override fun onResume() {
@@ -339,6 +345,9 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             }
             OSMPreferences.mapTileProvider -> {
                 setTileSource()
+            }
+            OSMPreferences.useAlternativeColorFilter -> {
+                setMapStyle()
             }
         }
     }

@@ -8,16 +8,14 @@ import app.simple.positional.math.MathExtensions
 object DMSConverter {
     fun latitudeAsDMS(latitude: Double, decimalPlace: Int, context: Context): String {
         val direction = if (latitude > 0) context.resources.getString(R.string.north_N) else context.resources.getString(R.string.south_S)
-        var strLatitude = Location.convert(latitude, Location.FORMAT_SECONDS)
-        strLatitude = replaceDelimiters(strLatitude, decimalPlace)
+        var strLatitude = replaceDelimiters(Location.convert(latitude, Location.FORMAT_SECONDS), decimalPlace)
         strLatitude += " $direction"
         return strLatitude
     }
 
     fun longitudeAsDMS(longitude: Double, decimalPlace: Int, context: Context): String {
         val direction = if (longitude < 0) context.resources.getString(R.string.west_W) else context.resources.getString(R.string.east_E)
-        var strLongitude = Location.convert(longitude, Location.FORMAT_SECONDS)
-        strLongitude = replaceDelimiters(strLongitude, decimalPlace)
+        var strLongitude = replaceDelimiters(Location.convert(longitude, Location.FORMAT_SECONDS), decimalPlace)
         strLongitude += " $direction"
         return strLongitude
     }

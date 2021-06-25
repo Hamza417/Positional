@@ -299,4 +299,6 @@
     <string name="failed">Failed!</string>
     <string name="set_only">Set Only</string>
     <string name="sure">Sure</string>
+    <string name="desc_custom_coord_dialog">These parameters are currently being used for calculating information.</string>
+    <string name="inverted_colors">Inverted Colors</string>
 </resources>

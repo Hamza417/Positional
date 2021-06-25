@@ -12,18 +12,21 @@ import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.GPSPreferences
+import app.simple.positional.preferences.OSMPreferences
 
 class OSMMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var toggleAutoCenter: SwitchView
     private lateinit var toggleVolumeKeys: SwitchView
     private lateinit var toggleUseBearing: SwitchView
+    private lateinit var toggleInvertColors: SwitchView
     private lateinit var pinCustomization: DynamicRippleTextView
     private lateinit var tileSource: DynamicRippleTextView
 
     private lateinit var toggleAutoCenterContainer: DynamicRippleLinearLayout
     private lateinit var toggleVolumeKeysContainer: DynamicRippleLinearLayout
     private lateinit var toggleUseBearingContainer: DynamicRippleLinearLayout
+    private lateinit var toggleInvertColorsContainer: DynamicRippleLinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.dialog_osm_menu, container, false)
@@ -32,11 +35,13 @@ class OSMMenu : CustomBottomSheetDialogFragment() {
         toggleVolumeKeys = view.findViewById(R.id.toggle_use_volume_keys)
         toggleUseBearing = view.findViewById(R.id.toggle_bearing_rotation)
         pinCustomization = view.findViewById(R.id.gps_pin_customization)
+        toggleInvertColors = view.findViewById(R.id.toggle_osm_menu_color_filter)
         tileSource = view.findViewById(R.id.gps_tile_source)
 
         toggleAutoCenterContainer = view.findViewById(R.id.gps_menu_auto_center_container)
         toggleVolumeKeysContainer = view.findViewById(R.id.gps_menu_volume_keys_container)
         toggleUseBearingContainer = view.findViewById(R.id.gps_menu_bearing_rotation)
+        toggleInvertColorsContainer = view.findViewById(R.id.osm_menu_color_filter)
 
         return view
     }
@@ -47,6 +52,7 @@ class OSMMenu : CustomBottomSheetDialogFragment() {
         toggleAutoCenter.isChecked = GPSPreferences.getMapAutoCenter()
         toggleVolumeKeys.isChecked = GPSPreferences.isUsingVolumeKeys()
         toggleUseBearing.isChecked = GPSPreferences.isBearingRotationOn()
+        toggleInvertColors.isChecked = OSMPreferences.isAlternateColorFilter()
 
         toggleAutoCenter.setOnCheckedChangeListener {
             GPSPreferences.setMapAutoCenter(it)
@@ -58,6 +64,10 @@ class OSMMenu : CustomBottomSheetDialogFragment() {
 
         toggleUseBearing.setOnCheckedChangeListener {
             GPSPreferences.setUseBearingRotation(it)
+        }
+
+        toggleInvertColors.setOnCheckedChangeListener {
+            OSMPreferences.setAlternateColorFilter(it)
         }
 
         pinCustomization.setOnClickListener {
@@ -89,6 +99,10 @@ class OSMMenu : CustomBottomSheetDialogFragment() {
 
         toggleUseBearingContainer.setOnClickListener {
             toggleUseBearing.invertCheckedStatus()
+        }
+
+        toggleInvertColorsContainer.setOnClickListener {
+            toggleInvertColors.isChecked = !toggleInvertColors.isChecked
         }
     }
 

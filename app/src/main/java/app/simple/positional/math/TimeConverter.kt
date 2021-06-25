@@ -3,13 +3,12 @@ package app.simple.positional.math
 import java.time.ZonedDateTime
 
 object TimeConverter {
-
-    fun getSecondsInDegreesWithDecimalPrecision(calendar: ZonedDateTime): Float {
-        return (calendar.second + calendar.nano / 1000000000f) * 6f
-    }
-
-    fun getSecondsInDegrees(zonedDateTime: ZonedDateTime): Float {
-        return zonedDateTime.second * 6f
+    fun getSecondsInDegrees(zonedDateTime: ZonedDateTime, floatPrecision: Boolean): Float {
+        return if (floatPrecision) {
+            (zonedDateTime.second + zonedDateTime.nano / 1000000000f) * 6f
+        } else {
+            zonedDateTime.second * 6f
+        }
     }
 
     fun getMinutesInDegrees(zonedDateTime: ZonedDateTime): Float {
