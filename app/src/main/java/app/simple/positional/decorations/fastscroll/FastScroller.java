@@ -279,7 +279,6 @@ public class FastScroller {
                 
                 break;
             case MotionEvent.ACTION_MOVE:
-                
                 if (!mDragging && isInViewTouchTarget(mTrackView, mDownX, mDownY)
                         && Math.abs(eventY - mDownY) > mTouchSlop) {
                     if (isInViewTouchTarget(mThumbView, mDownX, mDownY)) {
@@ -294,7 +293,7 @@ public class FastScroller {
                     
                     setDragging(true);
                 }
-                
+    
                 if (mDragging) {
                     int thumbOffset = mDragStartThumbOffset + (int) (eventY - mDragStartY);
                     scrollToThumbOffset(thumbOffset);
@@ -304,6 +303,9 @@ public class FastScroller {
             case MotionEvent.ACTION_CANCEL:
                 setDragging(false);
                 break;
+            default: {
+                // no-op
+            }
         }
         
         mLastY = eventY;

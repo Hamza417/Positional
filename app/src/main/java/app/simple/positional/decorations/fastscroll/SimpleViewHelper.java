@@ -137,6 +137,8 @@ public abstract class SimpleViewHelper implements FastScroller.ViewHelper {
     
     protected abstract void superOnScrollChanged(int left, int top, int oldLeft, int oldTop);
     
+    protected abstract void scrollTo(int x, int y);
+    
     protected abstract boolean superOnInterceptTouchEvent(@NonNull MotionEvent event);
     
     protected abstract boolean superOnTouchEvent(@NonNull MotionEvent event);
@@ -146,6 +148,4 @@ public abstract class SimpleViewHelper implements FastScroller.ViewHelper {
     protected abstract int computeVerticalScrollOffset();
     
     protected abstract int getScrollX();
-    
-    protected abstract void scrollTo(int x, int y);
 }
