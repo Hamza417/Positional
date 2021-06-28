@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Panels -->
+    <string name="clock">Ceas</string>
+    <string name="compass">Busolă</string>
+    <string name="gps">Locație</string>
+    <string name="level">Nivel</string>
+    <string name="settings">Setări</string>
+    <!-- Info Headers -->
+    <string name="clock_info">Informații ceas</string>
+    <string name="compass_info">Informații busolă</string>
+    <string name="gps_info">Informaţii GPS</string>
+    <!-- Clock Information Headers-->
+    <string name="local_time">Ora locală</string>
+    <string name="utc_time">Ora UTC</string>
+    <string name="sun_position">Poziția soarelui</string>
+    <string name="sun_time">Timpul soarelui</string>
+    <string name="twilight">Amurg</string>
+    <string name="moon_position">Poziția Lunii</string>
+    <string name="moon_time">Timpul Lunii</string>
+    <string name="moon_illumination">Iluminarea Lunii</string>
+    <string name="moon_dates">Datele Lunii</string>
+    <!-- GPS Informatin Headers -->
+    <string name="gps_provider">Furnizor</string>
+    <string name="gps_location">Locație</string>
+    <string name="gps_movement">Mișcare</string>
+    <string name="gps_coordinates">Coordonate</string>
+    <string name="gps_address">Adresă</string>
+    <!--Compass Information Header -->
+    <string name="compass_accuracy">Precizie</string>
+    <string name="compass_field">Câmp magnetic</string>
+    <!-- Clock Information Items-->
+    <string name="local_timezone">Fus orar:</string>
+    <string name="local_time_24hr">Timp 24 ore:</string>
+    <string name="local_time_12hr">Timp 12 ore:</string>
+    <string name="local_day">Ziua:</string>
+    <string name="local_date">Data:</string>
+    <string name="local_day_of_year">Ziua anului:</string>
+    <string name="local_week_of_year">Săptămâna anului:</string>
+    <string name="utc_local_time_offset">Decalaj de timp local:</string>
+    <string name="utc_current_time">Ora:</string>
+    <string name="utc_current_date">Data:</string>
+    <string name="sun_azimuth">Azimut:</string>
+    <string name="sun_distance">Distanța:</string>
+    <string name="sun_altitude">Altitudine:</string>
+    <string name="sun_sunrise">Răsărit:</string>
+    <string name="sun_noon">Amiaza:</string>
+    <string name="sun_sunset">Apus:</string>
+    <string name="sun_nadir">Nadir:</string>
+    <string name="twilight_astronomical_dawn">Crepuscul astronomic:</string>
+    <string name="twilight_nautical_dawn">Crepuscul nautic:</string>
+    <string name="twilight_civil_dawn">Crepuscul civil:</string>
+    <string name="twilight_civil_dusk">Amurg civil:</string>
+    <string name="twilight_nautical_dusk">Amurg nautic:</string>
+    <string name="twilight_astronomical_dusk">Amurg astronomic:</string>
+    <string name="moon_parallactic_angle">Unghi paralactic:</string>
+    <string name="moon_moonrise">Răsăritul lunii:</string>
+    <string name="moon_moonset">Apusul lunii:</string>
+    <string name="moon_fraction">Fracție:</string>
+    <string name="moon_angle">Unghi:</string>
+    <string name="moon_angle_state">Starea unghiului:</string>
+    <string name="moon_phase">Faza:</string>
+    <string name="moon_phase_angle">Unghi de fază:</string>
+    <string name="moon_full_moon">Lună plină:</string>
+    <string name="moon_new_moon">Lună nouă:</string>
+    <string name="moon_first_quarter">Primul pătrar:</string>
+    <string name="moon_last_quarter">Ultimul pătrar:</string>
+    <!-- Compass information items -->
+    <string name="accelerometer_accuracy">Accelerometru:</string>
+    <string name="magnetometer_accuracy">Magnetometru:</string>
+    <string name="compass_inclination">Inclinație:</string>
+    <string name="compass_declination">Declinaţie:</string>
+    <string name="compass_field_strength">Puterea câmpului:</string>
+    <!-- GPS Information Panel -->
+    <string name="gps_status">Stare:</string>
+    <string name="gps_source">Sursa:</string>
+    <string name="gps_accuracy">Precizie:</string>
+    <string name="gps_altitude">Altitudine:</string>
+    <string name="gps_bearing">Direcție:</string>
+    <string name="gps_displacement">Deplasare:</string>
+    <string name="gps_direction">Direcție:</string>
+    <string name="gps_speed">Viteză:</string>
+    <string name="gps_latitude">Latitudine:</string>
+    <string name="gps_longitude">Longitudine:</string>
+    <!-- Sensor Accuracy -->
+    <string name="sensor_accuracy_unreliable">Nefiabilă</string>
+    <string name="sensor_accuracy_low">Redusă</string>
+    <string name="sensor_accuracy_medium">Medie</string>
+    <string name="sensor_accuracy_high">Înaltă</string>
+    <!-- GPS Source Status -->
+    <string name="gps_enabled">Activat</string>
+    <string name="gps_disabled">Dezactivat</string>
+    <!-- Units -->
+    <string name="meter">m</string>
+    <string name="kilometer">km</string>
+    <string name="feet">ft</string>
+    <string name="miles">mile</string>
+    <string name="kilometer_hour">km/h</string>
+    <string name="miles_hour">mph</string>
+    <!-- Alert -->
+    <string name="info_copied">Copiat în clipboard</string>
+    <string name="info_error">Informațiile nu au putut fi copiate!!</string>
+    <string name="reset_complete">Resetare finalizată</string>
+    <string name="invalid_coordinates">Coordonate incorecte</string>
+    <string name="internet_connection_alert">Conexiune la internet indisponibilă</string>
+    <string name="error">Eroare</string>
+    <string name="not_available">Indisponibil</string>
+    <string name="no_address_found">Nu s-a găsit nicio adresă pentru locația curentă</string>
+    <string name="location_saved">Salvat cu succes</string>
+    <string name="already_saved">Deja salvat!</string>
+    <string name="location_not_saved">Nu a putut fi salvat!</string>
+    <string name="no_update">Nicio actualizare disponibilă</string>
+    <string name="only_full_version">Această caracteristică este disponibilă doar în versiunea completă.</string>
+    <string name="location_not_available">Locația nu este încă disponibilă</string>
+    <!-- Settings Categories -->
+    <string name="appearance">Aspect</string>
+    <string name="configuration">Configurare</string>
+    <string name="about">Despre</string>
+    <string name="contribute">Contribuiți</string>
+    <!-- Settings Heading -->
+    <string name="theme">Temă</string>
+    <string name="icon">Pictogramă</string>
+    <string name="corner_radius">Raza de colț</string>
+    <string name="units">Unități</string>
+    <string name="location_provider">Furnizor de locație</string>
+    <string name="language">Limba</string>
+    <string name="skip_splash_screen">Omite ecranul de pornire</string>
+    <string name="specified_location">Utilizează locația specificată</string>
+    <string name="keep_screen_on">Menține ecranul aprins</string>
+    <string name="legal_notes">Note legale</string>
+    <string name="app_version">Versiune aplicație</string>
+    <string name="found_an_issue">Ați găsit o problemă?</string>
+    <string name="translate">Traducere</string>
+    <string name="buy_full">Cumpărați versiunea completă</string>
+    <!-- Settings Description -->
+    <string name="theme_follow_system">Urmărește sistemul</string>
+    <string name="theme_day">Deschisă</string>
+    <string name="theme_night">Întunecată</string>
+    <string name="theme_auto">Auto (zi/noapte)</string>
+    <string name="desc_skip_splash_Screen">Sari peste ecranul de pornire atunci când aplicația este lansată și mergi direct la ecranul principal</string>
+    <string name="desc_specified_location">Specificați latitudinea și longitudinea particularizate și utilizați-le pentru a prelua informații. Orice informație care utilizează doar GPS va rămâne neafectată</string>
+    <string name="desc_screen_on">Împiedică dispozitivul să intre în repaos în timp ce aplicația este vizibilă</string>
+    <string name="desc_legal">Citiți declarațiile aplicației, Politica de confidențialitate și Termenii de utilizare</string>
+    <string name="desc_git">Deschide repozitoriul aplicației</string>
+    <string name="desc_translate">Ajutați la traducerea aplicației în limba dvs. nativă</string>
+    <string name="desc_buy_full_version">Susțineți dezvoltarea prin cumpărarea versiunii complete</string>
+    <!-- Clock Menu -->
+    <string name="needles">Ac</string>
+    <string name="motion_type">Tip mișcare</string>
+    <string name="time_format">Utilizați formatul 12 ore</string>
+    <string name="motion_type_smooth">Lină</string>
+    <string name="motion_type_tick">Tic</string>
+    <!-- Compass Menu -->
+    <string name="bloom">Floare</string>
+    <string name="bloom_skins">Teme floare</string>
+    <string name="show_code">Afișare cod</string>
+    <!-- GPS Menu -->
+    <string name="show_label">Afișare etichete</string>
+    <string name="satellite_mode">Mod satelit</string>
+    <string name="high_contrast_mode">Hartă contrast mare</string>
+    <string name="show_building">Afișare clădiri</string>
+    <!-- Settings Menus -->
+    <string name="unit_metric">Metric</string>
+    <string name="unit_imperial">Imperial</string>
+    <!-- Specified Coordinates Menu -->
+    <string name="specified_hint_header">Introduceți datele de localizare</string>
+    <string name="specified_data_list_locations">Locații</string>
+    <string name="specified_hint_latitude">Latitudine (±90)</string>
+    <string name="specified_hint_longitude">Longitudine (±180)</string>
+    <!-- Info -->
+    <string name="compass_calibration_notice">Precizia senzorului busolei dispozitivului este scăzută, mutați dispozitivul în direcția 8 pentru a calibra senzorii.</string>
+    <string name="specified_location_notice">Informațiile prezentate mai jos sunt actualizate pentru coordonatele locației specificate.</string>
+    <string name="show_again">Arată din nou</string>
+    <string name="search_timezone">Căutare fus orar</string>
+    <string name="verifying_license">Verificare licență</string>
+    <string name="license_successful">Reușit :)</string>
+    <string name="license_failed">Verificare licență eșuată</string>
+    <string name="auto_system_default_language">Automat (implicit sistem)</string>
+    <string name="location_permission_denied">"Permisiune locație refuzată!"</string>
+    <string name="no_location_permission_alert">Unele caracteristici pot să nu funcționeze fără permisiunea de localizare</string>
+    <!-- Button Text -->
+    <string name="button_cancel">Anulare</string>
+    <string name="button_set">Setare</string>
+    <string name="button_close">Închidere</string>
+    <string name="button_grant">Permiteți</string>
+    <string name="button_copy">Copiere</string>
+    <string name="button_reset">Resetare</string>
+    <!-- Button Descriptions -->
+    <string name="clock_options">Meniu ceas</string>
+    <string name="compass_options">Meniu busolă</string>
+    <string name="gps_options">Meniu GPS</string>
+    <string name="gps_reset_location">Resetare locație</string>
+    <string name="delete_all">Ștergeți tot</string>
+    <string name="open_saved_locations">Deschideți locațiile salvate</string>
+    <string name="open_specified_location_documentation">Deschide documentația locației specificate</string>
+    <!-- Legal Menu -->
+    <string name="disclaimer">Act de renunțare</string>
+    <string name="privacy_policy">Politica de confidențialitate</string>
+    <string name="terms_of_use">Termeni de utilizare</string>
+    <string name="permissions">Permisiuni</string>
+    <string name="credits">Contribuții</string>
+    <string name="internet_uses">Utilizări Internet</string>
+    <!-- Moon Illumination -->
+    <string name="waning">În scădere</string>
+    <string name="waning_gibbous">Lună în descreștere</string>
+    <string name="waning_crescent">Semilună în descreștere</string>
+    <string name="waxing">Creștere</string>
+    <string name="waxing_gibbous">Lună în creștere</string>
+    <string name="waxing_crescent">Semilună în creștere</string>
+    <string name="full_moon">Lună plină</string>
+    <string name="new_moon">Lună nouă</string>
+    <string name="third_quarter">Al treilea pătrar</string>
+    <string name="first_quarter">Primul pătrar</string>
+    <!-- Directions -->
+    <string name="north">Nord</string>
+    <string name="north_west">Nord-Vest</string>
+    <string name="west">Vest</string>
+    <string name="south_west">Sud-Vest</string>
+    <string name="south">Sud</string>
+    <string name="south_east">Sud-Est</string>
+    <string name="east">Est</string>
+    <string name="north_east">Nord-Est</string>
+    <string name="north_N">N</string>
+    <string name="north_west_NW">NV</string>
+    <string name="west_W">V</string>
+    <string name="south_west_SW">SV</string>
+    <string name="south_S">S</string>
+    <string name="south_east_SE">SE</string>
+    <string name="east_E">E</string>
+    <string name="north_east_NE">NE</string>
+    <!-- Graph -->
+    <string name="location_details">Detalii locație</string>
+    <string name="min">Min:</string>
+    <string name="max">Max:</string>
+    <string name="avg">Mediu:</string>
+    <!-- UTM -->
+    <string name="utm_zone">Zona:</string>
+    <string name="utm_easting">Estic:</string>
+    <string name="utm_northing">Nordic:</string>
+    <string name="utm_meridian">Meridian central:</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">API-ul de localizare implicit al Android, extrem de precis, dar este limitat la un singur furnizor de locații la un moment dat, iar solicitările de locație interioară pot avea un impact asupra preciziei sale, necesită un senzor GPS puternic pentru a actualiza rapid locația.</string>
+    <string name="desc_fused_location_provider">API-ul Google Fused Location care triangulează datele de locație de la diferiți furnizori de locații și calculează în medie rezultatul într-o serie de locații. Poate da rezultate diferite, dar consumă mai puțină baterie.</string>
+    <string name="desc_location_provider_note">Notă: Utilizarea oricărui API poate oferi rezultate diferite în funcție de diferiți factori și niciunul dintre aceștia nu reprezintă o dovadă de acuratețe unul pentru celălalt, testați API-urile și păstrați-l pe cel selectat care funcționează cel mai bine în regiunea dvs.</string>
+    <string name="use_media_keys">Utilizează taste media</string>
+    <string name="auto_center_map">Auto-centrare hartă</string>
+    <string name="last_updated">Ultima actualizare</string>
+    <string name="coefficient_of_magnetic_field">Coeficientul câmpului magnetic</string>
+    <string name="damping_coefficient">Coeficient amortizare</string>
+    <string name="rotational_inertia">Inerție de rotație</string>
+    <string name="physical_properties">Proprietăți fizice</string>
+    <string name="help">Ajutor</string>
+    <string name="tick_smooth">Tic lin</string>
+    <string name="tick_oscillate">Tic oscilat</string>
+    <string name="use_physical_properties">Utilizare proprietăți fizice</string>
+    <string name="seconds_precision">Precizie secunde</string>
+    <string name="bearing_rotation">Rotire</string>
+    <string name="accent_color">Culoare accent</string>
+    <string name="opacity">Opacitate</string>
+    <string name="size">Dimensiune</string>
+    <string name="customize_pin">Personalizare marcator</string>
+    <string name="map_tile_source">Sursa hărții</string>
+    <string name="maps_provider">Furnizor de hărți</string>
+    <string name="twenty_four_hours_clock">Ceas 24 ore</string>
+    <string name="gimbal_lock">Stabilizare</string>
+    <string name="clock_widget_notification">Widget-ul Ceas rulează.</string>
+    <string name="notification_desc">Dezactivați \"Canalul Widget-ului\" din setările de notificare pentru a ascunde această notificare.</string>
+    <string name="save">Salvare</string>
+    <string name="set_and_save">Setare și salvare</string>
+    <string name="failed">Eșuat!</string>
+    <string name="set_only">Setare doar</string>
+    <string name="sure">Desigur</string>
+    <string name="desc_custom_coord_dialog">Acești parametri sunt utilizați în prezent pentru calcularea informațiilor.</string>
+    <string name="inverted_colors">Culori inversate</string>
+</resources>
