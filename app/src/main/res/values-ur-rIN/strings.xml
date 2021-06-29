@@ -270,4 +270,6 @@
     <string name="failed">ناکام!</string>
     <string name="set_only">صرف سیٹ کریں</string>
     <string name="sure">ضرور</string>
+    <string name="desc_custom_coord_dialog">فی الحال یہ اعداد و شمار معلومات کے حساب کتاب کرنے کے لئے استعمال ہو رہے ہیں۔</string>
+    <string name="inverted_colors">رنگ بدلیں</string>
 </resources>
