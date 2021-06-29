@@ -270,4 +270,6 @@
     <string name="failed">Неуспешно!</string>
     <string name="set_only">Приложи</string>
     <string name="sure">Разбира се</string>
+    <string name="desc_custom_coord_dialog">Понастоящем тези параметри се използват за изчисляване на информация.</string>
+    <string name="inverted_colors">Обърнати цветове</string>
 </resources>
