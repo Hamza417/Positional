@@ -270,4 +270,6 @@
     <string name="failed">विफल रहा!</string>
     <string name="set_only">केवल सेट करें</string>
     <string name="sure">ज़रूर</string>
+    <string name="desc_custom_coord_dialog">इन मापदंडों का उपयोग वर्तमान में जानकारी की गणना के लिए किया जा रहा है।</string>
+    <string name="inverted_colors">रंग उलटें</string>
 </resources>
