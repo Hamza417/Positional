@@ -20,6 +20,7 @@ object LocaleHelper {
             Locales("български", "bg"),
             // Locales("Deutsch", "de"),
             Locales("हिन्दी", "hi"),
+            Locales("Romanian", "ro"),
             Locales("اردو", "ur"))
 
     fun getSystemLanguageCode(): String {

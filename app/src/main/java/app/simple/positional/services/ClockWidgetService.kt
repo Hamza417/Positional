@@ -19,6 +19,7 @@ import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegrees
 import app.simple.positional.preferences.ClockPreferences
+import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.util.BitmapHelper.rotateBitmap
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.widgets.ClockWidget
@@ -51,6 +52,7 @@ class ClockWidgetService : Service() {
             postCallbacks()
             widgetNotification()
         }
+
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -94,11 +96,13 @@ class ClockWidgetService : Service() {
                 val zonedDateTime = ZonedDateTime.now()
 
                 val hour = rotateBitmap(
-                        R.drawable.widget_needle_hour.toBitmap(applicationContext, imageSize), if (ClockPreferences.isClockFace24Hour()) {
-                    getHoursInDegreesFor24(zonedDateTime)
-                } else {
-                    getHoursInDegrees(zonedDateTime)
-                })
+                        R.drawable.widget_needle_hour.toBitmap(applicationContext, imageSize),
+                        if (applicationContext.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
+                                        .getBoolean(ClockPreferences.is24HourFace, false)) {
+                            getHoursInDegreesFor24(zonedDateTime)
+                        } else {
+                            getHoursInDegrees(zonedDateTime)
+                        })
 
                 val minute = rotateBitmap(R.drawable.widget_needle_minute.toBitmap(applicationContext, imageSize), getMinutesInDegrees(zonedDateTime))
                 val second = rotateBitmap(R.drawable.widget_needle_seconds.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime, false))

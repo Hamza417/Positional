@@ -7,7 +7,7 @@ import app.simple.positional.util.NullSafety.isNull
 
 object SharedPreferences {
 
-    private const val preferences = "Preferences"
+    const val preferences = "Preferences"
     private var sharedPreferences: SharedPreferences? = null
 
     fun init(context: Context) {

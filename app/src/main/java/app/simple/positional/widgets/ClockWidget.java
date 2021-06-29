@@ -29,6 +29,7 @@ public class ClockWidget extends AppWidgetProvider {
             context.startService(new Intent(context, ClockWidgetService.class));
         }
     
+        System.out.println("Started");
         super.onEnabled(context);
     }
     

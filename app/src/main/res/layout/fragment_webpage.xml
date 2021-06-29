@@ -14,7 +14,7 @@
         android:scrollIndicators="none"
         android:scrollbarSize="0dp">
 
-        <app.simple.positional.decorations.views.CustomWebView
+        <app.simple.positional.decorations.fastscroll.FastScrollWebView
             android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

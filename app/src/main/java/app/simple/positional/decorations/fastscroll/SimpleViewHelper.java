@@ -1,4 +1,4 @@
-package app.simple.positional.decorations.fastscroll;
+    package app.simple.positional.decorations.fastscroll;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public abstract class SimpleViewHelper implements FastScroller.ViewHelper {
-
+    
     @Nullable
     private Runnable mOnPreDrawListener;
     

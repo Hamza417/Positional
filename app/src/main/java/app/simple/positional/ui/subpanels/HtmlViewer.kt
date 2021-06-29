@@ -9,7 +9,8 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
-import app.simple.positional.decorations.views.CustomWebView
+import app.simple.positional.decorations.fastscroll.FastScrollWebView
+import app.simple.positional.decorations.fastscroll.FastScrollerBuilder
 import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.isNetworkAvailable
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,7 @@ import java.util.concurrent.TimeUnit
 
 class HtmlViewer : ScopedFragment() {
 
-    private lateinit var webView: CustomWebView
+    private lateinit var webView: FastScrollWebView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_webpage, container, false)
@@ -35,6 +36,8 @@ class HtmlViewer : ScopedFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         webView = view.findViewById(R.id.web_view)
+
+        FastScrollerBuilder(webView).useMd2Style().build()
 
         if (this.arguments != null && savedInstanceState.isNull()) {
             when (this.requireArguments().get("source")) {
