@@ -452,9 +452,19 @@ class Compass : ScopedFragment(), SensorEventListener {
         degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append("°")
 
         direction.text = if (showDirectionCode) {
-            getDirectionCodeFromAzimuth(requireContext(), azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
+            getDirectionCodeFromAzimuth(
+                requireContext(),
+                azimuth = rotationAngle.toDouble()
+            ).uppercase(
+                Locale.getDefault()
+            )
         } else {
-            getDirectionNameFromAzimuth(requireContext(), azimuth = rotationAngle.toDouble()).toUpperCase(Locale.getDefault())
+            getDirectionNameFromAzimuth(
+                requireContext(),
+                azimuth = rotationAngle.toDouble()
+            ).uppercase(
+                Locale.getDefault()
+            )
         }
     }
 

@@ -87,7 +87,8 @@ class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var sear
     private fun searchTimeZones(textView: TextView, string: String) {
         if (string == "") return
         val sb = SpannableStringBuilder(string)
-        val startPos = string.toLowerCase(Locale.getDefault()).indexOf(searchText.toLowerCase(Locale.getDefault()))
+        val startPos =
+            string.lowercase(Locale.getDefault()).indexOf(searchText.lowercase(Locale.getDefault()))
         val endPos = startPos + searchText.length
 
         if (startPos != -1) {
@@ -100,6 +101,6 @@ class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var sear
     }
 
     override fun getPopupText(position: Int): String {
-        return timeZones[position].first.substring(0, 1).toUpperCase(LocaleHelper.getAppLocale())
+        return timeZones[position].first.substring(0, 1).uppercase(LocaleHelper.getAppLocale())
     }
 }

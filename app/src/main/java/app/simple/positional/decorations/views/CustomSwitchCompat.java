@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
+
 import app.simple.positional.R;
 
 public class CustomSwitchCompat extends SwitchCompat {

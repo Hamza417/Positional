@@ -6,11 +6,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.widget.AppCompatButton;
+
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
 
-import androidx.appcompat.widget.AppCompatButton;
 import app.simple.positional.R;
 import app.simple.positional.preferences.MainPreferences;
 

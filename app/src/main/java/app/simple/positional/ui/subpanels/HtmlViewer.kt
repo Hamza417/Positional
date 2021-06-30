@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.decorations.fastscroll.FastScrollWebView
@@ -14,7 +13,6 @@ import app.simple.positional.decorations.fastscroll.FastScrollerBuilder
 import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.isNetworkAvailable
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileNotFoundException
@@ -23,12 +21,15 @@ import java.net.URL
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 class HtmlViewer : ScopedFragment() {
 
     private lateinit var webView: FastScrollWebView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_webpage, container, false)
     }
 
@@ -69,10 +70,7 @@ class HtmlViewer : ScopedFragment() {
                     webView.loadUrl("file:///android_asset/html/buy_full.html")
                 }
                 "translator" -> {
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        webView.loadUrl("file:///android_asset/html/loader.html")
-                        downloadTranslationStatus()
-                    }
+                    webView.loadUrl("file:///android_asset/html/translation.html")
                 }
                 "Change Logs" -> {
                     webView.loadUrl("file:///android_asset/html/local_changelogs.html")
@@ -105,7 +103,8 @@ class HtmlViewer : ScopedFragment() {
             if (isNetworkAvailable(requireContext())) {
                 withContext(Dispatchers.IO) {
                     runCatching {
-                        val url = "https://raw.githubusercontent.com/Hamza417/Positional/master/app/src/main/assets/html/translators.html"
+                        val url =
+                            "https://raw.githubusercontent.com/Hamza417/Positional/master/app/src/main/assets/html/translators.html"
                         URL(url).openStream().use { input ->
                             cleanUpOldFiles(File("${context?.cacheDir}/translation.html"), 0)
 
@@ -118,10 +117,16 @@ class HtmlViewer : ScopedFragment() {
                     }
                 }
 
-                webView.loadUrl(Uri.fromFile(File("${requireContext().cacheDir}/translation.html")).toString())
+                webView.loadUrl(
+                    Uri.fromFile(File("${requireContext().cacheDir}/translation.html")).toString()
+                )
 
             } else {
-                Toast.makeText(requireContext(), R.string.internet_connection_alert, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.internet_connection_alert,
+                    Toast.LENGTH_SHORT
+                ).show()
                 requireActivity().onBackPressed()
             }
         } catch (e: FileNotFoundException) {

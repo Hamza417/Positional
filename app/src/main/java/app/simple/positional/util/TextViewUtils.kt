@@ -41,11 +41,11 @@ object TextViewUtils {
     }
 
     fun String.capitalizeText(): String {
-        return this.toLowerCase(LocaleHelper.getAppLocale()).split(" ").joinToString(" ") {
+        return this.lowercase(LocaleHelper.getAppLocale()).split(" ").joinToString(" ") {
             if (it.length <= 1) {
                 it
             } else {
-                it.capitalize(LocaleHelper.getAppLocale())
+                it.replaceFirstChar { if (it.isLowerCase()) it.titlecase(LocaleHelper.getAppLocale()) else it.toString() }
             }
         }.trimEnd().trim()
     }

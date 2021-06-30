@@ -6,14 +6,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-public class CustomBottomSheetBehavior <V extends View> extends BottomSheetBehavior <V> {
-    
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+
+public class CustomBottomSheetBehavior<V extends View> extends BottomSheetBehavior<V> {
+
     /*
      * we'll use the device's touch slop value to find out when a tap
      * becomes a scroll by checking how far the finger moved to be

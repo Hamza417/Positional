@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+
 import app.simple.positional.decorations.utils.LayoutBackground;
 
 public class DynamicCornerLinearLayout extends LinearLayout {

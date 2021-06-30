@@ -70,8 +70,17 @@ class TimeZones : ScopedFragment() {
                 if (count > 0) {
                     try {
                         for (str in timeZones) {
-                            if (str.first.toLowerCase(Locale.getDefault()).contains(keywords.toLowerCase(Locale.getDefault())) ||
-                                    str.second.toLowerCase(Locale.getDefault()).contains(keywords.toLowerCase(Locale.getDefault()))) {
+                            if (str.first.lowercase(Locale.getDefault()).contains(
+                                    keywords.lowercase(
+                                        Locale.getDefault()
+                                    )
+                                ) ||
+                                str.second.lowercase(Locale.getDefault()).contains(
+                                    keywords.lowercase(
+                                        Locale.getDefault()
+                                    )
+                                )
+                            ) {
                                 filtered.add(str)
                             }
                         }

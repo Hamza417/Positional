@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import app.simple.positional.decorations.utils.LayoutBackground;
 
 public class DynamicCornerCoordinatorLayout extends CoordinatorLayout {

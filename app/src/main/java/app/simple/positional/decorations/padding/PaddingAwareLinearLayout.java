@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+
 import app.simple.positional.util.StatusBarHeight;
 
 public class PaddingAwareLinearLayout extends LinearLayout {

@@ -223,25 +223,60 @@ class OSM : ScopedFragment() {
                                         ?: return@withContext
 
                                 if (!distanceSingleton.isInitialLocationSet!!) {
-                                    distanceSingleton.initialPointCoordinates = LatLng(location!!.latitude, location!!.longitude)
-                                    distanceSingleton.distanceCoordinates = LatLng(location!!.latitude, location!!.longitude)
+                                    distanceSingleton.initialPointCoordinates =
+                                        LatLng(location!!.latitude, location!!.longitude)
+                                    distanceSingleton.distanceCoordinates =
+                                        LatLng(location!!.latitude, location!!.longitude)
                                     distanceSingleton.isInitialLocationSet = true
                                 }
 
                                 GPSPreferences.setLastLatitude(location!!.latitude.toFloat())
                                 GPSPreferences.setLastLongitude(location!!.longitude.toFloat())
 
-                                val providerSource = fromHtml("<b>${getString(R.string.gps_source)}</b> ${location!!.provider.toUpperCase(Locale.getDefault())}")
-                                val providerStatus = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
+                                val providerSource = fromHtml(
+                                    "<b>${getString(R.string.gps_source)}</b> ${
+                                        location!!.provider.uppercase(
+                                            Locale.getDefault()
+                                        )
+                                    }"
+                                )
+                                val providerStatus = fromHtml(
+                                    "<b>${getString(R.string.gps_status)}</b> ${
+                                        if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
+                                            R.string.gps_disabled
+                                        )
+                                    }"
+                                )
 
                                 val accuracy = if (isMetric) {
-                                    fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${round(location!!.accuracy.toDouble(), 2)} ${getString(R.string.meter)}")
+                                    fromHtml(
+                                        "<b>${getString(R.string.gps_accuracy)}</b> ${
+                                            round(
+                                                location!!.accuracy.toDouble(),
+                                                2
+                                            )
+                                        } ${getString(R.string.meter)}"
+                                    )
                                 } else {
-                                    fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${round(location!!.accuracy.toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
+                                    fromHtml(
+                                        "<b>${getString(R.string.gps_accuracy)}</b> ${
+                                            round(
+                                                location!!.accuracy.toDouble().toFeet(),
+                                                2
+                                            )
+                                        } ${getString(R.string.feet)}"
+                                    )
                                 }
 
                                 val altitude = if (isMetric) {
-                                    fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude, 2)} ${getString(R.string.meter)}")
+                                    fromHtml(
+                                        "<b>${getString(R.string.gps_altitude)}</b> ${
+                                            round(
+                                                location!!.altitude,
+                                                2
+                                            )
+                                        } ${getString(R.string.meter)}"
+                                    )
                                 } else {
                                     fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
                                 }
@@ -317,8 +352,19 @@ class OSM : ScopedFragment() {
                         }
                     }
                     "provider" -> {
-                        providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
-                        providerSource.text = fromHtml("<b>${getString(R.string.gps_source)}</b> ${intent.getStringExtra("location_provider")?.toUpperCase(Locale.getDefault())}")
+                        providerStatus.text = fromHtml(
+                            "<b>${getString(R.string.gps_status)}</b> ${
+                                if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
+                                    R.string.gps_disabled
+                                )
+                            }"
+                        )
+                        providerSource.text = fromHtml(
+                            "<b>${getString(R.string.gps_source)}</b> ${
+                                intent.getStringExtra("location_provider")
+                                    ?.uppercase(Locale.getDefault())
+                            }"
+                        )
                         toolbar.locationIconStatusUpdates()
                     }
                 }

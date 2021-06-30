@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
+
 import app.simple.positional.decorations.utils.LayoutBackground;
 
 public class DynamicCornerRecyclerView extends RecyclerView {

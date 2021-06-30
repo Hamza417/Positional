@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import androidx.annotation.Nullable;
+
 import app.simple.positional.BuildConfig;
 import app.simple.positional.R;
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout;

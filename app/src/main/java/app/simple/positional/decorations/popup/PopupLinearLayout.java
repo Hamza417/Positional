@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
+
 import app.simple.positional.R;
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout;
 
