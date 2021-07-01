@@ -59,8 +59,10 @@ class MainActivity :
 
         bottomBar.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
         bottomBar.adapter = bottomBarAdapter
+        bottomBar.scheduleLayoutAnimation()
 
         bottomBarAdapter.onItemClicked = { position, _ ->
+            bottomBar.smoothScrollToPosition(position)
             openFragment(position)
         }
 

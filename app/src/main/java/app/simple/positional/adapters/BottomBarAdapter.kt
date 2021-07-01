@@ -21,16 +21,33 @@ class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerVi
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         lastItem = FragmentPreferences.getCurrentPage()
-        return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_bottom_bar, parent, false))
+        return Holder(
+                LayoutInflater.from(parent.context).inflate(R.layout.adapter_bottom_bar, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         if (position == lastItem) {
-            holder.bg.animate().scaleX(1F).scaleY(1F).alpha(1F).setInterpolator(DecelerateInterpolator(1.5F)).start()
-            holder.icon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.context, R.color.iconColor))
+            holder.bg.animate()
+                .scaleX(1F)
+                .scaleY(1F)
+                .alpha(1F)
+                .setInterpolator(DecelerateInterpolator(1.5F))
+                .setDuration(holder.itemView.context.resources.getInteger(R.integer.animation_duration).toLong())
+                .start()
+
+            holder.icon.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(holder.itemView.context, R.color.iconColor))
         } else {
-            holder.bg.animate().scaleX(0F).scaleY(0F).alpha(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
-            holder.icon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(holder.itemView.context, R.color.iconRegular))
+            holder.bg.animate()
+                .scaleX(0F)
+                .scaleY(0F)
+                .alpha(0F)
+                .setInterpolator(DecelerateInterpolator(1.5F))
+                .setDuration(holder.itemView.context.resources.getInteger(R.integer.animation_duration).toLong())
+                .start()
+
+            holder.icon.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(holder.itemView.context, R.color.iconRegular))
         }
 
         holder.icon.setImageResource(list[position].icon)
@@ -50,6 +67,7 @@ class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerVi
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         val icon: ImageView = itemView.findViewById(R.id.bottom_bar_item)
         val bg: ImageView = itemView.findViewById(R.id.bottom_bar_item_background)
         val container: FrameLayout = itemView.findViewById(R.id.bottom_bar_container)

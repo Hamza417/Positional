@@ -19,6 +19,7 @@
         android:paddingHorizontal="15dp"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:layoutAnimation="@anim/grid_list_animation_controller"
         app:roundTopCorners="true" />
 
 </merge>
