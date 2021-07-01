@@ -16,7 +16,7 @@
         android:layout_gravity="bottom"
         android:backgroundTint="@color/mainBackground"
         android:elevation="10dp"
-        android:paddingHorizontal="15dp"
+        android:paddingHorizontal="10dp"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:layoutAnimation="@anim/grid_list_animation_controller"

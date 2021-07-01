@@ -62,7 +62,6 @@ class MainActivity :
         bottomBar.scheduleLayoutAnimation()
 
         bottomBarAdapter.onItemClicked = { position, _ ->
-            bottomBar.smoothScrollToPosition(position)
             openFragment(position)
         }
 
@@ -160,6 +159,7 @@ class MainActivity :
     }
 
     private fun openFragment(position: Int) {
+        bottomBar.smoothScrollToPosition(position)
         getFragment(position)?.let {
             supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
