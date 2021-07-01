@@ -70,7 +70,7 @@ class HtmlViewer : ScopedFragment() {
                     webView.loadUrl("file:///android_asset/html/buy_full.html")
                 }
                 "translator" -> {
-                    webView.loadUrl("file:///android_asset/html/translation.html")
+                    webView.loadUrl("file:///android_asset/html/translators.html")
                 }
                 "Change Logs" -> {
                     webView.loadUrl("file:///android_asset/html/local_changelogs.html")

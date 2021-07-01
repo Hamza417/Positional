@@ -19,8 +19,6 @@ object GPSPreferences {
     const val highContrastMap = "high_contrast_map"
     const val showBuilding = "show_buildings_on_map"
     const val useVolumeKeys = "use_volume_keys_to_zoom"
-    const val lastLatitude = "last_latitude"
-    const val lastLongitude = "last_longitude"
     const val pinSkin = "current_pin_skin"
 
     //--------------------------------------------------------------------------------------------------//
@@ -41,23 +39,6 @@ object GPSPreferences {
 
     fun setSatelliteMode(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(GPSSatellite, value).apply()
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-
-    fun setLastLatitude(@NotNull value: Float) {
-        getSharedPreferences().edit().putFloat(lastLatitude, value).apply()
-    }
-
-    fun setLastLongitude(@NotNull value: Float) {
-        getSharedPreferences().edit().putFloat(lastLongitude, value).apply()
-    }
-
-    fun getLastCoordinates(): FloatArray {
-        return floatArrayOf(
-                getSharedPreferences().getFloat(lastLatitude, 48.8584f),
-                getSharedPreferences().getFloat(lastLongitude, 2.2945f)
-        )
     }
 
     //--------------------------------------------------------------------------------------------------//

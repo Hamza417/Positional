@@ -37,12 +37,10 @@ import org.osmdroid.views.overlay.*
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import kotlin.coroutines.CoroutineContext
 
-
 class OsmMaps(context: Context, attrs: AttributeSet?) :
-        MapView(context, attrs),
-        SharedPreferences.OnSharedPreferenceChangeListener,
-        CoroutineScope {
-
+    MapView(context, attrs),
+    SharedPreferences.OnSharedPreferenceChangeListener,
+    CoroutineScope {
     /**
      * Setting the location will also add marker on the map
      * on that location. If the custom coordinate is checked
@@ -59,23 +57,19 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
             addMarker()
             field = value
         }
-
     var address: String = ""
-
     private var latLng: LatLng? = null
     private var mapsCallbacks: OsmMapsCallbacks? = null
     private var marker: Drawable? = null
     private val viewHandler = Handler(Looper.getMainLooper())
     private var mapViewListener: MapListener
-
     private var isCustomCoordinate = false
     private var isBearingRotation = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
     private var bearing = 0F
-    val lastLatitude = GPSPreferences.getLastCoordinates()[0].toDouble()
-    val lastLongitude = GPSPreferences.getLastCoordinates()[1].toDouble()
-
+    val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
+    val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Default
@@ -98,7 +92,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         latLng = if (isCustomCoordinate)
             LatLng(customLatitude, customLongitude)
         else
-            LatLng(GPSPreferences.getLastCoordinates()[0].toDouble(), GPSPreferences.getLastCoordinates()[1].toDouble())
+            LatLng(MainPreferences.getLastCoordinates()[0].toDouble(), MainPreferences.getLastCoordinates()[1].toDouble())
 
         moveMap(false)
         addMarker()
@@ -109,12 +103,12 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         }
 
         viewHandler.postDelayed({
-            /**
-             * Workaround for flashing of view when map is
-             * Initialized
-             */
-            this.animate().alpha(1F).setDuration(500).start()
-        }, 500)
+                                    /**
+                                     * Workaround for flashing of view when map is
+                                     * Initialized
+                                     */
+                                    this.animate().alpha(1F).setDuration(500).start()
+                                }, 500)
 
         Configuration.getInstance().userAgentValue = BuildConfig.APPLICATION_ID
         setTileSource()
@@ -130,7 +124,6 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         showScaleBar()
         showCopyrightNotice()
         onResume()
-
         val mReceive: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
                 // Toast.makeText(context, p.latitude.toString() + " - " + p.longitude, Toast.LENGTH_LONG).show()
@@ -160,7 +153,6 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
     }
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 controller.stopAnimation(false)
@@ -187,7 +179,6 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         } else {
             controller.setCenter(GeoPoint(latLng!!.latitude, latLng!!.longitude))
         }
-
         // controller.setCenter(GeoPoint(latLng!!.latitude, latLng!!.longitude))
     }
 
@@ -207,7 +198,6 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
 
     private fun addMarker() {
         launch {
-
             overlays.forEach {
                 if (it is Marker && it.id == "marker") {
                     overlays.remove(it)
@@ -223,7 +213,6 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                     R.drawable.ic_place_historical.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                 }
             }.toDrawable(resources)
-
             val startMarker = Marker(this@OsmMaps).apply {
                 icon = marker
                 id = "marker"

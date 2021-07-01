@@ -111,6 +111,11 @@ a:link {
 	background-color: transparent;
 }
 
+small {
+    color: rgb(153, 163, 164);
+	text-align: left;
+}
+
 @keyframes scale {
   0%   {transform: scale(.8);}
   100% {transform: scale(1.2);}

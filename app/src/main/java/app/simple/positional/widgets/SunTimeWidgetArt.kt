@@ -47,13 +47,13 @@ class SunTimeWidgetArt : AppWidgetProvider() {
             val latitude = if (MainPreferences.isCustomCoordinate()) {
                 getSharedPreferences().getFloat(MainPreferences.latitude, 0.0F).toDouble()
             } else {
-                getSharedPreferences().getFloat(GPSPreferences.lastLatitude, 0.0F).toDouble()
+                getSharedPreferences().getFloat(MainPreferences.lastLatitude, 0.0F).toDouble()
             }
 
             val longitude = if (MainPreferences.isCustomCoordinate()) {
                 getSharedPreferences().getFloat(MainPreferences.longitude, 0.0F).toDouble()
             } else {
-                getSharedPreferences().getFloat(GPSPreferences.lastLongitude, 0.0F).toDouble()
+                getSharedPreferences().getFloat(MainPreferences.lastLongitude, 0.0F).toDouble()
             }
 
             val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTimeFormat()) {

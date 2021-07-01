@@ -34,7 +34,7 @@ class AccentColorAdapter : RecyclerView.Adapter<AccentColorAdapter.Holder>() {
                 ContextCompat.getColor(parent.context, R.color.amaranth)
         )
 
-        return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_color_pallete, parent, false))
+        return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_accent_colors, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {

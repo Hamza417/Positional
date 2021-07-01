@@ -62,9 +62,7 @@ import java.lang.Runnable
 import java.util.*
 
 class OSM : ScopedFragment() {
-
     private lateinit var expandUp: ImageView
-
     private lateinit var scrollView: NestedScrollView
     private lateinit var toolbar: MapToolbar
     private lateinit var bottomSheetSlide: BottomSheetSlide
@@ -76,7 +74,6 @@ class OSM : ScopedFragment() {
     private lateinit var copy: DynamicRippleImageButton
     private lateinit var save: DynamicRippleImageButton
     private lateinit var movementReset: DynamicRippleImageButton
-
     private lateinit var accuracy: TextView
     private lateinit var address: TextView
     private lateinit var latitude: TextView
@@ -90,32 +87,25 @@ class OSM : ScopedFragment() {
     private lateinit var speed: TextView
     private lateinit var specifiedLocationTextView: TextView
     private lateinit var infoText: TextView
-
     private lateinit var handler: Handler
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
     private lateinit var bottomSheetInfoPanel: BottomSheetBehavior<CoordinatorLayout>
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
-
     private var isMetric = true
     private var isFullScreen = false
     private var isCustomCoordinate = false
-
     private var customLatitude = 0.0
     private var customLongitude = 0.0
     private var lastLatitude = 0.0
     private var lastLongitude = 0.0
     private var peekHeight = 0
-
     private var distanceSingleton = DistanceSingleton
     private var mapView: OsmMaps? = null
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_osm, container, false)
-
         //isFullScreen = savedInstanceState?.getBoolean("full_screen") ?: false
-
         toolbar = view.findViewById(R.id.map_toolbar)
         scrollView = view.findViewById(R.id.gps_list_scroll_view)
         scrollView.alpha = 0f
@@ -151,14 +141,14 @@ class OSM : ScopedFragment() {
         handler = Handler(Looper.getMainLooper())
 
         handler.postDelayed({
-            if (requireActivity().intent.isNotNull()) {
-                if (requireActivity().intent.action == "action_map_panel_full") {
-                    isFullScreen = false
-                    setFullScreen(true)
-                    requireActivity().intent.action = null
-                }
-            }
-        }, 500L)
+                                if (requireActivity().intent.isNotNull()) {
+                                    if (requireActivity().intent.action == "action_map_panel_full") {
+                                        isFullScreen = false
+                                        setFullScreen(true)
+                                        requireActivity().intent.action = null
+                                    }
+                                }
+                            }, 500L)
 
         filter.addAction("location")
         filter.addAction("provider")
@@ -171,8 +161,8 @@ class OSM : ScopedFragment() {
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
         }
 
-        lastLatitude = GPSPreferences.getLastCoordinates()[0].toDouble()
-        lastLongitude = GPSPreferences.getLastCoordinates()[1].toDouble()
+        lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
+        lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
@@ -220,7 +210,7 @@ class OSM : ScopedFragment() {
                         viewLifecycleOwner.lifecycleScope.launch {
                             withContext(Dispatchers.Default) {
                                 location = intent.getParcelableExtra("location")
-                                        ?: return@withContext
+                                    ?: return@withContext
 
                                 if (!distanceSingleton.isInitialLocationSet!!) {
                                     distanceSingleton.initialPointCoordinates =
@@ -230,68 +220,61 @@ class OSM : ScopedFragment() {
                                     distanceSingleton.isInitialLocationSet = true
                                 }
 
-                                GPSPreferences.setLastLatitude(location!!.latitude.toFloat())
-                                GPSPreferences.setLastLongitude(location!!.longitude.toFloat())
-
+                                MainPreferences.setLastLatitude(location!!.latitude.toFloat())
+                                MainPreferences.setLastLongitude(location!!.longitude.toFloat())
                                 val providerSource = fromHtml(
-                                    "<b>${getString(R.string.gps_source)}</b> ${
-                                        location!!.provider.uppercase(
-                                            Locale.getDefault()
-                                        )
-                                    }"
+                                        "<b>${getString(R.string.gps_source)}</b> ${
+                                            location!!.provider.uppercase(
+                                                    Locale.getDefault()
+                                            )
+                                        }"
                                 )
                                 val providerStatus = fromHtml(
-                                    "<b>${getString(R.string.gps_status)}</b> ${
-                                        if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
-                                            R.string.gps_disabled
-                                        )
-                                    }"
+                                        "<b>${getString(R.string.gps_status)}</b> ${
+                                            if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
+                                                    R.string.gps_disabled
+                                            )
+                                        }"
                                 )
-
                                 val accuracy = if (isMetric) {
                                     fromHtml(
-                                        "<b>${getString(R.string.gps_accuracy)}</b> ${
-                                            round(
-                                                location!!.accuracy.toDouble(),
-                                                2
-                                            )
-                                        } ${getString(R.string.meter)}"
+                                            "<b>${getString(R.string.gps_accuracy)}</b> ${
+                                                round(
+                                                        location!!.accuracy.toDouble(),
+                                                        2
+                                                )
+                                            } ${getString(R.string.meter)}"
                                     )
                                 } else {
                                     fromHtml(
-                                        "<b>${getString(R.string.gps_accuracy)}</b> ${
-                                            round(
-                                                location!!.accuracy.toDouble().toFeet(),
-                                                2
-                                            )
-                                        } ${getString(R.string.feet)}"
+                                            "<b>${getString(R.string.gps_accuracy)}</b> ${
+                                                round(
+                                                        location!!.accuracy.toDouble().toFeet(),
+                                                        2
+                                                )
+                                            } ${getString(R.string.feet)}"
                                     )
                                 }
-
                                 val altitude = if (isMetric) {
                                     fromHtml(
-                                        "<b>${getString(R.string.gps_altitude)}</b> ${
-                                            round(
-                                                location!!.altitude,
-                                                2
-                                            )
-                                        } ${getString(R.string.meter)}"
+                                            "<b>${getString(R.string.gps_altitude)}</b> ${
+                                                round(
+                                                        location!!.altitude,
+                                                        2
+                                                )
+                                            } ${getString(R.string.meter)}"
                                     )
                                 } else {
                                     fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
                                 }
-
                                 val speed = if (isMetric) {
                                     fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)} ${getString(R.string.kilometer_hour)}")
                                 } else {
                                     fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} ${getString(R.string.miles_hour)}")
                                 }
-
                                 val bearing = fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${location!!.bearing}°")
-
                                 val displacement: Spanned?
                                 val direction: Spanned?
-
                                 val displacementValue = FloatArray(1)
                                 val distanceValue = FloatArray(1)
                                 Location.distanceBetween(
@@ -353,17 +336,17 @@ class OSM : ScopedFragment() {
                     }
                     "provider" -> {
                         providerStatus.text = fromHtml(
-                            "<b>${getString(R.string.gps_status)}</b> ${
-                                if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
-                                    R.string.gps_disabled
-                                )
-                            }"
+                                "<b>${getString(R.string.gps_status)}</b> ${
+                                    if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
+                                            R.string.gps_disabled
+                                    )
+                                }"
                         )
                         providerSource.text = fromHtml(
-                            "<b>${getString(R.string.gps_source)}</b> ${
-                                intent.getStringExtra("location_provider")
-                                    ?.uppercase(Locale.getDefault())
-                            }"
+                                "<b>${getString(R.string.gps_source)}</b> ${
+                                    intent.getStringExtra("location_provider")
+                                        ?.uppercase(Locale.getDefault())
+                                }"
                         )
                         toolbar.locationIconStatusUpdates()
                     }
@@ -395,18 +378,18 @@ class OSM : ScopedFragment() {
         })
 
         toolbar.setOnMapToolbarCallbacks(object : MapToolbar.MapToolbarCallbacks {
-            override fun onLocationReset(view: View?) {
+            override fun onLocationReset(view: View) {
                 updateViews(customLatitude, customLongitude)
                 mapView!!.moveMap(true)
             }
 
-            override fun onMenuClicked(view: View?) {
+            override fun onMenuClicked(view: View) {
                 OSMMenu().show(parentFragmentManager, "gps_menu")
             }
 
-            override fun onCustomLocationClicked(view: View?) {
+            override fun onCustomLocationClicked(view: View) {
                 CustomLocationParameters.newInstance()
-                        .show(parentFragmentManager, "location_params")
+                    .show(parentFragmentManager, "location_params")
             }
 
             override fun onLocationLongPressed() {
@@ -486,7 +469,6 @@ class OSM : ScopedFragment() {
                 stringBuilder.append("${longitude.text}\n\n")
 
                 stringBuilder.append("${getString(R.string.gps_address)}: ${address.text}")
-
                 val clip: ClipData = ClipData.newPlainText("GPS Data", stringBuilder)
                 clipboard.setPrimaryClip(clip)
             }
@@ -639,7 +621,7 @@ class OSM : ScopedFragment() {
 
     private fun setLocationPin() {
         view?.findViewById<ImageView>(R.id.coordinates_icon)!!
-                .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
+            .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
     }
 
     private fun backPressed(value: Boolean) {
@@ -648,7 +630,6 @@ class OSM : ScopedFragment() {
                 if (bottomSheetInfoPanel.state == BottomSheetBehavior.STATE_EXPANDED) {
                     bottomSheetInfoPanel.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
-
                 /**
                  * Remove this callback as soon as it's been called
                  * to prevent any further registering

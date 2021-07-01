@@ -27,9 +27,9 @@ object MainPreferences {
     const val longitude = "custom_longitude"
     const val accentColor = "app_accent_color"
     const val isOSMPanel = "is_map_panel_osm"
-
+    const val lastLatitude = "last_latitude"
+    const val lastLongitude = "last_longitude"
     //--------------------------------------------------------------------------------------------------//
-
     fun setLaunchCount(value: Int) {
         getSharedPreferences().edit().putInt(launchCount, value).apply()
     }
@@ -155,9 +155,22 @@ object MainPreferences {
                 getSharedPreferences().getFloat(longitude, 0f)
         )
     }
-
     //--------------------------------------------------------------------------------------------------//
+    fun setLastLatitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(lastLatitude, value).apply()
+    }
 
+    fun setLastLongitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(lastLongitude, value).apply()
+    }
+
+    fun getLastCoordinates(): FloatArray {
+        return floatArrayOf(
+                getSharedPreferences().getFloat(lastLatitude, 48.8584f),
+                getSharedPreferences().getFloat(lastLongitude, 2.2945f)
+        )
+    }
+    //--------------------------------------------------------------------------------------------------//
     fun setAddress(@NotNull value: String) {
         getSharedPreferences().edit().putString(address, value).apply()
     }

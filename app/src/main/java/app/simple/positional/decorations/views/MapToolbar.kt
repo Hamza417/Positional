@@ -1,131 +1,127 @@
-package app.simple.positional.decorations.views;
+package app.simple.positional.decorations.views
 
-import android.animation.LayoutTransition;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.animation.DecelerateInterpolator;
+import android.animation.LayoutTransition
+import android.content.Context
+import android.content.SharedPreferences
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.View
+import android.view.animation.DecelerateInterpolator
+import app.simple.positional.R
+import app.simple.positional.constants.LocationPins.locationsPins
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.preferences.GPSPreferences
+import app.simple.positional.preferences.GPSPreferences.getPinSkin
+import app.simple.positional.preferences.MainPreferences.isCustomCoordinate
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
+import app.simple.positional.util.LocationExtension.getLocationStatus
+import app.simple.positional.util.StatusBarHeight
 
-import androidx.annotation.Nullable;
+class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
+    private lateinit var mapToolbarCallbacks: MapToolbarCallbacks
+    private lateinit var location: DynamicRippleImageButton
+    private lateinit var menu: DynamicRippleImageButton
+    private lateinit var customLocationButton: DynamicRippleImageButton
+    private var isFixed = false
 
-import app.simple.positional.BuildConfig;
-import app.simple.positional.R;
-import app.simple.positional.decorations.corners.DynamicCornerLinearLayout;
-import app.simple.positional.decorations.ripple.DynamicRippleImageButton;
-import app.simple.positional.preferences.MainPreferences;
-import app.simple.positional.util.LocationExtension;
-import app.simple.positional.util.StatusBarHeight;
-import app.simple.positional.util.ViewUtils;
-
-public class MapToolbar extends DynamicCornerLinearLayout {
-    
-    private MapToolbarCallbacks mapToolbarCallbacks;
-    private DynamicRippleImageButton location;
-    private DynamicRippleImageButton menu;
-    private DynamicRippleImageButton customLocationButton;
-    private View customLocationDivider;
-    private boolean isFixed = false;
-    
-    public MapToolbar(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        setProperties();
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
+        setProperties()
     }
-    
-    public MapToolbar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        setProperties();
+
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        setProperties()
     }
-    
-    private void setProperties() {
-        initViews();
-        setLayoutTransition(new LayoutTransition());
+
+    private fun setProperties() {
+        initViews()
+        layoutTransition = LayoutTransition()
+        getSharedPreferences()
+            .registerOnSharedPreferenceChangeListener(this)
     }
-    
-    private void initViews() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.toolbar_map_panel, this, true);
-    
-        setPadding(getResources().getDimensionPixelOffset(R.dimen.toolbar_padding),
-                getResources().getDimensionPixelOffset(R.dimen.toolbar_padding) + StatusBarHeight.getStatusBarHeight(getResources()),
-                getResources().getDimensionPixelOffset(R.dimen.toolbar_padding),
-                getResources().getDimensionPixelOffset(R.dimen.toolbar_padding));
-    
-        location = view.findViewById(R.id.gps_location_indicator);
-        menu = view.findViewById(R.id.gps_menu);
-        customLocationDivider = view.findViewById(R.id.gps_location_divider);
-        customLocationButton = view.findViewById(R.id.gps_custom_location);
-    
-        if (MainPreferences.INSTANCE.isCustomCoordinate()) {
-            ViewUtils.INSTANCE.makeVisible(customLocationButton, false);
-            ViewUtils.INSTANCE.makeVisible(customLocationDivider, false);
+
+    private fun initViews() {
+        val view = LayoutInflater.from(context).inflate(R.layout.toolbar_map_panel, this, true)
+        setPadding(resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
+                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding) + StatusBarHeight.getStatusBarHeight(resources),
+                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
+                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding))
+
+        location = view.findViewById(R.id.gps_location_indicator)
+        menu = view.findViewById(R.id.gps_menu)
+        customLocationButton = view.findViewById(R.id.gps_custom_location)
+
+        if (isCustomCoordinate()) {
+            customLocationButton.setImageResource(R.drawable.ic_place_custom)
+        } else {
+            customLocationButton.setImageResource(locationsPins[getPinSkin()])
         }
-        else {
-            ViewUtils.INSTANCE.makeGoAway(customLocationButton);
-            ViewUtils.INSTANCE.makeGoAway(customLocationDivider);
+
+        location.setOnClickListener { mapToolbarCallbacks.onLocationReset(it) }
+        location.setOnLongClickListener {
+            mapToolbarCallbacks.onLocationLongPressed()
+            true
         }
-    
-        if (BuildConfig.FLAVOR.equals("lite")) {
-            ViewUtils.INSTANCE.makeGoAway(customLocationButton);
-            ViewUtils.INSTANCE.makeGoAway(customLocationDivider);
-        }
-    
-        location.setOnClickListener(it -> mapToolbarCallbacks.onLocationReset(it));
-    
-        location.setOnLongClickListener(v -> {
-            mapToolbarCallbacks.onLocationLongPressed();
-            return true;
-        });
-    
-        menu.setOnClickListener(it -> mapToolbarCallbacks.onMenuClicked(it));
-    
-        customLocationButton.setOnClickListener(v -> mapToolbarCallbacks.onCustomLocationClicked(v));
+
+        menu.setOnClickListener { mapToolbarCallbacks.onMenuClicked(it) }
+        customLocationButton.setOnClickListener { mapToolbarCallbacks.onCustomLocationClicked(it) }
     }
-    
-    public void hide() {
-        animate().translationY(getHeight() * -1).alpha(0).setInterpolator(new DecelerateInterpolator(1.5F)).start();
-        location.setClickable(false);
-        menu.setClickable(false);
-        setClickable(false);
+
+    fun hide() {
+        animate().translationY((height * -1).toFloat()).alpha(0f).setInterpolator(DecelerateInterpolator(1.5f)).start()
+        location.isClickable = false
+        menu.isClickable = false
+        isClickable = false
     }
-    
-    public void show() {
-        animate().translationY(0).alpha(1).setInterpolator(new DecelerateInterpolator(1.5F)).start();
-        location.setClickable(isFixed);
-        menu.setClickable(true);
-        setClickable(true);
+
+    fun show() {
+        animate().translationY(0f).alpha(1f).setInterpolator(DecelerateInterpolator(1.5f)).start()
+        location.isClickable = isFixed
+        menu.isClickable = true
+        isClickable = true
     }
-    
-    public void locationIndicatorUpdate(boolean isFixed) {
-        this.isFixed = isFixed;
-        
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        println("Called")
+        getSharedPreferences()
+            .unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    fun locationIndicatorUpdate(isFixed: Boolean) {
+        this.isFixed = isFixed
         if (isFixed) {
-            location.setImageResource(R.drawable.ic_gps_fixed);
-        }
-        else {
-            locationIconStatusUpdates();
-        }
-    }
-    
-    public void locationIconStatusUpdates() {
-        if (LocationExtension.INSTANCE.getLocationStatus(getContext())) {
-            location.setImageResource(R.drawable.ic_gps_not_fixed);
-        }
-        else {
-            location.setImageResource(R.drawable.ic_gps_off);
+            location.setImageResource(R.drawable.ic_gps_fixed)
+        } else {
+            locationIconStatusUpdates()
         }
     }
-    
-    public void setOnMapToolbarCallbacks(MapToolbarCallbacks mapToolbarCallbacks) {
-        this.mapToolbarCallbacks = mapToolbarCallbacks;
+
+    fun locationIconStatusUpdates() {
+        if (getLocationStatus(context)) {
+            location.setImageResource(R.drawable.ic_gps_not_fixed)
+        } else {
+            location.setImageResource(R.drawable.ic_gps_off)
+        }
     }
-    
-    public interface MapToolbarCallbacks {
-        void onLocationReset(View view);
-        
-        void onLocationLongPressed();
-        
-        void onMenuClicked(View view);
-        
-        void onCustomLocationClicked(View view);
+
+    fun setOnMapToolbarCallbacks(mapToolbarCallbacks: MapToolbarCallbacks) {
+        this.mapToolbarCallbacks = mapToolbarCallbacks
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (GPSPreferences.pinSkin == key) {
+            if (!isCustomCoordinate()) {
+                customLocationButton.setImageResource(locationsPins[getPinSkin()])
+            }
+        }
+    }
+
+    interface MapToolbarCallbacks {
+        fun onLocationReset(view: View)
+        fun onLocationLongPressed()
+        fun onMenuClicked(view: View)
+        fun onCustomLocationClicked(view: View)
     }
 }
