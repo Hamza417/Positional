@@ -8,52 +8,64 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
+import app.simple.positional.adapters.BottomBarAdapter
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
-import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
+import app.simple.positional.constants.LocationPins
+import app.simple.positional.decorations.bottombar.BottomBarModel
+import app.simple.positional.decorations.corners.DynamicCornerRecyclerView
 import app.simple.positional.dialogs.app.Permission
 import app.simple.positional.dialogs.app.Rate
 import app.simple.positional.preferences.FragmentPreferences
+import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.services.FusedLocationService
 import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
-import app.simple.positional.smoothbottombar.SmoothBottomBar
 import app.simple.positional.ui.panels.*
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
 
-class MainActivity
-    : BaseActivity(),
-      PermissionCallbacks,
-      BottomSheetSlide,
-      android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+class MainActivity :
+    BaseActivity(),
+    PermissionCallbacks,
+    BottomSheetSlide,
+    android.content.SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val defaultPermissionRequestCode = 123
-    private lateinit var bottomBar: SmoothBottomBar
-    private lateinit var bottomBarWrapper: DynamicCornerFrameLayout
-    private val fragmentTags = arrayOf("clock", "compass", "gps", "level", "settings")
+    private lateinit var bottomBar: DynamicCornerRecyclerView
+    private lateinit var bottomBarAdapter: BottomBarAdapter
+    private val fragments = arrayListOf(
+            BottomBarModel(R.drawable.ic_clock, "clock"),
+            BottomBarModel(R.drawable.ic_compass, "compass"),
+            BottomBarModel(LocationPins.locationsPins[GPSPreferences.getPinSkin()], "gps"),
+            BottomBarModel(R.drawable.ic_level, "level"),
+            BottomBarModel(R.drawable.ic_settings, "settings")
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         bottomBar = findViewById(R.id.bottom_bar)
-        bottomBarWrapper = findViewById(R.id.bottom_bar_wrapper)
+        bottomBarAdapter = BottomBarAdapter(fragments)
+        bottomBarAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
 
-        bottomBar.itemActiveIndex = FragmentPreferences.getCurrentPage()
+        bottomBar.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
+        bottomBar.adapter = bottomBarAdapter
+
+        bottomBarAdapter.onItemClicked = { position, _ ->
+            openFragment(position)
+        }
 
         checkRunTimePermission()
         showReviewPromptToUser()
-
-        bottomBar.setOnItemSelectedListener {
-            openFragment(it)
-            FragmentPreferences.setCurrentPage(it)
-        }
 
         if (savedInstanceState.isNull()) {
             openFragment(FragmentPreferences.getCurrentPage())
@@ -85,7 +97,7 @@ class MainActivity
 
     private fun checkRunTimePermission() {
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (MainPreferences.getShowPermissionDialog()) {
                 val permissionDialog = Permission().newInstance()
                 permissionDialog.show(supportFragmentManager, "permission_info")
@@ -105,7 +117,7 @@ class MainActivity
                 runService()
             } else {
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) &&
-                        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                     Toast.makeText(this, R.string.no_location_permission_alert, Toast.LENGTH_LONG).show()
                 }
             }
@@ -148,9 +160,9 @@ class MainActivity
     private fun openFragment(position: Int) {
         getFragment(position)?.let {
             supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                    .replace(R.id.containers, it, fragmentTags[position])
-                    .commit()
+                .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                .replace(R.id.containers, it, fragments[position].name)
+                .commit()
         }
     }
 
@@ -158,28 +170,28 @@ class MainActivity
         when (position) {
             0 -> {
                 return supportFragmentManager.findFragmentByTag("clock") as Clock?
-                        ?: Clock.newInstance()
+                    ?: Clock.newInstance()
             }
             1 -> {
                 return supportFragmentManager.findFragmentByTag("compass") as Compass?
-                        ?: Compass.newInstance()
+                    ?: Compass.newInstance()
             }
             2 -> {
                 return if (MainPreferences.getMapPanelType() && BuildConfig.FLAVOR != "lite") {
                     supportFragmentManager.findFragmentByTag("osm") as OSM?
-                            ?: OSM.newInstance()
+                        ?: OSM.newInstance()
                 } else {
                     supportFragmentManager.findFragmentByTag("gps") as GPS?
-                            ?: GPS.newInstance()
+                        ?: GPS.newInstance()
                 }
             }
             3 -> {
                 return supportFragmentManager.findFragmentByTag("level") as Level?
-                        ?: Level.newInstance()
+                    ?: Level.newInstance()
             }
             4 -> {
                 return supportFragmentManager.findFragmentByTag("settings") as AppSettings?
-                        ?: AppSettings.newInstance()
+                    ?: AppSettings.newInstance()
             }
         }
 
@@ -187,15 +199,14 @@ class MainActivity
     }
 
     override fun onBottomSheetSliding(slideOffset: Float) {
-        bottomBarWrapper.translationY = bottomBarWrapper.height * slideOffset
+        bottomBar.translationY = bottomBar.height * slideOffset
     }
 
     override fun onMapClicked(fullScreen: Boolean) {
-        println(fullScreen)
         if (fullScreen) {
-            bottomBarWrapper.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
+            bottomBar.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F)).start()
         } else {
-            bottomBarWrapper.animate().translationY(bottomBarWrapper.height.toFloat()).setInterpolator(DecelerateInterpolator(1.5F)).start()
+            bottomBar.animate().translationY(bottomBar.height.toFloat()).setInterpolator(DecelerateInterpolator(1.5F)).start()
         }
     }
 
@@ -221,13 +232,13 @@ class MainActivity
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putFloat("translation", bottomBarWrapper.translationY)
+        outState.putFloat("translation", bottomBar.translationY)
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         if (savedInstanceState.isNotNull()) {
-            bottomBarWrapper.translationY = savedInstanceState.getFloat("translation")
+            bottomBar.translationY = savedInstanceState.getFloat("translation")
         }
         super.onRestoreInstanceState(savedInstanceState)
     }

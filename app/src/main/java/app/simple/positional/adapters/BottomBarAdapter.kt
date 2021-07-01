@@ -10,14 +10,14 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.decorations.bottombar.BottomBarCallbacks
 import app.simple.positional.decorations.bottombar.BottomBarModel
 import app.simple.positional.preferences.FragmentPreferences
 
 class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
 
     private var lastItem = 0
-    private lateinit var bottomBarCallbacks: BottomBarCallbacks
+    var onItemClicked:
+            (position: Int, name: String) -> Unit = { _: Int, _: String -> }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         lastItem = FragmentPreferences.getCurrentPage()
@@ -38,7 +38,7 @@ class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerVi
         holder.container.setOnClickListener {
             notifyItemChanged(lastItem)
             lastItem = position
-            bottomBarCallbacks.onItemClicked(position, list[position].name)
+            onItemClicked.invoke(position, list[position].name)
             FragmentPreferences.setCurrentPage(position)
             FragmentPreferences.setCurrentTag(list[position].name)
             notifyItemChanged(lastItem)
@@ -53,9 +53,5 @@ class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerVi
         val icon: ImageView = itemView.findViewById(R.id.bottom_bar_item)
         val bg: ImageView = itemView.findViewById(R.id.bottom_bar_item_background)
         val container: FrameLayout = itemView.findViewById(R.id.bottom_bar_container)
-    }
-
-    fun setOnBottomBarCallbacksListener(bottomBarCallbacks: BottomBarCallbacks) {
-        this.bottomBarCallbacks = bottomBarCallbacks
     }
 }

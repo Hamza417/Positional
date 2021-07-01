@@ -10,8 +10,9 @@ def thisAppLicensingKey = noKeyFound
 /**
  * Can be used for any API Key
  *
- * If you have a Google Maps API Key, you can create sensitive_data.txt file in project's root directory
- * containing your API keys and this code will handle the changes.
+ * If you have a Google Maps API Key, you can create sensitive_data.txt file
+ * in project's root directory containing your API keys and this code will
+ * handle the changes.
  *
  * The file should look like this in sensitive_data.txt without any quotes
  *

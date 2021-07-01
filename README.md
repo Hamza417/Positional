@@ -85,7 +85,7 @@ On top of all the core functionality Positional is a highly polished app and pro
   * Sun Azimuth<br/>
   * Sun Distance and Sun Altitude<br/>
   * Sunset and Sunrise time<br/>
-  * Astronomical, Nautical, Civil twilights<br/>
+  * Astronomical, Nautical, Civil twilight<br/>
   * Moon Position/Location</br>
   * Moonrise and Moonset time<br/>
   * Moon Altitude<br/>
@@ -107,7 +107,7 @@ On top of all the core functionality Positional is a highly polished app and pro
 
 ## Road Map
   * Add a custom date mode along with specified coordinates
-  * Add a timeline view for moon dates upto a few years in the future and past
+  * Add a timeline view for moon dates up to a few years in the future and past
   * Add a 3D solar data model for visual representation
   * Solar and Lunar Eclipse dates
 

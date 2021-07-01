@@ -117,7 +117,7 @@ class Level : ScopedFragment(), SensorEventListener {
 
             val dampingRation = 0.32F
             val stiffness = SpringForce.STIFFNESS_VERY_LOW
-            val scaleLarge = 1.3F
+            val scaleLarge = 1.5F
             val scaleNormal = 1.0F
 
             val springForceLarge = SpringForce()

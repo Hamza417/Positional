@@ -126,7 +126,8 @@
       <option name="RIGHT_MARGIN" value="100" />
       <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
       <option name="KEEP_BLANK_LINES_IN_CODE" value="0" />
-      <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="0" />
+      <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="1" />
+      <option name="BLANK_LINES_AFTER_CLASS_HEADER" value="1" />
       <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true" />
       <option name="CALL_PARAMETERS_WRAP" value="0" />
       <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="false" />

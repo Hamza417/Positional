@@ -9,34 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
-        android:id="@+id/bottom_bar_wrapper"
+    <app.simple.positional.decorations.corners.DynamicCornerRecyclerView
+        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_nav_height"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/toolbarBackground"
-        android:elevation="20dp"
-        app:roundTopCorners="true"
-        app:roundBottomCorners="false">
-
-        <app.simple.positional.smoothbottombar.SmoothBottomBar
-            android:id="@+id/bottom_bar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_nav_height"
-            android:layout_gravity="bottom"
-            android:elevation="3dp"
-            app:backgroundColor="@android:color/transparent"
-            app:cornerRadius="@dimen/all_corner_radius"
-            app:duration="500"
-            app:iconSize="20dp"
-            app:iconTint="@color/iconRegular"
-            app:iconTintActive="@color/iconColor"
-            app:indicatorColor="@color/indicator"
-            app:indicatorRadius="@dimen/all_corner_radius"
-            app:itemFontFamily="@font/light"
-            app:menu="@menu/toolbar_items"
-            app:textColor="@color/textSecondary"
-            app:textSize="4pt" />
-    </app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
+        android:backgroundTint="@color/mainBackground"
+        android:elevation="10dp"
+        android:paddingHorizontal="15dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:roundTopCorners="true" />
 
 </merge>
