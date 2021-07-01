@@ -26,6 +26,8 @@ class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        holder.bg.clearAnimation()
+
         if (position == lastItem) {
             holder.bg.animate()
                 .scaleX(1F)

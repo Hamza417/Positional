@@ -1,4 +1,4 @@
-package app.simple.positional.decorations.maps
+package app.simple.positional.decorations.trail
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -9,24 +9,28 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
-import app.simple.positional.constants.LocationPins
+import app.simple.positional.decorations.maps.MapsCallbacks
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
-import app.simple.positional.util.BitmapHelper.toBitmap
+import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.PermissionUtils
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.Runnable
 import kotlin.coroutines.CoroutineContext
 
-class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
-                                                           OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
-                                                           CoroutineScope {
+class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
+                                                                OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
+                                                                CoroutineScope {
 
     private var googleMap: GoogleMap? = null
     var location: Location? = null
@@ -34,10 +38,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private var mapsCallbacks: MapsCallbacks? = null
     private var marker: Bitmap? = null
     private val viewHandler = Handler(Looper.getMainLooper())
-    private var isCustomCoordinate = false
-    private var isBearingRotation = false
-    private var customLatitude = 0.0
-    private var customLongitude = 0.0
     val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
     val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
     private val job = Job()
@@ -45,14 +45,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         get() = job + Dispatchers.Main
 
     init {
-        isCustomCoordinate = MainPreferences.isCustomCoordinate()
-        isBearingRotation = GPSPreferences.isBearingRotationOn()
-
-        if (isCustomCoordinate) {
-            customLatitude = MainPreferences.getCoordinates()[0].toDouble()
-            customLongitude = MainPreferences.getCoordinates()[1].toDouble()
-        }
-
         if (GPSPreferences.isUsingVolumeKeys()) {
             this.isFocusableInTouchMode = true
             this.requestFocus()
@@ -74,22 +66,28 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
          * Initialized
          */
         this.animate().alpha(1F).setDuration(500).start()
-
-        latLng = if (isCustomCoordinate)
-            LatLng(customLatitude, customLongitude)
-        else
-            LatLng(MainPreferences.getLastCoordinates()[0].toDouble(), MainPreferences.getLastCoordinates()[1].toDouble())
+        latLng = LatLng(MainPreferences.getLastCoordinates()[0].toDouble(), MainPreferences.getLastCoordinates()[1].toDouble())
 
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
         googleMap.uiSettings.isMyLocationButtonEnabled = false
 
-        this.googleMap = googleMap
+        if (PermissionUtils.checkPermission(context)) {
+            googleMap.isMyLocationEnabled = true
+        }
 
-        addMarker(latLng!!)
+        this.googleMap = googleMap
+        //addMarker(latLng!!)
         setMapStyle(GPSPreferences.isLabelOn())
         setSatellite()
         setBuildings(GPSPreferences.getShowBuildingsOnMap())
+        val list = arrayListOf(
+                LatLng(55.0, 100.0),
+                LatLng(55.0, 95.0),
+                LatLng(50.0, 90.0)
+        )
+
+        addPolyLine(list)
 
         this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
                 latLng!!,
@@ -134,16 +132,24 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         job.cancel()
     }
 
+    fun addPolyLine(coordinates: ArrayList<LatLng>) {
+        val options = PolylineOptions()
+            .width(10f)
+            .jointType(JointType.ROUND)
+            .color(context.resolveAttrColor(R.attr.colorAppAccent))
+            .geodesic(true)
+
+        options.add(latLng!!)
+        options.add(LatLng(55.0, 120.0))
+
+        googleMap?.addPolyline(options)
+    }
+
     fun resetCamera(zoom: Float) {
-        if (isCustomCoordinate) {
-            addMarker(LatLng(customLatitude, customLongitude))
-            moveMapCamera(LatLng(customLatitude, customLongitude), zoom, 0F)
-        } else
-            if (location != null) {
-                moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, location!!.bearing)
-                addMarker(LatLng(location!!.latitude, location!!.longitude))
-                viewHandler.removeCallbacks(mapMoved)
-            }
+        if (location != null) {
+            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
+            viewHandler.removeCallbacks(mapMoved)
+        }
     }
 
     private fun setSatellite() {
@@ -210,60 +216,30 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         googleMap?.animateCamera(CameraUpdateFactory.zoomOut())
     }
 
-    fun addMarker(latLng: LatLng) {
-        launch {
-            withContext(Dispatchers.Default) {
-                if (context.isNotNull())
-                    marker = if (isCustomCoordinate) {
-                        R.drawable.ic_place_custom.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
-                    } else {
-                        if (location.isNotNull()) {
-                            LocationPins.locationsPins[GPSPreferences.getPinSkin()].toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
-                        } else {
-                            R.drawable.ic_place_historical.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
-                        }
-                    }
-            }
-
-            if (googleMap.isNotNull()) {
-                googleMap?.clear()
-                googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker!!)))
-                invalidate()
-            }
-        }
-    }
-
     private val mapMoved = object : Runnable {
         override fun run() {
             if (GPSPreferences.getMapAutoCenter()) {
-                val bearing: Float
-                val latLng = if (isCustomCoordinate) {
-                    bearing = 0F
-                    LatLng(customLatitude, customLongitude)
+                val latLng = if (location.isNotNull()) {
+                    LatLng(location!!.latitude, location!!.longitude)
                 } else {
-                    if (location.isNotNull()) {
-                        bearing = location!!.bearing
-                        LatLng(location!!.latitude, location!!.longitude)
-                    } else {
-                        bearing = 0F
-                        LatLng(lastLatitude, lastLongitude)
-                    }
+                    LatLng(lastLatitude, lastLongitude)
                 }
 
-                moveMapCamera(latLng, GPSPreferences.getMapZoom(), bearing)
+                moveMapCamera(latLng, GPSPreferences.getMapZoom())
             }
             viewHandler.postDelayed(this, 6000L)
         }
     }
 
-    private fun moveMapCamera(latLng: LatLng, zoom: Float, bearing: Float) {
+    private fun moveMapCamera(latLng: LatLng, zoom: Float) {
         if (googleMap.isNull()) return
 
-        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder()
-                                                                           .target(latLng)
-                                                                           .tilt(GPSPreferences.getMapTilt())
-                                                                           .zoom(zoom)
-                                                                           .bearing(if (isBearingRotation) bearing else 0F).build()), 3000, null)
+        googleMap?.animateCamera(CameraUpdateFactory
+                                     .newCameraPosition(CameraPosition.builder()
+                                                            .target(latLng)
+                                                            .tilt(GPSPreferences.getMapTilt())
+                                                            .zoom(zoom)
+                                                            .bearing(0F).build()), 3000, null)
     }
 
     fun setOnMapsCallbackListener(mapsCallbacks: MapsCallbacks) {
@@ -284,15 +260,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             GPSPreferences.mapAutoCenter -> {
                 viewHandler.removeCallbacks(mapMoved)
                 viewHandler.post(mapMoved)
-            }
-            GPSPreferences.useBearingRotation -> {
-                isBearingRotation = GPSPreferences.isBearingRotationOn()
-            }
-            GPSPreferences.pinSize,
-            GPSPreferences.pinOpacity -> {
-                if (latLng.isNotNull()) {
-                    addMarker(latLng!!)
-                }
             }
         }
     }

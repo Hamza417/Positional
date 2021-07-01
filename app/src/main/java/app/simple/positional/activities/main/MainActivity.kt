@@ -45,6 +45,7 @@ class MainActivity :
             BottomBarModel(R.drawable.ic_clock, "clock"),
             BottomBarModel(R.drawable.ic_compass, "compass"),
             BottomBarModel(LocationPins.locationsPins[GPSPreferences.getPinSkin()], "gps"),
+            BottomBarModel(R.drawable.ic_timeline, "trail"),
             BottomBarModel(R.drawable.ic_level, "level"),
             BottomBarModel(R.drawable.ic_settings, "settings")
     )
@@ -61,15 +62,16 @@ class MainActivity :
         bottomBar.adapter = bottomBarAdapter
         bottomBar.scheduleLayoutAnimation()
 
-        bottomBarAdapter.onItemClicked = { position, _ ->
-            openFragment(position)
+        bottomBarAdapter.onItemClicked = { position, name ->
+            openFragment(name, position)
         }
 
         checkRunTimePermission()
         showReviewPromptToUser()
 
         if (savedInstanceState.isNull()) {
-            openFragment(FragmentPreferences.getCurrentPage())
+            openFragment(FragmentPreferences.getCurrentTag(),
+                         FragmentPreferences.getCurrentPage())
         }
     }
 
@@ -158,40 +160,44 @@ class MainActivity :
         ), defaultPermissionRequestCode)
     }
 
-    private fun openFragment(position: Int) {
+    private fun openFragment(tag: String, position: Int) {
         bottomBar.smoothScrollToPosition(position)
-        getFragment(position)?.let {
+        getFragment(tag)?.let {
             supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                .replace(R.id.containers, it, fragments[position].name)
+                .replace(R.id.containers, it, tag)
                 .commit()
         }
     }
 
-    private fun getFragment(position: Int): Fragment? {
+    private fun getFragment(position: String): Fragment? {
         when (position) {
-            0 -> {
+            "clock" -> {
                 return supportFragmentManager.findFragmentByTag("clock") as Clock?
                     ?: Clock.newInstance()
             }
-            1 -> {
+            "compass" -> {
                 return supportFragmentManager.findFragmentByTag("compass") as Compass?
                     ?: Compass.newInstance()
             }
-            2 -> {
+            "gps" -> {
                 return if (MainPreferences.getMapPanelType() && BuildConfig.FLAVOR != "lite") {
-                    supportFragmentManager.findFragmentByTag("osm") as OSM?
+                    supportFragmentManager.findFragmentByTag("gps") as OSM?
                         ?: OSM.newInstance()
                 } else {
                     supportFragmentManager.findFragmentByTag("gps") as GPS?
                         ?: GPS.newInstance()
                 }
             }
-            3 -> {
+            "trail" -> {
+                return supportFragmentManager.findFragmentByTag("trail") as Trail?
+                    ?: Trail.newInstance()
+            }
+            "level" -> {
                 return supportFragmentManager.findFragmentByTag("level") as Level?
                     ?: Level.newInstance()
             }
-            4 -> {
+            "settings" -> {
                 return supportFragmentManager.findFragmentByTag("settings") as AppSettings?
                     ?: AppSettings.newInstance()
             }

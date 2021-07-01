@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <app.simple.positional.decorations.views.TrailToolbar
+        android:layout_width="match_parent"
+        android:elevation="5dp"
+        android:backgroundTint="@color/mainBackground"
+        android:layout_height="wrap_content" />
+
+    <app.simple.positional.decorations.trail.TrailMaps
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
