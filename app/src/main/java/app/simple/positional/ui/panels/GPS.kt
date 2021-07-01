@@ -543,7 +543,6 @@ class GPS : ScopedFragment() {
     }
 
     private fun setFullScreen(forBottomBar: Boolean) {
-        println(isFullScreen)
         if (isFullScreen) {
             toolbar.show()
             bottomSheetInfoPanel.peekHeight = peekHeight

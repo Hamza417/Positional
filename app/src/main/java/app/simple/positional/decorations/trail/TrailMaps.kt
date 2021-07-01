@@ -9,23 +9,21 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
+import app.simple.positional.constants.LocationPins
 import app.simple.positional.decorations.maps.MapsCallbacks
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
+import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
-import app.simple.positional.util.PermissionUtils
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
@@ -36,10 +34,17 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     var location: Location? = null
     private var latLng: LatLng? = null
     private var mapsCallbacks: MapsCallbacks? = null
-    private var marker: Bitmap? = null
+    private var markerBitmap: Bitmap? = null
     private val viewHandler = Handler(Looper.getMainLooper())
     val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
     val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
+    private var marker: Marker? = null
+    var onMapClicked: () -> Unit = {}
+    private val options = PolylineOptions()
+        .width(20f)
+        .jointType(JointType.ROUND)
+        .color(context.resolveAttrColor(R.attr.colorAppAccent))
+        .geodesic(true)
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
@@ -72,12 +77,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         googleMap.uiSettings.isMapToolbarEnabled = false
         googleMap.uiSettings.isMyLocationButtonEnabled = false
 
-        if (PermissionUtils.checkPermission(context)) {
-            googleMap.isMyLocationEnabled = true
-        }
-
         this.googleMap = googleMap
-        //addMarker(latLng!!)
+        addMarker(latLng!!)
         setMapStyle(GPSPreferences.isLabelOn())
         setSatellite()
         setBuildings(GPSPreferences.getShowBuildingsOnMap())
@@ -87,7 +88,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 LatLng(50.0, 90.0)
         )
 
-        addPolyLine(list)
+        addPolyLine()
 
         this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
                 latLng!!,
@@ -107,7 +108,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         }
 
         this.googleMap?.setOnMapClickListener {
-            mapsCallbacks?.onMapClicked(this)
+            onMapClicked.invoke()
         }
     }
 
@@ -132,16 +133,27 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         job.cancel()
     }
 
-    fun addPolyLine(coordinates: ArrayList<LatLng>) {
-        val options = PolylineOptions()
-            .width(10f)
-            .jointType(JointType.ROUND)
-            .color(context.resolveAttrColor(R.attr.colorAppAccent))
-            .geodesic(true)
+    fun addMarker(latLng: LatLng) {
+        launch {
+            withContext(Dispatchers.Default) {
+                if (context.isNotNull())
+                    markerBitmap = if (location.isNotNull()) {
+                        LocationPins.locationsPins[GPSPreferences.getPinSkin()].toBitmap(context, 100)
+                    } else {
+                        R.drawable.ic_place_historical.toBitmap(context, 100)
+                    }
+            }
 
+            if (googleMap.isNotNull()) {
+                marker?.remove()
+                marker = googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                invalidate()
+            }
+        }
+    }
+
+    fun addPolyLine() {
         options.add(latLng!!)
-        options.add(LatLng(55.0, 120.0))
-
         googleMap?.addPolyline(options)
     }
 

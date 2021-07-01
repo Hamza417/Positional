@@ -1,22 +1,59 @@
 package app.simple.positional.ui.panels
 
+import android.content.*
+import android.location.Location
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.trail.TrailMaps
+import app.simple.positional.decorations.views.TrailToolbar
+import app.simple.positional.dialogs.gps.GPSMenu
+import app.simple.positional.preferences.GPSPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.NullSafety.isNotNull
+import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.*
 
 class Trail : ScopedFragment() {
 
-    private lateinit var maps: TrailMaps
+    private var maps: TrailMaps? = null
+    private lateinit var toolbar: TrailToolbar
+    private val handler = Handler(Looper.getMainLooper())
+    private var filter: IntentFilter = IntentFilter()
+    private lateinit var locationBroadcastReceiver: BroadcastReceiver
+    private lateinit var bottomSheetSlide: BottomSheetSlide
+    private var location: Location? = null
+    private var isFullScreen = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trail, container, false)
 
-        maps = view.findViewById(R.id.map_view)
+        toolbar = view.findViewById(R.id.toolbar)
+        bottomSheetSlide = requireActivity() as BottomSheetSlide
+
+        handler.postDelayed({
+                                maps = view.findViewById(R.id.map_view)
+                                maps?.onCreate(savedInstanceState)
+                                maps?.resume()
+
+                                maps?.onMapClicked = {
+                                    setFullScreen(true)
+                                }
+                            }, 500L)
+
+        filter.addAction("location")
+        filter.addAction("provider")
 
         return view
     }
@@ -24,15 +61,95 @@ class Trail : ScopedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        maps.onCreate(savedInstanceState)
-        maps.resume()
+        locationBroadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                when (intent!!.action) {
+                    "location" -> {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            withContext(Dispatchers.Default) {
+                                location = intent.getParcelableExtra("location")
+                                    ?: return@withContext
+
+                                MainPreferences.setLastLatitude(location!!.latitude.toFloat())
+                                MainPreferences.setLastLongitude(location!!.longitude.toFloat())
+
+                                withContext(Dispatchers.Main) {
+                                    maps?.location = location
+                                    maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        toolbar.onFlagClicked = {
+            maps?.addPolyLine()
+        }
+
+        toolbar.onMenuClicked = {
+            GPSMenu.newInstance()
+                .show(requireActivity().supportFragmentManager, "gps_menu")
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        if (maps.isNotNull()) {
-            maps.resume()
+        maps?.resume()
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        maps?.lowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putFloat("translation", toolbar.translationY)
+        outState.putBoolean("fullscreen", isFullScreen)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        if (savedInstanceState.isNotNull()) {
+            isFullScreen = !savedInstanceState!!.getBoolean("fullscreen")
+            setFullScreen(false)
         }
+        super.onViewStateRestored(savedInstanceState)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            GPSPreferences.useVolumeKeys -> {
+                view?.isFocusableInTouchMode = GPSPreferences.isUsingVolumeKeys()
+                if (GPSPreferences.isUsingVolumeKeys()) {
+                    view?.requestFocus()
+                } else {
+                    view?.clearFocus()
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        maps?.removeCallbacks { }
+        maps?.destroy()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    private fun setFullScreen(forBottomBar: Boolean) {
+        if (isFullScreen) {
+            toolbar.show()
+        } else {
+            toolbar.hide()
+        }
+
+        if (forBottomBar) {
+            bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
+        }
+        isFullScreen = !isFullScreen
     }
 
     companion object {
