@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:backgroundTint="@android:color/transparent"
@@ -15,28 +14,20 @@
         android:elevation="40dp"
         android:orientation="vertical">
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:clipChildren="true"
-            android:clipToPadding="true">
+            android:overScrollMode="always"
+            android:scrollIndicators="none"
+            android:scrollbarSize="0dp">
 
-            <androidx.core.widget.NestedScrollView
+            <app.simple.positional.decorations.views.CustomWebView
+                android:id="@+id/permissions_webview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:overScrollMode="always"
-                android:scrollIndicators="none"
-                android:scrollbarSize="0dp"
-                app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
+                android:layout_height="wrap_content" />
 
-                <app.simple.positional.decorations.views.CustomWebView
-                    android:id="@+id/permissions_webview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </androidx.core.widget.NestedScrollView>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <View
             android:layout_width="match_parent"

@@ -183,8 +183,6 @@ class Clock : ScopedFragment() {
                                MainPreferences.getLastCoordinates()[1].toDouble())
 
         if (BuildConfig.FLAVOR == "lite") {
-            customLocationButton.makeGoAway()
-            customLocationButtonDivider.makeGoAway()
             timezoneButton.makeGoAway()
         }
 
