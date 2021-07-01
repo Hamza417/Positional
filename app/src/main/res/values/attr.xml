@@ -5,27 +5,6 @@
     <attr name="colorAppAccentLight" format="color" />
     <attr name="colorAccentRipple" format="color" />
 
-    <declare-styleable name="SmoothBottomBar">
-        <attr name="menu" format="reference" />
-        <attr name="backgroundColor" format="color" />
-        <attr name="indicatorColor" format="color" />
-        <attr name="indicatorRadius" format="dimension" />
-        <attr name="sideMargins" format="dimension" />
-        <attr name="itemPadding" format="dimension" />
-        <attr name="textColor" format="color" />
-        <attr name="itemFontFamily" format="reference" />
-        <attr name="textSize" format="dimension" />
-        <attr name="iconSize" format="dimension" />
-        <attr name="iconMargin" format="dimension" />
-        <attr name="iconTint" format="color" />
-        <attr name="iconTintActive" format="color" />
-        <attr name="cornerRadius" format="dimension" />
-        <attr name="activeItem" format="integer" />
-        <attr name="duration" format="integer" />
-    </declare-styleable>
-
-    <attr name="SmoothBottomBarStyle" format="reference" />
-
     <declare-styleable name="SparkLineLayout">
         <attr name="s_line_color" format="color|reference" />
         <attr name="s_line_second_color" format="color|reference" />
