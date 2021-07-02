@@ -24,6 +24,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.*
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
@@ -40,11 +41,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
     private var marker: Marker? = null
     var onMapClicked: () -> Unit = {}
-    private val options = PolylineOptions()
-        .width(20f)
-        .jointType(JointType.ROUND)
-        .color(context.resolveAttrColor(R.attr.colorAppAccent))
-        .geodesic(true)
+
+    private var options: PolylineOptions? = null
+
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
@@ -54,6 +53,14 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             this.isFocusableInTouchMode = true
             this.requestFocus()
         }
+
+        options = PolylineOptions()
+            .width(10f)
+            .jointType(JointType.ROUND)
+            .startCap(RoundCap())
+            .endCap(RoundCap())
+            .color(context.resolveAttrColor(R.attr.colorAppAccent))
+            .geodesic(true)
 
         viewHandler.postDelayed({
                                     /**
@@ -88,7 +95,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 LatLng(50.0, 90.0)
         )
 
-        addPolyLine()
+        addPolyline(list)
 
         this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
                 latLng!!,
@@ -152,9 +159,17 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         }
     }
 
-    fun addPolyLine() {
-        options.add(latLng!!)
-        googleMap?.addPolyline(options)
+    fun addPolyline(coordinates: ArrayList<LatLng>) {
+        for (latLng in coordinates) {
+            options?.add(latLng)
+        }
+
+        googleMap?.addPolyline(options!!)
+    }
+
+    fun addPolyline(latLng: LatLng) {
+        options?.add(latLng)
+        googleMap?.addPolyline(options!!)
     }
 
     fun resetCamera(zoom: Float) {

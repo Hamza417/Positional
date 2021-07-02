@@ -85,7 +85,7 @@ class Trail : ScopedFragment() {
         }
 
         toolbar.onFlagClicked = {
-            maps?.addPolyLine()
+            maps?.addPolyline(LatLng((0..90).random().toDouble(), (0..180).random().toDouble()))
         }
 
         toolbar.onMenuClicked = {
@@ -136,6 +136,7 @@ class Trail : ScopedFragment() {
         super.onDestroy()
         maps?.removeCallbacks { }
         maps?.destroy()
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacksAndMessages(null)
     }
 
