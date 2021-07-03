@@ -302,4 +302,5 @@
     <string name="desc_custom_coord_dialog">These parameters are currently being used for calculating information.</string>
     <string name="inverted_colors">Inverted Colors</string>
     <string name="trail">Trail</string>
+    <string name="geodesic_trail">Geodesic Trail</string>
 </resources>

@@ -5,12 +5,23 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
+    <app.simple.positional.decorations.views.TrailTools
+        android:id="@+id/trail_tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical"
+        android:elevation="10dp"
+        android:padding="@dimen/trail_tools_padding"
+        android:backgroundTint="@color/mainBackground"
+        android:layout_gravity="end|center_vertical" />
+
     <app.simple.positional.decorations.views.TrailToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:elevation="5dp"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/mainBackground"
-        android:layout_height="wrap_content" />
+        android:elevation="5dp" />
 
     <app.simple.positional.decorations.trail.TrailMaps
         android:id="@+id/map_view"

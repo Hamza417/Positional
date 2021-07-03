@@ -10,9 +10,9 @@ import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
-import app.simple.positional.decorations.maps.MapsCallbacks
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.ColorUtils.resolveAttrColor
@@ -34,12 +34,14 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private var googleMap: GoogleMap? = null
     var location: Location? = null
     private var latLng: LatLng? = null
-    private var mapsCallbacks: MapsCallbacks? = null
     private var markerBitmap: Bitmap? = null
     private val viewHandler = Handler(Looper.getMainLooper())
     val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
     val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
     private var marker: Marker? = null
+    private val currentPolyline = arrayListOf<LatLng>()
+    private var isWrapped = false
+    private var lastZoom = 20F
     var onMapClicked: () -> Unit = {}
 
     private var options: PolylineOptions? = null
@@ -49,11 +51,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         get() = job + Dispatchers.Main
 
     init {
-        if (GPSPreferences.isUsingVolumeKeys()) {
-            this.isFocusableInTouchMode = true
-            this.requestFocus()
-        }
-
         options = PolylineOptions()
             .width(10f)
             .jointType(JointType.ROUND)
@@ -61,6 +58,15 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             .endCap(RoundCap())
             .color(context.resolveAttrColor(R.attr.colorAppAccent))
             .geodesic(true)
+
+        latLng = LatLng(MainPreferences.getLastCoordinates()[0].toDouble(),
+                        MainPreferences.getLastCoordinates()[1].toDouble())
+
+        if (TrailPreferences.arePolylinesWrapped()) {
+            wrap()
+        } else {
+            moveMapCamera(latLng!!, TrailPreferences.getMapZoom(), 3000)
+        }
 
         viewHandler.postDelayed({
                                     /**
@@ -89,13 +95,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         setMapStyle(GPSPreferences.isLabelOn())
         setSatellite()
         setBuildings(GPSPreferences.getShowBuildingsOnMap())
-        val list = arrayListOf(
-                LatLng(55.0, 100.0),
-                LatLng(55.0, 95.0),
-                LatLng(50.0, 90.0)
-        )
 
-        addPolyline(list)
+        addPolyline(currentPolyline)
 
         this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
                 latLng!!,
@@ -103,15 +104,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 GPSPreferences.getMapTilt(),
                 0F)))
 
-        this.googleMap?.setOnCameraMoveListener {
-            viewHandler.removeCallbacks(mapMoved)
-        }
-
         this.googleMap?.setOnCameraIdleListener {
-            GPSPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
-            GPSPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
-            viewHandler.removeCallbacks(mapMoved)
-            viewHandler.postDelayed(mapMoved, 6000)
+            TrailPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
+            TrailPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
         }
 
         this.googleMap?.setOnMapClickListener {
@@ -136,7 +131,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         onDestroy()
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         clearAnimation()
-        viewHandler.removeCallbacks(mapMoved)
         job.cancel()
     }
 
@@ -168,14 +162,52 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     }
 
     fun addPolyline(latLng: LatLng) {
+        currentPolyline.add(latLng)
         options?.add(latLng)
         googleMap?.addPolyline(options!!)
     }
 
+    fun removePolyline() {
+        currentPolyline.removeLastOrNull()
+        options?.addAll(currentPolyline)
+        googleMap?.addPolyline(options!!)
+    }
+
+    fun wrapUnwrap() {
+        if (isWrapped) {
+            moveMapCamera(latLng!!, lastZoom, 1000)
+        } else {
+            wrap()
+        }
+    }
+
+    private fun wrap() {
+        kotlin.runCatching {
+            val builder = LatLngBounds.Builder()
+            for (latLng in currentPolyline) {
+                builder.include(latLng)
+            }
+
+            val bounds = builder.build()
+
+            //BOUND_PADDING is an int to specify padding of bound.. try 100.
+            val cu = CameraUpdateFactory
+                .newLatLngBounds(bounds, 250)
+
+            googleMap!!.animateCamera(cu)
+
+            TrailPreferences.setWrapStatus(true)
+            isWrapped = true
+            lastZoom = googleMap?.cameraPosition?.zoom ?: 15F
+        }.onFailure {
+            isWrapped = false
+            TrailPreferences.setWrapStatus(false)
+        }
+    }
+
     fun resetCamera(zoom: Float) {
         if (location != null) {
-            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
-            viewHandler.removeCallbacks(mapMoved)
+            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, 1000)
         }
     }
 
@@ -243,50 +275,33 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         googleMap?.animateCamera(CameraUpdateFactory.zoomOut())
     }
 
-    private val mapMoved = object : Runnable {
-        override fun run() {
-            if (GPSPreferences.getMapAutoCenter()) {
-                val latLng = if (location.isNotNull()) {
-                    LatLng(location!!.latitude, location!!.longitude)
-                } else {
-                    LatLng(lastLatitude, lastLongitude)
-                }
-
-                moveMapCamera(latLng, GPSPreferences.getMapZoom())
-            }
-            viewHandler.postDelayed(this, 6000L)
-        }
-    }
-
-    private fun moveMapCamera(latLng: LatLng, zoom: Float) {
-        if (googleMap.isNull()) return
+    private fun moveMapCamera(latLng: LatLng, zoom: Float, duration: Int) {
+        if (googleMap.isNull() && latLng.isNull()) return
 
         googleMap?.animateCamera(CameraUpdateFactory
                                      .newCameraPosition(CameraPosition.builder()
                                                             .target(latLng)
                                                             .tilt(GPSPreferences.getMapTilt())
                                                             .zoom(zoom)
-                                                            .bearing(0F).build()), 3000, null)
-    }
 
-    fun setOnMapsCallbackListener(mapsCallbacks: MapsCallbacks) {
-        this.mapsCallbacks = mapsCallbacks
+                                                            .bearing(0F).build()), duration, null)
+        isWrapped = false
+        TrailPreferences.setWrapStatus(false)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            GPSPreferences.highContrastMap, GPSPreferences.GPSLabelMode -> {
+            TrailPreferences.trailHighContrastMap, TrailPreferences.trailLabelMode -> {
                 setMapStyle(GPSPreferences.isLabelOn())
             }
-            GPSPreferences.GPSSatellite -> {
+            TrailPreferences.trailSatellite -> {
                 setSatellite()
             }
-            GPSPreferences.showBuilding -> {
+            TrailPreferences.trailShowBuilding -> {
                 setBuildings(GPSPreferences.getShowBuildingsOnMap())
             }
-            GPSPreferences.mapAutoCenter -> {
-                viewHandler.removeCallbacks(mapMoved)
-                viewHandler.post(mapMoved)
+            TrailPreferences.geodesic -> {
+                options!!.geodesic(TrailPreferences.isTrailGeodesic())
             }
         }
     }

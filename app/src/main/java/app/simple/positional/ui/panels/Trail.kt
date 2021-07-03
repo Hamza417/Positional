@@ -15,7 +15,8 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.trail.TrailMaps
 import app.simple.positional.decorations.views.TrailToolbar
-import app.simple.positional.dialogs.gps.GPSMenu
+import app.simple.positional.decorations.views.TrailTools
+import app.simple.positional.dialogs.gps.TrailMenu
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.NullSafety.isNotNull
@@ -29,6 +30,7 @@ class Trail : ScopedFragment() {
 
     private var maps: TrailMaps? = null
     private lateinit var toolbar: TrailToolbar
+    private lateinit var tools: TrailTools
     private val handler = Handler(Looper.getMainLooper())
     private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
@@ -40,6 +42,7 @@ class Trail : ScopedFragment() {
         val view = inflater.inflate(R.layout.fragment_trail, container, false)
 
         toolbar = view.findViewById(R.id.toolbar)
+        tools = view.findViewById(R.id.trail_tools)
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
         handler.postDelayed({
@@ -84,13 +87,27 @@ class Trail : ScopedFragment() {
             }
         }
 
+        tools.setTrailCallbacksListener(object : TrailTools.Companion.TrailCallbacks {
+            override fun onAdd() {
+                maps?.addPolyline(LatLng((25..30).random().toDouble(), (80..85).random().toDouble()))
+            }
+
+            override fun onRemove() {
+                maps?.removePolyline()
+            }
+
+            override fun onWrapUnwrap() {
+                maps?.wrapUnwrap()
+            }
+        })
+
         toolbar.onFlagClicked = {
-            maps?.addPolyline(LatLng((0..90).random().toDouble(), (0..180).random().toDouble()))
+
         }
 
         toolbar.onMenuClicked = {
-            GPSMenu.newInstance()
-                .show(requireActivity().supportFragmentManager, "gps_menu")
+            TrailMenu.newInstance()
+                .show(requireActivity().supportFragmentManager, "trail_menu")
         }
     }
 
@@ -161,5 +178,6 @@ class Trail : ScopedFragment() {
             fragment.arguments = args
             return fragment
         }
+
     }
 }

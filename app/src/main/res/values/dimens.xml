@@ -93,4 +93,5 @@
     <dimen name="afs_md2_popup_elevation">3dp</dimen>
     <dimen name="fs_md2_popup_text_size">34dp</dimen>
     <dimen name="app_views_elevation">10dp</dimen>
+    <dimen name="trail_tools_padding">5dp</dimen>
 </resources>

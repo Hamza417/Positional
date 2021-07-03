@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/mainBackground"
+    android:elevation="@dimen/app_views_elevation"
+    android:orientation="vertical"
+    android:padding="5dp"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+        android:id="@+id/add_flag"
+        android:layout_width="@dimen/app_button_size"
+        android:layout_height="@dimen/app_button_size"
+        android:tint="@color/iconColor"
+        android:src="@drawable/ic_flag_add" />
+
+    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+        android:id="@+id/remove_flag"
+        android:layout_width="@dimen/app_button_size"
+        android:tint="@color/iconColor"
+        android:layout_height="@dimen/app_button_size"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_flag_remove" />
+
+    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+        android:id="@+id/wrap_unwrap_flags"
+        android:layout_width="@dimen/app_button_size"
+        android:layout_height="@dimen/app_button_size"
+        android:layout_marginTop="5dp"
+        android:tint="@color/iconColor"
+        android:src="@drawable/ic_full_screen" />
+
+</merge>
