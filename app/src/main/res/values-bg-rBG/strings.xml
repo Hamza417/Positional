@@ -273,4 +273,5 @@
     <string name="desc_custom_coord_dialog">Понастоящем тези параметри се използват за изчисляване на информация.</string>
     <string name="inverted_colors">Обърнати цветове</string>
     <string name="trail">Пътеки</string>
+    <string name="geodesic_trail">Геодезическа пътека</string>
 </resources>
