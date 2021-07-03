@@ -1,4 +1,4 @@
-package app.simple.positional.dialogs.gps
+package app.simple.positional.dialogs.trail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,13 +32,13 @@ class TrailMenu : CustomBottomSheetDialogFragment() {
         toggleSatellite = view.findViewById(R.id.toggle_satellite)
         toggleHighContrast = view.findViewById(R.id.toggle_high_contrast)
         toggleBuilding = view.findViewById(R.id.toggle_buildings)
-        toggleGeodesic = view.findViewById(R.id.toggle_auto_center)
+        toggleGeodesic = view.findViewById(R.id.toggle_geodesic)
 
         toggleLabelContainer = view.findViewById(R.id.gps_menu_show_label_container)
         toggleSatelliteContainer = view.findViewById(R.id.gps_menu_satellite_mode_container)
         toggleHighContrastContainer = view.findViewById(R.id.gps_menu_high_contrast_container)
         toggleBuildingContainer = view.findViewById(R.id.gps_menu_show_building_container)
-        toggleGeodesicContainer = view.findViewById(R.id.gps_menu_auto_center_container)
+        toggleGeodesicContainer = view.findViewById(R.id.trail_menu_geodesic_container)
 
         return view
     }

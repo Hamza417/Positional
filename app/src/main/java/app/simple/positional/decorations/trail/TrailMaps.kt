@@ -4,18 +4,18 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
-import app.simple.positional.constants.LocationPins
+import app.simple.positional.constants.TrailIcons
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
-import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.NullSafety.isNotNull
 import app.simple.positional.util.NullSafety.isNull
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -40,6 +40,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
     private var marker: Marker? = null
     private val currentPolyline = arrayListOf<LatLng>()
+    private val flagMarkers = arrayListOf<Marker>()
     private var isWrapped = false
     private var lastZoom = 20F
     var onMapClicked: () -> Unit = {}
@@ -56,7 +57,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             .jointType(JointType.ROUND)
             .startCap(RoundCap())
             .endCap(RoundCap())
-            .color(context.resolveAttrColor(R.attr.colorAppAccent))
+            .color(Color.parseColor("#1B9CFF"))
             .geodesic(true)
 
         latLng = LatLng(MainPreferences.getLastCoordinates()[0].toDouble(),
@@ -139,7 +140,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             withContext(Dispatchers.Default) {
                 if (context.isNotNull())
                     markerBitmap = if (location.isNotNull()) {
-                        LocationPins.locationsPins[GPSPreferences.getPinSkin()].toBitmap(context, 100)
+                        R.drawable.ic_pin_01.toBitmap(context, 60)
                     } else {
                         R.drawable.ic_place_historical.toBitmap(context, 100)
                     }
@@ -161,21 +162,31 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         googleMap?.addPolyline(options!!)
     }
 
-    fun addPolyline(latLng: LatLng) {
+    fun addPolyline(latLng: LatLng, position: Int) {
         currentPolyline.add(latLng)
+
+        val marker = googleMap?.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .icon(BitmapDescriptorFactory.fromBitmap(TrailIcons.icons[position].toBitmap(context, 50))))
+
+        flagMarkers.add(marker!!)
+
         options?.add(latLng)
         googleMap?.addPolyline(options!!)
     }
 
     fun removePolyline() {
         currentPolyline.removeLastOrNull()
+        flagMarkers.lastOrNull()?.remove()
         options?.addAll(currentPolyline)
+        googleMap?.clear()
         googleMap?.addPolyline(options!!)
     }
 
     fun wrapUnwrap() {
         if (isWrapped) {
-            moveMapCamera(latLng!!, lastZoom, 1000)
+            moveMapCamera(latLng!!, lastZoom, 500)
         } else {
             wrap()
         }
@@ -207,7 +218,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     fun resetCamera(zoom: Float) {
         if (location != null) {
-            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, 1000)
+            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, 500)
         }
     }
 
@@ -275,7 +286,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         googleMap?.animateCamera(CameraUpdateFactory.zoomOut())
     }
 
-    private fun moveMapCamera(latLng: LatLng, zoom: Float, duration: Int) {
+    fun moveMapCamera(latLng: LatLng, zoom: Float, duration: Int) {
         if (googleMap.isNull() && latLng.isNull()) return
 
         googleMap?.animateCamera(CameraUpdateFactory

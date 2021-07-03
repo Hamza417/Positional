@@ -16,9 +16,10 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.trail.TrailMaps
 import app.simple.positional.decorations.views.TrailToolbar
 import app.simple.positional.decorations.views.TrailTools
-import app.simple.positional.dialogs.gps.TrailMenu
+import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.NullSafety.isNotNull
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
@@ -88,8 +89,17 @@ class Trail : ScopedFragment() {
         }
 
         tools.setTrailCallbacksListener(object : TrailTools.Companion.TrailCallbacks {
-            override fun onAdd() {
-                maps?.addPolyline(LatLng((25..30).random().toDouble(), (80..85).random().toDouble()))
+            override fun onLocation() {
+                if (location.isNotNull()) {
+                    maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
+                                        TrailPreferences.getMapZoom(),
+                                        500)
+                }
+            }
+
+            override fun onAdd(position: Int) {
+                maps?.addPolyline(LatLng((25..30).random().toDouble(), (80..85).random().toDouble()),
+                                  position)
             }
 
             override fun onRemove() {

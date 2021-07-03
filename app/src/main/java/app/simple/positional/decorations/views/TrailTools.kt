@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import app.simple.positional.R
+import app.simple.positional.adapters.AdapterTrailIcons
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.preferences.TrailPreferences
@@ -13,9 +14,10 @@ import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 
 class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private lateinit var add: DynamicRippleImageButton
+    private lateinit var location: DynamicRippleImageButton
     private lateinit var remove: DynamicRippleImageButton
     private lateinit var wrap: DynamicRippleImageButton
+    private lateinit var icons: CustomRecyclerView
 
     private lateinit var trailCallbacks: TrailCallbacks
 
@@ -36,14 +38,23 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     private fun initViews() {
         val view = LayoutInflater.from(context).inflate(R.layout.trail_tools, this, true)
 
-        add = view.findViewById(R.id.add_flag)
+        location = view.findViewById(R.id.current_location)
         remove = view.findViewById(R.id.remove_flag)
         wrap = view.findViewById(R.id.wrap_unwrap_flags)
+        icons = view.findViewById(R.id.trail_icons_recycler_view)
+
+        val adapter = AdapterTrailIcons()
+
+        adapter.onIconClicked = {
+            trailCallbacks.onAdd(it)
+        }
+
+        icons.adapter = adapter
 
         setWrapUnwrapButtonStatus()
 
-        add.setOnClickListener {
-            trailCallbacks.onAdd()
+        location.setOnClickListener {
+            trailCallbacks.onLocation()
         }
 
         remove.setOnClickListener {
@@ -80,7 +91,8 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
 
     companion object {
         interface TrailCallbacks {
-            fun onAdd()
+            fun onLocation()
+            fun onAdd(position: Int)
             fun onRemove()
             fun onWrapUnwrap()
         }

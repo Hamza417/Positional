@@ -1,0 +1,7 @@
+<app.simple.positional.decorations.ripple.DynamicRippleImageButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/adapter_trail_icon"
+    android:layout_width="@dimen/app_button_size"
+    android:layout_height="@dimen/app_button_size"
+    android:src="@drawable/ic_flag_add"
+    android:layout_marginBottom="5dp"
+    android:tint="@color/iconColor" />
