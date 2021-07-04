@@ -41,6 +41,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private var marker: Marker? = null
     private val currentPolyline = arrayListOf<LatLng>()
     private val flagMarkers = arrayListOf<Marker>()
+    private val polylines = arrayListOf<Polyline>()
     private var isWrapped = false
     private var lastZoom = 20F
     var onMapClicked: () -> Unit = {}
@@ -171,17 +172,15 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                     .icon(BitmapDescriptorFactory.fromBitmap(TrailIcons.icons[position].toBitmap(context, 50))))
 
         flagMarkers.add(marker!!)
-
         options?.add(latLng)
-        googleMap?.addPolyline(options!!)
+        polylines.add(googleMap?.addPolyline(options!!)!!)
     }
 
     fun removePolyline() {
+        polylines.lastOrNull()?.remove()
         currentPolyline.removeLastOrNull()
         flagMarkers.lastOrNull()?.remove()
-        options?.addAll(currentPolyline)
-        googleMap?.clear()
-        googleMap?.addPolyline(options!!)
+        invalidate()
     }
 
     fun wrapUnwrap() {
@@ -194,6 +193,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     private fun wrap() {
         kotlin.runCatching {
+            lastZoom = googleMap?.cameraPosition?.zoom ?: 15F
+
             val builder = LatLngBounds.Builder()
             for (latLng in currentPolyline) {
                 builder.include(latLng)
@@ -202,14 +203,11 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             val bounds = builder.build()
 
             //BOUND_PADDING is an int to specify padding of bound.. try 100.
-            val cu = CameraUpdateFactory
-                .newLatLngBounds(bounds, 250)
-
-            googleMap!!.animateCamera(cu)
+            googleMap!!.animateCamera(CameraUpdateFactory
+                                          .newLatLngBounds(bounds, 250))
 
             TrailPreferences.setWrapStatus(true)
             isWrapped = true
-            lastZoom = googleMap?.cameraPosition?.zoom ?: 15F
         }.onFailure {
             isWrapped = false
             TrailPreferences.setWrapStatus(false)
