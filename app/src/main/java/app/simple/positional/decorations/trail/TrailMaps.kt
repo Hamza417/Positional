@@ -94,16 +94,16 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
         this.googleMap = googleMap
         addMarker(latLng!!)
-        setMapStyle(GPSPreferences.isLabelOn())
+        setMapStyle(TrailPreferences.isLabelOn())
         setSatellite()
-        setBuildings(GPSPreferences.getShowBuildingsOnMap())
+        setBuildings(TrailPreferences.getShowBuildingsOnMap())
 
         addPolyline(currentPolyline)
 
         this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
                 latLng!!,
-                GPSPreferences.getMapZoom(),
-                GPSPreferences.getMapTilt(),
+                TrailPreferences.getMapZoom(),
+                TrailPreferences.getMapTilt(),
                 0F)))
 
         this.googleMap?.setOnCameraIdleListener {
@@ -178,8 +178,11 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     fun removePolyline() {
         polylines.lastOrNull()?.remove()
-        currentPolyline.removeLastOrNull()
         flagMarkers.lastOrNull()?.remove()
+        currentPolyline.removeLastOrNull()
+        polylines.removeLastOrNull()
+        flagMarkers.removeLastOrNull()
+        options?.points?.removeLastOrNull()
         invalidate()
     }
 
