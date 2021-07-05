@@ -17,6 +17,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     private lateinit var location: DynamicRippleImageButton
     private lateinit var remove: DynamicRippleImageButton
     private lateinit var wrap: DynamicRippleImageButton
+    private lateinit var align: DynamicRippleImageButton
     private lateinit var icons: CustomRecyclerView
 
     private lateinit var trailCallbacks: TrailCallbacks
@@ -42,6 +43,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         remove = view.findViewById(R.id.remove_flag)
         wrap = view.findViewById(R.id.wrap_unwrap_flags)
         icons = view.findViewById(R.id.trail_icons_recycler_view)
+        align = view.findViewById(R.id.tools_align_btn)
 
         val adapter = AdapterTrailIcons()
 
@@ -51,7 +53,8 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
 
         icons.adapter = adapter
 
-        setWrapUnwrapButtonStatus()
+        setWrapUnwrapButtonState()
+        setAlignButtonState()
 
         location.setOnClickListener {
             trailCallbacks.onLocation()
@@ -64,13 +67,27 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         wrap.setOnClickListener {
             trailCallbacks.onWrapUnwrap()
         }
+
+        align.setOnClickListener {
+            TrailPreferences.setToolsGravityToLeft(
+                    !TrailPreferences.isToolsGravityToleft()
+            )
+        }
     }
 
-    private fun setWrapUnwrapButtonStatus() {
+    private fun setWrapUnwrapButtonState() {
         if (TrailPreferences.arePolylinesWrapped()) {
             wrap.setImageResource(R.drawable.ic_close_fullscreen)
         } else {
             wrap.setImageResource(R.drawable.ic_full_screen)
+        }
+    }
+
+    private fun setAlignButtonState() {
+        if (TrailPreferences.isToolsGravityToleft()) {
+            align.setImageResource(R.drawable.ic_arrow_right)
+        } else {
+            align.setImageResource(R.drawable.ic_arrow_left)
         }
     }
 
@@ -79,8 +96,13 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == TrailPreferences.wrapped) {
-            setWrapUnwrapButtonStatus()
+        when (key!!) {
+            TrailPreferences.wrapped -> {
+                setWrapUnwrapButtonState()
+            }
+            TrailPreferences.toolsMenuGravity -> {
+                setAlignButtonState()
+            }
         }
     }
 

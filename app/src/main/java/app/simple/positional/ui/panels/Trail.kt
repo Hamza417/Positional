@@ -5,12 +5,15 @@ import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
@@ -61,6 +64,8 @@ class Trail : ScopedFragment() {
 
         filter.addAction("location")
         filter.addAction("provider")
+
+        updateToolsGravity(view)
 
         return view
     }
@@ -176,6 +181,9 @@ class Trail : ScopedFragment() {
                     view?.clearFocus()
                 }
             }
+            TrailPreferences.toolsMenuGravity -> {
+                updateToolsGravity(requireView())
+            }
         }
     }
 
@@ -198,6 +206,24 @@ class Trail : ScopedFragment() {
             bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
         }
         isFullScreen = !isFullScreen
+    }
+
+    private fun updateToolsGravity(view: View) {
+        TransitionManager.beginDelayedTransition(view as ViewGroup)
+
+        val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        params.apply {
+            gravity = if (TrailPreferences.isToolsGravityToleft()) {
+                Gravity.START or Gravity.CENTER_VERTICAL
+            } else {
+                Gravity.END or Gravity.CENTER_VERTICAL
+            }
+
+            marginStart = resources.getDimensionPixelSize(R.dimen.trail_tools_margin)
+            marginEnd = resources.getDimensionPixelSize(R.dimen.trail_tools_margin)
+        }
+
+        tools.layoutParams = params
     }
 
     companion object {

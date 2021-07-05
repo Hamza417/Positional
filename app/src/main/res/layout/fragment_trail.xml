@@ -3,18 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
+    android:animateLayoutChanges="true"
     android:clipToPadding="false">
 
     <app.simple.positional.decorations.views.TrailTools
         android:id="@+id/trail_tools"
         android:layout_width="wrap_content"
+        android:animateLayoutChanges="true"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginHorizontal="@dimen/trail_tools_margin"
         android:orientation="vertical"
+        android:layout_gravity="center_vertical"
         android:elevation="10dp"
         android:padding="@dimen/trail_tools_padding"
-        android:backgroundTint="@color/mainBackground"
-        android:layout_gravity="end|center_vertical" />
+        android:backgroundTint="@color/mainBackground" />
 
     <app.simple.positional.decorations.views.TrailToolbar
         android:id="@+id/toolbar"

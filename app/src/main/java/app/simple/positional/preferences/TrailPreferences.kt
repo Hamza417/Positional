@@ -14,6 +14,7 @@ object TrailPreferences {
     const val trailSatellite = "trail_map_satellite_mode"
     const val trailHighContrastMap = "trail_map_high_contrast_map"
     const val trailShowBuilding = "trail_show_buildings_on_map"
+    const val toolsMenuGravity = "trail_tools_view_gravity"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -103,5 +104,15 @@ object TrailPreferences {
 
     fun getLastUsedTrail(): String {
         return getSharedPreferences().getString(lastSelectedTrail, "null")!!
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setToolsGravityToLeft(value: Boolean) {
+        getSharedPreferences().edit().putBoolean(toolsMenuGravity, value).apply()
+    }
+
+    fun isToolsGravityToleft(): Boolean {
+        return getSharedPreferences().getBoolean(toolsMenuGravity, false)
     }
 }
