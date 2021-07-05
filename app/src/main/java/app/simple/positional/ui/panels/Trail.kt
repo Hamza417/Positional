@@ -8,12 +8,13 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.decorations.trail.TrailMaps
+import app.simple.positional.decorations.trails.TrailMaps
 import app.simple.positional.decorations.views.TrailToolbar
 import app.simple.positional.decorations.views.TrailTools
 import app.simple.positional.dialogs.trail.TrailMenu
@@ -21,6 +22,8 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.NullSafety.isNotNull
+import app.simple.positional.viewmodels.factory.TrailDataFactory
+import app.simple.positional.viewmodels.viewmodel.TrailDataViewModel
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +42,8 @@ class Trail : ScopedFragment() {
     private var location: Location? = null
     private var isFullScreen = false
 
+    private lateinit var trailDataViewModel: TrailDataViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trail, container, false)
 
@@ -46,15 +51,12 @@ class Trail : ScopedFragment() {
         tools = view.findViewById(R.id.trail_tools)
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
-        handler.postDelayed({
-                                maps = view.findViewById(R.id.map_view)
-                                maps?.onCreate(savedInstanceState)
-                                maps?.resume()
+        val trailDataFactory = TrailDataFactory(TrailPreferences.getLastUsedTrail(), requireActivity().application)
+        trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
 
-                                maps?.onMapClicked = {
-                                    setFullScreen(true)
-                                }
-                            }, 500L)
+        maps = view.findViewById(R.id.map_view)
+        maps?.onCreate(savedInstanceState)
+        maps?.resume()
 
         filter.addAction("location")
         filter.addAction("provider")
@@ -119,6 +121,14 @@ class Trail : ScopedFragment() {
             TrailMenu.newInstance()
                 .show(requireActivity().supportFragmentManager, "trail_menu")
         }
+
+        maps?.onMapClicked = {
+            setFullScreen(true)
+        }
+
+        trailDataViewModel.getTrailData().observe(viewLifecycleOwner, {
+            maps?.addPolyline(it)
+        })
     }
 
     override fun onResume() {
@@ -181,13 +191,11 @@ class Trail : ScopedFragment() {
     }
 
     companion object {
-
         fun newInstance(): Trail {
             val args = Bundle()
             val fragment = Trail()
             fragment.arguments = args
             return fragment
         }
-
     }
 }

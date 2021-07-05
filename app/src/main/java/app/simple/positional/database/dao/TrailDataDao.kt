@@ -1,3 +1,5 @@
+package app.simple.positional.database.dao
+
 import androidx.room.*
 import app.simple.positional.model.TrailData
 
@@ -5,7 +7,7 @@ import app.simple.positional.model.TrailData
 interface TrailDataDao {
 
     @Query("SELECT * FROM trail_data ORDER BY time_added COLLATE nocase")
-    fun getAllTrailData(): MutableList<TrailData>
+    fun getAllTrailData(): List<TrailData>
 
     /**
      * Insert and save trail data to Database
@@ -21,7 +23,7 @@ interface TrailDataDao {
      * @param trailData trail data details
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrailData(trailData: ArrayList<TrailData>)
+    suspend fun insertTrailData(trailData: List<TrailData>)
 
     /**
      * Update trail data

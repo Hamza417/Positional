@@ -4,16 +4,20 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.google.android.gms.maps.model.LatLng;
-
 @Entity(tableName = "trail_data")
 public class TrailData {
 
     /**
-     * Latitude and longitude of the trail
+     * Latitude of the trail
      */
-    @ColumnInfo(name = "lat_lng")
-    LatLng latLng;
+    @ColumnInfo(name = "lat")
+    double latitude;
+
+    /**
+     * Longitude of the trail
+     */
+    @ColumnInfo(name = "lng")
+    double longitude;
 
     /**
      * Time of when this trail marker is added
@@ -42,20 +46,29 @@ public class TrailData {
     @ColumnInfo(name = "name")
     String name;
 
-    public TrailData(LatLng latLng, long timeAdded, int iconPosition, String note, String name) {
-        this.latLng = latLng;
+    public TrailData(double latitude, double longitude, long timeAdded, int iconPosition, String note, String name) {
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.timeAdded = timeAdded;
         this.iconPosition = iconPosition;
         this.note = note;
         this.name = name;
     }
 
-    public LatLng getLatLng() {
-        return latLng;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setLatLng(LatLng latLng) {
-        this.latLng = latLng;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     public long getTimeAdded() {

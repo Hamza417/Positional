@@ -101,7 +101,7 @@ object TrailPreferences {
         getSharedPreferences().edit().putString(lastSelectedTrail, value).apply()
     }
 
-    fun getLastUsedTrail(): String? {
-        return getSharedPreferences().getString(lastSelectedTrail, null)
+    fun getLastUsedTrail(): String {
+        return getSharedPreferences().getString(lastSelectedTrail, "null")!!
     }
 }

@@ -1,4 +1,4 @@
-package app.simple.positional.decorations.trail
+package app.simple.positional.decorations.trails
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,6 +11,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
 import app.simple.positional.constants.TrailIcons
+import app.simple.positional.model.TrailData
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
@@ -24,7 +25,6 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.*
-import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
@@ -99,8 +99,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         setSatellite()
         setBuildings(TrailPreferences.getShowBuildingsOnMap())
 
-        addPolyline(currentPolyline)
-
         this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
                 latLng!!,
                 TrailPreferences.getMapZoom(),
@@ -156,9 +154,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         }
     }
 
-    fun addPolyline(coordinates: ArrayList<LatLng>) {
-        for (latLng in coordinates) {
-            options?.add(latLng)
+    fun addPolyline(arrayList: ArrayList<TrailData>) {
+        for (trailData in arrayList) {
+            options?.add(LatLng(trailData.latitude, trailData.longitude))
         }
 
         googleMap?.addPolyline(options!!)

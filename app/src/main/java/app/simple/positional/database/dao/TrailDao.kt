@@ -6,8 +6,8 @@ import app.simple.positional.model.Trails
 @Dao
 interface TrailDao {
 
-    @Query("SELECT * FROM Trails ORDER BY date_added COLLATE nocase DESC LIMIT 99")
-    fun getAllLocations(): MutableList<Trails>
+    @Query("SELECT * FROM Trails ORDER BY date_added COLLATE nocase")
+    fun getAllTrails(): MutableList<Trails>
 
     /**
      * Insert and save location to Database

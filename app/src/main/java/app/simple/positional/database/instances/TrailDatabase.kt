@@ -19,7 +19,6 @@ abstract class TrailDatabase : RoomDatabase() {
         fun getInstance(context: Context?, DB_NAME: String?): TrailDatabase? {
             if (instance == null) {
                 instance = Room.databaseBuilder(context!!, TrailDatabase::class.java, DB_NAME!!)
-                    .fallbackToDestructiveMigration()
                     .build()
             }
             return instance
