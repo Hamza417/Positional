@@ -55,7 +55,7 @@
     <app.simple.positional.decorations.views.CustomRecyclerView
         android:id="@+id/trail_icons_recycler_view"
         android:layout_width="@dimen/app_button_size"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="10dp"
         android:requiresFadingEdge="vertical"

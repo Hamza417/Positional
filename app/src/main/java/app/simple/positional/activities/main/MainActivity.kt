@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.adapters.BottomBarAdapter
+import app.simple.positional.adapters.app.BottomBarAdapter
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.constants.LocationPins

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.adapters.LocaleAdapter
+import app.simple.positional.adapters.settings.LocaleAdapter
 import app.simple.positional.callbacks.LocaleCallback
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.MainPreferences

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.simple.positional.decorations.ripple.DynamicRippleTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/trails_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fontFamily="@font/medium"
+    android:padding="@dimen/options_container_horizontal_padding"
+    android:textSize="@dimen/options_item_text_size" />

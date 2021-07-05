@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import app.simple.positional.R
-import app.simple.positional.adapters.BloomSkinAdapter
+import app.simple.positional.adapters.compass.BloomSkinAdapter
 import app.simple.positional.constants.CompassBloom
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.CompassPreferences

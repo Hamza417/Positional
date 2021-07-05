@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.simple.positional.R
-import app.simple.positional.adapters.MapTilesAdapter
+import app.simple.positional.adapters.maps.MapTilesAdapter
 import app.simple.positional.decorations.corners.DynamicCornerRecyclerView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.OSMPreferences

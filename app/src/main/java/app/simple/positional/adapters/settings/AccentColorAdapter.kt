@@ -1,4 +1,4 @@
-package app.simple.positional.adapters
+package app.simple.positional.adapters.settings
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package app.simple.positional.adapters
+package app.simple.positional.adapters.clock
 
 import android.content.Context
 import android.os.Parcelable

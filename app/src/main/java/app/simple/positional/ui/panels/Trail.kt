@@ -13,6 +13,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
@@ -22,7 +23,6 @@ import app.simple.positional.decorations.views.TrailToolbar
 import app.simple.positional.decorations.views.TrailTools
 import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.model.TrailData
-import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.NullSafety.isNotNull
@@ -173,14 +173,6 @@ class Trail : ScopedFragment() {
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            GPSPreferences.useVolumeKeys -> {
-                view?.isFocusableInTouchMode = GPSPreferences.isUsingVolumeKeys()
-                if (GPSPreferences.isUsingVolumeKeys()) {
-                    view?.requestFocus()
-                } else {
-                    view?.clearFocus()
-                }
-            }
             TrailPreferences.toolsMenuGravity -> {
                 updateToolsGravity(requireView())
             }
@@ -209,7 +201,10 @@ class Trail : ScopedFragment() {
     }
 
     private fun updateToolsGravity(view: View) {
-        TransitionManager.beginDelayedTransition(view as ViewGroup)
+        TransitionManager.beginDelayedTransition(
+                view as ViewGroup,
+                TransitionInflater.from(requireContext())
+                    .inflateTransition(R.transition.tools_transition))
 
         val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.apply {

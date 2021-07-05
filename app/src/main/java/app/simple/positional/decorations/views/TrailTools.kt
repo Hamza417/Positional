@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import app.simple.positional.R
-import app.simple.positional.adapters.AdapterTrailIcons
+import app.simple.positional.adapters.trail.AdapterTrailIcons
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.preferences.TrailPreferences

@@ -1,4 +1,4 @@
-package app.simple.positional.adapters
+package app.simple.positional.adapters.trail
 
 import android.view.LayoutInflater
 import android.view.View

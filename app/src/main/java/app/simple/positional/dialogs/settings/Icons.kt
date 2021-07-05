@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.adapters.AdapterIcons
+import app.simple.positional.adapters.settings.AdapterIcons
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 
 class Icons : CustomBottomSheetDialogFragment() {

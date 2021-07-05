@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:backgroundTint="@color/mainBackground">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/trails_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/options_container_horizontal_padding" />
+
+    </app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
+
+</FrameLayout>

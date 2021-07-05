@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
 import app.simple.positional.R
-import app.simple.positional.adapters.ClockNeedleSkinsAdapter
+import app.simple.positional.adapters.clock.ClockNeedleSkinsAdapter
 import app.simple.positional.constants.ClockSkinsConstants
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.ClockPreferences

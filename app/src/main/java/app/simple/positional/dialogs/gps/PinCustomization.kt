@@ -9,7 +9,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.SeekBar
 import androidx.viewpager.widget.ViewPager
 import app.simple.positional.R
-import app.simple.positional.adapters.PinSkinAdapter
+import app.simple.positional.adapters.maps.PinSkinAdapter
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.GPSPreferences

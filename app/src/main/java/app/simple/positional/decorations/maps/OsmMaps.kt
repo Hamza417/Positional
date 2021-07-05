@@ -16,7 +16,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toDrawable
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.adapters.MapTilesAdapter
+import app.simple.positional.adapters.maps.MapTilesAdapter
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
