@@ -1,12 +1,13 @@
 package app.simple.positional.preferences
 
-import app.simple.positional.singleton.SharedPreferences
+import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import org.jetbrains.annotations.NotNull
 
 object TrailPreferences {
 
     private const val mapZoom = "trail_map_zoom_value"
     private const val mapTilt = "trail_map_tilt_value"
+    private const val lastSelectedTrail = "last_selected_trail"
     const val wrapped = "are_polylines_wrapped"
     const val geodesic = "is_trail_geodesic"
     const val trailLabelMode = "trail_map_label_mode"
@@ -17,80 +18,90 @@ object TrailPreferences {
     //--------------------------------------------------------------------------------------------------//
 
     fun setGeodesic(@NotNull value: Boolean) {
-        SharedPreferences.getSharedPreferences().edit().putBoolean(geodesic, value).apply()
+        getSharedPreferences().edit().putBoolean(geodesic, value).apply()
     }
 
     fun isTrailGeodesic(): Boolean {
-        return SharedPreferences.getSharedPreferences().getBoolean(geodesic, true)
+        return getSharedPreferences().getBoolean(geodesic, true)
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     fun isLabelOn(): Boolean {
-        return SharedPreferences.getSharedPreferences().getBoolean(trailLabelMode, true)
+        return getSharedPreferences().getBoolean(trailLabelMode, true)
     }
 
     fun setLabelMode(@NotNull value: Boolean) {
-        SharedPreferences.getSharedPreferences().edit().putBoolean(trailLabelMode, value).apply()
+        getSharedPreferences().edit().putBoolean(trailLabelMode, value).apply()
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     fun isSatelliteOn(): Boolean {
-        return SharedPreferences.getSharedPreferences().getBoolean(trailSatellite, false)
+        return getSharedPreferences().getBoolean(trailSatellite, false)
     }
 
     fun setSatelliteMode(@NotNull value: Boolean) {
-        SharedPreferences.getSharedPreferences().edit().putBoolean(trailSatellite, value).apply()
+        getSharedPreferences().edit().putBoolean(trailSatellite, value).apply()
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     fun setHighContrastMap(boolean: Boolean) {
-        SharedPreferences.getSharedPreferences().edit().putBoolean(trailHighContrastMap, boolean).apply()
+        getSharedPreferences().edit().putBoolean(trailHighContrastMap, boolean).apply()
     }
 
     fun getHighContrastMap(): Boolean {
-        return SharedPreferences.getSharedPreferences().getBoolean(trailHighContrastMap, false)
+        return getSharedPreferences().getBoolean(trailHighContrastMap, false)
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     fun setShowBuildingsOnMap(boolean: Boolean) {
-        SharedPreferences.getSharedPreferences().edit().putBoolean(trailShowBuilding, boolean).apply()
+        getSharedPreferences().edit().putBoolean(trailShowBuilding, boolean).apply()
     }
 
     fun getShowBuildingsOnMap(): Boolean {
-        return SharedPreferences.getSharedPreferences().getBoolean(trailShowBuilding, false)
+        return getSharedPreferences().getBoolean(trailShowBuilding, false)
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     fun setMapZoom(@NotNull value: Float) {
-        SharedPreferences.getSharedPreferences().edit().putFloat(mapZoom, value).apply()
+        getSharedPreferences().edit().putFloat(mapZoom, value).apply()
     }
 
     fun getMapZoom(): Float {
-        return SharedPreferences.getSharedPreferences().getFloat(mapZoom, 15F)
+        return getSharedPreferences().getFloat(mapZoom, 15F)
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     fun setMapTilt(@NotNull value: Float) {
-        SharedPreferences.getSharedPreferences().edit().putFloat(mapTilt, value).apply()
+        getSharedPreferences().edit().putFloat(mapTilt, value).apply()
     }
 
     fun getMapTilt(): Float {
-        return SharedPreferences.getSharedPreferences().getFloat(mapTilt, 15F)
+        return getSharedPreferences().getFloat(mapTilt, 15F)
     }
 
     //--------------------------------------------------------------------------------------------------//
 
     fun setWrapStatus(@NotNull value: Boolean) {
-        SharedPreferences.getSharedPreferences().edit().putBoolean(wrapped, value).apply()
+        getSharedPreferences().edit().putBoolean(wrapped, value).apply()
     }
 
     fun arePolylinesWrapped(): Boolean {
-        return SharedPreferences.getSharedPreferences().getBoolean(wrapped, true)
+        return getSharedPreferences().getBoolean(wrapped, true)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setLastTrailName(value: String) {
+        getSharedPreferences().edit().putString(lastSelectedTrail, value).apply()
+    }
+
+    fun getLastUsedTrail(): String? {
+        return getSharedPreferences().getString(lastSelectedTrail, null)
     }
 }

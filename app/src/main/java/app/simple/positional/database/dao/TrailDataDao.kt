@@ -5,7 +5,7 @@ import app.simple.positional.model.TrailData
 interface TrailDataDao {
 
     @Query("SELECT * FROM trail_data ORDER BY time_added COLLATE nocase")
-    fun getAllLocations(): MutableList<TrailData>
+    fun getAllTrailData(): MutableList<TrailData>
 
     /**
      * Insert and save trail data to Database
