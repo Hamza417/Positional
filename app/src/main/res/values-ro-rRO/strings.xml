@@ -272,6 +272,6 @@
     <string name="sure">Desigur</string>
     <string name="desc_custom_coord_dialog">Acești parametri sunt utilizați în prezent pentru calcularea informațiilor.</string>
     <string name="inverted_colors">Culori inversate</string>
-    <string name="trail">Urmă</string>
+    <string name="trails">Urmă</string>
     <string name="geodesic_trail">Traseu geodezic</string>
 </resources>
