@@ -1,4 +1,4 @@
-package app.simple.positional.database
+package app.simple.positional.database.dao
 
 import androidx.room.*
 import app.simple.positional.model.Locations

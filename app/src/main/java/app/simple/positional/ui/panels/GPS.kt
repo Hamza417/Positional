@@ -27,7 +27,7 @@ import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
-import app.simple.positional.database.LocationDatabase
+import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.maps.Maps
 import app.simple.positional.decorations.maps.MapsCallbacks
 import app.simple.positional.decorations.views.MapToolbar

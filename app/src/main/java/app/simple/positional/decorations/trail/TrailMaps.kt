@@ -28,7 +28,8 @@ import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
-                                                                OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
+                                                                OnMapReadyCallback,
+                                                                SharedPreferences.OnSharedPreferenceChangeListener,
                                                                 CoroutineScope {
 
     private var googleMap: GoogleMap? = null

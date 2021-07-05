@@ -1,9 +1,10 @@
-package app.simple.positional.database
+package app.simple.positional.database.instances
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import app.simple.positional.database.dao.LocationDao
 import app.simple.positional.model.Locations
 
 @Database(entities = [Locations::class], exportSchema = false, version = 2)

@@ -26,7 +26,7 @@ import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
-import app.simple.positional.database.LocationDatabase
+import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.maps.OsmMaps
 import app.simple.positional.decorations.maps.OsmMapsCallbacks
 import app.simple.positional.decorations.ripple.DynamicRippleFrameLayout

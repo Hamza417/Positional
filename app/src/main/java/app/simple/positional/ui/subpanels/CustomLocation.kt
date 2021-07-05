@@ -24,7 +24,7 @@ import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.adapters.LocationsAdapter
-import app.simple.positional.database.LocationDatabase
+import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.model.Locations
