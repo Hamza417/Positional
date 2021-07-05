@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class TrailDataViewModel(application: Application, private val trailDataName: String) : AndroidViewModel(application) {
 
-    val trailData: MutableLiveData<ArrayList<TrailData>> by lazy {
+    private val trailData: MutableLiveData<ArrayList<TrailData>> by lazy {
         MutableLiveData<ArrayList<TrailData>>().also {
             loadTrailData(trailDataName)
         }
@@ -27,7 +27,7 @@ class TrailDataViewModel(application: Application, private val trailDataName: St
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
                                                 TrailDataDatabase::class.java,
-                                                trailName).build()
+                                                "$trailName.db").build()
 
             val list = database.trailDataDao()?.getAllTrailData()
             database.close()

@@ -18,6 +18,7 @@ import app.simple.positional.decorations.trails.TrailMaps
 import app.simple.positional.decorations.views.TrailToolbar
 import app.simple.positional.decorations.views.TrailTools
 import app.simple.positional.dialogs.trail.TrailMenu
+import app.simple.positional.model.TrailData
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
@@ -51,7 +52,7 @@ class Trail : ScopedFragment() {
         tools = view.findViewById(R.id.trail_tools)
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
-        val trailDataFactory = TrailDataFactory(TrailPreferences.getLastUsedTrail(), requireActivity().application)
+        val trailDataFactory = TrailDataFactory("test", requireActivity().application)
         trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
 
         maps = view.findViewById(R.id.map_view)
@@ -100,8 +101,15 @@ class Trail : ScopedFragment() {
             }
 
             override fun onAdd(position: Int) {
-                maps?.addPolyline(LatLng((25..30).random().toDouble(), (80..85).random().toDouble()),
-                                  position)
+                val trailData = TrailData(
+                        (25..30).random().toDouble(),
+                        (80..85).random().toDouble(),
+                        System.currentTimeMillis(),
+                        position,
+                        "test",
+                        "N/A"
+                )
+                trailDataViewModel.saveTrailData("test", trailData)
             }
 
             override fun onRemove() {
@@ -126,9 +134,11 @@ class Trail : ScopedFragment() {
             setFullScreen(true)
         }
 
-        trailDataViewModel.getTrailData().observe(viewLifecycleOwner, {
-            maps?.addPolyline(it)
-        })
+        maps?.onMapInitialized = {
+            trailDataViewModel.getTrailData().observe(viewLifecycleOwner, {
+                maps?.addPolyline(it)
+            })
+        }
     }
 
     override fun onResume() {

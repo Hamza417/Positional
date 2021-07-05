@@ -46,6 +46,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private var isWrapped = false
     private var lastZoom = 20F
     var onMapClicked: () -> Unit = {}
+    lateinit var onMapInitialized: () -> Unit
 
     private var options: PolylineOptions? = null
 
@@ -113,6 +114,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         this.googleMap?.setOnMapClickListener {
             onMapClicked.invoke()
         }
+
+        onMapInitialized.invoke()
     }
 
     fun pause() {
@@ -155,11 +158,28 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     }
 
     fun addPolyline(arrayList: ArrayList<TrailData>) {
+        googleMap?.clear()
+        polylines.clear()
+        currentPolyline.clear()
+        flagMarkers.clear()
+        options?.points?.clear()
+
         for (trailData in arrayList) {
-            options?.add(LatLng(trailData.latitude, trailData.longitude))
+            val latLng = LatLng(trailData.latitude, trailData.longitude)
+
+            currentPolyline.add(latLng)
+
+            val marker = googleMap?.addMarker(
+                    MarkerOptions()
+                        .position(latLng)
+                        .icon(BitmapDescriptorFactory.fromBitmap(TrailIcons.icons[trailData.iconPosition].toBitmap(context, 50))))
+
+            flagMarkers.add(marker!!)
+            options?.add(latLng)
+            polylines.add(googleMap?.addPolyline(options!!)!!)
         }
 
-        googleMap?.addPolyline(options!!)
+        invalidate()
     }
 
     fun addPolyline(latLng: LatLng, position: Int) {
