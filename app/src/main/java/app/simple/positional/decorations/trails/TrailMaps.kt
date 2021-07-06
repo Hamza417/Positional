@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
@@ -17,6 +16,7 @@ import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
+import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -60,8 +60,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             .jointType(JointType.ROUND)
             .startCap(RoundCap())
             .endCap(RoundCap())
-            .color(Color.parseColor("#1B9CFF"))
-            .geodesic(true)
+            .jointType(JointType.ROUND)
+            .color(context.resolveAttrColor(R.attr.colorAppAccent))
+            .geodesic(TrailPreferences.isTrailGeodesic())
 
         latLng = LatLng(MainPreferences.getLastCoordinates()[0].toDouble(),
                         MainPreferences.getLastCoordinates()[1].toDouble())
@@ -322,10 +323,16 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                                                             .target(latLng)
                                                             .tilt(GPSPreferences.getMapTilt())
                                                             .zoom(zoom)
-
                                                             .bearing(0F).build()), duration, null)
         isWrapped = false
         TrailPreferences.setWrapStatus(false)
+    }
+
+    fun getCamera(): CameraPosition = googleMap?.cameraPosition!!
+
+    fun setCamera(cameraPosition: CameraPosition?) {
+        cameraPosition ?: return
+        googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -341,6 +348,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             }
             TrailPreferences.geodesic -> {
                 options!!.geodesic(TrailPreferences.isTrailGeodesic())
+                invalidate()
             }
         }
     }

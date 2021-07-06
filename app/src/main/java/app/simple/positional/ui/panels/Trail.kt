@@ -139,6 +139,10 @@ class Trail : ScopedFragment() {
 
         maps?.setOnTrailMapCallbackListener(object : TrailMapCallbacks {
             override fun onMapInitialized() {
+                if (savedInstanceState.isNotNull()) {
+                    maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
+                }
+
                 trailDataViewModel.getTrailData().observe(viewLifecycleOwner, {
                     maps?.addPolylines(it)
                 })
@@ -172,6 +176,7 @@ class Trail : ScopedFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putFloat("translation", toolbar.translationY)
         outState.putBoolean("fullscreen", isFullScreen)
+        outState.putParcelable("camera", maps?.getCamera())
         super.onSaveInstanceState(outState)
     }
 

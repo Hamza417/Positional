@@ -62,6 +62,7 @@ import java.lang.Runnable
 import java.util.*
 
 class OSM : ScopedFragment() {
+
     private lateinit var expandUp: ImageView
     private lateinit var scrollView: NestedScrollView
     private lateinit var toolbar: MapToolbar
@@ -88,9 +89,10 @@ class OSM : ScopedFragment() {
     private lateinit var specifiedLocationTextView: TextView
     private lateinit var infoText: TextView
     private lateinit var handler: Handler
-    private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
     private lateinit var bottomSheetInfoPanel: BottomSheetBehavior<CoordinatorLayout>
+
+    private var filter: IntentFilter = IntentFilter()
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
     private var isMetric = true
@@ -103,6 +105,7 @@ class OSM : ScopedFragment() {
     private var peekHeight = 0
     private var distanceSingleton = DistanceSingleton
     private var mapView: OsmMaps? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_osm, container, false)
         //isFullScreen = savedInstanceState?.getBoolean("full_screen") ?: false
@@ -138,17 +141,15 @@ class OSM : ScopedFragment() {
         mapView = view.findViewById(R.id.map)
         mapView!!.postCallbacks()
 
-        handler = Handler(Looper.getMainLooper())
+        if (requireActivity().intent.isNotNull()) {
+            if (requireActivity().intent.action == "action_map_panel_full") {
+                isFullScreen = false
+                setFullScreen(true)
+                requireActivity().intent.action = null
+            }
+        }
 
-        handler.postDelayed({
-                                if (requireActivity().intent.isNotNull()) {
-                                    if (requireActivity().intent.action == "action_map_panel_full") {
-                                        isFullScreen = false
-                                        setFullScreen(true)
-                                        requireActivity().intent.action = null
-                                    }
-                                }
-                            }, 500L)
+        handler = Handler(Looper.getMainLooper())
 
         filter.addAction("location")
         filter.addAction("provider")

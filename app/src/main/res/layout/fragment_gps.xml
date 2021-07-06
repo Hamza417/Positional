@@ -7,6 +7,7 @@
 
     <app.simple.positional.decorations.maps.Maps
         android:id="@+id/map"
+        android:alpha="0"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -111,6 +111,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         this.googleMap?.setOnMapClickListener {
             mapsCallbacks?.onMapClicked(this)
         }
+
+        mapsCallbacks?.onMapInitialized()
     }
 
     fun pause() {
@@ -264,6 +266,13 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                                                                            .tilt(GPSPreferences.getMapTilt())
                                                                            .zoom(zoom)
                                                                            .bearing(if (isBearingRotation) bearing else 0F).build()), 3000, null)
+    }
+
+    fun getCamera(): CameraPosition = googleMap?.cameraPosition!!
+
+    fun setCamera(cameraPosition: CameraPosition?) {
+        cameraPosition ?: return
+        googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
     fun setOnMapsCallbackListener(mapsCallbacks: MapsCallbacks) {

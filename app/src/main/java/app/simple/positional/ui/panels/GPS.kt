@@ -106,7 +106,7 @@ class GPS : ScopedFragment() {
     private var lastLongitude = 0.0
     private var peekHeight = 0
     private var distanceSingleton = DistanceSingleton
-    private var mapView: Maps? = null
+    private var maps: Maps? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_gps, container, false)
@@ -142,25 +142,17 @@ class GPS : ScopedFragment() {
 
         handler = Handler(Looper.getMainLooper())
 
-        handler.postDelayed({
-                                mapView = view.findViewById(R.id.map)
-                                mapView?.onCreate(savedInstanceState)
-                                mapView?.resume()
+        maps = view.findViewById(R.id.map)
+        maps?.onCreate(savedInstanceState)
+        maps?.resume()
 
-                                mapView?.setOnMapsCallbackListener(object : MapsCallbacks {
-                                    override fun onMapClicked(view: MapView?) {
-                                        setFullScreen(true)
-                                    }
-                                })
-
-                                if (requireActivity().intent.isNotNull()) {
-                                    if (requireActivity().intent.action == "action_map_panel_full") {
-                                        isFullScreen = false
-                                        setFullScreen(true)
-                                        requireActivity().intent.action = null
-                                    }
-                                }
-                            }, 500L)
+        if (requireActivity().intent.isNotNull()) {
+            if (requireActivity().intent.action == "action_map_panel_full") {
+                isFullScreen = false
+                setFullScreen(true)
+                requireActivity().intent.action = null
+            }
+        }
 
         filter.addAction("location")
         filter.addAction("provider")
@@ -342,8 +334,8 @@ class GPS : ScopedFragment() {
 
                                     if (!isCustomCoordinate) {
                                         updateViews(location!!.latitude, location!!.longitude)
-                                        mapView?.location = location
-                                        mapView?.addMarker(LatLng(location!!.latitude, location!!.longitude))
+                                        maps?.location = location
+                                        maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
                                     }
                                 }
                             }
@@ -395,7 +387,7 @@ class GPS : ScopedFragment() {
         toolbar.setOnMapToolbarCallbacks(object : MapToolbar.MapToolbarCallbacks {
             override fun onLocationReset(view: View) {
                 updateViews(customLatitude, customLongitude)
-                mapView?.resetCamera(GPSPreferences.getMapZoom())
+                maps?.resetCamera(GPSPreferences.getMapZoom())
             }
 
             override fun onMenuClicked(view: View) {
@@ -403,7 +395,7 @@ class GPS : ScopedFragment() {
             }
 
             override fun onLocationLongPressed() {
-                mapView?.resetCamera(18F)
+                maps?.resetCamera(18F)
             }
 
             override fun onCustomLocationClicked(view: View) {
@@ -520,17 +512,29 @@ class GPS : ScopedFragment() {
             }
         }
 
+        maps?.setOnMapsCallbackListener(object : MapsCallbacks {
+            override fun onMapInitialized() {
+                if (savedInstanceState.isNotNull()) {
+                    maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
+                }
+            }
+
+            override fun onMapClicked(view: MapView?) {
+                setFullScreen(true)
+            }
+        })
+
         view.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
                     KeyEvent.KEYCODE_VOLUME_UP -> {
-                        mapView?.zoomIn()
+                        maps?.zoomIn()
                     }
                     KeyEvent.KEYCODE_VOLUME_DOWN -> {
-                        mapView?.zoomOut()
+                        maps?.zoomOut()
                     }
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
-                        mapView?.resetCamera(GPSPreferences.getMapZoom())
+                        maps?.resetCamera(GPSPreferences.getMapZoom())
                     }
                     KeyEvent.KEYCODE_BACK -> {
                         requireActivity().onBackPressed()
@@ -563,7 +567,7 @@ class GPS : ScopedFragment() {
 
     override fun onPause() {
         super.onPause()
-        mapView?.pause()
+        maps?.pause()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
@@ -572,8 +576,8 @@ class GPS : ScopedFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mapView?.removeCallbacks { }
-        mapView?.destroy()
+        maps?.removeCallbacks { }
+        maps?.destroy()
         handler.removeCallbacks(textAnimationRunnable)
         infoText.clearAnimation()
         handler.removeCallbacksAndMessages(null)
@@ -581,13 +585,13 @@ class GPS : ScopedFragment() {
 
     override fun onResume() {
         super.onResume()
-        mapView?.resume()
+        maps?.resume()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView?.lowMemory()
+        maps?.lowMemory()
     }
 
     private fun updateViews(latitude_: Double, longitude_: Double) {
@@ -676,6 +680,7 @@ class GPS : ScopedFragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putFloat("translation", toolbar.translationY)
         outState.putBoolean("fullscreen", isFullScreen)
+        outState.putParcelable("camera", maps?.getCamera())
         super.onSaveInstanceState(outState)
     }
 

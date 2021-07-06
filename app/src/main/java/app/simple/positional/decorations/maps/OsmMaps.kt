@@ -37,10 +37,10 @@ import org.osmdroid.views.overlay.*
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import kotlin.coroutines.CoroutineContext
 
-class OsmMaps(context: Context, attrs: AttributeSet?) :
-    MapView(context, attrs),
-    SharedPreferences.OnSharedPreferenceChangeListener,
-    CoroutineScope {
+class OsmMaps(context: Context, attrs: AttributeSet?) : MapView(context, attrs),
+                                                        SharedPreferences.OnSharedPreferenceChangeListener,
+                                                        CoroutineScope {
+
     /**
      * Setting the location will also add marker on the map
      * on that location. If the custom coordinate is checked
@@ -70,6 +70,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
     private var bearing = 0F
     val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
     val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
+
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Default
@@ -124,6 +125,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         showScaleBar()
         showCopyrightNotice()
         onResume()
+
         val mReceive: MapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
                 // Toast.makeText(context, p.latitude.toString() + " - " + p.longitude, Toast.LENGTH_LONG).show()
@@ -179,7 +181,6 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
         } else {
             controller.setCenter(GeoPoint(latLng!!.latitude, latLng!!.longitude))
         }
-        // controller.setCenter(GeoPoint(latLng!!.latitude, latLng!!.longitude))
     }
 
     fun resetCamera() {
@@ -213,6 +214,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) :
                     R.drawable.ic_place_historical.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                 }
             }.toDrawable(resources)
+
             val startMarker = Marker(this@OsmMaps).apply {
                 icon = marker
                 id = "marker"
