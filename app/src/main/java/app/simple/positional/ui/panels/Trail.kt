@@ -18,6 +18,7 @@ import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.decorations.trails.TrailMapCallbacks
 import app.simple.positional.decorations.trails.TrailMaps
 import app.simple.positional.decorations.views.TrailToolbar
 import app.simple.positional.decorations.views.TrailTools
@@ -25,7 +26,8 @@ import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.model.TrailData
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
-import app.simple.positional.util.NullSafety.isNotNull
+import app.simple.positional.util.ConditionUtils.isNotNull
+import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.viewmodels.factory.TrailDataFactory
 import app.simple.positional.viewmodels.viewmodel.TrailDataViewModel
 import com.google.android.gms.maps.model.LatLng
@@ -135,15 +137,25 @@ class Trail : ScopedFragment() {
                 .show(requireActivity().supportFragmentManager, "trail_menu")
         }
 
-        maps?.onMapClicked = {
-            setFullScreen(true)
-        }
+        maps?.setOnTrailMapCallbackListener(object : TrailMapCallbacks {
+            override fun onMapInitialized() {
+                trailDataViewModel.getTrailData().observe(viewLifecycleOwner, {
+                    maps?.addPolylines(it)
+                })
+            }
 
-        maps?.onMapInitialized = {
-            trailDataViewModel.getTrailData().observe(viewLifecycleOwner, {
-                maps?.addPolyline(it)
-            })
-        }
+            override fun onMapClicked() {
+                setFullScreen(true)
+            }
+
+            override fun onLineDeleted(trailData: TrailData?) {
+                trailDataViewModel.deleteTrailData(trailData)
+            }
+
+            override fun onLineCountChanged(lineCount: Int) {
+                tools.changeButtonState(lineCount.isZero())
+            }
+        })
     }
 
     override fun onResume() {

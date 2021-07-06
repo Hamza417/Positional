@@ -6,7 +6,7 @@ import android.location.Location
 import android.os.HandlerThread
 import android.os.IBinder
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import app.simple.positional.util.NullSafety.isNotNull
+import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.PermissionUtils
 import com.google.android.gms.location.*
 

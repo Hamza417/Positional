@@ -27,10 +27,10 @@ import app.simple.positional.services.FusedLocationService
 import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.ui.panels.*
+import app.simple.positional.util.ConditionUtils.isNotNull
+import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
-import app.simple.positional.util.NullSafety.isNotNull
-import app.simple.positional.util.NullSafety.isNull
 
 class MainActivity :
     BaseActivity(),

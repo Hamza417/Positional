@@ -17,8 +17,8 @@ import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
-import app.simple.positional.util.NullSafety.isNotNull
-import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.ConditionUtils.isNotNull
+import app.simple.positional.util.ConditionUtils.isNull
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -43,10 +43,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private val currentPolyline = arrayListOf<LatLng>()
     private val flagMarkers = arrayListOf<Marker>()
     private val polylines = arrayListOf<Polyline>()
+    private var trailData = arrayListOf<TrailData>()
     private var isWrapped = false
     private var lastZoom = 20F
-    var onMapClicked: () -> Unit = {}
-    lateinit var onMapInitialized: () -> Unit
+    private lateinit var trailMapCallbacks: TrailMapCallbacks
 
     private var options: PolylineOptions? = null
 
@@ -112,10 +112,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         }
 
         this.googleMap?.setOnMapClickListener {
-            onMapClicked.invoke()
+            trailMapCallbacks.onMapClicked()
         }
 
-        onMapInitialized.invoke()
+        trailMapCallbacks.onMapInitialized()
     }
 
     fun pause() {
@@ -157,7 +157,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         }
     }
 
-    fun addPolyline(arrayList: ArrayList<TrailData>) {
+    fun addPolylines(arrayList: ArrayList<TrailData>) {
         googleMap?.clear()
         polylines.clear()
         currentPolyline.clear()
@@ -180,15 +180,20 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         }
 
         invalidate()
+
+        trailData.addAll(arrayList)
+        trailMapCallbacks.onLineCountChanged(options!!.points.size)
     }
 
-    fun addPolyline(latLng: LatLng, position: Int) {
+    fun addPolyline(trailData: TrailData, position: Int) {
+        val latLng = LatLng(trailData.latitude, trailData.longitude)
+
         currentPolyline.add(latLng)
 
         val marker = googleMap?.addMarker(
                 MarkerOptions()
                     .position(latLng)
-                    .icon(BitmapDescriptorFactory.fromBitmap(TrailIcons.icons[position].toBitmap(context, 50))))
+                    .icon(BitmapDescriptorFactory.fromBitmap(TrailIcons.icons[trailData.iconPosition].toBitmap(context, 50))))
 
         flagMarkers.add(marker!!)
         options?.add(latLng)
@@ -202,6 +207,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         polylines.removeLastOrNull()
         flagMarkers.removeLastOrNull()
         options?.points?.removeLastOrNull()
+        trailMapCallbacks.onLineDeleted(trailData.lastOrNull())
+        trailMapCallbacks.onLineCountChanged(options!!.points.size)
+        trailData.removeLastOrNull()
         invalidate()
     }
 
@@ -335,5 +343,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 options!!.geodesic(TrailPreferences.isTrailGeodesic())
             }
         }
+    }
+
+    fun setOnTrailMapCallbackListener(trailMapCallbacks: TrailMapCallbacks) {
+        this.trailMapCallbacks = trailMapCallbacks
     }
 }

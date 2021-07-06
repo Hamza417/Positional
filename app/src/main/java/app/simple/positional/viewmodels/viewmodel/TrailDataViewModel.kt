@@ -11,11 +11,11 @@ import app.simple.positional.model.TrailData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class TrailDataViewModel(application: Application, private val trailDataName: String) : AndroidViewModel(application) {
+class TrailDataViewModel(application: Application, private val trailName: String) : AndroidViewModel(application) {
 
     private val trailData: MutableLiveData<ArrayList<TrailData>> by lazy {
         MutableLiveData<ArrayList<TrailData>>().also {
-            loadTrailData(trailDataName)
+            loadTrailData(trailName)
         }
     }
 
@@ -51,18 +51,16 @@ class TrailDataViewModel(application: Application, private val trailDataName: St
         }
     }
 
-    fun deleteTrailData(trailName: String, trails: TrailData) {
+    fun deleteTrailData(trails: TrailData?) {
         viewModelScope.launch(Dispatchers.IO) {
+            trails ?: return@launch
+
             val database = Room.databaseBuilder(getApplication<Application>(),
                                                 TrailDataDatabase::class.java,
                                                 "$trailName.db").build()
 
             database.trailDataDao()?.deleteTrailData(trails)!!
-            val list = database.trailDataDao()?.getAllTrailData()
-
             database.close()
-
-            trailData.postValue(list as ArrayList<TrailData>)
         }
     }
 }

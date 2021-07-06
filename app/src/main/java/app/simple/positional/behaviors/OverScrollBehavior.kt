@@ -8,7 +8,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
-import app.simple.positional.util.NullSafety.isNotNull
+import app.simple.positional.util.ConditionUtils.isNotNull
 
 class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
 

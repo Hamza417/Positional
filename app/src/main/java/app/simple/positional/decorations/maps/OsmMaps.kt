@@ -24,7 +24,7 @@ import app.simple.positional.preferences.OSMPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.ColorUtils
-import app.simple.positional.util.NullSafety.isNotNull
+import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.StatusBarHeight
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.*

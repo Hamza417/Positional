@@ -11,6 +11,8 @@ import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
+import app.simple.positional.util.ViewUtils.makeGoAway
+import app.simple.positional.util.ViewUtils.makeVisible
 
 class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -93,6 +95,16 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
 
     fun setTrailCallbacksListener(trailCallbacks: TrailCallbacks) {
         this.trailCallbacks = trailCallbacks
+    }
+
+    fun changeButtonState(hide: Boolean) {
+        if (hide) {
+            wrap.makeGoAway()
+            remove.makeGoAway()
+        } else {
+            wrap.makeVisible(false)
+            remove.makeVisible(false)
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

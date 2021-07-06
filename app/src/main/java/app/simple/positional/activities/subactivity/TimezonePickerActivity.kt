@@ -6,7 +6,7 @@ import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.main.BaseActivity
 import app.simple.positional.ui.subpanels.TimeZones
-import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.ConditionUtils.isNull
 
 class TimezonePickerActivity : BaseActivity() {
 

@@ -4,8 +4,8 @@ import android.os.Bundle
 import app.simple.positional.R
 import app.simple.positional.activities.main.BaseActivity
 import app.simple.positional.ui.subpanels.HtmlViewer
-import app.simple.positional.util.NullSafety.isNotNull
-import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.ConditionUtils.isNotNull
+import app.simple.positional.util.ConditionUtils.isNull
 
 class WebPageViewerActivity : BaseActivity() {
 

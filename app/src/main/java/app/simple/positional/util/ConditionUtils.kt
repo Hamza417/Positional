@@ -1,7 +1,7 @@
 package app.simple.positional.util
 
 @Suppress("unused")
-object NullSafety {
+object ConditionUtils {
     /**
      * Quickly performs a null safety check
      * of a potential null object that has
@@ -30,5 +30,9 @@ object NullSafety {
 
     fun Any?.isNotNull(): Boolean {
         return this != null
+    }
+
+    fun Number.isZero(): Boolean {
+        return this == 0
     }
 }

@@ -10,7 +10,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.PermissionUtils
 
 class LocationService : Service(), LocationListener {

@@ -2,8 +2,8 @@ package app.simple.positional.singleton
 
 import android.content.Context
 import android.content.SharedPreferences
-import app.simple.positional.util.NullSafety.isNotNull
-import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.ConditionUtils.isNotNull
+import app.simple.positional.util.ConditionUtils.isNull
 
 object SharedPreferences {
 

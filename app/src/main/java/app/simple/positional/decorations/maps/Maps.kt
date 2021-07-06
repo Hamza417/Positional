@@ -14,8 +14,8 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
-import app.simple.positional.util.NullSafety.isNotNull
-import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.ConditionUtils.isNotNull
+import app.simple.positional.util.ConditionUtils.isNull
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView

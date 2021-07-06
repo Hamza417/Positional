@@ -47,10 +47,10 @@ import app.simple.positional.preferences.CompassPreferences
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.ColorUtils.resolveAttrColor
+import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
-import app.simple.positional.util.NullSafety.isNull
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers

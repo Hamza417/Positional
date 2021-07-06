@@ -10,7 +10,7 @@ import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.decorations.fastscroll.FastScrollWebView
 import app.simple.positional.decorations.fastscroll.FastScrollerBuilder
-import app.simple.positional.util.NullSafety.isNull
+import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.isNetworkAvailable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
