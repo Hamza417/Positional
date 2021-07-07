@@ -17,6 +17,7 @@ import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.activities.subactivity.TrailsViewerActivity
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.trails.TrailMapCallbacks
 import app.simple.positional.decorations.trails.TrailMaps
@@ -52,7 +53,7 @@ class Trail : ScopedFragment() {
 
     private var currentTrail = ""
 
-    private lateinit var trailDataViewModel: TrailDataViewModel
+    private lateinit var trailViewModel: TrailDataViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_trail, container, false)
@@ -120,7 +121,7 @@ class Trail : ScopedFragment() {
                         "N/A"
                 )
 
-                trailDataViewModel.saveTrailData(currentTrail, trailData)
+                trailViewModel.saveTrailData(currentTrail, trailData)
                 maps?.addPolyline(trailData, position)
             }
 
@@ -138,6 +139,10 @@ class Trail : ScopedFragment() {
                 .show(requireActivity().supportFragmentManager, "add_trail")
         }
 
+        toolbar.onFlagClicked = {
+            startActivity(Intent(requireContext(), TrailsViewerActivity::class.java))
+        }
+
         toolbar.onMenuClicked = {
             TrailMenu.newInstance()
                 .show(requireActivity().supportFragmentManager, "trail_menu")
@@ -149,7 +154,7 @@ class Trail : ScopedFragment() {
                     maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
                 }
 
-                trailDataViewModel.getTrailData().observe(viewLifecycleOwner, {
+                trailViewModel.getTrailData().observe(viewLifecycleOwner, {
                     maps?.addPolylines(it)
                 })
             }
@@ -159,7 +164,7 @@ class Trail : ScopedFragment() {
             }
 
             override fun onLineDeleted(trailData: TrailData?) {
-                trailDataViewModel.deleteTrailData(trailData)
+                trailViewModel.deleteTrailData(trailData)
             }
 
             override fun onLineCountChanged(lineCount: Int) {
@@ -171,7 +176,7 @@ class Trail : ScopedFragment() {
     private fun initViewModel() {
         currentTrail = TrailPreferences.getLastUsedTrail()
         val trailDataFactory = TrailDataFactory(currentTrail, requireActivity().application)
-        trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
+        trailViewModel = ViewModelProvider(requireActivity(), trailDataFactory).get(TrailDataViewModel::class.java)
     }
 
     override fun onResume() {
@@ -207,6 +212,7 @@ class Trail : ScopedFragment() {
             }
             TrailPreferences.lastSelectedTrail -> {
                 currentTrail = TrailPreferences.getLastUsedTrail()
+                trailViewModel.loadTrailData(currentTrail)
                 maps?.clear()
             }
         }

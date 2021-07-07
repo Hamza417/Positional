@@ -32,15 +32,15 @@ import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 
-class MainActivity :
-    BaseActivity(),
-    PermissionCallbacks,
-    BottomSheetSlide,
-    android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+class MainActivity : BaseActivity(),
+                     PermissionCallbacks,
+                     BottomSheetSlide,
+                     android.content.SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val defaultPermissionRequestCode = 123
     private lateinit var bottomBar: DynamicCornerRecyclerView
     private lateinit var bottomBarAdapter: BottomBarAdapter
+
     private val fragments = arrayListOf(
             BottomBarModel(R.drawable.ic_clock, "clock"),
             BottomBarModel(R.drawable.ic_compass, "compass"),

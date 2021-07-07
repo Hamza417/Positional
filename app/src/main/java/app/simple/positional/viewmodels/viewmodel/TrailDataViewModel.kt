@@ -24,7 +24,7 @@ class TrailDataViewModel(application: Application, private val trailName: String
         return trailData
     }
 
-    private fun loadTrailData(trailName: String) {
+    fun loadTrailData(trailName: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
                                                 TrailDataDatabase::class.java,

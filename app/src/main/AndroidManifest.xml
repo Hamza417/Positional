@@ -54,7 +54,7 @@
         android:supportsRtl="true"
         android:theme="@style/Positional"
         android:windowSoftInputMode="adjustPan"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup,LockedOrientationActivity">
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -260,6 +260,10 @@
 
         <activity
             android:name=".activities.subactivity.WebPageViewerActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.subactivity.TrailsViewerActivity"
             android:screenOrientation="portrait" />
 
         <activity
