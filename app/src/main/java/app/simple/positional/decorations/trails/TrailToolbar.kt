@@ -1,4 +1,4 @@
-package app.simple.positional.decorations.views
+package app.simple.positional.decorations.trails
 
 import android.animation.LayoutTransition
 import android.content.Context
@@ -14,9 +14,11 @@ class TrailToolbar : DynamicCornerLinearLayout {
 
     private lateinit var flag: DynamicRippleImageButton
     private lateinit var menu: DynamicRippleImageButton
+    private lateinit var add: DynamicRippleImageButton
 
     var onFlagClicked: () -> Unit = {}
     var onMenuClicked: () -> Unit = {}
+    var onTrailAdd: () -> Unit = {}
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         setProperties()
@@ -40,6 +42,7 @@ class TrailToolbar : DynamicCornerLinearLayout {
 
         flag = view.findViewById(R.id.trail_flag)
         menu = view.findViewById(R.id.trail_menu)
+        add = view.findViewById(R.id.trail_add)
 
         flag.setOnClickListener {
             onFlagClicked.invoke()
@@ -47,6 +50,10 @@ class TrailToolbar : DynamicCornerLinearLayout {
 
         menu.setOnClickListener {
             onMenuClicked.invoke()
+        }
+
+        add.setOnClickListener {
+            onTrailAdd.invoke()
         }
     }
 

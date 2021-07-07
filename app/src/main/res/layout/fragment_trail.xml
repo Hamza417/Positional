@@ -6,7 +6,7 @@
     android:animateLayoutChanges="true"
     android:clipToPadding="false">
 
-    <app.simple.positional.decorations.views.TrailTools
+    <app.simple.positional.decorations.trails.TrailTools
         android:id="@+id/trail_tools"
         android:layout_width="wrap_content"
         android:animateLayoutChanges="true"
@@ -18,7 +18,7 @@
         android:padding="@dimen/trail_tools_padding"
         android:backgroundTint="@color/mainBackground" />
 
-    <app.simple.positional.decorations.views.TrailToolbar
+    <app.simple.positional.decorations.trails.TrailToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

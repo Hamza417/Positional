@@ -10,6 +10,7 @@ import app.simple.positional.database.instances.TrailDataDatabase
 import app.simple.positional.model.TrailData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.system.measureTimeMillis
 
 class TrailDataViewModel(application: Application, private val trailName: String) : AndroidViewModel(application) {
 
@@ -43,24 +44,23 @@ class TrailDataViewModel(application: Application, private val trailName: String
                                                 "$trailName.db").build()
 
             database.trailDataDao()?.insertTrailData(trails)!!
-            val list = database.trailDataDao()?.getAllTrailData()
 
             database.close()
-
-            trailData.postValue(list as ArrayList<TrailData>)
         }
     }
 
     fun deleteTrailData(trails: TrailData?) {
         viewModelScope.launch(Dispatchers.IO) {
-            trails ?: return@launch
+            println(measureTimeMillis {
+                trails ?: return@launch
 
-            val database = Room.databaseBuilder(getApplication<Application>(),
-                                                TrailDataDatabase::class.java,
-                                                "$trailName.db").build()
+                val database = Room.databaseBuilder(getApplication<Application>(),
+                                                    TrailDataDatabase::class.java,
+                                                    "$trailName.db").build()
 
-            database.trailDataDao()?.deleteTrailData(trails)!!
-            database.close()
+                database.trailDataDao()?.deleteTrailData(trails)!!
+                database.close()
+            })
         }
     }
 }

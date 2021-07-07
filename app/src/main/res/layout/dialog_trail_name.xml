@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.simple.positional.decorations.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/mainBackground"
+    android:clipChildren="false"
+    android:elevation="15dp"
+    android:clipToPadding="false"
+    android:orientation="vertical"
+    android:padding="@dimen/options_container_horizontal_padding">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/trail_name_edit_text_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:hint="@string/name"
+        app:boxStrokeColor="?attr/colorAppAccent"
+        app:boxStrokeWidth="1px"
+        app:boxStrokeWidthFocused="2px"
+        app:errorEnabled="false"
+        app:errorIconTint="@android:color/holo_red_dark"
+        app:errorTextColor="@android:color/holo_red_dark"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        app:hintTextColor="?attr/colorAppAccent"
+        tools:ignore="PxUsage">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/trail_name_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="4"
+            android:paddingHorizontal="@dimen/options_container_horizontal_padding"
+            android:textColor="@color/textPrimary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <app.simple.positional.decorations.ripple.DynamicRippleButton
+        android:id="@+id/save"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/app_button_size"
+        android:layout_gravity="end"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/options_container_horizontal_padding"
+        android:text="@string/save"
+        android:textColor="@color/textSecondary"
+        android:textSize="@dimen/popup_text_size" />
+
+</app.simple.positional.decorations.corners.DynamicCornerLinearLayout>

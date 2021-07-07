@@ -1,4 +1,4 @@
-package app.simple.positional.decorations.views
+package app.simple.positional.decorations.trails
 
 import android.animation.LayoutTransition
 import android.content.Context
@@ -9,6 +9,7 @@ import app.simple.positional.R
 import app.simple.positional.adapters.trail.AdapterTrailIcons
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.ViewUtils.makeGoAway

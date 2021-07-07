@@ -20,8 +20,9 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.trails.TrailMapCallbacks
 import app.simple.positional.decorations.trails.TrailMaps
-import app.simple.positional.decorations.views.TrailToolbar
-import app.simple.positional.decorations.views.TrailTools
+import app.simple.positional.decorations.trails.TrailToolbar
+import app.simple.positional.decorations.trails.TrailTools
+import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.model.TrailData
 import app.simple.positional.preferences.MainPreferences
@@ -38,15 +39,18 @@ import java.util.*
 
 class Trail : ScopedFragment() {
 
-    private var maps: TrailMaps? = null
     private lateinit var toolbar: TrailToolbar
     private lateinit var tools: TrailTools
-    private val handler = Handler(Looper.getMainLooper())
-    private var filter: IntentFilter = IntentFilter()
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
     private lateinit var bottomSheetSlide: BottomSheetSlide
+
+    private var maps: TrailMaps? = null
+    private val handler = Handler(Looper.getMainLooper())
+    private var filter: IntentFilter = IntentFilter()
     private var location: Location? = null
     private var isFullScreen = false
+
+    private var currentTrail = ""
 
     private lateinit var trailDataViewModel: TrailDataViewModel
 
@@ -57,8 +61,7 @@ class Trail : ScopedFragment() {
         tools = view.findViewById(R.id.trail_tools)
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
-        val trailDataFactory = TrailDataFactory("test", requireActivity().application)
-        trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
+        initViewModel()
 
         maps = view.findViewById(R.id.map_view)
         maps?.onCreate(savedInstanceState)
@@ -116,7 +119,9 @@ class Trail : ScopedFragment() {
                         "test",
                         "N/A"
                 )
-                trailDataViewModel.saveTrailData("test", trailData)
+
+                trailDataViewModel.saveTrailData(currentTrail, trailData)
+                maps?.addPolyline(trailData, position)
             }
 
             override fun onRemove() {
@@ -128,8 +133,9 @@ class Trail : ScopedFragment() {
             }
         })
 
-        toolbar.onFlagClicked = {
-
+        toolbar.onTrailAdd = {
+            AddTrail.newInstance()
+                .show(requireActivity().supportFragmentManager, "add_trail")
         }
 
         toolbar.onMenuClicked = {
@@ -162,6 +168,12 @@ class Trail : ScopedFragment() {
         })
     }
 
+    private fun initViewModel() {
+        currentTrail = TrailPreferences.getLastUsedTrail()
+        val trailDataFactory = TrailDataFactory(currentTrail, requireActivity().application)
+        trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
+    }
+
     override fun onResume() {
         super.onResume()
         maps?.resume()
@@ -192,6 +204,10 @@ class Trail : ScopedFragment() {
         when (key) {
             TrailPreferences.toolsMenuGravity -> {
                 updateToolsGravity(requireView())
+            }
+            TrailPreferences.lastSelectedTrail -> {
+                currentTrail = TrailPreferences.getLastUsedTrail()
+                maps?.clear()
             }
         }
     }

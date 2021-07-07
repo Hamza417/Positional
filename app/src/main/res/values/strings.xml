@@ -303,4 +303,5 @@
     <string name="inverted_colors">Inverted Colors</string>
     <string name="trails">Trail</string>
     <string name="geodesic_trail">Geodesic Trail</string>
+    <string name="name">Name</string>
 </resources>

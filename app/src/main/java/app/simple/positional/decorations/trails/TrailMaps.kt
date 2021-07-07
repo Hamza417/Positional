@@ -33,12 +33,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                                                                 CoroutineScope {
 
     private var googleMap: GoogleMap? = null
-    var location: Location? = null
     private var latLng: LatLng? = null
     private var markerBitmap: Bitmap? = null
     private val viewHandler = Handler(Looper.getMainLooper())
-    val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
-    val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
     private var marker: Marker? = null
     private val currentPolyline = arrayListOf<LatLng>()
     private val flagMarkers = arrayListOf<Marker>()
@@ -46,9 +43,13 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private var trailData = arrayListOf<TrailData>()
     private var isWrapped = false
     private var lastZoom = 20F
-    private lateinit var trailMapCallbacks: TrailMapCallbacks
-
     private var options: PolylineOptions? = null
+
+    var location: Location? = null
+    val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
+    val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
+
+    private lateinit var trailMapCallbacks: TrailMapCallbacks
 
     private val job = Job()
     override val coroutineContext: CoroutineContext
@@ -139,6 +140,14 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         job.cancel()
     }
 
+    fun clear() {
+        polylines.clear()
+        flagMarkers.clear()
+        options!!.points.clear()
+        googleMap?.clear()
+        invalidate()
+    }
+
     fun addMarker(latLng: LatLng) {
         launch {
             withContext(Dispatchers.Default) {
@@ -199,6 +208,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         flagMarkers.add(marker!!)
         options?.add(latLng)
         polylines.add(googleMap?.addPolyline(options!!)!!)
+
+        trailMapCallbacks.onLineCountChanged(options!!.points.size)
     }
 
     fun removePolyline() {

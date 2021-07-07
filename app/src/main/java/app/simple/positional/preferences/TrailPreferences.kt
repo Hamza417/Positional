@@ -7,7 +7,7 @@ object TrailPreferences {
 
     private const val mapZoom = "trail_map_zoom_value"
     private const val mapTilt = "trail_map_tilt_value"
-    private const val lastSelectedTrail = "last_selected_trail"
+    const val lastSelectedTrail = "last_selected_trail"
     const val wrapped = "are_polylines_wrapped"
     const val geodesic = "is_trail_geodesic"
     const val trailLabelMode = "trail_map_label_mode"

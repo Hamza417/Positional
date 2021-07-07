@@ -21,7 +21,7 @@ import app.simple.positional.util.ColorUtils;
 
 public class Utils {
     
-    static final int alpha = 40;
+    static final int alpha = 100;
     
     static void animateBackground(int endColor, View view) {
         view.clearAnimation();
