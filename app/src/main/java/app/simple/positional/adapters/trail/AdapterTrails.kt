@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
-import app.simple.positional.model.Trails
+import app.simple.positional.model.TrailModel
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 import java.text.DateFormat
 import java.util.*
 
-class AdapterTrails(private val list: ArrayList<Trails>) : RecyclerView.Adapter<AdapterTrails.Holder>() {
+class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adapter<AdapterTrails.Holder>() {
 
     var onTrailNameClicked: (name: String) -> Unit = {}
     var currentTrail = TrailPreferences.getLastUsedTrail()

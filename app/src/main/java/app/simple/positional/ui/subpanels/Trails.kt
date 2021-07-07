@@ -44,7 +44,7 @@ class Trails : ScopedFragment() {
             val p0 = AddTrail.newInstance()
 
             p0.onNewTrailAddedSuccessfully = {
-                trailViewModel.loadTrails()
+                trailViewModel.addTrail(it)
             }
 
             p0.show(parentFragmentManager, "add_trail")
@@ -60,6 +60,11 @@ class Trails : ScopedFragment() {
 
             recyclerView.adapter = adapter
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        trailViewModel.loadTrails()
     }
 
     companion object {

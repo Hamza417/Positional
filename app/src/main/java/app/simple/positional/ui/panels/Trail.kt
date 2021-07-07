@@ -122,7 +122,7 @@ class Trail : ScopedFragment() {
                 )
 
                 trailViewModel.saveTrailData(currentTrail, trailData)
-                maps?.addPolyline(trailData, position)
+                maps?.addPolyline(trailData)
             }
 
             override fun onRemove() {
@@ -182,6 +182,7 @@ class Trail : ScopedFragment() {
     override fun onResume() {
         super.onResume()
         maps?.resume()
+        currentTrail = TrailPreferences.getLastUsedTrail()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
     }
 
