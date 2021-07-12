@@ -1,4 +1,4 @@
-package app.simple.positional.decorations.bottombar;
+package app.simple.positional.adapters.bottombar;
 
 public class BottomBarModel {
     private int icon;

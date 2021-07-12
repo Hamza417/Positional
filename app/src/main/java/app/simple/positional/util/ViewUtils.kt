@@ -54,15 +54,17 @@ object ViewUtils {
      * @param animate adds animation to the process
      */
     fun View.makeInvisible(animate: Boolean) {
+        clearAnimation()
+
         if (animate) {
             this.animate()
-                    .scaleY(0F)
-                    .scaleX(0F)
-                    .alpha(0F)
-                    .setInterpolator(AccelerateInterpolator())
-                    .setDuration(400L)
-                    .setListener(object : Animator.AnimatorListener {
-                        override fun onAnimationStart(animation: Animator?) {
+                .scaleY(0F)
+                .scaleX(0F)
+                .alpha(0F)
+                .setInterpolator(AccelerateInterpolator())
+                .setDuration(400L)
+                .setListener(object : Animator.AnimatorListener {
+                    override fun onAnimationStart(animation: Animator?) {
                             /* no-op */
                         }
 
@@ -90,15 +92,17 @@ object ViewUtils {
      * @param animate adds animation to the process
      */
     fun View.makeVisible(animate: Boolean) {
+        clearAnimation()
+
         if (animate) {
             this.animate()
-                    .scaleY(1F)
-                    .scaleX(1F)
-                    .alpha(1F)
-                    .setInterpolator(LinearOutSlowInInterpolator())
-                    .setDuration(400L)
-                    .setListener(object : Animator.AnimatorListener {
-                        override fun onAnimationStart(animation: Animator?) {
+                .scaleY(1F)
+                .scaleX(1F)
+                .alpha(1F)
+                .setInterpolator(LinearOutSlowInInterpolator())
+                .setDuration(400L)
+                .setListener(object : Animator.AnimatorListener {
+                    override fun onAnimationStart(animation: Animator?) {
                             this@makeVisible.visibility = View.VISIBLE
                         }
 

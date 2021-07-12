@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="@font/heading"
-        android:text="@string/trails"
+        android:text="@string/trail"
         android:layout_gravity="center_vertical"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/top_bar_text_size"

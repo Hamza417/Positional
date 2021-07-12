@@ -12,16 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.adapters.app.BottomBarAdapter
+import app.simple.positional.adapters.bottombar.BottomBarAdapter
+import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
-import app.simple.positional.constants.LocationPins
-import app.simple.positional.decorations.bottombar.BottomBarModel
 import app.simple.positional.decorations.corners.DynamicCornerRecyclerView
 import app.simple.positional.dialogs.app.Permission
 import app.simple.positional.dialogs.app.Rate
 import app.simple.positional.preferences.FragmentPreferences
-import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.services.FusedLocationService
 import app.simple.positional.services.LocationService
@@ -41,28 +39,23 @@ class MainActivity : BaseActivity(),
     private lateinit var bottomBar: DynamicCornerRecyclerView
     private lateinit var bottomBarAdapter: BottomBarAdapter
 
-    private val fragments = arrayListOf(
-            BottomBarModel(R.drawable.ic_clock, "clock"),
-            BottomBarModel(R.drawable.ic_compass, "compass"),
-            BottomBarModel(LocationPins.locationsPins[GPSPreferences.getPinSkin()], "gps"),
-            BottomBarModel(R.drawable.ic_timeline, "trail"),
-            BottomBarModel(R.drawable.ic_level, "level"),
-            BottomBarModel(R.drawable.ic_settings, "settings")
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bottomBar = findViewById(R.id.bottom_bar)
-        bottomBarAdapter = BottomBarAdapter(fragments)
+        bottomBarAdapter = BottomBarAdapter(BottomBarItems.getBottomBarItems(baseContext))
         bottomBarAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
 
-        bottomBar.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
-        bottomBar.adapter = bottomBarAdapter
-        bottomBar.scheduleLayoutAnimation()
+        bottomBar = findViewById(R.id.bottom_bar)
+
+        bottomBar.apply {
+            layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
+            adapter = bottomBarAdapter
+            scheduleLayoutAnimation()
+        }
 
         bottomBarAdapter.onItemClicked = { position, name ->
+            println("Called")
             openFragment(name, position)
         }
 
@@ -162,7 +155,7 @@ class MainActivity : BaseActivity(),
 
     private fun openFragment(tag: String, position: Int) {
         bottomBar.smoothScrollToPosition(position)
-        getFragment(tag)?.let {
+        getFragment(tag).let {
             supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
                 .replace(R.id.containers, it, tag)
@@ -170,8 +163,8 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    private fun getFragment(position: String): Fragment? {
-        when (position) {
+    private fun getFragment(name: String): Fragment {
+        when (name) {
             "clock" -> {
                 return supportFragmentManager.findFragmentByTag("clock") as Clock?
                     ?: Clock.newInstance()
@@ -180,7 +173,7 @@ class MainActivity : BaseActivity(),
                 return supportFragmentManager.findFragmentByTag("compass") as Compass?
                     ?: Compass.newInstance()
             }
-            "gps" -> {
+            "location" -> {
                 return if (MainPreferences.getMapPanelType() && BuildConfig.FLAVOR != "lite") {
                     supportFragmentManager.findFragmentByTag("gps") as OSM?
                         ?: OSM.newInstance()
@@ -201,9 +194,10 @@ class MainActivity : BaseActivity(),
                 return supportFragmentManager.findFragmentByTag("settings") as AppSettings?
                     ?: AppSettings.newInstance()
             }
+            else -> {
+                return getFragment("location")
+            }
         }
-
-        return null
     }
 
     override fun onBottomSheetSliding(slideOffset: Float) {
