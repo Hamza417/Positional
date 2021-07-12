@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.preferences.FragmentPreferences
+import app.simple.positional.util.ConditionUtils.isEqualTo
 import app.simple.positional.util.ViewUtils.makeInvisible
 import app.simple.positional.util.ViewUtils.makeVisible
 
@@ -26,9 +27,7 @@ class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bg.clearAnimation()
-
-        if (position == lastItem) {
+        if (position.isEqualTo(lastItem)) {
             holder.bg.makeVisible(animate = true)
 
             holder.icon.imageTintList = ColorStateList.valueOf(

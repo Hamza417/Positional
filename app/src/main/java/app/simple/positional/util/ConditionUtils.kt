@@ -22,17 +22,36 @@ object ConditionUtils {
     /**
      * Check if an object is null
      *
-     * @return boolean
+     * @return true if null
      */
     fun Any?.isNull(): Boolean {
         return this == null
     }
 
+    /**
+     * Check if an object is null
+     *
+     * @return true if not null
+     */
     fun Any?.isNotNull(): Boolean {
         return this != null
     }
 
+    /**
+     * Checks if a number is 0
+     *
+     * @return [Boolean]
+     */
     fun Number.isZero(): Boolean {
         return this == 0
+    }
+
+    /**
+     * Check is a number is equal to another number
+     *
+     * @return [Boolean]
+     */
+    fun Number.isEqualTo(number: Number): Boolean {
+        return this == number
     }
 }
