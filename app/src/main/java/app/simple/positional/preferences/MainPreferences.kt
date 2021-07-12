@@ -87,16 +87,6 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setShowPlayServiceDialog(@NotNull value: Boolean) {
-        getSharedPreferences().edit().putBoolean(showPlayServicesAgain, value).apply()
-    }
-
-    fun getShowPlayServiceDialog(): Boolean {
-        return getSharedPreferences().getBoolean(showPlayServicesAgain, true)
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-
     fun setShowRatingDialog(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(ratingDialog, value).apply()
     }

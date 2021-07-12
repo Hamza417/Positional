@@ -113,12 +113,12 @@ class Trail : ScopedFragment() {
 
             override fun onAdd(position: Int) {
                 val trailData = TrailData(
-                        (25..30).random().toDouble(),
-                        (80..85).random().toDouble(),
+                        location!!.latitude,
+                        location!!.longitude,
                         System.currentTimeMillis(),
                         position,
-                        "test",
-                        "N/A"
+                        null,
+                        null
                 )
 
                 trailViewModel.saveTrailData(currentTrail, trailData)

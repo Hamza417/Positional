@@ -110,7 +110,7 @@ class GPS : ScopedFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_gps, container, false)
-        //isFullScreen = savedInstanceState?.getBoolean("full_screen") ?: false
+
         toolbar = view.findViewById(R.id.map_toolbar)
         scrollView = view.findViewById(R.id.gps_list_scroll_view)
         scrollView.alpha = 0f
@@ -650,10 +650,8 @@ class GPS : ScopedFragment() {
         val availability = GoogleApiAvailability.getInstance()
         val resultCode = availability.isGooglePlayServicesAvailable(requireContext())
         if (resultCode != ConnectionResult.SUCCESS) {
-            if (MainPreferences.getShowPlayServiceDialog()) {
-                ErrorDialog.newInstance("Play Services")
-                    .show(childFragmentManager, "error_dialog")
-            }
+            ErrorDialog.newInstance(getString(R.string.play_services_error))
+                .show(childFragmentManager, "error_dialog")
             return false
         }
         return true

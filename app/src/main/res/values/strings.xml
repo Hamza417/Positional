@@ -304,4 +304,6 @@
     <string name="trail">Trail</string>
     <string name="geodesic_trail">Geodesic Trail</string>
     <string name="name">Name</string>
+    <string name="sensor_error">Your device does not have required sensors.</string>
+    <string name="play_services_error">Your device does not support required Google Play dependencies.</string>
 </resources>

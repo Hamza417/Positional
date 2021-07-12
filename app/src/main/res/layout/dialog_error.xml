@@ -1,65 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:backgroundTint="@android:color/transparent"
+    android:layout_height="wrap_content"
     android:clipChildren="false"
-    android:clipToPadding="false">
+    android:clipToPadding="false"
+    android:maxHeight="@dimen/dialog_height">
 
     <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/options_container_horizontal_padding"
-        android:backgroundTint="@color/toolbarBackground"
-        android:elevation="40dp"
-        android:orientation="vertical">
+        android:backgroundTint="@color/mainBackground"
+        android:elevation="@dimen/app_views_elevation"
+        android:orientation="vertical"
+        android:padding="@dimen/options_container_horizontal_padding">
 
-        <app.simple.positional.decorations.views.CustomWebView
-            android:id="@+id/error_webview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/dividerColor" />
-
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:orientation="horizontal">
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/medium"
+            android:text="@string/error"
+            android:textColor="?attr/colorAppAccent"
+            android:textSize="@dimen/popup_text_size" />
 
-            <CheckBox
-                android:id="@+id/show_again_error_dialog"
-                style="@style/Widget.AppCompat.CompoundButton.CheckBox"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="start|center_vertical"
-                android:layout_marginHorizontal="10dp"
-                android:buttonTint="@color/iconColor"
-                android:checked="true" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:fontFamily="@font/regular"
-                android:text="@string/show_again"
-                android:textColor="@color/textSecondary"
-                android:textSize="@dimen/options_item_text_size" />
-
-            <app.simple.positional.decorations.ripple.DynamicRippleButton
-                android:id="@+id/close_error_dialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ripple_btn"
-                android:fontFamily="@font/medium"
-                android:text="@string/button_close"
-                android:textColor="@color/textPrimary" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/print_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/options_item_text_size" />
 
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 

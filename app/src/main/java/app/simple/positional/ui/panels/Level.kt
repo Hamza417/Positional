@@ -28,7 +28,6 @@ import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.preferences.LevelPreferences
-import app.simple.positional.preferences.LevelPreferences.isNoSensorAlertON
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.HtmlHelper.fromHtml
 
@@ -77,16 +76,19 @@ class Level : ScopedFragment(), SensorEventListener {
         anim2Y = SpringAnimation(levelDot, DynamicAnimation.SCALE_Y)
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY) != null) {
+
+        kotlin.runCatching {
             gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
             hasGravitySensor = true
-        } else {
+        }.getOrElse {
             hasGravitySensor = false
-            if (isNoSensorAlertON()) {
-                ErrorDialog.newInstance("Level Sensor")
-                        .show(childFragmentManager, "error_dialog")
-            }
+
+            ErrorDialog.newInstance(getString(R.string.sensor_error))
+                .show(childFragmentManager, "error_dialog")
         }
+
+        ErrorDialog.newInstance(getString(R.string.sensor_error))
+            .show(childFragmentManager, "error_dialog")
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
             requireContext().display?.getRealMetrics(displayMetrics)
@@ -99,8 +101,8 @@ class Level : ScopedFragment(), SensorEventListener {
         screenWidth = displayMetrics.widthPixels
 
         /**
-         * Gravitational constant multiplied by 2
-         * (9.8 m/(s * s)) * 2 = 19.6
+         * Gravity constant multiplied by 2
+         * (9.8 m(s * s)) * 2 = 19.6
          */
         gravityWidthMotionCompensator = screenWidth / 19.6F
         gravityHeightMotionCompensator = screenHeight / 19.6F
