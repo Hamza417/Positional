@@ -272,7 +272,7 @@
     <string name="sure">Разбира се</string>
     <string name="desc_custom_coord_dialog">Понастоящем тези параметри се използват за изчисляване на информация.</string>
     <string name="inverted_colors">Обърнати цветове</string>
-    <string name="trails">Пътеки</string>
+    <string name="trail">Пътека</string>
     <string name="geodesic_trail">Геодезическа пътека</string>
     <string name="name">Име</string>
 </resources>
