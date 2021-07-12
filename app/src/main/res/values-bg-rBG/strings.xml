@@ -275,4 +275,6 @@
     <string name="trail">Пътека</string>
     <string name="geodesic_trail">Геодезическа пътека</string>
     <string name="name">Име</string>
+    <string name="sensor_error">Вашето устройство няма необходимите сензори.</string>
+    <string name="play_services_error">Вашето устройство не поддържа необходимите услуги от Google Play.</string>
 </resources>
