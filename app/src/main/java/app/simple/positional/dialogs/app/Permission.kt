@@ -14,41 +14,32 @@ import app.simple.positional.preferences.MainPreferences.setShowPermissionDialog
 
 class Permission : CustomBottomSheetDialogFragment() {
 
-    fun newInstance(): Permission {
-        return Permission()
-    }
-
     private var permissionCallbacks: PermissionCallbacks? = null
+    private lateinit var grant: DynamicRippleButton
+    private lateinit var close: DynamicRippleButton
+    private lateinit var showAgain: CheckBox
     private lateinit var webView: CustomWebView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
-        permissionCallbacks = try {
-            requireActivity() as PermissionCallbacks
-        } catch (e: ClassCastException) {
-            null
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.dialog_permission_info, container, false)
+        val view = inflater.inflate(R.layout.dialog_permission_info, container, false)
+
+        permissionCallbacks = requireActivity() as PermissionCallbacks
+
+        webView = view.findViewById(R.id.permissions_webview)
+        grant = view.findViewById(R.id.grant)
+        close = view.findViewById(R.id.close)
+        showAgain = view.findViewById(R.id.show_perm_dialog)
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        webView = view.findViewById(R.id.permissions_webview)
-
-        val grant: DynamicRippleButton = view.findViewById(R.id.grant)
-        val close: DynamicRippleButton = view.findViewById(R.id.close)
-
         webView.loadUrl("file:///android_asset/html/required_permissions.html")
 
         grant.setOnClickListener {
-            if (permissionCallbacks != null) {
-                permissionCallbacks?.onGrantRequest()
-            }
+            permissionCallbacks?.onGrantRequest()
             this.dismiss()
         }
 
@@ -56,8 +47,17 @@ class Permission : CustomBottomSheetDialogFragment() {
             this.dismiss()
         }
 
-        view.findViewById<CheckBox>(R.id.show_perm_dialog).setOnCheckedChangeListener { _, isChecked ->
+        showAgain.setOnCheckedChangeListener { _, isChecked ->
             setShowPermissionDialog(isChecked)
+        }
+    }
+
+    companion object {
+        fun newInstance(): Permission {
+            val args = Bundle()
+            val fragment = Permission()
+            fragment.arguments = args
+            return fragment
         }
     }
 }

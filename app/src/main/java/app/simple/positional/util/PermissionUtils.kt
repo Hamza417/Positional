@@ -3,7 +3,9 @@ package app.simple.positional.util
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.pm.PermissionInfo
 import android.os.Build
+import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 
 object PermissionUtils {
@@ -28,5 +30,15 @@ object PermissionUtils {
                     ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED)
         }
+    }
+
+    @Nullable
+    fun String.getPermissionInfo(context: Context): PermissionInfo? {
+        try {
+            return context.packageManager.getPermissionInfo(this, PackageManager.GET_META_DATA)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return null
     }
 }

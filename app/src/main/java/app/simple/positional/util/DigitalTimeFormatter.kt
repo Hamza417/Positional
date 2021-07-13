@@ -2,7 +2,7 @@ package app.simple.positional.util
 
 import android.text.SpannableString
 import app.simple.positional.preferences.ClockPreferences
-import app.simple.positional.util.SpannableStringBuilder.buildSpannableString
+import app.simple.positional.util.StringUtils.buildSpannableString
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 

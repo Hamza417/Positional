@@ -95,7 +95,7 @@ class MainActivity : BaseActivity(),
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (MainPreferences.getShowPermissionDialog()) {
-                val permissionDialog = Permission().newInstance()
+                val permissionDialog = Permission.newInstance()
                 permissionDialog.show(supportFragmentManager, "permission_info")
             } else {
                 Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_LONG).show()

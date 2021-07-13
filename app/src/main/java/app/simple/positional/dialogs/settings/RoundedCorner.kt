@@ -15,7 +15,7 @@ import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.MainPreferences.getCornerRadius
-import app.simple.positional.util.SpannableStringBuilder.buildSpannableString
+import app.simple.positional.util.StringUtils.buildSpannableString
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
