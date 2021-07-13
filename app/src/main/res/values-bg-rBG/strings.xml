@@ -272,6 +272,9 @@
     <string name="sure">Разбира се</string>
     <string name="desc_custom_coord_dialog">Понастоящем тези параметри се използват за изчисляване на информация.</string>
     <string name="inverted_colors">Обърнати цветове</string>
-    <string name="trail">Пътеки</string>
+    <string name="trail">Пътека</string>
     <string name="geodesic_trail">Геодезическа пътека</string>
+    <string name="name">Име</string>
+    <string name="sensor_error">Вашето устройство няма необходимите сензори.</string>
+    <string name="play_services_error">Вашето устройство не поддържа необходимите услуги от Google Play.</string>
 </resources>
