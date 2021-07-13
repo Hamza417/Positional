@@ -195,7 +195,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         trailMapCallbacks.onLineCountChanged(options!!.points.size)
     }
 
-    fun addPolyline(trailData: TrailData, position: Int) {
+    fun addPolyline(trailData: TrailData) {
         val latLng = LatLng(trailData.latitude, trailData.longitude)
 
         currentPolyline.add(latLng)
@@ -210,6 +210,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         polylines.add(googleMap?.addPolyline(options!!)!!)
 
         trailMapCallbacks.onLineCountChanged(options!!.points.size)
+
+        invalidate()
     }
 
     fun removePolyline() {

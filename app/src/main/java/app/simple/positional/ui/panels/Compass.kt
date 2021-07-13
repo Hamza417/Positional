@@ -47,7 +47,6 @@ import app.simple.positional.preferences.CompassPreferences
 import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.ColorUtils.resolveAttrColor
-import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
@@ -158,25 +157,17 @@ class Compass : ScopedFragment(), SensorEventListener {
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-        try {
-            if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD).isNull()
-                    && sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER).isNull()) {
-                haveAccelerometerSensor = false
-                haveMagnetometerSensor = false
-
-                if (CompassPreferences.isNoSensorAlertON()) {
-                    ErrorDialog.newInstance("Compass Sensor")
-                            .show(childFragmentManager, "error_dialog")
-                }
-            } else {
-                sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-                sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-                haveMagnetometerSensor = true
-                haveAccelerometerSensor = true
-            }
-        } catch (e: NullPointerException) {
+        kotlin.runCatching {
+            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            haveMagnetometerSensor = true
+            haveAccelerometerSensor = true
+        }.getOrElse {
             haveAccelerometerSensor = false
             haveMagnetometerSensor = false
+
+            ErrorDialog.newInstance(getString(R.string.sensor_error))
+                .show(childFragmentManager, "error_dialog")
         }
 
         flowerBloom = CompassPreferences.getFlowerBloomTheme()
@@ -274,7 +265,7 @@ class Compass : ScopedFragment(), SensorEventListener {
 
                             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
                                 val location: Location = intent.getParcelableExtra("location")
-                                        ?: return@launch
+                                    ?: return@launch
                                 val geomagneticField = GeomagneticField(
                                         location.latitude.toFloat(),
                                         location.longitude.toFloat(),
@@ -453,17 +444,17 @@ class Compass : ScopedFragment(), SensorEventListener {
 
         direction.text = if (showDirectionCode) {
             getDirectionCodeFromAzimuth(
-                requireContext(),
-                azimuth = rotationAngle.toDouble()
+                    requireContext(),
+                    azimuth = rotationAngle.toDouble()
             ).uppercase(
-                Locale.getDefault()
+                    Locale.getDefault()
             )
         } else {
             getDirectionNameFromAzimuth(
-                requireContext(),
-                azimuth = rotationAngle.toDouble()
+                    requireContext(),
+                    azimuth = rotationAngle.toDouble()
             ).uppercase(
-                Locale.getDefault()
+                    Locale.getDefault()
             )
         }
     }

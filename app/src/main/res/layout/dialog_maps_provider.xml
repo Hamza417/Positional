@@ -61,7 +61,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
-                android:text="Open Source Maps (alpha_)"
+                android:text="Open Street Maps (alpha)"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:layout_constraintBottom_toTopOf="@id/description_fused"

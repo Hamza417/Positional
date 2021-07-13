@@ -6,12 +6,13 @@
     android:layout_marginHorizontal="5dp"
     android:layout_height="match_parent">
 
-    <ImageView
+    <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
         android:id="@+id/bottom_bar_item_background"
         android:layout_width="70dp"
         android:layout_height="40dp"
+        android:visibility="invisible"
         android:layout_gravity="center_vertical"
-        android:background="@drawable/bg_pill"
+        android:backgroundTint="@color/indicator"
         tools:ignore="ContentDescription" />
 
     <ImageView

@@ -14,7 +14,9 @@ object FragmentPreferences {
     fun getCurrentPage(): Int {
         return getSharedPreferences().getInt(currentPage, 2)
     }
+
     //--------------------------------------------------------------------------------------------------//
+
     fun setCurrentTag(value: String) {
         getSharedPreferences().edit().putString(currentTag, value).apply()
     }

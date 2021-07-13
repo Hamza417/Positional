@@ -54,7 +54,7 @@
         android:supportsRtl="true"
         android:theme="@style/Positional"
         android:windowSoftInputMode="adjustPan"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup,LockedOrientationActivity">
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -263,16 +263,8 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activities.main.WidgetDialogActivity"
-            android:autoRemoveFromRecents="true"
-            android:clearTaskOnLaunch="true"
-            android:documentLaunchMode="intoExisting"
-            android:icon="@mipmap/ic_launcher_legacy"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"
-            android:roundIcon="@mipmap/ic_launcher_legacy_round"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Transparent" />
+            android:name=".activities.subactivity.TrailsViewerActivity"
+            android:screenOrientation="portrait" />
 
         <!-- Services -->
 

@@ -16,7 +16,6 @@ object CompassPreferences {
     const val rotationalInertia = "rotational_inertia"
     const val usePhysicalProperties = "use_physical_properties"
     const val useGimbalLock = "use_gimbal_lock"
-    private const val noSensorAlertCompass = "no_sensor_alert_compass_dialog_show"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -76,16 +75,6 @@ object CompassPreferences {
 
     fun getMagneticCoefficient(): Float {
         return getSharedPreferences().getFloat(magneticCoefficient, 10000f)
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-
-    fun isNoSensorAlertON(): Boolean {
-        return getSharedPreferences().getBoolean(noSensorAlertCompass, true)
-    }
-
-    fun setNoSensorAlert(@NotNull value: Boolean) {
-        getSharedPreferences().edit().putBoolean(noSensorAlertCompass, value).apply()
     }
 
     //--------------------------------------------------------------------------------------------------//
