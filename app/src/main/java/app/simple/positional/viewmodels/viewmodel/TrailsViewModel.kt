@@ -11,14 +11,10 @@ import kotlinx.coroutines.launch
 
 class TrailsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val trailModel: MutableLiveData<ArrayList<TrailModel>> by lazy {
+    val trailModel: MutableLiveData<ArrayList<TrailModel>> by lazy {
         MutableLiveData<ArrayList<TrailModel>>().also {
             loadTrails()
         }
-    }
-
-    fun getTrails(): LiveData<ArrayList<TrailModel>> {
-        return trailModel
     }
 
     fun loadTrails() {

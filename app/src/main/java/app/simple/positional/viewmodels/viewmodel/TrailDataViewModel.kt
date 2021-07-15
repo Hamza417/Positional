@@ -2,7 +2,6 @@ package app.simple.positional.viewmodels.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
@@ -14,14 +13,10 @@ import kotlin.system.measureTimeMillis
 
 class TrailDataViewModel(application: Application, private val trailName: String) : AndroidViewModel(application) {
 
-    private val trailData: MutableLiveData<ArrayList<TrailData>> by lazy {
+    val trailData: MutableLiveData<ArrayList<TrailData>> by lazy {
         MutableLiveData<ArrayList<TrailData>>().also {
             loadTrailData(trailName)
         }
-    }
-
-    fun getTrailData(): LiveData<ArrayList<TrailData>> {
-        return trailData
     }
 
     fun loadTrailData(trailName: String) {

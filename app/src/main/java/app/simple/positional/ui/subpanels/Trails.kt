@@ -50,7 +50,7 @@ class Trails : ScopedFragment() {
             p0.show(parentFragmentManager, "add_trail")
         }
 
-        trailViewModel.getTrails().observe(viewLifecycleOwner, {
+        trailViewModel.trailModel.observe(viewLifecycleOwner, {
             val adapter = AdapterTrails(it)
             adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
 

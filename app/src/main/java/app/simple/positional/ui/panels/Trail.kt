@@ -154,7 +154,7 @@ class Trail : ScopedFragment() {
                     maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
                 }
 
-                trailViewModel.getTrailData().observe(viewLifecycleOwner, {
+                trailViewModel.trailData.observe(viewLifecycleOwner, {
                     maps?.addPolylines(it)
                 })
             }
