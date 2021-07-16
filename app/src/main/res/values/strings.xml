@@ -306,4 +306,6 @@
     <string name="name">Name</string>
     <string name="sensor_error">Your device does not have required sensors.</string>
     <string name="play_services_error">Your device does not support required Google Play dependencies.</string>
+    <string name="enter_trail_name">Enter Trail Name</string>
+    <string name="note">Note</string>
 </resources>

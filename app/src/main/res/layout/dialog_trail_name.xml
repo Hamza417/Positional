@@ -1,53 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.corners.DynamicCornerLinearLayout android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     android:backgroundTint="@color/mainBackground"
-    android:clipChildren="false"
-    android:elevation="15dp"
-    android:clipToPadding="false"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
     android:orientation="vertical"
-    android:padding="@dimen/options_container_horizontal_padding">
+    android:padding="@dimen/popup_padding"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:text="@string/enter_trail_name"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/trail_name_edit_text_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
         android:animateLayoutChanges="true"
-        android:hint="@string/name"
         app:boxStrokeColor="?attr/colorAppAccent"
         app:boxStrokeWidth="1px"
-        app:boxStrokeWidthFocused="2px"
+        app:boxStrokeWidthFocused="1px"
+        app:endIconMode="clear_text"
+        app:endIconTint="?attr/colorAppAccent"
         app:errorEnabled="false"
         app:errorIconTint="@android:color/holo_red_dark"
         app:errorTextColor="@android:color/holo_red_dark"
         app:hintAnimationEnabled="true"
         app:hintEnabled="true"
-        app:hintTextColor="?attr/colorAppAccent"
+        android:hint="@string/name"
+        app:hintTextColor="@color/textSecondary"
         tools:ignore="PxUsage">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/trail_name_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="4"
-            android:paddingHorizontal="@dimen/options_container_horizontal_padding"
-            android:textColor="@color/textPrimary" />
+            android:layout_height="match_parent"
+            android:textColor="@color/textSecondary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <app.simple.positional.decorations.ripple.DynamicRippleButton
-        android:id="@+id/save"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/trail_note_edit_text_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:animateLayoutChanges="true"
+        app:boxStrokeColor="?attr/colorAppAccent"
+        app:boxStrokeWidth="1px"
+        app:boxStrokeWidthFocused="1px"
+        app:endIconMode="clear_text"
+        app:endIconTint="?attr/colorAppAccent"
+        app:errorEnabled="false"
+        app:errorIconTint="@android:color/holo_red_dark"
+        app:errorTextColor="@android:color/holo_red_dark"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true"
+        android:hint="@string/note"
+        app:hintTextColor="@color/textSecondary"
+        tools:ignore="PxUsage">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/trail_note_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/textSecondary" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/app_button_size"
+        android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:gravity="center"
-        android:layout_marginTop="@dimen/options_container_horizontal_padding"
-        android:text="@string/save"
-        android:textColor="@color/textSecondary"
-        android:textSize="@dimen/popup_text_size" />
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal">
+
+        <app.simple.positional.decorations.ripple.DynamicRippleButton
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/app_button_size"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/button_cancel"
+            android:textColor="@color/textPrimary" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleButton
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/app_button_size"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/save"
+            android:textColor="@color/textPrimary" />
+
+    </LinearLayout>
 
 </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>

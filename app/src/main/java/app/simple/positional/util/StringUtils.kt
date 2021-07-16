@@ -9,6 +9,7 @@ import android.text.style.RelativeSizeSpan
 import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import app.simple.positional.R
+import java.util.*
 
 object StringUtils {
     fun buildSpannableString(s: String): SpannableString {
@@ -49,5 +50,15 @@ object StringUtils {
         }.getOrElse {
             return this.toSpannable()
         }
+    }
+
+    fun generateRandomWords(wordLength: Int): String {
+        val r = Random() // Intialize a Random Number Generator with SysTime as the seed
+        val sb = StringBuilder(wordLength)
+        for (i in 0 until wordLength) { // For each letter in the word
+            val tmp = 'a' + r.nextInt('z' - 'a') // Generate a letter between a and z
+            sb.append(tmp) // Add it to the String
+        }
+        return sb.toString()
     }
 }

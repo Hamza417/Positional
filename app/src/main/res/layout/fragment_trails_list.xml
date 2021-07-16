@@ -21,11 +21,12 @@
         android:layout_height="60dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="25dp"
-        android:background="@color/mainBackground"
+        android:background="?attr/colorAppAccent"
         app:cardElevation="5dp"
         android:clickable="true"
         android:checkable="true"
-        app:rippleColor="?attr/colorAppAccent"
+        app:cardBackgroundColor="?attr/colorAppAccent"
+        app:rippleColor="@color/indicator"
         android:focusable="true">
 
         <ImageView
@@ -33,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_margin="15dp"
             android:src="@drawable/ic_add"
-            app:tint="?attr/colorAppAccent"
+            app:tint="@android:color/white"
             tools:ignore="ContentDescription" />
 
     </com.google.android.material.card.MaterialCardView>
