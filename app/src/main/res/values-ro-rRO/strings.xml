@@ -272,9 +272,11 @@
     <string name="sure">Desigur</string>
     <string name="desc_custom_coord_dialog">Acești parametri sunt utilizați în prezent pentru calcularea informațiilor.</string>
     <string name="inverted_colors">Culori inversate</string>
-    <string name="trail">Urmă</string>
+    <string name="trail">Traseu</string>
     <string name="geodesic_trail">Traseu geodezic</string>
     <string name="name">Nume</string>
     <string name="sensor_error">Dispozitivul dvs. nu are senzorii necesari.</string>
     <string name="play_services_error">Dispozitivul dvs. nu suportă dependențele necesare Google Play.</string>
+    <string name="enter_trail_name">Introduceți numele traseului</string>
+    <string name="note">Notă</string>
 </resources>
