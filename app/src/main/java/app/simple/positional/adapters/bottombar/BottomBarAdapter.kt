@@ -11,11 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.preferences.FragmentPreferences
-import app.simple.positional.util.ConditionUtils.isEqualTo
 import app.simple.positional.util.ViewUtils.makeInvisible
 import app.simple.positional.util.ViewUtils.makeVisible
 
-class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
+class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
 
     private var lastItem = FragmentPreferences.getCurrentPage()
     var onItemClicked:
@@ -27,7 +26,7 @@ class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        if (position.isEqualTo(lastItem)) {
+        if (FragmentPreferences.getCurrentTag() == list[position].tag) {
             holder.bg.makeVisible(animate = true)
 
             holder.icon.imageTintList = ColorStateList.valueOf(
@@ -45,9 +44,9 @@ class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerVi
             notifyItemChanged(lastItem)
             notifyItemChanged(position)
             lastItem = position
-            onItemClicked.invoke(position, list[position].name)
+            onItemClicked.invoke(position, list[position].tag)
             FragmentPreferences.setCurrentPage(position)
-            FragmentPreferences.setCurrentTag(list[position].name)
+            FragmentPreferences.setCurrentTag(list[position].tag)
         }
     }
 
@@ -58,6 +57,11 @@ class BottomBarAdapter(private val list: ArrayList<BottomBarModel>) : RecyclerVi
     override fun onViewDetachedFromWindow(holder: Holder) {
         super.onViewDetachedFromWindow(holder)
         holder.bg.clearAnimation()
+    }
+
+    fun setBottomBarItems(list: ArrayList<BottomBarModel>) {
+        this.list = list
+        notifyDataSetChanged()
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {

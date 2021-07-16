@@ -237,4 +237,15 @@
 
     </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
+        android:id="@+id/settings_panel_editor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:fontFamily="@font/medium"
+        android:padding="15dp"
+        android:text="@string/panels_editor"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/settings_primary_text_size" />
+
 </LinearLayout>

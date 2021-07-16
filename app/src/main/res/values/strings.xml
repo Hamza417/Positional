@@ -22,7 +22,7 @@
     <string name="moon_illumination">Moon Illumination</string>
     <string name="moon_dates">Moon Dates</string>
 
-    <!-- GPS Informatin Headers -->
+    <!-- GPS Information Headers -->
     <string name="gps_provider">Provider</string>
     <string name="gps_location">Location</string>
     <string name="gps_movement">Movement</string>
@@ -308,4 +308,5 @@
     <string name="play_services_error">Your device does not support required Google Play dependencies.</string>
     <string name="enter_trail_name">Enter Trail Name</string>
     <string name="note">Note</string>
+    <string name="panels_editor">Panels Editor</string>
 </resources>

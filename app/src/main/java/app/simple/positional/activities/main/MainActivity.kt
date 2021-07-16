@@ -19,6 +19,7 @@ import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerRecyclerView
 import app.simple.positional.dialogs.app.Permission
 import app.simple.positional.dialogs.app.Rate
+import app.simple.positional.preferences.BottomBarPreferences
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.services.FusedLocationService
@@ -229,6 +230,14 @@ class MainActivity : BaseActivity(),
                 } catch (e: IllegalStateException) {
                     Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
                 }
+            }
+            BottomBarPreferences.clockPanel,
+            BottomBarPreferences.compassPanel,
+            BottomBarPreferences.gpsPanel,
+            BottomBarPreferences.trailPanel,
+            BottomBarPreferences.levelPanel,
+            BottomBarPreferences.settingsPanel -> {
+                bottomBarAdapter.setBottomBarItems(BottomBarItems.getBottomBarItems(applicationContext))
             }
         }
     }

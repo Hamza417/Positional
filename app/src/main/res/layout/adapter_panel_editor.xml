@@ -1,0 +1,34 @@
+<app.simple.positional.decorations.ripple.DynamicRippleLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/adapter_panel_editor_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/options_sub_item_padding"
+    android:background="@drawable/ripple_btn"
+    android:clickable="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:focusable="true"
+    android:orientation="horizontal"
+    android:padding="@dimen/options_sub_item_padding">
+
+    <TextView
+        android:id="@+id/adapter_panel_editor_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/options_text_margin_start"
+        android:fontFamily="@font/medium"
+        android:gravity="center_vertical"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/options_item_text_size"
+        app:drawableStartCompat="@drawable/ic_twenty_four_hours"
+        app:drawableTint="@color/iconRegular" />
+
+    <app.simple.positional.decorations.switchview.SwitchView
+        android:id="@+id/adapter_panel_editor_switch"
+        android:layout_width="@dimen/switch_width"
+        android:layout_height="wrap_content" />
+
+</app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>

@@ -24,6 +24,7 @@ import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.app.AccentColor
+import app.simple.positional.dialogs.app.PanelEditor
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.popups.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
@@ -50,6 +51,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var corner: DynamicRippleTextView
     private lateinit var skipSplashScreenContainer: DynamicRippleConstraintLayout
     private lateinit var customLocation: DynamicRippleConstraintLayout
+    private lateinit var panelsEditor: DynamicRippleTextView
     private lateinit var appVersion: DynamicRippleLinearLayout
     private lateinit var legalNotes: DynamicRippleLinearLayout
     private lateinit var github: DynamicRippleLinearLayout
@@ -84,6 +86,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         corner = view.findViewById(R.id.settings_corner_radius)
         skipSplashScreenContainer = view.findViewById(R.id.setting_skip_splash_screen_container)
         customLocation = view.findViewById(R.id.setting_custom_location)
+        panelsEditor = view.findViewById(R.id.settings_panel_editor)
         appVersion = view.findViewById(R.id.current_app_version)
         legalNotes = view.findViewById(R.id.legal_notes)
         github = view.findViewById(R.id.github)
@@ -175,6 +178,11 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
                     MainPreferences.setCustomCoordinates(isChecked)
                 }
             }
+        }
+
+        panelsEditor.setOnClickListener {
+            PanelEditor.newInstance()
+                .show(childFragmentManager, "panel_editor")
         }
 
         keepScreenOn.setOnClickListener {
