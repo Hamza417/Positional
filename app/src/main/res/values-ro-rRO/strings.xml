@@ -20,7 +20,7 @@
     <string name="moon_time">Timpul Lunii</string>
     <string name="moon_illumination">Iluminarea Lunii</string>
     <string name="moon_dates">Datele Lunii</string>
-    <!-- GPS Informatin Headers -->
+    <!-- GPS Information Headers -->
     <string name="gps_provider">Furnizor</string>
     <string name="gps_location">Locație</string>
     <string name="gps_movement">Mișcare</string>
@@ -279,4 +279,5 @@
     <string name="play_services_error">Dispozitivul dvs. nu suportă dependențele necesare Google Play.</string>
     <string name="enter_trail_name">Introduceți numele traseului</string>
     <string name="note">Notă</string>
+    <string name="panels_editor">Editor de panouri</string>
 </resources>
