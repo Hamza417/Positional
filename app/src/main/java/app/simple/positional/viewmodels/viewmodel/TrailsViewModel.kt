@@ -46,4 +46,24 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
     }
+
+    fun deleteTrail(trailModel: TrailModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            kotlin.runCatching {
+                val db = Room.databaseBuilder(getApplication<Application>().applicationContext,
+                                              TrailDatabase::class.java,
+                                              "%%_trails.db").build()
+
+                db.trailDao()?.deleteTrail(trailModel)
+
+                if (TrailPreferences.getLastUsedTrail() == trailModel.trailName) {
+                    TrailPreferences.setLastTrailName("")
+                }
+
+                this@TrailsViewModel.trailModel.postValue(db.trailDao()!!.getAllTrails() as ArrayList<TrailModel>?)
+
+                db.close()
+            }
+        }
+    }
 }

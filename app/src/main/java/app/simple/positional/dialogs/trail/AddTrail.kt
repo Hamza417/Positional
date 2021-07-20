@@ -15,18 +15,24 @@ import com.google.android.material.textfield.TextInputLayout
 
 class AddTrail : CustomDialogFragment() {
 
-    private lateinit var textInputLayout: TextInputLayout
-    private lateinit var textInputEditText: TextInputEditText
+    private lateinit var nameInputLayout: TextInputLayout
+    private lateinit var nameInputEditText: TextInputEditText
+    private lateinit var noteInputLayout: TextInputLayout
+    private lateinit var noteInputEditText: TextInputEditText
     private lateinit var save: DynamicRippleButton
+    private lateinit var cancel: DynamicRippleButton
 
     var onNewTrailAddedSuccessfully: (trailModel: TrailModel) -> Unit = {}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_trail_name, container, false)
 
-        textInputEditText = view.findViewById(R.id.trail_name_edit_text)
-        textInputLayout = view.findViewById(R.id.trail_name_edit_text_layout)
+        nameInputEditText = view.findViewById(R.id.trail_name_edit_text)
+        noteInputEditText = view.findViewById(R.id.trail_note_edit_text)
+        nameInputLayout = view.findViewById(R.id.trail_name_edit_text_layout)
+        noteInputLayout = view.findViewById(R.id.trail_note_edit_text_layout)
         save = view.findViewById(R.id.save)
+        cancel = view.findViewById(R.id.cancel)
 
         return view
     }
@@ -34,13 +40,14 @@ class AddTrail : CustomDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        textInputEditText.addTextChangedListener(object : TextWatcher {
+        nameInputEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 save.isClickable = s.isNotEmpty()
+                save.isEnabled = s.isNotEmpty()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -51,13 +58,21 @@ class AddTrail : CustomDialogFragment() {
         save.setOnClickListener {
             val trails = TrailModel(
                     System.currentTimeMillis(),
-                    textInputEditText.text.toString(),
-                    getString(R.string.not_available)
+                    nameInputEditText.text.toString(),
+                    if (noteInputEditText.text.toString().isNotEmpty()) {
+                        noteInputEditText.text.toString()
+                    } else {
+                        getString(R.string.not_available)
+                    }
             )
 
             dismiss()
 
             onNewTrailAddedSuccessfully.invoke(trails)
+        }
+
+        cancel.setOnClickListener {
+            dismiss()
         }
     }
 

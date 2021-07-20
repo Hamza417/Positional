@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.adapters.trail.AdapterTrails
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.dialogs.trail.AddTrail
+import app.simple.positional.model.TrailModel
+import app.simple.positional.popups.DeletePopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ViewUtils
 import app.simple.positional.viewmodels.viewmodel.TrailsViewModel
@@ -19,6 +22,7 @@ import com.google.android.material.card.MaterialCardView
 class Trails : ScopedFragment() {
 
     private lateinit var recyclerView: CustomRecyclerView
+    private lateinit var adapterTrails: AdapterTrails
     private lateinit var add: MaterialCardView
     private val trailViewModel: TrailsViewModel by viewModels()
 
@@ -51,14 +55,28 @@ class Trails : ScopedFragment() {
         }
 
         trailViewModel.trailModel.observe(viewLifecycleOwner, {
-            val adapter = AdapterTrails(it)
-            adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
+            adapterTrails = AdapterTrails(it)
+            adapterTrails.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
 
-            adapter.onTrailNameClicked = {
+            adapterTrails.setOnAdapterTrailsCallbackListener(object : AdapterTrails.Companion.AdapterTrailsCallback {
+                override fun onTrailClicked(name: String) {
 
-            }
+                }
 
-            recyclerView.adapter = adapter
+                override fun onDelete(trailModel: TrailModel, anchor: View) {
+                    val popup = DeletePopupMenu(
+                            layoutInflater.inflate(R.layout.popup_delete_confirmation,
+                                                   DynamicCornerLinearLayout(requireContext())), anchor)
+
+                    popup.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
+                        override fun delete() {
+                            trailViewModel.deleteTrail(trailModel)
+                        }
+                    })
+                }
+            })
+
+            recyclerView.adapter = adapterTrails
         })
     }
 

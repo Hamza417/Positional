@@ -266,8 +266,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     private fun setSatellite() {
         if (googleMap.isNotNull())
-            googleMap?.mapType = if (GPSPreferences.isSatelliteOn()) {
-                if (GPSPreferences.isLabelOn()) {
+            googleMap?.mapType = if (TrailPreferences.isSatelliteOn()) {
+                if (TrailPreferences.isLabelOn()) {
                     GoogleMap.MAP_TYPE_HYBRID
                 } else {
                     GoogleMap.MAP_TYPE_SATELLITE
@@ -285,7 +285,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         setSatellite()
 
         if (!googleMap.isNull()) {
-            if (GPSPreferences.getHighContrastMap()) {
+            if (TrailPreferences.getHighContrastMap()) {
                 googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
                         context,
                         if (value) {
@@ -351,13 +351,13 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             TrailPreferences.trailHighContrastMap, TrailPreferences.trailLabelMode -> {
-                setMapStyle(GPSPreferences.isLabelOn())
+                setMapStyle(TrailPreferences.isLabelOn())
             }
             TrailPreferences.trailSatellite -> {
                 setSatellite()
             }
             TrailPreferences.trailShowBuilding -> {
-                setBuildings(GPSPreferences.getShowBuildingsOnMap())
+                setBuildings(TrailPreferences.getShowBuildingsOnMap())
             }
             TrailPreferences.geodesic -> {
                 options!!.geodesic(TrailPreferences.isTrailGeodesic())

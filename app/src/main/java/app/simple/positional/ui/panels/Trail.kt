@@ -246,7 +246,9 @@ class Trail : ScopedFragment() {
                 TransitionInflater.from(requireContext())
                     .inflateTransition(R.transition.tools_transition))
 
-        val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                                    ViewGroup.LayoutParams.WRAP_CONTENT)
+
         params.apply {
             gravity = if (TrailPreferences.isToolsGravityToleft()) {
                 Gravity.START or Gravity.CENTER_VERTICAL
