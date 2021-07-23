@@ -6,7 +6,7 @@ import app.simple.positional.model.TrailModel
 @Dao
 interface TrailDao {
 
-    @Query("SELECT * FROM trails ORDER BY date_added COLLATE nocase")
+    @Query("SELECT * FROM trails ORDER BY date_added COLLATE nocase DESC")
     fun getAllTrails(): MutableList<TrailModel>
 
     /**

@@ -13,7 +13,7 @@ import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.model.TrailModel
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ColorUtils.resolveAttrColor
-import java.text.DateFormat
+import app.simple.positional.util.TimeFormatter.formatDate
 import java.util.*
 
 class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adapter<AdapterTrails.Holder>() {
@@ -50,10 +50,6 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    private fun Long.formatDate(): String {
-        return DateFormat.getDateTimeInstance().format(Date(this))
     }
 
     inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {

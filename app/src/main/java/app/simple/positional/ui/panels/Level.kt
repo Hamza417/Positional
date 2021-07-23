@@ -87,9 +87,6 @@ class Level : ScopedFragment(), SensorEventListener {
                 .show(childFragmentManager, "error_dialog")
         }
 
-        ErrorDialog.newInstance(getString(R.string.sensor_error))
-            .show(childFragmentManager, "error_dialog")
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
             requireContext().display?.getRealMetrics(displayMetrics)
         } else {

@@ -3,10 +3,12 @@ package app.simple.positional.util
 import android.text.SpannableString
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.util.StringUtils.buildSpannableString
+import java.text.DateFormat
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
-object DigitalTimeFormatter {
+object TimeFormatter {
     /**
      * Returns the time in a localized format. The 12-hours format is always displayed with
      * AM/PM (and not for example vorm/nachm in german).
@@ -29,5 +31,14 @@ object DigitalTimeFormatter {
         } else {
             buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("HH:mm:ss").withLocale(LocaleHelper.getAppLocale())))
         }
+    }
+
+    /**
+     * Format [Long] to [Date]
+     *
+     * @return Date as [String]
+     */
+    fun Long.formatDate(): String {
+        return DateFormat.getDateTimeInstance().format(Date(this))
     }
 }

@@ -6,7 +6,6 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 object MoonTimeFormatter {
-
     /**
      * @param zonedDateTime here is passed a time like this 2020-10-22T06:00:05.447+05:30[Asia/Kolkata] and
      * this function will trim it to extract the 24 Hr formatted Time out of it

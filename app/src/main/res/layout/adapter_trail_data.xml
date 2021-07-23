@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/options_container_horizontal_padding">
+
+    <ImageView
+        android:id="@+id/adapter_trail_data_icon"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_trail"
+        app:layout_constraintBottom_toBottomOf="@+id/adapter_trail_data_name"
+        app:layout_constraintEnd_toStartOf="@id/adapter_trail_data_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/adapter_trail_data_name" />
+
+    <TextView
+        android:id="@+id/adapter_trail_data_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/medium"
+        android:maxLines="1"
+        android:text="Name"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/options_item_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/adapter_trail_data_icon"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/adapter_trail_data_notes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Notes"
+        android:textSize="@dimen/description_text_size"
+        app:layout_constraintEnd_toEndOf="@+id/adapter_trail_data_name"
+        app:layout_constraintStart_toStartOf="@+id/adapter_trail_data_name"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_name" />
+
+    <TextView
+        android:id="@+id/adapter_trail_data_coordinates"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Coordinates"
+        android:textSize="@dimen/description_text_size"
+        app:layout_constraintEnd_toEndOf="@+id/adapter_trail_data_notes"
+        app:layout_constraintStart_toStartOf="@+id/adapter_trail_data_notes"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_notes" />
+
+    <TextView
+        android:id="@+id/adapter_trail_data_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Date"
+        android:textSize="@dimen/description_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/adapter_trail_data_coordinates"
+        app:layout_constraintStart_toStartOf="@+id/adapter_trail_data_coordinates"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_coordinates" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

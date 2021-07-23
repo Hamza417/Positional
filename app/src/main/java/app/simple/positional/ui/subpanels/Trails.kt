@@ -54,13 +54,18 @@ class Trails : ScopedFragment() {
             p0.show(parentFragmentManager, "add_trail")
         }
 
-        trailViewModel.trailModel.observe(viewLifecycleOwner, {
+        trailViewModel.trails.observe(viewLifecycleOwner, {
             adapterTrails = AdapterTrails(it)
             adapterTrails.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
 
             adapterTrails.setOnAdapterTrailsCallbackListener(object : AdapterTrails.Companion.AdapterTrailsCallback {
                 override fun onTrailClicked(name: String) {
-
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                        .replace(R.id.sub_container, TrailData.newInstance(name))
+                        .addToBackStack(tag)
+                        .commit()
                 }
 
                 override fun onDelete(trailModel: TrailModel, anchor: View) {

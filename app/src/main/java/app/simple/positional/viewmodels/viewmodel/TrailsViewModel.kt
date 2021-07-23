@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class TrailsViewModel(application: Application) : AndroidViewModel(application) {
 
-    val trailModel: MutableLiveData<ArrayList<TrailModel>> by lazy {
+    val trails: MutableLiveData<ArrayList<TrailModel>> by lazy {
         MutableLiveData<ArrayList<TrailModel>>().also {
             loadTrails()
         }
@@ -23,7 +23,7 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
                                                 TrailDatabase::class.java,
                                                 "%%_trails.db").build()
 
-            trailModel.postValue(database.trailDao()!!.getAllTrails() as ArrayList<TrailModel>)
+            trails.postValue(database.trailDao()!!.getAllTrails() as ArrayList<TrailModel>)
 
             database.close()
         }
@@ -40,7 +40,7 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
 
                 TrailPreferences.setLastTrailName(trailModel.trailName)
 
-                this@TrailsViewModel.trailModel.postValue(db.trailDao()!!.getAllTrails() as ArrayList<TrailModel>?)
+                this@TrailsViewModel.trails.postValue(db.trailDao()!!.getAllTrails() as ArrayList<TrailModel>?)
 
                 db.close()
             }
@@ -60,7 +60,7 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
                     TrailPreferences.setLastTrailName("")
                 }
 
-                this@TrailsViewModel.trailModel.postValue(db.trailDao()!!.getAllTrails() as ArrayList<TrailModel>?)
+                this@TrailsViewModel.trails.postValue(db.trailDao()!!.getAllTrails() as ArrayList<TrailModel>?)
 
                 db.close()
             }
