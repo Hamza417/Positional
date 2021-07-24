@@ -176,10 +176,10 @@ class MainActivity : BaseActivity(),
             }
             "location" -> {
                 return if (MainPreferences.getMapPanelType() && BuildConfig.FLAVOR != "lite") {
-                    supportFragmentManager.findFragmentByTag("gps") as OSM?
+                    supportFragmentManager.findFragmentByTag("location") as OSM?
                         ?: OSM.newInstance()
                 } else {
-                    supportFragmentManager.findFragmentByTag("gps") as GPS?
+                    supportFragmentManager.findFragmentByTag("location") as GPS?
                         ?: GPS.newInstance()
                 }
             }
@@ -196,7 +196,13 @@ class MainActivity : BaseActivity(),
                     ?: AppSettings.newInstance()
             }
             else -> {
-                return getFragment("location")
+                return if (MainPreferences.getMapPanelType() && BuildConfig.FLAVOR != "lite") {
+                    supportFragmentManager.findFragmentByTag("location") as OSM?
+                        ?: OSM.newInstance()
+                } else {
+                    supportFragmentManager.findFragmentByTag("location") as GPS?
+                        ?: GPS.newInstance()
+                }
             }
         }
     }

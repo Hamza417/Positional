@@ -22,6 +22,7 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.TrailDataActivity
 import app.simple.positional.activities.subactivity.TrailsViewerActivity
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.trails.TrailMapCallbacks
 import app.simple.positional.decorations.trails.TrailMaps
 import app.simple.positional.decorations.trails.TrailToolbar
@@ -30,6 +31,7 @@ import app.simple.positional.dialogs.trail.AddMarker
 import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.model.TrailData
+import app.simple.positional.popups.DeletePopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ConditionUtils.isNotNull
@@ -156,8 +158,16 @@ class Trail : ScopedFragment() {
                 }
             }
 
-            override fun onRemove() {
-                maps?.removePolyline()
+            override fun onRemove(remove: View) {
+                val popup = DeletePopupMenu(
+                        layoutInflater.inflate(R.layout.popup_delete_confirmation,
+                                               DynamicCornerLinearLayout(requireContext())), remove)
+
+                popup.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
+                    override fun delete() {
+                        maps?.removePolyline()
+                    }
+                })
             }
 
             override fun onWrapUnwrap() {

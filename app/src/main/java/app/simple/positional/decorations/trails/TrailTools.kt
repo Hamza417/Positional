@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import app.simple.positional.R
 import app.simple.positional.adapters.trail.AdapterTrailIcons
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
@@ -68,7 +69,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         }
 
         remove.setOnClickListener {
-            trailCallbacks.onRemove()
+            trailCallbacks.onRemove(remove)
         }
 
         wrap.setOnClickListener {
@@ -132,7 +133,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         interface TrailCallbacks {
             fun onLocation()
             fun onAdd(position: Int)
-            fun onRemove()
+            fun onRemove(remove: View)
             fun onWrapUnwrap()
             fun onAddWithInfo(position: Int)
         }
