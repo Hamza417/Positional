@@ -59,7 +59,7 @@ class Trails : ScopedFragment() {
             p0.show(parentFragmentManager, "add_trail")
         }
 
-        trailViewModel.trails.observe(viewLifecycleOwner, {
+        trailViewModel.getTrails().observe(viewLifecycleOwner, {
             adapterTrails = AdapterTrails(it)
             adapterTrails.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
 
@@ -94,11 +94,6 @@ class Trails : ScopedFragment() {
                 art.makeInvisible(true)
             }
         })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        trailViewModel.loadTrails()
     }
 
     companion object {

@@ -11,15 +11,28 @@
     android:backgroundTint="@color/mainBackground">
 
     <TextView
-        android:layout_width="0dp"
+        android:id="@+id/header_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:fontFamily="@font/heading"
         android:text="@string/trail"
         android:layout_gravity="center_vertical"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/top_bar_text_size"
         android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/heading"
+        android:text="Beta"
+        android:layout_gravity="top"
+        android:layout_marginStart="5dp"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/description_text_size"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
 
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton
         android:id="@+id/trail_add"

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/options_container_horizontal_padding"
+    tools:ignore="UseCompoundDrawables">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/medium"
+        android:text="@string/saved_trails"
+        android:layout_gravity="center_vertical"
+        android:textColor="?attr/colorAppAccent"
+        android:textSize="@dimen/info_text_primary_size" />
+
+    <TextView
+        android:id="@+id/adapter_trails_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/light"
+        android:textColor="@color/textSecondary"
+        android:textSize="@dimen/info_text_secondary_size"
+        app:layout_constraintBottom_toBottomOf="@id/adapter_trail_data_trail_distance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/adapter_trail_data_trail_name" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="@dimen/options_container_horizontal_padding"
+        android:background="@color/dividerColor" />
+
+</LinearLayout>

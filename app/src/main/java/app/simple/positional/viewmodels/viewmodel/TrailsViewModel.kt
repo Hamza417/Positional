@@ -8,6 +8,7 @@ import app.simple.positional.database.instances.TrailDatabase
 import app.simple.positional.model.TrailModel
 import app.simple.positional.preferences.TrailPreferences
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class TrailsViewModel(application: Application) : AndroidViewModel(application) {
@@ -18,8 +19,15 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    fun getTrails(): LiveData<ArrayList<TrailModel>> {
+        return trails
+    }
+
     fun loadTrails() {
         viewModelScope.launch(Dispatchers.IO) {
+
+            delay(500)
+
             val database = Room.databaseBuilder(getApplication<Application>().applicationContext,
                                                 TrailDatabase::class.java,
                                                 "%%_trails.db").build()

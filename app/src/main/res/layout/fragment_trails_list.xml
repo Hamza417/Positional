@@ -10,6 +10,9 @@
         android:id="@+id/art"
         android:layout_width="200dp"
         android:layout_height="200dp"
+        android:scaleY="0"
+        android:scaleX="0"
+        android:visibility="invisible"
         android:layout_gravity="center"
         android:src="@drawable/art_lost"
         tools:ignore="ContentDescription" />

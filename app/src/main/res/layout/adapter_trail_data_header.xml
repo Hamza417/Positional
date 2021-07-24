@@ -10,13 +10,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
-        android:fontFamily="@font/light"
+        android:fontFamily="@font/medium"
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_trail_total"
-        android:text="Placeholder"
-        android:textColor="@color/textPrimary"
+        android:textColor="?attr/colorAppAccent"
         android:textSize="@dimen/info_text_primary_size"
+        app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_trail_total"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +26,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/light"
-        android:text="total"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/info_text_secondary_size"
         app:layout_constraintBottom_toBottomOf="@id/adapter_trail_data_trail_distance"
@@ -41,12 +39,22 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/light"
-        android:text="distance"
         android:textColor="@color/textSecondary"
         android:textSize="@dimen/info_text_secondary_size"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_trail_total" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="16dp"
+        android:background="@color/dividerColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_trail_distance" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

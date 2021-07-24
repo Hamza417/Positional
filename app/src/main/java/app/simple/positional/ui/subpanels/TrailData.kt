@@ -60,12 +60,11 @@ class TrailData : ScopedFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         trailDataViewModel.trailDataDescendingWithInfo.observe(viewLifecycleOwner, {
-            recyclerView.adapter = AdapterTrailData(it)
-
             if (it.first.isNullOrEmpty()) {
                 art.makeVisible(true)
             } else {
                 art.makeInvisible(true)
+                recyclerView.adapter = AdapterTrailData(it)
             }
         })
 
