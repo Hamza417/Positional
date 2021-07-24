@@ -20,7 +20,7 @@
     <string name="moon_time">Лунно време</string>
     <string name="moon_illumination">Лунно осветяване</string>
     <string name="moon_dates">Лунни дати</string>
-    <!-- GPS Informatin Headers -->
+    <!-- GPS Information Headers -->
     <string name="gps_provider">Доставчик</string>
     <string name="gps_location">Местоположение</string>
     <string name="gps_movement">Движения</string>
@@ -279,4 +279,5 @@
     <string name="play_services_error">Вашето устройство не поддържа необходимите услуги от Google Play.</string>
     <string name="enter_trail_name">Въведете име на пътека</string>
     <string name="note">Бележка</string>
+    <string name="panels_editor">Редактор на панели</string>
 </resources>

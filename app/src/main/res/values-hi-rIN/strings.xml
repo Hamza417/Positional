@@ -20,7 +20,7 @@
     <string name="moon_time">चाँद का समय</string>
     <string name="moon_illumination">चाँद प्रदीप्ति</string>
     <string name="moon_dates">चाँद की तारीखें</string>
-    <!-- GPS Informatin Headers -->
+    <!-- GPS Information Headers -->
     <string name="gps_provider">प्रदाता</string>
     <string name="gps_location">लोकेशन</string>
     <string name="gps_movement">चाल</string>
@@ -274,4 +274,10 @@
     <string name="inverted_colors">रंग उलटें</string>
     <string name="trail">पगडंडी</string>
     <string name="geodesic_trail">जियोडेसिक पगडंडी</string>
+    <string name="name">नाम</string>
+    <string name="sensor_error">आपके डिवाइस में आवश्यक सेंसर नहीं हैं।</string>
+    <string name="play_services_error">आपका उपकरण आवश्यक Google Play निर्भरता का समर्थन नहीं करता है।</string>
+    <string name="enter_trail_name">ट्रेल का नाम दर्ज करें</string>
+    <string name="note">टिप्पणियाँ</string>
+    <string name="panels_editor">पैनल संपादक</string>
 </resources>
