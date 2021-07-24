@@ -301,7 +301,7 @@ class Trail : ScopedFragment() {
                                                     ViewGroup.LayoutParams.WRAP_CONTENT)
 
         params.apply {
-            gravity = if (TrailPreferences.isToolsGravityToleft()) {
+            gravity = if (TrailPreferences.isToolsGravityToLeft()) {
                 Gravity.START or Gravity.CENTER_VERTICAL
             } else {
                 Gravity.END or Gravity.CENTER_VERTICAL

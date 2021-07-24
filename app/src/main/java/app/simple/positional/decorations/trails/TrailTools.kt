@@ -78,7 +78,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
 
         align.setOnClickListener {
             TrailPreferences.setToolsGravityToLeft(
-                    !TrailPreferences.isToolsGravityToleft()
+                    !TrailPreferences.isToolsGravityToLeft()
             )
         }
     }
@@ -92,7 +92,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     }
 
     private fun setAlignButtonState() {
-        if (TrailPreferences.isToolsGravityToleft()) {
+        if (TrailPreferences.isToolsGravityToLeft()) {
             align.setImageResource(R.drawable.ic_arrow_right)
         } else {
             align.setImageResource(R.drawable.ic_arrow_left)

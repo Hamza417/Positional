@@ -20,12 +20,14 @@ class TrailMenu : CustomBottomSheetDialogFragment() {
     private lateinit var toggleSatellite: SwitchView
     private lateinit var toggleHighContrast: SwitchView
     private lateinit var toggleBuilding: SwitchView
+    private lateinit var toggleAutoCenter: SwitchView
     private lateinit var toggleGeodesic: SwitchView
 
     private lateinit var toggleLabelContainer: DynamicRippleLinearLayout
     private lateinit var toggleSatelliteContainer: DynamicRippleLinearLayout
     private lateinit var toggleHighContrastContainer: DynamicRippleLinearLayout
     private lateinit var toggleBuildingContainer: DynamicRippleLinearLayout
+    private lateinit var toggleAutoCenterContainer: DynamicRippleLinearLayout
     private lateinit var toggleGeodesicContainer: DynamicRippleLinearLayout
 
     private lateinit var help: DynamicRippleTextView
@@ -37,12 +39,14 @@ class TrailMenu : CustomBottomSheetDialogFragment() {
         toggleSatellite = view.findViewById(R.id.toggle_satellite)
         toggleHighContrast = view.findViewById(R.id.toggle_high_contrast)
         toggleBuilding = view.findViewById(R.id.toggle_buildings)
+        toggleAutoCenter = view.findViewById(R.id.toggle_auto_center)
         toggleGeodesic = view.findViewById(R.id.toggle_geodesic)
 
         toggleLabelContainer = view.findViewById(R.id.gps_menu_show_label_container)
         toggleSatelliteContainer = view.findViewById(R.id.gps_menu_satellite_mode_container)
         toggleHighContrastContainer = view.findViewById(R.id.gps_menu_high_contrast_container)
         toggleBuildingContainer = view.findViewById(R.id.gps_menu_show_building_container)
+        toggleAutoCenterContainer = view.findViewById(R.id.trail_menu_auto_center_container)
         toggleGeodesicContainer = view.findViewById(R.id.trail_menu_geodesic_container)
 
         help = view.findViewById(R.id.trail_menu_help)
@@ -57,6 +61,7 @@ class TrailMenu : CustomBottomSheetDialogFragment() {
         toggleSatellite.isChecked = TrailPreferences.isSatelliteOn()
         toggleHighContrast.isChecked = TrailPreferences.getHighContrastMap()
         toggleBuilding.isChecked = TrailPreferences.getShowBuildingsOnMap()
+        toggleAutoCenter.isChecked = TrailPreferences.getMapAutoCenter()
         toggleGeodesic.isChecked = TrailPreferences.isTrailGeodesic()
 
         toggleLabel.setOnCheckedChangeListener { isChecked ->
@@ -80,6 +85,10 @@ class TrailMenu : CustomBottomSheetDialogFragment() {
             TrailPreferences.setShowBuildingsOnMap(it)
         }
 
+        toggleAutoCenter.setOnCheckedChangeListener {
+            TrailPreferences.setMapAutoCenter(it)
+        }
+
         toggleGeodesic.setOnCheckedChangeListener {
             TrailPreferences.setGeodesic(it)
         }
@@ -98,6 +107,10 @@ class TrailMenu : CustomBottomSheetDialogFragment() {
 
         toggleBuildingContainer.setOnClickListener {
             toggleBuilding.invertCheckedStatus()
+        }
+
+        toggleAutoCenterContainer.setOnClickListener {
+            toggleAutoCenter.invertCheckedStatus()
         }
 
         toggleGeodesicContainer.setOnClickListener {

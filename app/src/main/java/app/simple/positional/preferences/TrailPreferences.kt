@@ -7,6 +7,8 @@ object TrailPreferences {
 
     private const val mapZoom = "trail_map_zoom_value"
     private const val mapTilt = "trail_map_tilt_value"
+    private const val mapBearing = "trail_map_bearing"
+    const val mapAutoCenter = "trail_maps_auto_center"
     const val lastSelectedTrail = "last_selected_trail"
     const val wrapped = "are_polylines_wrapped"
     const val geodesic = "is_trail_geodesic"
@@ -83,7 +85,17 @@ object TrailPreferences {
     }
 
     fun getMapTilt(): Float {
-        return getSharedPreferences().getFloat(mapTilt, 15F)
+        return getSharedPreferences().getFloat(mapTilt, 0F)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setMapBearing(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(mapBearing, value).apply()
+    }
+
+    fun getMapBearing(): Float {
+        return getSharedPreferences().getFloat(mapBearing, 0F)
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -112,7 +124,17 @@ object TrailPreferences {
         getSharedPreferences().edit().putBoolean(toolsMenuGravity, value).apply()
     }
 
-    fun isToolsGravityToleft(): Boolean {
+    fun isToolsGravityToLeft(): Boolean {
         return getSharedPreferences().getBoolean(toolsMenuGravity, false)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setMapAutoCenter(boolean: Boolean) {
+        getSharedPreferences().edit().putBoolean(mapAutoCenter, boolean).apply()
+    }
+
+    fun getMapAutoCenter(): Boolean {
+        return getSharedPreferences().getBoolean(mapAutoCenter, true)
     }
 }

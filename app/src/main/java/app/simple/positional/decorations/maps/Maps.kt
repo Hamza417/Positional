@@ -28,6 +28,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                                                            OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
                                                            CoroutineScope {
 
+    private val cameraSpeed = 1000
     private var googleMap: GoogleMap? = null
     var location: Location? = null
     private var latLng: LatLng? = null
@@ -132,6 +133,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         onDestroy()
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         clearAnimation()
+        viewHandler.removeCallbacksAndMessages(null)
         viewHandler.removeCallbacks(mapMoved)
         job.cancel()
     }
@@ -265,7 +267,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                                                                            .target(latLng)
                                                                            .tilt(GPSPreferences.getMapTilt())
                                                                            .zoom(zoom)
-                                                                           .bearing(if (isBearingRotation) bearing else 0F).build()), 3000, null)
+                                                                           .bearing(if (isBearingRotation) bearing else 0F)
+                                                                           .build()), cameraSpeed, null)
     }
 
     fun getCamera(): CameraPosition = googleMap?.cameraPosition!!

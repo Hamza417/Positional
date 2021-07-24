@@ -3,10 +3,10 @@ package app.simple.positional.adapters.bottombar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.preferences.BottomBarPreferences
 
@@ -85,7 +85,7 @@ class AdapterPanelEditor(private val items: ArrayList<BottomBarModel>) : Recycle
     }
 
     open inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val container: DynamicRippleLinearLayout = itemView.findViewById(R.id.adapter_panel_editor_container)
+        val container: LinearLayout = itemView.findViewById(R.id.adapter_panel_editor_container)
         val name: TextView = itemView.findViewById(R.id.adapter_panel_editor_name)
         val switch: SwitchView = itemView.findViewById(R.id.adapter_panel_editor_switch)
     }

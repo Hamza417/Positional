@@ -176,7 +176,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) : MapView(context, attrs),
             controller.animateTo(
                     GeoPoint(latLng!!.latitude, latLng!!.longitude),
                     OSMPreferences.getOSMMapZoom().toDouble(),
-                    3000,
+                    1000,
                     bearing)
         } else {
             controller.setCenter(GeoPoint(latLng!!.latitude, latLng!!.longitude))
@@ -190,7 +190,7 @@ class OsmMaps(context: Context, attrs: AttributeSet?) : MapView(context, attrs),
         controller.animateTo(
                 GeoPoint(latLng!!.latitude, latLng!!.longitude),
                 15.0,
-                3000L,
+                1000L,
                 if (isBearingRotation) bearing else 0F
         )
 

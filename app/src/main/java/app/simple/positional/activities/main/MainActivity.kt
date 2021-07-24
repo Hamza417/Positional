@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.BottomBarAdapter
@@ -53,10 +54,11 @@ class MainActivity : BaseActivity(),
             layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
             adapter = bottomBarAdapter
             scheduleLayoutAnimation()
+            setItemViewCacheSize(10)
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         }
 
-        bottomBarAdapter.onItemClicked = { position, name ->
-            println("Called")
+        bottomBarAdapter.setOnBottomBarCallbackListener { position, name ->
             openFragment(name, position)
         }
 

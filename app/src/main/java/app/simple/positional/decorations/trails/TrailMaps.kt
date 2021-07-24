@@ -11,7 +11,6 @@ import android.util.AttributeSet
 import app.simple.positional.R
 import app.simple.positional.constants.TrailIcons
 import app.simple.positional.model.TrailData
-import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
@@ -32,6 +31,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                                                                 SharedPreferences.OnSharedPreferenceChangeListener,
                                                                 CoroutineScope {
 
+    private val cameraSpeed: Int = 1000
     private var googleMap: GoogleMap? = null
     private var latLng: LatLng? = null
     private var markerBitmap: Bitmap? = null
@@ -43,6 +43,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private var trailData = arrayListOf<TrailData>()
     private var isWrapped = false
     private var lastZoom = 20F
+    private var lastTilt = 0F
     private var options: PolylineOptions? = null
 
     var location: Location? = null
@@ -58,9 +59,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     init {
         options = PolylineOptions()
             .width(10f)
-            .jointType(JointType.ROUND)
-            .startCap(RoundCap())
-            .endCap(RoundCap())
             .jointType(JointType.ROUND)
             .color(context.resolveAttrColor(R.attr.colorAppAccent))
             .geodesic(TrailPreferences.isTrailGeodesic())
@@ -111,6 +109,13 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         this.googleMap?.setOnCameraIdleListener {
             TrailPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
             TrailPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
+            TrailPreferences.setMapBearing(this.googleMap?.cameraPosition!!.bearing)
+            viewHandler.removeCallbacks(mapMoved)
+            viewHandler.postDelayed(mapMoved, 6000)
+        }
+
+        this.googleMap?.setOnCameraMoveListener {
+            viewHandler.removeCallbacks(mapMoved)
         }
 
         this.googleMap?.setOnMapClickListener {
@@ -137,6 +142,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         onDestroy()
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         clearAnimation()
+        viewHandler.removeCallbacksAndMessages(null)
+        viewHandler.removeCallbacks(mapMoved)
         job.cancel()
     }
 
@@ -191,6 +198,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
         invalidate()
 
+        options?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_circle_stroke.toBitmap(context, 30))))
+        options?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_circle_stroke.toBitmap(context, 30))))
+
         trailData.addAll(arrayList)
         trailMapCallbacks.onLineCountChanged(options!!.points.size)
     }
@@ -212,6 +222,12 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         trailMapCallbacks.onLineCountChanged(options!!.points.size)
 
         invalidate()
+
+        if (TrailPreferences.arePolylinesWrapped()) {
+            wrap()
+        } else {
+            moveMapCamera(latLng, TrailPreferences.getMapZoom(), cameraSpeed)
+        }
     }
 
     fun removePolyline() {
@@ -229,7 +245,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     fun wrapUnwrap() {
         if (isWrapped) {
-            moveMapCamera(latLng!!, lastZoom, 500)
+            moveMapCamera(latLng!!, lastZoom, cameraSpeed)
         } else {
             wrap()
         }
@@ -238,6 +254,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private fun wrap() {
         kotlin.runCatching {
             lastZoom = googleMap?.cameraPosition?.zoom ?: 15F
+            lastTilt = googleMap?.cameraPosition?.tilt ?: 0F
 
             val builder = LatLngBounds.Builder()
             for (latLng in currentPolyline) {
@@ -260,7 +277,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     fun resetCamera(zoom: Float) {
         if (location != null) {
-            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, 500)
+            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, cameraSpeed)
         }
     }
 
@@ -334,9 +351,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         googleMap?.animateCamera(CameraUpdateFactory
                                      .newCameraPosition(CameraPosition.builder()
                                                             .target(latLng)
-                                                            .tilt(GPSPreferences.getMapTilt())
+                                                            .tilt(lastTilt)
                                                             .zoom(zoom)
-                                                            .bearing(0F).build()), duration, null)
+                                                            .bearing(TrailPreferences.getMapBearing())
+                                                            .build()), duration, null)
         isWrapped = false
         TrailPreferences.setWrapStatus(false)
     }
@@ -346,6 +364,21 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     fun setCamera(cameraPosition: CameraPosition?) {
         cameraPosition ?: return
         googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+    }
+
+    private val mapMoved = object : Runnable {
+        override fun run() {
+            if (TrailPreferences.getMapAutoCenter() && !isWrapped) {
+                val latLng = if (location.isNotNull()) {
+                    LatLng(location!!.latitude, location!!.longitude)
+                } else {
+                    LatLng(lastLatitude, lastLongitude)
+                }
+
+                moveMapCamera(latLng, TrailPreferences.getMapZoom(), cameraSpeed)
+            }
+            viewHandler.postDelayed(this, 6000L)
+        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
@@ -362,6 +395,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             TrailPreferences.geodesic -> {
                 options!!.geodesic(TrailPreferences.isTrailGeodesic())
                 invalidate()
+            }
+            TrailPreferences.mapAutoCenter -> {
+                viewHandler.removeCallbacks(mapMoved)
+                viewHandler.post(mapMoved)
             }
         }
     }

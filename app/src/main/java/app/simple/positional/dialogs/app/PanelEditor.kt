@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.AdapterPanelEditor
 import app.simple.positional.decorations.corners.DynamicCornerRecyclerView
@@ -22,7 +20,7 @@ class PanelEditor : CustomBottomSheetDialogFragment() {
         val view = inflater.inflate(R.layout.dialog_panel_editor, container, false)
 
         recyclerView = view.findViewById(R.id.panel_editor_recycler_view)
-        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
+        //recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
 
         return view
     }

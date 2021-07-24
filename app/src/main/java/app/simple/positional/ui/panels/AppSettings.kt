@@ -295,7 +295,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
     private fun setCurrentMapsProvider() {
         currentMapsProvider.text = if (MainPreferences.getMapPanelType()) {
-            "Open Source Maps"
+            "Open Street Maps (alpha)"
         } else {
             "Google Maps"
         }

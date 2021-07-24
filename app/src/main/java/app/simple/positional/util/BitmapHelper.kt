@@ -3,6 +3,8 @@ package app.simple.positional.util
 import android.content.Context
 import android.graphics.*
 import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 
 object BitmapHelper {
     fun addLinearGradient(originalBitmap: Bitmap, array: IntArray): Bitmap? {
@@ -102,5 +104,13 @@ object BitmapHelper {
         drawable?.alpha = alpha
         drawable?.draw(canvas)
         return bitmap
+    }
+
+    fun Int.bitmapDescriptorFromVector(context: Context): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(context, this)
+        vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
+        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        vectorDrawable.draw(Canvas(bitmap))
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 }

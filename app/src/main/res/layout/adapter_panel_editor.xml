@@ -1,4 +1,4 @@
-<app.simple.positional.decorations.ripple.DynamicRippleLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/adapter_panel_editor_container"
     android:layout_width="match_parent"
@@ -31,4 +31,4 @@
         android:layout_width="@dimen/switch_width"
         android:layout_height="wrap_content" />
 
-</app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+</LinearLayout>

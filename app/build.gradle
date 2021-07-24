@@ -51,8 +51,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
 
-    def appVersionCode = 116
-    def appVersionName = "positional_build_${appVersionCode}/trail_panel_beta"
+    def appVersionCode = 117
+    def appVersionName = "positional_build_${appVersionCode}"
 
     defaultConfig {
         applicationId "app.simple.positional"

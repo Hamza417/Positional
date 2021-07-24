@@ -16,9 +16,9 @@ import app.simple.positional.util.ViewUtils.makeVisible
 
 class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
 
+    private var currentTag = FragmentPreferences.getCurrentTag()
     private var lastItem = FragmentPreferences.getCurrentPage()
-    var onItemClicked:
-            (position: Int, name: String) -> Unit = { _: Int, _: String -> }
+    private var bottomBarCallbacks: BottomBarCallbacks? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(
@@ -26,7 +26,7 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        if (FragmentPreferences.getCurrentTag() == list[position].tag) {
+        if (currentTag == list[position].tag) {
             holder.bg.makeVisible(animate = true)
 
             holder.icon.imageTintList = ColorStateList.valueOf(
@@ -41,12 +41,13 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerVi
         holder.icon.setImageResource(list[position].icon)
 
         holder.container.setOnClickListener {
+            currentTag = list[position].tag
             notifyItemChanged(lastItem)
-            notifyItemChanged(position)
-            lastItem = position
-            onItemClicked.invoke(position, list[position].tag)
             FragmentPreferences.setCurrentPage(position)
             FragmentPreferences.setCurrentTag(list[position].tag)
+            notifyItemChanged(position)
+            lastItem = position
+            bottomBarCallbacks?.onItemClicked(position, list[position].tag)
         }
     }
 
@@ -61,7 +62,23 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerVi
 
     fun setBottomBarItems(list: ArrayList<BottomBarModel>) {
         this.list = list
+
+        /**
+         * Since this panels can only be edited from the settings panel
+         * it is safe to assume that last item is list's total size minus
+         * one. This will fix the bug of bottom bar settings icon stays selected
+         * issue
+         */
+        lastItem = list.size - 1
+
+        /**
+         * Now refresh the bottom panel
+         */
         notifyDataSetChanged()
+    }
+
+    fun setOnBottomBarCallbackListener(bottomBarCallbacks: BottomBarCallbacks) {
+        this.bottomBarCallbacks = bottomBarCallbacks
     }
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
