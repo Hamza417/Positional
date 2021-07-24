@@ -280,4 +280,6 @@
     <string name="enter_trail_name">Introduceți numele traseului</string>
     <string name="note">Notă</string>
     <string name="panels_editor">Editor de panouri</string>
+    <string name="total">Total:</string>
+    <string name="saved_trails">Traseuri salvate</string>
 </resources>
