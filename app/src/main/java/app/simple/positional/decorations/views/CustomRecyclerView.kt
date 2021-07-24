@@ -14,23 +14,26 @@ import app.simple.positional.util.StatusBarHeight
 /**
  * Custom recycler view with nice layout animation and
  * smooth overscroll effect and various states retention
+ * with fast scroller
  */
 class CustomRecyclerView(context: Context, attrs: AttributeSet?) : RecyclerView(context, attrs) {
 
-    init {
+    private var fastScroll = true
 
+    init {
         context.theme.obtainStyledAttributes(attrs, R.styleable.CustomRecyclerView, 0, 0).apply {
             try {
                 if (getBoolean(R.styleable.CustomRecyclerView_statusBarPaddingRequired, true)) {
                     setPadding(paddingLeft, StatusBarHeight.getStatusBarHeight(resources) + paddingTop, paddingRight, paddingBottom)
                 }
+
+                fastScroll = getBoolean(R.styleable.CustomRecyclerView_isFastScrollerRequired, true)
             } finally {
                 recycle()
             }
         }
 
         layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        setHasFixedSize(true)
 
         this.edgeEffectFactory = object : RecyclerView.EdgeEffectFactory() {
             override fun createEdgeEffect(recyclerView: RecyclerView, direction: Int): EdgeEffect {
@@ -98,7 +101,7 @@ class CustomRecyclerView(context: Context, attrs: AttributeSet?) : RecyclerView(
         super.setAdapter(adapter)
         adapter?.stateRestorationPolicy = Adapter.StateRestorationPolicy.ALLOW
         scheduleLayoutAnimation()
-        if (adapter?.itemCount!! >= 25) {
+        if (adapter?.itemCount!! >= 25 && fastScroll) {
             setupFastScroller()
         }
     }

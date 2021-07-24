@@ -18,7 +18,6 @@ import java.util.*
 
 class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adapter<AdapterTrails.Holder>() {
 
-    private var currentTrail = TrailPreferences.getLastUsedTrail()
     private lateinit var adapterTrailsCallback: AdapterTrailsCallback
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -30,7 +29,7 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
         holder.note.text = list[position].trailNote
         holder.date.text = list[position].dateCreated.formatDate()
 
-        if (list[position].trailName == currentTrail) {
+        if (list[position].trailName == TrailPreferences.getLastUsedTrail()) {
             holder.name.setTextColor(holder.itemView.context.resolveAttrColor(R.attr.colorAppAccent))
         } else {
             holder.name.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.textPrimary))
@@ -41,9 +40,6 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
         }
 
         holder.container.setOnClickListener {
-            currentTrail = list[position].trailName
-            TrailPreferences.setLastTrailName(list[position].trailName)
-            notifyDataSetChanged()
             adapterTrailsCallback.onTrailClicked(list[position].trailName)
         }
     }

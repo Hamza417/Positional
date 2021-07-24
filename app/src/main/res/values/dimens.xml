@@ -75,11 +75,6 @@
     <dimen name="switch_padding">5dp</dimen>
     <dimen name="switch_thumb_dimensions">20dp</dimen>
 
-    // Random
-    <dimen name="toolbar_title_padding">8dp</dimen>
-    <dimen name="toolbar_padding">16dp</dimen>
-    <dimen name="popup_padding">10dp</dimen>
-
     // Fast Scroll
     <dimen name="afs_min_touch_target_size">48dp</dimen>
     <dimen name="afs_popup_min_size">88dp</dimen>
@@ -95,4 +90,11 @@
     <dimen name="app_views_elevation">10dp</dimen>
     <dimen name="trail_tools_padding">5dp</dimen>
     <dimen name="trail_tools_margin">10dp</dimen>
+
+    // Random
+    <dimen name="toolbar_title_padding">8dp</dimen>
+    <dimen name="toolbar_padding">16dp</dimen>
+    <dimen name="popup_padding">10dp</dimen>
+    <dimen name="trail_name_text_size">24sp</dimen>
+    <dimen name="float_button_size">60dp</dimen>
 </resources>

@@ -3,6 +3,7 @@ package app.simple.positional.viewmodels.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import androidx.room.Room
+import app.simple.positional.database.instances.TrailDataDatabase
 import app.simple.positional.database.instances.TrailDatabase
 import app.simple.positional.model.TrailModel
 import app.simple.positional.preferences.TrailPreferences
@@ -23,7 +24,7 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
                                                 TrailDatabase::class.java,
                                                 "%%_trails.db").build()
 
-            trails.postValue(database.trailDao()!!.getAllTrails() as ArrayList<TrailModel>)
+            trails.postValue(database.trailDao()?.getAllTrails() as ArrayList<TrailModel>)
 
             database.close()
         }
@@ -63,7 +64,23 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
                 this@TrailsViewModel.trails.postValue(db.trailDao()!!.getAllTrails() as ArrayList<TrailModel>?)
 
                 db.close()
+
+                clearResidualFiles(trailModel.trailName)
             }
+        }
+    }
+
+    private fun clearResidualFiles(name: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val db = Room.databaseBuilder(getApplication<Application>().applicationContext,
+                                          TrailDataDatabase::class.java,
+                                          "$name.db").build()
+
+            db.trailDataDao()?.nukeTable()
+
+            db.close()
+
+            getApplication<Application>().applicationContext.deleteDatabase("$name.db")
         }
     }
 }

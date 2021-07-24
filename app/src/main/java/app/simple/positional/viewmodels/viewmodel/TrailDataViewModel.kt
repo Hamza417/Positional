@@ -1,22 +1,46 @@
 package app.simple.positional.viewmodels.viewmodel
 
 import android.app.Application
+import android.text.Spanned
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
+import app.simple.positional.R
 import app.simple.positional.database.instances.TrailDataDatabase
+import app.simple.positional.math.UnitConverter.toKilometers
+import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.model.TrailData
+import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.HtmlHelper
+import app.simple.positional.util.LocationExtension
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
 class TrailDataViewModel(application: Application, private val trailName: String) : AndroidViewModel(application) {
 
-    val trailData: MutableLiveData<ArrayList<TrailData>> by lazy {
+    val trailDataAscending: MutableLiveData<ArrayList<TrailData>> by lazy {
         MutableLiveData<ArrayList<TrailData>>().also {
             loadTrailData(trailName)
         }
+    }
+
+    val trailDataDescending: MutableLiveData<ArrayList<TrailData>> by lazy {
+        MutableLiveData<ArrayList<TrailData>>().also {
+            loadTrailData(trailName)
+        }
+    }
+
+    val trailDataDescendingWithInfo: MutableLiveData<Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>> by lazy {
+        MutableLiveData<Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>>().also {
+            loadTrailDataWithInformation(trailName)
+        }
+    }
+
+    val trailInfo: MutableLiveData<Triple<String?, String?, String?>> by lazy {
+        MutableLiveData<Triple<String?, String?, String?>>()
     }
 
     fun loadTrailData(trailName: String) {
@@ -25,10 +49,15 @@ class TrailDataViewModel(application: Application, private val trailName: String
                                                 TrailDataDatabase::class.java,
                                                 "$trailName.db").build()
 
-            val list = database.trailDataDao()?.getAllTrailData()
+            val list = database.trailDataDao()?.getAllTrailData()!!
+            val listDesc = database.trailDataDao()?.getAllTrailDataDesc()!!
             database.close()
 
-            trailData.postValue(list as ArrayList<TrailData>)
+            trailDataAscending.postValue(list as ArrayList<TrailData>)
+
+            delay(500) // For animation
+
+            trailDataDescending.postValue(listDesc as ArrayList<TrailData>)
         }
     }
 
@@ -56,6 +85,44 @@ class TrailDataViewModel(application: Application, private val trailName: String
                 database.trailDataDao()?.deleteTrailData(trails)!!
                 database.close()
             })
+        }
+    }
+
+    private fun loadTrailDataWithInformation(trailName: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val database = Room.databaseBuilder(getApplication<Application>(),
+                                                TrailDataDatabase::class.java,
+                                                "$trailName.db").build()
+
+            val list = database.trailDataDao()?.getAllTrailDataDesc()!!
+
+            database.close()
+
+            val total = HtmlHelper.fromHtml("<b>${getApplication<Application>().getString(R.string.total)} </b> ${list.size}")
+
+            val builder = StringBuilder()
+            builder.append("<b>${getApplication<Application>().getString(R.string.gps_displacement)} </b>")
+
+            if (MainPreferences.getUnit()) {
+                builder.append(LocationExtension.measureDisplacement(list).toKilometers())
+                builder.append(" ")
+                builder.append(getApplication<Application>().getString(R.string.kilometer))
+            } else {
+                builder.append(LocationExtension.measureDisplacement(list).toMiles())
+                builder.append(" ")
+                builder.append(getApplication<Application>().getString(R.string.miles))
+            }
+
+            val pair = Pair(list as ArrayList<TrailData>,
+                            Triple(
+                                    trailName,
+                                    total,
+                                    HtmlHelper.fromHtml(builder.toString())
+                            ))
+
+            delay(500)
+
+            trailDataDescendingWithInfo.postValue(pair)
         }
     }
 }

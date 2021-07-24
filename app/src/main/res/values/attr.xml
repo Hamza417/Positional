@@ -43,5 +43,6 @@
 
     <declare-styleable name="CustomRecyclerView">
         <attr name="statusBarPaddingRequired" format="boolean" />
+        <attr name="isFastScrollerRequired" format="boolean" />
     </declare-styleable>
 </resources>

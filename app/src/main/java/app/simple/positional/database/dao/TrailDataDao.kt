@@ -9,6 +9,9 @@ interface TrailDataDao {
     @Query("SELECT * FROM trail_data ORDER BY time_added COLLATE nocase")
     fun getAllTrailData(): List<TrailData>
 
+    @Query("SELECT * FROM trail_data ORDER BY time_added COLLATE nocase DESC")
+    fun getAllTrailDataDesc(): List<TrailData>
+
     /**
      * Insert and save trail data to Database
      *

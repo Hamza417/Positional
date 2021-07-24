@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
@@ -16,6 +17,8 @@ import app.simple.positional.model.TrailModel
 import app.simple.positional.popups.DeletePopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ViewUtils
+import app.simple.positional.util.ViewUtils.makeInvisible
+import app.simple.positional.util.ViewUtils.makeVisible
 import app.simple.positional.viewmodels.viewmodel.TrailsViewModel
 import com.google.android.material.card.MaterialCardView
 
@@ -24,6 +27,7 @@ class Trails : ScopedFragment() {
     private lateinit var recyclerView: CustomRecyclerView
     private lateinit var adapterTrails: AdapterTrails
     private lateinit var add: MaterialCardView
+    private lateinit var art: ImageView
     private val trailViewModel: TrailsViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,6 +35,7 @@ class Trails : ScopedFragment() {
 
         recyclerView = view.findViewById(R.id.trails_recycler_view)
         add = view.findViewById(R.id.add)
+        art = view.findViewById(R.id.art)
 
         add.apply {
             radius = MainPreferences.getCornerRadius().toFloat()
@@ -82,6 +87,12 @@ class Trails : ScopedFragment() {
             })
 
             recyclerView.adapter = adapterTrails
+
+            if (it.isNullOrEmpty()) {
+                art.makeVisible(true)
+            } else {
+                art.makeInvisible(true)
+            }
         })
     }
 

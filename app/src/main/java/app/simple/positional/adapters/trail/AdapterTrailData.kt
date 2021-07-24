@@ -1,5 +1,6 @@
 package app.simple.positional.adapters.trail
 
+import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,30 +11,61 @@ import app.simple.positional.R
 import app.simple.positional.R.id
 import app.simple.positional.constants.TrailIcons
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
+import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_HEADER
+import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_ITEM
 import app.simple.positional.model.TrailData
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.TimeFormatter.formatDate
 
-class AdapterTrailData(private val trailData: ArrayList<TrailData>) : RecyclerView.Adapter<AdapterTrailData.Holder>() {
+class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>) : RecyclerView.Adapter<VerticalListViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_trail_data, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalListViewHolder {
+        return when (viewType) {
+            TYPE_ITEM -> {
+                Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_trail_data, parent, false))
+            }
+            TYPE_HEADER -> {
+                Header(LayoutInflater.from(parent.context).inflate(R.layout.adapter_trail_data_header, parent, false))
+            }
+            else -> {
+                throw RuntimeException("there is no type that matches the type $viewType + make sure your using types correctly")
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.icon.setImageResource(TrailIcons.icons[trailData[position].iconPosition])
-        holder.name.text = trailData[position].name ?: "--"
-        holder.note.text = trailData[position].note ?: holder.itemView.context.getString(R.string.not_available)
-        holder.date.text = trailData[position].timeAdded.formatDate()
-        holder.coordinates.text = with(holder.itemView.context) {
-            getString(R.string.coordinates_format,
-                      DMSConverter.latitudeAsDMS(trailData[position].latitude, 2, this),
-                      DMSConverter.longitudeAsDMS(trailData[position].longitude, 2, this))
+    override fun onBindViewHolder(holder: VerticalListViewHolder, position_: Int) {
+
+        val position = position_ - 1
+
+        if (holder is Holder) {
+            holder.icon.setImageResource(TrailIcons.icons[trailData.first[position].iconPosition])
+            holder.name.text = trailData.first[position].name ?: "--"
+            holder.note.text = trailData.first[position].note ?: holder.itemView.context.getString(R.string.not_available)
+            holder.date.text = trailData.first[position].timeAdded.formatDate()
+            holder.coordinates.text = with(holder.itemView.context) {
+                getString(R.string.coordinates_format,
+                          DMSConverter.latitudeAsDMS(trailData.first[position].latitude, 2, this),
+                          DMSConverter.longitudeAsDMS(trailData.first[position].longitude, 2, this))
+            }
+        } else if (holder is Header) {
+            holder.name.text = trailData.second.first
+            holder.total.text = trailData.second.second
+            holder.distance.text = trailData.second.third
         }
     }
 
     override fun getItemCount(): Int {
-        return trailData.size
+        return trailData.first.size + 1
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (isPositionHeader(position)) {
+            TYPE_HEADER
+        } else TYPE_ITEM
+    }
+
+    private fun isPositionHeader(position: Int): Boolean {
+        return position == 0
     }
 
     inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
@@ -42,5 +74,15 @@ class AdapterTrailData(private val trailData: ArrayList<TrailData>) : RecyclerVi
         val note: TextView = itemView.findViewById(id.adapter_trail_data_notes)
         val coordinates: TextView = itemView.findViewById(id.adapter_trail_data_coordinates)
         val date: TextView = itemView.findViewById(id.adapter_trail_data_date)
+    }
+
+    inner class Header(itemView: View) : VerticalListViewHolder(itemView) {
+        val name: TextView = itemView.findViewById(id.adapter_trail_data_trail_name)
+        val total: TextView = itemView.findViewById(id.adapter_trail_data_trail_total)
+        val distance: TextView = itemView.findViewById(id.adapter_trail_data_trail_distance)
+        
+        init {
+            distance.isSelected = true
+        }
     }
 }
