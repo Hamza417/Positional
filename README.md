@@ -21,8 +21,6 @@ On top of all the core functionality Positional is a highly polished app and pro
 
 [![Intro](https://img.shields.io/youtube/views/H9UT8gCuvgk?label=Watch%20App%20Intro&logo=Youtube&logoColor=red&style=social)](https://youtu.be/H9UT8gCuvgk)
 
-[![Legacy](https://img.shields.io/github/downloads/Hamza417/Positional/1.7-beta/total?color=229954&label=Download%20Legacy%20Version)](https://github.com/Hamza417/Positional/releases/download/1.7-beta/1.7-beta.apk)
-
 <br/>
 
 ## Stats
