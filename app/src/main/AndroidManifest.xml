@@ -266,6 +266,10 @@
             android:name=".activities.subactivity.TrailsViewerActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activities.subactivity.TrailDataActivity"
+            android:screenOrientation="portrait" />
+
         <!-- Services -->
 
         <service

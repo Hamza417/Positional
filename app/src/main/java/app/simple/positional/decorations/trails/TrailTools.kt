@@ -51,6 +51,10 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         val adapter = AdapterTrailIcons()
 
         adapter.onIconClicked = {
+            trailCallbacks.onAddWithInfo(it)
+        }
+
+        adapter.onIconLongClicked = {
             trailCallbacks.onAdd(it)
         }
 
@@ -130,6 +134,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
             fun onAdd(position: Int)
             fun onRemove()
             fun onWrapUnwrap()
+            fun onAddWithInfo(position: Int)
         }
     }
 }

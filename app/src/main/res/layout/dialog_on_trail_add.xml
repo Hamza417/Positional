@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/medium"
-        android:text="@string/enter_trail_name"
+        android:text="@string/enter_marker_name"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/popup_text_size" />
 
@@ -43,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLength="20"
-            android:maxLines="1"
             android:textColor="@color/textSecondary" />
 
     </com.google.android.material.textfield.TextInputLayout>

@@ -4,28 +4,32 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.R.id
 import app.simple.positional.constants.TrailIcons
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
+import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_FOOTER
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_HEADER
-import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_ITEM
 import app.simple.positional.model.TrailData
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.TimeFormatter.formatDate
+import com.github.vipulasri.timelineview.TimelineView
 
 class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>) : RecyclerView.Adapter<VerticalListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalListViewHolder {
         return when (viewType) {
-            TYPE_ITEM -> {
-                Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_trail_data, parent, false))
+            0, 1, 2, 3 -> {
+                Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_trail_data, parent, false), viewType)
             }
             TYPE_HEADER -> {
                 Header(LayoutInflater.from(parent.context).inflate(R.layout.adapter_trail_data_header, parent, false))
+            }
+            TYPE_FOOTER -> {
+                Footer(LayoutInflater.from(parent.context).inflate(R.layout.adapter_trail_data_footer, parent, false))
             }
             else -> {
                 throw RuntimeException("there is no type that matches the type $viewType + make sure your using types correctly")
@@ -38,7 +42,10 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         val position = position_ - 1
 
         if (holder is Holder) {
-            holder.icon.setImageResource(TrailIcons.icons[trailData.first[position].iconPosition])
+
+            setMarker(holder,
+                      TrailIcons.icons[trailData.first[position].iconPosition])
+
             holder.name.text = trailData.first[position].name ?: "--"
             holder.note.text = trailData.first[position].note ?: holder.itemView.context.getString(R.string.not_available)
             holder.date.text = trailData.first[position].timeAdded.formatDate()
@@ -55,34 +62,56 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
     }
 
     override fun getItemCount(): Int {
-        return trailData.first.size + 1
+        return trailData.first.size + 2
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (isPositionHeader(position)) {
-            TYPE_HEADER
-        } else TYPE_ITEM
+        return when {
+            isPositionHeader(position) -> {
+                TYPE_HEADER
+            }
+            isPositionFooter(position) -> {
+                TYPE_FOOTER
+            }
+            else -> {
+                TimelineView.getTimeLineViewType(position - 1, itemCount - 2)
+            }
+        }
     }
 
     private fun isPositionHeader(position: Int): Boolean {
         return position == 0
     }
 
-    inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
-        val icon: ImageView = itemView.findViewById(id.adapter_trail_data_icon)
+    private fun isPositionFooter(position: Int): Boolean {
+        return position + 1 == itemCount
+    }
+
+    private fun setMarker(holder: Holder, drawableResId: Int) {
+        holder.icon.marker = ContextCompat.getDrawable(holder.itemView.context, drawableResId)
+    }
+
+    inner class Holder(itemView: View, viewType: Int) : VerticalListViewHolder(itemView) {
+        val icon: TimelineView = itemView.findViewById(id.adapter_trail_data_timeline)
         val name: TextView = itemView.findViewById(id.adapter_trail_data_name)
         val note: TextView = itemView.findViewById(id.adapter_trail_data_notes)
         val coordinates: TextView = itemView.findViewById(id.adapter_trail_data_coordinates)
         val date: TextView = itemView.findViewById(id.adapter_trail_data_date)
+
+        init {
+            icon.initLine(viewType)
+        }
     }
 
     inner class Header(itemView: View) : VerticalListViewHolder(itemView) {
         val name: TextView = itemView.findViewById(id.adapter_trail_data_trail_name)
         val total: TextView = itemView.findViewById(id.adapter_trail_data_trail_total)
         val distance: TextView = itemView.findViewById(id.adapter_trail_data_trail_distance)
-        
+
         init {
             distance.isSelected = true
         }
     }
+
+    inner class Footer(itemView: View) : VerticalListViewHolder(itemView)
 }

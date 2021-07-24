@@ -84,6 +84,9 @@ class HtmlViewer : ScopedFragment() {
                 "Media Keys" -> {
                     webView.loadUrl("file:///android_asset/html/media_keys.html")
                 }
+                "trail_help" -> {
+                    webView.loadUrl("file:///android_asset/html/trail_help.html")
+                }
                 "null" -> {
                     webView.loadUrl("file:///android_asset/html/null.html")
                 }

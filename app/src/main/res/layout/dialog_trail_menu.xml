@@ -193,6 +193,28 @@
 
         </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginVertical="@dimen/options_sub_item_padding"
+            android:background="@color/dividerColor" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
+            android:id="@+id/trail_menu_help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:drawablePadding="@dimen/options_text_margin_start"
+            android:fontFamily="@font/regular"
+            android:gravity="center_vertical"
+            android:padding="@dimen/options_item_padding"
+            android:text="@string/help"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/options_item_text_size"
+            app:drawableStartCompat="@drawable/ic_help"
+            app:drawableTint="@color/iconRegular" />
+
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
 </FrameLayout>

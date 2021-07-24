@@ -1,12 +1,15 @@
 package app.simple.positional.dialogs.trail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import app.simple.positional.R
+import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.TrailPreferences
@@ -25,6 +28,8 @@ class TrailMenu : CustomBottomSheetDialogFragment() {
     private lateinit var toggleBuildingContainer: DynamicRippleLinearLayout
     private lateinit var toggleGeodesicContainer: DynamicRippleLinearLayout
 
+    private lateinit var help: DynamicRippleTextView
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_trail_menu, container, false)
 
@@ -39,6 +44,8 @@ class TrailMenu : CustomBottomSheetDialogFragment() {
         toggleHighContrastContainer = view.findViewById(R.id.gps_menu_high_contrast_container)
         toggleBuildingContainer = view.findViewById(R.id.gps_menu_show_building_container)
         toggleGeodesicContainer = view.findViewById(R.id.trail_menu_geodesic_container)
+
+        help = view.findViewById(R.id.trail_menu_help)
 
         return view
     }
@@ -95,6 +102,12 @@ class TrailMenu : CustomBottomSheetDialogFragment() {
 
         toggleGeodesicContainer.setOnClickListener {
             toggleGeodesic.invertCheckedStatus()
+        }
+
+        help.setOnClickListener {
+            val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
+            intent.putExtra("source", "trail_help")
+            startActivity(intent)
         }
 
         /**

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import app.simple.positional.R
 import app.simple.positional.database.instances.TrailDataDatabase
+import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.model.TrailData
@@ -100,17 +101,32 @@ class TrailDataViewModel(application: Application, private val trailName: String
 
             val total = HtmlHelper.fromHtml("<b>${getApplication<Application>().getString(R.string.total)} </b> ${list.size}")
 
-            val builder = StringBuilder()
-            builder.append("<b>${getApplication<Application>().getString(R.string.gps_displacement)} </b>")
+            val builder = StringBuilder().also {
+                it.append("<b>${getApplication<Application>().getString(R.string.gps_displacement)} </b>")
 
-            if (MainPreferences.getUnit()) {
-                builder.append(LocationExtension.measureDisplacement(list).toKilometers())
-                builder.append(" ")
-                builder.append(getApplication<Application>().getString(R.string.kilometer))
-            } else {
-                builder.append(LocationExtension.measureDisplacement(list).toMiles())
-                builder.append(" ")
-                builder.append(getApplication<Application>().getString(R.string.miles))
+                val p0 = LocationExtension.measureDisplacement(list)
+
+                if (MainPreferences.getUnit()) {
+                    if (p0 < 1000) {
+                        it.append(p0)
+                        it.append(" ")
+                        it.append(getApplication<Application>().getString(R.string.meter))
+                    } else {
+                        it.append(p0.toKilometers())
+                        it.append(" ")
+                        it.append(getApplication<Application>().getString(R.string.kilometer))
+                    }
+                } else {
+                    if (p0 < 1000) {
+                        it.append(p0.toDouble().toFeet())
+                        it.append(" ")
+                        it.append(getApplication<Application>().getString(R.string.feet))
+                    } else {
+                        it.append(p0.toMiles())
+                        it.append(" ")
+                        it.append(getApplication<Application>().getString(R.string.miles))
+                    }
+                }
             }
 
             val pair = Pair(list as ArrayList<TrailData>,

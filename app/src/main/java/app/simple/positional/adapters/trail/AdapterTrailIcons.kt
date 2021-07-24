@@ -12,6 +12,7 @@ import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 class AdapterTrailIcons : RecyclerView.Adapter<AdapterTrailIcons.Holder>() {
 
     var onIconClicked: (position: Int) -> Unit = {}
+    var onIconLongClicked: (position: Int) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(
@@ -23,6 +24,11 @@ class AdapterTrailIcons : RecyclerView.Adapter<AdapterTrailIcons.Holder>() {
 
         holder.icon.setOnClickListener {
             onIconClicked.invoke(position)
+        }
+
+        holder.icon.setOnLongClickListener {
+            onIconLongClicked.invoke(position)
+            true
         }
     }
 

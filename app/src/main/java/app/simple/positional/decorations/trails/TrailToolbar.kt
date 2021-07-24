@@ -12,13 +12,10 @@ import app.simple.positional.util.StatusBarHeight
 
 class TrailToolbar : DynamicCornerLinearLayout {
 
-    private lateinit var flag: DynamicRippleImageButton
+    private lateinit var trails: DynamicRippleImageButton
     private lateinit var menu: DynamicRippleImageButton
     private lateinit var add: DynamicRippleImageButton
-
-    var onFlagClicked: () -> Unit = {}
-    var onMenuClicked: () -> Unit = {}
-    var onTrailAdd: () -> Unit = {}
+    private var trailToolsCallbacks: TrailToolsCallbacks? = null
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         setProperties()
@@ -40,34 +37,52 @@ class TrailToolbar : DynamicCornerLinearLayout {
                    resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
                    resources.getDimensionPixelOffset(R.dimen.toolbar_padding))
 
-        flag = view.findViewById(R.id.trail_flag)
+        trails = view.findViewById(R.id.trail_flag)
         menu = view.findViewById(R.id.trail_menu)
         add = view.findViewById(R.id.trail_add)
 
-        flag.setOnClickListener {
-            onFlagClicked.invoke()
+        trails.setOnClickListener {
+            trailToolsCallbacks?.onTrailsClicked()
+        }
+
+        trails.setOnLongClickListener {
+            trailToolsCallbacks?.onTrailsLongClicked()
+            true
         }
 
         menu.setOnClickListener {
-            onMenuClicked.invoke()
+            trailToolsCallbacks?.onMenuClicked()
         }
 
         add.setOnClickListener {
-            onTrailAdd.invoke()
+            trailToolsCallbacks?.onAddClicked()
         }
     }
 
     fun hide() {
         animate().translationY((height * -1).toFloat()).alpha(0f).setInterpolator(DecelerateInterpolator(1.5f)).start()
-        flag.isClickable = false
+        trails.isClickable = false
         menu.isClickable = false
         isClickable = false
     }
 
     fun show() {
         animate().translationY(0f).alpha(1f).setInterpolator(DecelerateInterpolator(1.5f)).start()
-        flag.isClickable = true
+        trails.isClickable = true
         menu.isClickable = true
         isClickable = true
+    }
+
+    fun setOnTrailToolbarEventListener(trailToolsCallbacks: TrailToolsCallbacks) {
+        this.trailToolsCallbacks = trailToolsCallbacks
+    }
+
+    companion object {
+        interface TrailToolsCallbacks {
+            fun onTrailsClicked()
+            fun onTrailsLongClicked()
+            fun onAddClicked()
+            fun onMenuClicked()
+        }
     }
 }

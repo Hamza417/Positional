@@ -311,4 +311,6 @@
     <string name="panels_editor">Panels Editor</string>
     <string name="total">Total:</string>
     <string name="saved_trails">Saved Trails</string>
+    <string name="starting_point">Starting Point</string>
+    <string name="enter_marker_name">Enter Marker Name</string>
 </resources>

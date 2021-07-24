@@ -5,33 +5,36 @@
     android:layout_height="wrap_content"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:padding="@dimen/options_container_horizontal_padding">
+    android:layout_marginHorizontal="10dp"
+    android:paddingHorizontal="@dimen/options_container_horizontal_padding">
 
-    <ImageView
-        android:id="@+id/adapter_trail_data_icon"
+    <com.github.vipulasri.timelineview.TimelineView
+        android:id="@+id/adapter_trail_data_timeline"
         android:layout_width="@dimen/app_button_size"
-        android:layout_height="@dimen/app_button_size"
-        android:src="@drawable/ic_trail"
-        android:scaleType="centerInside"
-        app:layout_constraintBottom_toBottomOf="@+id/adapter_trail_data_date"
-        app:layout_constraintEnd_toStartOf="@id/adapter_trail_data_name"
+        android:layout_height="0dp"
+        app:lineWidth="2dp"
+        app:linePadding="10dp"
+        app:endLineColor="?attr/colorAppAccent"
+        app:startLineColor="?attr/colorAppAccent"
+        app:markerSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/adapter_trail_data_name" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/adapter_trail_data_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:ellipsize="end"
         android:fontFamily="@font/medium"
         android:maxLines="1"
-        android:text="Name"
-        app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_notes"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/info_text_secondary_size"
+        app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_notes"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/adapter_trail_data_icon"
+        app:layout_constraintStart_toEndOf="@+id/adapter_trail_data_timeline"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -39,7 +42,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Notes"
         app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_coordinates"
         android:textColor="@color/textTertiary"
         android:textSize="@dimen/description_text_size"
@@ -52,7 +54,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Coordinates"
         android:textSize="@dimen/description_text_size"
         app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_date"
         android:textColor="?attr/colorAppAccent"
@@ -65,7 +66,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Date"
+        android:layout_marginBottom="24dp"
         android:textColor="@color/textTertiary"
         android:textSize="@dimen/description_text_size"
         app:layout_constraintBottom_toBottomOf="parent"

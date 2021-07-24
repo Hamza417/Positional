@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -18,12 +19,14 @@ import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.activities.subactivity.TrailDataActivity
 import app.simple.positional.activities.subactivity.TrailsViewerActivity
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.trails.TrailMapCallbacks
 import app.simple.positional.decorations.trails.TrailMaps
 import app.simple.positional.decorations.trails.TrailToolbar
 import app.simple.positional.decorations.trails.TrailTools
+import app.simple.positional.dialogs.trail.AddMarker
 import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.model.TrailData
@@ -53,7 +56,7 @@ class Trail : ScopedFragment() {
     private var location: Location? = null
     private var isFullScreen = false
 
-    private var currentTrail = ""
+    private var currentTrail: String? = null
 
     private lateinit var trailDataViewModel: TrailDataViewModel
     private val trailsViewModel: TrailsViewModel by viewModels()
@@ -115,7 +118,9 @@ class Trail : ScopedFragment() {
             }
 
             override fun onAdd(position: Int) {
-                if (currentTrail.isEmpty()) {
+                location ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show()
+
+                if (currentTrail!!.isEmpty()) {
                     addTrail()
                 } else {
                     val trailData = TrailData(
@@ -127,8 +132,27 @@ class Trail : ScopedFragment() {
                             null
                     )
 
-                    trailDataViewModel.saveTrailData(currentTrail, trailData)
+                    trailDataViewModel.saveTrailData(currentTrail!!, trailData)
                     maps?.addPolyline(trailData)
+                }
+            }
+
+            override fun onAddWithInfo(position: Int) {
+                location ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
+                    return
+                }
+
+                if (currentTrail!!.isEmpty()) {
+                    addTrail()
+                } else {
+                    val dialog = AddMarker.newInstance(position, LatLng(location!!.latitude, location!!.longitude))
+
+                    dialog.onNewTrailAddedSuccessfully = {
+                        trailDataViewModel.saveTrailData(currentTrail!!, it)
+                        maps?.addPolyline(it)
+                    }
+
+                    dialog.show(parentFragmentManager, "add_marker")
                 }
             }
 
@@ -141,18 +165,29 @@ class Trail : ScopedFragment() {
             }
         })
 
-        toolbar.onTrailAdd = {
-            addTrail()
-        }
+        toolbar.setOnTrailToolbarEventListener(object : TrailToolbar.Companion.TrailToolsCallbacks {
+            override fun onTrailsClicked() {
+                startActivity(Intent(requireContext(), TrailsViewerActivity::class.java))
+            }
 
-        toolbar.onFlagClicked = {
-            startActivity(Intent(requireContext(), TrailsViewerActivity::class.java))
-        }
+            override fun onTrailsLongClicked() {
+                if (currentTrail!!.isNotEmpty()) {
+                    val intent = Intent(requireContext(), TrailDataActivity::class.java)
+                    intent.putExtra("trail_name", currentTrail)
+                    startActivity(intent)
+                }
+            }
 
-        toolbar.onMenuClicked = {
-            TrailMenu.newInstance()
-                .show(requireActivity().supportFragmentManager, "trail_menu")
-        }
+            override fun onAddClicked() {
+                addTrail()
+            }
+
+            override fun onMenuClicked() {
+                TrailMenu.newInstance()
+                    .show(requireActivity().supportFragmentManager, "trail_menu")
+            }
+
+        })
 
         maps?.setOnTrailMapCallbackListener(object : TrailMapCallbacks {
             override fun onMapInitialized() {
@@ -181,7 +216,7 @@ class Trail : ScopedFragment() {
 
     private fun initViewModel() {
         currentTrail = TrailPreferences.getLastUsedTrail()
-        val trailDataFactory = TrailDataFactory(currentTrail, requireActivity().application)
+        val trailDataFactory = TrailDataFactory(currentTrail!!, requireActivity().application)
         trailDataViewModel = ViewModelProvider(requireActivity(), trailDataFactory).get(TrailDataViewModel::class.java)
     }
 
@@ -219,7 +254,7 @@ class Trail : ScopedFragment() {
             }
             TrailPreferences.lastSelectedTrail -> {
                 currentTrail = TrailPreferences.getLastUsedTrail()
-                trailDataViewModel.loadTrailData(currentTrail)
+                trailDataViewModel.loadTrailData(currentTrail!!)
                 maps?.clear()
             }
         }

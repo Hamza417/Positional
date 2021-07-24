@@ -103,7 +103,7 @@ object TrailPreferences {
     }
 
     fun getLastUsedTrail(): String {
-        return getSharedPreferences().getString(lastSelectedTrail, "null")!!
+        return getSharedPreferences().getString(lastSelectedTrail, "")!!
     }
 
     //--------------------------------------------------------------------------------------------------//

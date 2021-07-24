@@ -1,0 +1,64 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "8d733ad56521f18c7b12e63e8f6d92a2",
+    "entities": [
+      {
+        "tableName": "trail_data",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`lat` REAL NOT NULL, `lng` REAL NOT NULL, `time_added` INTEGER NOT NULL, `icon_position` INTEGER NOT NULL, `note` TEXT, `name` TEXT, PRIMARY KEY(`time_added`))",
+        "fields": [
+          {
+            "fieldPath": "latitude",
+            "columnName": "lat",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "longitude",
+            "columnName": "lng",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeAdded",
+            "columnName": "time_added",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "iconPosition",
+            "columnName": "icon_position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "time_added"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8d733ad56521f18c7b12e63e8f6d92a2')"
+    ]
+  }
+}
