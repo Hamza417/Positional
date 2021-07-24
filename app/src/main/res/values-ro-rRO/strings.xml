@@ -282,4 +282,6 @@
     <string name="panels_editor">Editor de panouri</string>
     <string name="total">Total:</string>
     <string name="saved_trails">Traseuri salvate</string>
+    <string name="starting_point">Punct de plecare</string>
+    <string name="enter_marker_name">Introdu numele marcatorului</string>
 </resources>
