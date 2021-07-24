@@ -280,4 +280,8 @@
     <string name="enter_trail_name">ट्रेल का नाम दर्ज करें</string>
     <string name="note">टिप्पणियाँ</string>
     <string name="panels_editor">पैनल संपादक</string>
+    <string name="total">कुल:</string>
+    <string name="saved_trails">संग्रहीत ट्रेल्स</string>
+    <string name="starting_point">मार्ग की शुरुआत</string>
+    <string name="enter_marker_name">मार्कर का नाम दर्ज करें</string>
 </resources>
