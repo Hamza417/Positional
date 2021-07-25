@@ -255,7 +255,7 @@
     <string name="use_physical_properties">भौतिक गुणों का उपयोग करें</string>
     <string name="seconds_precision">सेकंड्स परिशुद्धता</string>
     <string name="bearing_rotation">असर रोटेशन</string>
-    <string name="accent_color">एक्सेंट रंग</string>
+    <string name="accent_colors">एक्सेंट रंग</string>
     <string name="opacity">अपारदर्शिता</string>
     <string name="size">आकार</string>
     <string name="customize_pin">पिन अनुकूलित करें</string>

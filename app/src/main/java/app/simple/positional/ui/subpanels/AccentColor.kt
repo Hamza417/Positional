@@ -1,32 +1,29 @@
-package app.simple.positional.dialogs.app
+package app.simple.positional.ui.subpanels
 
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
 import app.simple.positional.R
+import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.adapters.settings.AccentColorAdapter
-import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.preferences.MainPreferences
 
-class AccentColor : CustomBottomSheetDialogFragment() {
+class AccentColor : ScopedFragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: CustomRecyclerView
     private lateinit var accentColorAdapter: AccentColorAdapter
-    private var spanCount = 4
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = layoutInflater.inflate(R.layout.dialog_color_accent, container, false)
+        val view = layoutInflater.inflate(R.layout.fragment_color_accent, container, false)
 
         recyclerView = view.findViewById(R.id.accent_recycler_view)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount, GridLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true)
-
         accentColorAdapter = AccentColorAdapter()
-        recyclerView.adapter = accentColorAdapter
 
         return view
     }
@@ -39,6 +36,8 @@ class AccentColor : CustomBottomSheetDialogFragment() {
                 MainPreferences.setAccentColor(source)
             }
         })
+
+        recyclerView.adapter = accentColorAdapter
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

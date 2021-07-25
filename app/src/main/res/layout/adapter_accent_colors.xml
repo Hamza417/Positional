@@ -1,21 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.corners.DynamicCornerAccentColor xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/adapter_palette_color"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/color_container"
     android:layout_width="match_parent"
-    android:elevation="10dp"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
     android:layout_margin="10dp">
 
-    <ImageView
-        android:id="@+id/adapter_palette_tick"
-        android:layout_width="match_parent"
-        android:layout_gravity="center"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        android:src="@drawable/ic_check"
-        app:tint="@android:color/white"
-        tools:ignore="ContentDescription" />
+    <app.simple.positional.decorations.corners.DynamicCornerAccentColor xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/adapter_palette_color"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:elevation="25dp">
 
-</app.simple.positional.decorations.corners.DynamicCornerAccentColor>
+        <ImageView
+            android:id="@+id/adapter_palette_tick"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:src="@drawable/ic_check"
+            app:tint="@android:color/white"
+            tools:ignore="ContentDescription" />
+
+    </app.simple.positional.decorations.corners.DynamicCornerAccentColor>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/color_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="10dp"
+            android:fontFamily="@font/medium"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/popup_text_size" />
+
+        <TextView
+            android:id="@+id/color_hex"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/medium"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/description_text_size" />
+    </LinearLayout>
+</LinearLayout>

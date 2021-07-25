@@ -80,7 +80,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:fontFamily="@font/medium"
-            android:text="@string/accent_color"
+            android:text="@string/accent_colors"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size" />
 

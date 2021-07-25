@@ -1,72 +1,141 @@
 package app.simple.positional.adapters.settings
 
 import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.RippleDrawable
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.RoundRectShape
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerAccentColor
+import app.simple.positional.decorations.ripple.Utils
+import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.preferences.MainPreferences.getCornerRadius
+import app.simple.positional.util.ColorUtils.toHex
+import app.simple.positional.util.ConditionUtils.isZero
+import app.simple.positional.util.HtmlHelper
 import org.jetbrains.annotations.NotNull
+import java.util.*
 
-class AccentColorAdapter : RecyclerView.Adapter<AccentColorAdapter.Holder>() {
+class AccentColorAdapter : RecyclerView.Adapter<VerticalListViewHolder>() {
 
-    private var list = arrayListOf<Int>()
+    private var list = arrayListOf<Pair<Int, String>>()
     private lateinit var palettesAdapterCallbacks: PalettesAdapterCallbacks
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalListViewHolder {
 
         list = arrayListOf(
-                ContextCompat.getColor(parent.context, R.color.positional),
-                ContextCompat.getColor(parent.context, R.color.blue),
-                ContextCompat.getColor(parent.context, R.color.blueGrey),
-                ContextCompat.getColor(parent.context, R.color.darkBlue),
-                ContextCompat.getColor(parent.context, R.color.red),
-                ContextCompat.getColor(parent.context, R.color.green),
-                ContextCompat.getColor(parent.context, R.color.orange),
-                ContextCompat.getColor(parent.context, R.color.purple),
-                ContextCompat.getColor(parent.context, R.color.yellow),
-                ContextCompat.getColor(parent.context, R.color.caribbeanGreen),
-                ContextCompat.getColor(parent.context, R.color.persianGreen),
-                ContextCompat.getColor(parent.context, R.color.amaranth)
+                Pair(ContextCompat.getColor(parent.context, R.color.positional), "Positional"),
+                Pair(ContextCompat.getColor(parent.context, R.color.blue), "Blue"),
+                Pair(ContextCompat.getColor(parent.context, R.color.blueGrey), "Blue Grey"),
+                Pair(ContextCompat.getColor(parent.context, R.color.darkBlue), "Dark Blue"),
+                Pair(ContextCompat.getColor(parent.context, R.color.red), "Red"),
+                Pair(ContextCompat.getColor(parent.context, R.color.green), "Green"),
+                Pair(ContextCompat.getColor(parent.context, R.color.orange), "Orange"),
+                Pair(ContextCompat.getColor(parent.context, R.color.purple), "Purple"),
+                Pair(ContextCompat.getColor(parent.context, R.color.yellow), "Yellow"),
+                Pair(ContextCompat.getColor(parent.context, R.color.caribbeanGreen), "Caribbean Green"),
+                Pair(ContextCompat.getColor(parent.context, R.color.persianGreen), "Persian Green"),
+                Pair(ContextCompat.getColor(parent.context, R.color.amaranth), "Amaranth"),
+                Pair(ContextCompat.getColor(parent.context, R.color.indian_red), "Indian Red"),
+                Pair(ContextCompat.getColor(parent.context, R.color.light_coral), "Light Coral"),
+                Pair(ContextCompat.getColor(parent.context, R.color.pink_flare), "Pink Flare"),
+                Pair(ContextCompat.getColor(parent.context, R.color.makeup_tan), "Makeup Tan"),
+                Pair(ContextCompat.getColor(parent.context, R.color.egg_yellow), "Egg Yellow"),
+                Pair(ContextCompat.getColor(parent.context, R.color.medium_green), "Medium Green"),
+                Pair(ContextCompat.getColor(parent.context, R.color.olive), "Olive")
         )
 
-        return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_accent_colors, parent, false))
+        return when (viewType) {
+            VerticalListViewHolder.TYPE_ITEM -> {
+                Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_accent_colors, parent, false))
+            }
+            VerticalListViewHolder.TYPE_HEADER -> {
+                Header(LayoutInflater.from(parent.context).inflate(R.layout.adapter_accent_color_header, parent, false))
+            }
+            else -> {
+                throw RuntimeException("there is no type that matches the type $viewType + make sure your using types correctly")
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.color.backgroundTintList = ColorStateList.valueOf(list[position])
+    override fun onBindViewHolder(holder: VerticalListViewHolder, position_: Int) {
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-            holder.color.outlineSpotShadowColor = list[position]
-            holder.color.outlineAmbientShadowColor = list[position]
-        }
+        val position = position_ - 1
 
-        holder.color.setOnClickListener {
-            palettesAdapterCallbacks.onColorPressed(list[position])
-        }
+        if (holder is Holder) {
+            holder.color.backgroundTintList = ColorStateList.valueOf(list[position].first)
 
-        holder.tick.visibility = if (list[position] == MainPreferences.getAccentColor()) {
-            View.VISIBLE
-        } else {
-            View.INVISIBLE
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                holder.color.outlineSpotShadowColor = list[position].first
+                holder.color.outlineAmbientShadowColor = list[position].first
+            }
+
+            holder.container.setOnClickListener {
+                palettesAdapterCallbacks.onColorPressed(list[position].first)
+            }
+
+            holder.name.text = list[position].second
+            holder.hex.text = list[position].first.toHex()
+
+            holder.container.background = null
+            holder.container.background = getRippleDrawable(holder.container.background, list[position].first)
+
+            holder.tick.visibility = if (list[position].first == MainPreferences.getAccentColor()) {
+                View.VISIBLE
+            } else {
+                View.INVISIBLE
+            }
+        } else if (holder is Header) {
+            holder.total.text = HtmlHelper.fromHtml("<b>${holder.itemView.context.getString(R.string.total)}</b> ${list.size}")
         }
     }
 
     override fun getItemCount(): Int {
-        return 12
+        return 19 + 1 // Extra 1 is Header
     }
 
-    inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    override fun getItemViewType(position: Int): Int {
+        return if (position.isZero()) {
+            VerticalListViewHolder.TYPE_HEADER
+        } else VerticalListViewHolder.TYPE_ITEM
+    }
+
+    inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
         val color: DynamicCornerAccentColor = itemView.findViewById(R.id.adapter_palette_color)
         val tick: ImageView = itemView.findViewById(R.id.adapter_palette_tick)
+        val name: TextView = itemView.findViewById(R.id.color_name)
+        val hex: TextView = itemView.findViewById(R.id.color_hex)
+        val container: LinearLayout = itemView.findViewById(R.id.color_container)
+    }
+
+    inner class Header(itemView: View) : VerticalListViewHolder(itemView) {
+        val total: TextView = itemView.findViewById(R.id.adapter_accent_total)
     }
 
     fun setOnPaletteChangeListener(palettesAdapterCallbacks: PalettesAdapterCallbacks) {
         this.palettesAdapterCallbacks = palettesAdapterCallbacks
+    }
+
+    private fun getRippleDrawable(backgroundDrawable: Drawable?, color: Int): RippleDrawable {
+        val outerRadii = FloatArray(8)
+        val innerRadii = FloatArray(8)
+        Arrays.fill(outerRadii, getCornerRadius().toFloat())
+        Arrays.fill(innerRadii, getCornerRadius().toFloat())
+        val shape = RoundRectShape(outerRadii, null, innerRadii)
+        val mask = ShapeDrawable(shape)
+        val stateList = ColorStateList.valueOf(color)
+        val rippleDrawable = RippleDrawable(stateList, backgroundDrawable, mask)
+        rippleDrawable.alpha = Utils.alpha
+        return rippleDrawable
     }
 
     companion object {

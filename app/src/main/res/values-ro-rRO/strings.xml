@@ -255,7 +255,7 @@
     <string name="use_physical_properties">Utilizare proprietăți fizice</string>
     <string name="seconds_precision">Precizie secunde</string>
     <string name="bearing_rotation">Rotire</string>
-    <string name="accent_color">Culoare accent</string>
+    <string name="accent_colors">Culoare accent</string>
     <string name="opacity">Opacitate</string>
     <string name="size">Dimensiune</string>
     <string name="customize_pin">Personalizare marcator</string>

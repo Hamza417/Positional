@@ -14,7 +14,6 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.animation.ArgbEvaluatorCompat
 
-
 @Suppress("unused")
 object ColorUtils {
     fun ViewGroup.animateColorChange(endColor: Int) {
@@ -55,6 +54,10 @@ object ColorUtils {
 
     fun changeAlpha(origColor: Int, userInputAlpha: Int): Int {
         return origColor and 0x00ffffff or (userInputAlpha shl 24)
+    }
+
+    fun Int.toHex(): String {
+        return String.format("#%06x", this and 0xffffff)
     }
 
     fun getMapColorFilter(): ColorMatrixColorFilter {

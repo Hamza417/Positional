@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.activities.subactivity.AccentColorsActivity
 import app.simple.positional.activities.subactivity.CustomLocationsActivity
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.callbacks.CoordinatesCallback
@@ -23,7 +24,6 @@ import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
-import app.simple.positional.dialogs.app.AccentColor
 import app.simple.positional.dialogs.app.PanelEditor
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.popups.settings.LegalNotesPopupMenu
@@ -137,8 +137,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         accent.setOnClickListener {
-            AccentColor.newInstance()
-                    .show(childFragmentManager, "accent")
+            startActivity(Intent(requireContext(), AccentColorsActivity::class.java))
         }
 
         icon.setOnClickListener {
@@ -330,6 +329,9 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             }
             MainPreferences.theme -> {
                 setCurrentThemeValue(MainPreferences.getTheme())
+            }
+            MainPreferences.accentColor -> {
+                requireActivity().recreate()
             }
             MainPreferences.isOSMPanel -> {
                 setCurrentMapsProvider()

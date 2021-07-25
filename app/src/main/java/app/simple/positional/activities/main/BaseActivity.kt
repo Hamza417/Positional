@@ -117,6 +117,30 @@ open class BaseActivity : AppCompatActivity() {
             ContextCompat.getColor(baseContext, R.color.amaranth) -> {
                 setTheme(R.style.Amaranth)
             }
+            ContextCompat.getColor(baseContext, R.color.indian_red) -> {
+                setTheme(R.style.IndianRed)
+            }
+            ContextCompat.getColor(baseContext, R.color.light_coral) -> {
+                setTheme(R.style.LightCoral)
+            }
+            ContextCompat.getColor(baseContext, R.color.pink_flare) -> {
+                setTheme(R.style.PinkFlare)
+            }
+            ContextCompat.getColor(baseContext, R.color.makeup_tan) -> {
+                setTheme(R.style.MakeupTan)
+            }
+            ContextCompat.getColor(baseContext, R.color.egg_yellow) -> {
+                setTheme(R.style.EggYellow)
+            }
+            ContextCompat.getColor(baseContext, R.color.medium_green) -> {
+                setTheme(R.style.MediumGreen)
+            }
+            ContextCompat.getColor(baseContext, R.color.medium_green) -> {
+                setTheme(R.style.MediumGreen)
+            }
+            ContextCompat.getColor(baseContext, R.color.olive) -> {
+                setTheme(R.style.Olive)
+            }
             else -> {
                 setTheme(R.style.Positional)
                 MainPreferences.setAccentColor(ContextCompat.getColor(baseContext, R.color.positional))

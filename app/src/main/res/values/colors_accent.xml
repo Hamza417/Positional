@@ -13,6 +13,13 @@
     <color name="caribbeanGreen">#00D390</color>
     <color name="persianGreen">#00B2AA</color>
     <color name="amaranth">#E4354A</color>
+    <color name="indian_red">#CD5C5C</color>
+    <color name="light_coral">#F08080</color>
+    <color name="pink_flare">#dec3c3</color>
+    <color name="makeup_tan">#DDAF94</color>
+    <color name="egg_yellow">#FFDF6C</color>
+    <color name="medium_green">#4D774E</color>
+    <color name="olive">#A3BCB6</color>
 
     <color name="positional_light">#6DDCE8</color>
     <color name="blue_light">#85C1E9</color>
@@ -26,4 +33,11 @@
     <color name="caribbeanGreenLight">#65FFCE</color>
     <color name="persianGreen_light">#38D9D2</color>
     <color name="amaranth_light">#F75D70</color>
+    <color name="indian_red_light">#E37B7B</color>
+    <color name="light_coral_light">#FD9A9A</color>
+    <color name="pink_flare_light">#e7d3d3</color>
+    <color name="makeup_tan_light">#EDC2A8</color>
+    <color name="egg_yellow_light">#FDE17D</color>
+    <color name="medium_green_light">#588259</color>
+    <color name="olive_light">#A3BCB6</color>
 </resources>

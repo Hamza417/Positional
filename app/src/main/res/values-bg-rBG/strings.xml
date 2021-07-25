@@ -255,7 +255,7 @@
     <string name="use_physical_properties">Използвайте физически свойства</string>
     <string name="seconds_precision">Секунди Прецизност</string>
     <string name="bearing_rotation">Въртене на лагера</string>
-    <string name="accent_color">Акцентиращ цвят</string>
+    <string name="accent_colors">Акцентиращ цвят</string>
     <string name="opacity">Прозрачност</string>
     <string name="size">Размер</string>
     <string name="customize_pin">Персонализиран Пин</string>

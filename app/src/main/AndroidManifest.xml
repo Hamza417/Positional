@@ -270,6 +270,10 @@
             android:name=".activities.subactivity.TrailDataActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activities.subactivity.AccentColorsActivity"
+            android:screenOrientation="portrait" />
+
         <!-- Services -->
 
         <service

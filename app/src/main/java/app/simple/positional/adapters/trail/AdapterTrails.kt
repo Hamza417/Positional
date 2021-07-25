@@ -13,6 +13,7 @@ import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.model.TrailModel
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ColorUtils.resolveAttrColor
+import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.HtmlHelper
 import app.simple.positional.util.TimeFormatter.formatDate
 import java.util.*
@@ -68,13 +69,9 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (isPositionHeader(position)) {
+        return if (position.isZero()) {
             VerticalListViewHolder.TYPE_HEADER
         } else VerticalListViewHolder.TYPE_ITEM
-    }
-
-    private fun isPositionHeader(position: Int): Boolean {
-        return position == 0
     }
 
     inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {

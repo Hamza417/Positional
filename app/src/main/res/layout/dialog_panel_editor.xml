@@ -18,7 +18,7 @@
         android:clipToPadding="false"
         android:layoutAnimation="@anim/list_animation_controller"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/options_sub_item_padding"
+        android:padding="@dimen/options_sub_item_padding"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:reverseLayout="false" />
 

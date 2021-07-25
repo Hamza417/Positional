@@ -55,4 +55,40 @@
         <item name="colorAppAccent">@color/amaranth</item>
         <item name="colorAppAccentLight">@color/amaranth_light</item>
     </style>
+
+    <style name="IndianRed" parent="Positional">
+        <item name="colorAppAccent">@color/amaranth</item>
+        <item name="colorAppAccentLight">@color/amaranth_light</item>
+    </style>
+
+    <style name="LightCoral" parent="Positional">
+        <item name="colorAppAccent">@color/light_coral</item>
+        <item name="colorAppAccentLight">@color/light_coral_light</item>
+    </style>
+
+    <style name="PinkFlare" parent="Positional">
+        <item name="colorAppAccent">@color/pink_flare</item>
+        <item name="colorAppAccentLight">@color/pink_flare_light</item>
+    </style>
+
+    <style name="MakeupTan" parent="Positional">
+        <item name="colorAppAccent">@color/makeup_tan</item>
+        <item name="colorAppAccentLight">@color/makeup_tan_light</item>
+    </style>
+
+    <style name="EggYellow" parent="Positional">
+        <item name="colorAppAccent">@color/egg_yellow</item>
+        <item name="colorAppAccentLight">@color/egg_yellow_light</item>
+    </style>
+
+    <style name="MediumGreen" parent="Positional">
+        <item name="colorAppAccent">@color/medium_green</item>
+        <item name="colorAppAccentLight">@color/medium_green_light</item>
+    </style>
+
+    <style name="Olive" parent="Positional">
+        <item name="colorAppAccent">@color/olive</item>
+        <item name="colorAppAccentLight">@color/olive_light</item>
+    </style>
+
 </resources>
