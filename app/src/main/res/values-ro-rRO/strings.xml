@@ -255,7 +255,7 @@
     <string name="use_physical_properties">Utilizare proprietăți fizice</string>
     <string name="seconds_precision">Precizie secunde</string>
     <string name="bearing_rotation">Rotire</string>
-    <string name="accent_colors">Culoare accent</string>
+    <string name="accent_colors">Culori accent</string>
     <string name="opacity">Opacitate</string>
     <string name="size">Dimensiune</string>
     <string name="customize_pin">Personalizare marcator</string>
@@ -284,4 +284,6 @@
     <string name="saved_trails">Traseuri salvate</string>
     <string name="starting_point">Punct de plecare</string>
     <string name="enter_marker_name">Introdu numele marcatorului</string>
+    <string name="delete">Ștergere</string>
+    <string name="show_on_map">Afişare pe hartă</string>
 </resources>
