@@ -67,12 +67,8 @@ class Trails : ScopedFragment() {
 
             adapterTrails.setOnAdapterTrailsCallbackListener(object : AdapterTrails.Companion.AdapterTrailsCallback {
                 override fun onTrailClicked(name: String) {
-                    requireActivity().supportFragmentManager
-                        .beginTransaction()
-                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                        .replace(R.id.sub_container, TrailData.newInstance(name))
-                        .addToBackStack(tag)
-                        .commit()
+                    TrailPreferences.setLastTrailName(name)
+                    requireActivity().finish()
                 }
 
                 override fun onTrailMenu(trailModel: TrailModel, anchor: View) {

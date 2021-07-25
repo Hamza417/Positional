@@ -9,18 +9,23 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.TrailDataActivity
 import app.simple.positional.activities.subactivity.TrailsViewerActivity
+import app.simple.positional.adapters.trail.AdapterTrailData
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.trails.TrailMapCallbacks
@@ -32,14 +37,19 @@ import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.model.TrailData
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
+import app.simple.positional.popups.trail.PopupTrailsDataMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isZero
+import app.simple.positional.util.StatusBarHeight
+import app.simple.positional.util.ViewUtils.makeInvisible
+import app.simple.positional.util.ViewUtils.makeVisible
 import app.simple.positional.viewmodels.factory.TrailDataFactory
 import app.simple.positional.viewmodels.viewmodel.TrailDataViewModel
 import app.simple.positional.viewmodels.viewmodel.TrailsViewModel
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -50,8 +60,14 @@ class Trail : ScopedFragment() {
     private lateinit var toolbar: TrailToolbar
     private lateinit var tools: TrailTools
     private lateinit var locationBroadcastReceiver: BroadcastReceiver
+    private lateinit var trailRecyclerView: RecyclerView
+    private lateinit var bottomSheetPanel: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var bottomSheetSlide: BottomSheetSlide
+    private lateinit var expandUp: ImageView
+    private lateinit var art: ImageView
+    private lateinit var dim: View
 
+    private var backPress: OnBackPressedDispatcher? = null
     private var maps: TrailMaps? = null
     private val handler = Handler(Looper.getMainLooper())
     private var filter: IntentFilter = IntentFilter()
@@ -68,9 +84,16 @@ class Trail : ScopedFragment() {
 
         toolbar = view.findViewById(R.id.toolbar)
         tools = view.findViewById(R.id.trail_tools)
+        trailRecyclerView = view.findViewById(R.id.trail_data_recycler_view)
+        bottomSheetPanel = BottomSheetBehavior.from(view.findViewById(R.id.trail_bottom_sheet))
+        expandUp = view.findViewById(R.id.expand_up)
+        art = view.findViewById(R.id.art)
+        dim = view.findViewById(R.id.dim)
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
-        initViewModel()
+        currentTrail = TrailPreferences.getLastUsedTrail()
+        val trailDataFactory = TrailDataFactory(currentTrail!!, requireActivity().application)
+        trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
 
         maps = view.findViewById(R.id.map_view)
         maps?.onCreate(savedInstanceState)
@@ -79,7 +102,16 @@ class Trail : ScopedFragment() {
         filter.addAction("location")
         filter.addAction("provider")
 
+        backPress = requireActivity().onBackPressedDispatcher
+
         updateToolsGravity(view)
+
+        trailRecyclerView.apply {
+            setPadding(paddingLeft,
+                       paddingTop + StatusBarHeight.getStatusBarHeight(resources),
+                       paddingRight,
+                       paddingBottom)
+        }
 
         return view
     }
@@ -109,6 +141,62 @@ class Trail : ScopedFragment() {
                 }
             }
         }
+
+        trailDataViewModel.trailDataDescendingWithInfo.observe(viewLifecycleOwner, {
+            val adapter = AdapterTrailData(it)
+
+            adapter.setOnTrailsDataCallbackListener(object : AdapterTrailData.Companion.AdapterTrailsDataCallbacks {
+                override fun onTrailsDataLongPressed(trailData: TrailData, view: View, i: Int) {
+                    val popup = PopupTrailsDataMenu(
+                            layoutInflater.inflate(R.layout.popup_trails_data,
+                                                   DynamicCornerLinearLayout(requireContext())), view)
+
+                    popup.setOnPopupCallbacksListener(object : PopupTrailsDataMenu.Companion.PopupTrailsCallbacks {
+                        override fun onDelete() {
+                            val deletePopupMenu = DeletePopupMenu(
+                                    layoutInflater.inflate(R.layout.popup_delete_confirmation,
+                                                           DynamicCornerLinearLayout(requireContext())), view)
+
+                            deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
+                                override fun delete() {
+                                    trailDataViewModel.deleteTrailData(trailData)
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+
+            if (it.first.isNullOrEmpty()) {
+                art.makeVisible(false)
+                trailRecyclerView.adapter = null
+            } else {
+                art.makeInvisible(false)
+                trailRecyclerView.adapter = adapter
+            }
+        })
+
+        bottomSheetPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    backPressed(true)
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    backPressed(false)
+                    if (backPress!!.hasEnabledCallbacks()) {
+                        backPress?.onBackPressed()
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                trailRecyclerView.alpha = slideOffset
+                expandUp.alpha = 1 - slideOffset
+                dim.alpha = slideOffset
+                if (!isFullScreen) {
+                    bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                }
+            }
+        })
 
         tools.setTrailCallbacksListener(object : TrailTools.Companion.TrailCallbacks {
             override fun onLocation() {
@@ -224,12 +312,6 @@ class Trail : ScopedFragment() {
         })
     }
 
-    private fun initViewModel() {
-        currentTrail = TrailPreferences.getLastUsedTrail()
-        val trailDataFactory = TrailDataFactory(currentTrail!!, requireActivity().application)
-        trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
-    }
-
     override fun onResume() {
         super.onResume()
         maps?.resume()
@@ -265,6 +347,7 @@ class Trail : ScopedFragment() {
             TrailPreferences.lastSelectedTrail -> {
                 currentTrail = TrailPreferences.getLastUsedTrail()
                 trailDataViewModel.loadTrailData(currentTrail!!)
+                trailDataViewModel.loadTrailDataWithInformation(currentTrail!!, false)
                 maps?.clear()
             }
         }
@@ -322,6 +405,24 @@ class Trail : ScopedFragment() {
         }
 
         p0.show(requireActivity().supportFragmentManager, "add_trail")
+    }
+
+    private fun backPressed(value: Boolean) {
+        /**
+         * @see Clock.backPressed
+         */
+        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
+            override fun handleOnBackPressed() {
+                if (bottomSheetPanel.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetPanel.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+                /**
+                 * Remove this callback as soon as it's been called
+                 * to prevent any further registering
+                 */
+                remove()
+            }
+        })
     }
 
     companion object {

@@ -70,6 +70,8 @@ class TrailDataViewModel(application: Application, private val trailName: String
 
             database.trailDataDao()?.insertTrailData(trails)!!
 
+            loadTrailDataWithInformation(trailName, false)
+
             database.close()
         }
     }
@@ -86,13 +88,14 @@ class TrailDataViewModel(application: Application, private val trailName: String
                 database.trailDataDao()?.deleteTrailData(trails)!!
 
                 loadTrailDataWithInformation(trailName, false)
+                loadTrailData(trailName)
 
                 database.close()
             })
         }
     }
 
-    private fun loadTrailDataWithInformation(trailName: String, delay: Boolean) {
+    fun loadTrailDataWithInformation(trailName: String, delay: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
                                                 TrailDataDatabase::class.java,
