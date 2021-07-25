@@ -11,7 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.adapters.trail.AdapterTrailData
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.views.CustomRecyclerView
+import app.simple.positional.popups.miscellaneous.DeletePopupMenu
+import app.simple.positional.popups.trail.PopupTrailsDataMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ViewUtils
@@ -60,11 +63,36 @@ class TrailData : ScopedFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         trailDataViewModel.trailDataDescendingWithInfo.observe(viewLifecycleOwner, {
+
+            val adapter = AdapterTrailData(it)
+
+            adapter.setOnTrailsDataCallbackListener(object : AdapterTrailData.Companion.AdapterTrailsDataCallbacks {
+                override fun onTrailsDataLongPressed(trailData: app.simple.positional.model.TrailData, view: View, i: Int) {
+                    val popup = PopupTrailsDataMenu(
+                            layoutInflater.inflate(R.layout.popup_trails_data,
+                                                   DynamicCornerLinearLayout(requireContext())), view)
+
+                    popup.setOnPopupCallbacksListener(object : PopupTrailsDataMenu.Companion.PopupTrailsCallbacks {
+                        override fun onDelete() {
+                            val deletePopupMenu = DeletePopupMenu(
+                                    layoutInflater.inflate(R.layout.popup_delete_confirmation,
+                                                           DynamicCornerLinearLayout(requireContext())), view)
+
+                            deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
+                                override fun delete() {
+                                    trailDataViewModel.deleteTrailData(trailData)
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+
             if (it.first.isNullOrEmpty()) {
                 art.makeVisible(true)
             } else {
                 art.makeInvisible(true)
-                recyclerView.adapter = AdapterTrailData(it)
+                recyclerView.adapter = adapter
             }
         })
 

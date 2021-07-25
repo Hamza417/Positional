@@ -36,7 +36,7 @@ class TrailDataViewModel(application: Application, private val trailName: String
 
     val trailDataDescendingWithInfo: MutableLiveData<Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>> by lazy {
         MutableLiveData<Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>>().also {
-            loadTrailDataWithInformation(trailName)
+            loadTrailDataWithInformation(trailName, true)
         }
     }
 
@@ -84,12 +84,15 @@ class TrailDataViewModel(application: Application, private val trailName: String
                                                     "$trailName.db").build()
 
                 database.trailDataDao()?.deleteTrailData(trails)!!
+
+                loadTrailDataWithInformation(trailName, false)
+
                 database.close()
             })
         }
     }
 
-    private fun loadTrailDataWithInformation(trailName: String) {
+    private fun loadTrailDataWithInformation(trailName: String, delay: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
                                                 TrailDataDatabase::class.java,
@@ -136,7 +139,7 @@ class TrailDataViewModel(application: Application, private val trailName: String
                                     HtmlHelper.fromHtml(builder.toString())
                             ))
 
-            delay(500)
+            if (delay) delay(500)
 
             trailDataDescendingWithInfo.postValue(pair)
         }

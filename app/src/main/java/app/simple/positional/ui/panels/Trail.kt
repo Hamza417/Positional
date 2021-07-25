@@ -31,7 +31,7 @@ import app.simple.positional.dialogs.trail.AddMarker
 import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.model.TrailData
-import app.simple.positional.popups.DeletePopupMenu
+import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ConditionUtils.isNotNull

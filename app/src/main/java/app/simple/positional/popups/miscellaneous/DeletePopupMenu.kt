@@ -1,4 +1,4 @@
-package app.simple.positional.popups
+package app.simple.positional.popups.miscellaneous
 
 import android.view.Gravity
 import android.view.View

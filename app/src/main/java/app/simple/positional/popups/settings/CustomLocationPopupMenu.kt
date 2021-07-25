@@ -1,4 +1,4 @@
-package app.simple.positional.popups
+package app.simple.positional.popups.settings
 
 import android.view.View
 import app.simple.positional.R

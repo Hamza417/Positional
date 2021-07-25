@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.R.id
 import app.simple.positional.constants.TrailIcons
+import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_FOOTER
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_HEADER
@@ -19,6 +20,8 @@ import app.simple.positional.util.TimeFormatter.formatDate
 import com.github.vipulasri.timelineview.TimelineView
 
 class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>) : RecyclerView.Adapter<VerticalListViewHolder>() {
+
+    private lateinit var trailsDataCallbacks: AdapterTrailsDataCallbacks
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalListViewHolder {
         return when (viewType) {
@@ -42,7 +45,6 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         val position = position_ - 1
 
         if (holder is Holder) {
-
             setMarker(holder,
                       TrailIcons.icons[trailData.first[position].iconPosition])
 
@@ -53,6 +55,11 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
                 getString(R.string.coordinates_format,
                           DMSConverter.latitudeAsDMS(trailData.first[position].latitude, 2, this),
                           DMSConverter.longitudeAsDMS(trailData.first[position].longitude, 2, this))
+            }
+
+            holder.container.setOnLongClickListener {
+                trailsDataCallbacks.onTrailsDataLongPressed(trailData.first[position], it, position + 1)
+                true
             }
         } else if (holder is Header) {
             holder.name.text = trailData.second.first
@@ -91,12 +98,22 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         holder.icon.marker = ContextCompat.getDrawable(holder.itemView.context, drawableResId)
     }
 
+    fun setOnTrailsDataCallbackListener(trailsDataCallbacks: AdapterTrailsDataCallbacks) {
+        this.trailsDataCallbacks = trailsDataCallbacks
+    }
+
+    fun removeItem(position: Int) {
+        trailData.first.removeAt(position - 1)
+        notifyItemRemoved(position)
+    }
+
     inner class Holder(itemView: View, viewType: Int) : VerticalListViewHolder(itemView) {
         val icon: TimelineView = itemView.findViewById(id.adapter_trail_data_timeline)
         val name: TextView = itemView.findViewById(id.adapter_trail_data_name)
         val note: TextView = itemView.findViewById(id.adapter_trail_data_notes)
         val coordinates: TextView = itemView.findViewById(id.adapter_trail_data_coordinates)
         val date: TextView = itemView.findViewById(id.adapter_trail_data_date)
+        val container: DynamicRippleConstraintLayout = itemView.findViewById(R.id.adapter_trails_data_item_container)
 
         init {
             icon.initLine(viewType)
@@ -114,4 +131,10 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
     }
 
     inner class Footer(itemView: View) : VerticalListViewHolder(itemView)
+
+    companion object {
+        interface AdapterTrailsDataCallbacks {
+            fun onTrailsDataLongPressed(trailData: TrailData, view: View, i: Int)
+        }
+    }
 }

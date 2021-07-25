@@ -28,7 +28,7 @@ import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.model.Locations
-import app.simple.positional.popups.CustomLocationPopupMenu
+import app.simple.positional.popups.settings.CustomLocationPopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.TextViewUtils.capitalizeText
 import app.simple.positional.util.ViewUtils.makeInvisible

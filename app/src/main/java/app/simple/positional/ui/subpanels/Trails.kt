@@ -14,7 +14,7 @@ import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.model.TrailModel
-import app.simple.positional.popups.DeletePopupMenu
+import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.popups.trail.PopupTrailsMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
