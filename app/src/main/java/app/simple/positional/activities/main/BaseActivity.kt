@@ -135,11 +135,20 @@ open class BaseActivity : AppCompatActivity() {
             ContextCompat.getColor(baseContext, R.color.medium_green) -> {
                 setTheme(R.style.MediumGreen)
             }
-            ContextCompat.getColor(baseContext, R.color.medium_green) -> {
-                setTheme(R.style.MediumGreen)
-            }
             ContextCompat.getColor(baseContext, R.color.olive) -> {
                 setTheme(R.style.Olive)
+            }
+            ContextCompat.getColor(baseContext, R.color.copperfield) -> {
+                setTheme(R.style.Copperfield)
+            }
+            ContextCompat.getColor(baseContext, R.color.mineral_green) -> {
+                setTheme(R.style.MineralGreen)
+            }
+            ContextCompat.getColor(baseContext, R.color.lochinvar) -> {
+                setTheme(R.style.Lochinvar)
+            }
+            ContextCompat.getColor(baseContext, R.color.beach_grey) -> {
+                setTheme(R.style.BeachGrey)
             }
             else -> {
                 setTheme(R.style.Positional)

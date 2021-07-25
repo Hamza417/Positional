@@ -51,7 +51,11 @@ class AccentColorAdapter : RecyclerView.Adapter<VerticalListViewHolder>() {
                 Pair(ContextCompat.getColor(parent.context, R.color.makeup_tan), "Makeup Tan"),
                 Pair(ContextCompat.getColor(parent.context, R.color.egg_yellow), "Egg Yellow"),
                 Pair(ContextCompat.getColor(parent.context, R.color.medium_green), "Medium Green"),
-                Pair(ContextCompat.getColor(parent.context, R.color.olive), "Olive")
+                Pair(ContextCompat.getColor(parent.context, R.color.olive), "Olive"),
+                Pair(ContextCompat.getColor(parent.context, R.color.copperfield), "Copperfield"),
+                Pair(ContextCompat.getColor(parent.context, R.color.mineral_green), "Mineral Green"),
+                Pair(ContextCompat.getColor(parent.context, R.color.lochinvar), "Lochinvar"),
+                Pair(ContextCompat.getColor(parent.context, R.color.beach_grey), "Beach Grey"),
         )
 
         return when (viewType) {
@@ -100,7 +104,7 @@ class AccentColorAdapter : RecyclerView.Adapter<VerticalListViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 19 + 1 // Extra 1 is Header
+        return 23 + 1 // Extra 1 is Header
     }
 
     override fun getItemViewType(position: Int): Int {

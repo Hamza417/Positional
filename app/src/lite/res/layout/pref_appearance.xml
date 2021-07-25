@@ -58,13 +58,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/ripple"
+        android:clickable="false"
         android:fontFamily="@font/medium"
         android:padding="15dp"
         android:text="@string/icon"
-        android:visibility="gone"
-        android:clickable="false"
         android:textColor="@color/textPrimary"
-        android:textSize="@dimen/settings_primary_text_size" />
+        android:textSize="@dimen/settings_primary_text_size"
+        android:visibility="gone" />
 
     <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/settings_accent"
@@ -82,7 +82,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:fontFamily="@font/medium"
-            android:text="@string/accent_color"
+            android:text="@string/accent_colors"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size" />
 

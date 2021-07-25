@@ -49,9 +49,8 @@ if (googleMapsAPIKey == noKeyFound) {
 android {
 
     compileSdkVersion 30
-    buildToolsVersion "29.0.3"
 
-    def appVersionCode = 117
+    def appVersionCode = 118
     def appVersionName = "positional_build_${appVersionCode}"
 
     defaultConfig {

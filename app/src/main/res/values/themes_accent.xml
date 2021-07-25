@@ -91,4 +91,24 @@
         <item name="colorAppAccentLight">@color/olive_light</item>
     </style>
 
+    <style name="Copperfield" parent="Positional">
+        <item name="colorAppAccent">@color/copperfield</item>
+        <item name="colorAppAccentLight">@color/copperfield_light</item>
+    </style>
+
+    <style name="MineralGreen" parent="Positional">
+        <item name="colorAppAccent">@color/mineral_green</item>
+        <item name="colorAppAccentLight">@color/mineral_green_light</item>
+    </style>
+
+    <style name="Lochinvar" parent="Positional">
+        <item name="colorAppAccent">@color/lochinvar</item>
+        <item name="colorAppAccentLight">@color/lochinvar_light</item>
+    </style>
+
+    <style name="BeachGrey" parent="Positional">
+        <item name="colorAppAccent">@color/beach_grey</item>
+        <item name="colorAppAccentLight">@color/beach_grey_light</item>
+    </style>
+
 </resources>
