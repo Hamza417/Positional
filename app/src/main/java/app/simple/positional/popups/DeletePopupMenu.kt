@@ -1,5 +1,6 @@
 package app.simple.positional.popups
 
+import android.view.Gravity
 import android.view.View
 import app.simple.positional.R
 import app.simple.positional.decorations.popup.BasePopupWindow
@@ -10,7 +11,7 @@ class DeletePopupMenu(contentView: View, anchor: View) : BasePopupWindow() {
     private lateinit var popupDeleteCallbacks: PopupDeleteCallbacks
 
     init {
-        init(contentView, anchor)
+        init(contentView, anchor, Gravity.END or Gravity.CENTER_VERTICAL)
 
         contentView.findViewById<DynamicRippleTextView>(R.id.menu_sure).setOnClickListener {
             popupDeleteCallbacks.delete().also {

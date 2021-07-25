@@ -50,13 +50,14 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
                 holder.name.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.textPrimary))
             }
 
-            holder.delete.setOnClickListener {
-                adapterTrailsCallback.onDelete(list[position], it)
+            holder.menu.setOnClickListener {
+                adapterTrailsCallback.onTrailMenu(list[position], it)
             }
 
             holder.container.setOnClickListener {
                 adapterTrailsCallback.onTrailClicked(list[position].trailName)
             }
+
         } else if (holder is Header) {
             holder.total.text = HtmlHelper.fromHtml("<b>${holder.itemView.context.getString(R.string.total)}</b> ${list.size}")
         }
@@ -80,7 +81,7 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
         val name: TextView = itemView.findViewById(R.id.trails_name)
         val note: TextView = itemView.findViewById(R.id.trails_note)
         val date: TextView = itemView.findViewById(R.id.trails_date)
-        val delete: DynamicRippleImageButton = itemView.findViewById(R.id.delete)
+        val menu: DynamicRippleImageButton = itemView.findViewById(R.id.menu)
         val container: DynamicRippleConstraintLayout = itemView.findViewById(R.id.adapter_trails_container)
     }
 
@@ -95,7 +96,7 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
     companion object {
         interface AdapterTrailsCallback {
             fun onTrailClicked(name: String)
-            fun onDelete(trailModel: TrailModel, anchor: View)
+            fun onTrailMenu(trailModel: TrailModel, anchor: View)
         }
     }
 }

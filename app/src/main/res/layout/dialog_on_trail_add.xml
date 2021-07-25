@@ -42,7 +42,7 @@
             android:id="@+id/trail_name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:maxLength="20"
+            android:maxLength="50"
             android:textColor="@color/textSecondary" />
 
     </com.google.android.material.textfield.TextInputLayout>

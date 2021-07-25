@@ -16,7 +16,7 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/trail_name_text_size"
         app:layout_constraintBottom_toTopOf="@id/trails_note"
-        app:layout_constraintEnd_toStartOf="@+id/delete"
+        app:layout_constraintEnd_toStartOf="@+id/menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,7 +29,7 @@
         android:textColor="@color/textTertiary"
         android:textSize="@dimen/description_text_size"
         app:layout_constraintBottom_toTopOf="@id/trails_date"
-        app:layout_constraintEnd_toStartOf="@+id/delete"
+        app:layout_constraintEnd_toStartOf="@+id/menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/trails_name" />
 
@@ -43,16 +43,16 @@
         android:textColor="@color/textTertiary"
         android:textSize="@dimen/description_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/delete"
+        app:layout_constraintEnd_toStartOf="@+id/menu"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/trails_note" />
 
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-        android:id="@+id/delete"
+        android:id="@+id/menu"
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
         android:tint="@color/iconColor"
-        android:src="@drawable/ic_delete"
+        android:src="@drawable/ic_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

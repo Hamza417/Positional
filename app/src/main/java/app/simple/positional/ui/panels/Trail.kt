@@ -227,7 +227,7 @@ class Trail : ScopedFragment() {
     private fun initViewModel() {
         currentTrail = TrailPreferences.getLastUsedTrail()
         val trailDataFactory = TrailDataFactory(currentTrail!!, requireActivity().application)
-        trailDataViewModel = ViewModelProvider(requireActivity(), trailDataFactory).get(TrailDataViewModel::class.java)
+        trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
     }
 
     override fun onResume() {
