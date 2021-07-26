@@ -84,6 +84,14 @@ class TrailData : ScopedFragment() {
                                 }
                             })
                         }
+
+                        override fun onCopy() {
+
+                        }
+
+                        override fun onShare() {
+                            TODO("Not yet implemented")
+                        }
                     })
                 }
 

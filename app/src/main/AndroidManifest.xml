@@ -24,11 +24,11 @@
 
     <uses-feature
         android:name="android.hardware.sensor.accelerometer"
-        android:required="false" />
+        android:required="true" />
 
     <uses-feature
         android:name="android.hardware.sensor.compass"
-        android:required="false" />
+        android:required="true" />
 
     <uses-feature
         android:name="android.software.webview"

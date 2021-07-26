@@ -2,6 +2,7 @@ package app.simple.positional.ui.panels
 
 import android.content.*
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -44,6 +45,7 @@ import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.StatusBarHeight
+import app.simple.positional.util.TimeFormatter.formatDate
 import app.simple.positional.util.ViewUtils.makeInvisible
 import app.simple.positional.util.ViewUtils.makeVisible
 import app.simple.positional.viewmodels.factory.TrailDataFactory
@@ -165,6 +167,31 @@ class Trail : ScopedFragment() {
                                     trailDataViewModel.deleteTrailData(trailData)
                                 }
                             })
+                        }
+
+                        override fun onCopy() {
+                            val builder = StringBuilder().apply {
+                                append(trailData.name ?: getString(R.string.not_available))
+                                append("\n\n")
+                                append(trailData.note ?: getString(R.string.not_available))
+                                append("\n\n")
+                                append(String.format(Locale.ENGLISH, "geo:%f,%f", trailData.latitude, trailData.longitude))
+                                append("\n\n")
+                                append(trailData.timeAdded.formatDate())
+                            }
+
+                            val clip: ClipData = ClipData.newPlainText("GPS Data", builder)
+                            val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                            clipboard.setPrimaryClip(clip)
+                        }
+
+                        override fun onShare() {
+                            kotlin.runCatching {
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:${trailData.latitude},${trailData.longitude}"))
+                                startActivity(intent)
+                            }.getOrElse { throwable ->
+                                Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     })
                 }

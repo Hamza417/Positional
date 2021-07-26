@@ -48,7 +48,7 @@ if (googleMapsAPIKey == noKeyFound) {
 
 android {
 
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     def appVersionCode = 118
     def appVersionName = "positional_build_${appVersionCode}"
@@ -56,7 +56,7 @@ android {
     defaultConfig {
         applicationId "app.simple.positional"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode appVersionCode
         versionName appVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

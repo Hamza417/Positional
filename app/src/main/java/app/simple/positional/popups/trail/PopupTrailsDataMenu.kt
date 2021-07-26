@@ -18,6 +18,12 @@ class PopupTrailsDataMenu(contentView: View, anchor: View) : BasePopupWindow() {
                 dismiss()
             }
         }
+
+        contentView.findViewById<DynamicRippleTextView>(R.id.menu_copy).setOnClickListener {
+            popupTrailsCallbacks.onCopy().also {
+                dismiss()
+            }
+        }
     }
 
     fun setOnPopupCallbacksListener(popupDeleteCallbacks: PopupTrailsCallbacks) {
@@ -27,6 +33,8 @@ class PopupTrailsDataMenu(contentView: View, anchor: View) : BasePopupWindow() {
     companion object {
         interface PopupTrailsCallbacks {
             fun onDelete()
+            fun onCopy()
+            fun onShare()
         }
     }
 }

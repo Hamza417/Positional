@@ -23,4 +23,17 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/popup_text_size" />
 
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
+        android:id="@+id/menu_copy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/copy"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
 </merge>

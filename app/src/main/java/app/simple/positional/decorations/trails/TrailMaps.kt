@@ -4,12 +4,19 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
 import app.simple.positional.constants.TrailIcons
+import app.simple.positional.math.CompassAzimuth
+import app.simple.positional.math.LowPassFilter
+import app.simple.positional.math.Vector3
 import app.simple.positional.model.TrailData
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
@@ -29,7 +36,24 @@ import kotlin.coroutines.CoroutineContext
 class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
                                                                 OnMapReadyCallback,
                                                                 SharedPreferences.OnSharedPreferenceChangeListener,
-                                                                CoroutineScope {
+                                                                CoroutineScope,
+                                                                SensorEventListener {
+
+    private val accelerometerReadings = FloatArray(3)
+    private val magnetometerReadings = FloatArray(3)
+    private val rotation = FloatArray(9)
+    private val inclination = FloatArray(9)
+    private var readingsAlpha = 0.03f
+    private var rotationAngle = 0f
+
+    private var haveAccelerometerSensor = false
+    private var haveMagnetometerSensor = false
+
+    private var accelerometer = Vector3.zero
+    private var magnetometer = Vector3.zero
+    private lateinit var sensorManager: SensorManager
+    private lateinit var sensorAccelerometer: Sensor
+    private lateinit var sensorMagneticField: Sensor
 
     private val cameraSpeed: Int = 1000
     private var googleMap: GoogleMap? = null
@@ -79,6 +103,16 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                                     this.alpha = 0F
                                     getMapAsync(this)
                                 }, 500)
+
+        kotlin.runCatching {
+            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            haveMagnetometerSensor = true
+            haveAccelerometerSensor = true
+        }.getOrElse {
+            haveAccelerometerSensor = false
+            haveMagnetometerSensor = false
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -409,5 +443,26 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     fun setOnTrailMapCallbackListener(trailMapCallbacks: TrailMapCallbacks) {
         this.trailMapCallbacks = trailMapCallbacks
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event == null) return
+
+        when (event.sensor.type) {
+            Sensor.TYPE_ACCELEROMETER -> {
+                LowPassFilter.smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
+                accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
+            }
+            Sensor.TYPE_MAGNETIC_FIELD -> {
+                LowPassFilter.smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
+                magnetometer = Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
+            }
+        }
+
+        rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+
     }
 }
