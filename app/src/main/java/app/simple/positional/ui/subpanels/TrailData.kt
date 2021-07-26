@@ -67,7 +67,7 @@ class TrailData : ScopedFragment() {
             val adapter = AdapterTrailData(it)
 
             adapter.setOnTrailsDataCallbackListener(object : AdapterTrailData.Companion.AdapterTrailsDataCallbacks {
-                override fun onTrailsDataLongPressed(trailData: app.simple.positional.model.TrailData, view: View, i: Int) {
+                override fun onTrailsDataLongPressed(trailData: app.simple.positional.model.TrailData, view: View, position: Int) {
                     val popup = PopupTrailsDataMenu(
                             layoutInflater.inflate(R.layout.popup_trails_data,
                                                    DynamicCornerLinearLayout(requireContext())), view)
@@ -85,6 +85,10 @@ class TrailData : ScopedFragment() {
                             })
                         }
                     })
+                }
+
+                override fun onAdd(view: View) {
+
                 }
             })
 

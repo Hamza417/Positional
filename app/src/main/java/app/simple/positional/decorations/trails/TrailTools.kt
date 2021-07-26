@@ -7,10 +7,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import app.simple.positional.R
-import app.simple.positional.adapters.trail.AdapterTrailIcons
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.ViewUtils.makeGoAway
@@ -22,7 +20,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     private lateinit var remove: DynamicRippleImageButton
     private lateinit var wrap: DynamicRippleImageButton
     private lateinit var align: DynamicRippleImageButton
-    private lateinit var icons: CustomRecyclerView
+    private lateinit var icons: DynamicRippleImageButton
 
     private lateinit var trailCallbacks: TrailCallbacks
 
@@ -46,20 +44,12 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         location = view.findViewById(R.id.current_location)
         remove = view.findViewById(R.id.remove_flag)
         wrap = view.findViewById(R.id.wrap_unwrap_flags)
-        icons = view.findViewById(R.id.trail_icons_recycler_view)
+        icons = view.findViewById(R.id.add_flag)
         align = view.findViewById(R.id.tools_align_btn)
 
-        val adapter = AdapterTrailIcons()
-
-        adapter.onIconClicked = {
-            trailCallbacks.onAddWithInfo(it)
-        }
-
-        adapter.onIconLongClicked = {
+        icons.setOnClickListener {
             trailCallbacks.onAdd(it)
         }
-
-        icons.adapter = adapter
 
         setWrapUnwrapButtonState()
         setAlignButtonState()
@@ -132,10 +122,9 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     companion object {
         interface TrailCallbacks {
             fun onLocation()
-            fun onAdd(position: Int)
+            fun onAdd(view: View)
             fun onRemove(remove: View)
             fun onWrapUnwrap()
-            fun onAddWithInfo(position: Int)
         }
     }
 }

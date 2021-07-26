@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/mainBackground"
+    android:clipChildren="true"
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    android:padding="@dimen/popup_padding"
+    tools:parentTag="app.simple.positional.decorations.popup.PopupLinearLayout">
+
+    <app.simple.positional.decorations.views.CustomRecyclerView
+        android:id="@+id/markers_recycler_view"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        app:statusBarPaddingRequired="false"
+        app:isFastScrollerRequired="false"
+        android:layoutAnimation="@anim/marker_grid_controller"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdge="vertical"
+        android:fadingEdgeLength="25dp" />
+
+</merge>

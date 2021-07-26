@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -38,6 +37,20 @@
         android:src="@drawable/ic_full_screen"
         android:tint="@color/iconColor" />
 
+    <View
+        android:layout_width="@dimen/app_button_size"
+        android:layout_height="1px"
+        android:layout_marginTop="2dp"
+        android:background="@color/dividerColor" />
+
+    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+        android:id="@+id/add_flag"
+        android:layout_width="@dimen/app_button_size"
+        android:layout_height="@dimen/app_button_size"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_add_location"
+        android:tint="@color/iconColor" />
+
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton
         android:id="@+id/remove_flag"
         android:layout_width="@dimen/app_button_size"
@@ -46,19 +59,4 @@
         android:src="@drawable/ic_backspace"
         android:tint="@color/iconColor" />
 
-    <View
-        android:layout_width="@dimen/app_button_size"
-        android:layout_height="1px"
-        android:layout_marginTop="2dp"
-        android:background="@color/dividerColor" />
-
-    <app.simple.positional.decorations.views.CustomRecyclerView
-        android:id="@+id/trail_icons_recycler_view"
-        android:layout_width="@dimen/app_button_size"
-        android:layout_height="250dp"
-        android:fadingEdge="vertical"
-        android:fadingEdgeLength="10dp"
-        app:isFastScrollerRequired="false"
-        android:requiresFadingEdge="vertical"
-        app:statusBarPaddingRequired="false" />
 </merge>

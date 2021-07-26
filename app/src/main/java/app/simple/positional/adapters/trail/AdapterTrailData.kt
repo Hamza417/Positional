@@ -11,6 +11,7 @@ import app.simple.positional.R
 import app.simple.positional.R.id
 import app.simple.positional.constants.TrailIcons
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_FOOTER
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_HEADER
@@ -65,6 +66,9 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
             holder.name.text = trailData.second.first
             holder.total.text = trailData.second.second
             holder.distance.text = trailData.second.third
+            holder.add.setOnClickListener {
+                trailsDataCallbacks.onAdd(it)
+            }
         }
     }
 
@@ -95,7 +99,9 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
     }
 
     private fun setMarker(holder: Holder, drawableResId: Int) {
-        holder.icon.marker = ContextCompat.getDrawable(holder.itemView.context, drawableResId)
+        holder.icon.marker = ContextCompat.getDrawable(holder.itemView.context, drawableResId)?.apply {
+            setTint(ContextCompat.getColor(holder.itemView.context, R.color.iconColor))
+        }
     }
 
     fun setOnTrailsDataCallbackListener(trailsDataCallbacks: AdapterTrailsDataCallbacks) {
@@ -124,6 +130,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         val name: TextView = itemView.findViewById(id.adapter_trail_data_trail_name)
         val total: TextView = itemView.findViewById(id.adapter_trail_data_trail_total)
         val distance: TextView = itemView.findViewById(id.adapter_trail_data_trail_distance)
+        val add: DynamicRippleImageButton = itemView.findViewById(R.id.add)
 
         init {
             distance.isSelected = true
@@ -134,7 +141,8 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
 
     companion object {
         interface AdapterTrailsDataCallbacks {
-            fun onTrailsDataLongPressed(trailData: TrailData, view: View, i: Int)
+            fun onTrailsDataLongPressed(trailData: TrailData, view: View, position: Int)
+            fun onAdd(view: View)
         }
     }
 }

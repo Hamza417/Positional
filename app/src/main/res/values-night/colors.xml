@@ -4,10 +4,11 @@
 
     <color name="mainBackground">#202020</color>
     <color name="iconColor">#F3F3F3</color>
+    <color name="textTertiary">#B3B3B3</color>
     <color name="textSecondary">#E4E4E4</color>
     <color name="textPrimary">#FFFFFF</color>
     <color name="dividerColor">#BDBDBD</color>
-    <color name="toolbarBackground">#303030</color>
+    <color name="toolbarBackground">#191919</color>
     <color name="rippleColor">#515151</color>
     <color name="edgeEffect">#EAEAEA</color>
 

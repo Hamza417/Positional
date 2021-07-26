@@ -31,7 +31,6 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
 
         holder.container.setOnClickListener {
             setIcon(holder.itemView.context, position)
-            println(position)
         }
     }
 
