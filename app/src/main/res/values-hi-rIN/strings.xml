@@ -286,4 +286,5 @@
     <string name="enter_marker_name">मार्कर का नाम दर्ज करें</string>
     <string name="delete">मिटाए</string>
     <string name="show_on_map">नक्शे पर दिखाएँ</string>
+    <string name="copy">कॉपी करें</string>
 </resources>
