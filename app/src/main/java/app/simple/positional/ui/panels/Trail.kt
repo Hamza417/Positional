@@ -73,7 +73,7 @@ class Trail : ScopedFragment() {
     private var filter: IntentFilter = IntentFilter()
     private var location: Location? = null
     private var isFullScreen = false
-
+    private var peekHeight = 0
     private var currentTrail: String? = null
 
     private lateinit var trailDataViewModel: TrailDataViewModel
@@ -112,6 +112,8 @@ class Trail : ScopedFragment() {
                        paddingRight,
                        paddingBottom)
         }
+
+        peekHeight = bottomSheetPanel.peekHeight
 
         return view
     }
@@ -364,8 +366,10 @@ class Trail : ScopedFragment() {
     private fun setFullScreen(forBottomBar: Boolean) {
         if (isFullScreen) {
             toolbar.show()
+            bottomSheetPanel.peekHeight = peekHeight
         } else {
             toolbar.hide()
+            bottomSheetPanel.peekHeight = 0
         }
 
         if (forBottomBar) {
