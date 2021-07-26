@@ -38,16 +38,16 @@ import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.*
-import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
+import app.simple.positional.util.ImageLoader.loadImage
 import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
-import app.simple.positional.util.ViewUtils.makeGoAway
+import app.simple.positional.util.ViewUtils.gone
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
 import org.shredzone.commons.suncalc.*
@@ -183,7 +183,7 @@ class Clock : ScopedFragment() {
                                MainPreferences.getLastCoordinates()[1].toDouble())
 
         if (BuildConfig.FLAVOR == "lite") {
-            timezoneButton.makeGoAway()
+            timezoneButton.gone()
         }
 
         return view

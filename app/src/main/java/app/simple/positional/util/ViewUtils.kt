@@ -8,7 +8,6 @@ import android.view.animation.AccelerateInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
 import app.simple.positional.util.ColorUtils.resolveAttrColor
-import app.simple.positional.util.ViewUtils.makeInvisible
 
 object ViewUtils {
     /**
@@ -44,8 +43,9 @@ object ViewUtils {
     /**
      * Makes the view go away
      */
-    fun View.makeGoAway() {
-        this.visibility = View.GONE
+    fun View.gone() {
+        clearAnimation()
+        visibility = View.GONE
     }
 
     /**
@@ -53,7 +53,7 @@ object ViewUtils {
      *
      * @param animate adds animation to the process
      */
-    fun View.makeInvisible(animate: Boolean) {
+    fun View.invisible(animate: Boolean) {
         clearAnimation()
 
         if (animate) {
@@ -69,7 +69,7 @@ object ViewUtils {
                         }
 
                         override fun onAnimationEnd(animation: Animator?) {
-                            this@makeInvisible.visibility = View.INVISIBLE
+                            this@invisible.visibility = View.INVISIBLE
                         }
 
                         override fun onAnimationCancel(animation: Animator?) {
@@ -91,7 +91,7 @@ object ViewUtils {
      *
      * @param animate adds animation to the process
      */
-    fun View.makeVisible(animate: Boolean) {
+    fun View.visible(animate: Boolean) {
         clearAnimation()
 
         if (animate) {
@@ -103,7 +103,7 @@ object ViewUtils {
                 .setDuration(400L)
                 .setListener(object : Animator.AnimatorListener {
                     override fun onAnimationStart(animation: Animator?) {
-                            this@makeVisible.visibility = View.VISIBLE
+                        this@visible.visibility = View.VISIBLE
                         }
 
                         override fun onAnimationEnd(animation: Animator?) {

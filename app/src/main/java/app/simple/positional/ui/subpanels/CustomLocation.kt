@@ -1,21 +1,19 @@
 package app.simple.positional.ui.subpanels
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.widget.ContentLoadingProgressBar
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -30,11 +28,10 @@ import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.model.Locations
 import app.simple.positional.popups.settings.CustomLocationPopupMenu
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.TextViewUtils.capitalizeText
-import app.simple.positional.util.ViewUtils.makeInvisible
-import app.simple.positional.util.ViewUtils.makeVisible
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
+import app.simple.positional.util.ViewUtils.invisible
+import app.simple.positional.util.ViewUtils.visible
 import gov.nasa.worldwind.geom.Angle.isValidLatitude
 import gov.nasa.worldwind.geom.Angle.isValidLongitude
 import kotlinx.coroutines.CoroutineScope
@@ -49,11 +46,9 @@ class CustomLocation : ScopedFragment() {
     private lateinit var art: ImageView
     private lateinit var options: DynamicRippleImageButton
     private lateinit var loadingProgressBar: ContentLoadingProgressBar
-    private lateinit var addressInputEditText: TextInputEditText
-    private lateinit var latitudeInputEditText: TextInputEditText
-    private lateinit var longitudeInputEditText: TextInputEditText
-    private lateinit var latitudeInputLayout: TextInputLayout
-    private lateinit var longitudeInputLayout: TextInputLayout
+    private lateinit var addressInputEditText: EditText
+    private lateinit var latitudeInputEditText: EditText
+    private lateinit var longitudeInputEditText: EditText
 
     private lateinit var locationsAdapter: LocationsAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
@@ -68,11 +63,9 @@ class CustomLocation : ScopedFragment() {
         art = view.findViewById(R.id.art_empty)
         options = view.findViewById(R.id.options_custom_coordinates)
         loadingProgressBar = view.findViewById(R.id.address_indicator)
-        addressInputEditText = view.findViewById(R.id.address_input)
-        latitudeInputEditText = view.findViewById(R.id.latitude_input)
-        longitudeInputEditText = view.findViewById(R.id.longitude_input)
-        latitudeInputLayout = view.findViewById(R.id.latitude_container)
-        longitudeInputLayout = view.findViewById(R.id.longitude_container)
+        addressInputEditText = view.findViewById(R.id.address)
+        latitudeInputEditText = view.findViewById(R.id.latitude)
+        longitudeInputEditText = view.findViewById(R.id.longitude)
 
         locationsAdapter = LocationsAdapter()
         itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
@@ -107,9 +100,9 @@ class CustomLocation : ScopedFragment() {
 
             withContext(Dispatchers.Main) {
                 if (list.isEmpty()) {
-                    art.makeVisible(true)
+                    art.visible(true)
                 } else {
-                    art.makeInvisible(true)
+                    art.invisible(true)
                 }
                 locationsAdapter.setList(list)
                 recyclerView.adapter = locationsAdapter
@@ -125,39 +118,42 @@ class CustomLocation : ScopedFragment() {
                 when (source) {
                     getString(R.string.save) -> {
                         viewLifecycleOwner.lifecycleScope.launch {
+                            kotlin.runCatching {
+                                var list = mutableListOf<Locations>()
 
-                            var list = mutableListOf<Locations>()
+                                withContext(Dispatchers.Default) {
+                                    if (!latitudeInputEditText.text.length.isZero() || !longitudeInputEditText.text.length.isZero()) {
+                                        if (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) && isValidLongitude(longitudeInputEditText.text.toString().toDouble())) {
+                                            val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
+                                            val locations = Locations()
 
-                            withContext(Dispatchers.Default) {
-                                if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty()) {
-                                    if (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) && isValidLongitude(longitudeInputEditText.text.toString().toDouble())) {
-                                        val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
-                                        val locations = Locations()
-
-                                        try {
-                                            locations.address = if (addressInputEditText.text.isNullOrEmpty()) {
-                                                "----"
-                                            } else {
-                                                addressInputEditText.text.toString().capitalizeText()
+                                            try {
+                                                locations.address = if (addressInputEditText.text.isNullOrEmpty()) {
+                                                    "----"
+                                                } else {
+                                                    addressInputEditText.text.toString().capitalizeText()
+                                                }
+                                                locations.latitude = latitudeInputEditText.text.toString().toDouble()
+                                                locations.longitude = longitudeInputEditText.text.toString().toDouble()
+                                                locations.date = System.currentTimeMillis()
+                                                db.locationDao()?.insetLocation(location = locations)
+                                                list = db.locationDao()!!.getAllLocations()
+                                            } catch (e: NumberFormatException) {
+                                                showToast(e.message!!)
+                                            } finally {
+                                                db.close()
                                             }
-                                            locations.latitude = latitudeInputEditText.text.toString().toDouble()
-                                            locations.longitude = longitudeInputEditText.text.toString().toDouble()
-                                            locations.date = System.currentTimeMillis()
-                                            db.locationDao()?.insetLocation(location = locations)
-                                            list = db.locationDao()!!.getAllLocations()
-                                        } catch (e: NumberFormatException) {
-                                            showToast(e.message!!)
-                                        } finally {
-                                            db.close()
                                         }
                                     }
                                 }
-                            }
 
-                            if (list.isNotEmpty()) {
-                                locationsAdapter.setList(list)
-                                art.makeInvisible(true)
-                            } else {
+                                if (list.isNotEmpty()) {
+                                    locationsAdapter.setList(list)
+                                    art.invisible(true)
+                                } else {
+                                    showToast(getString(R.string.failed))
+                                }
+                            }.getOrElse {
                                 showToast(getString(R.string.failed))
                             }
                         }
@@ -171,69 +167,77 @@ class CustomLocation : ScopedFragment() {
                             withContext(Dispatchers.Main) {
                                 if (list.isEmpty()) {
                                     locationsAdapter.clearList()
-                                    art.makeVisible(true)
+                                    art.visible(true)
                                 }
                             }
                         }
                     }
                     getString(R.string.set_and_save) -> {
                         viewLifecycleOwner.lifecycleScope.launch {
-                            withContext(Dispatchers.Default) {
-                                if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty()) {
-                                    if (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) && isValidLongitude(longitudeInputEditText.text.toString().toDouble())) {
-                                        val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
-                                        val locations = Locations()
+                            kotlin.runCatching {
+                                withContext(Dispatchers.Default) {
+                                    if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty()) {
+                                        if (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) && isValidLongitude(longitudeInputEditText.text.toString().toDouble())) {
+                                            val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
+                                            val locations = Locations()
 
-                                        try {
-                                            locations.address = if (addressInputEditText.text.isNullOrEmpty()) {
-                                                "----"
-                                            } else {
-                                                addressInputEditText.text.toString().capitalizeText()
+                                            try {
+                                                locations.address = if (addressInputEditText.text.isNullOrEmpty()) {
+                                                    "----"
+                                                } else {
+                                                    addressInputEditText.text.toString().capitalizeText()
+                                                }
+                                                locations.latitude = latitudeInputEditText.text.toString().toDouble()
+                                                locations.longitude = longitudeInputEditText.text.toString().toDouble()
+                                                locations.date = System.currentTimeMillis()
+                                                db.locationDao()?.insetLocation(location = locations)
+                                                MainPreferences.setCustomCoordinates(true)
+                                                MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
+                                                MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
+                                                MainPreferences.setAddress(addressInputEditText.text.toString())
+                                            } catch (e: NumberFormatException) {
+                                                MainPreferences.setCustomCoordinates(false)
+                                            } finally {
+                                                db.close()
                                             }
-                                            locations.latitude = latitudeInputEditText.text.toString().toDouble()
-                                            locations.longitude = longitudeInputEditText.text.toString().toDouble()
-                                            locations.date = System.currentTimeMillis()
-                                            db.locationDao()?.insetLocation(location = locations)
-                                            MainPreferences.setCustomCoordinates(true)
-                                            MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
-                                            MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
-                                            MainPreferences.setAddress(addressInputEditText.text.toString())
-                                        } catch (e: NumberFormatException) {
-                                            MainPreferences.setCustomCoordinates(false)
-                                        } finally {
-                                            db.close()
                                         }
                                     }
                                 }
-                            }
 
-                            if (MainPreferences.isCustomCoordinate()) {
-                                requireActivity().finishAfterTransition()
-                            } else {
+                                if (MainPreferences.isCustomCoordinate()) {
+                                    requireActivity().finishAfterTransition()
+                                } else {
+                                    showToast(getString(R.string.failed))
+                                }
+                            }.getOrElse {
                                 showToast(getString(R.string.failed))
                             }
                         }
                     }
                     getString(R.string.set_only) -> {
                         viewLifecycleOwner.lifecycleScope.launch {
-                            withContext(Dispatchers.Default) {
-                                if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty()) {
-                                    if (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) && isValidLongitude(longitudeInputEditText.text.toString().toDouble())) {
-                                        try {
-                                            MainPreferences.setCustomCoordinates(true)
-                                            MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
-                                            MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
-                                            MainPreferences.setAddress(addressInputEditText.text.toString().capitalizeText())
-                                        } catch (e: NumberFormatException) {
-                                            MainPreferences.setCustomCoordinates(false)
+                            kotlin.runCatching {
+                                withContext(Dispatchers.Default) {
+                                    if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty()) {
+                                        if (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) && isValidLongitude(longitudeInputEditText.text.toString().toDouble())) {
+                                            try {
+                                                MainPreferences.setCustomCoordinates(true)
+                                                MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
+                                                MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
+                                                MainPreferences.setAddress(addressInputEditText.text.toString().capitalizeText())
+                                            } catch (e: NumberFormatException) {
+                                                MainPreferences.setCustomCoordinates(false)
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            if (MainPreferences.isCustomCoordinate()) {
-                                requireActivity().finishAfterTransition()
-                            } else {
+                                if (MainPreferences.isCustomCoordinate()) {
+                                    requireActivity().finishAfterTransition()
+                                } else {
+                                    showToast(getString(R.string.failed))
+                                }
+                            }.getOrElse {
                                 showToast(getString(R.string.failed))
                             }
                         }
@@ -247,69 +251,11 @@ class CustomLocation : ScopedFragment() {
             }
         }
 
-        addressInputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                handler.removeCallbacks(geoCoderRunnable)
-                address = s.toString()
-                handler.postDelayed(geoCoderRunnable, 500)
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        latitudeInputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                /* no-op */
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                try {
-                    if (isValidLatitude(s.toString().toDouble())) {
-                        latitudeInputLayout.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.valid_input)
-                        latitudeInputLayout.hintTextColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.valid_input))
-                    } else {
-                        throw NumberFormatException()
-                    }
-                } catch (e: NumberFormatException) {
-                    latitudeInputLayout.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.invalid_input)
-                    latitudeInputLayout.hintTextColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.invalid_input))
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
-
-        longitudeInputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                /* no-op */
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                try {
-                    if (isValidLongitude(s.toString().toDouble())) {
-                        longitudeInputLayout.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.valid_input)
-                        longitudeInputLayout.hintTextColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.valid_input))
-                    } else {
-                        throw NumberFormatException()
-                    }
-                } catch (e: NumberFormatException) {
-                    longitudeInputLayout.boxStrokeColor = ContextCompat.getColor(requireContext(), R.color.invalid_input)
-                    longitudeInputLayout.hintTextColor = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), R.color.invalid_input))
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-        })
+        addressInputEditText.doOnTextChanged { text, _, _, _ ->
+            handler.removeCallbacks(geoCoderRunnable)
+            address = text.toString()
+            handler.postDelayed(geoCoderRunnable, 500)
+        }
 
         locationsAdapter.setOnLocationsCallbackListener(object : LocationsAdapter.LocationsCallback {
             override fun onLocationClicked(locations: Locations) {
@@ -383,7 +329,7 @@ class CustomLocation : ScopedFragment() {
                 db.locationDao()?.deleteLocation(p0)
                 if (db.locationDao()!!.getAllLocations().isEmpty()) {
                     handler.post {
-                        art.makeVisible(true)
+                        art.visible(true)
                     }
                 }
                 db.close()

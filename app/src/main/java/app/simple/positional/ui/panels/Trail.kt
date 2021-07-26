@@ -24,7 +24,6 @@ import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
-import app.simple.positional.activities.subactivity.TrailDataActivity
 import app.simple.positional.activities.subactivity.TrailsViewerActivity
 import app.simple.positional.adapters.trail.AdapterTrailData
 import app.simple.positional.callbacks.BottomSheetSlide
@@ -46,8 +45,8 @@ import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.StatusBarHeight
 import app.simple.positional.util.TimeFormatter.formatDate
-import app.simple.positional.util.ViewUtils.makeInvisible
-import app.simple.positional.util.ViewUtils.makeVisible
+import app.simple.positional.util.ViewUtils.invisible
+import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.factory.TrailDataFactory
 import app.simple.positional.viewmodels.viewmodel.TrailDataViewModel
 import app.simple.positional.viewmodels.viewmodel.TrailsViewModel
@@ -94,7 +93,7 @@ class Trail : ScopedFragment() {
         dim = view.findViewById(R.id.dim)
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
-        currentTrail = TrailPreferences.getLastUsedTrail()
+        currentTrail = TrailPreferences.getCurrentTrail()
         val trailDataFactory = TrailDataFactory(currentTrail!!, requireActivity().application)
         trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
 
@@ -202,10 +201,10 @@ class Trail : ScopedFragment() {
             })
 
             if (it.first.isNullOrEmpty()) {
-                art.makeVisible(false)
+                art.visible(false)
                 trailRecyclerView.adapter = null
             } else {
-                art.makeInvisible(false)
+                art.invisible(false)
                 trailRecyclerView.adapter = adapter
             }
         })
@@ -267,14 +266,6 @@ class Trail : ScopedFragment() {
                 startActivity(Intent(requireContext(), TrailsViewerActivity::class.java))
             }
 
-            override fun onTrailsLongClicked() {
-                if (currentTrail!!.isNotEmpty()) {
-                    val intent = Intent(requireContext(), TrailDataActivity::class.java)
-                    intent.putExtra("trail_name", currentTrail)
-                    startActivity(intent)
-                }
-            }
-
             override fun onAddClicked() {
                 addTrail()
             }
@@ -314,7 +305,7 @@ class Trail : ScopedFragment() {
     override fun onResume() {
         super.onResume()
         maps?.resume()
-        currentTrail = TrailPreferences.getLastUsedTrail()
+        currentTrail = TrailPreferences.getCurrentTrail()
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
     }
 
@@ -343,8 +334,8 @@ class Trail : ScopedFragment() {
             TrailPreferences.toolsMenuGravity -> {
                 updateToolsGravity(requireView())
             }
-            TrailPreferences.lastSelectedTrail -> {
-                currentTrail = TrailPreferences.getLastUsedTrail()
+            TrailPreferences.selectedTrail -> {
+                currentTrail = TrailPreferences.getCurrentTrail()
                 trailDataViewModel.setTrailName(currentTrail!!)
                 maps?.clear()
             }

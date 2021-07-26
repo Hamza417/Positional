@@ -11,8 +11,8 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.activities.alias.*
-import app.simple.positional.util.ViewUtils.makeInvisible
-import app.simple.positional.util.ViewUtils.makeVisible
+import app.simple.positional.util.ViewUtils.invisible
+import app.simple.positional.util.ViewUtils.visible
 
 class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
 
@@ -24,9 +24,9 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
         holder.icon.setImageResource(list[position])
 
         if (position == getIconStatus(holder.itemView.context)) {
-            holder.tick.makeVisible(false)
+            holder.tick.visible(false)
         } else {
-            holder.tick.makeInvisible(false)
+            holder.tick.invisible(false)
         }
 
         holder.container.setOnClickListener {

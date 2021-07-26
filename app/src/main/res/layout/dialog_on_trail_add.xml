@@ -1,104 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.corners.DynamicCornerLinearLayout android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<app.simple.positional.decorations.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:backgroundTint="@color/mainBackground"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
+    android:backgroundTint="@color/mainBackground"
     android:orientation="vertical"
-    android:padding="@dimen/popup_padding"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:padding="@dimen/popup_padding">
 
-    <TextView
+    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/medium"
-        android:text="@string/enter_marker_name"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/popup_text_size" />
+        android:backgroundTint="@color/editTextBackground"
+        android:orientation="vertical"
+        android:padding="@dimen/popup_padding">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/trail_name_edit_text_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:animateLayoutChanges="true"
-        app:boxStrokeColor="?attr/colorAppAccent"
-        app:boxStrokeWidth="1px"
-        app:boxStrokeWidthFocused="1px"
-        app:endIconMode="clear_text"
-        app:endIconTint="?attr/colorAppAccent"
-        app:errorEnabled="false"
-        app:errorIconTint="@android:color/holo_red_dark"
-        app:errorTextColor="@android:color/holo_red_dark"
-        app:hintAnimationEnabled="true"
-        app:hintEnabled="true"
-        android:hint="@string/name"
-        app:hintTextColor="@color/textSecondary"
-        tools:ignore="PxUsage">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/trail_name_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:maxLength="50"
-            android:textColor="@color/textSecondary" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/trail_note_edit_text_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:animateLayoutChanges="true"
-        app:boxStrokeColor="?attr/colorAppAccent"
-        app:boxStrokeWidth="1px"
-        app:boxStrokeWidthFocused="1px"
-        app:endIconMode="clear_text"
-        app:endIconTint="?attr/colorAppAccent"
-        app:errorEnabled="false"
-        app:errorIconTint="@android:color/holo_red_dark"
-        app:errorTextColor="@android:color/holo_red_dark"
-        app:hintAnimationEnabled="true"
-        app:hintEnabled="true"
-        android:hint="@string/note"
-        app:hintTextColor="@color/textSecondary"
-        tools:ignore="PxUsage">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/trail_note_edit_text"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/textSecondary" />
+            android:fontFamily="@font/medium"
+            android:text="@string/enter_marker_name"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/description_text_size" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:backgroundTint="@android:color/transparent"
+            android:fontFamily="@font/regular"
+            android:gravity="top"
+            android:importantForAutofill="no"
+            android:saveEnabled="true"
+            android:textColor="@color/textSecondary"
+            android:textColorHighlight="?attr/colorAppAccentLight"
+            android:textColorHint="@color/textTertiary"
+            android:textCursorDrawable="@drawable/text_cursor"
+            tools:ignore="LabelFor,TextFields" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+
+    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/editTextBackground"
+        android:orientation="vertical"
+        android:padding="@dimen/popup_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/note"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/description_text_size" />
+
+        <EditText
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:backgroundTint="@android:color/transparent"
+            android:fontFamily="@font/regular"
+            android:gravity="top"
+            android:importantForAutofill="no"
+            android:maxHeight="300dp"
+            android:minHeight="100dp"
+            android:saveEnabled="true"
+            android:textColor="@color/textSecondary"
+            android:textColorHighlight="?attr/colorAppAccentLight"
+            android:textColorHint="@color/textTertiary"
+            android:textCursorDrawable="@drawable/text_cursor"
+            tools:ignore="LabelFor,TextFields" />
+
+    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:orientation="horizontal">
+
+        <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+            android:id="@+id/icon"
+            android:layout_alignParentStart="true"
+            android:layout_width="@dimen/app_button_size"
+            android:layout_height="@dimen/app_button_size" />
 
         <app.simple.positional.decorations.ripple.DynamicRippleButton
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/app_button_size"
-            android:background="?attr/selectableItemBackground"
+            android:layout_gravity="end"
             android:text="@string/button_cancel"
-            android:textColor="@color/textPrimary" />
+            android:layout_toStartOf="@id/save"
+            android:textColor="@color/textPrimary"
+            tools:ignore="RelativeOverlap" />
 
         <app.simple.positional.decorations.ripple.DynamicRippleButton
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/app_button_size"
-            android:background="?attr/selectableItemBackground"
+            android:layout_alignParentEnd="true"
             android:text="@string/save"
             android:textColor="@color/textPrimary" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>

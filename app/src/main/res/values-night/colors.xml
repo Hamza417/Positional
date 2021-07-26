@@ -11,6 +11,7 @@
     <color name="toolbarBackground">#191919</color>
     <color name="rippleColor">#515151</color>
     <color name="edgeEffect">#EAEAEA</color>
+    <color name="editTextBackground">#3C3C3C</color>
 
     <!-- Bottom Bar Color -->
     <color name="iconRegular">#808080</color>

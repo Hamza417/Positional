@@ -13,9 +13,9 @@ import androidx.core.widget.ImageViewCompat
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
 import app.simple.positional.constants.SpeedometerConstants
-import app.simple.positional.util.AsyncImageLoader.loadImage
 import app.simple.positional.util.BitmapHelper
 import app.simple.positional.util.BitmapHelper.toBitmap
+import app.simple.positional.util.ImageLoader.loadImage
 import com.google.android.material.animation.ArgbEvaluatorCompat
 
 /**

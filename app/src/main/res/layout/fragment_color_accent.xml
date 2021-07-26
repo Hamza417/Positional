@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:layoutAnimation="@anim/grid_list_animation_controller"
+    android:layoutAnimation="@anim/list_animation_controller"
     android:padding="@dimen/popup_padding"
     app:statusBarPaddingRequired="true" />
-
-
-

@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.preferences.FragmentPreferences
-import app.simple.positional.util.ViewUtils.makeInvisible
-import app.simple.positional.util.ViewUtils.makeVisible
+import app.simple.positional.util.ViewUtils.invisible
+import app.simple.positional.util.ViewUtils.visible
 
 class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
 
@@ -27,12 +27,12 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerVi
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         if (currentTag == list[position].tag) {
-            holder.bg.makeVisible(animate = true)
+            holder.bg.visible(animate = true)
 
             holder.icon.imageTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(holder.itemView.context, R.color.iconColor))
         } else {
-            holder.bg.makeInvisible(animate = true)
+            holder.bg.invisible(animate = true)
 
             holder.icon.imageTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(holder.itemView.context, R.color.iconRegular))

@@ -11,7 +11,7 @@ class PopupTrailsDataMenu(contentView: View, anchor: View) : BasePopupWindow() {
     private lateinit var popupTrailsCallbacks: PopupTrailsCallbacks
 
     init {
-        init(contentView, anchor, Gravity.END or Gravity.CENTER_VERTICAL)
+        init(contentView, anchor, Gravity.END or Gravity.CENTER_VERTICAL, 2)
 
         contentView.findViewById<DynamicRippleTextView>(R.id.menu_delete).setOnClickListener {
             popupTrailsCallbacks.onDelete().also {

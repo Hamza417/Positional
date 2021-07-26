@@ -45,11 +45,6 @@ class TrailToolbar : DynamicCornerLinearLayout {
             trailToolsCallbacks?.onTrailsClicked()
         }
 
-        trails.setOnLongClickListener {
-            trailToolsCallbacks?.onTrailsLongClicked()
-            true
-        }
-
         menu.setOnClickListener {
             trailToolsCallbacks?.onMenuClicked()
         }
@@ -80,7 +75,6 @@ class TrailToolbar : DynamicCornerLinearLayout {
     companion object {
         interface TrailToolsCallbacks {
             fun onTrailsClicked()
-            fun onTrailsLongClicked()
             fun onAddClicked()
             fun onMenuClicked()
         }

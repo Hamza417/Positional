@@ -33,23 +33,24 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
         if (intent.action == null) return
         when (intent.action) {
             "open_clock" -> {
-                setScreenValue(0)
+                setScreenValue(0, "clock")
             }
             "open_compass" -> {
-                setScreenValue(1)
+                setScreenValue(1, "compass")
             }
             "action_map_panel_full",
             "open_gps" -> {
-                setScreenValue(2)
+                setScreenValue(2, "location")
             }
             "open_level" -> {
-                setScreenValue(3)
+                setScreenValue(3, "level")
             }
         }
     }
 
-    private fun setScreenValue(value: Int) {
+    private fun setScreenValue(value: Int, tag: String) {
         FragmentPreferences.setCurrentPage(value)
+        FragmentPreferences.setCurrentTag(tag)
     }
 
     override fun onLicenseCheckCompletion() {

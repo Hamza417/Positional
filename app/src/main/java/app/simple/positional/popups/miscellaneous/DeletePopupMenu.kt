@@ -11,7 +11,7 @@ class DeletePopupMenu(contentView: View, anchor: View) : BasePopupWindow() {
     private lateinit var popupDeleteCallbacks: PopupDeleteCallbacks
 
     init {
-        init(contentView, anchor, Gravity.END or Gravity.CENTER_VERTICAL)
+        init(contentView, anchor, Gravity.END or Gravity.CENTER_VERTICAL, 2)
 
         contentView.findViewById<DynamicRippleTextView>(R.id.menu_sure).setOnClickListener {
             popupDeleteCallbacks.delete().also {

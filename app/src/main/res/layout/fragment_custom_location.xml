@@ -51,103 +51,114 @@
                 android:tint="@color/iconColor" />
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:animateLayoutChanges="true"
-            android:hint="@string/specified_hint_address"
-            app:boxStrokeColor="@color/iconColor"
-            app:boxStrokeWidth="1px"
-            app:boxStrokeWidthFocused="2px"
-            app:errorEnabled="false"
-            app:errorIconTint="@android:color/holo_red_dark"
-            app:errorTextColor="@android:color/holo_red_dark"
-            app:hintAnimationEnabled="true"
-            app:hintEnabled="true"
-            app:hintTextColor="@color/textSecondary"
-            tools:ignore="PxUsage">
+            android:padding="@dimen/popup_padding"
+            android:backgroundTint="@color/editTextBackground"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/address_input"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="4"
-                android:inputType="textCapWords"
-                android:textColor="@color/textSecondary" />
+                android:fontFamily="@font/medium"
+                android:text="@string/gps_address"
+                android:textColor="@color/textTertiary"
+                android:textSize="@dimen/description_text_size" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <EditText
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/regular"
+                android:gravity="top"
+                android:importantForAutofill="no"
+                android:saveEnabled="true"
+                android:textColor="@color/textSecondary"
+                android:textColorHighlight="?attr/colorAppAccentLight"
+                android:textColorHint="@color/textTertiary"
+                android:textCursorDrawable="@drawable/text_cursor"
+                tools:ignore="LabelFor,TextFields" />
+
+        </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:baselineAligned="false"
             android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/latitude_container"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
                 android:layout_weight="1"
-                android:animateLayoutChanges="true"
-                android:hint="@string/specified_hint_latitude"
-                app:boxStrokeColor="@color/iconColor"
-                app:boxStrokeWidth="1px"
-                app:boxStrokeWidthFocused="2px"
-                app:errorEnabled="false"
-                app:errorIconTint="@android:color/holo_red_dark"
-                app:errorTextColor="@android:color/holo_red_dark"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/textSecondary"
-                tools:ignore="PxUsage">
+                android:layout_marginEnd="10dp"
+                android:padding="@dimen/popup_padding"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/editTextBackground"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/latitude_input"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:maxLines="1"
-                    android:inputType="numberDecimal"
-                    android:maxLength="10"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/textSecondary" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/specified_hint_latitude"
+                    android:textColor="@color/textTertiary"
+                    android:textSize="@dimen/description_text_size" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/latitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:fontFamily="@font/regular"
+                    android:gravity="top"
+                    android:importantForAutofill="no"
+                    android:saveEnabled="true"
+                    android:textColor="@color/textSecondary"
+                    android:textColorHighlight="?attr/colorAppAccentLight"
+                    android:textColorHint="@color/textTertiary"
+                    android:textCursorDrawable="@drawable/text_cursor"
+                    tools:ignore="LabelFor,TextFields" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/longitude_container"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+
+            <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:layout_marginStart="@dimen/options_container_horizontal_padding"
                 android:layout_weight="1"
-                android:animateLayoutChanges="true"
-                android:hint="@string/specified_hint_longitude"
-                app:boxStrokeColor="@color/iconColor"
-                app:boxStrokeWidth="1px"
-                app:boxStrokeWidthFocused="2px"
-                app:errorEnabled="false"
-                app:errorIconTint="@android:color/holo_red_dark"
-                app:errorTextColor="@android:color/holo_red_dark"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true"
-                app:hintTextColor="@color/textSecondary"
-                tools:ignore="PxUsage">
+                android:layout_height="wrap_content"
+                android:padding="@dimen/popup_padding"
+                android:backgroundTint="@color/editTextBackground"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/longitude_input"
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:maxLines="1"
-                    android:maxLength="11"
-                    android:inputType="numberDecimal"
-                    android:textColor="@color/textSecondary" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/specified_hint_longitude"
+                    android:textColor="@color/textTertiary"
+                    android:textSize="@dimen/description_text_size" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <EditText
+                    android:id="@+id/longitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:backgroundTint="@android:color/transparent"
+                    android:fontFamily="@font/regular"
+                    android:gravity="top"
+                    android:importantForAutofill="no"
+                    android:saveEnabled="true"
+                    android:textColor="@color/textSecondary"
+                    android:textColorHighlight="?attr/colorAppAccentLight"
+                    android:textColorHint="@color/textTertiary"
+                    android:textCursorDrawable="@drawable/text_cursor"
+                    tools:ignore="LabelFor,TextFields" />
+
+            </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
         </LinearLayout>
 

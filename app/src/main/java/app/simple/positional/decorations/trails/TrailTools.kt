@@ -11,8 +11,9 @@ import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
-import app.simple.positional.util.ViewUtils.makeGoAway
-import app.simple.positional.util.ViewUtils.makeVisible
+import app.simple.positional.util.ImageLoader
+import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.util.ViewUtils.visible
 
 class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -53,9 +54,9 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
             trailCallbacks.onAdd(it)
         }
 
-        setWrapUnwrapButtonState()
-        setAlignButtonState()
-        setCompassButtonState()
+        setWrapUnwrapButtonState(false)
+        setAlignButtonState(false)
+        setCompassButtonState(false)
 
         location.setOnClickListener {
             trailCallbacks.onLocation()
@@ -80,27 +81,51 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         }
     }
 
-    private fun setWrapUnwrapButtonState() {
+    private fun setWrapUnwrapButtonState(animate: Boolean) {
         if (TrailPreferences.arePolylinesWrapped()) {
-            wrap.setImageResource(R.drawable.ic_close_fullscreen)
+            if (animate) {
+                ImageLoader.setImage(R.drawable.ic_close_fullscreen, wrap, context, 0)
+            } else {
+                wrap.setImageResource(R.drawable.ic_close_fullscreen)
+            }
         } else {
-            wrap.setImageResource(R.drawable.ic_full_screen)
+            if (animate) {
+                ImageLoader.setImage(R.drawable.ic_full_screen, wrap, context, 0)
+            } else {
+                wrap.setImageResource(R.drawable.ic_full_screen)
+            }
         }
     }
 
-    private fun setCompassButtonState() {
+    private fun setCompassButtonState(animate: Boolean) {
         if (TrailPreferences.isCompassRotation()) {
-            compass.setImageResource(R.drawable.ic_compass_on)
+            if (animate) {
+                ImageLoader.setImage(R.drawable.ic_compass_on, compass, context, 0)
+            } else {
+                compass.setImageResource(R.drawable.ic_compass_on)
+            }
         } else {
-            compass.setImageResource(R.drawable.ic_compass_off)
+            if (animate) {
+                ImageLoader.setImage(R.drawable.ic_compass_off, compass, context, 0)
+            } else {
+                compass.setImageResource(R.drawable.ic_compass_off)
+            }
         }
     }
 
-    private fun setAlignButtonState() {
+    private fun setAlignButtonState(animate: Boolean) {
         if (TrailPreferences.isToolsGravityToLeft()) {
-            align.setImageResource(R.drawable.ic_arrow_right)
+            if (animate) {
+                ImageLoader.setImage(R.drawable.ic_arrow_right, align, context, 0)
+            } else {
+                align.setImageResource(R.drawable.ic_arrow_right)
+            }
         } else {
-            align.setImageResource(R.drawable.ic_arrow_left)
+            if (animate) {
+                ImageLoader.setImage(R.drawable.ic_arrow_left, align, context, 0)
+            } else {
+                align.setImageResource(R.drawable.ic_arrow_left)
+            }
         }
     }
 
@@ -110,24 +135,24 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
 
     fun changeButtonState(hide: Boolean) {
         if (hide) {
-            wrap.makeGoAway()
-            remove.makeGoAway()
+            wrap.gone()
+            remove.gone()
         } else {
-            wrap.makeVisible(false)
-            remove.makeVisible(false)
+            wrap.visible(false)
+            remove.visible(false)
         }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key!!) {
             TrailPreferences.wrapped -> {
-                setWrapUnwrapButtonState()
+                setWrapUnwrapButtonState(true)
             }
             TrailPreferences.toolsMenuGravity -> {
-                setAlignButtonState()
+                setAlignButtonState(true)
             }
             TrailPreferences.compass -> {
-                setCompassButtonState()
+                setCompassButtonState(true)
             }
         }
     }

@@ -198,7 +198,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             withContext(Dispatchers.Default) {
                 if (context.isNotNull())
                     markerBitmap = if (location.isNotNull()) {
-                        println(rotationAngle)
                         BitmapHelper.rotateBitmap(
                                 R.drawable.ic_location_arrow.toBitmap(context, 100),
                                 if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing ?: 0F)

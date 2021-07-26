@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.preferences.OSMPreferences
-import app.simple.positional.util.ViewUtils.makeInvisible
-import app.simple.positional.util.ViewUtils.makeVisible
+import app.simple.positional.util.ViewUtils.invisible
+import app.simple.positional.util.ViewUtils.visible
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 
 class MapTilesAdapter : RecyclerView.Adapter<MapTilesAdapter.Holder>() {
@@ -25,9 +25,9 @@ class MapTilesAdapter : RecyclerView.Adapter<MapTilesAdapter.Holder>() {
         holder.name.text = list[position].second
 
         if (list[position].second == OSMPreferences.getMapTileProvider()) {
-            holder.indicator.makeVisible(false)
+            holder.indicator.visible(false)
         } else {
-            holder.indicator.makeInvisible(false)
+            holder.indicator.invisible(false)
         }
 
         holder.container.setOnClickListener {

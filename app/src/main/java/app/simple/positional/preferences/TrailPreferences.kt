@@ -8,8 +8,12 @@ object TrailPreferences {
     private const val mapZoom = "trail_map_zoom_value"
     private const val mapTilt = "trail_map_tilt_value"
     private const val mapBearing = "trail_map_bearing"
+    private const val trailNote = "last_trail_note"
+    private const val trailName = "last_trail_name"
+    private const val markerNote = "last_marker_note"
+    private const val markerName = "last_marker_name"
     const val mapAutoCenter = "trail_maps_auto_center"
-    const val lastSelectedTrail = "last_selected_trail"
+    const val selectedTrail = "last_selected_trail"
     const val wrapped = "are_polylines_wrapped"
     const val geodesic = "is_trail_geodesic"
     const val trailLabelMode = "trail_map_label_mode"
@@ -111,12 +115,12 @@ object TrailPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setLastTrailName(value: String) {
-        getSharedPreferences().edit().putString(lastSelectedTrail, value).apply()
+    fun setCurrentTrailName(value: String) {
+        getSharedPreferences().edit().putString(selectedTrail, value).apply()
     }
 
-    fun getLastUsedTrail(): String {
-        return getSharedPreferences().getString(lastSelectedTrail, "")!!
+    fun getCurrentTrail(): String {
+        return getSharedPreferences().getString(selectedTrail, "")!!
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -147,5 +151,45 @@ object TrailPreferences {
 
     fun isCompassRotation(): Boolean {
         return getSharedPreferences().getBoolean(compass, false)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setLastTrailName(value: String) {
+        getSharedPreferences().edit().putString(trailName, value).apply()
+    }
+
+    fun getLastTrailName(): String {
+        return getSharedPreferences().getString(trailName, "")!!
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setLastTrailNote(value: String) {
+        getSharedPreferences().edit().putString(trailNote, value).apply()
+    }
+
+    fun getLastTrailNote(): String {
+        return getSharedPreferences().getString(trailNote, "")!!
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setLastMarkerName(value: String) {
+        getSharedPreferences().edit().putString(markerName, value).apply()
+    }
+
+    fun getLastMarkerName(): String {
+        return getSharedPreferences().getString(markerName, "")!!
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setLastMarkerNote(value: String) {
+        getSharedPreferences().edit().putString(markerNote, value).apply()
+    }
+
+    fun getLastMarkerNote(): String {
+        return getSharedPreferences().getString(markerNote, "")!!
     }
 }

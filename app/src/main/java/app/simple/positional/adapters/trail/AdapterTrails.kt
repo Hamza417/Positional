@@ -45,7 +45,7 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
             holder.note.text = list[position].trailNote
             holder.date.text = list[position].dateCreated.formatDate()
 
-            if (list[position].trailName == TrailPreferences.getLastUsedTrail()) {
+            if (list[position].trailName == TrailPreferences.getCurrentTrail()) {
                 holder.name.setTextColor(holder.itemView.context.resolveAttrColor(R.attr.colorAppAccent))
             } else {
                 holder.name.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.textPrimary))

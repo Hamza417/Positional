@@ -47,7 +47,7 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
 
                 db.trailDao()?.insertTrail(trailModel)
 
-                TrailPreferences.setLastTrailName(trailModel.trailName)
+                TrailPreferences.setCurrentTrailName(trailModel.trailName)
 
                 this@TrailsViewModel.trails.postValue(db.trailDao()!!.getAllTrails() as ArrayList<TrailModel>?)
 
@@ -65,8 +65,8 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
 
                 db.trailDao()?.deleteTrail(trailModel)
 
-                if (TrailPreferences.getLastUsedTrail() == trailModel.trailName) {
-                    TrailPreferences.setLastTrailName("")
+                if (TrailPreferences.getCurrentTrail() == trailModel.trailName) {
+                    TrailPreferences.setCurrentTrailName("")
                 }
 
                 this@TrailsViewModel.trails.postValue(db.trailDao()!!.getAllTrails() as ArrayList<TrailModel>?)

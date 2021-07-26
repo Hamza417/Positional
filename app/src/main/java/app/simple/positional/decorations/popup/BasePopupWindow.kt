@@ -21,7 +21,7 @@ open class BasePopupWindow : PopupWindow() {
     fun init(contentView: View, viewGroup: ViewGroup, xOff: Float, yOff: Float) {
         setContentView(contentView)
         init()
-        showAsDropDown(viewGroup, xOff.toInt() - width / 2, yOff.toInt() - height, Gravity.START)
+        showAsDropDown(viewGroup, xOff.toInt() - width / 2, yOff.toInt() - height / 4, Gravity.START)
     }
 
     fun init(contentView: View, view: View) {
@@ -30,10 +30,10 @@ open class BasePopupWindow : PopupWindow() {
         showAsDropDown(view, (width / 1.2F * -1).toInt(), height / 8, Gravity.NO_GRAVITY)
     }
 
-    fun init(contentView: View, view: View, gravity: Int) {
+    fun init(contentView: View, view: View, gravity: Int, factor: Int) {
         setContentView(contentView)
         init()
-        showAsDropDown(view, (width / 2F * -1).toInt(), 0, gravity)
+        showAsDropDown(view, (width / factor * -1), 0, gravity)
     }
 
 
@@ -46,16 +46,13 @@ open class BasePopupWindow : PopupWindow() {
         isClippingEnabled = false
         isFocusable = true
         elevation = 50F
+        overlapAnchor = true
 
         ViewUtils.addShadow(contentView)
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            overlapAnchor = false
-        }
-
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             setIsClippedToScreen(false)
-            setIsLaidOutInScreen(true)
+            setIsLaidOutInScreen(false)
         }
     }
 

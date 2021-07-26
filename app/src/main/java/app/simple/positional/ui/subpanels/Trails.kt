@@ -19,8 +19,8 @@ import app.simple.positional.popups.trail.PopupTrailsMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ViewUtils
-import app.simple.positional.util.ViewUtils.makeInvisible
-import app.simple.positional.util.ViewUtils.makeVisible
+import app.simple.positional.util.ViewUtils.invisible
+import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.viewmodel.TrailsViewModel
 import com.google.android.material.card.MaterialCardView
 
@@ -67,7 +67,7 @@ class Trails : ScopedFragment() {
 
             adapterTrails.setOnAdapterTrailsCallbackListener(object : AdapterTrails.Companion.AdapterTrailsCallback {
                 override fun onTrailClicked(name: String) {
-                    TrailPreferences.setLastTrailName(name)
+                    TrailPreferences.setCurrentTrailName(name)
                     requireActivity().finish()
                 }
 
@@ -79,7 +79,7 @@ class Trails : ScopedFragment() {
 
                     popup.setOnPopupCallbacksListener(object : PopupTrailsMenu.Companion.PopupTrailsCallbacks {
                         override fun onShowOnMap() {
-                            TrailPreferences.setLastTrailName(trailModel.trailName).also {
+                            TrailPreferences.setCurrentTrailName(trailModel.trailName).also {
                                 requireActivity().finish()
                             }
                         }
@@ -100,10 +100,10 @@ class Trails : ScopedFragment() {
             })
 
             if (it.isNullOrEmpty()) {
-                art.makeVisible(true)
+                art.visible(true)
             } else {
                 recyclerView.adapter = adapterTrails
-                art.makeInvisible(true)
+                art.invisible(true)
             }
         })
     }

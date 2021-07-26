@@ -18,8 +18,8 @@ import app.simple.positional.popups.trail.PopupTrailsDataMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ViewUtils
-import app.simple.positional.util.ViewUtils.makeInvisible
-import app.simple.positional.util.ViewUtils.makeVisible
+import app.simple.positional.util.ViewUtils.invisible
+import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.factory.TrailDataFactory
 import app.simple.positional.viewmodels.viewmodel.TrailDataViewModel
 import com.google.android.material.card.MaterialCardView
@@ -101,15 +101,15 @@ class TrailData : ScopedFragment() {
             })
 
             if (it.first.isNullOrEmpty()) {
-                art.makeVisible(true)
+                art.visible(true)
             } else {
-                art.makeInvisible(true)
+                art.invisible(true)
                 recyclerView.adapter = adapter
             }
         })
 
         setTrail.setOnClickListener {
-            TrailPreferences.setLastTrailName(requireArguments().getString("trail_name")!!)
+            TrailPreferences.setCurrentTrailName(requireArguments().getString("trail_name")!!)
             requireActivity().finish()
         }
     }
