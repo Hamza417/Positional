@@ -87,10 +87,10 @@ class Level : ScopedFragment(), SensorEventListener {
                 .show(childFragmentManager, "error_dialog")
         }
 
+        @Suppress("deprecation")
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
             requireContext().display?.getRealMetrics(displayMetrics)
         } else {
-            @Suppress("deprecation")
             requireActivity().windowManager.defaultDisplay.getRealMetrics(displayMetrics)
         }
 

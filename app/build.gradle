@@ -48,7 +48,7 @@ if (googleMapsAPIKey == noKeyFound) {
 
 android {
 
-    compileSdkVersion 31
+    compileSdkVersion 30
 
     def appVersionCode = 118
     def appVersionName = "positional_build_${appVersionCode}"
@@ -56,7 +56,7 @@ android {
     defaultConfig {
         applicationId "app.simple.positional"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 30
         versionCode appVersionCode
         versionName appVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -129,10 +129,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // AndroidX
-    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.fragment:fragment-ktx:1.3.5'
+    implementation 'androidx.fragment:fragment-ktx:1.3.6'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     implementation 'androidx.webkit:webkit:1.4.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'

@@ -21,6 +21,7 @@ import app.simple.positional.model.TrailData
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
+import app.simple.positional.util.BitmapHelper
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isNotNull
@@ -41,8 +42,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
-    private val rotation = FloatArray(9)
-    private val inclination = FloatArray(9)
     private var readingsAlpha = 0.03f
     private var rotationAngle = 0f
 
@@ -104,6 +103,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                                     getMapAsync(this)
                                 }, 500)
 
+        sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
         kotlin.runCatching {
             sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
             sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -157,9 +158,11 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         }
 
         trailMapCallbacks.onMapInitialized()
+        register()
     }
 
     fun pause() {
+        unregister()
         onPause()
     }
 
@@ -169,6 +172,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     fun resume() {
         onResume()
+        register()
         getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
     }
 
@@ -194,15 +198,18 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             withContext(Dispatchers.Default) {
                 if (context.isNotNull())
                     markerBitmap = if (location.isNotNull()) {
-                        R.drawable.ic_pin_01.toBitmap(context, 60)
+                        println(rotationAngle)
+                        BitmapHelper.rotateBitmap(R.drawable.ic_location_arrow.toBitmap(context, 100), rotationAngle)
                     } else {
-                        R.drawable.ic_place_historical.toBitmap(context, 100)
+                        R.drawable.ic_place_historical.toBitmap(context, 60)
                     }
             }
 
             if (googleMap.isNotNull()) {
                 marker?.remove()
-                marker = googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                marker = googleMap?.addMarker(MarkerOptions()
+                                                  .position(latLng)
+                                                  .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
                 invalidate()
             }
         }
@@ -464,5 +471,20 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
 
+    }
+
+    private fun register() {
+        if (haveAccelerometerSensor && haveMagnetometerSensor) {
+            unregister()
+            sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
+            sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+        }
+    }
+
+    private fun unregister() {
+        if (haveAccelerometerSensor && haveMagnetometerSensor) {
+            sensorManager.unregisterListener(this, sensorAccelerometer)
+            sensorManager.unregisterListener(this, sensorMagneticField)
+        }
     }
 }
