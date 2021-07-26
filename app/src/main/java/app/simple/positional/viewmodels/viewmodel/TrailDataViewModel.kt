@@ -20,7 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
-class TrailDataViewModel(application: Application, private val trailName: String) : AndroidViewModel(application) {
+class TrailDataViewModel(application: Application, private var trailName: String) : AndroidViewModel(application) {
 
     val trailDataAscending: MutableLiveData<ArrayList<TrailData>> by lazy {
         MutableLiveData<ArrayList<TrailData>>().also {
@@ -146,5 +146,11 @@ class TrailDataViewModel(application: Application, private val trailName: String
 
             trailDataDescendingWithInfo.postValue(pair)
         }
+    }
+
+    fun setTrailName(trailName: String) {
+        this.trailName = trailName
+        loadTrailData(trailName)
+        loadTrailDataWithInformation(trailName, false)
     }
 }

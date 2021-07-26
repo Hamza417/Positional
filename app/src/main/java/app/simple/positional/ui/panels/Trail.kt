@@ -348,8 +348,7 @@ class Trail : ScopedFragment() {
             }
             TrailPreferences.lastSelectedTrail -> {
                 currentTrail = TrailPreferences.getLastUsedTrail()
-                trailDataViewModel.loadTrailData(currentTrail!!)
-                trailDataViewModel.loadTrailDataWithInformation(currentTrail!!, false)
+                trailDataViewModel.setTrailName(currentTrail!!)
                 maps?.clear()
             }
         }

@@ -179,6 +179,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         polylines.clear()
         currentPolyline.clear()
         flagMarkers.clear()
+        trailData.clear()
         options?.points?.clear()
 
         for (trailData in arrayList) {
@@ -189,7 +190,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             val marker = googleMap?.addMarker(
                     MarkerOptions()
                         .position(latLng)
-                        .icon(BitmapDescriptorFactory.fromBitmap(TrailIcons.icons[trailData.iconPosition].toBitmap(context, 50))))
+                        .icon(BitmapDescriptorFactory.fromBitmap(
+                                TrailIcons.icons[trailData.iconPosition]
+                                    .toBitmap(context, 50))))
 
             flagMarkers.add(marker!!)
             options?.add(latLng)
@@ -213,8 +216,11 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         val marker = googleMap?.addMarker(
                 MarkerOptions()
                     .position(latLng)
-                    .icon(BitmapDescriptorFactory.fromBitmap(TrailIcons.icons[trailData.iconPosition].toBitmap(context, 50))))
+                    .icon(BitmapDescriptorFactory.fromBitmap(
+                            TrailIcons.icons[trailData.iconPosition]
+                                .toBitmap(context, 50))))
 
+        this.trailData.add(trailData)
         flagMarkers.add(marker!!)
         options?.add(latLng)
         polylines.add(googleMap?.addPolyline(options!!)!!)
@@ -234,8 +240,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         polylines.lastOrNull()?.remove()
         flagMarkers.lastOrNull()?.remove()
         currentPolyline.removeLastOrNull()
-        polylines.removeLastOrNull()
-        flagMarkers.removeLastOrNull()
         options?.points?.removeLastOrNull()
         trailMapCallbacks.onLineDeleted(trailData.lastOrNull())
         trailMapCallbacks.onLineCountChanged(options!!.points.size)
