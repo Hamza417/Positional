@@ -21,6 +21,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     private lateinit var wrap: DynamicRippleImageButton
     private lateinit var align: DynamicRippleImageButton
     private lateinit var icons: DynamicRippleImageButton
+    private lateinit var compass: DynamicRippleImageButton
 
     private lateinit var trailCallbacks: TrailCallbacks
 
@@ -46,6 +47,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         wrap = view.findViewById(R.id.wrap_unwrap_flags)
         icons = view.findViewById(R.id.add_flag)
         align = view.findViewById(R.id.tools_align_btn)
+        compass = view.findViewById(R.id.compass)
 
         icons.setOnClickListener {
             trailCallbacks.onAdd(it)
@@ -53,6 +55,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
 
         setWrapUnwrapButtonState()
         setAlignButtonState()
+        setCompassButtonState()
 
         location.setOnClickListener {
             trailCallbacks.onLocation()
@@ -71,6 +74,10 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
                     !TrailPreferences.isToolsGravityToLeft()
             )
         }
+
+        compass.setOnClickListener {
+            TrailPreferences.setCompassRotation(!TrailPreferences.isCompassRotation())
+        }
     }
 
     private fun setWrapUnwrapButtonState() {
@@ -78,6 +85,14 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
             wrap.setImageResource(R.drawable.ic_close_fullscreen)
         } else {
             wrap.setImageResource(R.drawable.ic_full_screen)
+        }
+    }
+
+    private fun setCompassButtonState() {
+        if (TrailPreferences.isCompassRotation()) {
+            compass.setImageResource(R.drawable.ic_compass_on)
+        } else {
+            compass.setImageResource(R.drawable.ic_compass_off)
         }
     }
 
@@ -110,6 +125,9 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
             }
             TrailPreferences.toolsMenuGravity -> {
                 setAlignButtonState()
+            }
+            TrailPreferences.compass -> {
+                setCompassButtonState()
             }
         }
     }

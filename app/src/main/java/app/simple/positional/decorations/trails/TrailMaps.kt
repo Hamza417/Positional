@@ -50,7 +50,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     private var accelerometer = Vector3.zero
     private var magnetometer = Vector3.zero
-    private lateinit var sensorManager: SensorManager
+    private var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
     private lateinit var sensorMagneticField: Sensor
 
@@ -199,7 +199,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 if (context.isNotNull())
                     markerBitmap = if (location.isNotNull()) {
                         println(rotationAngle)
-                        BitmapHelper.rotateBitmap(R.drawable.ic_location_arrow.toBitmap(context, 100), rotationAngle)
+                        BitmapHelper.rotateBitmap(
+                                R.drawable.ic_location_arrow.toBitmap(context, 100),
+                                if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing ?: 0F)
                     } else {
                         R.drawable.ic_place_historical.toBitmap(context, 60)
                     }
@@ -445,6 +447,13 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 viewHandler.removeCallbacks(mapMoved)
                 viewHandler.post(mapMoved)
             }
+            TrailPreferences.compass -> {
+                if (TrailPreferences.isCompassRotation()) {
+                    register()
+                } else {
+                    unregister()
+                }
+            }
         }
     }
 
@@ -476,8 +485,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private fun register() {
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             unregister()
-            sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
-            sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+            if (TrailPreferences.isCompassRotation()) {
+                sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
+                sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+            }
         }
     }
 

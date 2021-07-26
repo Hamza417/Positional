@@ -17,6 +17,7 @@ object TrailPreferences {
     const val trailHighContrastMap = "trail_map_high_contrast_map"
     const val trailShowBuilding = "trail_show_buildings_on_map"
     const val toolsMenuGravity = "trail_tools_view_gravity"
+    const val compass = "trail_map_compass_or_bearing"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -136,5 +137,15 @@ object TrailPreferences {
 
     fun getMapAutoCenter(): Boolean {
         return getSharedPreferences().getBoolean(mapAutoCenter, true)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setCompassRotation(value: Boolean) {
+        getSharedPreferences().edit().putBoolean(compass, value).apply()
+    }
+
+    fun isCompassRotation(): Boolean {
+        return getSharedPreferences().getBoolean(compass, false)
     }
 }
