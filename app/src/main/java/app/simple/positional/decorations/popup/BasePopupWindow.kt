@@ -33,7 +33,7 @@ open class BasePopupWindow : PopupWindow() {
     fun init(contentView: View, view: View, gravity: Int, factor: Int) {
         setContentView(contentView)
         init()
-        showAsDropDown(view, (width / factor * -1), 0, gravity)
+        showAsDropDown(view, width / factor * -1, 0, gravity)
     }
 
 
