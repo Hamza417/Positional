@@ -56,6 +56,7 @@ android {
     defaultConfig {
         applicationId "app.simple.positional"
         minSdkVersion 23
+        //noinspection OldTargetApi
         targetSdkVersion 30
         versionCode appVersionCode
         versionName appVersionName
@@ -140,7 +141,7 @@ dependencies {
 
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
 
     // Google Services and Default android libs
     implementation 'com.google.android.gms:play-services-location:18.0.0'
@@ -158,9 +159,9 @@ dependencies {
     implementation 'com.github.vipulasri:timelineview:1.1.5'
 
     // Room components
-    implementation "androidx.room:room-ktx:2.3.0"
-    kapt "androidx.room:room-compiler:2.3.0"
-    androidTestImplementation "androidx.room:room-testing:2.3.0"
+    implementation "androidx.room:room-ktx:2.4.0-alpha04"
+    kapt "androidx.room:room-compiler:2.4.0-alpha04"
+    androidTestImplementation "androidx.room:room-testing:2.4.0-alpha04"
 
     // Leak Canary -- debugImplementation because LeakCanary should only run in debug builds.
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'

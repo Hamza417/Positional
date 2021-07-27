@@ -92,6 +92,19 @@ object MathExtensions {
         }
     }
 
+    fun Float.round(places: Int): Float {
+        return try {
+            var value = this
+            require(places >= 0)
+            val factor = 10.0.pow(places.toDouble()).toLong()
+            value *= factor
+            val tmp = value.roundToInt()
+            tmp.toFloat() / factor
+        } catch (e: IllegalArgumentException) {
+            Float.NaN
+        }
+    }
+
     fun Float.toNegative(): Float {
         return this * -1F
     }

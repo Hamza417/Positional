@@ -40,4 +40,7 @@
     <color name="switch_on">#2196F3</color>
     <color name="switch_off">#EAEAEA</color>
 
+    // Pin Color
+    <color name="compass_pin_color">#1B9CFF</color>
+    <color name="compass_pin_stroke_color">#6FC0FF</color>
 </resources>

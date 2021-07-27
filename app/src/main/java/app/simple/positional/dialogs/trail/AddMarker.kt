@@ -1,5 +1,6 @@
 package app.simple.positional.dialogs.trail
 
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,6 @@ import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.model.TrailData
 import app.simple.positional.popups.trail.PopupMarkers
 import app.simple.positional.preferences.TrailPreferences
-import com.google.android.gms.maps.model.LatLng
 
 class AddMarker : CustomDialogFragment() {
 
@@ -27,7 +27,7 @@ class AddMarker : CustomDialogFragment() {
 
     var onNewTrailAddedSuccessfully: (trailData: TrailData) -> Unit = {}
 
-    private var latLng: LatLng? = null
+    private var location: Location? = null
     private var iconPosition = -1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,7 +39,7 @@ class AddMarker : CustomDialogFragment() {
         save = view.findViewById(R.id.save)
         cancel = view.findViewById(R.id.cancel)
 
-        latLng = requireArguments().getParcelable("latlng")
+        location = requireArguments().getParcelable("location")
         setMarkerIcon(requireArguments().getInt("icon_position"))
 
         nameInputEditText.setText(TrailPreferences.getLastMarkerName())
@@ -77,8 +77,8 @@ class AddMarker : CustomDialogFragment() {
 
         save.setOnClickListener {
             val trails = TrailData(
-                    latLng!!.latitude,
-                    latLng!!.longitude,
+                    location!!.latitude,
+                    location!!.longitude,
                     requireArguments().getLong("time"),
                     iconPosition,
                     if (noteInputEditText.text.toString().isNotEmpty()) {
@@ -90,7 +90,8 @@ class AddMarker : CustomDialogFragment() {
                         nameInputEditText.text.toString()
                     } else {
                         null
-                    }
+                    },
+                    location?.accuracy ?: -1f
             )
 
             TrailPreferences.setLastMarkerName("")
@@ -113,10 +114,10 @@ class AddMarker : CustomDialogFragment() {
     }
 
     companion object {
-        fun newInstance(position: Int, latLng: LatLng): AddMarker {
+        fun newInstance(position: Int, location: Location): AddMarker {
             val args = Bundle()
             args.putInt("icon_position", position)
-            args.putParcelable("latlng", latLng)
+            args.putParcelable("location", location)
             args.putLong("time", System.currentTimeMillis())
             val fragment = AddMarker()
             fragment.arguments = args

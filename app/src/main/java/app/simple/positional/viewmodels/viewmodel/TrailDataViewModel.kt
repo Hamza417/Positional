@@ -48,7 +48,7 @@ class TrailDataViewModel(application: Application, private var trailName: String
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
                                                 TrailDataDatabase::class.java,
-                                                "$trailName.db").build()
+                                                "$trailName.db").fallbackToDestructiveMigration().build()
 
             val list = database.trailDataDao()?.getAllTrailData()!!
             val listDesc = database.trailDataDao()?.getAllTrailDataDesc()!!
@@ -66,7 +66,7 @@ class TrailDataViewModel(application: Application, private var trailName: String
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
                                                 TrailDataDatabase::class.java,
-                                                "$trailName.db").build()
+                                                "$trailName.db").fallbackToDestructiveMigration().build()
 
             database.trailDataDao()?.insertTrailData(trails)!!
 
@@ -83,7 +83,7 @@ class TrailDataViewModel(application: Application, private var trailName: String
 
                 val database = Room.databaseBuilder(getApplication<Application>(),
                                                     TrailDataDatabase::class.java,
-                                                    "$trailName.db").build()
+                                                    "$trailName.db").fallbackToDestructiveMigration().build()
 
                 database.trailDataDao()?.deleteTrailData(trails)!!
 
@@ -99,7 +99,7 @@ class TrailDataViewModel(application: Application, private var trailName: String
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
                                                 TrailDataDatabase::class.java,
-                                                "$trailName.db").build()
+                                                "$trailName.db").fallbackToDestructiveMigration().build()
 
             val list = database.trailDataDao()?.getAllTrailDataDesc()!!
 

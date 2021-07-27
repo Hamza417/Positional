@@ -56,4 +56,11 @@ object UnitConverter {
     fun Double.toFeet(): Double {
         return this * 3.28084
     }
+
+    /**
+     * Converts double value in meters to feet
+     */
+    fun Float.toFeet(): Float {
+        return this * 3.28084F
+    }
 }

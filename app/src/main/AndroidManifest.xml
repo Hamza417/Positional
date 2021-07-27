@@ -244,54 +244,66 @@
 
         <activity
             android:name=".activities.main.LauncherActivity"
+            android:exported="true"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.main.MainActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.subactivity.TimezonePickerActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.subactivity.CustomLocationsActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.subactivity.WebPageViewerActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.subactivity.TrailsViewerActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.subactivity.TrailDataActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".activities.subactivity.AccentColorsActivity"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <!-- Services -->
 
         <service
             android:name=".services.LocationService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
 
         <service
             android:name=".services.FusedLocationService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
 
         <service
             android:name=".services.ClockWidgetService"
-            android:enabled="true" />
+            android:enabled="true"
+            android:exported="false" />
 
         <!-- Widgets -->
 
         <receiver
             android:name=".widgets.ClockWidget"
+            android:exported="false"
             android:icon="@drawable/widget_clock_preview"
             android:label="@string/clock">
 
@@ -306,6 +318,7 @@
 
         <receiver
             android:name=".widgets.SunTimeWidget"
+            android:exported="false"
             android:icon="@drawable/ic_sunrise"
             android:label="@string/sun_time">
 
@@ -320,6 +333,7 @@
 
         <receiver
             android:name=".widgets.SunTimeWidgetArt"
+            android:exported="false"
             android:icon="@drawable/ic_sunrise"
             android:label="@string/sun_time">
 
@@ -334,6 +348,7 @@
 
         <receiver
             android:name=".widgets.MoonPhaseWidget"
+            android:exported="false"
             android:icon="@drawable/ic_moon_phase"
             android:label="@string/moon_illumination">
 

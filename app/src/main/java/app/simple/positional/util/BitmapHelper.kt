@@ -2,6 +2,7 @@ package app.simple.positional.util
 
 import android.content.Context
 import android.graphics.*
+import androidx.annotation.IntRange
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -50,7 +51,7 @@ object BitmapHelper {
     }
 
     fun rotateBitmap(bitmap: Bitmap, rotationAngleDegree: Float): Bitmap? {
-        val w = bitmap.width
+        val w = bitmap.height
         val h = bitmap.height
         var newW = w
         var newH = h
@@ -106,7 +107,17 @@ object BitmapHelper {
         return bitmap
     }
 
-    fun Int.bitmapDescriptorFromVector(context: Context): BitmapDescriptor {
+    fun Int.toBitmapKeepingSize(context: Context, @IntRange(from = 1, to = 5) incrementFactor: Int): Bitmap {
+        val vectorDrawable = ContextCompat.getDrawable(context, this)
+        val intrinsicWidth = vectorDrawable!!.intrinsicWidth * incrementFactor
+        val intrinsicHeight = vectorDrawable.intrinsicHeight * incrementFactor
+        vectorDrawable.setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+        val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+        vectorDrawable.draw(Canvas(bitmap))
+        return bitmap
+    }
+
+    fun Int.toBitmapDescriptor(context: Context): BitmapDescriptor {
         val vectorDrawable = ContextCompat.getDrawable(context, this)
         vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
         val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)

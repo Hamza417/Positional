@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/adapter_trails_data_item_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/adapter_trails_data_item_container"
+    android:layout_marginHorizontal="10dp"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:layout_marginHorizontal="10dp"
     android:paddingHorizontal="@dimen/options_container_horizontal_padding">
 
     <com.github.vipulasri.timelineview.TimelineView
         android:id="@+id/adapter_trail_data_timeline"
         android:layout_width="@dimen/app_button_size"
         android:layout_height="0dp"
-        app:lineWidth="2dp"
-        app:linePadding="10dp"
         app:endLineColor="?attr/colorAppAccent"
-        app:startLineColor="?attr/colorAppAccent"
-        app:markerSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:linePadding="10dp"
+        app:lineWidth="2dp"
+        app:markerSize="30dp"
+        app:startLineColor="?attr/colorAppAccent" />
 
     <TextView
         android:id="@+id/adapter_trail_data_name"
@@ -43,9 +43,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_coordinates"
         android:textColor="@color/textTertiary"
         android:textSize="@dimen/description_text_size"
+        android:fontFamily="@font/regular"
+        app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_coordinates"
         app:layout_constraintEnd_toEndOf="@+id/adapter_trail_data_name"
         app:layout_constraintStart_toStartOf="@+id/adapter_trail_data_name"
         app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_name" />
@@ -55,12 +56,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textSize="@dimen/description_text_size"
-        app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_date"
+        android:fontFamily="@font/medium"
         android:textColor="?attr/colorAppAccent"
+        android:textSize="@dimen/description_text_size"
+        app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_accuracy"
         app:layout_constraintEnd_toEndOf="@+id/adapter_trail_data_notes"
         app:layout_constraintStart_toStartOf="@+id/adapter_trail_data_notes"
         app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_notes" />
+
+    <TextView
+        android:id="@+id/adapter_trail_data_accuracy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/dividerColor"
+        android:textSize="@dimen/description_text_size"
+        android:fontFamily="@font/regular"
+        app:layout_constraintBottom_toTopOf="@id/adapter_trail_data_date"
+        app:layout_constraintEnd_toEndOf="@+id/adapter_trail_data_coordinates"
+        app:layout_constraintStart_toStartOf="@+id/adapter_trail_data_coordinates"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_coordinates" />
 
     <TextView
         android:id="@+id/adapter_trail_data_date"
@@ -68,12 +83,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
+        android:fontFamily="@font/regular"
         android:textColor="@color/textTertiary"
         android:textSize="@dimen/description_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/adapter_trail_data_coordinates"
-        app:layout_constraintStart_toStartOf="@+id/adapter_trail_data_coordinates"
-        app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_coordinates" />
+        app:layout_constraintEnd_toEndOf="@+id/adapter_trail_data_accuracy"
+        app:layout_constraintStart_toStartOf="@+id/adapter_trail_data_accuracy"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_trail_data_accuracy" />
 
 
 </app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>

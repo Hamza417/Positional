@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import app.simple.positional.database.dao.TrailDataDao
 import app.simple.positional.model.TrailData
 
-@Database(entities = [TrailData::class], exportSchema = true, version = 2)
+@Database(entities = [TrailData::class], exportSchema = true, version = 3)
 abstract class TrailDataDatabase : RoomDatabase() {
 
     abstract fun trailDataDao(): TrailDataDao?
@@ -19,6 +19,7 @@ abstract class TrailDataDatabase : RoomDatabase() {
         fun getInstance(context: Context?, DB_NAME: String?): TrailDataDatabase? {
             if (instance == null) {
                 instance = Room.databaseBuilder(context!!, TrailDataDatabase::class.java, DB_NAME!!)
+                    .fallbackToDestructiveMigration()
                     .build()
             }
             return instance

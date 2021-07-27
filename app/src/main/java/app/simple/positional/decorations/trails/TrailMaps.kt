@@ -23,6 +23,7 @@ import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper
 import app.simple.positional.util.BitmapHelper.toBitmap
+import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
@@ -44,6 +45,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private val magnetometerReadings = FloatArray(3)
     private var readingsAlpha = 0.03f
     private var rotationAngle = 0f
+    private var accuracy = -1
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
@@ -198,9 +200,39 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             withContext(Dispatchers.Default) {
                 if (context.isNotNull())
                     markerBitmap = if (location.isNotNull()) {
-                        BitmapHelper.rotateBitmap(
-                                R.drawable.ic_location_arrow.toBitmap(context, 100),
-                                if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing ?: 0F)
+                        if (TrailPreferences.isCompassRotation()) {
+                            when (accuracy) {
+                                SensorManager.SENSOR_STATUS_UNRELIABLE -> {
+                                    BitmapHelper.rotateBitmap(
+                                            R.drawable.ic_pin_unreliable.toBitmapKeepingSize(context, 2),
+                                            rotationAngle)
+                                }
+                                SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
+                                    BitmapHelper.rotateBitmap(
+                                            R.drawable.ic_pin_low.toBitmapKeepingSize(context, 2),
+                                            rotationAngle)
+                                }
+                                SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
+                                    BitmapHelper.rotateBitmap(
+                                            R.drawable.ic_pin_medium.toBitmapKeepingSize(context, 2),
+                                            rotationAngle)
+                                }
+                                SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
+                                    BitmapHelper.rotateBitmap(
+                                            R.drawable.ic_pin_high.toBitmapKeepingSize(context, 2),
+                                            rotationAngle)
+                                }
+                                else -> {
+                                    BitmapHelper.rotateBitmap(
+                                            R.drawable.ic_pin_unreliable.toBitmapKeepingSize(context, 2),
+                                            rotationAngle)
+                                }
+                            }
+                        } else {
+                            BitmapHelper.rotateBitmap(
+                                    R.drawable.ic_pin_bearing.toBitmapKeepingSize(context, 2),
+                                    location?.bearing ?: 0F)
+                        }
                     } else {
                         R.drawable.ic_place_historical.toBitmap(context, 60)
                     }
@@ -210,6 +242,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 marker?.remove()
                 marker = googleMap?.addMarker(MarkerOptions()
                                                   .position(latLng)
+                                                  .anchor(0.5F, 0.5F)
                                                   .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
                 invalidate()
             }
@@ -478,7 +511,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     }
 
     override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-
+        accuracy = p1
     }
 
     private fun register() {

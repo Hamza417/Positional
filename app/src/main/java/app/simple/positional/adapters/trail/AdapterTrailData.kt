@@ -1,5 +1,6 @@
 package app.simple.positional.adapters.trail
 
+import android.content.Context
 import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,13 @@ import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_FOOTER
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder.Companion.TYPE_HEADER
+import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.UnitConverter.toFeet
+import app.simple.positional.math.UnitConverter.toKilometers
+import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.model.TrailData
+import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.ConditionUtils.isEqualTo
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.TimeFormatter.formatDate
 import com.github.vipulasri.timelineview.TimelineView
@@ -56,6 +63,16 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
                 getString(R.string.coordinates_format,
                           DMSConverter.latitudeAsDMS(trailData.first[position].latitude, 2, this),
                           DMSConverter.longitudeAsDMS(trailData.first[position].longitude, 2, this))
+            }
+
+            holder.accuracy.text = if (trailData.first[position].accuracy.isEqualTo(-1)) {
+                holder.itemView.context.getString(R.string.not_available)
+            } else {
+                holder.itemView.context.getString(
+                        R.string.trail_data_accuracy,
+                        getAccuracy(trailData.first[position].accuracy.round(1)),
+                        getUnit(trailData.first[position].accuracy, holder.itemView.context)
+                )
             }
 
             holder.container.setOnLongClickListener {
@@ -108,9 +125,36 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         this.trailsDataCallbacks = trailsDataCallbacks
     }
 
-    fun removeItem(position: Int) {
-        trailData.first.removeAt(position - 1)
-        notifyItemRemoved(position)
+    fun getAccuracy(float: Float): String {
+        return if (MainPreferences.getUnit()) {
+            if (float < 1000F) {
+                float.toString()
+            } else {
+                float.toKilometers().toString()
+            }
+        } else {
+            if (float < 1000F) {
+                float.toFeet().toString()
+            } else {
+                float.toMiles().toString()
+            }
+        }
+    }
+
+    fun getUnit(float: Float, context: Context): String {
+        return if (MainPreferences.getUnit()) {
+            if (float < 1000F) {
+                context.getString(R.string.meter)
+            } else {
+                context.getString(R.string.kilometer)
+            }
+        } else {
+            if (float < 1000F) {
+                context.getString(R.string.feet)
+            } else {
+                context.getString(R.string.miles)
+            }
+        }
     }
 
     inner class Holder(itemView: View, viewType: Int) : VerticalListViewHolder(itemView) {
@@ -119,6 +163,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         val note: TextView = itemView.findViewById(id.adapter_trail_data_notes)
         val coordinates: TextView = itemView.findViewById(id.adapter_trail_data_coordinates)
         val date: TextView = itemView.findViewById(id.adapter_trail_data_date)
+        val accuracy: TextView = itemView.findViewById(id.adapter_trail_data_accuracy)
         val container: DynamicRippleConstraintLayout = itemView.findViewById(R.id.adapter_trails_data_item_container)
 
         init {

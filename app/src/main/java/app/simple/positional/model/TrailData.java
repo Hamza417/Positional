@@ -46,13 +46,28 @@ public class TrailData {
     @ColumnInfo(name = "name")
     String name;
 
-    public TrailData(double latitude, double longitude, long timeAdded, int iconPosition, String note, String name) {
+    /**
+     * Accuracy of the marker's location
+     */
+    @ColumnInfo(name = "accuracy")
+    float accuracy;
+
+    public TrailData(double latitude, double longitude, long timeAdded, int iconPosition, String note, String name, float accuracy) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.timeAdded = timeAdded;
         this.iconPosition = iconPosition;
         this.note = note;
         this.name = name;
+        this.accuracy = accuracy;
+    }
+
+    public float getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(float accuracy) {
+        this.accuracy = accuracy;
     }
 
     public double getLatitude() {

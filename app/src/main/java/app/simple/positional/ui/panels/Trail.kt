@@ -318,6 +318,7 @@ class Trail : ScopedFragment() {
         outState.putFloat("translation", toolbar.translationY)
         outState.putBoolean("fullscreen", isFullScreen)
         outState.putParcelable("camera", maps?.getCamera())
+        outState.putInt("bottom_sheet_state", bottomSheetPanel.state)
         super.onSaveInstanceState(outState)
     }
 
@@ -325,6 +326,7 @@ class Trail : ScopedFragment() {
         if (savedInstanceState.isNotNull()) {
             isFullScreen = !savedInstanceState!!.getBoolean("fullscreen")
             setFullScreen(false)
+            bottomSheetPanel.state = savedInstanceState.getInt("bottom_sheet_state")
         }
         super.onViewStateRestored(savedInstanceState)
     }
@@ -412,8 +414,7 @@ class Trail : ScopedFragment() {
                 if (currentTrail!!.isEmpty()) {
                     addTrail()
                 } else {
-                    val dialog = AddMarker.newInstance(position,
-                                                       LatLng(location!!.latitude, location!!.longitude))
+                    val dialog = AddMarker.newInstance(position, location!!)
 
                     dialog.onNewTrailAddedSuccessfully = {
                         trailDataViewModel.saveTrailData(currentTrail!!, it)
@@ -436,7 +437,8 @@ class Trail : ScopedFragment() {
                             System.currentTimeMillis(),
                             position,
                             null,
-                            null
+                            null,
+                            location?.accuracy ?: -1F
                     )
 
                     trailDataViewModel.saveTrailData(currentTrail!!, trailData)

@@ -1,0 +1,32 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="24dp"
+    android:height="44.01dp"
+    android:viewportWidth="24"
+    android:viewportHeight="44.01">
+    <path
+        android:fillColor="@color/compass_pin_color"
+        android:fillType="evenOdd"
+        android:pathData="M12,22.01m-3.94,0a3.94,3.94 0,1 1,7.88 0a3.94,3.94 0,1 1,-7.88 0"
+        android:strokeWidth="1"
+        android:strokeColor="@color/compass_pin_stroke_color" />
+    <path
+        android:fillType="evenOdd"
+        android:pathData="M18.74,7.63l-4.72,8.68c-0.15,0.28 -0.48,0.41 -0.8,0.33c-0.39,-0.09 -0.8,-0.14 -1.23,-0.14s-0.84,0.05 -1.23,0.14c-0.32,0.07 -0.64,-0.05 -0.8,-0.33L5.26,7.63C5.01,7.17 5.34,6.61 5.86,6.61h12.27C18.66,6.61 18.99,7.17 18.74,7.63z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:endX="12"
+                android:endY="16.6639"
+                android:startX="12"
+                android:startY="6.6059"
+                android:type="linear">
+                <item
+                    android:color="#00FFFFFF"
+                    android:offset="0" />
+                <item
+                    android:color="@color/compass_pin_color"
+                    android:offset="1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>
