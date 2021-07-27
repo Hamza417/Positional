@@ -287,4 +287,5 @@
     <string name="delete">Ștergere</string>
     <string name="show_on_map">Afişare pe hartă</string>
     <string name="copy">Copiere</string>
+    <string name="trail_data_accuracy">În %1$s %2$s din locație</string>
 </resources>

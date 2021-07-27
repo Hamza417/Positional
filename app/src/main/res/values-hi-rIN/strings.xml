@@ -287,4 +287,5 @@
     <string name="delete">मिटाए</string>
     <string name="show_on_map">नक्शे पर दिखाएँ</string>
     <string name="copy">कॉपी करें</string>
+    <string name="trail_data_accuracy">स्थान के %1$s %2$s के भीतर</string>
 </resources>
