@@ -26,7 +26,6 @@ object MainPreferences {
     const val latitude = "custom_latitude"
     const val longitude = "custom_longitude"
     const val accentColor = "app_accent_color"
-    const val isOSMPanel = "is_map_panel_osm"
     const val lastLatitude = "last_latitude"
     const val lastLongitude = "last_longitude"
     //--------------------------------------------------------------------------------------------------//
@@ -221,15 +220,5 @@ object MainPreferences {
 
     fun getAccentColor(): Int {
         return getSharedPreferences().getInt(accentColor, 0)
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-
-    fun setMapPanelType(@NotNull value: Boolean) {
-        getSharedPreferences().edit().putBoolean(isOSMPanel, value).apply()
-    }
-
-    fun getMapPanelType(): Boolean {
-        return getSharedPreferences().getBoolean(isOSMPanel, false)
     }
 }

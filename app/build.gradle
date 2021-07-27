@@ -50,7 +50,7 @@ android {
 
     compileSdkVersion 30
 
-    def appVersionCode = 121
+    def appVersionCode = 122
     def appVersionName = "positional_build_${appVersionCode}"
 
     defaultConfig {
@@ -149,9 +149,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'com.google.maps.android:android-maps-utils:2.2.4'
-
-    // OSM
-    implementation 'org.osmdroid:osmdroid-android:6.1.10'
 
     // Third Party Implementations
     implementation 'org.shredzone.commons:commons-suncalc:3.4'

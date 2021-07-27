@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.BottomBarAdapter
 import app.simple.positional.adapters.bottombar.BottomBarItems
@@ -177,13 +176,8 @@ class MainActivity : BaseActivity(),
                     ?: Compass.newInstance()
             }
             "location" -> {
-                return if (MainPreferences.getMapPanelType() && BuildConfig.FLAVOR != "lite") {
-                    supportFragmentManager.findFragmentByTag("location") as OSM?
-                        ?: OSM.newInstance()
-                } else {
-                    supportFragmentManager.findFragmentByTag("location") as GPS?
-                        ?: GPS.newInstance()
-                }
+                return supportFragmentManager.findFragmentByTag("location") as GPS?
+                    ?: GPS.newInstance()
             }
             "trail" -> {
                 return supportFragmentManager.findFragmentByTag("trail") as Trail?
@@ -198,13 +192,8 @@ class MainActivity : BaseActivity(),
                     ?: AppSettings.newInstance()
             }
             else -> {
-                return if (MainPreferences.getMapPanelType() && BuildConfig.FLAVOR != "lite") {
-                    supportFragmentManager.findFragmentByTag("location") as OSM?
-                        ?: OSM.newInstance()
-                } else {
-                    supportFragmentManager.findFragmentByTag("location") as GPS?
-                        ?: GPS.newInstance()
-                }
+                return supportFragmentManager.findFragmentByTag("location") as GPS?
+                    ?: GPS.newInstance()
             }
         }
     }

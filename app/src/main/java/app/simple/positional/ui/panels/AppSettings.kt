@@ -24,7 +24,6 @@ import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
-import app.simple.positional.dialogs.app.PanelEditor
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.popups.settings.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
@@ -42,7 +41,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var buyFull: DynamicRippleLinearLayout
     private lateinit var unit: DynamicRippleLinearLayout
     private lateinit var locationProvider: DynamicRippleLinearLayout
-    private lateinit var mapsProvider: DynamicRippleLinearLayout
     private lateinit var language: DynamicRippleLinearLayout
     private lateinit var theme: DynamicRippleLinearLayout
     private lateinit var accent: DynamicRippleLinearLayout
@@ -51,7 +49,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var corner: DynamicRippleTextView
     private lateinit var skipSplashScreenContainer: DynamicRippleConstraintLayout
     private lateinit var customLocation: DynamicRippleConstraintLayout
-    private lateinit var panelsEditor: DynamicRippleTextView
     private lateinit var appVersion: DynamicRippleLinearLayout
     private lateinit var legalNotes: DynamicRippleLinearLayout
     private lateinit var github: DynamicRippleLinearLayout
@@ -67,7 +64,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var currentUnit: TextView
     private lateinit var currentLanguage: TextView
     private lateinit var currentLocationProvider: TextView
-    private lateinit var currentMapsProvider: TextView
     private lateinit var foundIssues: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -77,7 +73,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         buyFull = view.findViewById(R.id.buy_full)
         unit = view.findViewById(R.id.settings_units)
         locationProvider = view.findViewById(R.id.settings_location_provider)
-        mapsProvider = view.findViewById(R.id.settings_map_provider)
         language = view.findViewById(R.id.settings_languages)
         theme = view.findViewById(R.id.settings_theme)
         accent = view.findViewById(R.id.settings_accent)
@@ -86,7 +81,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         corner = view.findViewById(R.id.settings_corner_radius)
         skipSplashScreenContainer = view.findViewById(R.id.setting_skip_splash_screen_container)
         customLocation = view.findViewById(R.id.setting_custom_location)
-        panelsEditor = view.findViewById(R.id.settings_panel_editor)
         appVersion = view.findViewById(R.id.current_app_version)
         legalNotes = view.findViewById(R.id.legal_notes)
         github = view.findViewById(R.id.github)
@@ -103,7 +97,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         currentUnit = view.findViewById(R.id.current_unit)
         currentLanguage = view.findViewById(R.id.current_language)
         currentLocationProvider = view.findViewById(R.id.current_location_provider)
-        currentMapsProvider = view.findViewById(R.id.current_map_provider)
 
         return view
     }
@@ -120,7 +113,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         setCurrentUnit(MainPreferences.getUnit())
         setCurrentLocation()
-        setCurrentMapsProvider()
         toggleKeepScreenOn.isChecked = MainPreferences.isScreenOn()
         toggleSkipSplashScreen.isChecked = MainPreferences.getSkipSplashScreen()
         isCoordinatesSet(MainPreferences.isCustomCoordinate())
@@ -156,11 +148,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             LocationProvider.newInstance().show(childFragmentManager, "location_provider")
         }
 
-        mapsProvider.setOnClickListener {
-            MapProvider.newInstance()
-                    .show(parentFragmentManager, "map_provider")
-        }
-
         language.setOnClickListener {
             Locales().newInstance().show(childFragmentManager, "locales")
         }
@@ -177,11 +164,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
                     MainPreferences.setCustomCoordinates(isChecked)
                 }
             }
-        }
-
-        panelsEditor.setOnClickListener {
-            PanelEditor.newInstance()
-                .show(childFragmentManager, "panel_editor")
         }
 
         keepScreenOn.setOnClickListener {
@@ -228,8 +210,8 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         legalNotes.setOnClickListener {
             val popupMenu = LegalNotesPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.popup_legal_notes,
-                    PopupLinearLayout(context),
-                    true), legalNotes, xOff, yOff)
+                                                                                              PopupLinearLayout(context),
+                                                                                              true), legalNotes, xOff, yOff)
             popupMenu.popupMenuCallback = this
         }
 
@@ -292,14 +274,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         currentUnit.text = if (value) getString(R.string.unit_metric) else getString(R.string.unit_imperial)
     }
 
-    private fun setCurrentMapsProvider() {
-        currentMapsProvider.text = if (MainPreferences.getMapPanelType()) {
-            "Open Street Maps (alpha)"
-        } else {
-            "Google Maps"
-        }
-    }
-
     override fun isCoordinatesSet(boolean: Boolean) {
         try {
             toggleCustomLocation.isChecked = boolean
@@ -332,9 +306,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             }
             MainPreferences.accentColor -> {
                 requireActivity().recreate()
-            }
-            MainPreferences.isOSMPanel -> {
-                setCurrentMapsProvider()
             }
             MainPreferences.isCustomCoordinate -> {
                 toggleCustomLocation.isChecked = MainPreferences.isCustomCoordinate()
