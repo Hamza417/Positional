@@ -91,12 +91,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         latLng = LatLng(MainPreferences.getLastCoordinates()[0].toDouble(),
                         MainPreferences.getLastCoordinates()[1].toDouble())
 
-        if (TrailPreferences.arePolylinesWrapped()) {
-            wrap()
-        } else {
-            moveMapCamera(latLng!!, TrailPreferences.getMapZoom(), 3000)
-        }
-
         viewHandler.postDelayed({
                                     /**
                                      * This prevents the lag when fragment is switched
@@ -125,7 +119,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
          * Initialized
          */
         this.animate().alpha(1F).setDuration(500).start()
-        latLng = LatLng(MainPreferences.getLastCoordinates()[0].toDouble(), MainPreferences.getLastCoordinates()[1].toDouble())
 
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
@@ -137,11 +130,13 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         setSatellite()
         setBuildings(TrailPreferences.getShowBuildingsOnMap())
 
-        this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
-                latLng!!,
-                TrailPreferences.getMapZoom(),
-                TrailPreferences.getMapTilt(),
-                0F)))
+        if (!TrailPreferences.arePolylinesWrapped()) {
+            this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
+                    latLng!!,
+                    TrailPreferences.getMapZoom(),
+                    TrailPreferences.getMapTilt(),
+                    0F)))
+        }
 
         this.googleMap?.setOnCameraIdleListener {
             TrailPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
@@ -158,6 +153,12 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         this.googleMap?.setOnMapClickListener {
             trailMapCallbacks.onMapClicked()
         }
+
+        this.googleMap?.setOnMapLongClickListener {
+            trailMapCallbacks.onMapLongClicked(it)
+        }
+
+
 
         trailMapCallbacks.onMapInitialized()
         register()
@@ -281,6 +282,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
         trailData.addAll(arrayList)
         trailMapCallbacks.onLineCountChanged(options!!.points.size)
+
+        if (TrailPreferences.arePolylinesWrapped()) {
+            wrap(false)
+        }
     }
 
     fun addPolyline(trailData: TrailData) {
@@ -305,7 +310,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         invalidate()
 
         if (TrailPreferences.arePolylinesWrapped()) {
-            wrap()
+            wrap(true)
         } else {
             moveMapCamera(latLng, TrailPreferences.getMapZoom(), cameraSpeed)
         }
@@ -319,6 +324,19 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         trailMapCallbacks.onLineDeleted(trailData.lastOrNull())
         trailMapCallbacks.onLineCountChanged(options!!.points.size)
         trailData.removeLastOrNull()
+
+        kotlin.runCatching {
+            if (TrailPreferences.arePolylinesWrapped()) {
+                wrap(true)
+            } else {
+                with(trailData.lastOrNull()!!) {
+                    moveMapCamera(LatLng(latitude, longitude), TrailPreferences.getMapZoom(), cameraSpeed)
+                }
+            }
+        }.getOrElse {
+            moveMapCamera(latLng!!, TrailPreferences.getMapZoom(), cameraSpeed)
+        }
+
         invalidate()
     }
 
@@ -326,14 +344,14 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         if (isWrapped) {
             moveMapCamera(latLng!!, lastZoom, cameraSpeed)
         } else {
-            wrap()
+            wrap(true)
         }
     }
 
-    private fun wrap() {
+    private fun wrap(animate: Boolean) {
         kotlin.runCatching {
-            lastZoom = googleMap?.cameraPosition?.zoom ?: 15F
-            lastTilt = googleMap?.cameraPosition?.tilt ?: 0F
+            lastZoom = TrailPreferences.getMapZoom()
+            lastTilt = TrailPreferences.getMapTilt()
 
             val builder = LatLngBounds.Builder()
             for (latLng in currentPolyline) {
@@ -343,14 +361,18 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             val bounds = builder.build()
 
             //BOUND_PADDING is an int to specify padding of bound.. try 100.
-            googleMap!!.animateCamera(CameraUpdateFactory
-                                          .newLatLngBounds(bounds, 250))
+            if (animate) {
+                googleMap!!.animateCamera(CameraUpdateFactory
+                                              .newLatLngBounds(bounds, 250))
+            } else {
+                googleMap!!.moveCamera(CameraUpdateFactory
+                                           .newLatLngBounds(bounds, 250))
+            }
 
             TrailPreferences.setWrapStatus(true)
             isWrapped = true
         }.onFailure {
-            isWrapped = false
-            TrailPreferences.setWrapStatus(false)
+            isWrapped = TrailPreferences.arePolylinesWrapped()
         }
     }
 

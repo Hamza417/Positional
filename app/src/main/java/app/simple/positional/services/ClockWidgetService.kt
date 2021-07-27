@@ -28,7 +28,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.time.ZonedDateTime
-import kotlin.system.measureTimeMillis
 
 class ClockWidgetService : Service() {
 
@@ -92,51 +91,49 @@ class ClockWidgetService : Service() {
     private val clockWidgetRunnable = object : Runnable {
         @Suppress("SameParameterValue")
         override fun run() {
-            println(measureTimeMillis {
-                CoroutineScope(Dispatchers.Default).launch {
-                    val zonedDateTime = ZonedDateTime.now()
+            CoroutineScope(Dispatchers.Default).launch {
+                val zonedDateTime = ZonedDateTime.now()
 
-                    val hour = rotateBitmap(
-                            R.drawable.widget_needle_hour.toBitmap(applicationContext, imageSize),
-                            if (applicationContext.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
-                                    .getBoolean(ClockPreferences.is24HourFace, false)) {
-                                getHoursInDegreesFor24(zonedDateTime)
-                            } else {
-                                getHoursInDegrees(zonedDateTime)
-                            })
+                val hour = rotateBitmap(
+                        R.drawable.widget_needle_hour.toBitmap(applicationContext, imageSize),
+                        if (applicationContext.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
+                                .getBoolean(ClockPreferences.is24HourFace, false)) {
+                            getHoursInDegreesFor24(zonedDateTime)
+                        } else {
+                            getHoursInDegrees(zonedDateTime)
+                        })
 
-                    val minute = rotateBitmap(R.drawable.widget_needle_minute.toBitmap(applicationContext, imageSize), getMinutesInDegrees(zonedDateTime))
-                    val second = rotateBitmap(R.drawable.widget_needle_seconds.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime, true))
-                    val trail = rotateBitmap(R.drawable.widget_clock_trail.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime, true))
-                    val dayNight = getDayNightIndicator()
+                val minute = rotateBitmap(R.drawable.widget_needle_minute.toBitmap(applicationContext, imageSize), getMinutesInDegrees(zonedDateTime))
+                val second = rotateBitmap(R.drawable.widget_needle_seconds.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime, false))
+                val trail = rotateBitmap(R.drawable.widget_clock_trail.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime, false))
+                val dayNight = getDayNightIndicator()
 
-                    withContext(Dispatchers.Main) {
-                        val views = RemoteViews(applicationContext.packageName, R.layout.widget_clock)
+                withContext(Dispatchers.Main) {
+                    val views = RemoteViews(applicationContext.packageName, R.layout.widget_clock)
 
-                        views.setImageViewBitmap(R.id.widget_hour, hour)
-                        views.setImageViewBitmap(R.id.widget_minutes, minute)
-                        views.setImageViewBitmap(R.id.widget_seconds, second)
-                        views.setImageViewBitmap(R.id.widget_sweep_seconds, trail)
-                        views.setImageViewResource(R.id.widget_day_night_indicator, dayNight)
-                        views.setImageViewResource(
-                                R.id.widget_clock_face,
-                                if (ClockPreferences.isClockFace24Hour()) R.drawable.widget_clock_face_24 else R.drawable.widget_clock_face)
+                    views.setImageViewBitmap(R.id.widget_hour, hour)
+                    views.setImageViewBitmap(R.id.widget_minutes, minute)
+                    views.setImageViewBitmap(R.id.widget_seconds, second)
+                    views.setImageViewBitmap(R.id.widget_sweep_seconds, trail)
+                    views.setImageViewResource(R.id.widget_day_night_indicator, dayNight)
+                    views.setImageViewResource(
+                            R.id.widget_clock_face,
+                            if (ClockPreferences.isClockFace24Hour()) R.drawable.widget_clock_face_24 else R.drawable.widget_clock_face)
 
-                        views.setOnClickPendingIntent(R.id.clock_widget_wrapper, getPendingSelfIntent(applicationContext, "open_clock"))
+                    views.setOnClickPendingIntent(R.id.clock_widget_wrapper, getPendingSelfIntent(applicationContext, "open_clock"))
 
-                        val componentName = ComponentName(applicationContext, ClockWidget::class.java)
-                        val manager = AppWidgetManager.getInstance(applicationContext)
-                        manager.updateAppWidget(componentName, views)
+                    val componentName = ComponentName(applicationContext, ClockWidget::class.java)
+                    val manager = AppWidgetManager.getInstance(applicationContext)
+                    manager.updateAppWidget(componentName, views)
 
-                        hour!!.recycle()
-                        minute!!.recycle()
-                        second!!.recycle()
-                        trail!!.recycle()
-                    }
+                    hour!!.recycle()
+                    minute!!.recycle()
+                    second!!.recycle()
+                    trail!!.recycle()
                 }
-            })
+            }
 
-            handler.postDelayed(this, 16L)
+            handler.postDelayed(this, 1000L)
         }
     }
 

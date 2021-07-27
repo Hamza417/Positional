@@ -31,7 +31,8 @@ object LocationExtension {
 
     fun measureDisplacement(list: List<TrailData>): Float {
 
-        val result = floatArrayOf(0f, 0f)
+        val result = floatArrayOf(0f)
+        var distance = 0F
 
         for (i in list.indices) {
             if (i < list.size - 1) {
@@ -42,9 +43,11 @@ object LocationExtension {
                         list[i + 1].longitude,
                         result
                 )
+
+                distance += result[0]
             }
         }
 
-        return result[0]
+        return distance
     }
 }

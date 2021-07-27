@@ -1,6 +1,5 @@
 package app.simple.positional.dialogs.trail
 
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +15,7 @@ import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.model.TrailData
 import app.simple.positional.popups.trail.PopupMarkers
 import app.simple.positional.preferences.TrailPreferences
+import com.google.android.gms.maps.model.LatLng
 
 class AddMarker : CustomDialogFragment() {
 
@@ -27,8 +27,9 @@ class AddMarker : CustomDialogFragment() {
 
     var onNewTrailAddedSuccessfully: (trailData: TrailData) -> Unit = {}
 
-    private var location: Location? = null
-    private var iconPosition = -1
+    private var latLng: LatLng? = null
+    private var accuracy: Float = -1F
+    private var iconPosition = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_on_trail_add, container, false)
@@ -39,7 +40,8 @@ class AddMarker : CustomDialogFragment() {
         save = view.findViewById(R.id.save)
         cancel = view.findViewById(R.id.cancel)
 
-        location = requireArguments().getParcelable("location")
+        latLng = requireArguments().getParcelable("latlng")
+        accuracy = requireArguments().getFloat("accuracy")
         setMarkerIcon(requireArguments().getInt("icon_position"))
 
         nameInputEditText.setText(TrailPreferences.getLastMarkerName())
@@ -62,7 +64,7 @@ class AddMarker : CustomDialogFragment() {
         icon.setOnClickListener {
             val popup = PopupMarkers(
                     layoutInflater.inflate(R.layout.popup_trail_markers,
-                                           DynamicCornerLinearLayout(requireContext())), save)
+                                           DynamicCornerLinearLayout(requireContext())), icon, it.x, it.y)
 
             popup.setOnPopupMarkersCallbackListener(object : PopupMarkers.Companion.PopupMarkersCallbacks {
                 override fun onMarkerClicked(position: Int) {
@@ -77,8 +79,8 @@ class AddMarker : CustomDialogFragment() {
 
         save.setOnClickListener {
             val trails = TrailData(
-                    location!!.latitude,
-                    location!!.longitude,
+                    latLng!!.latitude,
+                    latLng!!.longitude,
                     requireArguments().getLong("time"),
                     iconPosition,
                     if (noteInputEditText.text.toString().isNotEmpty()) {
@@ -91,7 +93,7 @@ class AddMarker : CustomDialogFragment() {
                     } else {
                         null
                     },
-                    location?.accuracy ?: -1f
+                    accuracy
             )
 
             TrailPreferences.setLastMarkerName("")
@@ -114,10 +116,11 @@ class AddMarker : CustomDialogFragment() {
     }
 
     companion object {
-        fun newInstance(position: Int, location: Location): AddMarker {
+        fun newInstance(position: Int, latLng: LatLng, accuracy: Float): AddMarker {
             val args = Bundle()
             args.putInt("icon_position", position)
-            args.putParcelable("location", location)
+            args.putParcelable("latlng", latLng)
+            args.putFloat("accuracy", accuracy)
             args.putLong("time", System.currentTimeMillis())
             val fragment = AddMarker()
             fragment.arguments = args

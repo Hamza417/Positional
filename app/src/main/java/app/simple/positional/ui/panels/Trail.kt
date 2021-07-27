@@ -1,15 +1,13 @@
 package app.simple.positional.ui.panels
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -76,6 +74,8 @@ class Trail : ScopedFragment() {
     private var location: Location? = null
     private var isFullScreen = false
     private var peekHeight = 0
+    private var x = 0F
+    private var y = 0F
     private var currentTrail: String? = null
 
     private lateinit var trailDataViewModel: TrailDataViewModel
@@ -120,6 +120,7 @@ class Trail : ScopedFragment() {
         return view
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -196,7 +197,15 @@ class Trail : ScopedFragment() {
                 }
 
                 override fun onAdd(view: View) {
-                    addMarker(view)
+                    if (currentTrail!!.isEmpty()) {
+                        addTrail()
+                    } else {
+                        location ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
+                            return
+                        }
+
+                        addMarker(view, location!!.latitude, location!!.longitude, location!!.accuracy, view.x, view.y)
+                    }
                 }
             })
 
@@ -232,16 +241,28 @@ class Trail : ScopedFragment() {
         })
 
         tools.setTrailCallbacksListener(object : TrailTools.Companion.TrailCallbacks {
-            override fun onLocation() {
+            override fun onLocation(reset: Boolean) {
                 if (location.isNotNull()) {
-                    maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
-                                        TrailPreferences.getMapZoom(),
-                                        500)
+                    if (reset) {
+                        maps?.resetCamera(15F)
+                    } else {
+                        maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
+                                            TrailPreferences.getMapZoom(),
+                                            1000)
+                    }
                 }
             }
 
             override fun onAdd(view: View) {
-                addMarker(view)
+                if (currentTrail!!.isEmpty()) {
+                    addTrail()
+                } else {
+                    location ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
+                        return
+                    }
+
+                    addMarker(view, location!!.latitude, location!!.longitude, location!!.accuracy, view.x, view.y)
+                }
             }
 
             override fun onRemove(remove: View) {
@@ -292,6 +313,14 @@ class Trail : ScopedFragment() {
                 setFullScreen(true)
             }
 
+            override fun onMapLongClicked(latLng: LatLng) {
+                if (currentTrail!!.isEmpty()) {
+                    addTrail()
+                } else {
+                    addMarker(maps!!, latLng.latitude, latLng.longitude, 0F, x / 2, y / 2)
+                }
+            }
+
             override fun onLineDeleted(trailData: TrailData?) {
                 trailDataViewModel.deleteTrailData(trailData)
             }
@@ -300,6 +329,16 @@ class Trail : ScopedFragment() {
                 tools.changeButtonState(lineCount.isZero())
             }
         })
+
+        dim.setOnTouchListener { v, event ->
+            when (event!!.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    x = event.x
+                    y = event.y
+                }
+            }
+            false
+        }
     }
 
     override fun onResume() {
@@ -400,50 +439,36 @@ class Trail : ScopedFragment() {
         p0.show(requireActivity().supportFragmentManager, "add_trail")
     }
 
-    private fun addMarker(view: View) {
+    private fun addMarker(view: View, lat: Double, lon: Double, accuracy: Float, x: Float, y: Float) {
         val popup = PopupMarkers(
                 layoutInflater.inflate(R.layout.popup_trail_markers,
-                                       DynamicCornerLinearLayout(requireContext())), view)
+                                       DynamicCornerLinearLayout(requireContext())), view, x, y)
 
         popup.setOnPopupMarkersCallbackListener(object : PopupMarkers.Companion.PopupMarkersCallbacks {
             override fun onMarkerClicked(position: Int) {
-                location ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
-                    return
+                val dialog = AddMarker.newInstance(position, LatLng(lat, lon), accuracy)
+
+                dialog.onNewTrailAddedSuccessfully = {
+                    trailDataViewModel.saveTrailData(currentTrail!!, it)
+                    maps?.addPolyline(it)
                 }
 
-                if (currentTrail!!.isEmpty()) {
-                    addTrail()
-                } else {
-                    val dialog = AddMarker.newInstance(position, location!!)
-
-                    dialog.onNewTrailAddedSuccessfully = {
-                        trailDataViewModel.saveTrailData(currentTrail!!, it)
-                        maps?.addPolyline(it)
-                    }
-
-                    dialog.show(parentFragmentManager, "add_marker")
-                }
+                dialog.show(parentFragmentManager, "add_marker")
             }
 
             override fun onMarkerLongClicked(position: Int) {
-                location ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show()
+                val trailData = TrailData(
+                        lat,
+                        lon,
+                        System.currentTimeMillis(),
+                        position,
+                        null,
+                        null,
+                        accuracy
+                )
 
-                if (currentTrail!!.isEmpty()) {
-                    addTrail()
-                } else {
-                    val trailData = TrailData(
-                            location!!.latitude,
-                            location!!.longitude,
-                            System.currentTimeMillis(),
-                            position,
-                            null,
-                            null,
-                            location?.accuracy ?: -1F
-                    )
-
-                    trailDataViewModel.saveTrailData(currentTrail!!, trailData)
-                    maps?.addPolyline(trailData)
-                }
+                trailDataViewModel.saveTrailData(currentTrail!!, trailData)
+                maps?.addPolyline(trailData)
             }
         })
     }

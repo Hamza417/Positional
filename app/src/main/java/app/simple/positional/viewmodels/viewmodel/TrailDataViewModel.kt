@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import app.simple.positional.R
 import app.simple.positional.database.instances.TrailDataDatabase
+import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
@@ -114,21 +115,21 @@ class TrailDataViewModel(application: Application, private var trailName: String
 
                 if (MainPreferences.getUnit()) {
                     if (p0 < 1000) {
-                        it.append(p0)
+                        it.append(p0.round(2))
                         it.append(" ")
                         it.append(getApplication<Application>().getString(R.string.meter))
                     } else {
-                        it.append(p0.toKilometers())
+                        it.append(p0.toKilometers().round(2))
                         it.append(" ")
                         it.append(getApplication<Application>().getString(R.string.kilometer))
                     }
                 } else {
                     if (p0 < 1000) {
-                        it.append(p0.toDouble().toFeet())
+                        it.append(p0.toDouble().toFeet().toFloat().round(2))
                         it.append(" ")
                         it.append(getApplication<Application>().getString(R.string.feet))
                     } else {
-                        it.append(p0.toMiles())
+                        it.append(p0.toMiles().round(2))
                         it.append(" ")
                         it.append(getApplication<Application>().getString(R.string.miles))
                     }

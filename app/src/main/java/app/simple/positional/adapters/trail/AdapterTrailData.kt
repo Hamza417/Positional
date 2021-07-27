@@ -22,7 +22,6 @@ import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.model.TrailData
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.util.ConditionUtils.isEqualTo
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.TimeFormatter.formatDate
 import com.github.vipulasri.timelineview.TimelineView
@@ -65,15 +64,11 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
                           DMSConverter.longitudeAsDMS(trailData.first[position].longitude, 2, this))
             }
 
-            holder.accuracy.text = if (trailData.first[position].accuracy.isEqualTo(-1)) {
-                holder.itemView.context.getString(R.string.not_available)
-            } else {
-                holder.itemView.context.getString(
-                        R.string.trail_data_accuracy,
-                        getAccuracy(trailData.first[position].accuracy.round(1)),
-                        getUnit(trailData.first[position].accuracy, holder.itemView.context)
-                )
-            }
+            holder.accuracy.text = holder.itemView.context.getString(
+                    R.string.trail_data_accuracy,
+                    getAccuracy(trailData.first[position].accuracy.round(1)),
+                    getUnit(trailData.first[position].accuracy, holder.itemView.context)
+            )
 
             holder.container.setOnLongClickListener {
                 trailsDataCallbacks.onTrailsDataLongPressed(trailData.first[position], it, position + 1)

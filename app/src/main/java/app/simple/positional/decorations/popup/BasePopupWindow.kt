@@ -2,7 +2,6 @@ package app.simple.positional.decorations.popup
 
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.widget.PopupWindow
 import app.simple.positional.R
 import app.simple.positional.util.ViewUtils
@@ -18,10 +17,10 @@ import app.simple.positional.util.ViewUtils.dimBehind
  */
 open class BasePopupWindow : PopupWindow() {
 
-    fun init(contentView: View, viewGroup: ViewGroup, xOff: Float, yOff: Float) {
+    fun init(contentView: View, view: View, xOff: Float, yOff: Float) {
         setContentView(contentView)
         init()
-        showAsDropDown(viewGroup, xOff.toInt() - width / 2, yOff.toInt() - height / 4, Gravity.START)
+        showAsDropDown(view, xOff.toInt() - width / 2, yOff.toInt() - height / 2, Gravity.START)
     }
 
     fun init(contentView: View, view: View) {

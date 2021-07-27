@@ -59,7 +59,12 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         setCompassButtonState(false)
 
         location.setOnClickListener {
-            trailCallbacks.onLocation()
+            trailCallbacks.onLocation(false)
+        }
+
+        location.setOnLongClickListener {
+            trailCallbacks.onLocation(true)
+            true
         }
 
         remove.setOnClickListener {
@@ -89,7 +94,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
                 wrap.setImageResource(R.drawable.ic_close_fullscreen)
             }
         } else {
-            if (animate) {
+            if (animate && wrap.visibility != View.GONE) {
                 ImageLoader.setImage(R.drawable.ic_full_screen, wrap, context, 0)
             } else {
                 wrap.setImageResource(R.drawable.ic_full_screen)
@@ -164,7 +169,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
 
     companion object {
         interface TrailCallbacks {
-            fun onLocation()
+            fun onLocation(reset: Boolean)
             fun onAdd(view: View)
             fun onRemove(remove: View)
             fun onWrapUnwrap()
