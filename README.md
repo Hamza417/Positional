@@ -39,9 +39,9 @@ On top of all the core functionality Positional is a highly polished app and pro
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/01.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/02.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/03.png" width="100%">
+<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/05.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/06.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/08.png" width="100%">
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/05.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/04.png" width="100%">
 
 <br/>
