@@ -14,16 +14,11 @@
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
--dontobfuscate
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*,!code/allocation/variable
-
--keepattributes LineNumberTable,SourceFile
 
 # Keep activity aliases from getting obfuscated
 # Will throw IllegalArgumentException otherwise with reason "component class not exist"
@@ -39,3 +34,9 @@
 -keep class app.simple.positional.activities.alias.IconNineAlias
 -keep class app.simple.positional.activities.alias.IconLegacyAlias
 -keep class kotlin.KotlinNullPointerException
+
+-keepattributes InnerClasses
+ -keep class **.R
+ -keep class **.R$* {
+    <fields>;
+}

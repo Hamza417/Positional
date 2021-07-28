@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.util.Consumer;
+
 import app.simple.positional.R;
 import app.simple.positional.util.ViewUtils;
 
@@ -17,8 +18,8 @@ public class PopupStyles {
     
     private PopupStyles() {
     }
-    
-    public static Consumer <TextView> MD2 = popupView -> {
+
+    public static final Consumer<TextView> MD2 = popupView -> {
         Resources resources = popupView.getResources();
         popupView.setMinimumWidth(resources.getDimensionPixelSize(R.dimen.fs_md2_popup_min_width));
         popupView.setMinimumHeight(resources.getDimensionPixelSize(R.dimen.fs_md2_popup_min_height));

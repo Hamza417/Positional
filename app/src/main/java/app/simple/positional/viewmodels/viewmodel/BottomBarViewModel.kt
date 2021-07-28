@@ -27,7 +27,7 @@ class BottomBarViewModel(application: Application) : AndroidViewModel(applicatio
                     BottomBarModel(R.drawable.ic_clock, "clock", context.getString(R.string.clock)),
                     BottomBarModel(R.drawable.ic_compass, "compass", context.getString(R.string.compass)),
                     BottomBarModel(locationsPins[getPinSkin()], "location", context.getString(R.string.gps_location)),
-                    BottomBarModel(R.drawable.ic_trail, "trail", context.getString(R.string.trail)),
+                    BottomBarModel(R.drawable.ic_trail_line, "trail", context.getString(R.string.trail)),
                     BottomBarModel(R.drawable.ic_level, "level", context.getString(R.string.level)),
                     // BottomBarModel(R.drawable.ic_settings, "settings", context.getString(R.string.settings))
             )

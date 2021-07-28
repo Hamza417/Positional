@@ -13,7 +13,6 @@ import app.simple.positional.adapters.maps.PinSkinAdapter
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.GPSPreferences
-import app.simple.positional.preferences.MainPreferences
 
 class PinCustomization : CustomBottomSheetDialogFragment() {
 
@@ -129,13 +128,8 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
         opacity.clearAnimation()
         size.clearAnimation()
         if (!requireActivity().isDestroyed) {
-            if (MainPreferences.getMapPanelType()) {
-                OSMMenu.newInstance()
-                        .show(parentFragmentManager, "gps_menu")
-            } else {
-                GPSMenu.newInstance()
-                        .show(parentFragmentManager, "gps_menu")
-            }
+            GPSMenu.newInstance()
+                .show(parentFragmentManager, "gps_menu")
         }
     }
 

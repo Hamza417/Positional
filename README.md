@@ -19,7 +19,7 @@ On top of all the core functionality Positional is a highly polished app and pro
 [![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
 [![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
 
-[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build120/app-lite-release.apk)
+[![From Github](https://img.shields.io/github/downloads/Hamza417/Positional/total?color=white&label=Free%20Version%20%28GitHub%29&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build125/app-lite-release.apk)
 
 [![Intro](https://img.shields.io/youtube/views/H9UT8gCuvgk?label=Watch%20App%20Intro&logo=Youtube&logoColor=red&style=social)](https://youtu.be/H9UT8gCuvgk)
 
@@ -40,6 +40,7 @@ On top of all the core functionality Positional is a highly polished app and pro
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/02.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/03.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/06.png" width="100%">
+<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/08.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/05.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/04.png" width="100%">
 

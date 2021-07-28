@@ -71,7 +71,7 @@ public abstract class BaseSmoothScroller extends RecyclerView.SmoothScroller {
      * {@link DisplayMetrics#DENSITY_LOW}, {@link DisplayMetrics#DENSITY_MEDIUM},
      * or {@link DisplayMetrics#DENSITY_HIGH}.
      */
-    protected int mDensityDpi;
+    protected final int mDensityDpi;
 
     protected Interpolator mSearchingTargetInterpolator;
 

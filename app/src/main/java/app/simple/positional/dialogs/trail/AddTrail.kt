@@ -50,16 +50,22 @@ class AddTrail : CustomDialogFragment() {
             list.addAll(it)
         })
 
-        nameInputEditText.doOnTextChanged { text, _, _, count ->
+        nameInputEditText.doOnTextChanged { text, _, _, _ ->
             kotlin.runCatching {
-                for (i in list) {
-                    if (i.trailName.lowercase() == text.toString().lowercase() || text.toString().lowercase() == "%%_trails" || count.isZero()) {
-                        println("Called")
+                if (list.isEmpty()) {
+                    if (text.toString().lowercase() == "%%_trails" || text?.length!!.isZero()) {
                         save.gone()
-                        break
                     } else {
-
                         save.visible(true)
+                    }
+                } else {
+                    for (i in list) {
+                        if (i.trailName.lowercase() == text.toString().lowercase() || text.toString().lowercase() == "%%_trails" || text?.length!!.isZero()) {
+                            save.gone()
+                            break
+                        } else {
+                            save.visible(true)
+                        }
                     }
                 }
             }

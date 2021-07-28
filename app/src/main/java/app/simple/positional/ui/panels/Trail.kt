@@ -330,7 +330,7 @@ class Trail : ScopedFragment() {
             }
         })
 
-        dim.setOnTouchListener { v, event ->
+        dim.setOnTouchListener { _, event ->
             when (event!!.action) {
                 MotionEvent.ACTION_DOWN -> {
                     x = event.x

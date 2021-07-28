@@ -110,7 +110,7 @@ object TrailPreferences {
     }
 
     fun arePolylinesWrapped(): Boolean {
-        return getSharedPreferences().getBoolean(wrapped, true)
+        return getSharedPreferences().getBoolean(wrapped, false)
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -140,7 +140,7 @@ object TrailPreferences {
     }
 
     fun getMapAutoCenter(): Boolean {
-        return getSharedPreferences().getBoolean(mapAutoCenter, true)
+        return getSharedPreferences().getBoolean(mapAutoCenter, false)
     }
 
     //--------------------------------------------------------------------------------------------------//
