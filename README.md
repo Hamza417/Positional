@@ -109,13 +109,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 <br/>
 
-## Translate
-This app is currently only available in Bulgarian, English, Hindi and Urdu language. Contribute translating app into your native language on [Crowdin](https://crowdin.com/project/positional/)
-
-<br/>
-
-## Libraries Used
-* [commons-suncalc](https://github.com/shred/commons-suncalc) by **Richard Körber**
+## Translation
+This app is currently only available in Bulgarian, English, Hindi, Romanian and Urdu language. Contribute translating app into your native language on [Crowdin](https://crowdin.com/project/positional/)
   
 <br/>
 
