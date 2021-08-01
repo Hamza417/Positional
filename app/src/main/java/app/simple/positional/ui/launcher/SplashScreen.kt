@@ -15,7 +15,6 @@ import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.main.MainActivity
 import app.simple.positional.constants.*
@@ -53,15 +52,6 @@ class SplashScreen : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (BuildConfig.DEBUG) {
-            @Suppress("SetTextI18n")
-            if (BuildConfig.FLAVOR == "lite") {
-                text.text = "Positional Lite (Debug)"
-            } else {
-                text.text = "Positional (Debug)"
-            }
-        }
 
         randomDayValue = LauncherBackground.vectorBackground.indices.random()
         randomNightValue = LauncherBackground.vectorBackgroundNight.indices.random()
@@ -118,19 +108,19 @@ class SplashScreen : Fragment() {
 
     private fun runPostDelayed(delay: Long) {
         handler.postDelayed({
-            /*
-             * [isActivityFinishing] will check if the activity is alive or not
-             * It is possible that the app could have been launched by accident and user might want
-             * to close it immediately, in such cases leaving the [Handler.postDelayed] in queue will
-             * explicitly execute the action in the background even if the activity is closed
-             * and this will run the [MainActivity] and we don't want that.
-             *
-             * @see Handler.removeCallbacks
-             * @see Handler.removeCallbacksAndMessages
-             */
-            if (requireActivity().isActivityFinishing()) return@postDelayed
-            runIntent()
-        }, delay)
+                                /*
+                                 * [isActivityFinishing] will check if the activity is alive or not
+                                 * It is possible that the app could have been launched by accident and user might want
+                                 * to close it immediately, in such cases leaving the [Handler.postDelayed] in queue will
+                                 * explicitly execute the action in the background even if the activity is closed
+                                 * and this will run the [MainActivity] and we don't want that.
+                                 *
+                                 * @see Handler.removeCallbacks
+                                 * @see Handler.removeCallbacksAndMessages
+                                 */
+                                if (requireActivity().isActivityFinishing()) return@postDelayed
+                                runIntent()
+                            }, delay)
     }
 
     private fun runIntent() {

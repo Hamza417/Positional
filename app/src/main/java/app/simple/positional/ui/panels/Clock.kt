@@ -16,7 +16,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.TimezonePickerActivity
@@ -47,7 +46,6 @@ import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
-import app.simple.positional.util.ViewUtils.gone
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
 import org.shredzone.commons.suncalc.*
@@ -182,10 +180,6 @@ class Clock : ScopedFragment() {
         calculateAndUpdateData(MainPreferences.getLastCoordinates()[0].toDouble(),
                                MainPreferences.getLastCoordinates()[1].toDouble())
 
-        if (BuildConfig.FLAVOR == "lite") {
-            timezoneButton.gone()
-        }
-
         return view
     }
 
@@ -271,12 +265,6 @@ class Clock : ScopedFragment() {
                 stringBuilder.append("${moonDatesData.text}\n\n")
             }
 
-            if (BuildConfig.FLAVOR == "lite") {
-                stringBuilder.append("\n\n")
-                stringBuilder.append("Information is copied using Positional Lite\n")
-                stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
-            }
-
             val clip: ClipData = ClipData.newPlainText("Time Data", stringBuilder)
             clipboard.setPrimaryClip(clip)
 
@@ -292,7 +280,7 @@ class Clock : ScopedFragment() {
 
         customLocationButton.setOnClickListener {
             CustomLocationParameters.newInstance()
-                    .show(parentFragmentManager, "location_parameters")
+                .show(parentFragmentManager, "location_parameters")
         }
     }
 

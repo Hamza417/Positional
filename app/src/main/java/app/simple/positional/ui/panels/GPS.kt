@@ -22,7 +22,6 @@ import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.room.Room
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
@@ -477,10 +476,6 @@ class GPS : ScopedFragment() {
 
                 stringBuilder.append("${getString(R.string.gps_address)}: ${address.text}")
 
-                if (BuildConfig.FLAVOR == "lite") {
-                    stringBuilder.append("\n\nInformation is copied using Positional Lite\n")
-                    stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
-                }
                 val clip: ClipData = ClipData.newPlainText("GPS Data", stringBuilder)
                 clipboard.setPrimaryClip(clip)
             }

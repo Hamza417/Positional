@@ -38,7 +38,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private var yOff = 0F
 
     private lateinit var scrollView: PaddingAwareNestedScrollView
-    private lateinit var buyFull: DynamicRippleLinearLayout
     private lateinit var unit: DynamicRippleLinearLayout
     private lateinit var locationProvider: DynamicRippleLinearLayout
     private lateinit var language: DynamicRippleLinearLayout
@@ -70,7 +69,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
         scrollView = view.findViewById(R.id.settings_scroll_view)
-        buyFull = view.findViewById(R.id.buy_full)
         unit = view.findViewById(R.id.settings_units)
         locationProvider = view.findViewById(R.id.settings_location_provider)
         language = view.findViewById(R.id.settings_languages)
@@ -230,12 +228,6 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         foundIssues.setOnClickListener {
             val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
             intent.putExtra("source", "Found Issue")
-            startActivity(intent)
-        }
-
-        buyFull.setOnClickListener {
-            val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
-            intent.putExtra("source", "Buy")
             startActivity(intent)
         }
 

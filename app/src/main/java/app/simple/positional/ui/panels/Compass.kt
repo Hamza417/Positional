@@ -26,7 +26,6 @@ import androidx.core.widget.NestedScrollView
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
@@ -204,12 +203,6 @@ class Compass : ScopedFragment(), SensorEventListener {
             stringBuilder.append("${inclinationTextView.text}\n")
             stringBuilder.append("${declination.text}\n")
             stringBuilder.append("${fieldStrength.text}\n\n")
-
-            if (BuildConfig.FLAVOR == "lite") {
-                stringBuilder.append("\n\n")
-                stringBuilder.append("Information is copied using Positional Lite\n")
-                stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
-            }
 
             val clip: ClipData = ClipData.newPlainText("Time Data", stringBuilder)
             clipboard.setPrimaryClip(clip)

@@ -143,7 +143,6 @@
     <string name="app_version">App Version</string>
     <string name="found_an_issue">Found an issue?</string>
     <string name="translate">Translation</string>
-    <string name="buy_full">Buy Full Version</string>
 
     <!-- Settings Description -->
     <string name="theme_follow_system">Follow System</string>
@@ -156,7 +155,6 @@
     <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>
     <string name="desc_git">Open app\'s repository</string>
     <string name="desc_translate">Help translating the app in your native language</string>
-    <string name="desc_buy_full_version">Support development by buying full version</string>
 
     <!-- Clock Menu -->
     <string name="needles">Needle</string>

@@ -9,10 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.preferences.ClockPreferences
-import app.simple.positional.preferences.CompassPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.util.ContextUtils
@@ -66,17 +64,7 @@ open class BaseActivity : AppCompatActivity() {
          */
         LocaleHelper.setAppLocale(ConfigurationCompat.getLocales(resources.configuration)[0])
 
-        if (BuildConfig.FLAVOR == "lite") {
-            resetLitePrefs()
-        }
-
         setTheme()
-    }
-
-    private fun resetLitePrefs() {
-        CompassPreferences.setFlowerBloom(false)
-        ClockPreferences.setClockNeedleTheme(1)
-        MainPreferences.setCustomCoordinates(false)
     }
 
     private fun setTheme() {

@@ -79,19 +79,6 @@ android {
         }
     }
 
-    flavorDimensions "version"
-    productFlavors {
-        lite {
-            dimension "version"
-            applicationIdSuffix ".lite"
-            versionNameSuffix "/lite"
-        }
-
-        full {
-            dimension "version"
-        }
-    }
-
     buildTypes {
         release {
             postprocessing {
