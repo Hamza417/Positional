@@ -26,8 +26,4 @@ public class DynamicCornerEditText extends AppCompatEditText {
         super(context, attrs, defStyleAttr);
         LayoutBackground.setBackground(context, this, attrs);
     }
-
-    private void initViews() {
-
-    }
 }

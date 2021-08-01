@@ -25,6 +25,7 @@ import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.TimeFormatter.formatDate
 import com.github.vipulasri.timelineview.TimelineView
+import com.google.android.gms.maps.model.LatLng
 
 class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>) : RecyclerView.Adapter<VerticalListViewHolder>() {
 
@@ -69,6 +70,12 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
                     getAccuracy(trailData.first[position].accuracy.round(1)),
                     getUnit(trailData.first[position].accuracy, holder.itemView.context)
             )
+
+            holder.container.setOnClickListener {
+                with(trailData.first[position]) {
+                    trailsDataCallbacks.onTrailClicked(LatLng(latitude, longitude))
+                }
+            }
 
             holder.container.setOnLongClickListener {
                 trailsDataCallbacks.onTrailsDataLongPressed(trailData.first[position], it, position + 1)
@@ -120,7 +127,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         this.trailsDataCallbacks = trailsDataCallbacks
     }
 
-    fun getAccuracy(float: Float): String {
+    private fun getAccuracy(float: Float): String {
         return if (MainPreferences.getUnit()) {
             if (float < 1000F) {
                 float.toString()
@@ -183,6 +190,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         interface AdapterTrailsDataCallbacks {
             fun onTrailsDataLongPressed(trailData: TrailData, view: View, position: Int)
             fun onAdd(view: View)
+            fun onTrailClicked(latLng: LatLng)
         }
     }
 }

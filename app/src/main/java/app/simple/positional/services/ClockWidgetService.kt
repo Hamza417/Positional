@@ -93,11 +93,12 @@ class ClockWidgetService : Service() {
         override fun run() {
             CoroutineScope(Dispatchers.Default).launch {
                 val zonedDateTime = ZonedDateTime.now()
+                val face = applicationContext.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
+                    .getBoolean(ClockPreferences.is24HourFace, false)
 
                 val hour = rotateBitmap(
                         R.drawable.widget_needle_hour.toBitmap(applicationContext, imageSize),
-                        if (applicationContext.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
-                                .getBoolean(ClockPreferences.is24HourFace, false)) {
+                        if (face) {
                             getHoursInDegreesFor24(zonedDateTime)
                         } else {
                             getHoursInDegrees(zonedDateTime)
@@ -118,7 +119,7 @@ class ClockWidgetService : Service() {
                     views.setImageViewResource(R.id.widget_day_night_indicator, dayNight)
                     views.setImageViewResource(
                             R.id.widget_clock_face,
-                            if (ClockPreferences.isClockFace24Hour()) R.drawable.widget_clock_face_24 else R.drawable.widget_clock_face)
+                            if (face) R.drawable.widget_clock_face_24 else R.drawable.widget_clock_face)
 
                     views.setOnClickPendingIntent(R.id.clock_widget_wrapper, getPendingSelfIntent(applicationContext, "open_clock"))
 

@@ -207,6 +207,14 @@ class Trail : ScopedFragment() {
                         addMarker(view, location!!.latitude, location!!.longitude, location!!.accuracy, view.x, view.y)
                     }
                 }
+
+                override fun onTrailClicked(latLng: LatLng) {
+                    maps?.moveMapCamera(latLng, 15F, 1500)
+
+                    if (bottomSheetPanel.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        bottomSheetPanel.state = BottomSheetBehavior.STATE_COLLAPSED
+                    }
+                }
             })
 
             if (it.first.isNullOrEmpty()) {

@@ -50,8 +50,8 @@ android {
 
     compileSdkVersion 30
 
-    def appVersionCode = 125
-    def appVersionName = "positional_build_${appVersionCode}"
+    def appVersionCode = 126
+    def appVersionName = "positional_build_${appVersionCode}_final"
 
     defaultConfig {
         applicationId "app.simple.positional"
@@ -94,9 +94,14 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            postprocessing {
+                removeUnusedCode true
+                removeUnusedResources true // <--
+                obfuscate false
+                optimizeCode true
+            }
+
+           // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
@@ -107,8 +112,8 @@ android {
 
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
@@ -131,7 +136,7 @@ dependencies {
 
     // AndroidX
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.fragment:fragment-ktx:1.3.6'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'

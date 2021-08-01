@@ -273,11 +273,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activities.subactivity.TrailDataActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".activities.subactivity.AccentColorsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
