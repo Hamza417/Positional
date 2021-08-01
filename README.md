@@ -16,8 +16,7 @@ On top of all the core functionality Positional is a highly polished app and pro
 ## Download
 ![API](https://img.shields.io/badge/API-23%2B-%23138D75)
 
-[![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
-[![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
+[![Full](https://img.shields.io/badge/Buy%20-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
 
 [![Intro](https://img.shields.io/youtube/views/34iuIlusrcs?label=Watch%20App%20Intro&logo=Youtube&logoColor=red&style=social)](https://youtu.be/34iuIlusrcs)
 
