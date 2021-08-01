@@ -131,7 +131,6 @@
     <string name="app_version">Versiune aplicație</string>
     <string name="found_an_issue">Ați găsit o problemă?</string>
     <string name="translate">Traducere</string>
-    <string name="buy_full">Cumpărați versiunea completă</string>
     <!-- Settings Description -->
     <string name="theme_follow_system">Urmărește sistemul</string>
     <string name="theme_day">Deschisă</string>
@@ -143,7 +142,6 @@
     <string name="desc_legal">Citiți declarațiile aplicației, Politica de confidențialitate și Termenii de utilizare</string>
     <string name="desc_git">Deschide repozitoriul aplicației</string>
     <string name="desc_translate">Ajutați la traducerea aplicației în limba dvs. nativă</string>
-    <string name="desc_buy_full_version">Susțineți dezvoltarea prin cumpărarea versiunii complete</string>
     <!-- Clock Menu -->
     <string name="needles">Ac</string>
     <string name="motion_type">Tip mișcare</string>
