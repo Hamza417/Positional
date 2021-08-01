@@ -131,7 +131,6 @@
     <string name="app_version">ऐप का वर्श़न</string>
     <string name="found_an_issue">एक मुद्दा मिला?</string>
     <string name="translate">अनुवाद करें</string>
-    <string name="buy_full">फुल वर्जन खरीदें</string>
     <!-- Settings Description -->
     <string name="theme_follow_system">सिस्टम का पालन करें</string>
     <string name="theme_day">उजाला</string>
@@ -143,7 +142,6 @@
     <string name="desc_legal">ऐप की अस्वीकृति, गोपनीयता नीति और उपयोग की शर्तें पढ़ें</string>
     <string name="desc_git">ऐप का रिपॉजिटरी खोलें</string>
     <string name="desc_translate">अपनी मूल भाषा में एप्लिकेशन का अनुवाद करने में सहायता करें I</string>
-    <string name="desc_buy_full_version">पूर्ण संस्करण खरीदकर विकास का समर्थन करें</string>
     <!-- Clock Menu -->
     <string name="needles">सुई</string>
     <string name="motion_type">मोशन टाइप</string>
