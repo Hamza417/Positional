@@ -243,38 +243,39 @@ class Clock : ScopedFragment() {
             handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager =
                 requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val stringBuilder = StringBuilder()
 
-            stringBuilder.append("${R.string.local_time}\n")
-            stringBuilder.append("${localTimeData.text}\n")
-            stringBuilder.append("${R.string.utc_time}\n")
-            stringBuilder.append("${utcTimeData.text}\n")
+            val stringBuilder = StringBuilder().apply {
+                append("${R.string.local_time}\n")
+                append("${localTimeData.text}\n")
+                append("${R.string.utc_time}\n")
+                append("${utcTimeData.text}\n")
 
-            if (isCustomCoordinate) {
-                stringBuilder.append(specifiedLocationNotice.text)
-                stringBuilder.append("\n")
-            }
+                if (isCustomCoordinate) {
+                    append(specifiedLocationNotice.text)
+                    append("\n")
+                }
 
-            if (sunPositionData.text != "") {
-                stringBuilder.append("${R.string.sun_position}\n")
-                stringBuilder.append("${sunPositionData.text}\n")
-                stringBuilder.append("${getString(R.string.sun_time)}\n")
-                stringBuilder.append("${sunTimeData.text}\n\n")
-                stringBuilder.append("${R.string.twilight}\n")
-                stringBuilder.append("${twilightData.text}\n\n")
-                stringBuilder.append("${R.string.moon_position}\n")
-                stringBuilder.append("${moonPositionData.text}\n\n")
-                stringBuilder.append("${moonTimeData.text}\n\n")
-                stringBuilder.append("${R.string.moon_illumination}\n")
-                stringBuilder.append("${moonIlluminationData.text}\n\n")
-                stringBuilder.append("${R.string.moon_dates}\n")
-                stringBuilder.append("${moonDatesData.text}\n\n")
-            }
+                if (sunPositionData.text.isNotEmpty()) {
+                    append("${R.string.sun_position}\n")
+                    append("${sunPositionData.text}\n")
+                    append("${getString(R.string.sun_time)}\n")
+                    append("${sunTimeData.text}\n\n")
+                    append("${R.string.twilight}\n")
+                    append("${twilightData.text}\n\n")
+                    append("${R.string.moon_position}\n")
+                    append("${moonPositionData.text}\n\n")
+                    append("${moonTimeData.text}\n\n")
+                    append("${R.string.moon_illumination}\n")
+                    append("${moonIlluminationData.text}\n\n")
+                    append("${R.string.moon_dates}\n")
+                    append("${moonDatesData.text}\n\n")
+                }
 
-            if (BuildConfig.FLAVOR == "lite") {
-                stringBuilder.append("\n\n")
-                stringBuilder.append("Information is copied using Positional Lite\n")
-                stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
+                if (BuildConfig.FLAVOR == "lite") {
+                    append("\n\n")
+                    append("Information is copied using Positional\n")
+                    append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
+                }
             }
 
             val clip: ClipData = ClipData.newPlainText("Time Data", stringBuilder)

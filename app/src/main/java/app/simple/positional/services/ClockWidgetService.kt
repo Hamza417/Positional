@@ -1,6 +1,9 @@
 package app.simple.positional.services
 
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.Service
 import android.appwidget.AppWidgetManager
 import android.content.*
 import android.graphics.Color
@@ -121,8 +124,6 @@ class ClockWidgetService : Service() {
                             R.id.widget_clock_face,
                             if (face) R.drawable.widget_clock_face_24 else R.drawable.widget_clock_face)
 
-                    views.setOnClickPendingIntent(R.id.clock_widget_wrapper, getPendingSelfIntent(applicationContext, "open_clock"))
-
                     val componentName = ComponentName(applicationContext, ClockWidget::class.java)
                     val manager = AppWidgetManager.getInstance(applicationContext)
                     manager.updateAppWidget(componentName, views)
@@ -189,11 +190,5 @@ class ClockWidgetService : Service() {
     private fun postCallbacks() {
         removeCallbacks()
         handler.post(clockWidgetRunnable)
-    }
-
-    private fun getPendingSelfIntent(context: Context, @Suppress("SameParameterValue") action: String): PendingIntent? {
-        val intent = Intent(context, ClockWidget::class.java)
-        intent.action = action
-        return PendingIntent.getBroadcast(context, 0, intent, 0)
     }
 }

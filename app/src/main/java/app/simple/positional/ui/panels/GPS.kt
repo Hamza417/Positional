@@ -451,36 +451,37 @@ class GPS : ScopedFragment() {
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             if (accuracy.text != "") {
-                val stringBuilder = StringBuilder()
+                val stringBuilder = StringBuilder().apply {
+                    append("${getString(R.string.gps_provider)}\n")
+                    append("${providerStatus.text}\n")
+                    append("${providerSource.text}\n\n")
 
-                stringBuilder.append("${getString(R.string.gps_provider)}\n")
-                stringBuilder.append("${providerStatus.text}\n")
-                stringBuilder.append("${providerSource.text}\n\n")
+                    append("${getString(R.string.gps_location)}\n")
+                    append("${accuracy.text}\n")
+                    append("${altitude.text}\n")
+                    append("${bearing.text}\n\n")
 
-                stringBuilder.append("${getString(R.string.gps_location)}\n")
-                stringBuilder.append("${accuracy.text}\n")
-                stringBuilder.append("${altitude.text}\n")
-                stringBuilder.append("${bearing.text}\n\n")
+                    append("${getString(R.string.gps_movement)}\n")
+                    append("${displacement.text}\n")
+                    append("${direction.text}\n")
+                    append("${speed.text}\n")
 
-                stringBuilder.append("${getString(R.string.gps_movement)}\n")
-                stringBuilder.append("${displacement.text}\n")
-                stringBuilder.append("${direction.text}\n")
-                stringBuilder.append("${speed.text}\n")
+                    if (isCustomCoordinate) {
+                        append("\n${specifiedLocationTextView.text}\n")
+                    }
 
-                if (isCustomCoordinate) {
-                    stringBuilder.append("\n${specifiedLocationTextView.text}\n")
+                    append("\n${getString(R.string.gps_coordinates)}\n")
+                    append("${latitude.text}\n")
+                    append("${longitude.text}\n\n")
+
+                    append("${getString(R.string.gps_address)}: ${address.text}")
+
+                    if (BuildConfig.FLAVOR == "lite") {
+                        append("\n\nInformation is copied using Positional\n")
+                        append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
+                    }
                 }
 
-                stringBuilder.append("\n${getString(R.string.gps_coordinates)}\n")
-                stringBuilder.append("${latitude.text}\n")
-                stringBuilder.append("${longitude.text}\n\n")
-
-                stringBuilder.append("${getString(R.string.gps_address)}: ${address.text}")
-
-                if (BuildConfig.FLAVOR == "lite") {
-                    stringBuilder.append("\n\nInformation is copied using Positional Lite\n")
-                    stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
-                }
                 val clip: ClipData = ClipData.newPlainText("GPS Data", stringBuilder)
                 clipboard.setPrimaryClip(clip)
             }

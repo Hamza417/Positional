@@ -194,21 +194,21 @@ class Compass : ScopedFragment(), SensorEventListener {
             handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
-            val stringBuilder = StringBuilder()
+            val stringBuilder = StringBuilder().apply {
+                append("${getString(R.string.compass_info)}\n\n")
+                append("${getString(R.string.compass_accuracy)}\n")
+                append("${accuracyAccelerometer.text}\n")
+                append("${accuracyMagnetometer.text}\n")
+                append("\n${getString(R.string.compass_field)}\n")
+                append("${inclinationTextView.text}\n")
+                append("${declination.text}\n")
+                append("${fieldStrength.text}\n\n")
 
-            stringBuilder.append("${getString(R.string.compass_info)}\n\n")
-            stringBuilder.append("${getString(R.string.compass_accuracy)}\n")
-            stringBuilder.append("${accuracyAccelerometer.text}\n")
-            stringBuilder.append("${accuracyMagnetometer.text}\n")
-            stringBuilder.append("\n${getString(R.string.compass_field)}\n")
-            stringBuilder.append("${inclinationTextView.text}\n")
-            stringBuilder.append("${declination.text}\n")
-            stringBuilder.append("${fieldStrength.text}\n\n")
-
-            if (BuildConfig.FLAVOR == "lite") {
-                stringBuilder.append("\n\n")
-                stringBuilder.append("Information is copied using Positional Lite\n")
-                stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
+                if (BuildConfig.FLAVOR == "lite") {
+                    append("\n\n")
+                    append("Information is copied using Positional\n")
+                    append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
+                }
             }
 
             val clip: ClipData = ClipData.newPlainText("Time Data", stringBuilder)
