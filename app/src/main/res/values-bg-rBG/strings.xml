@@ -131,7 +131,6 @@
     <string name="app_version">Версия на приложението</string>
     <string name="found_an_issue">Намерихте проблем?</string>
     <string name="translate">Превод</string>
-    <string name="buy_full">Купете пълната версия</string>
     <!-- Settings Description -->
     <string name="theme_follow_system">Следвай системната тема</string>
     <string name="theme_day">Светла</string>
@@ -143,7 +142,6 @@
     <string name="desc_legal">Прочетете Отказ от отговорност, Политика за поверителност и Условия за използване на приложението</string>
     <string name="desc_git">Отворете хранилището на приложението</string>
     <string name="desc_translate">Помогнете за превода на приложението на вашия роден език</string>
-    <string name="desc_buy_full_version">Подкрепете развитието на приложението чрез закупуване на пълната му версия</string>
     <!-- Clock Menu -->
     <string name="needles">Стрелки</string>
     <string name="motion_type">Тип на движението</string>
@@ -280,4 +278,12 @@
     <string name="enter_trail_name">Въведете име на пътека</string>
     <string name="note">Бележка</string>
     <string name="panels_editor">Редактор на панели</string>
+    <string name="total">Общо:</string>
+    <string name="saved_trails">Запазени пътеки</string>
+    <string name="starting_point">Начална точка</string>
+    <string name="enter_marker_name">Въведете име на маркер</string>
+    <string name="delete">Изтриване</string>
+    <string name="show_on_map">Покажи на картата</string>
+    <string name="copy">Копирай</string>
+    <string name="trail_data_accuracy">В рамките на %1$s %2$s от местоположението</string>
 </resources>
