@@ -71,7 +71,7 @@ class MainActivity : BaseActivity(),
     }
 
     private fun showReviewPromptToUser() {
-        if (MainPreferences.getLaunchCount() < 3) {
+        if (MainPreferences.getLaunchCount() < 5) {
             MainPreferences.setLaunchCount(MainPreferences.getLaunchCount() + 1)
             return
         } else {

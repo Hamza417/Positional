@@ -277,8 +277,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
         invalidate()
 
-        options?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_circle_stroke.toBitmap(context, 30))))
-        options?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_circle_stroke.toBitmap(context, 30))))
+        options?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
+        options?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
 
         trailData.addAll(arrayList)
         trailMapCallbacks.onLineCountChanged(options!!.points.size)
