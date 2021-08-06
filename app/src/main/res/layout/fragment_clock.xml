@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clock_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,14 +12,13 @@
         android:paddingBottom="25dp"
         android:orientation="vertical">
 
-        <app.simple.positional.decorations.padding.PaddingAwareFrameLayout
+        <include layout="@layout/toolbar_clock" />
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:clickable="false"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1">
-
-            <include layout="@layout/toolbar_clock" />
 
             <ImageView
                 android:layout_width="@dimen/clock_image_shadow_size"
@@ -78,7 +75,7 @@
                 android:scaleType="fitXY"
                 tools:ignore="ContentDescription" />
 
-        </app.simple.positional.decorations.padding.PaddingAwareFrameLayout>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/digital_time_main"

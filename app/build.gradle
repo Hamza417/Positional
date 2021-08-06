@@ -50,7 +50,7 @@ android {
 
     compileSdkVersion 30
 
-    def appVersionCode = 129
+    def appVersionCode = 130
     def appVersionName = "positional_build_${appVersionCode}_final"
 
     defaultConfig {
@@ -94,14 +94,7 @@ android {
 
     buildTypes {
         release {
-            postprocessing {
-                removeUnusedCode true
-                removeUnusedResources true // <--
-                obfuscate false
-                optimizeCode true
-            }
 
-           // proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {

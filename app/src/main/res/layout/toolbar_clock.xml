@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.padding.PaddingAwareLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clock_appbar"
     android:layout_width="match_parent"
@@ -62,4 +62,4 @@
         android:focusable="true"
         android:src="@drawable/ic_pin_01" />
 
-</LinearLayout>
+</app.simple.positional.decorations.padding.PaddingAwareLinearLayout>
