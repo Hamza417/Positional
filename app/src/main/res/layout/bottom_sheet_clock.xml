@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:behavior_hideable="false"
     app:behavior_peekHeight="@dimen/peek_height"
-    app:layout_behavior="app.simple.positional.behaviors.CustomBottomSheetBehavior">
+    app:layout_behavior="@string/bottom_sheet_behavior">
 
     <ImageView
         android:id="@+id/expand_up_clock_sheet"
