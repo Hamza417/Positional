@@ -5,8 +5,10 @@
       <map>
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_trail_start.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/seekbar_thumb.xml" value="0.2523076923076923" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/bottom_sheet_clock.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/fragment_clock.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/fragment_compass.xml" value="0.24010416666666667" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/fragment_gps.xml" value="0.2074074074074074" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/info_panel_clock.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/info_panel_gps.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/toolbar_clock.xml" value="0.21851851851851853" />
