@@ -278,6 +278,12 @@ class CustomLocation : ScopedFragment() {
     private val geoCoderRunnable: Runnable = Runnable { getCoordinatesFromAddress(address) }
 
     private fun getCoordinatesFromAddress(address: String) {
+
+        if(address == "----") {
+            loadingProgressBar.hide()
+            return
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             loadingProgressBar.show()
 

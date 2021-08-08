@@ -56,10 +56,10 @@ class CustomLocationParameters : CustomBottomSheetDialogFragment() {
 
         if (MainPreferences.isCustomCoordinate()) {
             latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " +
-                                             DMSConverter.latitudeAsDMS(MainPreferences.getCoordinates()[0].toDouble(), 3, requireContext()))
+                                             DMSConverter.latitudeAsDMS(MainPreferences.getCoordinates()[0].toDouble(), requireContext()))
 
             longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " +
-                                              DMSConverter.longitudeAsDMS(MainPreferences.getCoordinates()[1].toDouble(), 3, requireContext()))
+                                              DMSConverter.longitudeAsDMS(MainPreferences.getCoordinates()[1].toDouble(), requireContext()))
 
             address.text = fromHtml("<b>${getString(R.string.gps_address)}</b>: " +
                                             MainPreferences.getAddress())
@@ -85,10 +85,10 @@ class CustomLocationParameters : CustomBottomSheetDialogFragment() {
 
     private fun calculateAndUpdateData(latitude: Double, longitude: Double) {
         this.latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " +
-                                              DMSConverter.latitudeAsDMS(latitude, 3, requireContext()))
+                                              DMSConverter.latitudeAsDMS(latitude, requireContext()))
 
         this.longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " +
-                                               DMSConverter.longitudeAsDMS(longitude, 3, requireContext()))
+                                               DMSConverter.longitudeAsDMS(longitude, requireContext()))
 
         getAddress(latitude, longitude)
     }

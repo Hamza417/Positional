@@ -61,8 +61,8 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
             holder.date.text = trailData.first[position].timeAdded.formatDate()
             holder.coordinates.text = with(holder.itemView.context) {
                 getString(R.string.coordinates_format,
-                          DMSConverter.latitudeAsDMS(trailData.first[position].latitude, 2, this),
-                          DMSConverter.longitudeAsDMS(trailData.first[position].longitude, 2, this))
+                          DMSConverter.latitudeAsDMS(trailData.first[position].latitude, this),
+                          DMSConverter.longitudeAsDMS(trailData.first[position].longitude, this))
             }
 
             holder.accuracy.text = holder.itemView.context.getString(
@@ -166,7 +166,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         val coordinates: TextView = itemView.findViewById(id.adapter_trail_data_coordinates)
         val date: TextView = itemView.findViewById(id.adapter_trail_data_date)
         val accuracy: TextView = itemView.findViewById(id.adapter_trail_data_accuracy)
-        val container: DynamicRippleConstraintLayout = itemView.findViewById(R.id.adapter_trails_data_item_container)
+        val container: DynamicRippleConstraintLayout = itemView.findViewById(id.adapter_trails_data_item_container)
 
         init {
             icon.initLine(viewType)

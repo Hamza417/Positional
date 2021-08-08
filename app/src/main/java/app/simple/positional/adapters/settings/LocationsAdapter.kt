@@ -1,5 +1,6 @@
 package app.simple.positional.adapters.settings
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -24,8 +25,8 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
     override fun onBindViewHolder(holder: Holder, position: Int) {
         Log.d("Locations:", "${locations[position].latitude} : ${locations[position].longitude}")
         holder.address.text = locations[position].address
-        holder.latitude.text = DMSConverter.latitudeAsDMS(locations[position].latitude, 3, holder.itemView.context)
-        holder.longitude.text = DMSConverter.longitudeAsDMS(locations[position].longitude, 3, holder.itemView.context)
+        holder.latitude.text = DMSConverter.latitudeAsDMS(locations[position].latitude, holder.itemView.context)
+        holder.longitude.text = DMSConverter.longitudeAsDMS(locations[position].longitude, holder.itemView.context)
 
         holder.container.setOnClickListener {
             locationsAdapterCallback?.onLocationClicked(locations = locations[position])
@@ -36,6 +37,7 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
         return locations.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setList(locations: MutableList<Locations>) {
         this.locations = locations
         notifyDataSetChanged()

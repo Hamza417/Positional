@@ -35,12 +35,16 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private var mapsCallbacks: MapsCallbacks? = null
     private var marker: Bitmap? = null
     private val viewHandler = Handler(Looper.getMainLooper())
+
     private var isCustomCoordinate = false
     private var isBearingRotation = false
+
     private var customLatitude = 0.0
     private var customLongitude = 0.0
+
     val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
     val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
+
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main

@@ -72,11 +72,11 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         formatCoordinates(requireArguments().getDouble("latitude"), requireArguments().getDouble("longitude"))
-        if (MainPreferences.isCustomCoordinate()) return
 
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent) {
                 if (intent.action == "location") {
+                    if (MainPreferences.isCustomCoordinate()) return
                     val location = intent.getParcelableExtra<Location>("location") ?: return
                     formatCoordinates(location.latitude, location.longitude)
                 }
@@ -161,8 +161,8 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
             val utmMeridian: Spanned
 
             withContext(Dispatchers.Default) {
-                dmsLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude, 3, requireContext())}")
-                dmsLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude, 3, requireContext())}")
+                dmsLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude, requireContext())}")
+                dmsLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude, requireContext())}")
                 dmLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDM(latitude, requireContext())}")
                 dmLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDM(longitude, requireContext())}")
                 ddLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDD(latitude, requireContext())}")

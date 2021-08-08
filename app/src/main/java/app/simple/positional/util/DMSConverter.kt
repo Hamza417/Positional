@@ -6,16 +6,16 @@ import app.simple.positional.R
 import app.simple.positional.math.MathExtensions
 
 object DMSConverter {
-    fun latitudeAsDMS(latitude: Double, decimalPlace: Int, context: Context): String {
+    fun latitudeAsDMS(latitude: Double, context: Context): String {
         val direction = if (latitude > 0) context.resources.getString(R.string.north_N) else context.resources.getString(R.string.south_S)
-        var strLatitude = replaceDelimiters(Location.convert(latitude, Location.FORMAT_SECONDS), decimalPlace)
+        var strLatitude = toDMS(latitude)
         strLatitude += " $direction"
         return strLatitude
     }
 
-    fun longitudeAsDMS(longitude: Double, decimalPlace: Int, context: Context): String {
+    fun longitudeAsDMS(longitude: Double, context: Context): String {
         val direction = if (longitude < 0) context.resources.getString(R.string.west_W) else context.resources.getString(R.string.east_E)
-        var strLongitude = replaceDelimiters(Location.convert(longitude, Location.FORMAT_SECONDS), decimalPlace)
+        var strLongitude = toDMS(longitude)
         strLongitude += " $direction"
         return strLongitude
     }
@@ -35,7 +35,7 @@ object DMSConverter {
     }
 
     fun getLatitudeAsDM(lat: Double, context: Context): String {
-        val ddmLat = replaceDelimiters(Location.convert(lat, Location.FORMAT_MINUTES), 3)
+        val ddmLat = replaceDelimiters(Location.convert(lat, Location.FORMAT_MINUTES))
         return if (lat >= 0.0) {
             "$ddmLat ${context.resources.getString(R.string.north_N)}"
         } else {
@@ -44,7 +44,7 @@ object DMSConverter {
     }
 
     fun getLongitudeAsDM(longitude: Double, context: Context): String {
-        val ddLongitude = replaceDelimiters(Location.convert(longitude, Location.FORMAT_MINUTES), 3)
+        val ddLongitude = replaceDelimiters(Location.convert(longitude, Location.FORMAT_MINUTES))
         return if (longitude >= 0.0) {
             "$ddLongitude ${context.resources.getString(R.string.east_E)}"
         } else {
@@ -52,16 +52,19 @@ object DMSConverter {
         }
     }
 
-    private fun replaceDelimiters(str: String, decimalPlace: Int): String {
-        var string = str
-        string = string.replaceFirst(":".toRegex(), "°")
-        string = string.replaceFirst(":".toRegex(), "'")
-        val pointIndex = string.indexOf(".")
-        val endIndex = pointIndex + 1 + decimalPlace
-        if (endIndex < string.length) {
-            string = string.substring(0, endIndex)
-        }
-        string += "\""
-        return string
+    private fun replaceDelimiters(string: String): String {
+        return string.replaceFirst(":".toRegex(), "° ").replaceFirst(":".toRegex(), "' ") + "\""
+    }
+
+    private fun toDMS(number: Double): String {
+        val degree = kotlin.math.floor(number)
+        val minutes = (number - kotlin.math.floor(number)) * 60.0
+        val seconds = (minutes - kotlin.math.floor(minutes)) * 60.0
+
+        return "%1\$d%2\$s %3\$d%4\$s %5\$.${2}f%6\$s".format(
+                degree.toInt(), "°",
+                minutes.toInt(), "'",
+                seconds, "\""
+        )
     }
 }
