@@ -1,9 +1,13 @@
 package app.simple.positional.activities.main
 
 import android.content.Context
+import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.graphics.PixelFormat
+import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.view.Display
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -46,6 +50,10 @@ open class BaseActivity : AppCompatActivity() {
             if (DateFormat.is24HourFormat(this)) {
                 ClockPreferences.setDefaultClockTime(false)
             }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            window.colorMode = ActivityInfo.COLOR_MODE_WIDE_COLOR_GAMUT
         }
 
         /**
