@@ -50,14 +50,14 @@ class AddTrail : CustomDialogFragment() {
             list.addAll(it)
         })
 
+        if (TrailPreferences.getLastTrailName().isNotBlank()) {
+            saveButtonState(TrailPreferences.getLastTrailName())
+        }
+
         nameInputEditText.doOnTextChanged { text, _, _, _ ->
             kotlin.runCatching {
                 if (list.isEmpty()) {
-                    if (text.toString().lowercase() == "%%_trails" || text?.length!!.isZero()) {
-                        save.gone()
-                    } else {
-                        save.visible(true)
-                    }
+                    saveButtonState(text!!.toString())
                 } else {
                     for (i in list) {
                         if (i.trailName.lowercase() == text.toString().lowercase() || text.toString().lowercase() == "%%_trails" || text?.length!!.isZero()) {
@@ -98,6 +98,14 @@ class AddTrail : CustomDialogFragment() {
 
         cancel.setOnClickListener {
             dismiss()
+        }
+    }
+
+    fun saveButtonState(text: String) {
+        if (text.lowercase() == "%%_trails" || text.length.isZero()) {
+            save.gone()
+        } else {
+            save.visible(true)
         }
     }
 

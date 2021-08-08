@@ -51,12 +51,12 @@
                 android:tint="@color/iconColor" />
         </LinearLayout>
 
-        <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/popup_padding"
             android:backgroundTint="@color/editTextBackground"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:layout_width="match_parent"
@@ -71,18 +71,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:backgroundTint="@android:color/transparent"
+                android:background="@drawable/text_field"
                 android:fontFamily="@font/regular"
-                android:gravity="top"
                 android:importantForAutofill="no"
+                android:padding="@dimen/popup_padding"
+                android:minHeight="50dp"
                 android:saveEnabled="true"
+                android:inputType="text"
+                android:maxLines="3"
                 android:textColor="@color/textSecondary"
                 android:textColorHighlight="?attr/colorAppAccentLight"
                 android:textColorHint="@color/textTertiary"
                 android:textCursorDrawable="@drawable/text_cursor"
                 tools:ignore="LabelFor,TextFields" />
 
-        </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,12 +94,11 @@
             android:baselineAligned="false"
             android:orientation="horizontal">
 
-            <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-                android:padding="@dimen/popup_padding"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/editTextBackground"
                 android:orientation="vertical">
 
@@ -113,10 +115,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:backgroundTint="@android:color/transparent"
+                    android:background="@drawable/text_field"
                     android:fontFamily="@font/regular"
-                    android:gravity="top"
+                    android:paddingHorizontal="@dimen/popup_padding"
                     android:importantForAutofill="no"
+                    android:minHeight="50dp"
+                    android:inputType="numberDecimal"
                     android:saveEnabled="true"
                     android:textColor="@color/textSecondary"
                     android:textColorHighlight="?attr/colorAppAccentLight"
@@ -124,13 +128,12 @@
                     android:textCursorDrawable="@drawable/text_cursor"
                     tools:ignore="LabelFor,TextFields" />
 
-            </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+            </LinearLayout>
 
-            <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+            <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/popup_padding"
+                android:layout_weight="1"
                 android:backgroundTint="@color/editTextBackground"
                 android:orientation="vertical">
 
@@ -147,10 +150,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:backgroundTint="@android:color/transparent"
+                    android:background="@drawable/text_field"
                     android:fontFamily="@font/regular"
-                    android:gravity="top"
+                    android:paddingHorizontal="@dimen/popup_padding"
+                    android:maxLines="1"
+                    android:inputType="numberDecimal"
                     android:importantForAutofill="no"
+                    android:minHeight="50dp"
                     android:saveEnabled="true"
                     android:textColor="@color/textSecondary"
                     android:textColorHighlight="?attr/colorAppAccentLight"
@@ -158,7 +164,7 @@
                     android:textCursorDrawable="@drawable/text_cursor"
                     tools:ignore="LabelFor,TextFields" />
 
-            </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -186,13 +192,13 @@
             android:id="@+id/custom_locations_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fadingEdge="vertical"
-            android:paddingVertical="@dimen/options_container_horizontal_padding"
-            android:clipToPadding="false"
             android:background="@android:color/transparent"
+            android:clipToPadding="false"
+            android:fadingEdge="vertical"
             android:fadingEdgeLength="10dp"
-            android:requiresFadingEdge="vertical"
             android:layoutAnimation="@anim/list_animation_controller"
+            android:paddingVertical="@dimen/options_container_horizontal_padding"
+            android:requiresFadingEdge="vertical"
             app:statusBarPaddingRequired="false" />
 
     </FrameLayout>
