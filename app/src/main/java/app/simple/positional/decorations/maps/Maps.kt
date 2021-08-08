@@ -25,8 +25,8 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
-                                                           OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
-                                                           CoroutineScope {
+        OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
+        CoroutineScope {
 
     private val cameraSpeed = 1000
     private var googleMap: GoogleMap? = null
@@ -38,6 +38,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
     private var isCustomCoordinate = false
     private var isBearingRotation = false
+    private var isFirstLocation = true
 
     private var customLatitude = 0.0
     private var customLongitude = 0.0
@@ -64,12 +65,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         }
 
         viewHandler.postDelayed({
-                                    /**
-                                     * This prevents the lag when fragment is switched
-                                     */
-                                    this.alpha = 0F
-                                    getMapAsync(this)
-                                }, 500)
+            /**
+             * This prevents the lag when fragment is switched
+             */
+            this.alpha = 0F
+            getMapAsync(this)
+        }, 500)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -92,6 +93,13 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         this.googleMap = googleMap
 
         addMarker(latLng!!)
+
+        if(!isCustomCoordinate) {
+            if(location.isNotNull()) {
+                setFirstLocation(location!!)
+            }
+        }
+
         setMapStyle(GPSPreferences.isLabelOn())
         setSatellite()
         setBuildings(GPSPreferences.getShowBuildingsOnMap())
@@ -268,11 +276,11 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         if (googleMap.isNull()) return
 
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder()
-                                                                           .target(latLng)
-                                                                           .tilt(GPSPreferences.getMapTilt())
-                                                                           .zoom(zoom)
-                                                                           .bearing(if (isBearingRotation) bearing else 0F)
-                                                                           .build()), cameraSpeed, null)
+                .target(latLng)
+                .tilt(GPSPreferences.getMapTilt())
+                .zoom(zoom)
+                .bearing(if (isBearingRotation) bearing else 0F)
+                .build()), cameraSpeed, null)
     }
 
     fun getCamera(): CameraPosition? {
@@ -282,6 +290,24 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     fun setCamera(cameraPosition: CameraPosition?) {
         cameraPosition ?: return
         googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+    }
+
+    fun setFirstLocation(location: Location?) {
+        if(googleMap.isNotNull() && isFirstLocation) {
+            this.location = location
+
+            with(LatLng(location!!.latitude, location.longitude)) {
+                addMarker(this)
+                googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
+                        this,
+                        GPSPreferences.getMapZoom(),
+                        GPSPreferences.getMapTilt(),
+                        0F)))
+
+                latLng = this
+                isFirstLocation = false
+            }
+        }
     }
 
     fun setOnMapsCallbackListener(mapsCallbacks: MapsCallbacks) {

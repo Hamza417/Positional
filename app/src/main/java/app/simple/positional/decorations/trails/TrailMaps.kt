@@ -18,6 +18,7 @@ import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter
 import app.simple.positional.math.Vector3
 import app.simple.positional.model.TrailData
+import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
@@ -67,6 +68,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private val polylines = arrayListOf<Polyline>()
     private var trailData = arrayListOf<TrailData>()
     private var isWrapped = false
+    private var isFirstLocation = true
     private var lastZoom = 20F
     private var lastTilt = 0F
     private var options: PolylineOptions? = null
@@ -129,6 +131,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         setMapStyle(TrailPreferences.isLabelOn())
         setSatellite()
         setBuildings(TrailPreferences.getShowBuildingsOnMap())
+
+        if(location.isNotNull()) {
+            setFirstLocation(location)
+        }
 
         if (!TrailPreferences.arePolylinesWrapped()) {
             this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
@@ -460,11 +466,31 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         TrailPreferences.setWrapStatus(false)
     }
 
-    fun getCamera(): CameraPosition = googleMap?.cameraPosition!!
+    fun getCamera(): CameraPosition? {
+        return  googleMap?.cameraPosition
+    }
 
     fun setCamera(cameraPosition: CameraPosition?) {
         cameraPosition ?: return
         googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+    }
+
+    fun setFirstLocation(location: Location?) {
+        if(googleMap.isNotNull() && isFirstLocation) {
+            this.location = location
+
+            with(LatLng(location!!.latitude, location.longitude)) {
+                addMarker(this)
+                googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
+                        this,
+                        GPSPreferences.getMapZoom(),
+                        GPSPreferences.getMapTilt(),
+                        0F)))
+
+                latLng = this
+                isFirstLocation = false
+            }
+        }
     }
 
     private val mapMoved = object : Runnable {

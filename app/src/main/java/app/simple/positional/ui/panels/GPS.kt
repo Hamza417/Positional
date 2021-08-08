@@ -334,6 +334,7 @@ class GPS : ScopedFragment() {
 
                                     if (!isCustomCoordinate) {
                                         updateViews(location!!.latitude, location!!.longitude)
+                                        maps?.setFirstLocation(location)
                                         maps?.location = location
                                         maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
                                     }

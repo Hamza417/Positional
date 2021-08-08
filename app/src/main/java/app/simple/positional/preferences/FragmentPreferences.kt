@@ -22,6 +22,6 @@ object FragmentPreferences {
     }
 
     fun getCurrentTag(): String {
-        return getSharedPreferences().getString(currentTag, "gps")!!
+        return getSharedPreferences().getString(currentTag, "location")!!
     }
 }

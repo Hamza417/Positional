@@ -18,10 +18,14 @@ import java.util.*
 class LocaleAdapter : RecyclerView.Adapter<LocaleAdapter.Holder>() {
 
     var localeCallback: LocaleCallback? = null
-    private var localeList: MutableList<Locales> = LocaleHelper.localeList
+
+    private var localeList: MutableList<Locales> = LocaleHelper.localeList.also { it ->
+        it.subList(1, it.size).sortBy {
+            it.language
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        localeList.sortBy { it.language.lowercase(Locale.ROOT) }
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_locales, parent, false))
     }
 

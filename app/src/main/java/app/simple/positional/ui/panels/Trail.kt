@@ -137,6 +137,7 @@ class Trail : ScopedFragment() {
                                 MainPreferences.setLastLongitude(location!!.longitude.toFloat())
 
                                 withContext(Dispatchers.Main) {
+                                    maps?.setFirstLocation(location)
                                     maps?.location = location
                                     maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
                                 }
