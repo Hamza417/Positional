@@ -271,7 +271,9 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                                                                            .build()), cameraSpeed, null)
     }
 
-    fun getCamera(): CameraPosition = googleMap?.cameraPosition!!
+    fun getCamera(): CameraPosition? {
+        return googleMap?.cameraPosition
+    }
 
     fun setCamera(cameraPosition: CameraPosition?) {
         cameraPosition ?: return
