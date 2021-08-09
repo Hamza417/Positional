@@ -44,7 +44,7 @@
     <string name="sun_distance">Distanța:</string>
     <string name="sun_altitude">Altitudine:</string>
     <string name="sun_sunrise">Răsărit:</string>
-    <string name="sun_noon">Amiaza:</string>
+    <string name="sun_noon">Amiază:</string>
     <string name="sun_sunset">Apus:</string>
     <string name="sun_nadir">Nadir:</string>
     <string name="twilight_astronomical_dawn">Crepuscul astronomic:</string>
@@ -59,7 +59,7 @@
     <string name="moon_fraction">Fracție:</string>
     <string name="moon_angle">Unghi:</string>
     <string name="moon_angle_state">Starea unghiului:</string>
-    <string name="moon_phase">Faza:</string>
+    <string name="moon_phase">Fază:</string>
     <string name="moon_phase_angle">Unghi de fază:</string>
     <string name="moon_full_moon">Lună plină:</string>
     <string name="moon_new_moon">Lună nouă:</string>
@@ -123,7 +123,7 @@
     <string name="corner_radius">Raza de colț</string>
     <string name="units">Unități</string>
     <string name="location_provider">Furnizor de locație</string>
-    <string name="language">Limba</string>
+    <string name="language">Limbă</string>
     <string name="skip_splash_screen">Omite ecranul de pornire</string>
     <string name="specified_location">Utilizează locația specificată</string>
     <string name="keep_screen_on">Menține ecranul aprins</string>
@@ -131,10 +131,9 @@
     <string name="app_version">Versiune aplicație</string>
     <string name="found_an_issue">Ați găsit o problemă?</string>
     <string name="translate">Traducere</string>
-    <string name="buy_full">Cumpărați versiunea completă</string>
     <!-- Settings Description -->
-    <string name="theme_follow_system">Urmărește sistemul</string>
-    <string name="theme_day">Deschisă</string>
+    <string name="theme_follow_system">Sistem</string>
+    <string name="theme_day">Luminoasă</string>
     <string name="theme_night">Întunecată</string>
     <string name="theme_auto">Auto (zi/noapte)</string>
     <string name="desc_skip_splash_Screen">Sari peste ecranul de pornire atunci când aplicația este lansată și mergi direct la ecranul principal</string>
@@ -143,9 +142,8 @@
     <string name="desc_legal">Citiți declarațiile aplicației, Politica de confidențialitate și Termenii de utilizare</string>
     <string name="desc_git">Deschide repozitoriul aplicației</string>
     <string name="desc_translate">Ajutați la traducerea aplicației în limba dvs. nativă</string>
-    <string name="desc_buy_full_version">Susțineți dezvoltarea prin cumpărarea versiunii complete</string>
     <!-- Clock Menu -->
-    <string name="needles">Ac</string>
+    <string name="needles">Ace</string>
     <string name="motion_type">Tip mișcare</string>
     <string name="time_format">Utilizați formatul 12 ore</string>
     <string name="motion_type_smooth">Lină</string>
@@ -160,8 +158,8 @@
     <string name="high_contrast_mode">Hartă contrast mare</string>
     <string name="show_building">Afișare clădiri</string>
     <!-- Settings Menus -->
-    <string name="unit_metric">Metric</string>
-    <string name="unit_imperial">Imperial</string>
+    <string name="unit_metric">Metrice</string>
+    <string name="unit_imperial">Imperiale</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Introduceți datele de localizare</string>
     <string name="specified_data_list_locations">Locații</string>
