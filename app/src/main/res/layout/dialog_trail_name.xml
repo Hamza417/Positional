@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:clipToPadding="false"
         android:clipChildren="false"
-        android:padding="@dimen/popup_padding">
+        android:layout_marginBottom="@dimen/popup_padding">
 
         <TextView
             android:layout_width="match_parent"

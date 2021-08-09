@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -32,13 +34,14 @@ import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 
 class MainActivity : BaseActivity(),
-                     PermissionCallbacks,
-                     BottomSheetSlide,
-                     android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+        PermissionCallbacks,
+        BottomSheetSlide,
+        android.content.SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val defaultPermissionRequestCode = 123
     private lateinit var bottomBar: DynamicCornerRecyclerView
     private lateinit var bottomBarAdapter: BottomBarAdapter
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +69,7 @@ class MainActivity : BaseActivity(),
 
         if (savedInstanceState.isNull()) {
             openFragment(FragmentPreferences.getCurrentTag(),
-                         FragmentPreferences.getCurrentPage())
+                    FragmentPreferences.getCurrentPage())
         }
     }
 
@@ -76,7 +79,10 @@ class MainActivity : BaseActivity(),
             return
         } else {
             if (MainPreferences.getShowRatingDialog()) {
-                Rate().show(supportFragmentManager, "rate")
+                handler.postDelayed({
+                    Rate.newInstance()
+                            .show(supportFragmentManager, "rate")
+                }, 1500L)
             }
         }
     }
@@ -93,9 +99,14 @@ class MainActivity : BaseActivity(),
         stopService()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+    }
+
     private fun checkRunTimePermission() {
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (MainPreferences.getShowPermissionDialog()) {
                 val permissionDialog = Permission.newInstance()
                 permissionDialog.show(supportFragmentManager, "permission_info")
@@ -115,7 +126,7 @@ class MainActivity : BaseActivity(),
                 runService()
             } else {
                 if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) &&
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
                     Toast.makeText(this, R.string.no_location_permission_alert, Toast.LENGTH_LONG).show()
                 }
             }
@@ -159,9 +170,9 @@ class MainActivity : BaseActivity(),
         bottomBar.smoothScrollToPosition(position)
         getFragment(tag).let {
             supportFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                .replace(R.id.containers, it, tag)
-                .commit()
+                    .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                    .replace(R.id.containers, it, tag)
+                    .commit()
         }
     }
 
@@ -169,31 +180,31 @@ class MainActivity : BaseActivity(),
         when (name) {
             "clock" -> {
                 return supportFragmentManager.findFragmentByTag("clock") as Clock?
-                    ?: Clock.newInstance()
+                        ?: Clock.newInstance()
             }
             "compass" -> {
                 return supportFragmentManager.findFragmentByTag("compass") as Compass?
-                    ?: Compass.newInstance()
+                        ?: Compass.newInstance()
             }
             "location" -> {
                 return supportFragmentManager.findFragmentByTag("location") as GPS?
-                    ?: GPS.newInstance()
+                        ?: GPS.newInstance()
             }
             "trail" -> {
                 return supportFragmentManager.findFragmentByTag("trail") as Trail?
-                    ?: Trail.newInstance()
+                        ?: Trail.newInstance()
             }
             "level" -> {
                 return supportFragmentManager.findFragmentByTag("level") as Level?
-                    ?: Level.newInstance()
+                        ?: Level.newInstance()
             }
             "settings" -> {
                 return supportFragmentManager.findFragmentByTag("settings") as AppSettings?
-                    ?: AppSettings.newInstance()
+                        ?: AppSettings.newInstance()
             }
             else -> {
                 return supportFragmentManager.findFragmentByTag("location") as GPS?
-                    ?: GPS.newInstance()
+                        ?: GPS.newInstance()
             }
         }
     }

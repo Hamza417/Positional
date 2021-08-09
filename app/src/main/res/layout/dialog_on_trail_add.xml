@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/editTextBackground"
         android:orientation="vertical"
-        android:padding="@dimen/popup_padding">
+        android:layout_marginBottom="@dimen/popup_padding">
 
         <TextView
             android:layout_width="match_parent"

@@ -66,7 +66,7 @@
     <dimen name="launcher_app_title">31sp</dimen>
     <dimen name="launcher_app_icon_dimen">150dp</dimen>
     <dimen name="touch_indicator_size">100dp</dimen>
-    <dimen name="license_text_size">31sp</dimen>
+    <dimen name="license_text_size">26sp</dimen>
     <dimen name="license_check_indicator_dimen">50dp</dimen>
     <dimen name="popup_text_size">16sp</dimen>
 

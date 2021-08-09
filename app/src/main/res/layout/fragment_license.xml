@@ -1,30 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.padding.PaddingAwareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
     android:animateLayoutChanges="true"
     android:orientation="vertical"
     tools:ignore="UseCompoundDrawables">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/licence_status"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
         android:fontFamily="@font/light"
         android:gravity="center"
         android:text="@string/verifying_license"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/license_text_size" />
 
-    <ImageView
-        android:id="@+id/licence_loader"
-        android:layout_width="@dimen/license_check_indicator_dimen"
-        android:layout_height="@dimen/license_check_indicator_dimen"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/ic_loader"
-        tools:ignore="ContentDescription" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/buttons_container"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal"
+        android:padding="@dimen/popup_padding"
+        android:visibility="gone">
+
+        <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+            android:id="@+id/retry"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@drawable/ic_reset"
+            android:text="Retry"
+            tools:ignore="HardcodedText,MissingConstraints" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleButton
+            android:id="@+id/help"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_help"
+            android:text="@string/help"
+            tools:ignore="MissingConstraints" />
+
+    </LinearLayout>
+
+</app.simple.positional.decorations.padding.PaddingAwareFrameLayout>

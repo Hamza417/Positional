@@ -1,9 +1,13 @@
 package app.simple.positional.dialogs.trail
 
+import android.app.ActionBar
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import app.simple.positional.R
@@ -47,11 +51,22 @@ class AddMarker : CustomDialogFragment() {
         nameInputEditText.setText(TrailPreferences.getLastMarkerName())
         noteInputEditText.setText(TrailPreferences.getLastMarkerNote())
 
+        kotlin.runCatching {
+            nameInputEditText.requestFocus()
+            dialog!!.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        }.getOrElse {
+            nameInputEditText.clearFocus()
+        }
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        with(requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager) {
+            showSoftInput(nameInputEditText, InputMethodManager.SHOW_FORCED)
+        }
 
         nameInputEditText.doOnTextChanged { text, _, _, _ ->
             TrailPreferences.setLastMarkerName(text.toString())

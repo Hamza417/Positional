@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -39,6 +40,13 @@ class AddTrail : CustomDialogFragment() {
 
         nameInputEditText.setText(TrailPreferences.getLastTrailName())
         noteInputEditText.setText(TrailPreferences.getLastTrailNote())
+
+        kotlin.runCatching {
+            nameInputEditText.requestFocus()
+            dialog!!.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+        }.getOrElse {
+            nameInputEditText.clearFocus()
+        }
 
         return view
     }

@@ -106,4 +106,13 @@ class Rate : CustomBottomSheetDialogFragment() {
             requireContext().startActivity(webIntent)
         }
     }
+
+    companion object {
+        fun newInstance(): Rate {
+            val args = Bundle()
+            val fragment = Rate()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 }
