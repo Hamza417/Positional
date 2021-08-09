@@ -16,6 +16,7 @@
         android:layout_gravity="bottom"
         android:backgroundTint="@color/mainBackground"
         android:elevation="20dp"
+        android:overScrollMode="never"
         android:paddingHorizontal="10dp"
         android:clipChildren="false"
         android:clipToPadding="false"

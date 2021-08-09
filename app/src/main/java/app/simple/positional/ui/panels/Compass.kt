@@ -167,7 +167,7 @@ class Compass : ScopedFragment(), SensorEventListener {
             haveMagnetometerSensor = false
 
             ErrorDialog.newInstance(getString(R.string.sensor_error))
-                .show(childFragmentManager, "error_dialog")
+                    .show(childFragmentManager, "error_dialog")
         }
 
         flowerBloom = CompassPreferences.getFlowerBloomTheme()
@@ -265,7 +265,7 @@ class Compass : ScopedFragment(), SensorEventListener {
 
                             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
                                 val location: Location = intent.getParcelableExtra("location")
-                                    ?: return@launch
+                                        ?: return@launch
                                 val geomagneticField = GeomagneticField(
                                         location.latitude.toFloat(),
                                         location.longitude.toFloat(),
@@ -382,49 +382,46 @@ class Compass : ScopedFragment(), SensorEventListener {
     }
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
-
-        if (!haveMagnetometerSensor) {
-            accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.not_available)}")
-        }
-
-        if (!haveAccelerometerSensor) {
-            accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.not_available)}")
-        }
-
         if (sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
-            when (accuracy) {
+            accuracyMagnetometer.text = when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
-                    accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                     openCalibrationDialog()
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
-                    accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                     openCalibrationDialog()
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
-                    accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
-                    accuracyMagnetometer.text = fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
+                }
+                else -> {
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
             }
         }
 
         if (sensor.type == Sensor.TYPE_ACCELEROMETER) {
-            when (accuracy) {
+            accuracyAccelerometer.text = when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
-                    accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                     openCalibrationDialog()
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
-                    accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                     openCalibrationDialog()
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
-                    accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
-                    accuracyAccelerometer.text = fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
+                }
+                else -> {
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
             }
         }

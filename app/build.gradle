@@ -50,12 +50,12 @@ android {
 
     compileSdkVersion 30
 
-    def appVersionCode = 133
+    def appVersionCode = 134
     def appVersionName = "positional_build_${appVersionCode}_final"
 
     defaultConfig {
         applicationId "app.simple.positional"
-        minSdkVersion 24
+        minSdkVersion 23
         //noinspection OldTargetApi
         targetSdkVersion 30
         versionCode appVersionCode

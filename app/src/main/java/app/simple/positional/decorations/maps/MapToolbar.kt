@@ -1,4 +1,4 @@
-package app.simple.positional.decorations.views
+package app.simple.positional.decorations.maps
 
 import android.animation.LayoutTransition
 import android.content.Context
@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.TextView
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins.locationsPins
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
@@ -38,19 +39,23 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
         initViews()
         layoutTransition = LayoutTransition()
         getSharedPreferences()
-            .registerOnSharedPreferenceChangeListener(this)
+                .registerOnSharedPreferenceChangeListener(this)
     }
 
     private fun initViews() {
         val view = LayoutInflater.from(context).inflate(R.layout.toolbar_map_panel, this, true)
         setPadding(resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
-                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding) + StatusBarHeight.getStatusBarHeight(resources),
-                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
-                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding))
+                resources.getDimensionPixelOffset(R.dimen.toolbar_padding) + StatusBarHeight.getStatusBarHeight(resources),
+                resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
+                resources.getDimensionPixelOffset(R.dimen.toolbar_padding))
 
         location = view.findViewById(R.id.gps_location_indicator)
         menu = view.findViewById(R.id.gps_menu)
         customLocationButton = view.findViewById(R.id.gps_custom_location)
+
+        with(view.findViewById<TextView>(R.id.map_toolbar_heading)) {
+            isSelected = true
+        }
 
         if (isCustomCoordinate()) {
             customLocationButton.setImageResource(R.drawable.ic_place_custom)
@@ -86,7 +91,7 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
         super.onDetachedFromWindow()
         println("Called")
         getSharedPreferences()
-            .unregisterOnSharedPreferenceChangeListener(this)
+                .unregisterOnSharedPreferenceChangeListener(this)
     }
 
     fun locationIndicatorUpdate(isFixed: Boolean) {

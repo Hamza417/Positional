@@ -4,6 +4,8 @@ import kotlin.math.sqrt
 
 data class Vector3(val x: Float, val y: Float, val z: Float) {
 
+    private val array = floatArrayOf(x, y, z)
+
     fun cross(other: Vector3): Vector3 {
         return Vector3(
                 this.y * other.z - this.z * other.y,
@@ -53,7 +55,15 @@ data class Vector3(val x: Float, val y: Float, val z: Float) {
         )
     }
 
+    fun toFloatArray(): FloatArray {
+        return array
+    }
+
     companion object {
         val zero = Vector3(0f, 0f, 0f)
+
+        fun from(arr: FloatArray): Vector3 {
+            return Vector3(arr[0], arr[1], arr[2])
+        }
     }
 }

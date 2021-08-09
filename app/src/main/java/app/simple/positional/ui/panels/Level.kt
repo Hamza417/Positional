@@ -24,12 +24,19 @@ import androidx.dynamicanimation.animation.SpringForce
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.decorations.views.VerticalTextView
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.MathExtensions.toDegrees
+import app.simple.positional.math.Quaternion
+import app.simple.positional.math.QuaternionMath
 import app.simple.positional.preferences.LevelPreferences
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.ImageLoader.loadImage
+import kotlin.math.abs
+import kotlin.math.atan2
+import kotlin.math.sqrt
 
 class Level : ScopedFragment(), SensorEventListener {
 
@@ -37,7 +44,7 @@ class Level : ScopedFragment(), SensorEventListener {
     private lateinit var levelDot: ImageView
     private lateinit var boundingBox: FrameLayout
     private lateinit var levelX: TextView
-    private lateinit var levelY: TextView
+    private lateinit var levelY: VerticalTextView
     private lateinit var styleButton: DynamicRippleImageButton
 
     private lateinit var gravity: Sensor
@@ -46,8 +53,10 @@ class Level : ScopedFragment(), SensorEventListener {
 
     private val gravityReadings = FloatArray(3)
 
+    private val _quaternion = Quaternion.zero.toFloatArray()
+    val orientation: Quaternion get() = Quaternion.from(_quaternion.clone())
+
     private var hasGravitySensor = false
-    private var isScreenTouched = false
 
     private var screenHeight = 0
     private var screenWidth = 0
@@ -84,7 +93,7 @@ class Level : ScopedFragment(), SensorEventListener {
             hasGravitySensor = false
 
             ErrorDialog.newInstance(getString(R.string.sensor_error))
-                .show(childFragmentManager, "error_dialog")
+                    .show(childFragmentManager, "error_dialog")
         }
 
         @Suppress("deprecation")
@@ -192,9 +201,22 @@ class Level : ScopedFragment(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         if (event?.sensor?.type == Sensor.TYPE_GRAVITY) {
 
-            if (isScreenTouched) return
-
             smoothAndSetReadings(gravityReadings, event.values, readingsAlpha)
+
+            val roll = atan2(gravityReadings[0], sqrt(gravityReadings[1] * gravityReadings[1] + gravityReadings[2] * gravityReadings[2])).toDegrees()
+            val pitch = -atan2(gravityReadings[1], sqrt(gravityReadings[0] * gravityReadings[0] + gravityReadings[2] * gravityReadings[2])).toDegrees()
+
+            QuaternionMath.fromEuler(floatArrayOf(roll, pitch, 0f), _quaternion)
+
+            val euler = orientation.toEuler()
+
+            val x = when {
+                euler.roll in -90f..90f -> euler.roll
+                euler.roll > 90f -> 180 - euler.roll
+                else -> -(180 + euler.roll)
+            }
+
+            val y = euler.pitch
 
             levelDot.translationX = levelIndicator.translationX * -0.3f //gravityReadings[0] * -1 * gravityWidthMotionCompensator / 4
             levelDot.translationY = levelIndicator.translationY * -0.3f //gravityReadings[1] * gravityHeightMotionCompensator / 4
@@ -222,8 +244,13 @@ class Level : ScopedFragment(), SensorEventListener {
                 levelIndicator.translationY = gravityReadings[1] * -1 * gravityHeightMotionCompensator
             }
 
-            levelX.text = fromHtml("<b>X:</b> ${round(gravityReadings[0].toDouble(), 2)} m/s²")
-            levelY.text = fromHtml("<b>Y:</b> ${round(gravityReadings[1].toDouble(), 2)} m/s²")
+            /**
+             * Alternative rounding method
+             */
+            //String.format("%.2g%n", abs(x))
+
+            levelX.text = fromHtml("<b>X:</b> ${abs(round(x.toDouble(), 1))}°")
+            levelY.text = fromHtml("<b>Y:</b> ${abs(round(y.toDouble(), 1))}°")
         }
     }
 

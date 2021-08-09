@@ -82,6 +82,7 @@
         <activity-alias
             android:name=".activities.alias.IconOneAlias"
             android:enabled="true"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_default"
             android:roundIcon="@mipmap/ic_launcher_default_round"
             android:targetActivity=".activities.main.LauncherActivity">
@@ -99,6 +100,7 @@
         <activity-alias
             android:name=".activities.alias.IconTwoAlias"
             android:enabled="false"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_two"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_two_round"
@@ -115,6 +117,7 @@
         <activity-alias
             android:name=".activities.alias.IconLegacyAlias"
             android:enabled="false"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_legacy"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_legacy_round"
@@ -131,6 +134,7 @@
         <activity-alias
             android:name=".activities.alias.IconThreeAlias"
             android:enabled="false"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_three"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_three_round"
@@ -147,6 +151,7 @@
         <activity-alias
             android:name=".activities.alias.IconFourAlias"
             android:enabled="false"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_four"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_four_round"
@@ -163,6 +168,7 @@
         <activity-alias
             android:name=".activities.alias.IconFiveAlias"
             android:enabled="false"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_five"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_five_round"
@@ -179,6 +185,7 @@
         <activity-alias
             android:name=".activities.alias.IconSixAlias"
             android:enabled="false"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_six"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_six_round"
@@ -195,6 +202,7 @@
         <activity-alias
             android:name=".activities.alias.IconSevenAlias"
             android:enabled="false"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_seven"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_seven_round"
@@ -211,6 +219,7 @@
         <activity-alias
             android:name=".activities.alias.IconEightAlias"
             android:enabled="false"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_eight"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_eight_round"
@@ -227,9 +236,27 @@
         <activity-alias
             android:name=".activities.alias.IconNineAlias"
             android:enabled="false"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher_nine"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_nine_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconTenAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_ten"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_ten_round"
             android:targetActivity=".activities.main.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -30,7 +30,7 @@ import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.maps.Maps
 import app.simple.positional.decorations.maps.MapsCallbacks
-import app.simple.positional.decorations.views.MapToolbar
+import app.simple.positional.decorations.maps.MapToolbar
 import app.simple.positional.dialogs.app.CustomLocationParameters
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion

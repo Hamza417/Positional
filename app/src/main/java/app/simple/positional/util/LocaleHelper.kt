@@ -21,7 +21,7 @@ object LocaleHelper {
             // Locales("Deutsch", "de"),
             Locales("हिन्दी", "hi"),
             Locales("Romanian", "ro"),
-            Locales("русский язык", "ru"),
+            Locales("Русский", "ru"),
             Locales("اردو", "ur"))
 
     fun getSystemLanguageCode(): String {

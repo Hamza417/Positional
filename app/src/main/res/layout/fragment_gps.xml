@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <app.simple.positional.decorations.views.MapToolbar
+    <app.simple.positional.decorations.maps.MapToolbar
         android:id="@+id/map_toolbar"
         android:elevation="5dp"
         android:backgroundTint="@color/mainBackground"

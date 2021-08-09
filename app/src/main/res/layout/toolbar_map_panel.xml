@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="app.simple.positional.decorations.corners.DynamicCornerLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:backgroundTint="@color/mainBackground"
+    android:elevation="10dp"
     android:orientation="horizontal"
     android:paddingHorizontal="16dp"
     android:paddingVertical="8dp"
-    android:elevation="10dp"
-    android:backgroundTint="@color/mainBackground">
+    tools:parentTag="app.simple.positional.decorations.corners.DynamicCornerLinearLayout">
 
     <TextView
+        android:id="@+id/map_toolbar_heading"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/heading"
-        android:text="@string/gps"
         android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:fontFamily="@font/heading"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:singleLine="true"
+        android:layout_marginEnd="8dp"
+        android:text="@string/gps"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/top_bar_text_size"
         android:textStyle="bold" />
@@ -26,8 +31,8 @@
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
         android:layout_gravity="center_vertical|end"
-        android:background="@drawable/ripple_btn"
         android:layout_marginEnd="10dp"
+        android:background="@drawable/ripple_btn"
         android:contentDescription="@string/gps_reset_location"
         android:src="@drawable/ic_gps_fixed"
         android:tint="@color/iconColor" />

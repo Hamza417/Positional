@@ -45,7 +45,7 @@
     <!-- Level -->
     <dimen name="level_indicator">200dp</dimen>
     <dimen name="level_dot">40dp</dimen>
-    <dimen name="level_text_size">18sp</dimen>
+    <dimen name="level_text_size">28sp</dimen>
 
     <!-- Settings -->
     <dimen name="settings_category_text_size">33sp</dimen>

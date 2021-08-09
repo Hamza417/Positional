@@ -85,8 +85,7 @@ object MathExtensions {
             require(places >= 0)
             val factor = 10.0.pow(places.toDouble()).toLong()
             value *= factor
-            val tmp = value.roundToInt()
-            tmp.toDouble() / factor
+            value.roundToInt().toDouble() / factor
         } catch (e: IllegalArgumentException) {
             Double.NaN
         }
