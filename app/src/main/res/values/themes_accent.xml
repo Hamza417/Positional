@@ -57,8 +57,8 @@
     </style>
 
     <style name="IndianRed" parent="Positional">
-        <item name="colorAppAccent">@color/amaranth</item>
-        <item name="colorAppAccentLight">@color/amaranth_light</item>
+        <item name="colorAppAccent">@color/indian_red</item>
+        <item name="colorAppAccentLight">@color/indian_red_light</item>
     </style>
 
     <style name="LightCoral" parent="Positional">

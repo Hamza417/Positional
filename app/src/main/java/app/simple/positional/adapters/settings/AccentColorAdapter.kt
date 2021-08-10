@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerAccentColor
@@ -25,39 +24,11 @@ import app.simple.positional.util.HtmlHelper
 import org.jetbrains.annotations.NotNull
 import java.util.*
 
-class AccentColorAdapter : RecyclerView.Adapter<VerticalListViewHolder>() {
+class AccentColorAdapter(private val list: ArrayList<Pair<Int, String>>) : RecyclerView.Adapter<VerticalListViewHolder>() {
 
-    private var list = arrayListOf<Pair<Int, String>>()
     private lateinit var palettesAdapterCallbacks: PalettesAdapterCallbacks
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalListViewHolder {
-
-        list = arrayListOf(
-                Pair(ContextCompat.getColor(parent.context, R.color.positional), "Positional"),
-                Pair(ContextCompat.getColor(parent.context, R.color.blue), "Blue"),
-                Pair(ContextCompat.getColor(parent.context, R.color.blueGrey), "Blue Grey"),
-                Pair(ContextCompat.getColor(parent.context, R.color.darkBlue), "Dark Blue"),
-                Pair(ContextCompat.getColor(parent.context, R.color.red), "Red"),
-                Pair(ContextCompat.getColor(parent.context, R.color.green), "Green"),
-                Pair(ContextCompat.getColor(parent.context, R.color.orange), "Orange"),
-                Pair(ContextCompat.getColor(parent.context, R.color.purple), "Purple"),
-                Pair(ContextCompat.getColor(parent.context, R.color.yellow), "Yellow"),
-                Pair(ContextCompat.getColor(parent.context, R.color.caribbeanGreen), "Caribbean Green"),
-                Pair(ContextCompat.getColor(parent.context, R.color.persianGreen), "Persian Green"),
-                Pair(ContextCompat.getColor(parent.context, R.color.amaranth), "Amaranth"),
-                Pair(ContextCompat.getColor(parent.context, R.color.indian_red), "Indian Red"),
-                Pair(ContextCompat.getColor(parent.context, R.color.light_coral), "Light Coral"),
-                Pair(ContextCompat.getColor(parent.context, R.color.pink_flare), "Pink Flare"),
-                Pair(ContextCompat.getColor(parent.context, R.color.makeup_tan), "Makeup Tan"),
-                Pair(ContextCompat.getColor(parent.context, R.color.egg_yellow), "Egg Yellow"),
-                Pair(ContextCompat.getColor(parent.context, R.color.medium_green), "Medium Green"),
-                Pair(ContextCompat.getColor(parent.context, R.color.olive), "Olive"),
-                Pair(ContextCompat.getColor(parent.context, R.color.copperfield), "Copperfield"),
-                Pair(ContextCompat.getColor(parent.context, R.color.mineral_green), "Mineral Green"),
-                Pair(ContextCompat.getColor(parent.context, R.color.lochinvar), "Lochinvar"),
-                Pair(ContextCompat.getColor(parent.context, R.color.beach_grey), "Beach Grey"),
-        )
-
         return when (viewType) {
             VerticalListViewHolder.TYPE_ITEM -> {
                 Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_accent_colors, parent, false))
