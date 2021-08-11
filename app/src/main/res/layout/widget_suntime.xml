@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/widget_bg_suntime"
+    android:background="@drawable/bg_widget"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="vertical"
