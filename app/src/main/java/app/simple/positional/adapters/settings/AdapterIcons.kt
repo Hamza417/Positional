@@ -49,10 +49,10 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
             context.packageManager.getComponentEnabledSetting(ComponentName(context, IconOneAlias::class.java)) -> {
                 0
             }
-            context.packageManager.getComponentEnabledSetting(ComponentName(context, IconTwoAlias::class.java)) -> {
+            context.packageManager.getComponentEnabledSetting(ComponentName(context, IconLegacyAlias::class.java)) -> {
                 1
             }
-            context.packageManager.getComponentEnabledSetting(ComponentName(context, IconLegacyAlias::class.java)) -> {
+            context.packageManager.getComponentEnabledSetting(ComponentName(context, IconTwoAlias::class.java)) -> {
                 2
             }
             context.packageManager.getComponentEnabledSetting(ComponentName(context, IconThreeAlias::class.java)) -> {
@@ -87,8 +87,8 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
 
     private fun setIcon(context: Context, position: Int) {
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconOneAlias::class.java), getStatusFromPosition(position == 0), PackageManager.DONT_KILL_APP)
-        context.packageManager.setComponentEnabledSetting(ComponentName(context, IconTwoAlias::class.java), getStatusFromPosition(position == 1), PackageManager.DONT_KILL_APP)
-        context.packageManager.setComponentEnabledSetting(ComponentName(context, IconLegacyAlias::class.java), getStatusFromPosition(position == 2), PackageManager.DONT_KILL_APP)
+        context.packageManager.setComponentEnabledSetting(ComponentName(context, IconLegacyAlias::class.java), getStatusFromPosition(position == 1), PackageManager.DONT_KILL_APP)
+        context.packageManager.setComponentEnabledSetting(ComponentName(context, IconTwoAlias::class.java), getStatusFromPosition(position == 2), PackageManager.DONT_KILL_APP)
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconThreeAlias::class.java), getStatusFromPosition(position == 3), PackageManager.DONT_KILL_APP)
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconFourAlias::class.java), getStatusFromPosition(position == 4), PackageManager.DONT_KILL_APP)
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconFiveAlias::class.java), getStatusFromPosition(position == 5), PackageManager.DONT_KILL_APP)
@@ -110,8 +110,8 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
     companion object {
         val list = arrayListOf(
                 R.mipmap.ic_launcher_default,
-                R.mipmap.ic_launcher_two,
                 R.mipmap.ic_launcher_legacy,
+                R.mipmap.ic_launcher_two,
                 R.mipmap.ic_launcher_three,
                 R.mipmap.ic_launcher_four,
                 R.mipmap.ic_launcher_five,
