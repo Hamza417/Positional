@@ -120,11 +120,6 @@ This app is currently only available in Bulgarian, English, Hindi and Urdu langu
 
 <br/>
 
-## Libraries Used
-* [commons-suncalc](https://github.com/shred/commons-suncalc) by **Richard Körber**
-  
-<br/>
-
 ## License
 **Positional** Copyright © 2021 - Hamza Rizwan
 
