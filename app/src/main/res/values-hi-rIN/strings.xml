@@ -131,7 +131,6 @@
     <string name="app_version">ऐप का वर्श़न</string>
     <string name="found_an_issue">एक मुद्दा मिला?</string>
     <string name="translate">अनुवाद करें</string>
-    <string name="buy_full">फुल वर्जन खरीदें</string>
     <!-- Settings Description -->
     <string name="theme_follow_system">सिस्टम का पालन करें</string>
     <string name="theme_day">उजाला</string>
@@ -143,7 +142,6 @@
     <string name="desc_legal">ऐप की अस्वीकृति, गोपनीयता नीति और उपयोग की शर्तें पढ़ें</string>
     <string name="desc_git">ऐप का रिपॉजिटरी खोलें</string>
     <string name="desc_translate">अपनी मूल भाषा में एप्लिकेशन का अनुवाद करने में सहायता करें I</string>
-    <string name="desc_buy_full_version">पूर्ण संस्करण खरीदकर विकास का समर्थन करें</string>
     <!-- Clock Menu -->
     <string name="needles">सुई</string>
     <string name="motion_type">मोशन टाइप</string>
@@ -168,7 +166,7 @@
     <string name="specified_hint_latitude">अक्षांश (±90)</string>
     <string name="specified_hint_longitude">देशान्तर (±180)</string>
     <!-- Info -->
-    <string name="compass_calibration_notice">आपकी डिवाइस कम्पास सेंसर की सटीकता कम है, इसको कैलिब्रेट करने के लिए अपनी डिवाइस को आठ नंबर के तरीके से घुमाएं |</string>
+    <string name="compass_calibration_notice">यदि आपकी डिवाइस कंपास सेंसर सटीकता कम है, तो सेंसर को कैलिब्रेट करने के लिए अपने डिवाइस को आठ अंक की दिशा में ले जाएं।</string>
     <string name="specified_location_notice">नीचे दी गई जानकारी निर्दिष्ट स्थान निर्देशांक के लिए अपडेट की जा रही है|</string>
     <string name="show_again">फिर से दिखाएँ</string>
     <string name="search_timezone">समय क्षेत्र खोजें</string>
