@@ -46,6 +46,7 @@ import app.simple.positional.util.TimeFormatter.formatDate
 import app.simple.positional.util.ViewUtils.invisible
 import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.factory.TrailDataFactory
+import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import app.simple.positional.viewmodels.viewmodel.TrailDataViewModel
 import app.simple.positional.viewmodels.viewmodel.TrailsViewModel
 import com.google.android.gms.maps.model.LatLng
@@ -59,7 +60,6 @@ class Trail : ScopedFragment() {
 
     private lateinit var toolbar: TrailToolbar
     private lateinit var tools: TrailTools
-    private lateinit var locationBroadcastReceiver: BroadcastReceiver
     private lateinit var trailRecyclerView: RecyclerView
     private lateinit var bottomSheetPanel: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var bottomSheetSlide: BottomSheetSlide
@@ -70,8 +70,9 @@ class Trail : ScopedFragment() {
     private var backPress: OnBackPressedDispatcher? = null
     private var maps: TrailMaps? = null
     private val handler = Handler(Looper.getMainLooper())
-    private var filter: IntentFilter = IntentFilter()
     private var location: Location? = null
+    private lateinit var locationViewModel: LocationViewModel
+
     private var isFullScreen = false
     private var peekHeight = 0
     private var x = 0F
@@ -96,13 +97,11 @@ class Trail : ScopedFragment() {
         currentTrail = TrailPreferences.getCurrentTrail()
         val trailDataFactory = TrailDataFactory(currentTrail!!, requireActivity().application)
         trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
+        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
 
         maps = view.findViewById(R.id.map_view)
         maps?.onCreate(savedInstanceState)
         maps?.resume()
-
-        filter.addAction("location")
-        filter.addAction("provider")
 
         backPress = requireActivity().onBackPressedDispatcher
 
@@ -110,9 +109,9 @@ class Trail : ScopedFragment() {
 
         trailRecyclerView.apply {
             setPadding(paddingLeft,
-                       paddingTop + StatusBarHeight.getStatusBarHeight(resources),
-                       paddingRight,
-                       paddingBottom)
+                    paddingTop + StatusBarHeight.getStatusBarHeight(resources),
+                    paddingRight,
+                    paddingBottom)
         }
 
         peekHeight = bottomSheetPanel.peekHeight
@@ -124,29 +123,22 @@ class Trail : ScopedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        locationBroadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                when (intent!!.action) {
-                    "location" -> {
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            withContext(Dispatchers.Default) {
-                                location = intent.getParcelableExtra("location")
-                                    ?: return@withContext
+        locationViewModel.location.observe(viewLifecycleOwner, {
+            viewLifecycleOwner.lifecycleScope.launch {
+                withContext(Dispatchers.Default) {
+                    location = it
 
-                                MainPreferences.setLastLatitude(location!!.latitude.toFloat())
-                                MainPreferences.setLastLongitude(location!!.longitude.toFloat())
+                    MainPreferences.setLastLatitude(location!!.latitude.toFloat())
+                    MainPreferences.setLastLongitude(location!!.longitude.toFloat())
 
-                                withContext(Dispatchers.Main) {
-                                    maps?.setFirstLocation(location)
-                                    maps?.location = location
-                                    maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
-                                }
-                            }
-                        }
+                    withContext(Dispatchers.Main) {
+                        maps?.setFirstLocation(location)
+                        maps?.location = location
+                        maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
                     }
                 }
             }
-        }
+        })
 
         trailDataViewModel.trailDataDescendingWithInfo.observe(viewLifecycleOwner, {
             val adapter = AdapterTrailData(it)
@@ -155,13 +147,13 @@ class Trail : ScopedFragment() {
                 override fun onTrailsDataLongPressed(trailData: TrailData, view: View, position: Int) {
                     val popup = PopupTrailsDataMenu(
                             layoutInflater.inflate(R.layout.popup_trails_data,
-                                                   DynamicCornerLinearLayout(requireContext())), view)
+                                    DynamicCornerLinearLayout(requireContext())), view)
 
                     popup.setOnPopupCallbacksListener(object : PopupTrailsDataMenu.Companion.PopupTrailsCallbacks {
                         override fun onDelete() {
                             val deletePopupMenu = DeletePopupMenu(
                                     layoutInflater.inflate(R.layout.popup_delete_confirmation,
-                                                           DynamicCornerLinearLayout(requireContext())), view)
+                                            DynamicCornerLinearLayout(requireContext())), view)
 
                             deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                                 override fun delete() {
@@ -201,9 +193,10 @@ class Trail : ScopedFragment() {
                     if (currentTrail!!.isEmpty()) {
                         addTrail()
                     } else {
-                        location ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
-                            return
-                        }
+                        location
+                                ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
+                                    return
+                                }
 
                         addMarker(view, location!!.latitude, location!!.longitude, location!!.accuracy, view.x, view.y)
                     }
@@ -256,8 +249,8 @@ class Trail : ScopedFragment() {
                         maps?.resetCamera(15F)
                     } else {
                         maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
-                                            TrailPreferences.getMapZoom(),
-                                            1000)
+                                TrailPreferences.getMapZoom(),
+                                1000)
                     }
                 }
             }
@@ -266,9 +259,10 @@ class Trail : ScopedFragment() {
                 if (currentTrail!!.isEmpty()) {
                     addTrail()
                 } else {
-                    location ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
-                        return
-                    }
+                    location
+                            ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
+                                return
+                            }
 
                     addMarker(view, location!!.latitude, location!!.longitude, location!!.accuracy, view.x, view.y)
                 }
@@ -277,7 +271,7 @@ class Trail : ScopedFragment() {
             override fun onRemove(remove: View) {
                 val popup = DeletePopupMenu(
                         layoutInflater.inflate(R.layout.popup_delete_confirmation,
-                                               DynamicCornerLinearLayout(requireContext())), remove)
+                                DynamicCornerLinearLayout(requireContext())), remove)
 
                 popup.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                     override fun delete() {
@@ -302,7 +296,7 @@ class Trail : ScopedFragment() {
 
             override fun onMenuClicked() {
                 TrailMenu.newInstance()
-                    .show(requireActivity().supportFragmentManager, "trail_menu")
+                        .show(requireActivity().supportFragmentManager, "trail_menu")
             }
 
         })
@@ -354,7 +348,6 @@ class Trail : ScopedFragment() {
         super.onResume()
         maps?.resume()
         currentTrail = TrailPreferences.getCurrentTrail()
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
     }
 
     override fun onLowMemory() {
@@ -396,7 +389,6 @@ class Trail : ScopedFragment() {
         super.onDestroy()
         maps?.removeCallbacks { }
         maps?.destroy()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacksAndMessages(null)
     }
 
@@ -419,10 +411,10 @@ class Trail : ScopedFragment() {
         TransitionManager.beginDelayedTransition(
                 view as ViewGroup,
                 TransitionInflater.from(requireContext())
-                    .inflateTransition(R.transition.tools_transition))
+                        .inflateTransition(R.transition.tools_transition))
 
         val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                                    ViewGroup.LayoutParams.WRAP_CONTENT)
+                ViewGroup.LayoutParams.WRAP_CONTENT)
 
         params.apply {
             gravity = if (TrailPreferences.isToolsGravityToLeft()) {
@@ -451,7 +443,7 @@ class Trail : ScopedFragment() {
     private fun addMarker(view: View, lat: Double, lon: Double, accuracy: Float, x: Float, y: Float) {
         val popup = PopupMarkers(
                 layoutInflater.inflate(R.layout.popup_trail_markers,
-                                       DynamicCornerLinearLayout(requireContext())), view, x, y)
+                        DynamicCornerLinearLayout(requireContext())), view, x, y)
 
         popup.setOnPopupMarkersCallbackListener(object : PopupMarkers.Companion.PopupMarkersCallbacks {
             override fun onMarkerClicked(position: Int) {

@@ -6,7 +6,6 @@ import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Color
 import android.hardware.*
-import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,8 +23,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
@@ -51,6 +50,7 @@ import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.ImageLoader.loadImage
 import app.simple.positional.util.TextViewUtils.setTextAnimation
+import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,6 +66,7 @@ class Compass : ScopedFragment(), SensorEventListener {
     private var objectAnimator: ObjectAnimator? = null
     private var backPress: OnBackPressedDispatcher? = null
     private var calibrationDialog: CompassCalibration? = null
+    private lateinit var locationViewModel: LocationViewModel
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
@@ -81,9 +82,6 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private var accelerometer = Vector3.zero
     private var magnetometer = Vector3.zero
-
-    private var filter: IntentFilter = IntentFilter()
-    private lateinit var locationBroadcastReceiver: BroadcastReceiver
 
     private var readingsAlpha = 0.03f
     private var rotationAngle = 0f
@@ -115,6 +113,7 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private lateinit var copy: DynamicRippleImageButton
     private lateinit var menu: DynamicRippleImageButton
+    private lateinit var calibrate: DynamicRippleImageButton
     private lateinit var dialContainer: FrameLayout
     private lateinit var compassListScrollView: NestedScrollView
     private lateinit var dim: View
@@ -122,6 +121,8 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_compass, container, false)
+
+        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
 
         accuracyAccelerometer = view.findViewById(R.id.compass_accuracy_accelerometer)
         accuracyMagnetometer = view.findViewById(R.id.compass_accuracy_magnetometer)
@@ -141,13 +142,12 @@ class Compass : ScopedFragment(), SensorEventListener {
 
         copy = view.findViewById(R.id.compass_copy)
         menu = view.findViewById(R.id.compass_menu)
+        calibrate = view.findViewById(R.id.compass_calibrate)
         dialContainer = view.findViewById(R.id.dial_container)
         (view.findViewById(R.id.compass_main_layout) as CustomCoordinatorLayout).setProxyView(view)
         compassListScrollView = view.findViewById(R.id.compass_list_scroll_view)
         dim = view.findViewById(R.id.compass_dim)
         toolbar = view.findViewById(R.id.compass_appbar)
-
-        filter.addAction("location")
 
         showDirectionCode = CompassPreferences.getDirectionCode()
         isGimbalLock = CompassPreferences.isUsingGimbalLock()
@@ -188,6 +188,10 @@ class Compass : ScopedFragment(), SensorEventListener {
 
         menu.setOnClickListener {
             CompassMenu().show(parentFragmentManager, "compass_menu")
+        }
+
+        calibrate.setOnClickListener {
+            openCalibrationDialog()
         }
 
         copy.setOnClickListener {
@@ -253,69 +257,56 @@ class Compass : ScopedFragment(), SensorEventListener {
             }
         })
 
-        locationBroadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                if (intent != null) {
-                    when (intent.action) {
-                        "location" -> {
+        locationViewModel.location.observe(viewLifecycleOwner, { location ->
+            var declination: Spanned
+            var inclination: Spanned
+            var fieldStrength: Spanned
 
-                            var declination: Spanned
-                            var inclination: Spanned
-                            var fieldStrength: Spanned
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+                val geomagneticField = GeomagneticField(
+                        location.latitude.toFloat(),
+                        location.longitude.toFloat(),
+                        location.altitude.toFloat(),
+                        location.time
+                )
 
-                            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
-                                val location: Location = intent.getParcelableExtra("location")
-                                        ?: return@launch
-                                val geomagneticField = GeomagneticField(
-                                        location.latitude.toFloat(),
-                                        location.longitude.toFloat(),
-                                        location.altitude.toFloat(),
-                                        location.time
-                                )
+                declination = fromHtml("<b>${getString(R.string.compass_declination)}</b> ${
+                    round(
+                            geomagneticField.declination.toDouble(),
+                            2
+                    )
+                }°")
 
-                                declination = fromHtml("<b>${getString(R.string.compass_declination)}</b> ${
-                                    round(
-                                            geomagneticField.declination.toDouble(),
-                                            2
-                                    )
-                                }°")
+                inclination = fromHtml("<b>${getString(R.string.compass_inclination)}</b> ${
+                    round(
+                            geomagneticField.inclination.toDouble(),
+                            2
+                    )
+                }°")
 
-                                inclination = fromHtml("<b>${getString(R.string.compass_inclination)}</b> ${
-                                    round(
-                                            geomagneticField.inclination.toDouble(),
-                                            2
-                                    )
-                                }°")
+                fieldStrength = fromHtml("<b>${getString(R.string.compass_field_strength)}</b> ${
+                    round(
+                            geomagneticField.fieldStrength.toDouble(),
+                            2
+                    )
+                } nT")
 
-                                fieldStrength = fromHtml("<b>${getString(R.string.compass_field_strength)}</b> ${
-                                    round(
-                                            geomagneticField.fieldStrength.toDouble(),
-                                            2
-                                    )
-                                } nT")
-
-                                withContext(Dispatchers.Main) {
-                                    this@Compass.declination.text = declination
-                                    this@Compass.inclinationTextView.text = inclination
-                                    this@Compass.fieldStrength.text = fieldStrength
-                                }
-                            }
-                        }
-                    }
+                withContext(Dispatchers.Main) {
+                    this@Compass.declination.text = declination
+                    this@Compass.inclinationTextView.text = inclination
+                    this@Compass.fieldStrength.text = fieldStrength
                 }
             }
-        }
+        })
     }
 
     override fun onResume() {
         super.onResume()
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         register()
     }
 
     override fun onPause() {
         super.onPause()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(compassDialAnimationRunnable)
         objectAnimator?.removeAllListeners()
         objectAnimator?.cancel()

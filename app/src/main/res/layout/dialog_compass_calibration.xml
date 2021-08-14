@@ -37,11 +37,23 @@
             android:textSize="@dimen/description_text_size" />
 
         <TextView
-            android:id="@+id/calibrate_accuracy"
+            android:id="@+id/acc_accuracy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/medium"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/description_text_size" />
+
+        <TextView
+            android:id="@+id/mag_accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/medium"
             android:gravity="center"
             android:textAlignment="center"

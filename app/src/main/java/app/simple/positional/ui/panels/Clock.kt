@@ -14,6 +14,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
@@ -48,6 +49,7 @@ import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
 import org.shredzone.commons.suncalc.*
@@ -95,9 +97,8 @@ class Clock : ScopedFragment() {
 
     private lateinit var handler: Handler
     private var backPress: OnBackPressedDispatcher? = null
-    private var filter: IntentFilter = IntentFilter()
-    private lateinit var locationBroadcastReceiver: BroadcastReceiver
     private lateinit var bottomSheetSlide: BottomSheetSlide
+    private lateinit var locationViewModel: LocationViewModel
 
     var delay: Long = 1000
     private var dayNightIndicatorImageCountViolation = 1
@@ -115,8 +116,9 @@ class Clock : ScopedFragment() {
         timezone = ClockPreferences.getTimeZone()
         movementType = ClockPreferences.getMovementType()
 
+        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
         handler = Handler(Looper.getMainLooper())
-        filter.addAction("location")
+
         hour = view.findViewById(R.id.hour)
         minutes = view.findViewById(R.id.minutes)
         seconds = view.findViewById(R.id.seconds)
@@ -198,19 +200,10 @@ class Clock : ScopedFragment() {
 
         clockMainLayout.setProxyView(view)
 
-        locationBroadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                if (intent != null) {
-                    when (intent.action) {
-                        "location" -> {
-                            if (isCustomCoordinate) return
-                            val location: Location = intent.getParcelableExtra("location") ?: return
-                            calculateAndUpdateData(location.latitude, location.longitude)
-                        }
-                    }
-                }
-            }
-        }
+        locationViewModel.location.observe(viewLifecycleOwner, {
+            if (isCustomCoordinate) return@observe
+            calculateAndUpdateData(it.latitude, it.longitude)
+        })
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -365,7 +358,6 @@ class Clock : ScopedFragment() {
 
     override fun onResume() {
         super.onResume()
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
         handler.post(clock)
         handler.post(calender)
         if (isCustomCoordinate) {
@@ -375,7 +367,6 @@ class Clock : ScopedFragment() {
 
     override fun onPause() {
         super.onPause()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         handler.removeCallbacks(clock)
         handler.removeCallbacks(calender)
         handler.removeCallbacks(textAnimationRunnable)

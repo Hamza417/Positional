@@ -6,8 +6,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,13 +19,12 @@ class CompassCalibration : CustomBottomSheetDialogFragment(), SensorEventListene
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
     private lateinit var sensorMagneticField: Sensor
-    private val handlerThread = Handler(Looper.getMainLooper())
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
-    private var someValue = 1
 
-    private lateinit var calibrateAccuracy: TextView
+    private lateinit var magAccuracy: TextView
+    private lateinit var accAccuracy: TextView
 
     fun newInstance(): CompassCalibration {
         return CompassCalibration()
@@ -35,7 +32,8 @@ class CompassCalibration : CustomBottomSheetDialogFragment(), SensorEventListene
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.dialog_compass_calibration, container, false)
-        calibrateAccuracy = v.findViewById(R.id.calibrate_accuracy)
+        magAccuracy = v.findViewById(R.id.mag_accuracy)
+        accAccuracy = v.findViewById(R.id.acc_accuracy)
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -67,23 +65,42 @@ class CompassCalibration : CustomBottomSheetDialogFragment(), SensorEventListene
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        if (sensor == sensorAccelerometer || sensor == sensorMagneticField) {
-            when (accuracy) {
+        if (sensor!!.type == Sensor.TYPE_MAGNETIC_FIELD) {
+            magAccuracy.text = when (accuracy) {
                 SensorManager.SENSOR_STATUS_UNRELIABLE -> {
-                    calibrateAccuracy.text = fromHtml("Accuracy: <b>Unreliable, immediate calibration required</b>")
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
-                    calibrateAccuracy.text = fromHtml("Accuracy: <b>Low, calibration required</b>")
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
-                    calibrateAccuracy.text = fromHtml("Accuracy: <b>Medium</b>")
-                    handlerThread.removeCallbacks(runnable)
-                    handlerThread.post(runnable)
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
                 }
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
-                    calibrateAccuracy.text = fromHtml("Accuracy: <b>High</b>")
-                    handlerThread.removeCallbacks(runnable)
-                    handlerThread.post(runnable)
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
+                }
+                else -> {
+                    fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
+                }
+            }
+        }
+
+        if (sensor.type == Sensor.TYPE_ACCELEROMETER) {
+            accAccuracy.text = when (accuracy) {
+                SensorManager.SENSOR_STATUS_UNRELIABLE -> {
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
+                }
+                SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
+                }
+                SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
+                }
+                SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
+                }
+                else -> {
+                    fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
             }
         }
@@ -102,18 +119,6 @@ class CompassCalibration : CustomBottomSheetDialogFragment(), SensorEventListene
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             sensorManager.unregisterListener(this, sensorAccelerometer)
             sensorManager.unregisterListener(this, sensorMagneticField)
-        }
-        handlerThread.removeCallbacks(runnable)
-    }
-
-    private val runnable = object : Runnable {
-        override fun run() {
-            if (someValue == 0) {
-                this@CompassCalibration.dialog?.dismiss()
-            } else {
-                someValue -= 1
-            }
-            handlerThread.postDelayed(this, 3000)
         }
     }
 }

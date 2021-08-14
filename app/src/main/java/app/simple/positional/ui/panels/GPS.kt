@@ -19,8 +19,8 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.room.Room
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
@@ -28,9 +28,9 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
+import app.simple.positional.decorations.maps.MapToolbar
 import app.simple.positional.decorations.maps.Maps
 import app.simple.positional.decorations.maps.MapsCallbacks
-import app.simple.positional.decorations.maps.MapToolbar
 import app.simple.positional.dialogs.app.CustomLocationParameters
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
@@ -54,6 +54,7 @@ import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.TextViewUtils.setTextAnimation
+import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.*
@@ -91,12 +92,14 @@ class GPS : ScopedFragment() {
     private lateinit var speed: TextView
     private lateinit var specifiedLocationTextView: TextView
     private lateinit var infoText: TextView
+
     private lateinit var handler: Handler
     private var filter: IntentFilter = IntentFilter()
-    private lateinit var locationBroadcastReceiver: BroadcastReceiver
     private lateinit var bottomSheetInfoPanel: BottomSheetBehavior<CoordinatorLayout>
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
+    private lateinit var locationViewModel: LocationViewModel
+
     private var isMetric = true
     private var isFullScreen = false
     private var isCustomCoordinate = false
@@ -141,6 +144,7 @@ class GPS : ScopedFragment() {
         infoText = view.findViewById(R.id.gps_info_text)
 
         handler = Handler(Looper.getMainLooper())
+        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
 
         maps = view.findViewById(R.id.map)
         maps?.onCreate(savedInstanceState)
@@ -153,9 +157,6 @@ class GPS : ScopedFragment() {
                 requireActivity().intent.action = null
             }
         }
-
-        filter.addAction("location")
-        filter.addAction("provider")
 
         isMetric = MainPreferences.getUnit()
 
@@ -209,158 +210,149 @@ class GPS : ScopedFragment() {
             Toast.makeText(requireContext(), R.string.reset_complete, Toast.LENGTH_SHORT).show()
         }
 
-        locationBroadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                when (intent!!.action) {
-                    "location" -> {
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            withContext(Dispatchers.Default) {
-                                location = intent.getParcelableExtra("location")
-                                    ?: return@withContext
+        locationViewModel.location.observe(viewLifecycleOwner, {
+            viewLifecycleOwner.lifecycleScope.launch {
+                withContext(Dispatchers.Default) {
+                    location = it
 
-                                if (!distanceSingleton.isInitialLocationSet!!) {
-                                    distanceSingleton.initialPointCoordinates =
-                                        LatLng(location!!.latitude, location!!.longitude)
-                                    distanceSingleton.distanceCoordinates =
-                                        LatLng(location!!.latitude, location!!.longitude)
-                                    distanceSingleton.isInitialLocationSet = true
-                                }
+                    if (!distanceSingleton.isInitialLocationSet!!) {
+                        distanceSingleton.initialPointCoordinates =
+                                LatLng(location!!.latitude, location!!.longitude)
+                        distanceSingleton.distanceCoordinates =
+                                LatLng(location!!.latitude, location!!.longitude)
+                        distanceSingleton.isInitialLocationSet = true
+                    }
 
-                                MainPreferences.setLastLatitude(location!!.latitude.toFloat())
-                                MainPreferences.setLastLongitude(location!!.longitude.toFloat())
-                                val providerSource = fromHtml(
-                                        "<b>${getString(R.string.gps_source)}</b> ${
-                                            location!!.provider.uppercase(
-                                                    Locale.getDefault()
-                                            )
-                                        }"
+                    MainPreferences.setLastLatitude(location!!.latitude.toFloat())
+                    MainPreferences.setLastLongitude(location!!.longitude.toFloat())
+                    val providerSource = fromHtml(
+                            "<b>${getString(R.string.gps_source)}</b> ${
+                                location!!.provider.uppercase(
+                                        Locale.getDefault()
                                 )
-                                val providerStatus = fromHtml(
-                                        "<b>${getString(R.string.gps_status)}</b> ${
-                                            if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
-                                                    R.string.gps_disabled
-                                            )
-                                        }"
+                            }"
+                    )
+                    val providerStatus = fromHtml(
+                            "<b>${getString(R.string.gps_status)}</b> ${
+                                if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
+                                        R.string.gps_disabled
                                 )
-                                val accuracy = if (isMetric) {
-                                    fromHtml(
-                                            "<b>${getString(R.string.gps_accuracy)}</b> ${
-                                                round(
-                                                        location!!.accuracy.toDouble(),
-                                                        2
-                                                )
-                                            } ${getString(R.string.meter)}"
+                            }"
+                    )
+                    val accuracy = if (isMetric) {
+                        fromHtml(
+                                "<b>${getString(R.string.gps_accuracy)}</b> ${
+                                    round(
+                                            location!!.accuracy.toDouble(),
+                                            2
                                     )
-                                } else {
-                                    fromHtml(
-                                            "<b>${getString(R.string.gps_accuracy)}</b> ${
-                                                round(
-                                                        location!!.accuracy.toDouble().toFeet(),
-                                                        2
-                                                )
-                                            } ${getString(R.string.feet)}"
+                                } ${getString(R.string.meter)}"
+                        )
+                    } else {
+                        fromHtml(
+                                "<b>${getString(R.string.gps_accuracy)}</b> ${
+                                    round(
+                                            location!!.accuracy.toDouble().toFeet(),
+                                            2
                                     )
-                                }
-                                val altitude = if (isMetric) {
-                                    fromHtml(
-                                            "<b>${getString(R.string.gps_altitude)}</b> ${
-                                                round(
-                                                        location!!.altitude,
-                                                        2
-                                                )
-                                            } ${getString(R.string.meter)}"
+                                } ${getString(R.string.feet)}"
+                        )
+                    }
+                    val altitude = if (isMetric) {
+                        fromHtml(
+                                "<b>${getString(R.string.gps_altitude)}</b> ${
+                                    round(
+                                            location!!.altitude,
+                                            2
                                     )
-                                } else {
-                                    fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
-                                }
-                                val speed = if (isMetric) {
-                                    fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)} ${getString(R.string.kilometer_hour)}")
-                                } else {
-                                    fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} ${getString(R.string.miles_hour)}")
-                                }
-                                val bearing = fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${location!!.bearing}°")
-                                val displacement: Spanned?
-                                val direction: Spanned?
-                                val displacementValue = FloatArray(1)
-                                val distanceValue = FloatArray(1)
-                                Location.distanceBetween(
-                                        distanceSingleton.initialPointCoordinates!!.latitude,
-                                        distanceSingleton.initialPointCoordinates!!.longitude,
-                                        location!!.latitude,
-                                        location!!.longitude,
-                                        displacementValue
-                                )
+                                } ${getString(R.string.meter)}"
+                        )
+                    } else {
+                        fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
+                    }
+                    val speed = if (isMetric) {
+                        fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)} ${getString(R.string.kilometer_hour)}")
+                    } else {
+                        fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} ${getString(R.string.miles_hour)}")
+                    }
+                    val bearing = fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${location!!.bearing}°")
+                    val displacement: Spanned?
+                    val direction: Spanned?
+                    val displacementValue = FloatArray(1)
+                    val distanceValue = FloatArray(1)
+                    Location.distanceBetween(
+                            distanceSingleton.initialPointCoordinates!!.latitude,
+                            distanceSingleton.initialPointCoordinates!!.longitude,
+                            location!!.latitude,
+                            location!!.longitude,
+                            displacementValue
+                    )
 
-                                Location.distanceBetween(
-                                        distanceSingleton.initialPointCoordinates!!.latitude,
-                                        distanceSingleton.initialPointCoordinates!!.longitude,
-                                        location!!.latitude,
-                                        location!!.longitude,
-                                        distanceValue
-                                )
+                    Location.distanceBetween(
+                            distanceSingleton.initialPointCoordinates!!.latitude,
+                            distanceSingleton.initialPointCoordinates!!.longitude,
+                            location!!.latitude,
+                            location!!.longitude,
+                            distanceValue
+                    )
 
-                                if (location!!.speed > 0f) {
-                                    distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(distanceValue[0])
-                                    distanceSingleton.distanceCoordinates = LatLng(location!!.latitude, location!!.longitude)
-                                    direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> ${getDirectionNameFromAzimuth(requireContext(), location!!.bearing.toDouble())}")
-                                } else {
-                                    direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> N/A")
-                                }
+                    if (location!!.speed > 0f) {
+                        distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(distanceValue[0])
+                        distanceSingleton.distanceCoordinates = LatLng(location!!.latitude, location!!.longitude)
+                        direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> ${getDirectionNameFromAzimuth(requireContext(), location!!.bearing.toDouble())}")
+                    } else {
+                        direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> N/A")
+                    }
 
-                                displacement = if (displacementValue[0] < 1000) {
-                                    if (isMetric) {
-                                        fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toDouble(), 2)} ${getString(R.string.meter)}")
-                                    } else {
-                                        fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
-                                    }
-                                } else {
-                                    if (isMetric) {
-                                        fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toKilometers().toDouble(), 2)} ${getString(R.string.kilometer)}")
-                                    } else {
-                                        fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toMiles().toDouble().toFeet(), 2)} ${getString(R.string.miles)}")
-                                    }
-                                }
-
-                                withContext(Dispatchers.Main) {
-                                    this@GPS.toolbar.locationIndicatorUpdate(true)
-                                    this@GPS.providerSource.text = providerSource
-                                    this@GPS.providerStatus.text = providerStatus
-                                    this@GPS.altitude.text = altitude
-                                    this@GPS.speed.text = speed
-                                    this@GPS.bearing.text = bearing
-                                    this@GPS.accuracy.text = accuracy
-                                    this@GPS.displacement.text = displacement
-                                    this@GPS.direction.text = direction
-
-                                    if (!isCustomCoordinate) {
-                                        updateViews(location!!.latitude, location!!.longitude)
-                                        maps?.setFirstLocation(location)
-                                        maps?.location = location
-                                        maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
-                                    }
-                                }
-                            }
+                    displacement = if (displacementValue[0] < 1000) {
+                        if (isMetric) {
+                            fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toDouble(), 2)} ${getString(R.string.meter)}")
+                        } else {
+                            fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
+                        }
+                    } else {
+                        if (isMetric) {
+                            fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toKilometers().toDouble(), 2)} ${getString(R.string.kilometer)}")
+                        } else {
+                            fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toMiles().toDouble().toFeet(), 2)} ${getString(R.string.miles)}")
                         }
                     }
-                    "provider" -> {
-                        providerStatus.text = fromHtml(
-                                "<b>${getString(R.string.gps_status)}</b> ${
-                                    if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
-                                            R.string.gps_disabled
-                                    )
-                                }"
-                        )
-                        providerSource.text = fromHtml(
-                                "<b>${getString(R.string.gps_source)}</b> ${
-                                    intent.getStringExtra("location_provider")
-                                        ?.uppercase(Locale.getDefault())
-                                }"
-                        )
-                        toolbar.locationIconStatusUpdates()
+
+                    withContext(Dispatchers.Main) {
+                        this@GPS.toolbar.locationIndicatorUpdate(true)
+                        this@GPS.providerSource.text = providerSource
+                        this@GPS.providerStatus.text = providerStatus
+                        this@GPS.altitude.text = altitude
+                        this@GPS.speed.text = speed
+                        this@GPS.bearing.text = bearing
+                        this@GPS.accuracy.text = accuracy
+                        this@GPS.displacement.text = displacement
+                        this@GPS.direction.text = direction
+
+                        if (!isCustomCoordinate) {
+                            updateViews(location!!.latitude, location!!.longitude)
+                            maps?.setFirstLocation(location)
+                            maps?.location = location
+                            maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
+                        }
                     }
                 }
             }
-        }
+        })
+
+        locationViewModel.provider.observe(viewLifecycleOwner, {
+            providerStatus.text = fromHtml(
+                    "<b>${getString(R.string.gps_status)}</b> ${
+                        if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
+                                R.string.gps_disabled
+                        )
+                    }"
+            )
+            providerSource.text = fromHtml(
+                    "<b>${getString(R.string.gps_source)}</b> $it"
+            )
+            toolbar.locationIconStatusUpdates()
+        })
 
         bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -401,7 +393,7 @@ class GPS : ScopedFragment() {
 
             override fun onCustomLocationClicked(view: View) {
                 CustomLocationParameters.newInstance()
-                    .show(parentFragmentManager, "location_params")
+                        .show(parentFragmentManager, "location_params")
             }
         })
 
@@ -570,7 +562,6 @@ class GPS : ScopedFragment() {
     override fun onPause() {
         super.onPause()
         maps?.pause()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(locationBroadcastReceiver)
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
         }
@@ -588,7 +579,6 @@ class GPS : ScopedFragment() {
     override fun onResume() {
         super.onResume()
         maps?.resume()
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(locationBroadcastReceiver, filter)
     }
 
     override fun onLowMemory() {
@@ -645,7 +635,7 @@ class GPS : ScopedFragment() {
 
     private fun setLocationPin() {
         view?.findViewById<ImageView>(R.id.coordinates_icon)!!
-            .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
+                .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
     }
 
     private fun checkGooglePlayServices(): Boolean {
@@ -653,7 +643,7 @@ class GPS : ScopedFragment() {
         val resultCode = availability.isGooglePlayServicesAvailable(requireContext())
         if (resultCode != ConnectionResult.SUCCESS) {
             ErrorDialog.newInstance(getString(R.string.play_services_error))
-                .show(childFragmentManager, "error_dialog")
+                    .show(childFragmentManager, "error_dialog")
             return false
         }
         return true

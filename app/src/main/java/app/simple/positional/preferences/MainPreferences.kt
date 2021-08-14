@@ -160,7 +160,9 @@ object MainPreferences {
                 getSharedPreferences().getFloat(lastLongitude, 2.2945f)
         )
     }
+
     //--------------------------------------------------------------------------------------------------//
+
     fun setAddress(@NotNull value: String) {
         getSharedPreferences().edit().putString(address, value).apply()
     }
