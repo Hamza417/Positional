@@ -166,7 +166,7 @@
     <string name="specified_hint_latitude">Географска ширина (±90)</string>
     <string name="specified_hint_longitude">Географска дължина (±180)</string>
     <!-- Info -->
-    <string name="compass_calibration_notice">Точността на сензора на компаса на вашето устройство е ниска, движете устройство във фигура осем за калибриране на сензорите.</string>
+    <string name="compass_calibration_notice">Ако точността на сензора на компаса на вашето устройство е ниска, движете устройство във фигура осем за калибриране на сензорите.</string>
     <string name="specified_location_notice">Информацията, показана по-долу, се актуализира за посочените координати на местоположението.</string>
     <string name="show_again">Покажи отново</string>
     <string name="search_timezone">Търси часова зона</string>
