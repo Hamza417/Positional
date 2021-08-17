@@ -191,7 +191,8 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         calibrate.setOnClickListener {
-            openCalibrationDialog()
+            CompassCalibration().newInstance()
+                    .show(parentFragmentManager, "calibration_dialog")
         }
 
         copy.setOnClickListener {

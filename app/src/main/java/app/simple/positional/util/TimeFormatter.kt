@@ -17,8 +17,6 @@ object TimeFormatter {
      */
     fun getTime(zoneDateTime: ZonedDateTime): SpannableString {
         return if (ClockPreferences.getDefaultClockTimeFormat()) {
-
-
             buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("hh:mm a").withLocale(LocaleHelper.getAppLocale())))
         } else {
             buildSpannableString(zoneDateTime.format(DateTimeFormatter.ofPattern("HH:mm").withLocale(LocaleHelper.getAppLocale())))

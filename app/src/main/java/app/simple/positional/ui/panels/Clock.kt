@@ -441,7 +441,6 @@ class Clock : ScopedFragment() {
                                     "<b>${getString(R.string.moon_moonset)}</b> ${pattern.format(set)}")
                         }
 
-
                 twilightData =
                         with(SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude)) {
                             fromHtml("<b>${getString(R.string.twilight_astronomical_dawn)}</b> ${pattern.format(twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise)}<br>" +
@@ -451,7 +450,6 @@ class Clock : ScopedFragment() {
                                     "<b>${getString(R.string.twilight_nautical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().set)}<br>" +
                                     "<b>${getString(R.string.twilight_astronomical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set)}")
                         }
-
 
                 sunPositionData =
                         with(SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).execute()) {
@@ -486,7 +484,6 @@ class Clock : ScopedFragment() {
                                     "<b>${getString(R.string.moon_phase)}</b> ${getMoonPhase(requireContext(), phase)}<br>" +
                                     "<b>${getString(R.string.moon_phase_angle)}</b> ${round(phase, 2)}°")
                         }
-
 
                 moonDatesData =
                         with(MoonPhase.compute().timezone(timezone).on(Instant.now())) {
