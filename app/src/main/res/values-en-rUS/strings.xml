@@ -131,7 +131,6 @@
     <string name="app_version">App Version</string>
     <string name="found_an_issue">Found an issue?</string>
     <string name="translate">Translation</string>
-    <string name="buy_full">Buy Full Version</string>
     <!-- Settings Description -->
     <string name="theme_follow_system">Follow System</string>
     <string name="theme_day">Light</string>
@@ -143,7 +142,6 @@
     <string name="desc_legal">Read app\'s Disclaimer, Privacy Policy and Terms of Use</string>
     <string name="desc_git">Open app\'s repository</string>
     <string name="desc_translate">Help translating the app into your native language</string>
-    <string name="desc_buy_full_version">Support development by buying full version</string>
     <!-- Clock Menu -->
     <string name="needles">Needle</string>
     <string name="motion_type">Motion Type</string>
@@ -168,7 +166,7 @@
     <string name="specified_hint_latitude">Latitude (±90)</string>
     <string name="specified_hint_longitude">Longitude (±180)</string>
     <!-- Info -->
-    <string name="compass_calibration_notice">Your device compass sensor accuracy is low, move your device in figure eight direction to calibrate the sensors.</string>
+    <string name="compass_calibration_notice">If your device compass sensor accuracy is low, move your device in figure eight direction to calibrate the sensors.</string>
     <string name="specified_location_notice">Information shown below are being updated for specified location coordinates.</string>
     <string name="show_again">Show Again</string>
     <string name="search_timezone">Search Timezones</string>

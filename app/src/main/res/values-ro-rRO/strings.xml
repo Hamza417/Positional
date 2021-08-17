@@ -166,7 +166,7 @@
     <string name="specified_hint_latitude">Latitudine (±90)</string>
     <string name="specified_hint_longitude">Longitudine (±180)</string>
     <!-- Info -->
-    <string name="compass_calibration_notice">Precizia senzorului busolei dispozitivului este scăzută, mutați dispozitivul în direcția 8 pentru a calibra senzorii.</string>
+    <string name="compass_calibration_notice">Dacă precizia senzorului busolei dispozitivului este scăzută, mutați dispozitivul în direcția 8 pentru a calibra senzorii.</string>
     <string name="specified_location_notice">Informațiile prezentate mai jos sunt actualizate pentru coordonatele locației specificate.</string>
     <string name="show_again">Arată din nou</string>
     <string name="search_timezone">Căutare fus orar</string>
