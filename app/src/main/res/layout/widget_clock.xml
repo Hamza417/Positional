@@ -57,4 +57,15 @@
         android:adjustViewBounds="true"
         tools:ignore="ContentDescription" />
 
+    <TextView
+        android:id="@+id/widget_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:fontFamily="@font/heading"
+        android:textColor="@color/textPrimary"
+        android:layout_gravity="center_horizontal|bottom"/>
+
 </FrameLayout>

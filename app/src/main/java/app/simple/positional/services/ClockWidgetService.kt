@@ -30,7 +30,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.DateFormat
 import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class ClockWidgetService : Service() {
 
@@ -123,6 +125,8 @@ class ClockWidgetService : Service() {
                     views.setImageViewResource(
                             R.id.widget_clock_face,
                             if (face) R.drawable.widget_clock_face_24 else R.drawable.widget_clock_face)
+
+                    views.setTextViewText(R.id.widget_date, zonedDateTime.format(DateTimeFormatter.ofPattern("EEE, MMM dd")))
 
                     val componentName = ComponentName(applicationContext, ClockWidget::class.java)
                     val manager = AppWidgetManager.getInstance(applicationContext)
