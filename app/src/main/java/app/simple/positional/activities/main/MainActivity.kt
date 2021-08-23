@@ -19,6 +19,7 @@ import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerRecyclerView
+import app.simple.positional.decorations.itemdecoration.LinePagerIndicatorDecoration
 import app.simple.positional.dialogs.app.Permission
 import app.simple.positional.dialogs.app.Rate
 import app.simple.positional.preferences.BottomBarPreferences

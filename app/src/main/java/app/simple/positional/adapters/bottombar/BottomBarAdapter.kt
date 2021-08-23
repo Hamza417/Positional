@@ -1,12 +1,16 @@
 package app.simple.positional.adapters.bottombar
 
+import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
@@ -25,17 +29,15 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerVi
                 LayoutInflater.from(parent.context).inflate(R.layout.adapter_bottom_bar, parent, false))
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(holder: Holder, @SuppressLint("RecyclerView") position: Int) {
         if (currentTag == list[position].tag) {
             holder.bg.visible(animate = true)
 
-            holder.icon.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(holder.itemView.context, R.color.iconColor))
+            holder.icon.animateColor(ContextCompat.getColor(holder.itemView.context, R.color.iconColor))
         } else {
             holder.bg.invisible(animate = true)
 
-            holder.icon.imageTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(holder.itemView.context, R.color.iconRegular))
+            holder.icon.animateColor(ContextCompat.getColor(holder.itemView.context, R.color.iconRegular))
         }
 
         holder.icon.setImageResource(list[position].icon)
@@ -60,6 +62,7 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerVi
         holder.bg.clearAnimation()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setBottomBarItems(list: ArrayList<BottomBarModel>) {
         this.list = list
 
@@ -75,6 +78,16 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerVi
          * Now refresh the bottom panel
          */
         notifyDataSetChanged()
+    }
+
+    private fun ImageView.animateColor(color: Int) {
+        val valueAnimator = ValueAnimator.ofArgb(this.imageTintList!!.defaultColor, color)
+        valueAnimator.duration = 500L
+        valueAnimator.interpolator = DecelerateInterpolator(1.5F)
+        valueAnimator.addUpdateListener {
+            this.imageTintList = ColorStateList.valueOf(it.animatedValue as Int)
+        }
+        valueAnimator.start()
     }
 
     fun setOnBottomBarCallbackListener(bottomBarCallbacks: BottomBarCallbacks) {

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
     android:id="@+id/bottom_bar_container"
-    android:layout_marginHorizontal="5dp"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="5dp">
 
     <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
         android:id="@+id/bottom_bar_item_background"
         android:layout_width="70dp"
         android:layout_height="40dp"
-        android:visibility="invisible"
         android:layout_gravity="center_vertical"
         android:backgroundTint="@color/indicator"
+        android:visibility="invisible"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -23,5 +24,6 @@
         android:padding="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_clock"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        app:tint="@color/iconRegular" />
 </FrameLayout>
