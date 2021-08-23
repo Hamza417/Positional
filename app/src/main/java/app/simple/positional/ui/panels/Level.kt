@@ -123,18 +123,18 @@ class Level : ScopedFragment(), SensorEventListener {
 
         boundingBox.setOnTouchListener { _, event ->
 
-            val dampingRation = 0.32F
+            val dampingRatio = 0.32F
             val stiffness = SpringForce.STIFFNESS_VERY_LOW
             val scaleLarge = 1.5F
             val scaleNormal = 1.0F
 
             val springForceLarge = SpringForce()
-                    .setDampingRatio(dampingRation)
+                    .setDampingRatio(dampingRatio)
                     .setStiffness(stiffness)
                     .setFinalPosition(scaleLarge)
 
             val springForceNormal = SpringForce()
-                    .setDampingRatio(dampingRation)
+                    .setDampingRatio(dampingRatio)
                     .setStiffness(stiffness)
                     .setFinalPosition(scaleNormal)
 

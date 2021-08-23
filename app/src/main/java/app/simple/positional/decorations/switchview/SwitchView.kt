@@ -6,10 +6,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
 import android.view.animation.DecelerateInterpolator
-import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.dynamicanimation.animation.DynamicAnimation
+import androidx.dynamicanimation.animation.SpringAnimation
+import androidx.dynamicanimation.animation.SpringForce
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
 import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.ColorUtils.resolveAttrColor
@@ -21,6 +25,10 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     private var thumb: ImageView
     private var switchCallbacks: SwitchCallbacks? = null
+    private var switchAnimation : SpringAnimation? = null
+
+    private val dampingRatio = 0.32F
+    private val stiffness = 300F
 
     var isChecked: Boolean = false
         set(value) {
@@ -36,6 +44,8 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         val view = LayoutInflater.from(context).inflate(R.layout.switch_view, this, true)
 
         thumb = view.findViewById(R.id.switch_thumb)
+
+        switchAnimation = SpringAnimation(thumb, DynamicAnimation.TRANSLATION_X)
 
         clipChildren = false
         clipToPadding = false
@@ -76,11 +86,11 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     private fun animateUnchecked() {
-        thumb.animate()
-                .translationX(0F)
-                .setInterpolator(OvershootInterpolator(3F))
-                .setDuration(500)
-                .start()
+        switchAnimation!!.spring = SpringForce(0F)
+                .setDampingRatio(dampingRatio)
+                .setStiffness(stiffness)
+
+        switchAnimation!!.start()
 
         animateColorChange(ContextCompat.getColor(context, R.color.switch_off))
         switchCallbacks?.onCheckedChanged(false)
@@ -93,11 +103,11 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         val p = context.resources.getDimensionPixelOffset(R.dimen.switch_padding)
         val thumbWidth = context.resources.getDimensionPixelOffset(R.dimen.switch_thumb_dimensions)
 
-        thumb.animate()
-                .translationX((w - p * 2 - thumbWidth).toFloat())
-                .setInterpolator(OvershootInterpolator(3F))
-                .setDuration(500)
-                .start()
+        switchAnimation!!.spring = SpringForce((w - p * 2 - thumbWidth).toFloat())
+                .setDampingRatio(dampingRatio)
+                .setStiffness(stiffness)
+
+        switchAnimation!!.start()
 
         animateColorChange(context.resolveAttrColor(R.attr.colorAppAccent))
         switchCallbacks?.onCheckedChanged(true)
@@ -107,7 +117,7 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private fun animateElevation(elevation: Float) {
         val valueAnimator = ValueAnimator.ofFloat(this.elevation, elevation)
         valueAnimator.duration = 500L
-        valueAnimator.interpolator = DecelerateInterpolator(1.5F)
+        valueAnimator.interpolator = LinearOutSlowInInterpolator()
         valueAnimator.addUpdateListener {
             this.elevation = it.animatedValue as Float
         }
@@ -116,6 +126,11 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     fun setOnCheckedChangeListener(switchCallbacks: SwitchCallbacks) {
         this.switchCallbacks = switchCallbacks
+    }
+
+    override fun onViewRemoved(child: View?) {
+        super.onViewRemoved(child)
+        switchAnimation?.cancel()
     }
 
     /**
