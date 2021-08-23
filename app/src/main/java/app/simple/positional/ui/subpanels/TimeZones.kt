@@ -68,25 +68,22 @@ class TimeZones : ScopedFragment() {
                 var filtered: MutableList<Pair<String, String>> = arrayListOf()
 
                 if (count > 0) {
-                    try {
+                    kotlin.runCatching {
                         for (str in timeZones) {
                             if (str.first.lowercase(Locale.getDefault()).contains(
-                                    keywords.lowercase(
-                                        Locale.getDefault()
+                                            keywords.lowercase(
+                                                    Locale.getDefault()
+                                            )
+                                    ) ||
+                                    str.second.lowercase(Locale.getDefault()).contains(
+                                            keywords.lowercase(
+                                                    Locale.getDefault()
+                                            )
                                     )
-                                ) ||
-                                str.second.lowercase(Locale.getDefault()).contains(
-                                    keywords.lowercase(
-                                        Locale.getDefault()
-                                    )
-                                )
                             ) {
                                 filtered.add(str)
                             }
                         }
-                    } catch (ignored: ConcurrentModificationException) {
-                    } catch (ignored: IndexOutOfBoundsException) {
-                    } catch (ignored: NullPointerException) {
                     }
                 } else {
                     filtered = timeZones
