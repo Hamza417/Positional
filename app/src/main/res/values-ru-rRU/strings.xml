@@ -286,4 +286,5 @@
     <string name="show_on_map">Показать на карте</string>
     <string name="copy">Копировать</string>
     <string name="trail_data_accuracy">В пределах %1$s %2$s местоположения</string>
+    <string name="rate_text">Насколько вы довольны этим приложением? Нажмите здесь, чтобы оценить приложение в Play Store.</string>
 </resources>
