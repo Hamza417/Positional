@@ -350,6 +350,11 @@ class Trail : ScopedFragment() {
         currentTrail = TrailPreferences.getCurrentTrail()
     }
 
+    override fun onPause() {
+        super.onPause()
+        maps?.onPause()
+    }
+
     override fun onLowMemory() {
         super.onLowMemory()
         maps?.lowMemory()

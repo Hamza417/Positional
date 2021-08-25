@@ -256,6 +256,42 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         }
     }
 
+    fun updatePolylines(arrayList: ArrayList<TrailData>) {
+        googleMap?.clear()
+        polylines.clear()
+        currentPolyline.clear()
+        flagMarkers.clear()
+        options?.points?.clear()
+
+        for (trailData in arrayList) {
+            val latLng = LatLng(trailData.latitude, trailData.longitude)
+
+            currentPolyline.add(latLng)
+
+            val marker = googleMap?.addMarker(
+                    MarkerOptions()
+                            .position(latLng)
+                            .icon(BitmapDescriptorFactory.fromBitmap(
+                                    TrailIcons.icons[trailData.iconPosition]
+                                            .toBitmap(context, 50))))
+
+            flagMarkers.add(marker!!)
+            options?.add(latLng)
+            polylines.add(googleMap?.addPolyline(options!!)!!)
+        }
+
+        invalidate()
+
+        options?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
+        options?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
+
+        trailMapCallbacks.onLineCountChanged(options!!.points.size)
+
+        if (TrailPreferences.arePolylinesWrapped()) {
+            wrap(false)
+        }
+    }
+
     fun addPolylines(arrayList: ArrayList<TrailData>) {
         googleMap?.clear()
         polylines.clear()
@@ -521,6 +557,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             }
             TrailPreferences.geodesic -> {
                 options!!.geodesic(TrailPreferences.isTrailGeodesic())
+                updatePolylines(trailData)
                 invalidate()
             }
             TrailPreferences.mapAutoCenter -> {

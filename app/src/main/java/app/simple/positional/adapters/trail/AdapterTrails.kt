@@ -65,7 +65,11 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
     }
 
     override fun getItemCount(): Int {
-        return list.size + 1
+        return if(list.isNullOrEmpty()) {
+            0
+        } else {
+            list.size + 1
+        }
     }
 
     override fun getItemViewType(position: Int): Int {

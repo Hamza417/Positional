@@ -102,9 +102,10 @@ class Trails : ScopedFragment() {
             if (it.isNullOrEmpty()) {
                 art.visible(true)
             } else {
-                recyclerView.adapter = adapterTrails
                 art.invisible(true)
             }
+
+            recyclerView.adapter = adapterTrails
         })
     }
 
