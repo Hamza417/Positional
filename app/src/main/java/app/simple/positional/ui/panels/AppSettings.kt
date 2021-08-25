@@ -1,8 +1,10 @@
 package app.simple.positional.ui.panels
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ResolveInfo
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
@@ -17,10 +19,12 @@ import app.simple.positional.activities.subactivity.CustomLocationsActivity
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.callbacks.CoordinatesCallback
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.padding.PaddingAwareNestedScrollView
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.popup.PopupMenuCallback
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
@@ -28,6 +32,9 @@ import app.simple.positional.dialogs.settings.*
 import app.simple.positional.popups.settings.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.LocaleHelper.localeList
+import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.util.ViewUtils.invisible
+import app.simple.positional.util.ViewUtils.visible
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
@@ -38,7 +45,11 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private var yOff = 0F
 
     private lateinit var scrollView: PaddingAwareNestedScrollView
+
+    private lateinit var hideRate: DynamicRippleImageButton
+
     private lateinit var buyFull: DynamicRippleLinearLayout
+    private lateinit var rate: DynamicCornerLinearLayout
     private lateinit var unit: DynamicRippleLinearLayout
     private lateinit var locationProvider: DynamicRippleLinearLayout
     private lateinit var language: DynamicRippleLinearLayout
@@ -70,6 +81,8 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
         scrollView = view.findViewById(R.id.settings_scroll_view)
+        hideRate = view.findViewById(R.id.rate_hide)
+        rate = view.findViewById(R.id.rate_layout)
         buyFull = view.findViewById(R.id.buy_full)
         unit = view.findViewById(R.id.settings_units)
         locationProvider = view.findViewById(R.id.settings_location_provider)
@@ -109,6 +122,14 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             setCurrentThemeValue(4)
         } else {
             setCurrentThemeValue(AppCompatDelegate.getDefaultNightMode())
+        }
+
+        println(MainPreferences.getLaunchCount())
+
+        if (MainPreferences.getLaunchCount() > 3) {
+            if (MainPreferences.getShowRatingDialog()) {
+                rate.visible(false)
+            }
         }
 
         setCurrentUnit(MainPreferences.getUnit())
@@ -210,8 +231,8 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         legalNotes.setOnClickListener {
             val popupMenu = LegalNotesPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.popup_legal_notes,
-                                                                                              PopupLinearLayout(context),
-                                                                                              true), legalNotes, xOff, yOff)
+                    PopupLinearLayout(context),
+                    true), legalNotes, xOff, yOff)
             popupMenu.popupMenuCallback = this
         }
 
@@ -246,6 +267,15 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         skipSplashScreenContainer.setOnClickListener {
             toggleSkipSplashScreen.isChecked = !toggleSkipSplashScreen.isChecked
         }
+
+        rate.setOnClickListener {
+            openAppRating()
+        }
+
+        hideRate.setOnClickListener {
+            rate.gone()
+            MainPreferences.setShowRatingDialog(false)
+        }
     }
 
     private fun setCurrentLocation() {
@@ -272,6 +302,64 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
     private fun setCurrentUnit(value: Boolean) {
         currentUnit.text = if (value) getString(R.string.unit_metric) else getString(R.string.unit_imperial)
+    }
+
+    private fun openAppRating() {
+        /**
+         * you can also use BuildConfig.APPLICATION_ID
+         */
+        val appId: String = requireContext().packageName
+        val rateIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appId"))
+        var marketFound = false
+
+        /**
+         * find all applications able to handle our rateIntent
+         */
+        val otherApps: List<ResolveInfo> = requireContext().packageManager.queryIntentActivities(rateIntent, 0)
+
+        for (otherApp in otherApps) {
+            /**
+             * look for Google Play application
+             */
+            if (otherApp.activityInfo.applicationInfo.packageName == "com.android.vending") {
+                val otherAppActivity = otherApp.activityInfo
+                val componentName = ComponentName(otherAppActivity.applicationInfo.packageName, otherAppActivity.name)
+
+                /**
+                 * make sure it does NOT open in the stack of your activity
+                 */
+                rateIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+                /**
+                 * task re -parenting if needed
+                 */
+                rateIntent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+
+                /**
+                 * if the Google Play was already open in a search result
+                 * this make sure it still go to the app page you requested
+                 */
+                rateIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+                /**
+                 * this make sure only the Google Play app is allowed to
+                 * intercept the intent
+                 */
+                rateIntent.component = componentName
+                requireContext().startActivity(rateIntent)
+                marketFound = true
+
+                break
+            }
+        }
+
+        /**
+         * if GP not present on device, open web browser
+         */
+        if (!marketFound) {
+            val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appId"))
+            requireContext().startActivity(webIntent)
+        }
     }
 
     override fun isCoordinatesSet(boolean: Boolean) {

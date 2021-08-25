@@ -20,6 +20,7 @@ object MainPreferences {
     private const val skipSplashScreen = "skip_splash_screen"
     private const val ratingDialog = "is_showing_rating_dialog"
     private const val wideColor = "is_wide_color_gamut"
+
     const val isCustomCoordinate = "is_custom_coordinate_set"
     const val locationProvider = "location_provider"
     const val unit = "all_measurement_unit"
@@ -29,7 +30,9 @@ object MainPreferences {
     const val accentColor = "app_accent_color"
     const val lastLatitude = "last_latitude"
     const val lastLongitude = "last_longitude"
+
     //--------------------------------------------------------------------------------------------------//
+
     fun setLaunchCount(value: Int) {
         getSharedPreferences().edit().putInt(launchCount, value).apply()
     }

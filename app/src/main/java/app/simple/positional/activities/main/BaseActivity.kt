@@ -22,6 +22,12 @@ import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.util.ContextUtils
 import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.ThemeSetter
+import android.os.StrictMode.VmPolicy
+
+import android.os.StrictMode
+
+
+
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -35,6 +41,8 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // StrictMode.enableDefaults()
 
         if (MainPreferences.isDayNightOn()) {
             ThemeSetter.setAppTheme(4)

@@ -315,4 +315,5 @@
     <string name="show_on_map">Show on Map</string>
     <string name="copy">Copy</string>
     <string name="trail_data_accuracy">Within %1$s %2$s of the location</string>
+    <string name="rate_text">How satisfied are you with this app? Click here to rate the app on Play Store.</string>
 </resources>

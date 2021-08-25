@@ -4,18 +4,19 @@
     android:layout_height="match_parent">
 
     <app.simple.positional.decorations.padding.PaddingAwareNestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/settings_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/bottom_nav_height"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:animateLayoutChanges="true"
         android:overScrollMode="always"
         app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:animateLayoutChanges="true"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -24,12 +25,43 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:fontFamily="@font/heading"
-                android:paddingStart="10dp"
+                android:paddingHorizontal="10dp"
                 android:text="@string/settings"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/top_bar_text_size"
-                android:textStyle="bold"
-                tools:ignore="RtlSymmetry" />
+                android:textStyle="bold" />
+
+            <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+                android:id="@+id/rate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16sp"
+                android:backgroundTint="?attr/colorAppAccent"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="15dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/rate_text"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/settings_secondary_text_size" />
+
+                <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+                    android:id="@+id/rate_hide"
+                    android:layout_width="@dimen/app_button_size"
+                    android:layout_height="@dimen/app_button_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_block"
+                    android:tint="@android:color/white" />
+
+            </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 
             <include layout="@layout/pref_appearance" />
 

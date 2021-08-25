@@ -19,9 +19,7 @@ import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerRecyclerView
-import app.simple.positional.decorations.itemdecoration.LinePagerIndicatorDecoration
 import app.simple.positional.dialogs.app.Permission
-import app.simple.positional.dialogs.app.Rate
 import app.simple.positional.preferences.BottomBarPreferences
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
@@ -66,25 +64,11 @@ class MainActivity : BaseActivity(),
         }
 
         checkRunTimePermission()
-        showReviewPromptToUser()
+        MainPreferences.setLaunchCount(MainPreferences.getLaunchCount() + 1)
 
         if (savedInstanceState.isNull()) {
             openFragment(FragmentPreferences.getCurrentTag(),
                     FragmentPreferences.getCurrentPage())
-        }
-    }
-
-    private fun showReviewPromptToUser() {
-        if (MainPreferences.getLaunchCount() < 5) {
-            MainPreferences.setLaunchCount(MainPreferences.getLaunchCount() + 1)
-            return
-        } else {
-            if (MainPreferences.getShowRatingDialog()) {
-                handler.postDelayed({
-                    Rate.newInstance()
-                            .show(supportFragmentManager, "rate")
-                }, 1500L)
-            }
         }
     }
 

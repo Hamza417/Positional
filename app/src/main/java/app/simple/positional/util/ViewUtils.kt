@@ -62,7 +62,7 @@ object ViewUtils {
                 .scaleX(0F)
                 .alpha(0F)
                 .setInterpolator(AccelerateInterpolator())
-                .setDuration(400L)
+                .setDuration(this.resources.getInteger(R.integer.animation_duration).toLong())
                 .setListener(object : Animator.AnimatorListener {
                     override fun onAnimationStart(animation: Animator?) {
                             /* no-op */
@@ -100,7 +100,7 @@ object ViewUtils {
                 .scaleX(1F)
                 .alpha(1F)
                 .setInterpolator(LinearOutSlowInInterpolator())
-                .setDuration(400L)
+                .setDuration(this.resources.getInteger(R.integer.animation_duration).toLong())
                 .setListener(object : Animator.AnimatorListener {
                     override fun onAnimationStart(animation: Animator?) {
                         this@visible.visibility = View.VISIBLE
