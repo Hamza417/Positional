@@ -166,7 +166,7 @@
     <string name="specified_hint_latitude">طول بلد (90±)</string>
     <string name="specified_hint_longitude">طول البلد (180±)</string>
     <!-- Info -->
-    <string name="compass_calibration_notice">آپ کے آلے کمپاس سینسر کی درستگی کم ہے، اسے کیلیبریٹ کرنے کے لیے ، اپنے آلے کو آٹھ نمبر والے انداز میں گھمائیں۔.</string>
+    <string name="compass_calibration_notice">اگر آپ کے آلے کے کمپاس سینسر کی درستگی کم ہے تو ، سینسر کیلیبریٹ کرنے کے لیے اپنے آلے کو آٹھ سمت میں منتقل کریں۔</string>
     <string name="specified_location_notice">ذیل میں دکھائی گئی معلومات کو مخصوص مقام کوآرڈینیٹ کیلئے تازہ کاری کی جارہی ہے۔</string>
     <string name="show_again">دوبارہ دکھائیں</string>
     <string name="search_timezone">ٹائم زونز تلاش کریں</string>
@@ -285,4 +285,6 @@
     <string name="delete">حذف کریں</string>
     <string name="show_on_map">نقشہ پر دکھائیں</string>
     <string name="copy">نقل کریں</string>
+    <string name="trail_data_accuracy">مقام کے %1$s %2$s کے اندر۔</string>
+    <string name="rate_text">آپ اس ایپ سے کتنے مطمئن ہیں؟ پلے سٹور پر ایپ کی درجہ بندی کے لیے یہاں کلک کریں۔</string>
 </resources>
