@@ -286,4 +286,5 @@
     <string name="show_on_map">Afişare pe hartă</string>
     <string name="copy">Copiere</string>
     <string name="trail_data_accuracy">În %1$s %2$s din locație</string>
+    <string name="rate_text">Cât de mulțumit(ă) sunteți de această aplicație? Faceți clic aici pentru a evalua aplicația în Magazin Play.</string>
 </resources>
