@@ -108,7 +108,7 @@ object GPSPreferences {
     }
 
     fun isBearingRotationOn(): Boolean {
-        return getSharedPreferences().getBoolean(useBearingRotation, true)
+        return getSharedPreferences().getBoolean(useBearingRotation, false)
     }
 
     //--------------------------------------------------------------------------------------------------//

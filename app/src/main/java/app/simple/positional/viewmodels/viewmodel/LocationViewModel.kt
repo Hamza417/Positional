@@ -36,7 +36,6 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                     when (intent.action) {
                         "location" -> {
                             location.postValue(intent.getParcelableExtra("location"))
-                            Log.d(javaClass.name, "Location Posted")
                         }
                         "provider" -> {
                             provider.postValue(intent.getStringExtra("location_provider")

@@ -64,7 +64,7 @@
         android:layout_marginBottom="60dp"
         android:gravity="center"
         android:textSize="16sp"
-        android:fontFamily="@font/heading"
+        android:fontFamily="@font/clock_date"
         android:textColor="@color/textPrimary"
         android:layout_gravity="center_horizontal|bottom"/>
 

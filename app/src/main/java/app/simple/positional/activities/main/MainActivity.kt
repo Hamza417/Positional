@@ -57,6 +57,16 @@ class MainActivity : BaseActivity(),
             scheduleLayoutAnimation()
             setItemViewCacheSize(10)
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+
+                }
+
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+                }
+            })
         }
 
         bottomBarAdapter.setOnBottomBarCallbackListener { position, name ->
