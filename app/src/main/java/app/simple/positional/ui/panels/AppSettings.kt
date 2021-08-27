@@ -129,17 +129,13 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             setCurrentThemeValue(AppCompatDelegate.getDefaultNightMode())
         }
 
-        if (PermissionUtils.checkPermission(requireContext())) {
-            permission.gone()
-        } else {
-            permission.visible(false)
-        }
-
         if (MainPreferences.getLaunchCount() > 3) {
             if (MainPreferences.getShowRatingDialog()) {
                 rate.visible(false)
             }
         }
+
+        permissionNotification()
 
         setCurrentUnit(MainPreferences.getUnit())
         setCurrentLocation()
@@ -327,6 +323,14 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         currentUnit.text = if (value) getString(R.string.unit_metric) else getString(R.string.unit_imperial)
     }
 
+    private fun permissionNotification() {
+        if (PermissionUtils.checkPermission(requireContext())) {
+            permission.gone()
+        } else {
+            permission.visible(false)
+        }
+    }
+
     private fun openAppRating() {
         /**
          * you can also use BuildConfig.APPLICATION_ID
@@ -402,6 +406,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     override fun onResume() {
         super.onResume()
         toggleCustomLocation.isChecked = MainPreferences.isCustomCoordinate()
+        permissionNotification()
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
