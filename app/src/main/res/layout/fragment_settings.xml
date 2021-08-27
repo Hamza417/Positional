@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <app.simple.positional.decorations.padding.PaddingAwareNestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <app.simple.positional.decorations.padding.PaddingAwareNestedScrollView
         android:id="@+id/settings_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/bottom_nav_height"
+        android:animateLayoutChanges="true"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:animateLayoutChanges="true"
         android:overScrollMode="always"
         app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:animateLayoutChanges="true"
             android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
             <TextView
@@ -38,9 +40,9 @@
                 android:layout_marginHorizontal="16sp"
                 android:backgroundTint="?attr/colorAppAccent"
                 android:orientation="horizontal"
-                android:visibility="gone"
                 android:paddingHorizontal="16dp"
-                android:paddingVertical="15dp">
+                android:paddingVertical="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"
@@ -60,6 +62,41 @@
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_block"
                     android:tint="@android:color/white" />
+
+            </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+
+            <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+                android:id="@+id/permission_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16sp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="15dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/location_permission_denied"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/settings_secondary_text_size" />
+
+                <ImageView
+                    android:id="@+id/permission_button"
+                    android:layout_width="@dimen/app_button_size"
+                    android:layout_height="@dimen/app_button_size"
+                    android:padding="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_bad_location"
+                    app:tint="@android:color/white"
+                    tools:ignore="ContentDescription" />
 
             </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 

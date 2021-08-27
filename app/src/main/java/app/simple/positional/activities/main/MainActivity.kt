@@ -120,10 +120,8 @@ class MainActivity : BaseActivity(),
                 showPrompt()
                 runService()
             } else {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION) &&
-                        ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                    Toast.makeText(this, R.string.no_location_permission_alert, Toast.LENGTH_LONG).show()
-                }
+                Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.no_location_permission_alert, Toast.LENGTH_LONG).show()
             }
         }
     }

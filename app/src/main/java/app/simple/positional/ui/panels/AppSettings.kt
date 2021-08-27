@@ -1,5 +1,6 @@
 package app.simple.positional.ui.panels
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Intent
@@ -8,10 +9,12 @@ import android.content.pm.ResolveInfo
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.AccentColorsActivity
@@ -32,8 +35,8 @@ import app.simple.positional.dialogs.settings.*
 import app.simple.positional.popups.settings.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.LocaleHelper.localeList
+import app.simple.positional.util.PermissionUtils
 import app.simple.positional.util.ViewUtils.gone
-import app.simple.positional.util.ViewUtils.invisible
 import app.simple.positional.util.ViewUtils.visible
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
@@ -50,6 +53,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
     private lateinit var buyFull: DynamicRippleLinearLayout
     private lateinit var rate: DynamicCornerLinearLayout
+    private lateinit var permission: DynamicCornerLinearLayout
     private lateinit var unit: DynamicRippleLinearLayout
     private lateinit var locationProvider: DynamicRippleLinearLayout
     private lateinit var language: DynamicRippleLinearLayout
@@ -83,6 +87,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         scrollView = view.findViewById(R.id.settings_scroll_view)
         hideRate = view.findViewById(R.id.rate_hide)
         rate = view.findViewById(R.id.rate_layout)
+        permission = view.findViewById(R.id.permission_layout)
         buyFull = view.findViewById(R.id.buy_full)
         unit = view.findViewById(R.id.settings_units)
         locationProvider = view.findViewById(R.id.settings_location_provider)
@@ -124,7 +129,11 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             setCurrentThemeValue(AppCompatDelegate.getDefaultNightMode())
         }
 
-        println(MainPreferences.getLaunchCount())
+        if (PermissionUtils.checkPermission(requireContext())) {
+            permission.gone()
+        } else {
+            permission.visible(false)
+        }
 
         if (MainPreferences.getLaunchCount() > 3) {
             if (MainPreferences.getShowRatingDialog()) {
@@ -275,6 +284,20 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         hideRate.setOnClickListener {
             rate.gone()
             MainPreferences.setShowRatingDialog(false)
+        }
+
+        permission.setOnClickListener {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) &&
+                    ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                ), 123)
+            } else {
+                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", requireActivity().packageName, null)
+                })
+            }
         }
     }
 
