@@ -1,68 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/adapter_locations_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/options_container_horizontal_padding"
-    android:background="@drawable/ripple"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical"
-    android:padding="@dimen/options_container_horizontal_padding">
+    android:layout_marginVertical="5dp"
+    app:cardElevation="5dp"
+    app:rippleColor="?attr/colorAppAccentLight">
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:src="@drawable/ic_place_custom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/adapter_locations_address"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:fontFamily="@font/medium"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/info_text_secondary_size"
-        app:layout_constraintBottom_toTopOf="@id/adapter_locations_latitude"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:focusable="true"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/adapter_locations_latitude"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/regular"
-        android:maxLines="1"
-        android:textColor="@color/textTertiary"
-        android:textSize="@dimen/description_text_size"
-        app:layout_constraintBottom_toTopOf="@id/adapter_locations_longitude"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageView3"
-        app:layout_constraintTop_toBottomOf="@id/adapter_locations_address" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_place_custom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
-    <TextView
-        android:id="@+id/adapter_locations_longitude"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:fontFamily="@font/regular"
-        android:maxLines="1"
-        android:textColor="@color/textTertiary"
-        android:textSize="@dimen/description_text_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageView3"
-        app:layout_constraintTop_toBottomOf="@id/adapter_locations_latitude" />
+        <TextView
+            android:id="@+id/adapter_locations_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/medium"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/info_text_secondary_size"
+            app:layout_constraintBottom_toTopOf="@id/adapter_locations_latitude"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>
+        <TextView
+            android:id="@+id/adapter_locations_latitude"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/regular"
+            android:maxLines="1"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/description_text_size"
+            app:layout_constraintBottom_toTopOf="@id/adapter_locations_longitude"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView3"
+            app:layout_constraintTop_toBottomOf="@id/adapter_locations_address" />
+
+        <TextView
+            android:id="@+id/adapter_locations_longitude"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/regular"
+            android:maxLines="1"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/description_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView3"
+            app:layout_constraintTop_toBottomOf="@id/adapter_locations_latitude" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

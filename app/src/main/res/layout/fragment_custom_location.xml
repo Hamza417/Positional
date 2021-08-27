@@ -194,11 +194,8 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:clipToPadding="false"
-            android:fadingEdge="vertical"
-            android:fadingEdgeLength="10dp"
             android:layoutAnimation="@anim/list_animation_controller"
             android:paddingVertical="@dimen/options_container_horizontal_padding"
-            android:requiresFadingEdge="vertical"
             app:statusBarPaddingRequired="false" />
 
     </FrameLayout>

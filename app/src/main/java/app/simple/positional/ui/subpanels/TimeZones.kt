@@ -52,7 +52,7 @@ class TimeZones : ScopedFragment() {
         recyclerView.setPadding(recyclerView.paddingLeft,
                 recyclerView.paddingTop + params.topMargin + params.height + params.bottomMargin,
                 recyclerView.paddingRight,
-                recyclerView.paddingBottom)
+                recyclerView.paddingBottom + params.bottomMargin)
 
         return view
     }

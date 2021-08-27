@@ -11,12 +11,17 @@ import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.model.Locations
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.DMSConverter
+import app.simple.positional.util.ViewUtils
+import com.google.android.material.card.MaterialCardView
 
 class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
 
     private var locations: MutableList<Locations> = arrayListOf()
     var locationsAdapterCallback: LocationsCallback? = null
+
+    private val radius = MainPreferences.getCornerRadius()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_locations, parent, false))
@@ -62,10 +67,15 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
     }
 
     inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
-        val container: DynamicRippleConstraintLayout = itemView.findViewById(R.id.adapter_locations_container)
+        val container: MaterialCardView = itemView.findViewById(R.id.adapter_locations_container)
         val address: TextView = itemView.findViewById(R.id.adapter_locations_address)
         val latitude: TextView = itemView.findViewById(R.id.adapter_locations_latitude)
         val longitude: TextView = itemView.findViewById(R.id.adapter_locations_longitude)
+
+        init {
+            container.radius = radius.toFloat()
+            ViewUtils.addShadow(container)
+        }
     }
 
     interface LocationsCallback {
