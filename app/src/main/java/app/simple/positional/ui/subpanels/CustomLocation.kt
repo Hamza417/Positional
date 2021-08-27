@@ -27,6 +27,7 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.adapters.settings.LocationsAdapter
 import app.simple.positional.database.instances.LocationDatabase
+import app.simple.positional.decorations.padding.PaddingAwareLinearLayout
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.model.Locations
@@ -53,7 +54,7 @@ class CustomLocation : ScopedFragment() {
     private lateinit var addressInputEditText: EditText
     private lateinit var latitudeInputEditText: EditText
     private lateinit var longitudeInputEditText: EditText
-    private lateinit var inputLayoutsContainer: LinearLayout
+    private lateinit var inputLayoutsContainer: PaddingAwareLinearLayout
 
     private lateinit var locationsAdapter: LocationsAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.padding.PaddingAwareLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <app.simple.positional.decorations.padding.PaddingAwareLinearLayout
         android:id="@+id/custom_location_input_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -177,7 +177,7 @@
             android:layout_marginTop="10dp"
             android:background="@color/dividerColor" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.padding.PaddingAwareLinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -203,4 +203,4 @@
 
     </FrameLayout>
 
-</app.simple.positional.decorations.padding.PaddingAwareLinearLayout>
+</LinearLayout>

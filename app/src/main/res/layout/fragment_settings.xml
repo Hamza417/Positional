@@ -84,7 +84,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:fontFamily="@font/medium"
-                    android:text="@string/location_permission_denied"
+                    android:text="@string/no_location_permission_alert"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/settings_secondary_text_size" />
 

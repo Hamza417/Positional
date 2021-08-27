@@ -10,11 +10,13 @@ import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.AccentColorsActivity
@@ -80,6 +82,29 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var currentLanguage: TextView
     private lateinit var currentLocationProvider: TextView
     private lateinit var foundIssues: TextView
+
+    private lateinit var permissionContracts: ActivityResultLauncher<Array<String>>
+    private var opened = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        permissionContracts = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { mutableMap ->
+            mutableMap.entries.forEach {
+                if (it.value) {
+                    Log.d("Permissions", "${it.key} : ${it.value}")
+                } else {
+                    if (!opened) {
+                        startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                            data = Uri.fromParts("package", requireActivity().packageName, null)
+                        })
+
+                        opened = true
+                    }
+                }
+            }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
@@ -283,16 +308,13 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         permission.setOnClickListener {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) &&
-                    ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                ), 123)
+            if (PermissionUtils.checkPermission(requireContext())) {
+                permissionNotification()
             } else {
-                startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", requireActivity().packageName, null)
-                })
+                permissionContracts.launch(
+                        arrayOf(
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION))
             }
         }
     }
@@ -407,6 +429,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         super.onResume()
         toggleCustomLocation.isChecked = MainPreferences.isCustomCoordinate()
         permissionNotification()
+        opened = false
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
