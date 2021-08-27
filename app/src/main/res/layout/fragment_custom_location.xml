@@ -7,16 +7,18 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/custom_location_input_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
+        android:background="@color/mainBackground"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/options_container_horizontal_padding"
         android:paddingTop="@dimen/options_container_horizontal_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/options_container_horizontal_padding"
             android:orientation="horizontal">
 
             <TextView
@@ -54,9 +56,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/options_container_horizontal_padding"
             android:backgroundTint="@color/editTextBackground"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
@@ -74,11 +76,11 @@
                 android:background="@drawable/text_field"
                 android:fontFamily="@font/regular"
                 android:importantForAutofill="no"
-                android:padding="@dimen/popup_padding"
-                android:minHeight="50dp"
-                android:saveEnabled="true"
                 android:inputType="text"
                 android:maxLines="3"
+                android:minHeight="50dp"
+                android:padding="@dimen/popup_padding"
+                android:saveEnabled="true"
                 android:textColor="@color/textSecondary"
                 android:textColorHighlight="?attr/colorAppAccentLight"
                 android:textColorHint="@color/textTertiary"
@@ -90,6 +92,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/options_container_horizontal_padding"
             android:layout_marginTop="10dp"
             android:baselineAligned="false"
             android:orientation="horizontal">
@@ -117,10 +120,10 @@
                     android:layout_marginTop="2dp"
                     android:background="@drawable/text_field"
                     android:fontFamily="@font/regular"
-                    android:paddingHorizontal="@dimen/popup_padding"
                     android:importantForAutofill="no"
-                    android:minHeight="50dp"
                     android:inputType="numberDecimal"
+                    android:minHeight="50dp"
+                    android:paddingHorizontal="@dimen/popup_padding"
                     android:saveEnabled="true"
                     android:textColor="@color/textSecondary"
                     android:textColorHighlight="?attr/colorAppAccentLight"
@@ -152,11 +155,11 @@
                     android:layout_marginTop="2dp"
                     android:background="@drawable/text_field"
                     android:fontFamily="@font/regular"
-                    android:paddingHorizontal="@dimen/popup_padding"
-                    android:maxLines="1"
-                    android:inputType="numberDecimal"
                     android:importantForAutofill="no"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
                     android:minHeight="50dp"
+                    android:paddingHorizontal="@dimen/popup_padding"
                     android:saveEnabled="true"
                     android:textColor="@color/textSecondary"
                     android:textColorHighlight="?attr/colorAppAccentLight"
@@ -168,13 +171,13 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="10dp"
+            android:background="@color/dividerColor" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="10dp"
-        android:background="@color/dividerColor" />
+    </LinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

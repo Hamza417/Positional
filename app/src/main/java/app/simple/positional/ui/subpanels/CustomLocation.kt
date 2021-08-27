@@ -1,5 +1,6 @@
 package app.simple.positional.ui.subpanels
 
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
@@ -11,11 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.core.widget.doOnTextChanged
+import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import app.simple.positional.R
@@ -30,6 +34,7 @@ import app.simple.positional.popups.settings.CustomLocationPopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.TextViewUtils.capitalizeText
+import app.simple.positional.util.ViewUtils
 import app.simple.positional.util.ViewUtils.invisible
 import app.simple.positional.util.ViewUtils.visible
 import gov.nasa.worldwind.geom.Angle.isValidLatitude
@@ -38,7 +43,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 
 class CustomLocation : ScopedFragment() {
 
@@ -49,10 +53,12 @@ class CustomLocation : ScopedFragment() {
     private lateinit var addressInputEditText: EditText
     private lateinit var latitudeInputEditText: EditText
     private lateinit var longitudeInputEditText: EditText
+    private lateinit var inputLayoutsContainer: LinearLayout
 
     private lateinit var locationsAdapter: LocationsAdapter
     private lateinit var itemTouchHelper: ItemTouchHelper
     private val handler = Handler(Looper.getMainLooper())
+    private lateinit var linearLayoutManager: LinearLayoutManager
 
     private var address = ""
 
@@ -66,10 +72,17 @@ class CustomLocation : ScopedFragment() {
         addressInputEditText = view.findViewById(R.id.address)
         latitudeInputEditText = view.findViewById(R.id.latitude)
         longitudeInputEditText = view.findViewById(R.id.longitude)
+        inputLayoutsContainer = view.findViewById(R.id.custom_location_input_container)
 
         locationsAdapter = LocationsAdapter()
         itemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
+
+        linearLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        recyclerView.layoutManager = linearLayoutManager
+
+        ViewUtils.addShadow(inputLayoutsContainer)
 
         return view
     }
@@ -86,6 +99,20 @@ class CustomLocation : ScopedFragment() {
         } else {
             loadingProgressBar.hide()
         }
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (linearLayoutManager.findFirstCompletelyVisibleItemPosition() > 0) {
+                        inputLayoutsContainer.animateElevation(200F)
+                    } else {
+                        inputLayoutsContainer.animateElevation(0F)
+                    }
+                }
+            }
+        })
 
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
             val db = Room.databaseBuilder(
@@ -149,6 +176,7 @@ class CustomLocation : ScopedFragment() {
 
                                 if (list.isNotEmpty()) {
                                     locationsAdapter.setList(list)
+                                    recyclerView.smoothScrollToPosition(0)
                                     art.invisible(true)
                                 } else {
                                     showToast(getString(R.string.failed))
@@ -279,7 +307,7 @@ class CustomLocation : ScopedFragment() {
 
     private fun getCoordinatesFromAddress(address: String) {
 
-        if(address == "----") {
+        if (address == "----") {
             loadingProgressBar.hide()
             return
         }
@@ -319,6 +347,16 @@ class CustomLocation : ScopedFragment() {
         }
     }
 
+    private fun LinearLayout.animateElevation(elevation: Float) {
+        val valueAnimator = ValueAnimator.ofFloat(this.elevation, elevation)
+        valueAnimator.duration = 500L
+        valueAnimator.interpolator = LinearOutSlowInInterpolator()
+        valueAnimator.addUpdateListener {
+            this.elevation = it.animatedValue as Float
+        }
+        valueAnimator.start()
+    }
+
     private val simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object
         : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
@@ -336,6 +374,7 @@ class CustomLocation : ScopedFragment() {
                 if (db.locationDao()!!.getAllLocations().isEmpty()) {
                     handler.post {
                         art.visible(true)
+                        inputLayoutsContainer.animateElevation(0F)
                     }
                 }
                 db.close()
