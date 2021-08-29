@@ -4,37 +4,38 @@ import android.content.Context
 import android.location.Location
 import app.simple.positional.R
 import app.simple.positional.math.MathExtensions
+import kotlin.math.abs
 
 object DMSConverter {
     fun latitudeAsDMS(latitude: Double, context: Context): String {
-        val direction = if (latitude > 0) context.resources.getString(R.string.north_N) else context.resources.getString(R.string.south_S)
-        var strLatitude = toDMS(latitude)
+        val direction = if (latitude < 0) context.resources.getString(R.string.south_S) else context.resources.getString(R.string.north_N)
+        var strLatitude = toDMS(abs(latitude))
         strLatitude += " $direction"
         return strLatitude
     }
 
     fun longitudeAsDMS(longitude: Double, context: Context): String {
         val direction = if (longitude < 0) context.resources.getString(R.string.west_W) else context.resources.getString(R.string.east_E)
-        var strLongitude = toDMS(longitude)
+        var strLongitude = toDMS(abs(longitude))
         strLongitude += " $direction"
         return strLongitude
     }
 
-    fun getLatitudeAsDD(latitude: Double, context: Context): String {
+    fun latitudeAsDD(latitude: Double): String {
         return if (latitude > 0)
-            "${MathExtensions.round(latitude, 3)}° ${context.resources.getString(R.string.north_N)}"
+            "${MathExtensions.round(latitude, 3)}°"
         else
-            "${MathExtensions.round(latitude, 3)}° ${context.resources.getString(R.string.south_S)}"
+            "${MathExtensions.round(latitude, 3)}°"
     }
 
-    fun getLongitudeAsDD(longitude: Double, context: Context): String {
+    fun longitudeAsDD(longitude: Double): String {
         return if (longitude > 0)
-            "${MathExtensions.round(longitude, 3)}° ${context.resources.getString(R.string.east_E)}"
+            "${MathExtensions.round(longitude, 3)}°"
         else
-            "${MathExtensions.round(longitude, 3)}° ${context.resources.getString(R.string.west_W)}"
+            "${MathExtensions.round(longitude, 3)}°"
     }
 
-    fun getLatitudeAsDM(lat: Double, context: Context): String {
+    fun latitudeAsDM(lat: Double, context: Context): String {
         val ddmLat = replaceDelimiters(Location.convert(lat, Location.FORMAT_MINUTES))
         return if (lat >= 0.0) {
             "$ddmLat ${context.resources.getString(R.string.north_N)}"
@@ -43,7 +44,7 @@ object DMSConverter {
         }
     }
 
-    fun getLongitudeAsDM(longitude: Double, context: Context): String {
+    fun longitudeAsDM(longitude: Double, context: Context): String {
         val ddLongitude = replaceDelimiters(Location.convert(longitude, Location.FORMAT_MINUTES))
         return if (longitude >= 0.0) {
             "$ddLongitude ${context.resources.getString(R.string.east_E)}"

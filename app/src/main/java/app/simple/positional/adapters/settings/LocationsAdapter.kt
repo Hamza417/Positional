@@ -48,6 +48,12 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun addLocation(locations: Locations) {
+        this.locations.add(0, locations)
+        notifyItemInserted(0)
+    }
+
     fun clearList() {
         for (i in locations.indices) {
             removeItem(0)

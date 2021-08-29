@@ -15,7 +15,7 @@ interface LocationDao {
      * @param location saves location details
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insetLocation(location: Locations)
+    suspend fun insertLocation(location: Locations)
 
     /**
      * Update location

@@ -1,5 +1,6 @@
 package app.simple.positional.preferences
 
+import android.annotation.SuppressLint
 import androidx.annotation.IntRange
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatDelegate
@@ -134,12 +135,14 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
+    @SuppressLint("ApplySharedPref")
     fun setLatitude(@NotNull value: Float) {
-        getSharedPreferences().edit().putFloat(latitude, value).apply()
+        getSharedPreferences().edit().putFloat(latitude, value).commit()
     }
 
+    @SuppressLint("ApplySharedPref")
     fun setLongitude(@NotNull value: Float) {
-        getSharedPreferences().edit().putFloat(longitude, value).apply()
+        getSharedPreferences().edit().putFloat(longitude, value).commit()
     }
 
     fun getCoordinates(): FloatArray {

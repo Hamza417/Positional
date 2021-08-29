@@ -1,7 +1,6 @@
 package app.simple.positional.dialogs.gps
 
 import android.content.*
-import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,8 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
@@ -21,6 +20,7 @@ import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.UTMConverter
+import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +29,7 @@ import kotlinx.coroutines.withContext
 
 class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
 
-    private lateinit var broadcastReceiver: BroadcastReceiver
+    private lateinit var locationViewModel: LocationViewModel
     private val handler = Handler(Looper.getMainLooper())
 
     private lateinit var coordinatesDataTextView: TextView
@@ -65,23 +65,13 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
 
         copyImageButton = view.findViewById(R.id.coordinates_copy)
 
+        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        formatCoordinates(requireArguments().getDouble("latitude"), requireArguments().getDouble("longitude"))
-
-        broadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent) {
-                if (intent.action == "location") {
-                    if (MainPreferences.isCustomCoordinate()) return
-                    val location = intent.getParcelableExtra<Location>("location") ?: return
-                    formatCoordinates(location.latitude, location.longitude)
-                }
-            }
-        }
 
         copyImageButton.setOnClickListener {
             handler.removeCallbacks(textAnimationRunnable)
@@ -123,20 +113,40 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
                 handler.postDelayed(textAnimationRunnable, 3000)
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        if (!MainPreferences.isCustomCoordinate()) {
-            LocalBroadcastManager.getInstance(requireContext()).registerReceiver(broadcastReceiver, IntentFilter("location"))
-        }
-    }
+        if (MainPreferences.isCustomCoordinate()) {
+            with(MainPreferences.getCoordinates()) {
+                formatCoordinates(this[0].toDouble(), this[1].toDouble())
+            }
 
-    override fun onPause() {
-        super.onPause()
-        if (!MainPreferences.isCustomCoordinate()) {
-            LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(broadcastReceiver)
+            return
         }
+
+        locationViewModel.dms.observe(viewLifecycleOwner, {
+            dmsLatitude.text = it.first
+            dmsLongitude.text = it.second
+        })
+
+        locationViewModel.dm.observe(viewLifecycleOwner, {
+            dmLatitude.text = it.first
+            dmLongitude.text = it.second
+        })
+
+        locationViewModel.dd.observe(viewLifecycleOwner, {
+            ddLatitude.text = it.first
+            ddLongitude.text = it.second
+        })
+
+        locationViewModel.mgrs.observe(viewLifecycleOwner, {
+            mgrsCoordinates.text = it
+        })
+
+        locationViewModel.utm.observe(viewLifecycleOwner, {
+            utmZone.text = fromHtml("<b>${getString(R.string.utm_zone)}</b> ${it.zone}")
+            utmEasting.text = fromHtml("<b>${getString(R.string.utm_easting)}</b> ${it.easting}")
+            utmNorthing.text = fromHtml("<b>${getString(R.string.utm_northing)}</b> ${it.northing}")
+            utmMeridian.text = fromHtml("<b>${getString(R.string.utm_meridian)}</b> ${it.centralMeridian}")
+        })
     }
 
     override fun onDestroy() {
@@ -147,7 +157,6 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
 
     private fun formatCoordinates(latitude: Double, longitude: Double) {
         viewLifecycleOwner.lifecycleScope.launch {
-
             val dmsLatitude: Spanned
             val dmsLongitude: Spanned
             val dmLatitude: Spanned
@@ -163,10 +172,10 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
             withContext(Dispatchers.Default) {
                 dmsLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude, requireContext())}")
                 dmsLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude, requireContext())}")
-                dmLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDM(latitude, requireContext())}")
-                dmLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDM(longitude, requireContext())}")
-                ddLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getLatitudeAsDD(latitude, requireContext())}")
-                ddLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getLongitudeAsDD(longitude, requireContext())}")
+                dmLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDM(latitude, requireContext())}")
+                dmLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDM(longitude, requireContext())}")
+                ddLatitude = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDD(latitude)}")
+                ddLongitude = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDD(longitude)}")
                 mgrsCoord = MGRSCoord.fromLatLon(Angle.fromDegreesLatitude(latitude), Angle.fromDegreesLongitude(longitude)).toString()
 
                 val utm = UTMConverter.getUTM(latitude, longitude)
@@ -195,10 +204,8 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(latitude: Double, longitude: Double): CoordinatesExpansion {
+        fun newInstance(): CoordinatesExpansion {
             val args = Bundle()
-            args.putDouble("latitude", latitude)
-            args.putDouble("longitude", longitude)
             val fragment = CoordinatesExpansion()
             fragment.arguments = args
             return fragment

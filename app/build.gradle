@@ -50,7 +50,7 @@ android {
 
     compileSdkVersion 30
 
-    def appVersionCode = 139
+    def appVersionCode = 140
     def appVersionName = "positional_build_${appVersionCode}_final"
 
     defaultConfig {
@@ -138,7 +138,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 
     // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
 
     // Google Services and Default android libs

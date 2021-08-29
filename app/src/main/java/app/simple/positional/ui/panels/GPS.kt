@@ -94,7 +94,6 @@ class GPS : ScopedFragment() {
     private lateinit var infoText: TextView
 
     private lateinit var handler: Handler
-    private var filter: IntentFilter = IntentFilter()
     private lateinit var bottomSheetInfoPanel: BottomSheetBehavior<CoordinatorLayout>
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
@@ -414,7 +413,7 @@ class GPS : ScopedFragment() {
                         locations.address = address.text.toString()
                         locations.date = System.currentTimeMillis()
 
-                        db.locationDao()?.insetLocation(locations)
+                        db.locationDao()?.insertLocation(locations)
                         db.close()
 
                         isLocationSaved = true
@@ -497,13 +496,8 @@ class GPS : ScopedFragment() {
         }
 
         coordinatesBox.setOnClickListener {
-            if (location.isNull() && !isCustomCoordinate) {
-                Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show()
-            } else {
-                val latitude = if (isCustomCoordinate) customLatitude else location!!.latitude
-                val longitude = if (isCustomCoordinate) customLongitude else location!!.longitude
-                CoordinatesExpansion.newInstance(latitude, longitude).show(childFragmentManager, "coordinates_expansion")
-            }
+            CoordinatesExpansion.newInstance()
+                    .show(childFragmentManager, "coordinates_expansion")
         }
 
         maps?.setOnMapsCallbackListener(object : MapsCallbacks {
