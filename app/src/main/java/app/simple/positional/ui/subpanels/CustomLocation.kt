@@ -265,6 +265,30 @@ class CustomLocation : ScopedFragment() {
                 longitudeInputEditText.setText(locations.longitude.toString())
                 addressInputEditText.setText(locations.address)
             }
+
+            override fun onLocationLongClicked(locations: Locations) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    withContext(Dispatchers.Default) {
+                        kotlin.runCatching {
+                            if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty()) {
+                                if (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) && isValidLongitude(longitudeInputEditText.text.toString().toDouble())) {
+                                    MainPreferences.setCustomCoordinates(true)
+                                    MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
+                                    MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
+                                    MainPreferences.setAddress(addressInputEditText.text.toString().capitalizeText())
+                                }
+                            }
+
+                            withContext(Dispatchers.Main) {
+                                requireActivity().finishAfterTransition()
+                            }
+                        }.getOrElse {
+                            MainPreferences.setCustomCoordinates(false)
+                            showToast(getString(R.string.failed))
+                        }
+                    }
+                }
+            }
         })
     }
 

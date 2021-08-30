@@ -36,6 +36,11 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
         holder.container.setOnClickListener {
             locationsAdapterCallback?.onLocationClicked(locations = locations[position])
         }
+
+        holder.container.setOnLongClickListener {
+            locationsAdapterCallback?.onLocationLongClicked(locations = locations[position])
+            true
+        }
     }
 
     override fun getItemCount(): Int {
@@ -86,5 +91,6 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
 
     interface LocationsCallback {
         fun onLocationClicked(locations: Locations)
+        fun onLocationLongClicked(locations: Locations)
     }
 }
