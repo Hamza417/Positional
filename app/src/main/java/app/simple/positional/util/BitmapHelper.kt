@@ -73,6 +73,40 @@ object BitmapHelper {
         return rotatedBitmap
     }
 
+    fun rotateBitmap(bitmap: Bitmap, rotationAngleDegree: Float, tilt: Float): Bitmap? {
+        val w = bitmap.height
+        val h = bitmap.height
+        var newW = w
+        var newH = h
+
+        if (rotationAngleDegree == 90F || rotationAngleDegree == 270F) {
+            newW = h
+            newH = w
+        }
+
+        val rotatedBitmap = Bitmap.createBitmap(newW, newH, bitmap.config)
+        val canvas = Canvas(rotatedBitmap)
+        val rect = Rect(0, 0, newW, newH)
+        val matrix = Matrix()
+
+        matrix.postRotate(rotationAngleDegree)
+
+        val camera = Camera()
+        camera.save()
+        camera.rotateX(tilt)
+        camera.getMatrix(matrix)
+        camera.restore()
+
+        val px: Float = rect.exactCenterX()
+        val py: Float = rect.exactCenterY()
+        matrix.postTranslate((-bitmap.width / 2).toFloat(), (-bitmap.height / 2).toFloat())
+        matrix.postTranslate(px, py)
+
+        canvas.drawBitmap(bitmap, matrix, Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG or Paint.FILTER_BITMAP_FLAG))
+        matrix.reset()
+        return rotatedBitmap
+    }
+
     /**
      * Convert vector resource into Bitmap
      *

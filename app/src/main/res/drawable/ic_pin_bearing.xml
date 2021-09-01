@@ -7,7 +7,7 @@
         android:fillColor="@color/compass_pin_color"
         android:fillType="evenOdd"
         android:pathData="M12,22.01m-3.94,0a3.94,3.94 0,1 1,7.88 0a3.94,3.94 0,1 1,-7.88 0"
-        android:strokeWidth="1"
+        android:strokeWidth="2"
         android:strokeColor="@color/compass_pin_stroke_color" />
     <path
         android:fillColor="@color/compass_pin_color"

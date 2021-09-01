@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.location.Location
 import android.text.Spanned
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -63,6 +64,8 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                                 dd(this)
                                 mgrs(this)
                                 utm(this)
+
+                                Log.d("LocationViewModel", "Location Posted")
                             }
                         }
                         "provider" -> {

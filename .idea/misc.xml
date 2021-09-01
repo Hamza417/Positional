@@ -35,6 +35,10 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_arrow_right.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_01.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_bearing.xml" value="0.2523076923076923" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_high.xml" value="0.2523076923076923" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_low.xml" value="0.2523076923076923" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_medium.xml" value="0.2523076923076923" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_unreliable.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_place__.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_trail_start.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/rate_background.xml" value="0.2523076923076923" />
