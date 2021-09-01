@@ -20,6 +20,7 @@ object GPSPreferences {
     const val showBuilding = "show_buildings_on_map"
     const val useVolumeKeys = "use_volume_keys_to_zoom"
     const val pinSkin = "current_pin_skin"
+    const val compass = "is_location_map_compass_rotation"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -29,6 +30,16 @@ object GPSPreferences {
 
     fun setLabelMode(@NotNull value: Boolean) {
         getSharedPreferences().edit().putBoolean(GPSLabelMode, value).apply()
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun isCompassRotation(): Boolean {
+        return getSharedPreferences().getBoolean(compass, true)
+    }
+
+    fun setCompassRotation(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(compass, value).apply()
     }
 
     //--------------------------------------------------------------------------------------------------//

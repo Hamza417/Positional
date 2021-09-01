@@ -4,14 +4,22 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
+import app.simple.positional.math.CompassAzimuth
+import app.simple.positional.math.LowPassFilter
+import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.ConditionUtils.isNotNull
@@ -25,8 +33,25 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
-        OnMapReadyCallback, SharedPreferences.OnSharedPreferenceChangeListener,
+        OnMapReadyCallback,
+        SharedPreferences.OnSharedPreferenceChangeListener,
+        SensorEventListener,
         CoroutineScope {
+
+    private val accelerometerReadings = FloatArray(3)
+    private val magnetometerReadings = FloatArray(3)
+    private var readingsAlpha = 0.03f
+    private var rotationAngle = 0f
+    private var accuracy = -1
+
+    private var haveAccelerometerSensor = false
+    private var haveMagnetometerSensor = false
+
+    private var accelerometer = Vector3.zero
+    private var magnetometer = Vector3.zero
+    private var sensorManager: SensorManager
+    private lateinit var sensorAccelerometer: Sensor
+    private lateinit var sensorMagneticField: Sensor
 
     private val cameraSpeed = 1000
     private var googleMap: GoogleMap? = null
@@ -39,6 +64,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private var isCustomCoordinate = false
     private var isBearingRotation = false
     private var isFirstLocation = true
+    private var isCompassRotation = false
 
     private var customLatitude = 0.0
     private var customLongitude = 0.0
@@ -53,6 +79,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     init {
         isCustomCoordinate = MainPreferences.isCustomCoordinate()
         isBearingRotation = GPSPreferences.isBearingRotationOn()
+        isCompassRotation = GPSPreferences.isCompassRotation()
 
         if (isCustomCoordinate) {
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
@@ -71,6 +98,18 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             this.alpha = 0F
             getMapAsync(this)
         }, 500)
+
+        sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        kotlin.runCatching {
+            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            haveMagnetometerSensor = true
+            haveAccelerometerSensor = true
+        }.getOrElse {
+            haveAccelerometerSensor = false
+            haveMagnetometerSensor = false
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -94,8 +133,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
         addMarker(latLng!!)
 
-        if(!isCustomCoordinate) {
-            if(location.isNotNull()) {
+        if (!isCustomCoordinate) {
+            if (location.isNotNull()) {
                 setFirstLocation(location!!)
             }
         }
@@ -126,6 +165,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         }
 
         mapsCallbacks?.onMapInitialized()
+        register()
     }
 
     fun pause() {
@@ -139,6 +179,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     fun resume() {
         onResume()
         getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
+        register()
     }
 
     fun destroy() {
@@ -267,6 +308,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 }
 
                 moveMapCamera(latLng, GPSPreferences.getMapZoom(), bearing)
+                isCompassRotation = GPSPreferences.isCompassRotation()
             }
             viewHandler.postDelayed(this, 6000L)
         }
@@ -293,7 +335,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     }
 
     fun setFirstLocation(location: Location?) {
-        if(googleMap.isNotNull() && isFirstLocation) {
+        if (googleMap.isNotNull() && isFirstLocation) {
             this.location = location
 
             with(LatLng(location!!.latitude, location.longitude)) {
@@ -307,6 +349,56 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 latLng = this
                 isFirstLocation = false
             }
+        }
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event == null) return
+
+        when (event.sensor.type) {
+            Sensor.TYPE_ACCELEROMETER -> {
+                LowPassFilter.smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
+                accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
+            }
+            Sensor.TYPE_MAGNETIC_FIELD -> {
+                LowPassFilter.smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
+                magnetometer = Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
+            }
+        }
+
+        rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+
+        if(isCompassRotation) {
+            if(googleMap.isNotNull())
+                with(googleMap!!) {
+                    moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
+                            latLng!!,
+                            cameraPosition.zoom,
+                            cameraPosition.tilt,
+                            rotationAngle
+                    )))
+                }
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        /* no-op */
+    }
+
+    private fun register() {
+        if (haveAccelerometerSensor && haveMagnetometerSensor) {
+            unregister()
+            if (TrailPreferences.isCompassRotation()) {
+                sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
+                sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+            }
+        }
+    }
+
+    private fun unregister() {
+        if (haveAccelerometerSensor && haveMagnetometerSensor) {
+            sensorManager.unregisterListener(this, sensorAccelerometer)
+            sensorManager.unregisterListener(this, sensorMagneticField)
         }
     }
 
@@ -336,6 +428,15 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             GPSPreferences.pinOpacity -> {
                 if (latLng.isNotNull()) {
                     addMarker(latLng!!)
+                }
+            }
+            GPSPreferences.compass -> {
+                if (GPSPreferences.isCompassRotation()) {
+                    isCompassRotation = true
+                    register()
+                } else {
+                    isCompassRotation = false
+                    unregister()
                 }
             }
         }
