@@ -19,7 +19,6 @@ import app.simple.positional.math.LowPassFilter
 import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.ConditionUtils.isNotNull
@@ -78,7 +77,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
     init {
         isCustomCoordinate = MainPreferences.isCustomCoordinate()
-        isBearingRotation = GPSPreferences.isBearingRotationOn()
+        isBearingRotation = GPSPreferences.isBearingRotation()
         isCompassRotation = GPSPreferences.isCompassRotation()
 
         if (isCustomCoordinate) {
@@ -368,11 +367,11 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
         rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
 
-        if(isCompassRotation) {
-            if(googleMap.isNotNull())
+        if (isCompassRotation) {
+            if (googleMap.isNotNull())
                 with(googleMap!!) {
                     moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
-                            latLng!!,
+                            cameraPosition.target,
                             cameraPosition.zoom,
                             cameraPosition.tilt,
                             rotationAngle
@@ -388,9 +387,17 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private fun register() {
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             unregister()
-            if (TrailPreferences.isCompassRotation()) {
+            if (GPSPreferences.isCompassRotation()) {
                 sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
                 sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+
+                if(googleMap.isNotNull()) {
+                    with(googleMap!!.uiSettings) {
+                        isScrollGesturesEnabled = false
+                        isZoomGesturesEnabled = false
+                        isRotateGesturesEnabled = false
+                    }
+                }
             }
         }
     }
@@ -399,6 +406,14 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             sensorManager.unregisterListener(this, sensorAccelerometer)
             sensorManager.unregisterListener(this, sensorMagneticField)
+
+            if(googleMap.isNotNull()) {
+                with(googleMap!!.uiSettings) {
+                    isScrollGesturesEnabled = true
+                    isZoomGesturesEnabled = true
+                    isRotateGesturesEnabled = true
+                }
+            }
         }
     }
 
@@ -421,22 +436,45 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 viewHandler.removeCallbacks(mapMoved)
                 viewHandler.post(mapMoved)
             }
-            GPSPreferences.useBearingRotation -> {
-                isBearingRotation = GPSPreferences.isBearingRotationOn()
-            }
             GPSPreferences.pinSize,
             GPSPreferences.pinOpacity -> {
                 if (latLng.isNotNull()) {
                     addMarker(latLng!!)
                 }
             }
-            GPSPreferences.compass -> {
+            GPSPreferences.compassRotation -> {
                 if (GPSPreferences.isCompassRotation()) {
                     isCompassRotation = true
                     register()
                 } else {
                     isCompassRotation = false
                     unregister()
+                }
+            }
+            GPSPreferences.useBearingRotation -> {
+                isBearingRotation = GPSPreferences.isBearingRotation()
+
+                if (googleMap.isNotNull() && isBearingRotation) {
+                    with(googleMap!!) {
+                        moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
+                                cameraPosition.target,
+                                cameraPosition.zoom,
+                                cameraPosition.tilt,
+                                if (location.isNotNull()) location!!.bearing else 0F
+                        )))
+                    }
+                }
+            }
+            GPSPreferences.isNorthOnly -> {
+                if (googleMap.isNotNull() && GPSPreferences.isNorthOnly()) {
+                    with(googleMap!!) {
+                        moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
+                                cameraPosition.target,
+                                cameraPosition.zoom,
+                                cameraPosition.tilt,
+                                0F
+                        )))
+                    }
                 }
             }
         }

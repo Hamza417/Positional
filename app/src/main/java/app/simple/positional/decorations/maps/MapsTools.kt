@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.animation.DecelerateInterpolator
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
@@ -48,7 +49,10 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         bearing = view.findViewById(R.id.bearing)
         northOnly = view.findViewById(R.id.north_up)
 
-        setAlignButtonState(false)
+        setAlignButtonState(animate = false)
+        updateNorthOnlyIcon(animate = false)
+        updateBearingIcon(animate = false)
+        updateCompassIcon(animate = false)
 
         location.setOnClickListener {
             mapsToolsCallbacks.onLocationClicked(it, false)
@@ -66,7 +70,27 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         }
 
         compass.setOnClickListener {
-            TrailPreferences.setCompassRotation(!TrailPreferences.isCompassRotation())
+            with(GPSPreferences) {
+                setCompassRotation(true)
+                setBearingRotation(false)
+                setNorthOnly(false)
+            }
+        }
+
+        bearing.setOnClickListener {
+            with(GPSPreferences) {
+                setCompassRotation(false)
+                setBearingRotation(true)
+                setNorthOnly(false)
+            }
+        }
+
+        northOnly.setOnClickListener {
+            with(GPSPreferences) {
+                setCompassRotation(false)
+                setBearingRotation(false)
+                setNorthOnly(true)
+            }
         }
     }
 
@@ -103,11 +127,69 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         }
     }
 
+    private fun updateCompassIcon(animate: Boolean) {
+        if (GPSPreferences.isCompassRotation()) {
+            if (animate) {
+                compass.animate().alpha(1F).setInterpolator(DecelerateInterpolator()).start()
+            } else {
+                compass.alpha = 1F
+            }
+        } else {
+            if (animate) {
+                compass.animate().alpha(0.4F).setInterpolator(DecelerateInterpolator()).start()
+            } else {
+                compass.alpha = 0.4F
+            }
+        }
+    }
+
+    private fun updateBearingIcon(animate: Boolean) {
+        if (GPSPreferences.isBearingRotation()) {
+            if (animate) {
+                bearing.animate().alpha(1F).setInterpolator(DecelerateInterpolator()).start()
+            } else {
+                bearing.alpha = 1F
+            }
+        } else {
+            if (animate) {
+                bearing.animate().alpha(0.4F).setInterpolator(DecelerateInterpolator()).start()
+            } else {
+                bearing.alpha = 0.4F
+            }
+        }
+    }
+
+    private fun updateNorthOnlyIcon(animate: Boolean) {
+        if (GPSPreferences.isNorthOnly()) {
+            if (animate) {
+                northOnly.animate().alpha(1F).setInterpolator(DecelerateInterpolator()).start()
+            } else {
+                northOnly.alpha = 1F
+            }
+        } else {
+            if (animate) {
+                northOnly.animate().alpha(0.4F).setInterpolator(DecelerateInterpolator()).start()
+            } else {
+                northOnly.alpha = 0.4F
+            }
+        }
+    }
+
     fun setOnToolsCallbacksListener(mapsToolsCallbacks: MapsToolsCallbacks) {
         this.mapsToolsCallbacks = mapsToolsCallbacks
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-
+        when (key) {
+            GPSPreferences.isNorthOnly -> {
+                updateNorthOnlyIcon(true)
+            }
+            GPSPreferences.compassRotation -> {
+                updateCompassIcon(true)
+            }
+            GPSPreferences.useBearingRotation -> {
+                updateBearingIcon(true)
+            }
+        }
     }
 }

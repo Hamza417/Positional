@@ -96,8 +96,6 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
     }
 
     interface MapToolbarCallbacks {
-        fun onLocationReset(view: View)
-        fun onLocationLongPressed()
         fun onMenuClicked(view: View)
         fun onCustomLocationClicked(view: View)
     }

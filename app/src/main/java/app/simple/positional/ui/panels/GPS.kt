@@ -28,9 +28,7 @@ import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
-import app.simple.positional.decorations.maps.MapToolbar
-import app.simple.positional.decorations.maps.Maps
-import app.simple.positional.decorations.maps.MapsCallbacks
+import app.simple.positional.decorations.maps.*
 import app.simple.positional.dialogs.app.CustomLocationParameters
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
@@ -70,6 +68,7 @@ class GPS : ScopedFragment() {
     private lateinit var expandUp: ImageView
     private lateinit var scrollView: NestedScrollView
     private lateinit var toolbar: MapToolbar
+    private lateinit var tools: MapsTools
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
     private lateinit var dim: View
@@ -114,6 +113,7 @@ class GPS : ScopedFragment() {
         val view: View = inflater.inflate(R.layout.fragment_gps, container, false)
 
         toolbar = view.findViewById(R.id.map_toolbar)
+        tools = view.findViewById(R.id.maps_tools)
         scrollView = view.findViewById(R.id.gps_list_scroll_view)
         scrollView.alpha = 0f
         divider = view.findViewById(R.id.gps_divider)
@@ -172,7 +172,7 @@ class GPS : ScopedFragment() {
         backPress = requireActivity().onBackPressedDispatcher
 
         peekHeight = bottomSheetInfoPanel.peekHeight
-        //toolbar.locationIndicatorUpdate(false)
+        tools.locationIndicatorUpdate(false)
 
         return view
     }
@@ -318,7 +318,7 @@ class GPS : ScopedFragment() {
                     }
 
                     withContext(Dispatchers.Main) {
-                        //this@GPS.toolbar.locationIndicatorUpdate(true)
+                        this@GPS.tools.locationIndicatorUpdate(true)
                         this@GPS.providerSource.text = providerSource
                         this@GPS.providerStatus.text = providerStatus
                         this@GPS.altitude.text = altitude
@@ -347,10 +347,12 @@ class GPS : ScopedFragment() {
                         )
                     }"
             )
+
             providerSource.text = fromHtml(
                     "<b>${getString(R.string.gps_source)}</b> $it"
             )
-            //toolbar.locationIconStatusUpdates()
+
+            tools.locationIconStatusUpdates()
         })
 
         bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -377,22 +379,24 @@ class GPS : ScopedFragment() {
         })
 
         toolbar.setOnMapToolbarCallbacks(object : MapToolbar.MapToolbarCallbacks {
-            override fun onLocationReset(view: View) {
-                updateViews(customLatitude, customLongitude)
-                maps?.resetCamera(GPSPreferences.getMapZoom())
-            }
-
             override fun onMenuClicked(view: View) {
                 GPSMenu().show(parentFragmentManager, "gps_menu")
-            }
-
-            override fun onLocationLongPressed() {
-                maps?.resetCamera(18F)
             }
 
             override fun onCustomLocationClicked(view: View) {
                 CustomLocationParameters.newInstance()
                         .show(parentFragmentManager, "location_params")
+            }
+        })
+
+        tools.setOnToolsCallbacksListener(object : MapsToolsCallbacks {
+            override fun onLocationClicked(view: View, longPressed: Boolean) {
+                if(longPressed) {
+                    maps?.resetCamera(18F)
+                } else {
+                    updateViews(customLatitude, customLongitude)
+                    maps?.resetCamera(GPSPreferences.getMapZoom())
+                }
             }
         })
 

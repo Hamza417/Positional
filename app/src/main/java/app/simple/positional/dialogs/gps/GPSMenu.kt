@@ -22,7 +22,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
     private lateinit var toggleBuilding: SwitchView
     private lateinit var toggleAutoCenter: SwitchView
     private lateinit var toggleVolumeKeys: SwitchView
-    private lateinit var toggleUseBearing: SwitchView
     private lateinit var togglePinCustomization: DynamicRippleTextView
 
     private lateinit var toggleLabelContainer: DynamicRippleLinearLayout
@@ -31,7 +30,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
     private lateinit var toggleBuildingContainer: DynamicRippleLinearLayout
     private lateinit var toggleAutoCenterContainer: DynamicRippleLinearLayout
     private lateinit var toggleVolumeKeysContainer: DynamicRippleLinearLayout
-    private lateinit var toggleUseBearingContainer: DynamicRippleLinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_gps_menu, container, false)
@@ -43,7 +41,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleAutoCenter = view.findViewById(R.id.toggle_auto_center)
         toggleVolumeKeys = view.findViewById(R.id.toggle_use_volume_keys)
         togglePinCustomization = view.findViewById(R.id.gps_pin_customization)
-        toggleUseBearing = view.findViewById(R.id.toggle_bearing_rotation)
 
         toggleLabelContainer = view.findViewById(R.id.gps_menu_show_label_container)
         toggleSatelliteContainer = view.findViewById(R.id.gps_menu_satellite_mode_container)
@@ -51,7 +48,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleBuildingContainer = view.findViewById(R.id.gps_menu_show_building_container)
         toggleAutoCenterContainer = view.findViewById(R.id.gps_menu_auto_center_container)
         toggleVolumeKeysContainer = view.findViewById(R.id.gps_menu_volume_keys_container)
-        toggleUseBearingContainer = view.findViewById(R.id.gps_menu_bearing_rotation)
 
         return view
     }
@@ -65,7 +61,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleBuilding.isChecked = GPSPreferences.getShowBuildingsOnMap()
         toggleAutoCenter.isChecked = GPSPreferences.getMapAutoCenter()
         toggleVolumeKeys.isChecked = GPSPreferences.isUsingVolumeKeys()
-        toggleUseBearing.isChecked = GPSPreferences.isBearingRotationOn()
 
         toggleLabel.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setLabelMode(isChecked)
@@ -102,10 +97,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
             dismiss()
         }
 
-        toggleUseBearing.setOnCheckedChangeListener {
-            GPSPreferences.setUseBearingRotation(it)
-        }
-
         toggleLabelContainer.setOnClickListener {
             toggleLabel.invertCheckedStatus()
         }
@@ -135,10 +126,6 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
             intent.putExtra("source", "Media Keys")
             startActivity(intent)
             true
-        }
-
-        toggleUseBearingContainer.setOnClickListener {
-            toggleUseBearing.invertCheckedStatus()
         }
 
         /**

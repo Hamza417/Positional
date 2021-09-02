@@ -20,8 +20,9 @@ object GPSPreferences {
     const val showBuilding = "show_buildings_on_map"
     const val useVolumeKeys = "use_volume_keys_to_zoom"
     const val pinSkin = "current_pin_skin"
-    const val compass = "is_location_map_compass_rotation"
+    const val compassRotation = "is_location_map_compass_rotation"
     const val toolsGravity = "is_tools_gravity_left"
+    const val isNorthOnly = "is_map_north_only"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -46,11 +47,11 @@ object GPSPreferences {
     //--------------------------------------------------------------------------------------------------//
 
     fun isCompassRotation(): Boolean {
-        return getSharedPreferences().getBoolean(compass, true)
+        return getSharedPreferences().getBoolean(compassRotation, false)
     }
 
     fun setCompassRotation(@NotNull value: Boolean) {
-        getSharedPreferences().edit().putBoolean(compass, value).apply()
+        getSharedPreferences().edit().putBoolean(compassRotation, value).apply()
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -125,12 +126,22 @@ object GPSPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setUseBearingRotation(boolean: Boolean) {
+    fun setBearingRotation(boolean: Boolean) {
         getSharedPreferences().edit().putBoolean(useBearingRotation, boolean).apply()
     }
 
-    fun isBearingRotationOn(): Boolean {
+    fun isBearingRotation(): Boolean {
         return getSharedPreferences().getBoolean(useBearingRotation, false)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setNorthOnly(boolean: Boolean) {
+        getSharedPreferences().edit().putBoolean(isNorthOnly, boolean).apply()
+    }
+
+    fun isNorthOnly(): Boolean {
+        return getSharedPreferences().getBoolean(isNorthOnly, true)
     }
 
     //--------------------------------------------------------------------------------------------------//
