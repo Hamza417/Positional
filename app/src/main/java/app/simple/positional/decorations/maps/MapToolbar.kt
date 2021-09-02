@@ -21,11 +21,10 @@ import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.StatusBarHeight
 
 class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
+
     private lateinit var mapToolbarCallbacks: MapToolbarCallbacks
-    private lateinit var location: DynamicRippleImageButton
     private lateinit var menu: DynamicRippleImageButton
     private lateinit var customLocationButton: DynamicRippleImageButton
-    private var isFixed = false
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         setProperties()
@@ -49,7 +48,6 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
                 resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
                 resources.getDimensionPixelOffset(R.dimen.toolbar_padding))
 
-        location = view.findViewById(R.id.gps_location_indicator)
         menu = view.findViewById(R.id.gps_menu)
         customLocationButton = view.findViewById(R.id.gps_custom_location)
 
@@ -63,52 +61,26 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
             customLocationButton.setImageResource(locationsPins[getPinSkin()])
         }
 
-        location.setOnClickListener { mapToolbarCallbacks.onLocationReset(it) }
-        location.setOnLongClickListener {
-            mapToolbarCallbacks.onLocationLongPressed()
-            true
-        }
-
         menu.setOnClickListener { mapToolbarCallbacks.onMenuClicked(it) }
         customLocationButton.setOnClickListener { mapToolbarCallbacks.onCustomLocationClicked(it) }
     }
 
     fun hide() {
         animate().translationY((height * -1).toFloat()).alpha(0f).setInterpolator(DecelerateInterpolator(1.5f)).start()
-        location.isClickable = false
         menu.isClickable = false
         isClickable = false
     }
 
     fun show() {
         animate().translationY(0f).alpha(1f).setInterpolator(DecelerateInterpolator(1.5f)).start()
-        location.isClickable = isFixed
         menu.isClickable = true
         isClickable = true
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        println("Called")
         getSharedPreferences()
                 .unregisterOnSharedPreferenceChangeListener(this)
-    }
-
-    fun locationIndicatorUpdate(isFixed: Boolean) {
-        this.isFixed = isFixed
-        if (isFixed) {
-            location.setImageResource(R.drawable.ic_gps_fixed)
-        } else {
-            locationIconStatusUpdates()
-        }
-    }
-
-    fun locationIconStatusUpdates() {
-        if (getLocationStatus(context)) {
-            location.setImageResource(R.drawable.ic_gps_not_fixed)
-        } else {
-            location.setImageResource(R.drawable.ic_gps_off)
-        }
     }
 
     fun setOnMapToolbarCallbacks(mapToolbarCallbacks: MapToolbarCallbacks) {

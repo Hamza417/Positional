@@ -172,7 +172,7 @@ class GPS : ScopedFragment() {
         backPress = requireActivity().onBackPressedDispatcher
 
         peekHeight = bottomSheetInfoPanel.peekHeight
-        toolbar.locationIndicatorUpdate(false)
+        //toolbar.locationIndicatorUpdate(false)
 
         return view
     }
@@ -318,7 +318,7 @@ class GPS : ScopedFragment() {
                     }
 
                     withContext(Dispatchers.Main) {
-                        this@GPS.toolbar.locationIndicatorUpdate(true)
+                        //this@GPS.toolbar.locationIndicatorUpdate(true)
                         this@GPS.providerSource.text = providerSource
                         this@GPS.providerStatus.text = providerStatus
                         this@GPS.altitude.text = altitude
@@ -350,7 +350,7 @@ class GPS : ScopedFragment() {
             providerSource.text = fromHtml(
                     "<b>${getString(R.string.gps_source)}</b> $it"
             )
-            toolbar.locationIconStatusUpdates()
+            //toolbar.locationIconStatusUpdates()
         })
 
         bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {

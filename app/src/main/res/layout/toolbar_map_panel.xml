@@ -27,17 +27,6 @@
         android:textStyle="bold" />
 
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-        android:id="@+id/gps_location_indicator"
-        android:layout_width="@dimen/app_button_size"
-        android:layout_height="@dimen/app_button_size"
-        android:layout_gravity="center_vertical|end"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/ripple_btn"
-        android:contentDescription="@string/gps_reset_location"
-        android:src="@drawable/ic_gps_fixed"
-        android:tint="@color/iconColor" />
-
-    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
         android:id="@+id/gps_menu"
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
