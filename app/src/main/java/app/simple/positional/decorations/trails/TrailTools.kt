@@ -9,6 +9,7 @@ import android.view.View
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.ImageLoader
@@ -138,7 +139,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         this.trailCallbacks = trailCallbacks
     }
 
-    fun changeButtonState(hide: Boolean) {
+    fun changeWrapButtonState(hide: Boolean) {
         if (hide) {
             wrap.gone()
             remove.gone()

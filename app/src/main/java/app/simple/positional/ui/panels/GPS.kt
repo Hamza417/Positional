@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Spanned
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
@@ -22,6 +19,8 @@ import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
+import androidx.transition.TransitionInflater
+import androidx.transition.TransitionManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
@@ -44,6 +43,7 @@ import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.model.Locations
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
 import app.simple.positional.util.ConditionUtils.isNotNull
@@ -173,6 +173,8 @@ class GPS : ScopedFragment() {
 
         peekHeight = bottomSheetInfoPanel.peekHeight
         tools.locationIndicatorUpdate(false)
+
+        updateToolsGravity(view)
 
         return view
     }
@@ -680,6 +682,29 @@ class GPS : ScopedFragment() {
         super.onViewStateRestored(savedInstanceState)
     }
 
+    private fun updateToolsGravity(view: View) {
+        TransitionManager.beginDelayedTransition(
+                view as ViewGroup,
+                TransitionInflater.from(requireContext())
+                        .inflateTransition(R.transition.tools_transition))
+
+        val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        params.apply {
+            gravity = if (GPSPreferences.isToolsGravityLeft()) {
+                Gravity.START or Gravity.CENTER_VERTICAL
+            } else {
+                Gravity.END or Gravity.CENTER_VERTICAL
+            }
+
+            marginStart = resources.getDimensionPixelSize(R.dimen.trail_tools_margin)
+            marginEnd = resources.getDimensionPixelSize(R.dimen.trail_tools_margin)
+        }
+
+        tools.layoutParams = params
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             GPSPreferences.useVolumeKeys -> {
@@ -692,6 +717,9 @@ class GPS : ScopedFragment() {
             }
             GPSPreferences.pinSkin -> {
                 setLocationPin()
+            }
+            GPSPreferences.toolsGravity -> {
+                updateToolsGravity(requireView())
             }
         }
     }

@@ -46,6 +46,7 @@ object ViewUtils {
     fun View.gone() {
         clearAnimation()
         visibility = View.GONE
+        isClickable = false
     }
 
     /**

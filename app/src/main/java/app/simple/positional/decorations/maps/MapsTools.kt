@@ -10,9 +10,10 @@ import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.preferences.GPSPreferences
-import app.simple.positional.preferences.TrailPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ImageLoader
 import app.simple.positional.util.LocationExtension
+import app.simple.positional.util.ViewUtils.gone
 
 class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -64,8 +65,8 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         }
 
         align.setOnClickListener {
-            TrailPreferences.setToolsGravityToLeft(
-                    !TrailPreferences.isToolsGravityToLeft()
+            GPSPreferences.setToolsGravity(
+                    !GPSPreferences.isToolsGravityLeft()
             )
         }
 
@@ -91,6 +92,10 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
                 setBearingRotation(false)
                 setNorthOnly(true)
             }
+        }
+
+        if (MainPreferences.isCustomCoordinate()) {
+            bearing.gone()
         }
     }
 
@@ -189,6 +194,9 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
             }
             GPSPreferences.useBearingRotation -> {
                 updateBearingIcon(true)
+            }
+            GPSPreferences.toolsGravity -> {
+                setAlignButtonState(animate = true)
             }
         }
     }

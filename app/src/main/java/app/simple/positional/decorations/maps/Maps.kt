@@ -196,7 +196,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             moveMapCamera(LatLng(customLatitude, customLongitude), zoom, 0F)
         } else
             if (location != null) {
-                moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, location!!.bearing)
+                moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, if (isBearingRotation) location!!.bearing else 0F)
                 addMarker(LatLng(location!!.latitude, location!!.longitude))
                 viewHandler.removeCallbacks(mapMoved)
             }
@@ -316,12 +316,25 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private fun moveMapCamera(latLng: LatLng, zoom: Float, bearing: Float) {
         if (googleMap.isNull()) return
 
-        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition.builder()
-                .target(latLng)
-                .tilt(GPSPreferences.getMapTilt())
-                .zoom(zoom)
-                .bearing(if (isBearingRotation) bearing else 0F)
-                .build()), cameraSpeed, null)
+        if (isCompassRotation) unregister()
+
+        googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(
+                CameraPosition.builder()
+                        .target(latLng)
+                        .tilt(GPSPreferences.getMapTilt())
+                        .zoom(zoom)
+                        .bearing(if (isBearingRotation) bearing else 0F)
+                        .build()),
+                cameraSpeed,
+                object : GoogleMap.CancelableCallback {
+                    override fun onFinish() {
+                        register()
+                    }
+
+                    override fun onCancel() {
+                        register()
+                    }
+                })
     }
 
     fun getCamera(): CameraPosition? {
@@ -391,7 +404,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
                 sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
 
-                if(googleMap.isNotNull()) {
+                if (googleMap.isNotNull()) {
                     with(googleMap!!.uiSettings) {
                         isScrollGesturesEnabled = false
                         isZoomGesturesEnabled = false
@@ -407,7 +420,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             sensorManager.unregisterListener(this, sensorAccelerometer)
             sensorManager.unregisterListener(this, sensorMagneticField)
 
-            if(googleMap.isNotNull()) {
+            if (googleMap.isNotNull()) {
                 with(googleMap!!.uiSettings) {
                     isScrollGesturesEnabled = true
                     isZoomGesturesEnabled = true
@@ -456,24 +469,14 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
                 if (googleMap.isNotNull() && isBearingRotation) {
                     with(googleMap!!) {
-                        moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
-                                cameraPosition.target,
-                                cameraPosition.zoom,
-                                cameraPosition.tilt,
-                                if (location.isNotNull()) location!!.bearing else 0F
-                        )))
+                        resetCamera(cameraPosition.zoom)
                     }
                 }
             }
             GPSPreferences.isNorthOnly -> {
                 if (googleMap.isNotNull() && GPSPreferences.isNorthOnly()) {
                     with(googleMap!!) {
-                        moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
-                                cameraPosition.target,
-                                cameraPosition.zoom,
-                                cameraPosition.tilt,
-                                0F
-                        )))
+                        resetCamera(cameraPosition.zoom)
                     }
                 }
             }

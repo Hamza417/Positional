@@ -16,7 +16,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
@@ -329,7 +328,7 @@ class Trail : ScopedFragment() {
             }
 
             override fun onLineCountChanged(lineCount: Int) {
-                tools.changeButtonState(lineCount.isZero())
+                tools.changeWrapButtonState(lineCount.isZero())
             }
         })
 
