@@ -229,7 +229,7 @@ class CustomLocation : ScopedFragment() {
                                             MainPreferences.setCustomCoordinates(true)
                                             MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
                                             MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
-                                            MainPreferences.setAddress(addressInputEditText.text.toString().capitalizeText())
+                                            MainPreferences.setAddress(addressInputEditText.text.toString())
                                         }
                                     }
 

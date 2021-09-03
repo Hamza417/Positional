@@ -15,34 +15,34 @@ public class ClockWidget extends AppWidgetProvider {
     
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
+
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, getService(context));
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
     
     @Override
     public void onEnabled(Context context) {
+        super.onEnabled(context);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(new Intent(context, ClockWidgetService.class));
         }
         else {
             context.startService(new Intent(context, ClockWidgetService.class));
         }
-    
-        System.out.println("Started");
-        super.onEnabled(context);
     }
     
     @Override
     public void onDisabled(Context context) {
-        cancelWidgetProcess(context);
         super.onDisabled(context);
+        cancelWidgetProcess(context);
     }
     
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
-        cancelWidgetProcess(context);
         super.onDeleted(context, appWidgetIds);
+        cancelWidgetProcess(context);
     }
     
     private void cancelWidgetProcess(Context context) {
@@ -57,6 +57,6 @@ public class ClockWidget extends AppWidgetProvider {
         return PendingIntent.getService(context,
                 1543,
                 new Intent(context, ClockWidgetService.class),
-                PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

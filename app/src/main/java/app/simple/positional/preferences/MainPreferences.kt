@@ -125,8 +125,9 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
+    @SuppressLint("ApplySharedPref")
     fun setCustomCoordinates(@NotNull value: Boolean) {
-        getSharedPreferences().edit().putBoolean(isCustomCoordinate, value).apply()
+        getSharedPreferences().edit().putBoolean(isCustomCoordinate, value).commit()
     }
 
     fun isCustomCoordinate(): Boolean {

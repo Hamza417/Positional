@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.Service
 import android.appwidget.AppWidgetManager
 import android.content.*
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.display.DisplayManager
 import android.os.Build
@@ -15,29 +16,33 @@ import android.os.Looper
 import android.view.Display
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import app.simple.positional.R
+import app.simple.positional.constants.ClockSkinsConstants
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
 import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegrees
 import app.simple.positional.preferences.ClockPreferences
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.util.BitmapHelper.rotateBitmap
 import app.simple.positional.util.BitmapHelper.toBitmap
+import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.widgets.ClockWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.DateFormat
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 class ClockWidgetService : Service() {
 
     private var isScreenOn = true
-    private val imageSize = 400
+    private val imageSize = 500
     private val serviceChannelId = "widget_channel"
     private val serviceChannelName = "Widget Channel"
 
@@ -94,47 +99,57 @@ class ClockWidgetService : Service() {
     }
 
     private val clockWidgetRunnable = object : Runnable {
-        @Suppress("SameParameterValue")
         override fun run() {
             CoroutineScope(Dispatchers.Default).launch {
+                val ctw = ContextThemeWrapper(applicationContext, getAccentTheme())
+
                 val zonedDateTime = ZonedDateTime.now()
-                val face = applicationContext.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
-                    .getBoolean(ClockPreferences.is24HourFace, false)
+                val face = ctw.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
+                        .getBoolean(ClockPreferences.is24HourFace, false)
+
+                val needleSkins = ClockSkinsConstants.clockNeedleSkins[ctw.getSharedPreferences(
+                        SharedPreferences.preferences, Context.MODE_PRIVATE).getInt(ClockPreferences.clockNeedle, 1)]
 
                 val hour = rotateBitmap(
-                        R.drawable.widget_needle_hour.toBitmap(applicationContext, imageSize),
+                        needleSkins[0].toBitmap(ctw, imageSize),
                         if (face) {
                             getHoursInDegreesFor24(zonedDateTime)
                         } else {
                             getHoursInDegrees(zonedDateTime)
                         })
 
-                val minute = rotateBitmap(R.drawable.widget_needle_minute.toBitmap(applicationContext, imageSize), getMinutesInDegrees(zonedDateTime))
-                val second = rotateBitmap(R.drawable.widget_needle_seconds.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime, false))
-                val trail = rotateBitmap(R.drawable.widget_clock_trail.toBitmap(applicationContext, imageSize), getSecondsInDegrees(zonedDateTime, false))
-                val dayNight = getDayNightIndicator()
+                val minute = rotateBitmap(needleSkins[1].toBitmap(ctw, imageSize), getMinutesInDegrees(zonedDateTime))
+                val second = rotateBitmap(needleSkins[2].toBitmap(ctw, imageSize), getSecondsInDegrees(zonedDateTime, false))
+
+                val trail = rotateBitmap(R.drawable.clock_trail.toBitmap(ctw, imageSize), getSecondsInDegrees(zonedDateTime, false))
+                val dayNight = ctw.getDayNightIndicator()
+                val faceBitmap = if (face) {
+                    R.drawable.clock_face_24.toBitmap(ctw, imageSize)
+                } else {
+                    R.drawable.clock_face.toBitmap(ctw, imageSize)
+                }
 
                 withContext(Dispatchers.Main) {
-                    val views = RemoteViews(applicationContext.packageName, R.layout.widget_clock)
+                    val views = RemoteViews(ctw.packageName, R.layout.widget_clock)
 
                     views.setImageViewBitmap(R.id.widget_hour, hour)
                     views.setImageViewBitmap(R.id.widget_minutes, minute)
                     views.setImageViewBitmap(R.id.widget_seconds, second)
                     views.setImageViewBitmap(R.id.widget_sweep_seconds, trail)
-                    views.setImageViewResource(R.id.widget_day_night_indicator, dayNight)
-                    views.setImageViewResource(
-                            R.id.widget_clock_face,
-                            if (face) R.drawable.widget_clock_face_24 else R.drawable.widget_clock_face)
+                    views.setImageViewBitmap(R.id.widget_day_night_indicator, dayNight)
+                    views.setImageViewBitmap(R.id.widget_clock_face, faceBitmap)
 
                     views.setTextViewText(R.id.widget_date, zonedDateTime.format(DateTimeFormatter.ofPattern("EEE, MMM dd")))
 
-                    val componentName = ComponentName(applicationContext, ClockWidget::class.java)
-                    val manager = AppWidgetManager.getInstance(applicationContext)
+                    val componentName = ComponentName(ctw, ClockWidget::class.java)
+                    val manager = AppWidgetManager.getInstance(ctw)
                     manager.updateAppWidget(componentName, views)
 
                     hour!!.recycle()
                     minute!!.recycle()
                     second!!.recycle()
+                    faceBitmap.recycle()
+                    dayNight!!.recycle()
                     trail!!.recycle()
                 }
             }
@@ -143,14 +158,18 @@ class ClockWidgetService : Service() {
         }
     }
 
-    private fun getDayNightIndicator(): Int {
-        if (ZonedDateTime.now().hour < 7 || ZonedDateTime.now().hour > 18) {
-            return R.drawable.widget_ic_night
-        } else if (ZonedDateTime.now().hour < 18 || ZonedDateTime.now().hour > 6) {
-            return R.drawable.widget_ic_day
+    private fun Context.getDayNightIndicator(): Bitmap? {
+        return when {
+            ZonedDateTime.now().hour < 7 || ZonedDateTime.now().hour > 18 -> {
+                R.drawable.ic_night.toBitmapKeepingSize(this, 2)
+            }
+            ZonedDateTime.now().hour < 18 || ZonedDateTime.now().hour > 6 -> {
+                R.drawable.ic_day.toBitmapKeepingSize(this, 2)
+            }
+            else -> {
+                null
+            }
         }
-
-        return R.drawable.widget_ic_day
     }
 
     private fun widgetNotification() {
@@ -183,6 +202,83 @@ class ClockWidgetService : Service() {
     private fun removeCallbacks() {
         handler.removeCallbacks(clockWidgetRunnable)
         handler.removeCallbacksAndMessages(null)
+    }
+
+    private fun getAccentTheme(): Int {
+        return when (applicationContext.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE).getInt(MainPreferences.accentColor, 0)) {
+            ContextCompat.getColor(baseContext, R.color.positional) -> {
+                R.style.Positional
+            }
+            ContextCompat.getColor(baseContext, R.color.blue) -> {
+                R.style.Blue
+            }
+            ContextCompat.getColor(baseContext, R.color.blueGrey) -> {
+                R.style.BlueGrey
+            }
+            ContextCompat.getColor(baseContext, R.color.darkBlue) -> {
+                R.style.DarkBlue
+            }
+            ContextCompat.getColor(baseContext, R.color.red) -> {
+                R.style.Red
+            }
+            ContextCompat.getColor(baseContext, R.color.green) -> {
+                R.style.Green
+            }
+            ContextCompat.getColor(baseContext, R.color.orange) -> {
+                R.style.Orange
+            }
+            ContextCompat.getColor(baseContext, R.color.purple) -> {
+                R.style.Purple
+            }
+            ContextCompat.getColor(baseContext, R.color.yellow) -> {
+                R.style.Yellow
+            }
+            ContextCompat.getColor(baseContext, R.color.caribbeanGreen) -> {
+                R.style.CaribbeanGreen
+            }
+            ContextCompat.getColor(baseContext, R.color.persianGreen) -> {
+                R.style.PersianGreen
+            }
+            ContextCompat.getColor(baseContext, R.color.amaranth) -> {
+                R.style.Amaranth
+            }
+            ContextCompat.getColor(baseContext, R.color.indian_red) -> {
+                R.style.IndianRed
+            }
+            ContextCompat.getColor(baseContext, R.color.light_coral) -> {
+                R.style.LightCoral
+            }
+            ContextCompat.getColor(baseContext, R.color.pink_flare) -> {
+                R.style.PinkFlare
+            }
+            ContextCompat.getColor(baseContext, R.color.makeup_tan) -> {
+                R.style.MakeupTan
+            }
+            ContextCompat.getColor(baseContext, R.color.egg_yellow) -> {
+                R.style.EggYellow
+            }
+            ContextCompat.getColor(baseContext, R.color.medium_green) -> {
+                R.style.MediumGreen
+            }
+            ContextCompat.getColor(baseContext, R.color.olive) -> {
+                R.style.Olive
+            }
+            ContextCompat.getColor(baseContext, R.color.copperfield) -> {
+                R.style.Copperfield
+            }
+            ContextCompat.getColor(baseContext, R.color.mineral_green) -> {
+                R.style.MineralGreen
+            }
+            ContextCompat.getColor(baseContext, R.color.lochinvar) -> {
+                R.style.Lochinvar
+            }
+            ContextCompat.getColor(baseContext, R.color.beach_grey) -> {
+                R.style.BeachGrey
+            }
+            else -> {
+                R.style.Positional
+            }
+        }
     }
 
     /**

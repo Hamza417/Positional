@@ -6,6 +6,10 @@ object ClockSkinsConstants {
     /**
      * Should follow the needle sequences of hours minutes and seconds for the ease of access
      * This pattern will be followed throughout the app
+     *
+     * 0 for hour
+     * 1 for minute
+     * 2 for second
      */
     var clockNeedleSkins: Array<IntArray> = arrayOf(
             intArrayOf( // 0
@@ -14,9 +18,9 @@ object ClockSkinsConstants {
                     R.drawable.clock_needle_minimal_second
             ),
             intArrayOf( // 1
-                    R.drawable.clock_needle_red_rounded_hour,
-                    R.drawable.clock_needle_red_rounded_minute,
-                    R.drawable.clock_needle_red_rounded_second
+                    R.drawable.clock_needle_rectangular_hour,
+                    R.drawable.clock_needle_rectangular_minute,
+                    R.drawable.clock_needle_rectangular_second
             ),
             intArrayOf( // 2
                     R.drawable.clock_needle_thick_rounded_hour,
@@ -24,9 +28,9 @@ object ClockSkinsConstants {
                     R.drawable.clock_needle_thick_rounded_second
             ),
             intArrayOf( // 3
-                    R.drawable.clock_needle_red_pointy_hour,
-                    R.drawable.clock_needle_red_pointy_minute,
-                    R.drawable.clock_needle_red_pointy_second
+                    R.drawable.clock_needle_pointy_hour,
+                    R.drawable.clock_needle_pointy_minute,
+                    R.drawable.clock_needle_pointy_second
             ),
             intArrayOf( // 4
                     R.drawable.clock_hour,

@@ -5,6 +5,5 @@
     android:viewportHeight="512">
     <path
         android:fillColor="@color/clock_needle_fill_color"
-        android:fillType="evenOdd"
-        android:pathData="M241.858,256L256,94l14.142,162L256,304Z" />
+        android:pathData="M249,126L263,126A3,3 0,0 1,266 129L266,288A3,3 0,0 1,263 291L249,291A3,3 0,0 1,246 288L246,129A3,3 0,0 1,249 126z" />
 </vector>

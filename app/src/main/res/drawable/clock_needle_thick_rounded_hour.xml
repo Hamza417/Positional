@@ -1,12 +1,10 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="6dp"
-    android:height="100dp"
-    android:viewportWidth="60"
-    android:viewportHeight="1000">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
     <path
         android:fillColor="@color/clock_needle_fill_color"
         android:fillType="evenOdd"
-        android:strokeWidth="2"
-        android:strokeColor="@color/clock_needle_stroke_color"
-        android:pathData="M16,156c0.27,-8.27 7.36,-14.53 15,-14a14.33,14.33 0,0 1,13 14L60,502a30.45,30.45 0,0 1,-29 28c-15.75,0.52 -29.66,-11.78 -31,-28Z" />
+        android:pathData="M241.858,256L256,123l14.142,133L256,294Z" />
 </vector>

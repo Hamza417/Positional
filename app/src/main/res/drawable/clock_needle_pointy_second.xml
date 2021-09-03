@@ -1,23 +1,22 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:width="6dp"
-    android:height="100dp"
-    android:viewportWidth="60"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="1000"
     android:viewportHeight="1000">
     <path
         android:fillColor="?attr/colorAppAccent"
-        android:pathData="M31,77l4,423H27Z" />
+        android:fillType="evenOdd"
+        android:pathData="M501,77l4,423h-8Z" />
     <path
-        android:fillColor="#FF000000"
-        android:pathData="M30,500m-30,0a30,30 0,1 1,60 0a30,30 0,1 1,-60 0"
-        android:strokeWidth="2"
-        android:strokeColor="@color/clock_needle_stroke_color" />
-    <path android:pathData="M30,500m-12,0a12,12 0,1 1,24 0a12,12 0,1 1,-24 0">
+        android:fillColor="@color/clock_needle_fill_color"
+        android:pathData="M500,500m-30,0a30,30 0,1 1,60 0a30,30 0,1 1,-60 0" />
+    <path android:pathData="M500,500m-12,0a12,12 0,1 1,24 0a12,12 0,1 1,-24 0">
         <aapt:attr name="android:fillColor">
             <gradient
-                android:endX="30"
+                android:endX="500"
                 android:endY="488"
-                android:startX="30"
+                android:startX="500"
                 android:startY="512"
                 android:type="linear">
                 <item

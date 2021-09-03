@@ -19,7 +19,7 @@
         android:layout_width="@dimen/clock_image_dimensions"
         android:layout_height="@dimen/clock_image_dimensions"
         android:layout_gravity="center"
-        android:src="@drawable/widget_clock_face"
+        android:src="@drawable/widget_clock_preview"
         tools:ignore="ContentDescription" />
 
     <ImageView
@@ -29,6 +29,17 @@
         android:layout_gravity="center"
         android:layout_marginBottom="60dp"
         tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/widget_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:fontFamily="@font/clock_date"
+        android:textColor="@color/textPrimary"
+        android:layout_gravity="center_horizontal|bottom"/>
 
     <ImageView
         android:id="@+id/widget_hour"
@@ -56,16 +67,5 @@
         android:layout_margin="25dp"
         android:adjustViewBounds="true"
         tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/widget_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:fontFamily="@font/clock_date"
-        android:textColor="@color/textPrimary"
-        android:layout_gravity="center_horizontal|bottom"/>
 
 </FrameLayout>

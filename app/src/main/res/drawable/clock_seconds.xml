@@ -10,7 +10,7 @@
         android:fillColor="?attr/colorAppAccent"
         android:pathData="M500,202L500,202A4,4 0,0 1,504 206L504,528A4,4 0,0 1,500 532L500,532A4,4 0,0 1,496 528L496,206A4,4 0,0 1,500 202z" />
     <path
-        android:fillColor="#fff"
+        android:fillColor="?attr/colorAppAccent"
         android:pathData="M500,500m-19,0a19,19 0,1 1,38 0a19,19 0,1 1,-38 0"
         android:strokeWidth="1.68"
         android:strokeColor="@color/clock_needle_stroke_color"
