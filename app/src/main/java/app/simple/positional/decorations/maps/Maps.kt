@@ -12,6 +12,8 @@ import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.View
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.math.CompassAzimuth
@@ -307,7 +309,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 }
 
                 moveMapCamera(latLng, GPSPreferences.getMapZoom(), bearing)
-                isCompassRotation = GPSPreferences.isCompassRotation()
             }
             viewHandler.postDelayed(this, 6000L)
         }
@@ -316,7 +317,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private fun moveMapCamera(latLng: LatLng, zoom: Float, bearing: Float) {
         if (googleMap.isNull()) return
 
-        if (isCompassRotation) unregister()
+        if (GPSPreferences.isCompassRotation()) unregister()
 
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(
                 CameraPosition.builder()
@@ -397,7 +398,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         /* no-op */
     }
 
-    private fun register() {
+    fun register() {
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             unregister()
             if (GPSPreferences.isCompassRotation()) {
@@ -415,7 +416,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         }
     }
 
-    private fun unregister() {
+    fun unregister() {
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             sensorManager.unregisterListener(this, sensorAccelerometer)
             sensorManager.unregisterListener(this, sensorMagneticField)

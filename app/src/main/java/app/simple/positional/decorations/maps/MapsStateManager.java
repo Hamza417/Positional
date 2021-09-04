@@ -23,16 +23,16 @@ public class MapsStateManager {
         mapStatePrefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
     
-    public void saveMapState(GoogleMap mapMie) {
+    public void saveMapState(GoogleMap googleMap) {
         SharedPreferences.Editor editor = mapStatePrefs.edit();
-        CameraPosition position = mapMie.getCameraPosition();
+        CameraPosition position = googleMap.getCameraPosition();
         
         editor.putFloat(LATITUDE, (float) position.target.latitude);
         editor.putFloat(LONGITUDE, (float) position.target.longitude);
         editor.putFloat(ZOOM, position.zoom);
         editor.putFloat(TILT, position.tilt);
         editor.putFloat(BEARING, position.bearing);
-        editor.putInt(MAPTYPE, mapMie.getMapType());
+        editor.putInt(MAPTYPE, googleMap.getMapType());
         editor.apply();
     }
     

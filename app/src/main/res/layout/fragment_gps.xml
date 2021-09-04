@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.maps.TouchWrapperCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map_panel_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipChildren="false"
@@ -7,25 +8,25 @@
 
     <app.simple.positional.decorations.maps.Maps
         android:id="@+id/map"
-        android:alpha="0"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:alpha="0" />
 
     <app.simple.positional.decorations.maps.MapToolbar
         android:id="@+id/map_toolbar"
-        android:elevation="5dp"
-        android:backgroundTint="@color/mainBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top" />
+        android:layout_gravity="top"
+        android:backgroundTint="@color/mainBackground"
+        android:elevation="5dp" />
 
     <View
         android:id="@+id/gps_dim"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
-        android:translationZ="20dp"
-        android:background="#7E000000" />
+        android:background="#7E000000"
+        android:translationZ="20dp" />
 
     <app.simple.positional.decorations.maps.MapsTools
         android:id="@+id/maps_tools"
@@ -41,4 +42,4 @@
 
     <include layout="@layout/bottom_sheet_gps" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</app.simple.positional.decorations.maps.TouchWrapperCoordinatorLayout>

@@ -538,6 +538,17 @@ class GPS : ScopedFragment() {
 
             true
         }
+
+        view.findViewById<TouchWrapperCoordinatorLayout>(R.id.map_panel_container).onTouch = {
+            when (it.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    maps?.unregister()
+                }
+                MotionEvent.ACTION_UP -> {
+                    maps?.register()
+                }
+            }
+        }
     }
 
     private fun setFullScreen(forBottomBar: Boolean) {
