@@ -43,7 +43,6 @@ import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.model.Locations
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
 import app.simple.positional.util.ConditionUtils.isNotNull
@@ -359,12 +358,29 @@ class GPS : ScopedFragment() {
 
         bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    backPressed(true)
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    backPressed(false)
-                    if (backPress!!.hasEnabledCallbacks()) {
-                        backPress?.onBackPressed()
+                when (newState) {
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                        maps?.unregister()
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        backPressed(true)
+                        maps?.unregister()
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        backPressed(false)
+                        if (backPress!!.hasEnabledCallbacks()) {
+                            backPress?.onBackPressed()
+                        }
+                        maps?.register()
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        /* no-op */
+                    }
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        /* no-op */
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                        /* no-op */
                     }
                 }
             }
@@ -393,7 +409,7 @@ class GPS : ScopedFragment() {
 
         tools.setOnToolsCallbacksListener(object : MapsToolsCallbacks {
             override fun onLocationClicked(view: View, longPressed: Boolean) {
-                if(longPressed) {
+                if (longPressed) {
                     maps?.resetCamera(18F)
                 } else {
                     updateViews(customLatitude, customLongitude)
@@ -543,9 +559,16 @@ class GPS : ScopedFragment() {
             when (it.action) {
                 MotionEvent.ACTION_DOWN -> {
                     maps?.unregister()
+                    println("Down")
                 }
                 MotionEvent.ACTION_UP -> {
-                    maps?.register()
+                    if (bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_DRAGGING ||
+                            bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_EXPANDED ||
+                            bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_HALF_EXPANDED ||
+                            bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_SETTLING) {
+                        maps?.register()
+                    }
+                    println("Up")
                 }
             }
         }

@@ -12,6 +12,7 @@ import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.constants.TrailIcons
 import app.simple.positional.math.CompassAzimuth
@@ -22,8 +23,6 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
-import app.simple.positional.ui.panels.Trail
-import app.simple.positional.util.BitmapHelper
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ColorUtils.resolveAttrColor
@@ -64,6 +63,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private var markerBitmap: Bitmap? = null
     private val viewHandler = Handler(Looper.getMainLooper())
     private var marker: Marker? = null
+    private var circle: Circle? = null
 
     private val currentPolyline = arrayListOf<LatLng>()
     private val flagMarkers = arrayListOf<Marker>()
@@ -132,6 +132,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
         googleMap.uiSettings.isMyLocationButtonEnabled = false
+        googleMap.uiSettings.isTiltGesturesEnabled = false
 
         this.googleMap = googleMap
         addMarker(latLng!!)
@@ -244,9 +245,20 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                     marker?.remove()
                     marker = googleMap?.addMarker(MarkerOptions()
                             .position(latLng)
-                            .rotation(if(TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing ?: 0F)
+                            .rotation(if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing
+                                    ?: 0F)
                             .anchor(0.5F, 0.5F)
                             .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+
+                    circle?.remove()
+                    circle = googleMap?.addCircle(CircleOptions()
+                            .center(latLng)
+                            .radius(location?.accuracy?.toDouble() ?: 0.0)
+                            .clickable(false)
+                            .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
+                            .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
+                            .strokeWidth(3F))
+
                     invalidate()
                 }
             }
@@ -593,7 +605,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
         rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
 
-        if(isCompassRotation) {
+        if (isCompassRotation) {
             marker?.rotation = rotationAngle
             //googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(latLng!!, googleMap?.cameraPosition?.zoom!!, googleMap!!.cameraPosition.tilt, rotationAngle)))
         }

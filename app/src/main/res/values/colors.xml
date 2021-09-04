@@ -43,4 +43,5 @@
     // Pin Color
     <color name="compass_pin_color">#1B9CFF</color>
     <color name="compass_pin_stroke_color">#FFFFFF</color>
+    <color name="map_circle_color">#261B9CFF</color>
 </resources>

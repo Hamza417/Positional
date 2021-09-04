@@ -12,8 +12,7 @@ import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.view.MotionEvent
-import android.view.View
+import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.math.CompassAzimuth
@@ -47,6 +46,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
+    private var isRegistered = false
 
     private var accelerometer = Vector3.zero
     private var magnetometer = Vector3.zero
@@ -170,6 +170,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     }
 
     fun pause() {
+        unregister()
         onPause()
     }
 
@@ -286,6 +287,15 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             if (googleMap.isNotNull()) {
                 googleMap?.clear()
                 googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(marker!!)))
+
+                googleMap?.addCircle(CircleOptions()
+                        .center(latLng)
+                        .radius(location?.accuracy?.toDouble() ?: 0.0)
+                        .clickable(false)
+                        .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
+                        .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
+                        .strokeWidth(3F))
+
                 invalidate()
             }
         }
@@ -399,33 +409,45 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     }
 
     fun register() {
-        if (haveAccelerometerSensor && haveMagnetometerSensor) {
-            unregister()
-            if (GPSPreferences.isCompassRotation()) {
-                sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
-                sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+        if (!isRegistered) {
+            if (haveAccelerometerSensor && haveMagnetometerSensor) {
+                unregister()
+                if (GPSPreferences.isCompassRotation()) {
+                    sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
+                    sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
 
-                if (googleMap.isNotNull()) {
-                    with(googleMap!!.uiSettings) {
-                        isScrollGesturesEnabled = false
-                        isZoomGesturesEnabled = false
-                        isRotateGesturesEnabled = false
+                    if (googleMap.isNotNull()) {
+                        with(googleMap!!.uiSettings) {
+                            isScrollGesturesEnabled = false
+                            isZoomGesturesEnabled = false
+                            isRotateGesturesEnabled = false
+                        }
                     }
+
+                    isRegistered = true
+
+                    println("Registered")
                 }
             }
         }
     }
 
     fun unregister() {
-        if (haveAccelerometerSensor && haveMagnetometerSensor) {
-            sensorManager.unregisterListener(this, sensorAccelerometer)
-            sensorManager.unregisterListener(this, sensorMagneticField)
+        if (isRegistered) {
+            if (haveAccelerometerSensor && haveMagnetometerSensor) {
+                sensorManager.unregisterListener(this, sensorAccelerometer)
+                sensorManager.unregisterListener(this, sensorMagneticField)
 
-            if (googleMap.isNotNull()) {
-                with(googleMap!!.uiSettings) {
-                    isScrollGesturesEnabled = true
-                    isZoomGesturesEnabled = true
-                    isRotateGesturesEnabled = true
+                isRegistered = false
+
+                println("Unregistered")
+
+                if (googleMap.isNotNull()) {
+                    with(googleMap!!.uiSettings) {
+                        isScrollGesturesEnabled = true
+                        isZoomGesturesEnabled = true
+                        isRotateGesturesEnabled = true
+                    }
                 }
             }
         }
