@@ -412,7 +412,6 @@ class GPS : ScopedFragment() {
                 if (longPressed) {
                     maps?.resetCamera(18F)
                 } else {
-                    updateViews(customLatitude, customLongitude)
                     maps?.resetCamera(GPSPreferences.getMapZoom())
                 }
             }
@@ -562,12 +561,9 @@ class GPS : ScopedFragment() {
                     println("Down")
                 }
                 MotionEvent.ACTION_UP -> {
-                    if (bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_DRAGGING ||
-                            bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_EXPANDED ||
-                            bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_HALF_EXPANDED ||
-                            bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_SETTLING) {
+                    handler.postDelayed({
                         maps?.register()
-                    }
+                    }, maps?.cameraSpeed?.toLong() ?: 500L)
                     println("Up")
                 }
             }

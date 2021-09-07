@@ -50,8 +50,8 @@ android {
 
     compileSdkVersion 30
 
-    def appVersionCode = 140
-    def appVersionName = "positional_build_${appVersionCode}_final"
+    def appVersionCode = 141
+    def appVersionName = "positional_build_${appVersionCode}_BETA"
 
     defaultConfig {
         applicationId "app.simple.positional"

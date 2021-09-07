@@ -6,6 +6,8 @@ import androidx.annotation.IntRange
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import android.graphics.Bitmap
+import android.view.View
 
 object BitmapHelper {
     fun addLinearGradient(originalBitmap: Bitmap, array: IntArray): Bitmap? {
@@ -157,5 +159,15 @@ object BitmapHelper {
         val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
         vectorDrawable.draw(Canvas(bitmap))
         return BitmapDescriptorFactory.fromBitmap(bitmap)
+    }
+
+    fun View.loadBitmapFromView(v: View): Bitmap? {
+        val b = Bitmap.createBitmap(v.layoutParams.width, v.layoutParams.height, Bitmap.Config.ARGB_8888)
+        val c = Canvas(b)
+
+        v.layout(v.left, v.top, v.right, v.bottom)
+        v.draw(c)
+
+        return b
     }
 }

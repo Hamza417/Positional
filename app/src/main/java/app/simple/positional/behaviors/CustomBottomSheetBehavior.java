@@ -25,20 +25,13 @@ public class CustomBottomSheetBehavior<V extends View> extends BottomSheetBehavi
     private float initialY;
     private boolean ignoreUntilClose;
 
-    public CustomBottomSheetBehavior(
-            @NonNull Context context,
-            @Nullable AttributeSet attrs
-    ) {
+    public CustomBottomSheetBehavior(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
     }
 
     @Override
-    public boolean onInterceptTouchEvent(
-            @NonNull CoordinatorLayout parent,
-            @NonNull V child,
-            @NonNull MotionEvent event
-    ) {
+    public boolean onInterceptTouchEvent(@NonNull CoordinatorLayout parent, @NonNull V child, @NonNull MotionEvent event) {
 
         /*
          * touch events are ignored if the bottom sheet is already
