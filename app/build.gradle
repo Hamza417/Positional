@@ -55,7 +55,7 @@ android {
 
     defaultConfig {
         applicationId "app.simple.positional"
-        minSdkVersion 23
+        minSdkVersion 24
         //noinspection OldTargetApi
         targetSdkVersion 30
         versionCode appVersionCode
