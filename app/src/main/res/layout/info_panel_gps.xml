@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
+    android:background="@color/toolbarBackground"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:elevation="5dp"
     android:overScrollMode="always"
-    android:paddingHorizontal="10dp"
-    android:background="@color/toolbarBackground">
+    android:paddingHorizontal="10dp">
 
     <!-- TODO remove useless views -->
     <LinearLayout
@@ -42,10 +42,10 @@
                 android:layout_width="@dimen/copy_button_dimensions"
                 android:layout_height="@dimen/copy_button_dimensions"
                 android:layout_gravity="center_vertical"
-                android:background="@drawable/ripple_btn"
-                android:src="@drawable/ic_save"
                 android:layout_marginEnd="5dp"
+                android:background="@drawable/ripple_btn"
                 android:contentDescription="@string/button_copy"
+                android:src="@drawable/ic_save"
                 app:tint="@color/iconColor" />
 
             <app.simple.positional.decorations.ripple.DynamicRippleImageButton
@@ -54,8 +54,8 @@
                 android:layout_height="@dimen/copy_button_dimensions"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ripple_btn"
-                android:src="@drawable/ic_content_copy"
                 android:contentDescription="@string/button_copy"
+                android:src="@drawable/ic_content_copy"
                 app:tint="@color/iconColor" />
 
         </LinearLayout>
@@ -105,8 +105,8 @@
             android:id="@+id/gps_panel_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ripple"
             android:layout_marginVertical="5dp"
+            android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
@@ -160,51 +160,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
+            android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
-            android:background="@drawable/ripple"
             android:orientation="vertical"
             android:padding="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/PrimaryTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:text="@string/gps_movement"
-                    android:textSize="@dimen/info_text_primary_size" />
-
-                <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-                    android:id="@+id/movement_reset"
-                    android:layout_width="@dimen/copy_button_dimensions"
-                    android:layout_height="@dimen/copy_button_dimensions"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:background="@drawable/ripple_btn"
-                    android:padding="@dimen/notification_button_padding"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_reset"
-                    android:contentDescription="@string/button_reset"
-                    app:tint="@color/iconColor" />
-
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/gps_displacement"
-                style="@style/SecondaryTextView"
+                style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/gps_displacement"
-                android:textSize="@dimen/info_text_secondary_size" />
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="@string/gps_movement"
+                android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
                 android:id="@+id/gps_bearing"
@@ -267,8 +236,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
-            android:clickable="true"
             android:background="@drawable/ripple"
+            android:clickable="true"
             android:focusable="true"
             android:padding="10dp">
 

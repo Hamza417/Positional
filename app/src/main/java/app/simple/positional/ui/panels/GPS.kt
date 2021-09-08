@@ -7,7 +7,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Spanned
 import android.view.*
-import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -26,8 +25,8 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.maps.*
-import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.app.ErrorDialog
+import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
 import app.simple.positional.dialogs.gps.LocationExpansion
@@ -35,13 +34,10 @@ import app.simple.positional.dialogs.gps.MovementExpansion
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
-import app.simple.positional.math.UnitConverter.toKilometers
-import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.model.Locations
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.singleton.DistanceSingleton
 import app.simple.positional.util.*
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
@@ -50,8 +46,6 @@ import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -73,7 +67,6 @@ class GPS : ScopedFragment() {
     private lateinit var coordinatesBox: FrameLayout
     private lateinit var copy: ImageButton
     private lateinit var save: ImageButton
-    private lateinit var movementReset: ImageButton
     private lateinit var accuracy: TextView
     private lateinit var address: TextView
     private lateinit var latitude: TextView
@@ -83,7 +76,6 @@ class GPS : ScopedFragment() {
     private lateinit var altitude: TextView
     private lateinit var bearing: TextView
     private lateinit var latency: TextView
-    private lateinit var displacement: TextView
     private lateinit var direction: TextView
     private lateinit var speed: TextView
     private lateinit var specifiedLocationTextView: TextView
@@ -103,7 +95,7 @@ class GPS : ScopedFragment() {
     private var lastLatitude = 0.0
     private var lastLongitude = 0.0
     private var peekHeight = 0
-    private var distanceSingleton = DistanceSingleton
+
     private var maps: Maps? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -117,7 +109,6 @@ class GPS : ScopedFragment() {
         dim = view.findViewById(R.id.gps_dim)
         copy = view.findViewById(R.id.gps_copy)
         save = view.findViewById(R.id.gps_save)
-        movementReset = view.findViewById(R.id.movement_reset)
         expandUp = view.findViewById(R.id.expand_up_gps_sheet)
         bottomSheetInfoPanel = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
 
@@ -134,7 +125,6 @@ class GPS : ScopedFragment() {
         altitude = view.findViewById(R.id.gps_altitude)
         latency = view.findViewById(R.id.gps_time_taken)
         bearing = view.findViewById(R.id.gps_bearing)
-        displacement = view.findViewById(R.id.gps_displacement)
         direction = view.findViewById(R.id.gps_direction)
         speed = view.findViewById(R.id.gps_speed)
         specifiedLocationTextView = view.findViewById(R.id.specified_location_notice_gps)
@@ -195,35 +185,15 @@ class GPS : ScopedFragment() {
 
         providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
 
-        if(!LocationPrompt.checkGooglePlayServices(requireContext())) {
+        if (!LocationPrompt.checkGooglePlayServices(requireContext())) {
             ErrorDialog.newInstance(getString(R.string.play_services_error))
                     .show(childFragmentManager, "error_dialog")
-        }
-
-        movementReset.setOnClickListener {
-            it.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.button_pressed_scale))
-            distanceSingleton.totalDistance = 0f
-            if (location != null) {
-                distanceSingleton.initialPointCoordinates = LatLng(location!!.latitude, location!!.longitude)
-            } else {
-                distanceSingleton.isInitialLocationSet = false
-            }
-
-            Toast.makeText(requireContext(), R.string.reset_complete, Toast.LENGTH_SHORT).show()
         }
 
         locationViewModel.location.observe(viewLifecycleOwner, {
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.Default) {
                     location = it
-
-                    if (!distanceSingleton.isInitialLocationSet!!) {
-                        distanceSingleton.initialPointCoordinates =
-                                LatLng(location!!.latitude, location!!.longitude)
-                        distanceSingleton.distanceCoordinates =
-                                LatLng(location!!.latitude, location!!.longitude)
-                        distanceSingleton.isInitialLocationSet = true
-                    }
 
                     MainPreferences.setLastLatitude(location!!.latitude.toFloat())
                     MainPreferences.setLastLongitude(location!!.longitude.toFloat())
@@ -277,47 +247,13 @@ class GPS : ScopedFragment() {
                     } else {
                         fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} ${getString(R.string.miles_hour)}")
                     }
+
                     val bearing = fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${location!!.bearing}°")
-                    val displacement: Spanned?
-                    val direction: Spanned?
-                    val displacementValue = FloatArray(1)
-                    val distanceValue = FloatArray(1)
-                    Location.distanceBetween(
-                            distanceSingleton.initialPointCoordinates!!.latitude,
-                            distanceSingleton.initialPointCoordinates!!.longitude,
-                            location!!.latitude,
-                            location!!.longitude,
-                            displacementValue
-                    )
 
-                    Location.distanceBetween(
-                            distanceSingleton.initialPointCoordinates!!.latitude,
-                            distanceSingleton.initialPointCoordinates!!.longitude,
-                            location!!.latitude,
-                            location!!.longitude,
-                            distanceValue
-                    )
-
-                    if (location!!.speed > 0f) {
-                        distanceSingleton.totalDistance = distanceSingleton.totalDistance?.plus(distanceValue[0])
-                        distanceSingleton.distanceCoordinates = LatLng(location!!.latitude, location!!.longitude)
-                        direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> ${getDirectionNameFromAzimuth(requireContext(), location!!.bearing.toDouble())}")
+                    val direction: Spanned = if (location!!.speed > 0f) {
+                        fromHtml("<b>${getString(R.string.gps_direction)}</b> ${getDirectionNameFromAzimuth(requireContext(), location!!.bearing.toDouble())}")
                     } else {
-                        direction = fromHtml("<b>${getString(R.string.gps_direction)}</b> N/A")
-                    }
-
-                    displacement = if (displacementValue[0] < 1000) {
-                        if (isMetric) {
-                            fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toDouble(), 2)} ${getString(R.string.meter)}")
-                        } else {
-                            fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
-                        }
-                    } else {
-                        if (isMetric) {
-                            fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toKilometers().toDouble(), 2)} ${getString(R.string.kilometer)}")
-                        } else {
-                            fromHtml("<b>${getString(R.string.gps_displacement)}</b> ${round(displacementValue[0].toMiles().toDouble().toFeet(), 2)} ${getString(R.string.miles)}")
-                        }
+                        fromHtml("<b>${getString(R.string.gps_direction)}</b> N/A")
                     }
 
                     withContext(Dispatchers.Main) {
@@ -328,7 +264,6 @@ class GPS : ScopedFragment() {
                         this@GPS.speed.text = speed
                         this@GPS.bearing.text = bearing
                         this@GPS.accuracy.text = accuracy
-                        this@GPS.displacement.text = displacement
                         this@GPS.direction.text = direction
 
                         if (!isCustomCoordinate) {
@@ -342,7 +277,7 @@ class GPS : ScopedFragment() {
         })
 
         locationViewModel.dms.observe(viewLifecycleOwner, {
-            if(isCustomCoordinate) return@observe
+            if (isCustomCoordinate) return@observe
             latitude.text = it.first
             longitude.text = it.second
         })
@@ -441,37 +376,29 @@ class GPS : ScopedFragment() {
                 val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db").fallbackToDestructiveMigration().build()
                 val locations = Locations()
 
-                if (MainPreferences.isCustomCoordinate()) {
+                if (location.isNull()) {
                     isLocationSaved = false
                 } else {
-                    if (location.isNull()) {
-                        isLocationSaved = false
-                    } else {
-                        locations.latitude = location?.latitude!!
-                        locations.longitude = location?.longitude!!
-                        locations.address = address.text.toString()
-                        locations.date = System.currentTimeMillis()
+                    locations.latitude = location?.latitude!!
+                    locations.longitude = location?.longitude!!
+                    locations.address = address.text.toString()
+                    locations.date = System.currentTimeMillis()
 
-                        db.locationDao()?.insertLocation(locations)
-                        db.close()
+                    db.locationDao()?.insertLocation(locations)
+                    db.close()
 
-                        isLocationSaved = true
-                    }
+                    isLocationSaved = true
                 }
 
                 withContext(Dispatchers.Main) {
                     handler.removeCallbacks(textAnimationRunnable)
-                    if (MainPreferences.isCustomCoordinate()) {
-                        infoText.setTextAnimation(getString(R.string.already_saved), 300)
+
+                    if (isLocationSaved) {
+                        infoText.setTextAnimation(getString(R.string.location_saved), 300)
                         handler.postDelayed(textAnimationRunnable, 3000)
                     } else {
-                        if (isLocationSaved) {
-                            infoText.setTextAnimation(getString(R.string.location_saved), 300)
-                            handler.postDelayed(textAnimationRunnable, 3000)
-                        } else {
-                            infoText.setTextAnimation(getString(R.string.location_not_saved), 300)
-                            handler.postDelayed(textAnimationRunnable, 3000)
-                        }
+                        infoText.setTextAnimation(getString(R.string.location_not_saved), 300)
+                        handler.postDelayed(textAnimationRunnable, 3000)
                     }
                 }
             }
@@ -493,7 +420,6 @@ class GPS : ScopedFragment() {
                     append("${bearing.text}\n\n")
 
                     append("${getString(R.string.gps_movement)}\n")
-                    append("${displacement.text}\n")
                     append("${direction.text}\n")
                     append("${speed.text}\n")
 

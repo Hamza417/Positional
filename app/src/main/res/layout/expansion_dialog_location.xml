@@ -46,7 +46,7 @@
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/description_text_size" />
 
-        <app.simple.positional.sparkline.SparkLineLayout
+        <app.simple.positional.sparkline.view.SparkLineLayout
             android:id="@+id/location_accuracy_chart"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -80,7 +80,7 @@
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/description_text_size" />
 
-        <app.simple.positional.sparkline.SparkLineLayout
+        <app.simple.positional.sparkline.view.SparkLineLayout
             android:id="@+id/location_altitude_chart"
             android:layout_width="match_parent"
             android:layout_height="200dp"

@@ -1,4 +1,4 @@
-package app.simple.positional.sparkline
+package app.simple.positional.sparkline.view
 
 import android.content.Context
 import android.graphics.*

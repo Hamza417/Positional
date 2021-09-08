@@ -12,7 +12,7 @@ import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.math.MathExtensions
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.sparkline.SparkLineLayout
+import app.simple.positional.sparkline.view.SparkLineLayout
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 
