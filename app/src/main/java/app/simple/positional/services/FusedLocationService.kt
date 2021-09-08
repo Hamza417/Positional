@@ -49,7 +49,7 @@ class FusedLocationService : Service() {
 
             override fun onLocationAvailability(p0: LocationAvailability) {
                 super.onLocationAvailability(p0)
-                p0.isLocationAvailable
+                /* no-op */
             }
         }
     }

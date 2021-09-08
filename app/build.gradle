@@ -50,8 +50,8 @@ android {
 
     compileSdkVersion 30
 
-    def appVersionCode = 141
-    def appVersionName = "positional_build_${appVersionCode}_BETA"
+    def appVersionCode = 142
+    def appVersionName = "positional_build_${appVersionCode}_Compass_Map_Rev_02"
 
     defaultConfig {
         applicationId "app.simple.positional"

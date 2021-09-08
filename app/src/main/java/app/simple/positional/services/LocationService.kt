@@ -2,6 +2,7 @@ package app.simple.positional.services
 
 import android.app.Service
 import android.content.Intent
+import android.location.GnssStatus
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -14,9 +15,10 @@ import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.PermissionUtils
 
 class LocationService : Service(), LocationListener {
+
     private var locationManager: LocationManager? = null
     private var handler = Handler(Looper.getMainLooper())
-    private var delay: Long = 6000
+    private var delay: Long = 100
 
     override fun onBind(intent: Intent): IBinder? {
         return null

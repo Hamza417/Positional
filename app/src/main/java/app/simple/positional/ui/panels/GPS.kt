@@ -352,7 +352,6 @@ class GPS : ScopedFragment() {
                         if (getLocationStatus(requireContext())) {
                             getString(R.string.gps_enabled)
                         } else {
-                            maps?.clear()
                             getString(R.string.gps_disabled)
                         }
                     }"
@@ -363,6 +362,7 @@ class GPS : ScopedFragment() {
             )
 
             tools.locationIconStatusUpdates()
+            maps?.clearMarkers()
         })
 
         bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {

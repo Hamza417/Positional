@@ -486,7 +486,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                                 if (value) {
                                     R.raw.maps_light_labelled
                                 } else {
-                                    R.raw.maps_no_label
+                                    R.raw.maps_light_no_label
                                 }
                             }
                             else -> 0

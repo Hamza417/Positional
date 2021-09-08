@@ -13,6 +13,7 @@ import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.GPSPreferences
+import app.simple.positional.util.ViewUtils.gone
 
 class GPSMenu : CustomBottomSheetDialogFragment() {
 
@@ -61,6 +62,10 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleBuilding.isChecked = GPSPreferences.getShowBuildingsOnMap()
         toggleAutoCenter.isChecked = GPSPreferences.getMapAutoCenter()
         toggleVolumeKeys.isChecked = GPSPreferences.isUsingVolumeKeys()
+
+        if(GPSPreferences.isCompassRotation()) {
+            toggleAutoCenterContainer.gone()
+        }
 
         toggleLabel.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setLabelMode(isChecked)
