@@ -76,6 +76,7 @@
     <string name="gps_source">ذریعہ:</string>
     <string name="gps_accuracy">قطعیت:</string>
     <string name="gps_altitude">بلندی:</string>
+    <string name="gps_latency">تاخیر:</string>
     <string name="gps_bearing">اثر:</string>
     <string name="gps_displacement">نقل مکانی:</string>
     <string name="gps_direction">سمت:</string>
@@ -97,6 +98,8 @@
     <string name="miles">میل</string>
     <string name="kilometer_hour">کلومیٹر فی گھنٹہ</string>
     <string name="miles_hour">میل فی گھنٹہ</string>
+    <string name="milliseconds">ملی سیکنڈ</string>
+    <string name="seconds">سیکنڈ</string>
     <!-- Alert -->
     <string name="info_copied">کلپ بورڈ میں کاپی ہو گیا ہے</string>
     <string name="info_error">کاپی نہیں ہوسکی!!</string>
