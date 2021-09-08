@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.location.Geocoder
 import android.location.Location
 import android.text.Spannable
 import android.text.Spanned
@@ -14,9 +15,11 @@ import android.util.Log
 import androidx.core.text.toSpannable
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.math.MathExtensions
+import app.simple.positional.util.ArrayHelper.isLastValueSame
 import app.simple.positional.util.DMSConverter.latitudeAsDD
 import app.simple.positional.util.DMSConverter.latitudeAsDM
 import app.simple.positional.util.DMSConverter.latitudeAsDMS
@@ -25,9 +28,14 @@ import app.simple.positional.util.DMSConverter.longitudeAsDM
 import app.simple.positional.util.DMSConverter.longitudeAsDMS
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.UTMConverter
+import app.simple.positional.util.isNetworkAvailable
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.IOException
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * This viewmodel receives the location updated by location services
@@ -40,6 +48,9 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
     private var filter: IntentFilter = IntentFilter()
     private var locationBroadcastReceiver: BroadcastReceiver
 
+    private val accuracyData = ArrayList<Float>()
+    private val altitudeData = ArrayList<Float>()
+
     val location = MutableLiveData<Location>()
     val provider = MutableLiveData<String>()
 
@@ -49,9 +60,13 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
     val mgrs = MutableLiveData<String>()
     val utm = MutableLiveData<UTMConverter.UTM>()
     val latency = MutableLiveData<Spannable>()
-    val quality = MutableLiveData<Spanned>()
+    val address = MutableLiveData<String>()
 
-    var lastLatencyInMilliseconds: Number = System.currentTimeMillis().toDouble()
+    val accuracyGraphData = MutableLiveData<ArrayList<Float>>()
+    val altitudeGraphData = MutableLiveData<ArrayList<Float>>()
+
+    private var lastLatencyInMilliseconds: Number = System.currentTimeMillis().toDouble()
+    private var addressThreshold = 0
 
     init {
         filter.addAction("location")
@@ -72,6 +87,9 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                                 dd(this)
                                 mgrs(this)
                                 utm(this)
+                                address(this)
+
+                                graphData(this)
 
                                 Log.d("LocationViewModel", "Location Posted")
                             }
@@ -172,6 +190,64 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         with(location) {
             utm.postValue(UTMConverter.getUTM(latitude, longitude))
         }
+    }
+
+    private fun graphData(location: Location) {
+        accuracyGraphData.postValue(manipulateDataForGraph(accuracyData, location.accuracy))
+        altitudeGraphData.postValue(manipulateDataForGraph(altitudeData, location.altitude.toFloat()))
+    }
+
+    private fun address(location: Location) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (!this@LocationViewModel.address.hasActiveObservers()) return@launch
+
+            if(addressThreshold != 0) {
+                addressThreshold--
+                return@launch
+            }
+
+            var address: String = getApplication<Application>().getString(R.string.not_available)
+
+            runCatching {
+                with(getApplication<Application>()) {
+                    address = try {
+                        if (!isNetworkAvailable(this)) {
+                            getString(R.string.internet_connection_alert)
+                        } else {
+                            val geocoder = Geocoder(this, Locale.getDefault())
+
+                            with(geocoder.getFromLocation(location.latitude, location.longitude, 1)) {
+                                if (this != null && this.isNotEmpty()) {
+                                    addressThreshold = 10
+                                    this[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
+                                } else {
+                                    getString(R.string.not_available)
+                                }
+                            }
+                        }
+                    } catch (e: IOException) {
+                        "${e.message}"
+                    } catch (e: NullPointerException) {
+                        "${e.message}\n${getString(R.string.no_address_found)}"
+                    } catch (e: IllegalArgumentException) {
+                        getString(R.string.invalid_coordinates)
+                    }
+                }
+            }
+            
+            this@LocationViewModel.address.postValue(address)
+        }
+    }
+
+    private fun manipulateDataForGraph(arrayList: ArrayList<Float>, value: Float): ArrayList<Float> {
+        if (arrayList.isLastValueSame(value))
+            return arrayList
+
+        if (arrayList.size >= 45)
+            arrayList.removeAt(0)
+
+        arrayList.add(value)
+        return arrayList
     }
 
     override fun onCleared() {

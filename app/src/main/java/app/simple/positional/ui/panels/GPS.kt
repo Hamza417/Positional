@@ -1,8 +1,6 @@
 package app.simple.positional.ui.panels
 
 import android.content.*
-import android.location.Address
-import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -28,7 +26,7 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.maps.*
-import app.simple.positional.dialogs.app.CustomLocationParameters
+import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
@@ -58,7 +56,6 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
-import java.io.IOException
 import java.lang.Runnable
 import java.util.*
 
@@ -188,7 +185,7 @@ class GPS : ScopedFragment() {
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
             divider.isVisible = true
-            updateViews(customLatitude, customLongitude)
+            updateCoordinates(customLatitude, customLongitude)
         }
 
         if (GPSPreferences.isUsingVolumeKeys()) {
@@ -332,7 +329,6 @@ class GPS : ScopedFragment() {
                         this@GPS.direction.text = direction
 
                         if (!isCustomCoordinate) {
-                            updateViews(location!!.latitude, location!!.longitude)
                             maps?.setFirstLocation(location)
                             maps?.location = location
                             maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
@@ -340,6 +336,16 @@ class GPS : ScopedFragment() {
                     }
                 }
             }
+        })
+
+        locationViewModel.dms.observe(viewLifecycleOwner, {
+            if(isCustomCoordinate) return@observe
+            latitude.text = it.first
+            longitude.text = it.second
+        })
+
+        locationViewModel.address.observe(viewLifecycleOwner, {
+            address.text = it
         })
 
         locationViewModel.latency.observe(viewLifecycleOwner, {
@@ -411,7 +417,7 @@ class GPS : ScopedFragment() {
             }
 
             override fun onCustomLocationClicked(view: View) {
-                CustomLocationParameters.newInstance()
+                LocationParameters.newInstance()
                         .show(parentFragmentManager, "location_params")
             }
         })
@@ -577,6 +583,11 @@ class GPS : ScopedFragment() {
         }
     }
 
+    private fun updateCoordinates(latitude_: Double, longitude_: Double) {
+        latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude_, requireContext())}")
+        longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, requireContext())}")
+    }
+
     private fun setFullScreen(forBottomBar: Boolean) {
         if (isFullScreen) {
             toolbar.show()
@@ -621,53 +632,6 @@ class GPS : ScopedFragment() {
     override fun onLowMemory() {
         super.onLowMemory()
         maps?.lowMemory()
-    }
-
-    private fun updateViews(latitude_: Double, longitude_: Double) {
-        getAddress(latitude_, longitude_)
-        latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude_, requireContext())}")
-        longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, requireContext())}")
-    }
-
-    private fun getAddress(latitude: Double, longitude: Double) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            var address: String = getString(R.string.not_available)
-
-            withContext(Dispatchers.IO) {
-                runCatching {
-                    address = try {
-                        if (context == null) {
-                            getString(R.string.error)
-                        } else if (!isNetworkAvailable(requireContext())) {
-                            getString(R.string.internet_connection_alert)
-                        } else {
-                            val addresses: List<Address>
-                            val geocoder = Geocoder(context, Locale.getDefault())
-
-                            addresses = geocoder.getFromLocation(latitude, longitude, 1)
-
-                            if (addresses != null && addresses.isNotEmpty()) {
-                                addresses[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
-                            } else {
-                                getString(R.string.not_available)
-                            }
-                        }
-                    } catch (e: IOException) {
-                        "${e.message}"
-                    } catch (e: NullPointerException) {
-                        "${e.message}\n${getString(R.string.no_address_found)}"
-                    } catch (e: IllegalArgumentException) {
-                        getString(R.string.invalid_coordinates)
-                    }
-                }
-            }
-
-            try {
-                this@GPS.address.text = address
-            } catch (ignored: NullPointerException) {
-            } catch (ignored: UninitializedPropertyAccessException) {
-            }
-        }
     }
 
     private fun setLocationPin() {

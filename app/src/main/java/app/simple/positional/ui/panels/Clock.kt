@@ -1,7 +1,6 @@
 package app.simple.positional.ui.panels
 
 import android.content.*
-import android.location.Location
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,7 +15,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
@@ -27,7 +25,7 @@ import app.simple.positional.constants.LocationPins
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
-import app.simple.positional.dialogs.app.CustomLocationParameters
+import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
@@ -284,7 +282,7 @@ class Clock : ScopedFragment() {
         }
 
         customLocationButton.setOnClickListener {
-            CustomLocationParameters.newInstance()
+            LocationParameters.newInstance()
                     .show(parentFragmentManager, "location_parameters")
         }
     }

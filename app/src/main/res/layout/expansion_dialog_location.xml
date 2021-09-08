@@ -53,8 +53,8 @@
             app:s_gradient_line="true"
             app:s_line_bezier="0.5"
             app:s_line_color="?attr/colorAppAccent"
-            app:s_line_second_color="?attr/colorAppAccent"
-            app:s_line_thickness="4dp"
+            app:s_line_second_color="@color/amaranth"
+            app:s_line_thickness="3dp"
             app:s_marker_background_color="?attr/colorAppAccent"
             app:s_marker_circle_style="false"
             app:s_marker_width="8dp" />
@@ -78,7 +78,7 @@
             android:lines="3"
             android:paddingHorizontal="5dp"
             android:textColor="@color/textPrimary"
-            android:textSize="6pt" />
+            android:textSize="@dimen/description_text_size" />
 
         <app.simple.positional.sparkline.SparkLineLayout
             android:id="@+id/location_altitude_chart"
@@ -87,8 +87,8 @@
             app:s_gradient_line="true"
             app:s_line_bezier="0.5"
             app:s_line_color="?attr/colorAppAccent"
-            app:s_line_second_color="?attr/colorAppAccent"
-            app:s_line_thickness="4dp"
+            app:s_line_second_color="@color/amaranth"
+            app:s_line_thickness="3dp"
             app:s_marker_background_color="?attr/colorAppAccent"
             app:s_marker_circle_style="false"
             app:s_marker_width="8dp" />
