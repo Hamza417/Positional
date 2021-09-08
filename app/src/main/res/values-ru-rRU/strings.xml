@@ -76,6 +76,7 @@
     <string name="gps_source">Источник:</string>
     <string name="gps_accuracy">Точность:</string>
     <string name="gps_altitude">Высота:</string>
+    <string name="gps_latency">Задержка:</string>
     <string name="gps_bearing">Пеленг:</string>
     <string name="gps_displacement">Смещение:</string>
     <string name="gps_direction">Направление:</string>
@@ -97,6 +98,8 @@
     <string name="miles">мили</string>
     <string name="kilometer_hour">км/ч</string>
     <string name="miles_hour">миль/ч</string>
+    <string name="milliseconds">мс</string>
+    <string name="seconds">с</string>
     <!-- Alert -->
     <string name="info_copied">Скопировано в буфер обмена</string>
     <string name="info_error">Информация не может быть скопирована!!</string>

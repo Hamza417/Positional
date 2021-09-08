@@ -76,6 +76,7 @@
     <string name="gps_source">स्रोत:</string>
     <string name="gps_accuracy">सटीकता:</string>
     <string name="gps_altitude">उन्नतांश:</string>
+    <string name="gps_latency">विलंबता:</string>
     <string name="gps_bearing">वहन:</string>
     <string name="gps_displacement">विस्थापन:</string>
     <string name="gps_direction">दिशा:</string>
@@ -91,12 +92,14 @@
     <string name="gps_enabled">सक्षम</string>
     <string name="gps_disabled">निष्क्रिय</string>
     <!-- Units -->
-    <string name="meter">मि.</string>
-    <string name="kilometer">कि. मी.</string>
+    <string name="meter">मि०</string>
+    <string name="kilometer">कि० मी०</string>
     <string name="feet">फ़ीट</string>
     <string name="miles">मील</string>
     <string name="kilometer_hour">किमी/घं</string>
     <string name="miles_hour">मील/घं</string>
+    <string name="milliseconds">मि० से०</string>
+    <string name="seconds">से०</string>
     <!-- Alert -->
     <string name="info_copied">क्लिपबोर्ड पर कॉपी किया गया</string>
     <string name="info_error">जानकारी कॉपी नहीं की जा सकी!</string>

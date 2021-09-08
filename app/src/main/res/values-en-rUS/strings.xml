@@ -76,6 +76,7 @@
     <string name="gps_source">Source:</string>
     <string name="gps_accuracy">Accuracy:</string>
     <string name="gps_altitude">Altitude:</string>
+    <string name="gps_latency">Latency:</string>
     <string name="gps_bearing">Bearing:</string>
     <string name="gps_displacement">Displacement:</string>
     <string name="gps_direction">Direction:</string>
@@ -97,6 +98,8 @@
     <string name="miles">miles</string>
     <string name="kilometer_hour">km/h</string>
     <string name="miles_hour">mph</string>
+    <string name="milliseconds">ms</string>
+    <string name="seconds">s</string>
     <!-- Alert -->
     <string name="info_copied">Copied to Clipboard</string>
     <string name="info_error">Info couldn\'t be copied!!</string>
