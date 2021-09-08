@@ -195,7 +195,10 @@ class GPS : ScopedFragment() {
 
         providerStatus.text = fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
 
-        checkGooglePlayServices()
+        if(!LocationPrompt.checkGooglePlayServices(requireContext())) {
+            ErrorDialog.newInstance(getString(R.string.play_services_error))
+                    .show(childFragmentManager, "error_dialog")
+        }
 
         movementReset.setOnClickListener {
             it.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.button_pressed_scale))
@@ -637,17 +640,6 @@ class GPS : ScopedFragment() {
     private fun setLocationPin() {
         view?.findViewById<ImageView>(R.id.coordinates_icon)!!
                 .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
-    }
-
-    private fun checkGooglePlayServices(): Boolean {
-        val availability = GoogleApiAvailability.getInstance()
-        val resultCode = availability.isGooglePlayServicesAvailable(requireContext())
-        if (resultCode != ConnectionResult.SUCCESS) {
-            ErrorDialog.newInstance(getString(R.string.play_services_error))
-                    .show(childFragmentManager, "error_dialog")
-            return false
-        }
-        return true
     }
 
     private fun backPressed(value: Boolean) {
