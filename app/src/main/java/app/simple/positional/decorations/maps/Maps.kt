@@ -22,10 +22,10 @@ import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
-import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
+import app.simple.positional.util.LocationExtension
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -62,7 +62,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     var location: Location? = null
     private var latLng: LatLng? = null
     private var mapsCallbacks: MapsCallbacks? = null
-    private var marker: Bitmap? = null
+    var marker: Bitmap? = null
     private val viewHandler = Handler(Looper.getMainLooper())
     var onTouch: ((event: MotionEvent, b: Boolean) -> Unit)? = null
 
@@ -119,6 +119,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.googleMap = googleMap
+
         /**
          * Workaround for flashing of view when map is
          * Initialized
@@ -130,13 +131,15 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         else
             LatLng(lastLatitude, lastLongitude)
 
+        if (isCustomCoordinate) {
+            addMarker(latLng!!)
+        }
+
         googleMap.uiSettings.isCompassEnabled = false
         googleMap.uiSettings.isMapToolbarEnabled = false
         googleMap.uiSettings.isMyLocationButtonEnabled = false
 
         this.googleMap = googleMap
-
-        addMarker(latLng!!)
 
         if (!isCustomCoordinate) {
             if (location.isNotNull()) {
@@ -285,16 +288,23 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     fun addMarker(latLng: LatLng) {
         launch {
             withContext(Dispatchers.Default) {
-                if (context.isNotNull())
-                    marker = if (isCustomCoordinate) {
-                        R.drawable.ic_place_custom.toBitmapKeepingSize(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
-                    } else {
-                        if (location.isNotNull()) {
-                            LocationPins.locationsPins[GPSPreferences.getPinSkin()].toBitmapKeepingSize(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
-                        } else {
-                            R.drawable.ic_place_historical.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
-                        }
+                // if(!LocationExtension.getLocationStatus(context)) return@withContext
+
+                if (isCustomCoordinate) {
+                    marker = R.drawable.ic_place_custom
+                            .toBitmapKeepingSize(
+                                    context,
+                                    GPSPreferences.getPinSize(),
+                                    GPSPreferences.getPinOpacity())
+                } else {
+                    if (location.isNotNull()) {
+                        marker = LocationPins.locationsPins[GPSPreferences.getPinSkin()]
+                                .toBitmapKeepingSize(
+                                        context,
+                                        GPSPreferences.getPinSize(),
+                                        GPSPreferences.getPinOpacity())
                     }
+                }
             }
 
             if (googleMap.isNotNull()) {
@@ -312,6 +322,10 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 invalidate()
             }
         }
+    }
+
+    fun clear() {
+        googleMap?.clear()
     }
 
     private val mapMoved = object : Runnable {

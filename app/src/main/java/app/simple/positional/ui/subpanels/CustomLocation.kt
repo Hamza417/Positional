@@ -270,14 +270,10 @@ class CustomLocation : ScopedFragment() {
                 viewLifecycleOwner.lifecycleScope.launch {
                     withContext(Dispatchers.Default) {
                         kotlin.runCatching {
-                            if (latitudeInputEditText.text.toString().isNotEmpty() || longitudeInputEditText.text.toString().isNotEmpty()) {
-                                if (isValidLatitude(latitudeInputEditText.text.toString().toDouble()) && isValidLongitude(longitudeInputEditText.text.toString().toDouble())) {
-                                    MainPreferences.setCustomCoordinates(true)
-                                    MainPreferences.setLatitude(latitudeInputEditText.text.toString().toFloat())
-                                    MainPreferences.setLongitude(longitudeInputEditText.text.toString().toFloat())
-                                    MainPreferences.setAddress(addressInputEditText.text.toString().capitalizeText())
-                                }
-                            }
+                            MainPreferences.setCustomCoordinates(true)
+                            MainPreferences.setLatitude(locations.latitude.toFloat())
+                            MainPreferences.setLongitude(locations.longitude.toFloat())
+                            MainPreferences.setAddress(locations.address)
 
                             withContext(Dispatchers.Main) {
                                 requireActivity().finishAfterTransition()

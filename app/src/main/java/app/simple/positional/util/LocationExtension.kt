@@ -17,7 +17,8 @@ object LocationExtension {
         return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
             locationManager.isLocationEnabled
         } else {
-            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+                    locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         }
     }
 

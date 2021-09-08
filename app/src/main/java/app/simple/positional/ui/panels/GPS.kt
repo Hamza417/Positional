@@ -349,9 +349,12 @@ class GPS : ScopedFragment() {
         locationViewModel.provider.observe(viewLifecycleOwner, {
             providerStatus.text = fromHtml(
                     "<b>${getString(R.string.gps_status)}</b> ${
-                        if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
-                                R.string.gps_disabled
-                        )
+                        if (getLocationStatus(requireContext())) {
+                            getString(R.string.gps_enabled)
+                        } else {
+                            maps?.clear()
+                            getString(R.string.gps_disabled)
+                        }
                     }"
             )
 
@@ -560,19 +563,15 @@ class GPS : ScopedFragment() {
             true
         }
 
-        maps?.onTouch = { event, b ->
+        maps?.onTouch = { event, _ ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     maps?.unregister()
-                    println("Down")
                 }
                 MotionEvent.ACTION_UP -> {
-                    handler.postDelayed({
-                        if(bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_EXPANDED) {
-                            maps?.registerWithRunnable()
-                        }
-                    }, maps?.cameraSpeed?.toLong() ?: 500L)
-                    println("Up")
+                    if (bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_EXPANDED) {
+                        maps?.registerWithRunnable()
+                    }
                 }
             }
         }

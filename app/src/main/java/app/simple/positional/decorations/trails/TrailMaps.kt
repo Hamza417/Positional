@@ -27,6 +27,7 @@ import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
+import app.simple.positional.util.LocationExtension
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -207,6 +208,13 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         options!!.points.clear()
         googleMap?.clear()
         invalidate()
+    }
+
+    fun clearMarkers() {
+        if(!LocationExtension.getLocationStatus(context)) {
+            marker?.remove()
+            circle?.remove()
+        }
     }
 
     fun addMarker(latLng: LatLng) {

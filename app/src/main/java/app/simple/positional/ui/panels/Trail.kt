@@ -142,6 +142,11 @@ class Trail : ScopedFragment() {
             }
         })
 
+        locationViewModel.provider.observe(viewLifecycleOwner, {
+            maps?.clearMarkers()
+            tools.locationIconStatusUpdates()
+        })
+
         trailDataViewModel.trailDataDescendingWithInfo.observe(viewLifecycleOwner, {
             val adapter = AdapterTrailData(it)
 

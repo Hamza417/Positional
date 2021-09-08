@@ -9,6 +9,7 @@ import android.view.View
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.decorations.views.LocationButton
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
@@ -19,7 +20,7 @@ import app.simple.positional.util.ViewUtils.visible
 
 class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private lateinit var location: DynamicRippleImageButton
+    private lateinit var location: LocationButton
     private lateinit var remove: DynamicRippleImageButton
     private lateinit var wrap: DynamicRippleImageButton
     private lateinit var align: DynamicRippleImageButton
@@ -27,8 +28,6 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     private lateinit var compass: DynamicRippleImageButton
 
     private lateinit var trailCallbacks: TrailCallbacks
-
-    private var isFixed = false
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         setProperties()
@@ -138,22 +137,8 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
         }
     }
 
-    fun locationIndicatorUpdate(isFixed: Boolean) {
-        this.isFixed = isFixed
-        if (isFixed) {
-            location.setImageResource(R.drawable.ic_gps_fixed)
-        } else {
-            locationIconStatusUpdates()
-        }
-    }
-
-    fun locationIconStatusUpdates() {
-        if (LocationExtension.getLocationStatus(context)) {
-            location.setImageResource(R.drawable.ic_gps_not_fixed)
-        } else {
-            location.setImageResource(R.drawable.ic_gps_off)
-        }
-    }
+    fun locationIndicatorUpdate(isFixed: Boolean) = location.locationIndicatorUpdate(isFixed)
+    fun locationIconStatusUpdates() = location.locationIconStatusUpdate()
 
     fun setTrailCallbacksListener(trailCallbacks: TrailCallbacks) {
         this.trailCallbacks = trailCallbacks

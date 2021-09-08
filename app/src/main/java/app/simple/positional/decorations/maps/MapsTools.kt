@@ -3,12 +3,15 @@ package app.simple.positional.decorations.maps
 import android.animation.LayoutTransition
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.DecelerateInterpolator
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.decorations.views.LocationButton
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ImageLoader
@@ -18,14 +21,13 @@ import app.simple.positional.util.ViewUtils.gone
 class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var align: DynamicRippleImageButton
-    private lateinit var location: DynamicRippleImageButton
+    private lateinit var location: LocationButton
     private lateinit var compass: DynamicRippleImageButton
     private lateinit var bearing: DynamicRippleImageButton
     private lateinit var northOnly: DynamicRippleImageButton
 
-    private var isFixed = false
-
     private lateinit var mapsToolsCallbacks: MapsToolsCallbacks
+    private val viewHandler = Handler(Looper.getMainLooper())
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         setProperties()
@@ -115,22 +117,8 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         }
     }
 
-    fun locationIndicatorUpdate(isFixed: Boolean) {
-        this.isFixed = isFixed
-        if (isFixed) {
-            location.setImageResource(R.drawable.ic_gps_fixed)
-        } else {
-            locationIconStatusUpdates()
-        }
-    }
-
-    fun locationIconStatusUpdates() {
-        if (LocationExtension.getLocationStatus(context)) {
-            location.setImageResource(R.drawable.ic_gps_not_fixed)
-        } else {
-            location.setImageResource(R.drawable.ic_gps_off)
-        }
-    }
+    fun locationIndicatorUpdate(isFixed: Boolean) = location.locationIndicatorUpdate(isFixed)
+    fun locationIconStatusUpdates() = location.locationIconStatusUpdate()
 
     private fun updateCompassIcon(animate: Boolean) {
         if (GPSPreferences.isCompassRotation()) {
