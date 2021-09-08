@@ -614,7 +614,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
         if (isCompassRotation) {
             marker?.rotation = rotationAngle
-            //googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(latLng!!, googleMap?.cameraPosition?.zoom!!, googleMap!!.cameraPosition.tilt, rotationAngle)))
         }
     }
 

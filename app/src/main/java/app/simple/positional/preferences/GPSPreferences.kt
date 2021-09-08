@@ -110,7 +110,7 @@ object GPSPreferences {
         getSharedPreferences().edit().putBoolean(mapAutoCenter, boolean).apply()
     }
 
-    fun getMapAutoCenter(): Boolean {
+    fun isMapAutoCenter(): Boolean {
         return getSharedPreferences().getBoolean(mapAutoCenter, true)
     }
 

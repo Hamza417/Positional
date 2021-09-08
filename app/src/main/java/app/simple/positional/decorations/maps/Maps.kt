@@ -358,7 +358,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
     private val mapAutoCenter = object : Runnable {
         override fun run() {
-            if (GPSPreferences.getMapAutoCenter()) {
+            if (GPSPreferences.isMapAutoCenter()) {
                 if (isCustomCoordinate) {
                     moveMapCamera(LatLng(customLatitude, customLongitude), GPSPreferences.getMapZoom())
                 } else {

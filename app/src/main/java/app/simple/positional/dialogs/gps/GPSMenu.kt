@@ -60,12 +60,8 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         toggleSatellite.isChecked = GPSPreferences.isSatelliteOn()
         toggleHighContrast.isChecked = GPSPreferences.getHighContrastMap()
         toggleBuilding.isChecked = GPSPreferences.getShowBuildingsOnMap()
-        toggleAutoCenter.isChecked = GPSPreferences.getMapAutoCenter()
+        toggleAutoCenter.isChecked = GPSPreferences.isMapAutoCenter()
         toggleVolumeKeys.isChecked = GPSPreferences.isUsingVolumeKeys()
-
-        if(GPSPreferences.isCompassRotation()) {
-            toggleAutoCenterContainer.gone()
-        }
 
         toggleLabel.setOnCheckedChangeListener { isChecked ->
             GPSPreferences.setLabelMode(isChecked)

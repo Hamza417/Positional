@@ -50,7 +50,6 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
-import java.lang.Runnable
 import java.util.*
 
 class GPS : ScopedFragment() {
@@ -90,6 +89,7 @@ class GPS : ScopedFragment() {
     private var isMetric = true
     private var isFullScreen = false
     private var isCustomCoordinate = false
+    private var isCompassRotation = false
     private var customLatitude = 0.0
     private var customLongitude = 0.0
     private var lastLatitude = 0.0
@@ -152,6 +152,8 @@ class GPS : ScopedFragment() {
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
             customLongitude = MainPreferences.getCoordinates()[1].toDouble()
         }
+
+        isCompassRotation = GPSPreferences.isCompassRotation()
 
         lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
         lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
@@ -469,6 +471,10 @@ class GPS : ScopedFragment() {
             override fun onMapInitialized() {
                 if (savedInstanceState.isNotNull()) {
                     maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
+
+                    if (isCompassRotation && GPSPreferences.isMapAutoCenter()) {
+                        handler.postDelayed(compassMapCamera, 6000L)
+                    }
                 }
             }
 
@@ -502,10 +508,15 @@ class GPS : ScopedFragment() {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     maps?.unregister()
+                    handler.removeCallbacks(compassMapCamera)
                 }
                 MotionEvent.ACTION_UP -> {
                     if (bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_EXPANDED) {
                         maps?.registerWithRunnable()
+
+                        if(isCompassRotation && GPSPreferences.isMapAutoCenter()) {
+                            handler.postDelayed(compassMapCamera, 6000L)
+                        }
                     }
                 }
             }
@@ -536,6 +547,16 @@ class GPS : ScopedFragment() {
         infoText.setTextAnimation(getString(R.string.gps_info), 300)
     }
 
+    private val compassMapCamera = object : Runnable {
+        override fun run() {
+            if (isCompassRotation) {
+                maps?.resetCamera(GPSPreferences.getMapZoom())
+            }
+
+            handler.postDelayed(this, 6000L)
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         maps?.pause()
@@ -549,6 +570,7 @@ class GPS : ScopedFragment() {
         maps?.removeCallbacks { }
         maps?.destroy()
         handler.removeCallbacks(textAnimationRunnable)
+        handler.removeCallbacks(compassMapCamera)
         infoText.clearAnimation()
         handler.removeCallbacksAndMessages(null)
     }
@@ -636,6 +658,18 @@ class GPS : ScopedFragment() {
             }
             GPSPreferences.pinSkin -> {
                 setLocationPin()
+            }
+            GPSPreferences.compassRotation,
+            GPSPreferences.mapAutoCenter -> {
+                isCompassRotation = GPSPreferences.isCompassRotation()
+
+                if (isCompassRotation) {
+                    if (GPSPreferences.isMapAutoCenter()) {
+                        handler.postDelayed(compassMapCamera, 6000L)
+                    } else {
+                        handler.removeCallbacks(compassMapCamera)
+                    }
+                }
             }
             GPSPreferences.toolsGravity -> {
                 updateToolsGravity(requireView())
