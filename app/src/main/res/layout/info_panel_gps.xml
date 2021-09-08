@@ -142,6 +142,17 @@
                 android:text="@string/gps_altitude"
                 android:textSize="@dimen/info_text_secondary_size" />
 
+            <TextView
+                android:id="@+id/gps_time_taken"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:text="@string/gps_latency"
+                android:textSize="@dimen/info_text_secondary_size" />
+
         </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
         <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout

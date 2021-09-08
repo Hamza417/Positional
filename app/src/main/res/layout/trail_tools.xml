@@ -26,7 +26,7 @@
         android:id="@+id/current_location"
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
-        android:src="@drawable/ic_pin_01"
+        android:src="@drawable/ic_gps_not_fixed"
         android:tint="@color/iconColor" />
 
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton

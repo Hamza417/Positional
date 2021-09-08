@@ -13,6 +13,7 @@ import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.ImageLoader
+import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
 
@@ -26,6 +27,8 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     private lateinit var compass: DynamicRippleImageButton
 
     private lateinit var trailCallbacks: TrailCallbacks
+
+    private var isFixed = false
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         setProperties()
@@ -132,6 +135,23 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
             } else {
                 align.setImageResource(R.drawable.ic_arrow_left)
             }
+        }
+    }
+
+    fun locationIndicatorUpdate(isFixed: Boolean) {
+        this.isFixed = isFixed
+        if (isFixed) {
+            location.setImageResource(R.drawable.ic_gps_fixed)
+        } else {
+            locationIconStatusUpdates()
+        }
+    }
+
+    fun locationIconStatusUpdates() {
+        if (LocationExtension.getLocationStatus(context)) {
+            location.setImageResource(R.drawable.ic_gps_not_fixed)
+        } else {
+            location.setImageResource(R.drawable.ic_gps_off)
         }
     }
 

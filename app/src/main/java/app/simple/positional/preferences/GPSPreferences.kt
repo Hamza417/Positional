@@ -10,7 +10,7 @@ object GPSPreferences {
 
     private const val mapZoom = "map_zoom_value"
     private const val mapTilt = "map_tilt_value"
-    const val pinSize = "pin_size"
+    const val pinSize = "map_pin_size"
     const val pinOpacity = "pin_opacity"
     const val useBearingRotation = "use_bearing_rotation"
     const val mapAutoCenter = "auto_center_map"
@@ -151,7 +151,7 @@ object GPSPreferences {
     }
 
     fun getPinSize(): Int {
-        return getSharedPreferences().getInt(pinSize, 400)
+        return getSharedPreferences().getInt(pinSize, 4)
     }
 
     //--------------------------------------------------------------------------------------------------//

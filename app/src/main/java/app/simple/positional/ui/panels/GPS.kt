@@ -85,6 +85,7 @@ class GPS : ScopedFragment() {
     private lateinit var providerSource: TextView
     private lateinit var altitude: TextView
     private lateinit var bearing: TextView
+    private lateinit var latency: TextView
     private lateinit var displacement: TextView
     private lateinit var direction: TextView
     private lateinit var speed: TextView
@@ -134,6 +135,7 @@ class GPS : ScopedFragment() {
         providerSource = view.findViewById(R.id.provider_source)
         providerStatus = view.findViewById(R.id.provider_status)
         altitude = view.findViewById(R.id.gps_altitude)
+        latency = view.findViewById(R.id.gps_time_taken)
         bearing = view.findViewById(R.id.gps_bearing)
         displacement = view.findViewById(R.id.gps_displacement)
         direction = view.findViewById(R.id.gps_direction)
@@ -340,6 +342,10 @@ class GPS : ScopedFragment() {
             }
         })
 
+        locationViewModel.latency.observe(viewLifecycleOwner, {
+            latency.text = it
+        })
+
         locationViewModel.provider.observe(viewLifecycleOwner, {
             providerStatus.text = fromHtml(
                     "<b>${getString(R.string.gps_status)}</b> ${
@@ -371,7 +377,7 @@ class GPS : ScopedFragment() {
                         if (backPress!!.hasEnabledCallbacks()) {
                             backPress?.onBackPressed()
                         }
-                        maps?.register()
+                        maps?.registerWithRunnable()
                     }
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
                         /* no-op */
@@ -554,15 +560,17 @@ class GPS : ScopedFragment() {
             true
         }
 
-        view.findViewById<TouchWrapperCoordinatorLayout>(R.id.map_panel_container).onTouch = {
-            when (it.action) {
+        maps?.onTouch = { event, b ->
+            when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     maps?.unregister()
                     println("Down")
                 }
                 MotionEvent.ACTION_UP -> {
                     handler.postDelayed({
-                        maps?.register()
+                        if(bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_EXPANDED) {
+                            maps?.registerWithRunnable()
+                        }
                     }, maps?.cameraSpeed?.toLong() ?: 500L)
                     println("Up")
                 }

@@ -16,7 +16,7 @@ import app.simple.positional.util.PermissionUtils
 class LocationService : Service(), LocationListener {
     private var locationManager: LocationManager? = null
     private var handler = Handler(Looper.getMainLooper())
-    private var delay: Long = 1000
+    private var delay: Long = 100
 
     override fun onBind(intent: Intent): IBinder? {
         return null

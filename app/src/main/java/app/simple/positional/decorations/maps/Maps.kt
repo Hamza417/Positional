@@ -12,6 +12,7 @@ import android.location.Location
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.view.MotionEvent
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
@@ -22,6 +23,7 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
+import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -53,6 +55,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
     private lateinit var sensorMagneticField: Sensor
+    val sensorRegistrationRunnable = Runnable { register() }
 
     val cameraSpeed = 1000
     private var googleMap: GoogleMap? = null
@@ -61,6 +64,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private var mapsCallbacks: MapsCallbacks? = null
     private var marker: Bitmap? = null
     private val viewHandler = Handler(Looper.getMainLooper())
+    var onTouch: ((event: MotionEvent, b: Boolean) -> Unit)? = null
 
     private var isCustomCoordinate = false
     private var isBearingRotation = false
@@ -70,8 +74,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private var customLatitude = 0.0
     private var customLongitude = 0.0
 
-    val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
-    val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
+    private val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
+    private val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
 
     private val job = Job()
     override val coroutineContext: CoroutineContext
@@ -166,7 +170,15 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         }
 
         mapsCallbacks?.onMapInitialized()
-        register()
+
+        viewHandler.postDelayed(sensorRegistrationRunnable, 0L)
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        with(super.dispatchTouchEvent(ev)) {
+            onTouch?.invoke(ev, this)
+            return this
+        }
     }
 
     fun pause() {
@@ -181,15 +193,16 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     fun resume() {
         onResume()
         getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
-        register()
+        viewHandler.postDelayed(sensorRegistrationRunnable, 250L)
     }
 
     fun destroy() {
         onDestroy()
         getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         clearAnimation()
-        viewHandler.removeCallbacksAndMessages(null)
         viewHandler.removeCallbacks(mapMoved)
+        viewHandler.removeCallbacks(sensorRegistrationRunnable)
+        viewHandler.removeCallbacksAndMessages(null)
         job.cancel()
     }
 
@@ -274,10 +287,10 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             withContext(Dispatchers.Default) {
                 if (context.isNotNull())
                     marker = if (isCustomCoordinate) {
-                        R.drawable.ic_place_custom.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
+                        R.drawable.ic_place_custom.toBitmapKeepingSize(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                     } else {
                         if (location.isNotNull()) {
-                            LocationPins.locationsPins[GPSPreferences.getPinSkin()].toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
+                            LocationPins.locationsPins[GPSPreferences.getPinSkin()].toBitmapKeepingSize(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                         } else {
                             R.drawable.ic_place_historical.toBitmap(context, GPSPreferences.getPinSize(), GPSPreferences.getPinOpacity())
                         }
@@ -324,7 +337,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
         if (isCompassRotation) {
             unregister()
-            googleMap?.stopAnimation()
         }
 
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(
@@ -337,7 +349,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 cameraSpeed,
                 object : GoogleMap.CancelableCallback {
                     override fun onFinish() {
-                        register()
+                        println("Finished")
+                        viewHandler.postDelayed(sensorRegistrationRunnable, cameraSpeed.toLong())
                     }
 
                     override fun onCancel() {
@@ -406,7 +419,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         /* no-op */
     }
 
-    fun register() {
+    fun registerWithRunnable() {
+        viewHandler.removeCallbacks(sensorRegistrationRunnable)
+        viewHandler.postDelayed(sensorRegistrationRunnable, 500L)
+    }
+
+    private fun register() {
         if (!isRegistered) {
             if (haveAccelerometerSensor && haveMagnetometerSensor) {
                 unregister()
@@ -431,6 +449,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     }
 
     fun unregister() {
+        viewHandler.removeCallbacks(sensorRegistrationRunnable)
+
         if (isRegistered) {
             if (haveAccelerometerSensor && haveMagnetometerSensor) {
                 sensorManager.unregisterListener(this, sensorAccelerometer)
@@ -479,7 +499,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             GPSPreferences.compassRotation -> {
                 if (GPSPreferences.isCompassRotation()) {
                     isCompassRotation = true
-                    register()
+                    viewHandler.post(sensorRegistrationRunnable)
                 } else {
                     isCompassRotation = false
                     unregister()

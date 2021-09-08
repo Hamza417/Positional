@@ -9,16 +9,18 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
  * Workaround to intercept touch events on the [Maps] while the compass
  * is running to allow gestures support.
  */
-class TouchWrapperCoordinatorLayout: CoordinatorLayout {
+class TouchWrapperCoordinatorLayout : CoordinatorLayout {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    var onTouch: ((event : MotionEvent) -> Unit)? = null
+    var onTouch: ((event: MotionEvent, b: Boolean) -> Unit)? = null
 
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        onTouch?.invoke(event)
-        return super.dispatchTouchEvent(event)
+        with(super.dispatchTouchEvent(event)) {
+            onTouch?.invoke(event, this)
+            return this
+        }
     }
 }

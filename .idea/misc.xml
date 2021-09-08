@@ -50,6 +50,15 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_arrow_left.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_arrow_right.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_01.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_02.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_03.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_04.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_05.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_06.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_07.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_08.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_09.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_10.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_bearing.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_high.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_low.xml" value="0.2523076923076923" />
@@ -79,6 +88,7 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_compass_calibration.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_gps_menu.xml" value="0.22685185185185186" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_on_trail_add.xml" value="0.20185185185185187" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_pin_customization.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_rating.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_trail_name.xml" value="0.20185185185185187" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/expansion_dialog_movement.xml" value="0.24010416666666667" />

@@ -106,6 +106,8 @@ class Trail : ScopedFragment() {
 
         updateToolsGravity(view)
 
+        tools.locationIndicatorUpdate(false)
+
         trailRecyclerView.apply {
             setPadding(paddingLeft,
                     paddingTop + StatusBarHeight.getStatusBarHeight(resources),
@@ -134,6 +136,7 @@ class Trail : ScopedFragment() {
                         maps?.setFirstLocation(location)
                         maps?.location = location
                         maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
+                        tools.locationIndicatorUpdate(true)
                     }
                 }
             }

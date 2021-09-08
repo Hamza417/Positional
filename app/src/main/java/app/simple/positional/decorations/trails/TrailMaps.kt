@@ -19,7 +19,6 @@ import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter
 import app.simple.positional.math.Vector3
 import app.simple.positional.model.TrailData
-import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
@@ -148,13 +147,13 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
                     latLng!!,
                     TrailPreferences.getMapZoom(),
-                    TrailPreferences.getMapTilt(),
+                    0F,
                     0F)))
         }
 
         this.googleMap?.setOnCameraIdleListener {
             TrailPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
-            TrailPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
+            // TrailPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
             TrailPreferences.setMapBearing(this.googleMap?.cameraPosition!!.bearing)
             viewHandler.removeCallbacks(mapMoved)
             viewHandler.postDelayed(mapMoved, 6000)
@@ -402,7 +401,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private fun wrap(animate: Boolean) {
         kotlin.runCatching {
             lastZoom = TrailPreferences.getMapZoom()
-            lastTilt = TrailPreferences.getMapTilt()
+            // lastTilt = TrailPreferences.getMapTilt()
 
             val builder = LatLngBounds.Builder()
             for (latLng in currentPolyline) {
@@ -528,8 +527,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 addMarker(this)
                 googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
                         this,
-                        GPSPreferences.getMapZoom(),
-                        GPSPreferences.getMapTilt(),
+                        TrailPreferences.getMapZoom(),
+                        0F,
                         0F)))
 
                 latLng = this

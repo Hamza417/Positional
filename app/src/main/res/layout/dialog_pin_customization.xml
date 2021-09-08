@@ -87,7 +87,7 @@
             android:layout_marginHorizontal="@dimen/options_text_margin_start"
             android:layout_marginTop="@dimen/options_text_margin_start"
             android:layout_marginBottom="20dp"
-            android:max="800"
+            android:max="12"
             android:maxHeight="4dp"
             android:progressDrawable="@drawable/seek_bar"
             android:progressTint="?attr/colorAppAccent"
@@ -98,6 +98,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pins_view_pager"
             android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
             android:layout_height="150dp" />
 
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>

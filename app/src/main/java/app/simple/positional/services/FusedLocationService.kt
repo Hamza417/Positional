@@ -20,6 +20,7 @@ class FusedLocationService : Service() {
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
     private lateinit var handlerThread: HandlerThread
+    private var delay: Long = 100
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -32,8 +33,8 @@ class FusedLocationService : Service() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(applicationContext)
         locationRequest = LocationRequest.create()
-                .setInterval(1000L)
-                .setFastestInterval(1000L)
+                .setInterval(delay)
+                .setFastestInterval(delay)
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
         requestLastLocation()

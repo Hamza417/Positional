@@ -22,7 +22,7 @@ import app.simple.positional.constants.*
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.util.BitmapHelper.addLinearGradient
 import app.simple.positional.util.BitmapHelper.addRadialGradient
-import app.simple.positional.util.BitmapHelper.toBitmap
+import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 
 class SplashScreen : Fragment() {
 
@@ -71,6 +71,7 @@ class SplashScreen : Fragment() {
                 colorOne = LauncherBackground.vectorNightColors[randomNightValue][0]
                 colorTwo = LauncherBackground.vectorNightColors[randomNightValue][1]
                 launcherBackground.setImageResource(LauncherBackground.vectorBackgroundNight[randomNightValue])
+
                 val window: Window = requireActivity().window
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                 window.statusBarColor = Color.TRANSPARENT
@@ -81,12 +82,22 @@ class SplashScreen : Fragment() {
                 launcherBackground.setImageResource(LauncherBackground.vectorBackground[randomDayValue])
             }
             Configuration.UI_MODE_NIGHT_UNDEFINED -> {
-
+                colorOne = LauncherBackground.vectorColors[randomDayValue][0]
+                colorTwo = LauncherBackground.vectorColors[randomDayValue][1]
+                launcherBackground.setImageResource(LauncherBackground.vectorBackground[randomDayValue])
             }
         }
 
-        touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator.toBitmap(context = requireContext(), size = 400, 255).let { addRadialGradient(it, colorTwo) })
-        icon.setImageBitmap(LocationPins.locationsPins[GPSPreferences.getPinSkin()].toBitmap(context = requireContext(), size = 400, 255).let { addLinearGradient(it, intArrayOf(colorOne, colorTwo)) })
+        touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator
+                .toBitmapKeepingSize(context = requireContext(), 6).let {
+                    addRadialGradient(it, colorTwo)
+                })
+
+        icon.setImageBitmap(LocationPins.locationsPins[GPSPreferences.getPinSkin()]
+                .toBitmapKeepingSize(context = requireContext(), 6).let {
+                    addLinearGradient(it, intArrayOf(colorOne, colorTwo))
+                })
+
         icon.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.launcher_icon))
         text.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.image_in))
 

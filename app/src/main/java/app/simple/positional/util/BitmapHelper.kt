@@ -143,7 +143,27 @@ object BitmapHelper {
         return bitmap
     }
 
-    fun Int.toBitmapKeepingSize(context: Context, @IntRange(from = 1, to = 5) incrementFactor: Int): Bitmap {
+    /**
+     * Convert vector resource into Bitmap
+     *
+     * @param context [Context]
+     * @param incrementFactor Resolution/Dimension of the output bitmap
+     * @param alpha 0 - 255 opacity of output bitmap
+     * @return [Bitmap]
+     */
+    fun Int.toBitmapKeepingSize(context: Context, incrementFactor: Int, alpha: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(context, this)
+        val intrinsicWidth = drawable!!.intrinsicWidth * incrementFactor
+        val intrinsicHeight = drawable.intrinsicHeight * incrementFactor
+        drawable.setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+        val bitmap = Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.alpha = alpha
+        drawable.draw(canvas)
+        return bitmap
+    }
+
+    fun Int.toBitmapKeepingSize(context: Context, @IntRange(from = 1, to = 10) incrementFactor: Int): Bitmap {
         val vectorDrawable = ContextCompat.getDrawable(context, this)
         val intrinsicWidth = vectorDrawable!!.intrinsicWidth * incrementFactor
         val intrinsicHeight = vectorDrawable.intrinsicHeight * incrementFactor

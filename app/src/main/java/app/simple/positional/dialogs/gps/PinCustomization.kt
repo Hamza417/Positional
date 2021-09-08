@@ -44,7 +44,7 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
         pins.currentItem = GPSPreferences.getPinSkin()
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            size.min = 50
+            size.min = 1
             opacity.min = 10
         }
 
