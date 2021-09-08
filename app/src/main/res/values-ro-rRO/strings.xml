@@ -76,6 +76,7 @@
     <string name="gps_source">Sursa:</string>
     <string name="gps_accuracy">Precizie:</string>
     <string name="gps_altitude">Altitudine:</string>
+    <string name="gps_latency">Latență:</string>
     <string name="gps_bearing">Direcție:</string>
     <string name="gps_displacement">Deplasare:</string>
     <string name="gps_direction">Direcție:</string>
@@ -97,6 +98,8 @@
     <string name="miles">mile</string>
     <string name="kilometer_hour">km/h</string>
     <string name="miles_hour">mph</string>
+    <string name="milliseconds">ms</string>
+    <string name="seconds">s</string>
     <!-- Alert -->
     <string name="info_copied">Copiat în clipboard</string>
     <string name="info_error">Informațiile nu au putut fi copiate!!</string>
