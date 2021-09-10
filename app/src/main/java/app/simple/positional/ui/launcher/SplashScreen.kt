@@ -89,12 +89,12 @@ class SplashScreen : Fragment() {
         }
 
         touchIndicator.setImageBitmap(R.drawable.ic_touch_indicator
-                .toBitmapKeepingSize(context = requireContext(), 6).let {
+                .toBitmapKeepingSize(context = requireContext(), 6, 255).let {
                     addRadialGradient(it, colorTwo)
                 })
 
         icon.setImageBitmap(LocationPins.locationsPins[GPSPreferences.getPinSkin()]
-                .toBitmapKeepingSize(context = requireContext(), 6).let {
+                .toBitmapKeepingSize(context = requireContext(), 6, 255).let {
                     addLinearGradient(it, intArrayOf(colorOne, colorTwo))
                 })
 

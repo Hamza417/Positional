@@ -45,7 +45,7 @@ object BitmapHelper {
         val canvas = Canvas(updatedBitmap)
         canvas.drawBitmap(originalBitmap, 0f, 0f, null)
         val paint = Paint()
-        val shader = RadialGradient(200f, 200f, 200f, 0x000000, int, Shader.TileMode.CLAMP)
+        val shader = RadialGradient(width.div(2F), height.div(2F), 200f, 0x000000, int, Shader.TileMode.CLAMP)
         paint.shader = shader
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), paint)

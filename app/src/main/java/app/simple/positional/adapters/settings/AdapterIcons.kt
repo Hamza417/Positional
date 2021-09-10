@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.activities.alias.*
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.util.ViewUtils.invisible
 import app.simple.positional.util.ViewUtils.visible
 
@@ -41,7 +42,7 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val icon: ImageView = itemView.findViewById(R.id.adapter_icon_iv)
         val tick: ImageView = itemView.findViewById(R.id.adapter_icon_tick)
-        val container: LinearLayout = itemView.findViewById(R.id.adapter_icon_container)
+        val container: DynamicRippleLinearLayout = itemView.findViewById(R.id.adapter_icon_container)
     }
 
     private fun getIconStatus(context: Context): Int {
@@ -79,6 +80,9 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
             context.packageManager.getComponentEnabledSetting(ComponentName(context, IconTenAlias::class.java)) -> {
                 10
             }
+            context.packageManager.getComponentEnabledSetting(ComponentName(context, IconElevenAlias::class.java)) -> {
+                11
+            }
             else -> {
                 0
             }
@@ -97,6 +101,7 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconEightAlias::class.java), getStatusFromPosition(position == 8), PackageManager.DONT_KILL_APP)
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconNineAlias::class.java), getStatusFromPosition(position == 9), PackageManager.DONT_KILL_APP)
         context.packageManager.setComponentEnabledSetting(ComponentName(context, IconTenAlias::class.java), getStatusFromPosition(position == 10), PackageManager.DONT_KILL_APP)
+        context.packageManager.setComponentEnabledSetting(ComponentName(context, IconElevenAlias::class.java), getStatusFromPosition(position == 11), PackageManager.DONT_KILL_APP)
     }
 
     private fun getStatusFromPosition(position: Boolean): Int {
@@ -119,7 +124,8 @@ class AdapterIcons : RecyclerView.Adapter<AdapterIcons.Holder>() {
                 R.mipmap.ic_launcher_seven,
                 R.mipmap.ic_launcher_eight,
                 R.mipmap.ic_launcher_nine,
-                R.mipmap.ic_launcher_ten
+                R.mipmap.ic_launcher_ten,
+                R.mipmap.ic_launcher_eleven
         )
     }
 }

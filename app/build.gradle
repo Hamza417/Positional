@@ -50,8 +50,8 @@ android {
 
     compileSdkVersion 30
 
-    def appVersionCode = 142
-    def appVersionName = "positional_build_${appVersionCode}_Compass_Map_Rev_02"
+    def appVersionCode = 143
+    def appVersionName = "positional_build_${appVersionCode}_compass_map_rev_03"
 
     defaultConfig {
         applicationId "app.simple.positional"
@@ -110,7 +110,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     applicationVariants.all { variant ->
