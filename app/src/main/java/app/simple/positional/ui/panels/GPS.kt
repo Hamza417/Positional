@@ -364,10 +364,14 @@ class GPS : ScopedFragment() {
 
         tools.setOnToolsCallbacksListener(object : MapsToolsCallbacks {
             override fun onLocationClicked(view: View, longPressed: Boolean) {
-                if (longPressed) {
-                    maps?.resetCamera(18F)
+                if(LocationExtension.getLocationStatus(requireContext())) {
+                    if (longPressed) {
+                        maps?.resetCamera(18F)
+                    } else {
+                        maps?.resetCamera(GPSPreferences.getMapZoom())
+                    }
                 } else {
-                    maps?.resetCamera(GPSPreferences.getMapZoom())
+                    LocationPrompt.displayLocationSettingsRequest(requireActivity())
                 }
             }
         })

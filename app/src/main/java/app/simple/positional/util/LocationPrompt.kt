@@ -23,7 +23,7 @@ object LocationPrompt {
         }
     }
 
-    fun displayLocationSettingsRequest(context: Context, activity: Activity) {
+    fun displayLocationSettingsRequest(activity: Activity) {
         val locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 10000
@@ -32,7 +32,7 @@ object LocationPrompt {
         val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
         builder.setAlwaysShow(true)
 
-        LocationServices.getSettingsClient(context).checkLocationSettings(builder.build()).addOnCompleteListener { task ->
+        LocationServices.getSettingsClient(activity).checkLocationSettings(builder.build()).addOnCompleteListener { task ->
             try {
                 val response: LocationSettingsResponse = task.getResult(ApiException::class.java)
                 Log.i(TAG, "${response.locationSettingsStates}: All location settings are satisfied.")

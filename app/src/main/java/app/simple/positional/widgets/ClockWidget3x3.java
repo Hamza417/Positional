@@ -10,9 +10,11 @@ import android.os.Build;
 import android.os.SystemClock;
 
 import app.simple.positional.services.ClockWidgetService;
+import app.simple.positional.services.ClockWidgetService2x2;
+import app.simple.positional.services.ClockWidgetService3x3;
 
-public class ClockWidget extends AppWidgetProvider {
-    
+public class ClockWidget3x3 extends AppWidgetProvider {
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
@@ -20,7 +22,7 @@ public class ClockWidget extends AppWidgetProvider {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, getService(context));
     }
-    
+
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
@@ -32,31 +34,31 @@ public class ClockWidget extends AppWidgetProvider {
             context.startService(new Intent(context, ClockWidgetService.class));
         }
     }
-    
+
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
         cancelWidgetProcess(context);
     }
-    
+
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         super.onDeleted(context, appWidgetIds);
         cancelWidgetProcess(context);
     }
-    
+
     private void cancelWidgetProcess(Context context) {
         try {
-            context.stopService(new Intent(context, ClockWidgetService.class));
+            context.stopService(new Intent(context, ClockWidgetService3x3.class));
         } catch (IllegalStateException ignored) {
         }
         ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).cancel(getService(context));
     }
-    
+
     private PendingIntent getService(Context context) {
         return PendingIntent.getService(context,
-                1543,
-                new Intent(context, ClockWidgetService.class),
+                1533,
+                new Intent(context, ClockWidgetService3x3.class),
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

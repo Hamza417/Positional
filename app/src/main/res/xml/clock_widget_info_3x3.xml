@@ -2,6 +2,6 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/widget_clock"
     android:resizeMode="none"
-    android:minWidth="250dp"
-    android:minHeight="250dp"
+    android:minWidth="180dp"
+    android:minHeight="180dp"
     android:updatePeriodMillis="0" />

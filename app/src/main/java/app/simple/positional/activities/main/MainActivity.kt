@@ -148,7 +148,7 @@ class MainActivity : BaseActivity(),
 
     private fun showPrompt() {
         if (!getLocationStatus(this)) {
-            displayLocationSettingsRequest(this, this)
+            displayLocationSettingsRequest(this)
         }
     }
 

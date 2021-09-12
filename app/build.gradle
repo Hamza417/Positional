@@ -50,8 +50,8 @@ android {
 
     compileSdkVersion 30
 
-    def appVersionCode = 144
-    def appVersionName = "positional_build_${appVersionCode}_pins_rev_02"
+    def appVersionCode = 145
+    def appVersionName = "positional_build_${appVersionCode}"
 
     defaultConfig {
         applicationId "app.simple.positional"
@@ -157,10 +157,6 @@ dependencies {
     implementation "androidx.room:room-ktx:2.4.0-alpha04"
     kapt "androidx.room:room-compiler:2.4.0-alpha04"
     androidTestImplementation "androidx.room:room-testing:2.4.0-alpha04"
-
-    // Glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
     // Leak Canary -- debugImplementation because LeakCanary should only run in debug builds.
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'

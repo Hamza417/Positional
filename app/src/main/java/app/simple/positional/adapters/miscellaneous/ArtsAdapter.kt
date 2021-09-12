@@ -3,15 +3,12 @@ package app.simple.positional.adapters.miscellaneous
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.constants.LauncherBackground.vectorBackground
 import app.simple.positional.constants.LauncherBackground.vectorBackgroundNight
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
-import app.simple.positional.glide.utils.ArtLoader.loadArtDrawable
 import app.simple.positional.preferences.MainPreferences
 import com.google.android.material.card.MaterialCardView
 
@@ -25,7 +22,7 @@ class ArtsAdapter : RecyclerView.Adapter<ArtsAdapter.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.art.loadArtDrawable(list[holder.absoluteAdapterPosition])
+        holder.art.setImageResource(list[position])
     }
 
     override fun getItemCount(): Int {

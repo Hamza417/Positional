@@ -94,6 +94,7 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/bottom_sheet_compass.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/bottom_sheet_gps.xml" value="0.20462962962962963" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/bottom_sheet_trail.xml" value="0.24010416666666667" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/clock_widget_3x3.xml" value="0.21342592592592594" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_compass_calibration.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_custom_location_shortcut.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_gps_menu.xml" value="0.22685185185185186" />
@@ -126,11 +127,15 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/toolbar_map_panel.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/toolbar_trail_maps.xml" value="0.21851851851851853" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/trail_tools.xml" value="0.23055555555555557" />
-        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/widget_clock.xml" value="0.1" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/widget_clock.xml" value="0.2" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/widget_clock_2x2.xml" value="0.5" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/widget_clock_3x3.xml" value="0.25" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/widget_digital_clock.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/widget_suntime.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/mipmap-anydpi-v26/ic_launcher_ten.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/mipmap-anydpi-v26/ic_launcher_two.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/xml/clock_widget_info_202.xml" value="0.21342592592592594" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/xml/clock_widget_info_3x3.xml" value="0.21342592592592594" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/xml/digital_clock_widget_info.xml" value="0.24010416666666667" />
       </map>
     </option>

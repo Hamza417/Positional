@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clock_widget_wrapper"
-    android:layout_width="250dp"
-    android:layout_height="250dp">
+    android:layout_width="110dp"
+    android:layout_height="110dp">
 
     <ImageView
         android:id="@+id/widget_sweep_seconds"
@@ -24,29 +24,30 @@
 
     <ImageView
         android:id="@+id/widget_day_night_indicator"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="25dp"
         tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/widget_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="25dp"
         android:gravity="center"
-        android:textSize="16sp"
+        android:textSize="7sp"
         android:fontFamily="@font/clock_date"
         android:textColor="@color/textPrimary"
-        android:layout_gravity="center_horizontal|bottom"/>
+        android:layout_gravity="center_horizontal|bottom"
+        tools:ignore="SmallSp" />
 
     <ImageView
         android:id="@+id/widget_hour"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="25dp"
+        android:layout_margin="10dp"
         android:adjustViewBounds="true"
         tools:ignore="ContentDescription" />
 
@@ -55,7 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="25dp"
+        android:layout_margin="10dp"
         android:adjustViewBounds="true"
         tools:ignore="ContentDescription" />
 
@@ -64,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="25dp"
+        android:layout_margin="10dp"
         android:adjustViewBounds="true"
         tools:ignore="ContentDescription" />
 

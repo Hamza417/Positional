@@ -330,18 +330,22 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             }
 
             if (googleMap.isNotNull()) {
-                marker?.remove()
-                circle?.remove()
+                try {
+                    marker?.remove()
+                    circle?.remove()
 
-                marker = googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                    marker = googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
 
-                circle = googleMap?.addCircle(CircleOptions()
-                        .center(latLng)
-                        .radius(location?.accuracy?.toDouble() ?: 0.0)
-                        .clickable(false)
-                        .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
-                        .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
-                        .strokeWidth(3F))
+                    circle = googleMap?.addCircle(CircleOptions()
+                            .center(latLng)
+                            .radius(location?.accuracy?.toDouble() ?: 0.0)
+                            .clickable(false)
+                            .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
+                            .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
+                            .strokeWidth(3F))
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
                 invalidate()
             }

@@ -4,7 +4,6 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
-import android.appwidget.AppWidgetManager
 import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -14,7 +13,6 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.view.Display
-import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.core.app.NotificationCompat
@@ -25,13 +23,13 @@ import app.simple.positional.math.TimeConverter.getHoursInDegrees
 import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
 import app.simple.positional.math.TimeConverter.getSecondsInDegrees
+import app.simple.positional.model.ClockModel
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.util.BitmapHelper.rotateBitmap
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
-import app.simple.positional.widgets.ClockWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,13 +37,14 @@ import kotlinx.coroutines.withContext
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-class ClockWidgetService : Service() {
+open class ClockWidgetService : Service() {
 
     private var isScreenOn = true
     private val imageSize = 500
     private val serviceChannelId = "widget_channel"
     private val serviceChannelName = "Widget Channel"
 
+    internal var contextThemeWrapper: ContextThemeWrapper? = null
     private var mReceiver: BroadcastReceiver? = null
     private val handler = Handler(Looper.getMainLooper())
 
@@ -101,49 +100,46 @@ class ClockWidgetService : Service() {
     private val clockWidgetRunnable = object : Runnable {
         override fun run() {
             CoroutineScope(Dispatchers.Default).launch {
-                val ctw = ContextThemeWrapper(applicationContext, getAccentTheme())
+                contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
 
                 val zonedDateTime = ZonedDateTime.now()
-                val face = ctw.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
+                val face = contextThemeWrapper!!.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
                         .getBoolean(ClockPreferences.is24HourFace, false)
 
-                val needleSkins = ClockSkinsConstants.clockNeedleSkins[ctw.getSharedPreferences(
+                val needleSkins = ClockSkinsConstants.clockNeedleSkins[contextThemeWrapper!!.getSharedPreferences(
                         SharedPreferences.preferences, Context.MODE_PRIVATE).getInt(ClockPreferences.clockNeedle, 1)]
 
                 val hour = rotateBitmap(
-                        needleSkins[0].toBitmap(ctw, imageSize),
+                        needleSkins[0].toBitmap(contextThemeWrapper!!, imageSize),
                         if (face) {
                             getHoursInDegreesFor24(zonedDateTime)
                         } else {
                             getHoursInDegrees(zonedDateTime)
                         })
 
-                val minute = rotateBitmap(needleSkins[1].toBitmap(ctw, imageSize), getMinutesInDegrees(zonedDateTime))
-                val second = rotateBitmap(needleSkins[2].toBitmap(ctw, imageSize), getSecondsInDegrees(zonedDateTime, false))
+                val minute = rotateBitmap(needleSkins[1].toBitmap(contextThemeWrapper!!, imageSize), getMinutesInDegrees(zonedDateTime))
+                val second = rotateBitmap(needleSkins[2].toBitmap(contextThemeWrapper!!, imageSize), getSecondsInDegrees(zonedDateTime, false))
 
-                val trail = rotateBitmap(R.drawable.clock_trail.toBitmap(ctw, imageSize), getSecondsInDegrees(zonedDateTime, false))
-                val dayNight = ctw.getDayNightIndicator()
+                val trail = rotateBitmap(R.drawable.clock_trail.toBitmap(contextThemeWrapper!!, imageSize), getSecondsInDegrees(zonedDateTime, false))
+                val dayNight = contextThemeWrapper!!.getDayNightIndicator()
                 val faceBitmap = if (face) {
-                    R.drawable.clock_face_24.toBitmap(ctw, imageSize)
+                    R.drawable.clock_face_24.toBitmap(contextThemeWrapper!!, imageSize)
                 } else {
-                    R.drawable.clock_face.toBitmap(ctw, imageSize)
+                    R.drawable.clock_face.toBitmap(contextThemeWrapper!!, imageSize)
                 }
 
                 withContext(Dispatchers.Main) {
-                    val views = RemoteViews(ctw.packageName, R.layout.widget_clock)
+                    val clockModel = ClockModel()
 
-                    views.setImageViewBitmap(R.id.widget_hour, hour)
-                    views.setImageViewBitmap(R.id.widget_minutes, minute)
-                    views.setImageViewBitmap(R.id.widget_seconds, second)
-                    views.setImageViewBitmap(R.id.widget_sweep_seconds, trail)
-                    views.setImageViewBitmap(R.id.widget_day_night_indicator, dayNight)
-                    views.setImageViewBitmap(R.id.widget_clock_face, faceBitmap)
+                    clockModel.hour = hour
+                    clockModel.minute = minute
+                    clockModel.second = second
+                    clockModel.dayNight = dayNight
+                    clockModel.face = faceBitmap
+                    clockModel.trail = trail
+                    clockModel.date = zonedDateTime.format(DateTimeFormatter.ofPattern("EEE, MMM dd"))
 
-                    views.setTextViewText(R.id.widget_date, zonedDateTime.format(DateTimeFormatter.ofPattern("EEE, MMM dd")))
-
-                    val componentName = ComponentName(ctw, ClockWidget::class.java)
-                    val manager = AppWidgetManager.getInstance(ctw)
-                    manager.updateAppWidget(componentName, views)
+                    onDataGenerated(clockModel)
 
                     hour!!.recycle()
                     minute!!.recycle()
@@ -291,4 +287,9 @@ class ClockWidgetService : Service() {
         removeCallbacks()
         handler.post(clockWidgetRunnable)
     }
+
+    /**
+     * Post data to all subclasses
+     */
+    open fun onDataGenerated(clockModel: ClockModel) {}
 }

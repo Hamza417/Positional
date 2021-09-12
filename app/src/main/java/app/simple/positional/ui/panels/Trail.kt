@@ -40,6 +40,8 @@ import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isZero
+import app.simple.positional.util.LocationExtension
+import app.simple.positional.util.LocationPrompt
 import app.simple.positional.util.StatusBarHeight
 import app.simple.positional.util.TimeFormatter.formatDate
 import app.simple.positional.util.ViewUtils.invisible
@@ -251,14 +253,18 @@ class Trail : ScopedFragment() {
 
         tools.setTrailCallbacksListener(object : TrailTools.Companion.TrailCallbacks {
             override fun onLocation(reset: Boolean) {
-                if (location.isNotNull()) {
-                    if (reset) {
-                        maps?.resetCamera(18F)
-                    } else {
-                        maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
-                                TrailPreferences.getMapZoom(),
-                                1000)
+                if(LocationExtension.getLocationStatus(requireContext())) {
+                    if (location.isNotNull()) {
+                        if (reset) {
+                            maps?.resetCamera(18F)
+                        } else {
+                            maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
+                                    TrailPreferences.getMapZoom(),
+                                    1000)
+                        }
                     }
+                } else {
+                    LocationPrompt.displayLocationSettingsRequest(requireActivity())
                 }
             }
 

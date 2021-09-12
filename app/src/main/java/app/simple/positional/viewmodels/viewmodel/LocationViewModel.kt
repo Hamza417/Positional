@@ -19,6 +19,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.math.MathExtensions
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ArrayHelper.isLastValueSame
 import app.simple.positional.util.DMSConverter.latitudeAsDD
 import app.simple.positional.util.DMSConverter.latitudeAsDM
@@ -29,6 +30,7 @@ import app.simple.positional.util.DMSConverter.longitudeAsDMS
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.UTMConverter
 import app.simple.positional.util.isNetworkAvailable
+import com.google.android.gms.maps.model.LatLng
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
 import kotlinx.coroutines.Dispatchers
@@ -60,7 +62,16 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
     val mgrs = MutableLiveData<String>()
     val utm = MutableLiveData<UTMConverter.UTM>()
     val latency = MutableLiveData<Spannable>()
-    val address = MutableLiveData<String>()
+
+    val address : MutableLiveData<String> by lazy {
+        MutableLiveData<String>().also {
+            if(MainPreferences.isCustomCoordinate()) {
+                with(MainPreferences.getCoordinates()) {
+                    address(LatLng(this[0].toDouble(), this[1].toDouble()), true)
+                }
+            }
+        }
+    }
 
     val accuracyGraphData = MutableLiveData<ArrayList<Float>>()
     val altitudeGraphData = MutableLiveData<ArrayList<Float>>()
@@ -86,9 +97,16 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                                 dd(this)
                                 mgrs(this)
                                 utm(this)
-                                address(this)
 
                                 graphData(this)
+
+                                if (MainPreferences.isCustomCoordinate()) {
+                                    with(MainPreferences.getCoordinates()) {
+                                        address(LatLng(this[0].toDouble(), this[1].toDouble()), false)
+                                    }
+                                } else {
+                                    address(LatLng(latitude, longitude), false)
+                                }
 
                                 Log.d("LocationViewModel", "Location Posted")
                             }
@@ -196,9 +214,11 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         altitudeGraphData.postValue(manipulateDataForGraph(altitudeData, location.altitude.toFloat()))
     }
 
-    private fun address(location: Location) {
+    private fun address(latLng: LatLng, override: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (!this@LocationViewModel.address.hasActiveObservers()) return@launch
+            if(!override) {
+                if (!this@LocationViewModel.address.hasActiveObservers()) return@launch
+            }
 
             var address: String = getApplication<Application>().getString(R.string.not_available)
 
@@ -210,7 +230,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                         } else {
                             val geocoder = Geocoder(this, Locale.getDefault())
 
-                            with(geocoder.getFromLocation(location.latitude, location.longitude, 1)) {
+                            with(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)) {
                                 if (this != null && this.isNotEmpty()) {
                                     this[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
                                 } else {
@@ -227,7 +247,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                     }
                 }
             }
-            
+
             this@LocationViewModel.address.postValue(address)
         }
     }
