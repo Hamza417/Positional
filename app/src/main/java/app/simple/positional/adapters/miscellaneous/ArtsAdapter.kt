@@ -3,8 +3,9 @@ package app.simple.positional.adapters.miscellaneous
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.constants.LauncherBackground.vectorBackground
@@ -24,11 +25,16 @@ class ArtsAdapter : RecyclerView.Adapter<ArtsAdapter.Holder>() {
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.art.loadArtDrawable(list[position])
+        holder.art.loadArtDrawable(list[holder.absoluteAdapterPosition])
     }
 
     override fun getItemCount(): Int {
         return list.size
+    }
+
+    override fun onViewDetachedFromWindow(holder: Holder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.itemView.clearAnimation()
     }
 
     inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {

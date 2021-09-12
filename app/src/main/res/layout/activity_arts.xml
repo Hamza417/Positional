@@ -9,7 +9,6 @@
         android:clipToPadding="false"
         android:clipChildren="false"
         app:isFastScrollerRequired="false"
-        android:layoutAnimation="@anim/list_animation_controller"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
