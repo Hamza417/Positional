@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
 import app.simple.positional.activities.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.AccentColorsActivity
+import app.simple.positional.activities.subactivity.ArtsActivity
 import app.simple.positional.activities.subactivity.CustomLocationsActivity
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.callbacks.CoordinatesCallback
@@ -296,6 +297,11 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         skipSplashScreenContainer.setOnClickListener {
             toggleSkipSplashScreen.isChecked = !toggleSkipSplashScreen.isChecked
+        }
+
+        skipSplashScreenContainer.setOnLongClickListener {
+            startActivity(Intent(requireContext(), ArtsActivity::class.java))
+            true
         }
 
         rate.setOnClickListener {

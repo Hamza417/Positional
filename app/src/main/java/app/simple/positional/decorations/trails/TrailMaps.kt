@@ -27,6 +27,7 @@ import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
+import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.LocationExtension
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -242,7 +243,11 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                                 }
                             }
                         } else {
-                            R.drawable.ic_pin_bearing.toBitmapKeepingSize(context, incrementFactor)
+                            if(location!!.speed == 0.0F) {
+                                R.drawable.ic_pin_no_speed.toBitmapKeepingSize(context, incrementFactor)
+                            } else {
+                                R.drawable.ic_pin_bearing.toBitmapKeepingSize(context, incrementFactor)
+                            }
                         }
                     } else {
                         R.drawable.ic_place_historical.toBitmap(context, 60)

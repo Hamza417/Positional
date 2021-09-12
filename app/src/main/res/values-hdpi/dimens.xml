@@ -64,7 +64,7 @@
     <dimen name="bottom_nav_height">60dp</dimen>
     <dimen name="all_corner_radius">20dp</dimen>
     <dimen name="launcher_app_title">22sp</dimen>
-    <dimen name="launcher_app_icon_dimen">80dp</dimen>
+    <dimen name="launcher_app_icon_dimen">100dp</dimen>
     <dimen name="touch_indicator_size">100dp</dimen>
     <dimen name="license_text_size">18sp</dimen>
     <dimen name="license_check_indicator_dimen">30dp</dimen>

@@ -6,20 +6,20 @@
     android:viewportHeight="55.2">
     <path
         android:fillType="evenOdd"
-        android:pathData="M34,0C21.2,0 10.8,10.4 10.8,23.2c0,10.6 7.2,19.9 17.5,22.5c3.1,5.3 5.6,9.5 5.7,9.5c0.1,0 2.7,-4.3 5.7,-9.5C50,43.1 57.2,33.8 57.2,23.2C57.2,10.4 46.8,0 34,0C34,0 34,0 34,0C34,0 34,0 34,0zM34,8.6c8,0 14.6,6.5 14.6,14.6c0,8 -6.5,14.6 -14.6,14.6c0,0 0,0 0,0c-8,0 -14.6,-6.5 -14.6,-14.6C19.5,15.2 26,8.6 34,8.6z">
+        android:pathData="M34,0C21.2,0 10.8,10.4 10.8,23.2c0,8.3 4.4,15.8 11.2,19.9c4.8,2.9 8.7,6.9 11.7,11.6c0.2,0.3 0.3,0.5 0.3,0.5c0,0 0.2,-0.2 0.4,-0.5c3,-4.7 6.9,-8.7 11.7,-11.6c6.8,-4.1 11.1,-11.6 11.1,-19.8C57.2,10.4 46.8,0 34,0L34,0L34,0zM34,8.6c8,0 14.6,6.5 14.6,14.6c0,8 -6.5,14.6 -14.6,14.6l0,0c-8,0 -14.6,-6.5 -14.6,-14.6C19.5,15.2 26,8.6 34,8.6z">
 
         <aapt:attr name="android:fillColor">
             <gradient
                 android:endX="24"
-                android:endY="120"
+                android:endY="60"
                 android:startX="0"
                 android:startY="0"
                 android:type="linear">
                 <item
-                    android:color="#1B9CFF"
+                    android:color="#325372"
                     android:offset="0" />
                 <item
-                    android:color="#FFfd073a"
+                    android:color="#4c9acc"
                     android:offset="1" />
             </gradient>
         </aapt:attr>

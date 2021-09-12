@@ -253,7 +253,7 @@ class Trail : ScopedFragment() {
             override fun onLocation(reset: Boolean) {
                 if (location.isNotNull()) {
                     if (reset) {
-                        maps?.resetCamera(15F)
+                        maps?.resetCamera(18F)
                     } else {
                         maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
                                 TrailPreferences.getMapZoom(),

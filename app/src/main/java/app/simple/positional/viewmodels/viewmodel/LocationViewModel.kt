@@ -66,7 +66,6 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
     val altitudeGraphData = MutableLiveData<ArrayList<Float>>()
 
     private var lastLatencyInMilliseconds: Number = System.currentTimeMillis().toDouble()
-    private var addressThreshold = 0
 
     init {
         filter.addAction("location")
@@ -201,11 +200,6 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         viewModelScope.launch(Dispatchers.IO) {
             if (!this@LocationViewModel.address.hasActiveObservers()) return@launch
 
-            if(addressThreshold != 0) {
-                addressThreshold--
-                return@launch
-            }
-
             var address: String = getApplication<Application>().getString(R.string.not_available)
 
             runCatching {
@@ -218,7 +212,6 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
 
                             with(geocoder.getFromLocation(location.latitude, location.longitude, 1)) {
                                 if (this != null && this.isNotEmpty()) {
-                                    addressThreshold = 10
                                     this[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
                                 } else {
                                     getString(R.string.not_available)
