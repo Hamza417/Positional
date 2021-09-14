@@ -39,7 +39,6 @@
     <string name="local_week_of_year">Săptămâna anului:</string>
     <string name="utc_local_time_offset">Decalaj de timp local:</string>
     <string name="utc_current_time">Ora:</string>
-    <string name="utc_current_date">Data:</string>
     <string name="sun_azimuth">Azimut:</string>
     <string name="sun_distance">Distanța:</string>
     <string name="sun_altitude">Altitudine:</string>
