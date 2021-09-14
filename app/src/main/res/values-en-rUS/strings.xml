@@ -39,7 +39,6 @@
     <string name="local_week_of_year">Week of Year:</string>
     <string name="utc_local_time_offset">Local Time Offset:</string>
     <string name="utc_current_time">Time:</string>
-    <string name="utc_current_date">Date:</string>
     <string name="sun_azimuth">Azimuth:</string>
     <string name="sun_distance">Distance:</string>
     <string name="sun_altitude">Altitude:</string>
