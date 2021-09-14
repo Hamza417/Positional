@@ -540,7 +540,7 @@ class Clock : ScopedFragment() {
                                             .withLocale(patternLocale)).replace("Z", "+00:00")
                                 }<br>" +
                                         "<b>${getString(R.string.utc_current_time)}</b> ${getTimeWithSeconds(this)}<br>" +
-                                        "<b>${getString(R.string.utc_current_date)}</b> ${format(DateTimeFormatter.ofPattern("dd MMMM, yyyy").withLocale(patternLocale))}")
+                                        "<b>${getString(R.string.local_date)}</b> ${format(DateTimeFormatter.ofPattern("dd MMMM, yyyy").withLocale(patternLocale))}")
                             }
                 } catch (ignored: ParseException) {
                 }
