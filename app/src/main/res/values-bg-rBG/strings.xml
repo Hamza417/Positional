@@ -76,6 +76,7 @@
     <string name="gps_source">Източник:</string>
     <string name="gps_accuracy">Точност:</string>
     <string name="gps_altitude">Надм. височина:</string>
+    <string name="gps_latency">Закъснение:</string>
     <string name="gps_bearing">Посока:</string>
     <string name="gps_displacement">Изместване:</string>
     <string name="gps_direction">Посока:</string>
@@ -97,6 +98,8 @@
     <string name="miles">мили</string>
     <string name="kilometer_hour">км/ч</string>
     <string name="miles_hour">мили/ч</string>
+    <string name="milliseconds">мс</string>
+    <string name="seconds">с</string>
     <!-- Alert -->
     <string name="info_copied">Копирано в клипборда</string>
     <string name="info_error">Информацията не може да бъде копирана!!</string>
