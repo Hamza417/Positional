@@ -39,7 +39,6 @@
     <string name="local_week_of_year">Неделя года:</string>
     <string name="utc_local_time_offset">Смещение местного времени:</string>
     <string name="utc_current_time">Время:</string>
-    <string name="utc_current_date">Дата:</string>
     <string name="sun_azimuth">Азимут:</string>
     <string name="sun_distance">Расстояние:</string>
     <string name="sun_altitude">Высота:</string>
