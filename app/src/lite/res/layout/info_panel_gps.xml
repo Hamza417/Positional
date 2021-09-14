@@ -145,6 +145,17 @@
                 android:text="@string/gps_altitude"
                 android:textSize="@dimen/info_text_secondary_size" />
 
+            <TextView
+                android:id="@+id/gps_time_taken"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:text="@string/gps_latency"
+                android:textSize="@dimen/info_text_secondary_size" />
+
         </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
         <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
@@ -158,45 +169,14 @@
             android:orientation="vertical"
             android:padding="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/PrimaryTextView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:text="@string/gps_movement"
-                    android:textSize="@dimen/info_text_primary_size" />
-
-                <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-                    android:id="@+id/movement_reset"
-                    android:layout_width="@dimen/copy_button_dimensions"
-                    android:layout_height="@dimen/copy_button_dimensions"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="5dp"
-                    android:background="@drawable/ripple_btn"
-                    android:contentDescription="@string/button_reset"
-                    android:padding="@dimen/notification_button_padding"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_reset"
-                    app:tint="@color/iconColor" />
-
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/gps_displacement"
-                style="@style/SecondaryTextView"
+                style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/gps_displacement"
-                android:textSize="@dimen/info_text_secondary_size" />
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="@string/gps_movement"
+                android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
                 android:id="@+id/gps_bearing"
