@@ -39,7 +39,6 @@
     <string name="local_week_of_year">Седмица от годината:</string>
     <string name="utc_local_time_offset">Времева разлика:</string>
     <string name="utc_current_time">Час:</string>
-    <string name="utc_current_date">Дата:</string>
     <string name="sun_azimuth">Азимут:</string>
     <string name="sun_distance">Разстояние:</string>
     <string name="sun_altitude">Надморска височина:</string>

@@ -39,7 +39,6 @@
     <string name="local_week_of_year">سال کا ہفتہ:</string>
     <string name="utc_local_time_offset">مقامی وقت آفسیٹ:</string>
     <string name="utc_current_time">وقت:</string>
-    <string name="utc_current_date">تاریخ:</string>
     <string name="sun_azimuth">عزیموت:</string>
     <string name="sun_distance">دوری:</string>
     <string name="sun_altitude">بلندی:</string>

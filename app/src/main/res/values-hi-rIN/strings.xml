@@ -39,7 +39,6 @@
     <string name="local_week_of_year">साल का सप्ताह:</string>
     <string name="utc_local_time_offset">स्थानीय समय ऑफसेट:</string>
     <string name="utc_current_time">समय:</string>
-    <string name="utc_current_date">तिथि:</string>
     <string name="sun_azimuth">दिगंश:</string>
     <string name="sun_distance">दूरी:</string>
     <string name="sun_altitude">उन्नतांश:</string>
