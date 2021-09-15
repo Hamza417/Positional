@@ -3,7 +3,7 @@
     <!-- Panels -->
     <string name="clock">क्लॉक</string>
     <string name="compass">दिशा-सूचक</string>
-    <string name="gps">लोकेशन</string>
+    <string name="gps_location">लोकेशन</string>
     <string name="level">स्तर</string>
     <string name="settings">सेटिंग्स</string>
     <!-- Info Headers -->
@@ -22,7 +22,6 @@
     <string name="moon_dates">चाँद की तारीखें</string>
     <!-- GPS Information Headers -->
     <string name="gps_provider">प्रदाता</string>
-    <string name="gps_location">लोकेशन</string>
     <string name="gps_movement">चाल</string>
     <string name="gps_coordinates">निर्देशांक</string>
     <string name="gps_address">पता</string>
