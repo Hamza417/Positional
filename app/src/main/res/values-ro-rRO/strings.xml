@@ -3,7 +3,7 @@
     <!-- Panels -->
     <string name="clock">Ceas</string>
     <string name="compass">Busolă</string>
-    <string name="gps">Locație</string>
+    <string name="gps_location">Locație</string>
     <string name="level">Nivel</string>
     <string name="settings">Setări</string>
     <!-- Info Headers -->
@@ -22,7 +22,6 @@
     <string name="moon_dates">Datele Lunii</string>
     <!-- GPS Information Headers -->
     <string name="gps_provider">Furnizor</string>
-    <string name="gps_location">Locație</string>
     <string name="gps_movement">Mișcare</string>
     <string name="gps_coordinates">Coordonate</string>
     <string name="gps_address">Adresă</string>
