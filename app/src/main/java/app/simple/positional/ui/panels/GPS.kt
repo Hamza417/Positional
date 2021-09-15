@@ -58,7 +58,6 @@ class GPS : ScopedFragment() {
     private lateinit var scrollView: NestedScrollView
     private lateinit var toolbar: MapToolbar
     private lateinit var tools: MapsTools
-    private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
     private lateinit var dim: View
     private lateinit var locationBox: LinearLayout
@@ -140,7 +139,7 @@ class GPS : ScopedFragment() {
         if (requireActivity().intent.isNotNull()) {
             if (requireActivity().intent.action == "action_map_panel_full") {
                 isFullScreen = false
-                setFullScreen(true)
+                setFullScreen()
                 requireActivity().intent.action = null
             }
         }
@@ -158,7 +157,6 @@ class GPS : ScopedFragment() {
         lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
         lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
 
-        bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
 
         peekHeight = bottomSheetInfoPanel.peekHeight
@@ -345,9 +343,6 @@ class GPS : ScopedFragment() {
                 expandUp.alpha = 1 - slideOffset
                 expandUp.rotationX = -180 * slideOffset
                 dim.alpha = slideOffset
-                if (!isFullScreen) {
-                    bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                }
             }
         })
 
@@ -483,7 +478,7 @@ class GPS : ScopedFragment() {
             }
 
             override fun onMapClicked(view: MapView?) {
-                setFullScreen(true)
+                setFullScreen()
             }
         })
 
@@ -532,7 +527,7 @@ class GPS : ScopedFragment() {
         longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, requireContext())}")
     }
 
-    private fun setFullScreen(forBottomBar: Boolean) {
+    private fun setFullScreen() {
         if (isFullScreen) {
             toolbar.show()
             bottomSheetInfoPanel.peekHeight = peekHeight
@@ -541,9 +536,6 @@ class GPS : ScopedFragment() {
             bottomSheetInfoPanel.peekHeight = 0
         }
 
-        if (forBottomBar) {
-            bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
-        }
         isFullScreen = !isFullScreen
     }
 
@@ -622,7 +614,7 @@ class GPS : ScopedFragment() {
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         if (savedInstanceState.isNotNull()) {
             isFullScreen = !savedInstanceState!!.getBoolean("fullscreen")
-            setFullScreen(false)
+            setFullScreen()
         }
         super.onViewStateRestored(savedInstanceState)
     }

@@ -63,7 +63,6 @@ class Trail : ScopedFragment() {
     private lateinit var tools: TrailTools
     private lateinit var trailRecyclerView: RecyclerView
     private lateinit var bottomSheetPanel: BottomSheetBehavior<CoordinatorLayout>
-    private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var expandUp: ImageView
     private lateinit var art: ImageView
     private lateinit var dim: View
@@ -93,7 +92,6 @@ class Trail : ScopedFragment() {
         expandUp = view.findViewById(R.id.expand_up)
         art = view.findViewById(R.id.art)
         dim = view.findViewById(R.id.dim)
-        bottomSheetSlide = requireActivity() as BottomSheetSlide
 
         currentTrail = TrailPreferences.getCurrentTrail()
         val trailDataFactory = TrailDataFactory(currentTrail!!, requireActivity().application)
@@ -245,9 +243,6 @@ class Trail : ScopedFragment() {
                 trailRecyclerView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
                 dim.alpha = slideOffset
-                if (!isFullScreen) {
-                    bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                }
             }
         })
 
@@ -326,7 +321,7 @@ class Trail : ScopedFragment() {
             }
 
             override fun onMapClicked() {
-                setFullScreen(true)
+                setFullScreen()
             }
 
             override fun onMapLongClicked(latLng: LatLng) {
@@ -384,7 +379,7 @@ class Trail : ScopedFragment() {
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         if (savedInstanceState.isNotNull()) {
             isFullScreen = !savedInstanceState!!.getBoolean("fullscreen")
-            setFullScreen(false)
+            setFullScreen()
             bottomSheetPanel.state = savedInstanceState.getInt("bottom_sheet_state")
         }
         super.onViewStateRestored(savedInstanceState)
@@ -410,7 +405,7 @@ class Trail : ScopedFragment() {
         handler.removeCallbacksAndMessages(null)
     }
 
-    private fun setFullScreen(forBottomBar: Boolean) {
+    private fun setFullScreen() {
         if (isFullScreen) {
             toolbar.show()
             bottomSheetPanel.peekHeight = peekHeight
@@ -419,9 +414,6 @@ class Trail : ScopedFragment() {
             bottomSheetPanel.peekHeight = 0
         }
 
-        if (forBottomBar) {
-            bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
-        }
         isFullScreen = !isFullScreen
     }
 

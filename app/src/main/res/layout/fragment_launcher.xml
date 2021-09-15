@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/launcher_act"
+    android:id="@+id/app_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -36,8 +36,8 @@
             android:layout_width="@dimen/launcher_app_icon_dimen"
             android:layout_height="@dimen/launcher_app_icon_dimen"
             android:layout_gravity="center"
-            android:layout_margin="20dp"
             android:src="@drawable/ic_pin_01"
+            android:transitionName="launcher_icon"
             tools:ignore="ContentDescription" />
     </LinearLayout>
 

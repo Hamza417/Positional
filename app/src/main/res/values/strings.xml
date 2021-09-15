@@ -2,7 +2,7 @@
     <!-- Panels -->
     <string name="clock">Clock</string>
     <string name="compass">Compass</string>
-    <string name="gps">Location</string>
+    <string name="gps_location">Location</string>
     <string name="level">Level</string>
     <string name="settings">Settings</string>
 
@@ -24,7 +24,6 @@
 
     <!-- GPS Information Headers -->
     <string name="gps_provider">Provider</string>
-    <string name="gps_location">Location</string>
     <string name="gps_movement">Movement</string>
     <string name="gps_coordinates">Coordinates</string>
     <string name="gps_address">Address</string>

@@ -95,7 +95,6 @@ class Clock : ScopedFragment() {
 
     private lateinit var handler: Handler
     private var backPress: OnBackPressedDispatcher? = null
-    private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var locationViewModel: LocationViewModel
 
     var delay: Long = 1000
@@ -148,7 +147,6 @@ class Clock : ScopedFragment() {
         moonIlluminationData = view.findViewById(R.id.moon_illumination_data)
         moonDatesData = view.findViewById(R.id.moon_dates_data)
 
-        bottomSheetSlide = requireActivity() as BottomSheetSlide
         scrollView = view.findViewById(R.id.clock_panel_scrollview)
         scrollView.alpha = 0f
         expandUp = view.findViewById(R.id.expand_up_clock_sheet)
@@ -221,7 +219,6 @@ class Clock : ScopedFragment() {
                 scrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
                 view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset)
             }
         })
 

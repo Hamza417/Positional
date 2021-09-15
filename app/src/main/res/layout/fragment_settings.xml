@@ -9,7 +9,6 @@
         android:id="@+id/settings_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_nav_height"
         android:animateLayoutChanges="true"
         android:clipChildren="false"
         android:clipToPadding="false"

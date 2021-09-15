@@ -24,7 +24,7 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
         } else {
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                    .replace(R.id.launcher_act, License.newInstance(), "license")
+                    .replace(R.id.app_container, License.newInstance(), "license")
                     .commit()
         }
     }
@@ -63,7 +63,7 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
         } else {
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                    .replace(R.id.launcher_act, SplashScreen.newInstance(), "launcher")
+                    .replace(R.id.app_container, SplashScreen.newInstance(), "launcher")
                     .commit()
         }
     }

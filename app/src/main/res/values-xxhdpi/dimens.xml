@@ -9,7 +9,7 @@
     <!-- Information Panel -->
     <dimen name="info_text_item_margin_horizontal">0dp</dimen>
     <dimen name="info_text_item_margin_vertical">5dp</dimen>
-    <dimen name="peek_height">150dp</dimen>
+    <dimen name="peek_height">70dp</dimen>
     <dimen name="expand_up_image_size">30dp</dimen>
     <dimen name="info_text_primary_size">40sp</dimen>
     <dimen name="info_text_secondary_size">18sp</dimen>

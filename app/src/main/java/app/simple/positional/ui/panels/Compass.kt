@@ -62,7 +62,6 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private var handler = Handler(Looper.getMainLooper())
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
-    private lateinit var bottomSheetSlide: BottomSheetSlide
     private var objectAnimator: ObjectAnimator? = null
     private var backPress: OnBackPressedDispatcher? = null
     private var calibrationDialog: CompassCalibration? = null
@@ -152,7 +151,6 @@ class Compass : ScopedFragment(), SensorEventListener {
         showDirectionCode = CompassPreferences.getDirectionCode()
         isGimbalLock = CompassPreferences.isUsingGimbalLock()
 
-        bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -253,8 +251,6 @@ class Compass : ScopedFragment(), SensorEventListener {
                 compassListScrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
                 dim.alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset)
-                //toolbar.translationY = toolbar.height * -slideOffset
             }
         })
 

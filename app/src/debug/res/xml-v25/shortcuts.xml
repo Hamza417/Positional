@@ -27,8 +27,8 @@
         android:enabled="true"
         android:icon="@drawable/sc_03_gps"
         android:shortcutId="gps"
-        android:shortcutLongLabel="@string/gps"
-        android:shortcutShortLabel="@string/gps">
+        android:shortcutLongLabel="@string/gps_location"
+        android:shortcutShortLabel="@string/gps_location">
         <intent
             android:action="open_gps"
             android:targetClass="app.simple.positional.activities.main.LauncherActivity"

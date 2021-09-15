@@ -23,6 +23,7 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.util.BitmapHelper.addLinearGradient
 import app.simple.positional.util.BitmapHelper.addRadialGradient
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
+import app.simple.positional.util.FragmentHelper
 
 class SplashScreen : Fragment() {
 
@@ -45,7 +46,7 @@ class SplashScreen : Fragment() {
         touchIndicator = view.findViewById(R.id.touch_indicator)
         icon = view.findViewById(R.id.launcher_icon)
         text = view.findViewById(R.id.launcher_text)
-        launcherContainer = view.findViewById(R.id.launcher_act)
+        launcherContainer = view.findViewById(R.id.app_container)
 
         return view
     }
@@ -140,7 +141,12 @@ class SplashScreen : Fragment() {
              * @see Handler.removeCallbacksAndMessages
              */
             if (requireActivity().isActivityFinishing()) return@postDelayed
-            runIntent()
+
+            FragmentHelper.openFragment(
+                    requireActivity().supportFragmentManager,
+                    MainScreen.newInstance(),
+                    icon
+            )
         }, delay)
     }
 
