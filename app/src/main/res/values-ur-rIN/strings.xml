@@ -3,7 +3,7 @@
     <!-- Panels -->
     <string name="clock">گھڑی</string>
     <string name="compass">کمپاس</string>
-    <string name="gps">مقام</string>
+    <string name="gps_location">مقام</string>
     <string name="level">سطح</string>
     <string name="settings">ملاحظہ کریں</string>
     <!-- Info Headers -->
@@ -22,7 +22,6 @@
     <string name="moon_dates">چاند کی تاریخیں</string>
     <!-- GPS Information Headers -->
     <string name="gps_provider">ذریعہ</string>
-    <string name="gps_location">مقام</string>
     <string name="gps_movement">حرکت</string>
     <string name="gps_coordinates">نقاط</string>
     <string name="gps_address">پتہ</string>

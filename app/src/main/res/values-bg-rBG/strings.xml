@@ -3,7 +3,7 @@
     <!-- Panels -->
     <string name="clock">Часовник</string>
     <string name="compass">Компас</string>
-    <string name="gps">Местоположение</string>
+    <string name="gps_location">Местоположение</string>
     <string name="level">Ниво</string>
     <string name="settings">Настройки</string>
     <!-- Info Headers -->
@@ -22,7 +22,6 @@
     <string name="moon_dates">Лунни дати</string>
     <!-- GPS Information Headers -->
     <string name="gps_provider">Доставчик</string>
-    <string name="gps_location">Местоположение</string>
     <string name="gps_movement">Движения</string>
     <string name="gps_coordinates">Координати</string>
     <string name="gps_address">Адрес</string>
