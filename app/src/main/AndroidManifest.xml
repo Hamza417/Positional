@@ -349,34 +349,60 @@
         <service
             android:name=".services.LocationService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="location"
+            android:icon="@drawable/ic_pin_01"
+            android:label="@string/location_provider"
+            android:logo="@drawable/ic_pin_01"
+            android:stopWithTask="true" />
 
         <service
             android:name=".services.FusedLocationService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="location"
+            android:icon="@drawable/ic_pin_01"
+            android:label="@string/fused_location_provider"
+            android:stopWithTask="true" />
 
         <service
             android:name=".services.ClockWidgetService2x2"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="dataSync"
+            android:icon="@drawable/ic_access_time"
+            android:label="@string/clock"
+            android:stopWithTask="false" />
 
         <service
             android:name=".services.ClockWidgetService3x3"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="dataSync"
+            android:icon="@drawable/ic_access_time"
+            android:label="@string/clock"
+            android:stopWithTask="false" />
 
         <service
             android:name=".services.ClockWidgetService4x4"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="dataSync"
+            android:icon="@drawable/ic_access_time"
+            android:label="@string/clock"
+            android:stopWithTask="false" />
 
         <!-- Widgets -->
 
         <receiver
             android:name=".widgets.ClockWidget4x4"
             android:exported="false"
-            android:icon="@drawable/widget_clock_preview"
+            android:icon="@drawable/ic_access_time"
             android:label="@string/clock">
 
             <intent-filter>
@@ -391,7 +417,7 @@
         <receiver
             android:name=".widgets.ClockWidget2x2"
             android:exported="false"
-            android:icon="@drawable/widget_clock_preview"
+            android:icon="@drawable/ic_access_time"
             android:label="@string/clock">
 
             <intent-filter>
@@ -406,7 +432,7 @@
         <receiver
             android:name=".widgets.ClockWidget3x3"
             android:exported="false"
-            android:icon="@drawable/widget_clock_preview"
+            android:icon="@drawable/ic_access_time"
             android:label="@string/clock">
 
             <intent-filter>

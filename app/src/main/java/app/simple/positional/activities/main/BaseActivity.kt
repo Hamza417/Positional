@@ -26,9 +26,6 @@ import android.os.StrictMode.VmPolicy
 
 import android.os.StrictMode
 
-
-
-
 open class BaseActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBaseContext: Context) {
