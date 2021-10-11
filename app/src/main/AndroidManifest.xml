@@ -306,38 +306,52 @@
 
         <activity
             android:name=".activities.main.LauncherActivity"
+            android:colorMode="wideColorGamut"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:targetApi="o" />
 
         <activity
             android:name=".activities.main.MainActivity"
+            android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.TimezonePickerActivity"
+            android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.CustomLocationsActivity"
+            android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.WebPageViewerActivity"
+            android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.TrailsViewerActivity"
+            android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.AccentColorsActivity"
+            android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.ArtsActivity"
