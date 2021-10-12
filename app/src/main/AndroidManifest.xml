@@ -349,14 +349,16 @@
         <activity
             android:name=".activities.subactivity.AccentColorsActivity"
             android:colorMode="wideColorGamut"
-            android:exported="false"
+            android:exported="true"
             android:screenOrientation="portrait"
             tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.ArtsActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
+            android:colorMode="wideColorGamut"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            tools:targetApi="o" />
 
         <!-- Services -->
 

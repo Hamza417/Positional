@@ -18,7 +18,6 @@ class ArtsActivity: BaseActivity() {
         viewPager2 = findViewById(R.id.arts_view_pager)
 
         viewPager2.adapter = ArtsAdapter()
-
         viewPager2.setCurrentItem(MainPreferences.getCurrentArt(), false)
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

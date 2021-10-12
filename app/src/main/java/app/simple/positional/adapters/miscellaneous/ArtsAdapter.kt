@@ -1,5 +1,6 @@
 package app.simple.positional.adapters.miscellaneous
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,11 @@ class ArtsAdapter : RecyclerView.Adapter<ArtsAdapter.Holder>() {
                 .toBitmapKeepingSize(holder.itemView.context, 6, 255).let {
                     BitmapHelper.addLinearGradient(it, intArrayOf(colors[position][0], colors[position][1]))
                 })
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            holder.container.outlineAmbientShadowColor = colors[position][0]
+            holder.container.outlineSpotShadowColor = colors[position][0]
+        }
     }
 
     override fun getItemCount(): Int {
