@@ -1,33 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/arts_container"
+<app.simple.positional.decorations.padding.PaddingAwareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:animateLayoutChanges="true"
-    app:cardBackgroundColor="@color/toolbarBackground"
-    android:layout_margin="@dimen/options_container_horizontal_padding"
-    app:cardElevation="10dp">
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/options_container_horizontal_padding"
-        android:drawablePadding="@dimen/options_container_horizontal_padding"
-        android:fontFamily="@font/logo"
-        android:gravity="center_vertical"
-        android:text="@string/app_name"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/settings_secondary_text_size"
-        app:drawableStartCompat="@drawable/ic_pin_01" />
-
-    <ImageView
-        android:id="@+id/art"
+    <com.google.android.material.card.MaterialCardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/arts_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:adjustViewBounds="true"
-        tools:ignore="ContentDescription" />
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:animateLayoutChanges="true"
+        app:cardBackgroundColor="@color/toolbarBackground"
+        app:cardElevation="10dp">
 
-</com.google.android.material.card.MaterialCardView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="75dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/launcher_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/logo"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/textSecondary"
+                android:textSize="@dimen/launcher_app_title" />
+
+            <ImageView
+                android:id="@+id/arts_icon"
+                android:layout_width="@dimen/launcher_app_icon_dimen"
+                android:layout_height="@dimen/launcher_app_icon_dimen"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_pin_01"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/art"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="50dp"
+            android:adjustViewBounds="true"
+            tools:ignore="ContentDescription" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</app.simple.positional.decorations.padding.PaddingAwareFrameLayout>

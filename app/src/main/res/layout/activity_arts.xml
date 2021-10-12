@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <app.simple.positional.decorations.views.CustomRecyclerView
-        android:id="@+id/arts_recycler_view"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/arts_view_pager"
         android:clipToPadding="false"
         android:clipChildren="false"
         app:isFastScrollerRequired="false"
+        android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

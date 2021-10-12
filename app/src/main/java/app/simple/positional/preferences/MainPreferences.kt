@@ -21,6 +21,7 @@ object MainPreferences {
     private const val skipSplashScreen = "skip_splash_screen"
     private const val ratingDialog = "is_showing_rating_dialog"
     private const val wideColor = "is_wide_color_gamut"
+    private const val currentArt = "current_art_position"
 
     const val isCustomCoordinate = "is_custom_coordinate_set"
     const val locationProvider = "location_provider"
@@ -240,5 +241,15 @@ object MainPreferences {
 
     fun isWideColorGamut(): Boolean {
         return getSharedPreferences().getBoolean(wideColor, false)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setCurrentArt(value: Int) {
+        getSharedPreferences().edit().putInt(currentArt, value).apply()
+    }
+
+    fun getCurrentArt(): Int {
+        return getSharedPreferences().getInt(currentArt, 0)
     }
 }
