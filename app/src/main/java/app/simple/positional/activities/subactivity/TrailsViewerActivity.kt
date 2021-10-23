@@ -2,7 +2,7 @@ package app.simple.positional.activities.subactivity
 
 import android.os.Bundle
 import app.simple.positional.R
-import app.simple.positional.activities.main.BaseActivity
+import app.simple.positional.extensions.activity.BaseActivity
 import app.simple.positional.ui.subpanels.Trails
 import app.simple.positional.util.ConditionUtils.isNull
 

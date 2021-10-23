@@ -5,6 +5,7 @@ import android.os.Bundle
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.LicenceStatusCallback
+import app.simple.positional.extensions.activity.BaseActivity
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.MainPreferences.getLicenceStatus

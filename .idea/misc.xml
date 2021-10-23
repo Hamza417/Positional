@@ -29,6 +29,7 @@
         <entry key="..\:/Android_Apps/Positional/app/src/full/res/drawable/launcher_day_69.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/full/res/drawable/launcher_day_70.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/full/res/drawable/launcher_day_71.xml" value="0.2523076923076923" />
+        <entry key="..\:/Android_Apps/Positional/app/src/full/res/drawable/launcher_day_72.xml" value="0.22465753424657534" />
         <entry key="..\:/Android_Apps/Positional/app/src/lite/res/layout/info_panel_gps.xml" value="0.21342592592592594" />
         <entry key="..\:/Android_Apps/Positional/app/src/lite/res/layout/pref_configuration.xml" value="0.23055555555555557" />
         <entry key="..\:/Android_Apps/Positional/app/src/lite/res/layout/pref_contribute.xml" value="0.24010416666666667" />
@@ -51,11 +52,16 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_seconds.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_trail.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_trail_indicator.xml" value="0.25625" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/fs_md2_thumb.xml" value="0.22465753424657534" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/fs_md2_track.xml" value="0.22465753424657534" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/fs_thumb.xml" value="0.22465753424657534" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/fs_track.xml" value="0.22465753424657534" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_arrow_ind_left.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_arrow_ind_right.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_arrow_left.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_arrow_right.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_clock.xml" value="0.22777777777777777" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_label.xml" value="0.22465753424657534" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_01.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_02.xml" value="0.25625" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/ic_pin_03.xml" value="0.25625" />
@@ -88,10 +94,11 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/activity_launcher.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/activity_main.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/adapter_accent_colors.xml" value="0.2364102564102564" />
-        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/adapter_arts.xml" value="0.24010416666666667" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/adapter_arts.xml" value="0.21050228310502284" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/adapter_bottom_bar.xml" value="0.2364102564102564" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/adapter_icons.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/adapter_locations.xml" value="0.24010416666666667" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/adapter_timezone.xml" value="0.21342592592592594" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/bottom_sheet_clock.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/bottom_sheet_compass.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/bottom_sheet_gps.xml" value="0.20462962962962963" />
@@ -103,6 +110,7 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_on_trail_add.xml" value="0.20185185185185187" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_pin_customization.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_rating.xml" value="0.24010416666666667" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_trail_menu.xml" value="0.21342592592592594" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/dialog_trail_name.xml" value="0.20185185185185187" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/expansion_dialog_location.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/expansion_dialog_movement.xml" value="0.24010416666666667" />
@@ -116,6 +124,7 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/fragment_settings.xml" value="0.25" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/fragment_timezone_list.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/fragment_trail.xml" value="0.22037037037037038" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/fragment_webpage.xml" value="0.21342592592592594" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/info_panel_clock.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/info_panel_compass.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/info_panel_gps.xml" value="0.24010416666666667" />
@@ -124,6 +133,7 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/pref_contribute.xml" value="0.22685185185185186" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/search_view.xml" value="0.2364102564102564" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/speedometer.xml" value="0.24010416666666667" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/switch_view.xml" value="0.21342592592592594" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/toolbar_clock.xml" value="0.21851851851851853" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/toolbar_level.xml" value="0.24010416666666667" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/layout/toolbar_map_panel.xml" value="0.24010416666666667" />

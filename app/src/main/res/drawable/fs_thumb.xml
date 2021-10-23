@@ -2,6 +2,7 @@
     android:width="25dp"
     android:height="51.2dp"
     android:viewportWidth="250"
+    android:autoMirrored="true"
     android:viewportHeight="512">
     <path
         android:fillColor="?attr/colorAppAccent"

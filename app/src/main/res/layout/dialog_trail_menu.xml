@@ -72,7 +72,7 @@
                 android:text="@string/high_contrast_mode"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
-                app:drawableLeftCompat="@drawable/ic_filter_b_and_w"
+                app:drawableStartCompat="@drawable/ic_filter_b_and_w"
                 app:drawableTint="@color/iconRegular" />
 
             <app.simple.positional.decorations.switchview.SwitchView
@@ -105,7 +105,7 @@
                 android:text="@string/show_building"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
-                app:drawableLeftCompat="@drawable/ic_home"
+                app:drawableStartCompat="@drawable/ic_home"
                 app:drawableTint="@color/iconRegular" />
 
             <app.simple.positional.decorations.switchview.SwitchView
@@ -144,7 +144,7 @@
                 android:text="@string/satellite_mode"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
-                app:drawableLeftCompat="@drawable/ic_satellite"
+                app:drawableStartCompat="@drawable/ic_satellite"
                 app:drawableTint="@color/iconRegular" />
 
             <app.simple.positional.decorations.switchview.SwitchView
@@ -183,7 +183,7 @@
                 android:text="@string/auto_center_map"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
-                app:drawableLeftCompat="@drawable/ic_gps_fixed"
+                app:drawableStartCompat="@drawable/ic_gps_fixed"
                 app:drawableTint="@color/iconRegular" />
 
             <app.simple.positional.decorations.switchview.SwitchView
@@ -216,7 +216,7 @@
                 android:text="@string/geodesic_trail"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
-                app:drawableLeftCompat="@drawable/ic_geodesic"
+                app:drawableStartCompat="@drawable/ic_geodesic"
                 app:drawableTint="@color/iconRegular" />
 
             <app.simple.positional.decorations.switchview.SwitchView

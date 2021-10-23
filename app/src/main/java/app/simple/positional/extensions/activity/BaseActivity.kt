@@ -1,13 +1,11 @@
-package app.simple.positional.activities.main
+package app.simple.positional.extensions.activity
 
 import android.content.Context
 import android.content.pm.ActivityInfo
-import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.view.Display
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -22,9 +20,6 @@ import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.util.ContextUtils
 import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.ThemeSetter
-import android.os.StrictMode.VmPolicy
-
-import android.os.StrictMode
 
 open class BaseActivity : AppCompatActivity() {
 

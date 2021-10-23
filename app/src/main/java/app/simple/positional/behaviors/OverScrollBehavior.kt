@@ -9,8 +9,8 @@ import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 
-@Suppress("unused")
-class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
+class OverScrollBehavior(context: Context, attributeSet: AttributeSet) :
+        CoordinatorLayout.Behavior<View>(context, attributeSet) {
 
     /**
      * Used to store all [SpringAnimation] objects used to animate
@@ -26,16 +26,6 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
      * called inside [onStopNestedScroll] on [onNestedPreFling].
      */
     private val animationObjects = arrayListOf<SpringAnimation>()
-
-    companion object {
-        private const val OVER_SCROLL_AREA = 1.5F
-        private var overScrollY = 0F
-    }
-
-    /**
-     * Do not remove these
-     */
-    constructor(context: Context, attributeSet: AttributeSet) : this()
 
     override fun onStartNestedScroll(coordinatorLayout: CoordinatorLayout, child: View, directTargetChild: View, target: View, axes: Int, type: Int): Boolean {
         val group = target as ViewGroup
@@ -87,22 +77,6 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
         moveToDefPosition(target)
     }
 
-    override fun onNestedPreFling(coordinatorLayout: CoordinatorLayout, child: View, target: View, velocityX: Float, velocityY: Float): Boolean {
-        /**
-         * Scroll view by inertia when current position equals to 0,
-         * equivalent to not scrolling view when [View.TRANSLATION_Y]
-         * value is already 0 or view has not been overscrolled
-         */
-        if (overScrollY == 0F) {
-            return false
-        }
-        /**
-         * Smooth animate to 0 when user fling view
-         */
-        moveToDefPosition(target)
-        return true
-    }
-
     /**
      * [SpringForce.DAMPING_RATIO_NO_BOUNCY] will remove the bouncy effect, bouncy effect
      * is a short lived animation pleasure and not feasible for having to see a view
@@ -131,5 +105,10 @@ class OverScrollBehavior() : CoordinatorLayout.Behavior<View>() {
              */
             animationObjects.add(springAnimation)
         }
+    }
+
+    companion object {
+        private const val OVER_SCROLL_AREA = 1.5F
+        private var overScrollY = 0F
     }
 }

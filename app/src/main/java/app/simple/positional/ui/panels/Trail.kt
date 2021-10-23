@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.TrailsViewerActivity
 import app.simple.positional.adapters.trail.AdapterTrailData
 import app.simple.positional.callbacks.BottomSheetSlide

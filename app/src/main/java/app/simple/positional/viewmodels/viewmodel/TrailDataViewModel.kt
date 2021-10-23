@@ -2,11 +2,11 @@ package app.simple.positional.viewmodels.viewmodel
 
 import android.app.Application
 import android.text.Spanned
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import app.simple.positional.R
+import app.simple.positional.extensions.viewmodel.WrappedViewModel
 import app.simple.positional.database.instances.TrailDataDatabase
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
@@ -21,7 +21,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
-class TrailDataViewModel(application: Application, private var trailName: String) : AndroidViewModel(application) {
+class TrailDataViewModel(application: Application, private var trailName: String) : WrappedViewModel(application) {
 
     val trailDataAscending: MutableLiveData<ArrayList<TrailData>> by lazy {
         MutableLiveData<ArrayList<TrailData>>().also {
@@ -106,10 +106,10 @@ class TrailDataViewModel(application: Application, private var trailName: String
 
             database.close()
 
-            val total = HtmlHelper.fromHtml("<b>${getApplication<Application>().getString(R.string.total)} </b> ${list.size}")
+            val total = HtmlHelper.fromHtml("<b>${getContext().getString(R.string.total)} </b> ${list.size}")
 
             val builder = StringBuilder().also {
-                it.append("<b>${getApplication<Application>().getString(R.string.gps_displacement)} </b>")
+                it.append("<b>${getContext().getString(R.string.gps_displacement)} </b>")
 
                 val p0 = LocationExtension.measureDisplacement(list)
 
@@ -117,21 +117,21 @@ class TrailDataViewModel(application: Application, private var trailName: String
                     if (p0 < 1000) {
                         it.append(p0.round(2))
                         it.append(" ")
-                        it.append(getApplication<Application>().getString(R.string.meter))
+                        it.append(getContext().getString(R.string.meter))
                     } else {
                         it.append(p0.toKilometers().round(2))
                         it.append(" ")
-                        it.append(getApplication<Application>().getString(R.string.kilometer))
+                        it.append(getContext().getString(R.string.kilometer))
                     }
                 } else {
                     if (p0 < 1000) {
                         it.append(p0.toDouble().toFeet().toFloat().round(2))
                         it.append(" ")
-                        it.append(getApplication<Application>().getString(R.string.feet))
+                        it.append(getContext().getString(R.string.feet))
                     } else {
                         it.append(p0.toMiles().round(2))
                         it.append(" ")
-                        it.append(getApplication<Application>().getString(R.string.miles))
+                        it.append(getContext().getString(R.string.miles))
                     }
                 }
             }

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.adapters.settings.AccentColorAdapter
 import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.preferences.MainPreferences

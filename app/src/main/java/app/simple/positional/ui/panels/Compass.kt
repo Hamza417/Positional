@@ -27,7 +27,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton

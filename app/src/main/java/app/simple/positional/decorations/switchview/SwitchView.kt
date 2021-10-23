@@ -11,13 +11,11 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.dynamicanimation.animation.DynamicAnimation
-import androidx.dynamicanimation.animation.SpringAnimation
-import androidx.dynamicanimation.animation.SpringForce
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
 import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.ColorUtils.resolveAttrColor
+import app.simple.positional.util.LocaleHelper.isRTL
 import app.simple.positional.util.ViewUtils
 
 @SuppressLint("ClickableViewAccessibility")
@@ -28,6 +26,9 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private var switchCallbacks: SwitchCallbacks? = null
 
     private val tension = 3.5F
+    val w = context.resources.getDimensionPixelOffset(R.dimen.switch_width)
+    val p = context.resources.getDimensionPixelOffset(R.dimen.switch_padding)
+    val thumbWidth = context.resources.getDimensionPixelOffset(R.dimen.switch_thumb_dimensions)
 
     var isChecked: Boolean = false
         set(value) {
@@ -61,21 +62,21 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 thumb.animate()
-                        .scaleY(1.5F)
-                        .scaleX(1.5F)
-                        .setInterpolator(DecelerateInterpolator(1.5F))
-                        .setDuration(500L)
-                        .start()
+                    .scaleY(1.5F)
+                    .scaleX(1.5F)
+                    .setInterpolator(DecelerateInterpolator(1.5F))
+                    .setDuration(500L)
+                    .start()
             }
             MotionEvent.ACTION_MOVE,
             MotionEvent.ACTION_UP,
             -> {
                 thumb.animate()
-                        .scaleY(1.0F)
-                        .scaleX(1.0F)
-                        .setInterpolator(DecelerateInterpolator(1.5F))
-                        .setDuration(500L)
-                        .start()
+                    .scaleY(1.0F)
+                    .scaleX(1.0F)
+                    .setInterpolator(DecelerateInterpolator(1.5F))
+                    .setDuration(500L)
+                    .start()
             }
         }
 
@@ -84,10 +85,10 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
 
     private fun animateUnchecked() {
         thumb.animate()
-                .translationX(0F)
-                .setInterpolator(OvershootInterpolator(tension))
-                .setDuration(500)
-                .start()
+            .translationX(if(resources.isRTL()) (w - p * 2 - thumbWidth).toFloat() else 0F)
+            .setInterpolator(OvershootInterpolator(tension))
+            .setDuration(500)
+            .start()
 
         animateColorChange(ContextCompat.getColor(context, R.color.switch_off))
         switchCallbacks?.onCheckedChanged(false)
@@ -95,16 +96,11 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     }
 
     private fun animateChecked() {
-
-        val w = context.resources.getDimensionPixelOffset(R.dimen.switch_width)
-        val p = context.resources.getDimensionPixelOffset(R.dimen.switch_padding)
-        val thumbWidth = context.resources.getDimensionPixelOffset(R.dimen.switch_thumb_dimensions)
-
         thumb.animate()
-                .translationX((w - p * 2 - thumbWidth).toFloat())
-                .setInterpolator(OvershootInterpolator(tension))
-                .setDuration(500)
-                .start()
+            .translationX(if(resources.isRTL()) 0F else (w - p * 2 - thumbWidth).toFloat())
+            .setInterpolator(OvershootInterpolator(tension))
+            .setDuration(500)
+            .start()
 
         animateColorChange(context.resolveAttrColor(R.attr.colorAppAccent))
         switchCallbacks?.onCheckedChanged(true)

@@ -9,17 +9,20 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class DynamicRippleConstraintLayout extends ConstraintLayout {
-    
+
     public DynamicRippleConstraintLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        setBackgroundColor(Color.TRANSPARENT);
-        setBackground(Utils.getRippleDrawable(getContext(), getBackground()));
+        if (!isInEditMode()) {
+            setBackgroundColor(Color.TRANSPARENT);
+            setBackground(Utils.getRippleDrawable(getContext(), getBackground()));
+        }
     }
-    
+
     public DynamicRippleConstraintLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setBackgroundColor(Color.TRANSPARENT);
-        setBackground(Utils.getRippleDrawable(getContext(), getBackground()));
-        
+        if (!isInEditMode()) {
+            setBackgroundColor(Color.TRANSPARENT);
+            setBackground(Utils.getRippleDrawable(getContext(), getBackground()));
+        }
     }
 }

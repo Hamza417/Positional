@@ -8,7 +8,7 @@ import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.adapters.trail.AdapterTrails
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.views.CustomRecyclerView

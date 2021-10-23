@@ -9,6 +9,7 @@
     android:background="@drawable/ripple_btn"
     android:clickable="true"
     android:focusable="true"
+    android:layoutDirection="ltr"
     android:orientation="horizontal"
     android:padding="15dp">
 

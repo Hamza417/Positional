@@ -20,6 +20,7 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerRecyclerView
 import app.simple.positional.dialogs.app.Permission
+import app.simple.positional.extensions.activity.BaseActivity
 import app.simple.positional.preferences.BottomBarPreferences
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
@@ -33,9 +34,9 @@ import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 
 class MainActivity : BaseActivity(),
-        PermissionCallbacks,
-        BottomSheetSlide,
-        android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+                     PermissionCallbacks,
+                     BottomSheetSlide,
+                     android.content.SharedPreferences.OnSharedPreferenceChangeListener {
 
     private val defaultPermissionRequestCode = 123
     private lateinit var bottomBar: DynamicCornerRecyclerView

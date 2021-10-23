@@ -22,7 +22,7 @@ import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.VerticalTextView
 import app.simple.positional.dialogs.app.ErrorDialog

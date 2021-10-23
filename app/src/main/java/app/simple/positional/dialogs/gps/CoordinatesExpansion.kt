@@ -123,18 +123,18 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
         }
 
         locationViewModel.dms.observe(viewLifecycleOwner, {
-            dmsLatitude.text = it.first
-            dmsLongitude.text = it.second
+            dmsLatitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " + it.first)
+            dmsLongitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " + it.second)
         })
 
         locationViewModel.dm.observe(viewLifecycleOwner, {
-            dmLatitude.text = it.first
-            dmLongitude.text = it.second
+            dmLatitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " + it.first)
+            dmsLongitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " + it.second)
         })
 
         locationViewModel.dd.observe(viewLifecycleOwner, {
-            ddLatitude.text = it.first
-            ddLongitude.text = it.second
+            ddLatitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " + it.first)
+            ddLongitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " + it.second)
         })
 
         locationViewModel.mgrs.observe(viewLifecycleOwner, {

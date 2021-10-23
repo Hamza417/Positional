@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.activities.main.BaseActivity
+import app.simple.positional.extensions.activity.BaseActivity
 import app.simple.positional.ui.subpanels.CustomLocation
 import app.simple.positional.util.ConditionUtils.isNull
 

@@ -1,24 +1,25 @@
 package app.simple.positional.util
 
 import android.icu.text.MessageFormat
-import android.os.Build
+import java.util.*
 
-fun Number?.toOrdinal(): String {
-    if (this == null) {
-        return "N/A"
+object Ordinal {
+    fun Number?.toOrdinal(): String {
+        if (this == null) {
+            return "N/A"
+        }
+
+        val testArgs = arrayOf<Any>(this)
+        val messageFormat = MessageFormat("{0,ordinal}", LocaleHelper.getAppLocale())
+
+        return messageFormat.format(testArgs)
     }
 
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        MessageFormat.format("{0,ordinal}", this)
-    } else {
-        ordinal(this.toInt())
-    }
-}
-
-private fun ordinal(i: Int): String {
-    val suffixes = arrayOf("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
-    return when (i % 100) {
-        11, 12, 13 -> i.toString() + "th"
-        else -> StringBuilder().append(i).append(suffixes[i % 10]).toString()
+    private fun ordinal(i: Int): String {
+        val suffixes = arrayOf("th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th")
+        return when (i % 100) {
+            11, 12, 13 -> i.toString() + "th"
+            else -> StringBuilder().append(i).append(suffixes[i % 10]).toString()
+        }
     }
 }

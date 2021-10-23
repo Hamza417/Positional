@@ -1,4 +1,4 @@
-package app.simple.positional.activities.fragment
+package app.simple.positional.extensions.fragment
 
 import android.content.SharedPreferences
 import androidx.fragment.app.Fragment

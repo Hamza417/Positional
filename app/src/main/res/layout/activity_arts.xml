@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/arts_view_pager"
-        android:clipToPadding="false"
-        android:clipChildren="false"
-        app:isFastScrollerRequired="false"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:statusBarPaddingRequired="true" />
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical" />
+
 </merge>

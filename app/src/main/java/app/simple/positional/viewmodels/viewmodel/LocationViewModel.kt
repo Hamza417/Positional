@@ -9,7 +9,6 @@ import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.text.Spannable
-import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import androidx.core.text.toSpannable
@@ -56,22 +55,12 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
     val location = MutableLiveData<Location>()
     val provider = MutableLiveData<String>()
 
-    val dms = MutableLiveData<Pair<Spanned, Spanned>>()
-    val dm = MutableLiveData<Pair<Spanned, Spanned>>()
-    val dd = MutableLiveData<Pair<Spanned, Spanned>>()
+    val dms = MutableLiveData<Pair<String, String>>()
+    val dm = MutableLiveData<Pair<String, String>>()
+    val dd = MutableLiveData<Pair<String, String>>()
     val mgrs = MutableLiveData<String>()
     val utm = MutableLiveData<UTMConverter.UTM>()
-    val latency = MutableLiveData<Spannable>()
-
-    val address : MutableLiveData<String> by lazy {
-        MutableLiveData<String>().also {
-            if(MainPreferences.isCustomCoordinate()) {
-                with(MainPreferences.getCoordinates()) {
-                    address(LatLng(this[0].toDouble(), this[1].toDouble()), true)
-                }
-            }
-        }
-    }
+    val latency = MutableLiveData<Pair<Number, Boolean>>()
 
     val accuracyGraphData = MutableLiveData<ArrayList<Float>>()
     val altitudeGraphData = MutableLiveData<ArrayList<Float>>()
@@ -100,27 +89,20 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
 
                                 graphData(this)
 
-                                if (MainPreferences.isCustomCoordinate()) {
-                                    with(MainPreferences.getCoordinates()) {
-                                        address(LatLng(this[0].toDouble(), this[1].toDouble()), false)
-                                    }
-                                } else {
-                                    address(LatLng(latitude, longitude), false)
-                                }
-
                                 Log.d("LocationViewModel", "Location Posted")
                             }
                         }
                         "provider" -> {
                             provider.postValue(intent.getStringExtra("location_provider")
-                                    ?.uppercase(Locale.getDefault()))
+                                ?.uppercase(Locale.getDefault()))
                         }
                     }
                 }
             }
         }
 
-        LocalBroadcastManager.getInstance(getApplication()).registerReceiver(locationBroadcastReceiver, filter)
+        LocalBroadcastManager.getInstance(getApplication())
+            .registerReceiver(locationBroadcastReceiver, filter)
     }
 
     private fun measureLatency() {
@@ -142,55 +124,30 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                 currentLatency.toInt()
             }
 
-            val str: Spannable = with(getApplication<Application>()) {
-                fromHtml("<b>${getString(R.string.gps_latency)}</b> " +
-                        "$currentLatency " +
-                        if (inSeconds) getString(R.string.seconds) else getString(R.string.milliseconds)).toSpannable()
-            }
-
-            with(getApplication<Application>()) {
-                if (inSeconds) {
-                    if (currentLatency.toDouble() > 5.0) {
-                        str.setSpan(ForegroundColorSpan(Color.RED), getString(R.string.gps_latency).length, str.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                        latency.postValue(str)
-                    } else {
-                        latency.postValue(str)
-                    }
-                }
-            }
-        }.getOrElse {
-            with(getApplication<Application>()) {
-                latency.postValue(fromHtml("<b>${getString(R.string.gps_latency)}</b> " +
-                        getString(R.string.not_available)).toSpannable())
-            }
+            latency.postValue(Pair(currentLatency, inSeconds))
         }
     }
 
     private fun dms(location: Location) {
         with(getApplication<Application>()) {
             dms.postValue(Pair(
-                    fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${latitudeAsDMS(location.latitude, this)}"),
-                    fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${longitudeAsDMS(location.longitude, this)}")
-            ))
+                    latitudeAsDMS(location.latitude, this),
+                    longitudeAsDMS(location.longitude, this)))
         }
     }
 
     private fun dm(location: Location) {
         with(getApplication<Application>()) {
             dm.postValue(Pair(
-                    fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${latitudeAsDM(location.latitude, this)}"),
-                    fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${longitudeAsDM(location.longitude, this)}")
-            ))
+                    latitudeAsDM(location.latitude, this),
+                    longitudeAsDM(location.longitude, this)))
         }
     }
 
     private fun dd(location: Location) {
-        with(getApplication<Application>()) {
-            dd.postValue(Pair(
-                    fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${latitudeAsDD(location.latitude)}"),
-                    fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${longitudeAsDD(location.longitude)}")
-            ))
-        }
+        dd.postValue(Pair(
+                latitudeAsDD(location.latitude),
+                longitudeAsDD(location.longitude)))
     }
 
     private fun mgrs(location: Location) {
@@ -214,44 +171,6 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
         altitudeGraphData.postValue(manipulateDataForGraph(altitudeData, location.altitude.toFloat()))
     }
 
-    private fun address(latLng: LatLng, override: Boolean) {
-        viewModelScope.launch(Dispatchers.IO) {
-            if(!override) {
-                if (!this@LocationViewModel.address.hasActiveObservers()) return@launch
-            }
-
-            var address: String = getApplication<Application>().getString(R.string.not_available)
-
-            runCatching {
-                with(getApplication<Application>()) {
-                    address = try {
-                        if (!isNetworkAvailable(this)) {
-                            getString(R.string.internet_connection_alert)
-                        } else {
-                            val geocoder = Geocoder(this, Locale.getDefault())
-
-                            with(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)) {
-                                if (this != null && this.isNotEmpty()) {
-                                    this[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
-                                } else {
-                                    getString(R.string.not_available)
-                                }
-                            }
-                        }
-                    } catch (e: IOException) {
-                        "${e.message}"
-                    } catch (e: NullPointerException) {
-                        "${e.message}\n${getString(R.string.no_address_found)}"
-                    } catch (e: IllegalArgumentException) {
-                        getString(R.string.invalid_coordinates)
-                    }
-                }
-            }
-
-            this@LocationViewModel.address.postValue(address)
-        }
-    }
-
     private fun manipulateDataForGraph(arrayList: ArrayList<Float>, value: Float): ArrayList<Float> {
         if (arrayList.isLastValueSame(value))
             return arrayList
@@ -265,6 +184,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
 
     override fun onCleared() {
         super.onCleared()
-        LocalBroadcastManager.getInstance(getApplication()).unregisterReceiver(locationBroadcastReceiver)
+        LocalBroadcastManager.getInstance(getApplication())
+            .unregisterReceiver(locationBroadcastReceiver)
     }
 }

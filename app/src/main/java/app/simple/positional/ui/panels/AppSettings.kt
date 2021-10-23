@@ -18,7 +18,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.AccentColorsActivity
 import app.simple.positional.activities.subactivity.ArtsActivity
 import app.simple.positional.activities.subactivity.CustomLocationsActivity

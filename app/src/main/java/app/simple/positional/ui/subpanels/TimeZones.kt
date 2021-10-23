@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.adapters.clock.TimeZoneAdapter
 import app.simple.positional.decorations.searchview.SearchView
 import app.simple.positional.decorations.views.CustomRecyclerView

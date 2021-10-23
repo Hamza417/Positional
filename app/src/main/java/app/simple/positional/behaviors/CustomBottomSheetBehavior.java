@@ -38,10 +38,8 @@ public class CustomBottomSheetBehavior<V extends View> extends BottomSheetBehavi
          * open and we save that state for further processing
          */
         if (getState() == STATE_EXPANDED) {
-
             ignoreUntilClose = true;
             return super.onInterceptTouchEvent(parent, child, event);
-
         }
 
         switch (event.getAction()) {

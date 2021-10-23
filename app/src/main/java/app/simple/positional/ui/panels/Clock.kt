@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.TimezonePickerActivity
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
@@ -43,6 +43,7 @@ import app.simple.positional.util.ImageLoader.loadImage
 import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
+import app.simple.positional.util.Ordinal.toOrdinal
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds

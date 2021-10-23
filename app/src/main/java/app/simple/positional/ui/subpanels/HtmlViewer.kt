@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.decorations.fastscroll.FastScrollWebView
 import app.simple.positional.decorations.fastscroll.FastScrollerBuilder
 import app.simple.positional.util.ConditionUtils.isNull

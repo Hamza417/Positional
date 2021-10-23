@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import app.simple.positional.R
-import app.simple.positional.activities.fragment.ScopedFragment
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.adapters.settings.LocationsAdapter
 import app.simple.positional.database.instances.LocationDatabase

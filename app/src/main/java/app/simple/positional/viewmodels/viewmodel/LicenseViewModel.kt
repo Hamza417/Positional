@@ -7,13 +7,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import app.simple.positional.R
+import app.simple.positional.extensions.viewmodel.WrappedViewModel
 import app.simple.positional.licensing.*
 import app.simple.positional.util.isNetworkAvailable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @SuppressLint("HardwareIds")
-class LicenseViewModel(application: Application) : AndroidViewModel(application), LicenseCheckerCallback {
+class LicenseViewModel(application: Application) : WrappedViewModel(application), LicenseCheckerCallback {
 
     val allow = MutableLiveData<String>()
     val doNotAllow = MutableLiveData<String>()
@@ -48,7 +49,7 @@ class LicenseViewModel(application: Application) : AndroidViewModel(application)
                 delay(delay)
                 licenseChecker.checkAccess(this@LicenseViewModel)
             } else {
-                doNotAllow.postValue(getApplication<Application>().getString(R.string.internet_connection_alert))
+                doNotAllow.postValue(getContext().getString(R.string.internet_connection_alert))
             }
         }
     }
@@ -56,16 +57,16 @@ class LicenseViewModel(application: Application) : AndroidViewModel(application)
     override fun allow(reason: Int) {
         when (reason) {
             Policy.NOT_LICENSED -> {
-                doNotAllow.postValue(getApplication<Application>().getString(R.string.license_failed))
+                doNotAllow.postValue(getContext().getString(R.string.license_failed))
             }
             Policy.RETRY -> {
-                doNotAllow.postValue(getApplication<Application>().getString(R.string.failed))
+                doNotAllow.postValue(getContext().getString(R.string.failed))
             }
             Policy.LICENSED -> {
-                allow.postValue(getApplication<Application>().getString(R.string.license_successful))
+                allow.postValue(getContext().getString(R.string.license_successful))
             }
             else -> {
-                doNotAllow.postValue(getApplication<Application>().getString(R.string.common_google_play_services_unknown_issue))
+                doNotAllow.postValue(getContext().getString(R.string.common_google_play_services_unknown_issue))
             }
         }
     }
@@ -73,16 +74,16 @@ class LicenseViewModel(application: Application) : AndroidViewModel(application)
     override fun doNotAllow(reason: Int) {
         when (reason) {
             Policy.NOT_LICENSED -> {
-                doNotAllow.postValue(getApplication<Application>().getString(R.string.license_failed))
+                doNotAllow.postValue(getContext().getString(R.string.license_failed))
             }
             Policy.RETRY -> {
-                doNotAllow.postValue(getApplication<Application>().getString(R.string.failed))
+                doNotAllow.postValue(getContext().getString(R.string.failed))
             }
             Policy.LICENSED -> {
-                allow.postValue(getApplication<Application>().getString(R.string.license_successful))
+                allow.postValue(getContext().getString(R.string.license_successful))
             }
             else -> {
-                doNotAllow.postValue(getApplication<Application>().getString(R.string.common_google_play_services_unknown_issue))
+                doNotAllow.postValue(getContext().getString(R.string.common_google_play_services_unknown_issue))
             }
         }
     }

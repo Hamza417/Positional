@@ -10,12 +10,21 @@
         android:id="@+id/arts_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:layout_margin="@dimen/options_container_horizontal_padding"
-        android:animateLayoutChanges="true"
         app:cardBackgroundColor="@color/toolbarBackground"
-        app:cardElevation="10dp">
+        app:cardElevation="25dp">
+
+        <TextView
+            android:id="@+id/arts_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="25dp"
+            android:fontFamily="@font/light"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/popup_text_size" />
 
         <LinearLayout
             android:layout_width="wrap_content"
