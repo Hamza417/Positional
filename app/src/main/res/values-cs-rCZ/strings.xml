@@ -278,7 +278,6 @@
     <string name="play_services_error">Vaše zařízení nepodporuje požadované závislosti Google Play.</string>
     <string name="enter_trail_name">Zadejte název trasy</string>
     <string name="note">Poznámka</string>
-    <string name="panels_editor">Editor panelů</string>
     <string name="total">Celkem:</string>
     <string name="saved_trails">Uložené trasy</string>
     <string name="starting_point">Počáteční bod</string>
