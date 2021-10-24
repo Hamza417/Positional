@@ -278,7 +278,6 @@
     <string name="play_services_error">Ваше устройство не поддерживает необходимые зависимости Google Play.</string>
     <string name="enter_trail_name">Введите название следа</string>
     <string name="note">Примечание</string>
-    <string name="panels_editor">Редактор панелей</string>
     <string name="total">Всего:</string>
     <string name="saved_trails">Сохранённые следы</string>
     <string name="starting_point">Начальная точка</string>
