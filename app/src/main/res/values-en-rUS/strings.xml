@@ -278,7 +278,6 @@
     <string name="play_services_error">Your device does not support required Google Play dependencies.</string>
     <string name="enter_trail_name">Enter Trail Name</string>
     <string name="note">Note</string>
-    <string name="panels_editor">Panels Editor</string>
     <string name="total">Total:</string>
     <string name="saved_trails">Saved Trails</string>
     <string name="starting_point">Starting Point</string>
