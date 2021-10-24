@@ -182,7 +182,6 @@
     <string name="button_set">Nastavit</string>
     <string name="button_close">Zavřít</string>
     <string name="button_grant">Povolit</string>
-    <string name="button_copy">Kopírovat</string>
     <string name="button_reset">Resetovat</string>
     <!-- Button Descriptions -->
     <string name="clock_options">Nabídka hodin</string>
