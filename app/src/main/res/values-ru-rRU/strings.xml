@@ -182,7 +182,6 @@
     <string name="button_set">Установить</string>
     <string name="button_close">Закрыть</string>
     <string name="button_grant">Предоставить</string>
-    <string name="button_copy">Копировать</string>
     <string name="button_reset">Сбросить</string>
     <!-- Button Descriptions -->
     <string name="clock_options">Меню часов</string>
