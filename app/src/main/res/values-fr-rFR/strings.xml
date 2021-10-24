@@ -11,13 +11,13 @@
     <string name="compass_info">Informations sur la boussole</string>
     <string name="gps_info">Information de Lieu</string>
     <!-- Clock Information Headers-->
-    <string name="local_time">Heure locale</string>
-    <string name="utc_time">Heure UTC</string>
+    <string name="local_time">Temps local</string>
+    <string name="utc_time">Temps UTC</string>
     <string name="sun_position">Position du Soleil</string>
-    <string name="sun_time">Heure du Soleil</string>
+    <string name="sun_time">Temps du Soleil</string>
     <string name="twilight">Crépuscule</string>
     <string name="moon_position">Position de la lune</string>
-    <string name="moon_time">Heure de la lune</string>
+    <string name="moon_time">Temps de la Lune</string>
     <string name="moon_illumination">Illumination de la lune</string>
     <string name="moon_dates">Dates de la Lune</string>
     <!-- GPS Information Headers -->
@@ -29,15 +29,15 @@
     <string name="compass_accuracy">Précision</string>
     <string name="compass_field">Champ magnétique</string>
     <!-- Clock Information Items-->
-    <string name="local_timezone">Fuseau horaire :</string>
-    <string name="local_time_24hr">Heure 24h:</string>
-    <string name="local_time_12hr">Heure 12h:</string>
+    <string name="local_timezone">Fuseau horaire:</string>
+    <string name="local_time_24hr">Temps 24h:</string>
+    <string name="local_time_12hr">Temps 12h:</string>
     <string name="local_day">Jour:</string>
     <string name="local_date">Date:</string>
     <string name="local_day_of_year">Jour de l’année:</string>
     <string name="local_week_of_year">Semaine de l\'année:</string>
-    <string name="utc_local_time_offset">Décalage de l\'heure locale:</string>
-    <string name="utc_current_time">Heure:</string>
+    <string name="utc_local_time_offset">Décalage horaire local:</string>
+    <string name="utc_current_time">Temps:</string>
     <string name="sun_azimuth">Azimut:</string>
     <string name="sun_distance">Distance:</string>
     <string name="sun_altitude">Altitude:</string>
