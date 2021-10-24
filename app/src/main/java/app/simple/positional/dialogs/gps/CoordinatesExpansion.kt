@@ -129,7 +129,7 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
 
         locationViewModel.dm.observe(viewLifecycleOwner, {
             dmLatitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " + it.first)
-            dmsLongitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " + it.second)
+            dmLongitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " + it.second)
         })
 
         locationViewModel.dd.observe(viewLifecycleOwner, {
