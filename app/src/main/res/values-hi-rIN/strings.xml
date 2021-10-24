@@ -182,7 +182,6 @@
     <string name="button_set">सेट करें</string>
     <string name="button_close">बंद करें</string>
     <string name="button_grant">अनुदान</string>
-    <string name="button_copy">कॉपी करें</string>
     <string name="button_reset">रीसेट करें</string>
     <!-- Button Descriptions -->
     <string name="clock_options">Clock Menu</string>
