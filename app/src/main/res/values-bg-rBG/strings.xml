@@ -278,7 +278,6 @@
     <string name="play_services_error">Вашето устройство не поддържа необходимите услуги от Google Play.</string>
     <string name="enter_trail_name">Въведете име на пътека</string>
     <string name="note">Бележка</string>
-    <string name="panels_editor">Редактор на панели</string>
     <string name="total">Общо:</string>
     <string name="saved_trails">Запазени пътеки</string>
     <string name="starting_point">Начална точка</string>
