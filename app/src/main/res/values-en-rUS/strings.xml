@@ -182,7 +182,6 @@
     <string name="button_set">Set</string>
     <string name="button_close">Close</string>
     <string name="button_grant">Grant</string>
-    <string name="button_copy">Copy</string>
     <string name="button_reset">Reset</string>
     <!-- Button Descriptions -->
     <string name="clock_options">Clock Menu</string>
@@ -278,7 +277,6 @@
     <string name="play_services_error">Your device does not support required Google Play dependencies.</string>
     <string name="enter_trail_name">Enter Trail Name</string>
     <string name="note">Note</string>
-    <string name="panels_editor">Panels Editor</string>
     <string name="total">Total:</string>
     <string name="saved_trails">Saved Trails</string>
     <string name="starting_point">Starting Point</string>

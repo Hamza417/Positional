@@ -182,7 +182,6 @@
     <string name="button_set">Setare</string>
     <string name="button_close">Închidere</string>
     <string name="button_grant">Permiteți</string>
-    <string name="button_copy">Copiere</string>
     <string name="button_reset">Resetare</string>
     <!-- Button Descriptions -->
     <string name="clock_options">Meniu ceas</string>
@@ -278,7 +277,6 @@
     <string name="play_services_error">Dispozitivul dvs. nu suportă dependențele necesare Google Play.</string>
     <string name="enter_trail_name">Introduceți numele traseului</string>
     <string name="note">Notă</string>
-    <string name="panels_editor">Editor de panouri</string>
     <string name="total">Total:</string>
     <string name="saved_trails">Traseuri salvate</string>
     <string name="starting_point">Punct de plecare</string>
