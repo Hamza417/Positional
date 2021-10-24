@@ -17,10 +17,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:fontFamily="@font/medium"
+        android:fontFamily="@font/regular"
+        android:textStyle="bold"
         android:layout_weight="1"
         android:textColor="@color/textSecondary"
-        android:textSize="@dimen/options_item_text_size" />
+        android:textSize="@dimen/popup_text_size" />
 
     <ImageView
         android:id="@+id/locale_indicator"

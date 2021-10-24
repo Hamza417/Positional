@@ -19,7 +19,7 @@ object LocaleHelper {
             Locales("autoSystemLanguageString" /* Placeholder */, "default"),
             Locales("English", "en"),
             Locales("български", "bg"),
-            // Locales("Deutsch", "de"),
+            Locales("Français", "fr"),
             Locales("Čeština", "cs"),
             Locales("हिन्दी", "hi"),
             Locales("Romanian", "ro"),

@@ -46,7 +46,7 @@
                 android:layout_height="@dimen/copy_button_dimensions"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ripple_btn"
-                android:contentDescription="@string/button_copy"
+                android:contentDescription="@string/copy"
                 android:src="@drawable/ic_content_copy"
                 app:tint="@color/iconColor" />
 
