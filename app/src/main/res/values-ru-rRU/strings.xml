@@ -101,17 +101,14 @@
     <!-- Alert -->
     <string name="info_copied">Скопировано в буфер обмена</string>
     <string name="info_error">Информация не может быть скопирована!!</string>
-    <string name="reset_complete">Сброс выполнен</string>
     <string name="invalid_coordinates">Неверные координаты</string>
     <string name="internet_connection_alert">Отсутствует интернет-соединение</string>
     <string name="error">Ошибка</string>
     <string name="not_available">Нет данных</string>
     <string name="no_address_found">Не найден адрес для текущего местоположения</string>
     <string name="location_saved">Сохранено успешно</string>
-    <string name="already_saved">Уже сохранено!</string>
     <string name="location_not_saved">Сохранить не удалось!</string>
     <string name="no_update">Нет доступных обновлений</string>
-    <string name="only_full_version">Эта функция доступна только в полной версии.</string>
     <string name="location_not_available">Местоположение пока недоступно</string>
     <!-- Settings Categories -->
     <string name="appearance">Оформление</string>
@@ -163,7 +160,6 @@
     <string name="unit_imperial">Английская</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Введите данные местоположения</string>
-    <string name="specified_data_list_locations">Местоположения</string>
     <string name="specified_hint_latitude">Широта (±90)</string>
     <string name="specified_hint_longitude">Долгота (±180)</string>
     <!-- Info -->
@@ -189,7 +185,6 @@
     <string name="gps_options">Меню GPS</string>
     <string name="gps_reset_location">Сброс местоположения</string>
     <string name="delete_all">Удалить всё</string>
-    <string name="open_saved_locations">Открыть сохранённые местоположения</string>
     <string name="open_specified_location_documentation">Открыть документацию по указанному местоположению</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Отказ от ответственности</string>
@@ -252,13 +247,10 @@
     <string name="tick_oscillate">Тик колеблющийся</string>
     <string name="use_physical_properties">Использовать физические свойства</string>
     <string name="seconds_precision">Точность в секундах</string>
-    <string name="bearing_rotation">Вращение пеленга</string>
     <string name="accent_colors">Основной цвет</string>
     <string name="opacity">Непрозрачность</string>
     <string name="size">Размер</string>
     <string name="customize_pin">Настройка маркера</string>
-    <string name="map_tile_source">Источник тайла карты</string>
-    <string name="maps_provider">Поставщик карт</string>
     <string name="twenty_four_hours_clock">24-часовой формат</string>
     <string name="gimbal_lock">Подвесной замок</string>
     <string name="clock_widget_notification">Виджет часов работает.</string>
@@ -269,10 +261,8 @@
     <string name="set_only">Только установить</string>
     <string name="sure">Обязательно</string>
     <string name="desc_custom_coord_dialog">В настоящее время эти параметры используются для вычисления информации.</string>
-    <string name="inverted_colors">Инвертировать цвета</string>
     <string name="trail">След</string>
     <string name="geodesic_trail">Геодезический след</string>
-    <string name="name">Название</string>
     <string name="sensor_error">В вашем устройстве нет необходимых датчиков.</string>
     <string name="play_services_error">Ваше устройство не поддерживает необходимые зависимости Google Play.</string>
     <string name="enter_trail_name">Введите название следа</string>

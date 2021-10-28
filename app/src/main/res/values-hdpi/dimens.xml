@@ -25,7 +25,6 @@
     <dimen name="info_text_primary_size">20sp</dimen>
     <dimen name="info_text_secondary_size">12sp</dimen>
     <dimen name="copy_button_dimensions">30dp</dimen>
-    <dimen name="notification_button_padding">6dp</dimen>
     <dimen name="info_graphics_dimension">120dp</dimen>
 
     <!-- Dialog Menus -->
@@ -67,7 +66,6 @@
     <dimen name="launcher_app_icon_dimen">100dp</dimen>
     <dimen name="touch_indicator_size">100dp</dimen>
     <dimen name="license_text_size">18sp</dimen>
-    <dimen name="license_check_indicator_dimen">30dp</dimen>
     <dimen name="popup_text_size">12sp</dimen>
 
     <!-- Switch -->

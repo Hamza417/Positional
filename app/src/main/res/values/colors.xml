@@ -10,7 +10,6 @@
     <color name="dividerColor">#BDBDBD</color>
     <color name="toolbarBackground">#FFFFFF</color>
     <color name="rippleColor">#9FDADADA</color>
-    <color name="edgeEffect">#717171</color>
     <color name="editTextBackground">#F6F6F6</color>
 
     <!-- Bottom Bar Color -->
@@ -18,8 +17,6 @@
     <color name="indicator">#F3F3F3</color>
 
     <color name="notification_icon_color">#D60044</color>
-    <color name="valid_input">#10D609</color>
-    <color name="invalid_input">#B60000</color>
 
     <color name="clock_needle_stroke_color">#FFFFFF</color>
     <color name="clock_needle_fill_color">#202020</color>
@@ -37,7 +34,6 @@
     <color name="speedometer_number">#353535</color>
 
     <!-- Switch -->
-    <color name="switch_on">#2196F3</color>
     <color name="switch_off">#EAEAEA</color>
 
     // Pin Color

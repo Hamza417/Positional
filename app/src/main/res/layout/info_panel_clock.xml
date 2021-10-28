@@ -79,7 +79,6 @@
             android:paddingHorizontal="10dp">
 
             <ImageView
-                android:id="@+id/imageView"
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:layout_gravity="end|center_vertical"
@@ -186,7 +185,6 @@
             android:paddingHorizontal="10dp">
 
             <ImageView
-                android:id="@+id/imageView2"
                 android:layout_width="@dimen/info_graphics_dimension"
                 android:layout_height="@dimen/info_graphics_dimension"
                 android:src="@drawable/ic_sunrise"

@@ -14,7 +14,7 @@ def thisAppLicensingKey = noKeyFound
  * in project's root directory containing your API keys and this code will
  * handle the changes.
  *
- * The file should look like this in sensitive_data.txt without any quotes
+ * The format should look like this in sensitive_data.txt without any quotes
  *
  * googleMapsAPIKey YourKey
  */
@@ -48,16 +48,16 @@ if (googleMapsAPIKey == noKeyFound) {
 
 android {
 
-    compileSdkVersion 30
+    compileSdkVersion 31
 
-    def appVersionCode = 148
+    def appVersionCode = 149
     def appVersionName = "positional_build_${appVersionCode}_FINAL"
 
     defaultConfig {
         applicationId "app.simple.positional"
         minSdkVersion 24
         //noinspection OldTargetApi
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode appVersionCode
         versionName appVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -129,7 +129,7 @@ dependencies {
 
     // AndroidX
     implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.fragment:fragment-ktx:1.3.6'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
@@ -138,13 +138,13 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 
     // Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.30"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
     // Google Services and Default android libs
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
-    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'com.google.maps.android:android-maps-utils:2.2.4'
 
@@ -154,9 +154,9 @@ dependencies {
     implementation 'com.github.vipulasri:timelineview:1.1.5'
 
     // Room components
-    implementation "androidx.room:room-ktx:2.4.0-alpha04"
-    kapt "androidx.room:room-compiler:2.4.0-alpha04"
-    androidTestImplementation "androidx.room:room-testing:2.4.0-alpha04"
+    implementation "androidx.room:room-ktx:2.4.0-beta01"
+    kapt "androidx.room:room-compiler:2.4.0-beta01"
+    androidTestImplementation "androidx.room:room-testing:2.4.0-beta01"
 
     // Leak Canary -- debugImplementation because LeakCanary should only run in debug builds.
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'

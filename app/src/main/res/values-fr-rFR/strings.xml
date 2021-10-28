@@ -101,17 +101,14 @@
     <!-- Alert -->
     <string name="info_copied">Copié dans la Presse-Papiers</string>
     <string name="info_error">Les infos n\'ont pas pu être copiées!!</string>
-    <string name="reset_complete">Réinitialisation terminée</string>
     <string name="invalid_coordinates">Coordonnées invalides</string>
     <string name="internet_connection_alert">Connexion Internet non disponible</string>
     <string name="error">Erreur</string>
     <string name="not_available">N/A</string>
     <string name="no_address_found">Aucune adresse trouvée pour l\'emplacement actuel</string>
     <string name="location_saved">Sauvegardé avec succès</string>
-    <string name="already_saved">Déjà enregistré!</string>
     <string name="location_not_saved">N’aie pas pu être sauvé!</string>
     <string name="no_update">Aucune mise à jour disponible</string>
-    <string name="only_full_version">Cette fonctionnalité est uniquement disponible en version complète.</string>
     <string name="location_not_available">L\'emplacement n\'est pas encore disponible</string>
     <!-- Settings Categories -->
     <string name="appearance">Apparence</string>
@@ -163,7 +160,6 @@
     <string name="unit_imperial">Impériale</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Saisir les données de localisation</string>
-    <string name="specified_data_list_locations">Emplacements</string>
     <string name="specified_hint_latitude">Latitude (±90)</string>
     <string name="specified_hint_longitude">Longitude (±180)</string>
     <!-- Info -->
@@ -189,7 +185,6 @@
     <string name="gps_options">Menu GPS</string>
     <string name="gps_reset_location">Réinitialiser l\'emplacement</string>
     <string name="delete_all">Tout effacer</string>
-    <string name="open_saved_locations">Ouvrir les emplacements enregistrés</string>
     <string name="open_specified_location_documentation">Ouvrir la documentation de l\'emplacement spécifié</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Avertissement</string>
@@ -252,13 +247,10 @@
     <string name="tick_oscillate">Tique (Osciller)</string>
     <string name="use_physical_properties">Utiliser les propriétés physiques</string>
     <string name="seconds_precision">Précision en secondes</string>
-    <string name="bearing_rotation">Rotation des roulements</string>
     <string name="accent_colors">Couleur d\'accentuation</string>
     <string name="opacity">Opacité</string>
     <string name="size">Taille</string>
     <string name="customize_pin">Personnaliser l\'épingle</string>
-    <string name="map_tile_source">Source des tuiles de la carte</string>
-    <string name="maps_provider">Fournisseur de carte</string>
     <string name="twenty_four_hours_clock">Horloge 24 heures</string>
     <string name="gimbal_lock">Verrou de cardan</string>
     <string name="clock_widget_notification">Le widget Horloge est en cours d\'exécution.</string>
@@ -269,10 +261,8 @@
     <string name="set_only">Définir uniquement</string>
     <string name="sure">Sûr</string>
     <string name="desc_custom_coord_dialog">Ces paramètres sont actuellement utilisés pour le calcul des informations.</string>
-    <string name="inverted_colors">Couleurs inversées</string>
     <string name="trail">Piste</string>
     <string name="geodesic_trail">Piste Géodésique</string>
-    <string name="name">Nom</string>
     <string name="sensor_error">Votre appareil n\'a pas de capteurs requis.</string>
     <string name="play_services_error">Votre appareil ne supporte pas les dépendances Google Play requises.</string>
     <string name="enter_trail_name">Entrez le nom de la piste</string>

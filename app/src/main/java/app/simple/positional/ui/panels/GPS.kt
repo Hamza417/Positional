@@ -141,6 +141,9 @@ class GPS : ScopedFragment() {
         locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
 
         maps = view.findViewById(R.id.map)
+
+        MapsInitializer.initialize(requireContext(), MapsInitializer.Renderer.LATEST, null)
+
         maps?.onCreate(savedInstanceState)
         maps?.resume()
 

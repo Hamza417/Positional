@@ -24,6 +24,7 @@ import app.simple.positional.util.BitmapHelper.addLinearGradient
 import app.simple.positional.util.BitmapHelper.addRadialGradient
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 
+@SuppressLint("CustomSplashScreen")
 class SplashScreen : Fragment() {
 
     private lateinit var launcherBackground: ImageView

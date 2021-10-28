@@ -101,17 +101,14 @@
     <!-- Alert -->
     <string name="info_copied">کلپ بورڈ میں کاپی ہو گیا ہے</string>
     <string name="info_error">کاپی نہیں ہوسکی!!</string>
-    <string name="reset_complete">ری سیٹ مکمل</string>
     <string name="invalid_coordinates">غلط نقاط</string>
     <string name="internet_connection_alert">انٹرنیٹ کنکشن دستیاب نہیں ہے</string>
     <string name="error">خرابی واقع ہوئی</string>
     <string name="not_available">دستیاب نہیں ہے</string>
     <string name="no_address_found">موجودہ مقام کے لئے کوئی پتہ نہیں ملا</string>
     <string name="location_saved">کامیابی سے محفوظ کیا گیا</string>
-    <string name="already_saved">پہلے ہی محفوظ!</string>
     <string name="location_not_saved">محفوظ نہیں ہو سکتا!</string>
     <string name="no_update">کوئی اپ ڈیٹ دستیاب نہیں ہے</string>
-    <string name="only_full_version">یہ خصوصیت صرف مکمل ورژن میں دستیاب ہے۔</string>
     <string name="location_not_available">مقام ابھی دستیاب نہیں ہے</string>
     <!-- Settings Categories -->
     <string name="appearance">ظہور</string>
@@ -163,7 +160,6 @@
     <string name="unit_imperial">امپیریل</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">مقام کا ڈیٹا درج کریں</string>
-    <string name="specified_data_list_locations">مقام</string>
     <string name="specified_hint_latitude">طول بلد (90±)</string>
     <string name="specified_hint_longitude">طول البلد (180±)</string>
     <!-- Info -->
@@ -189,7 +185,6 @@
     <string name="gps_options">GPS مینو</string>
     <string name="gps_reset_location">مقام کو دوبارہ ترتیب دیںمقام کو دوبارہ ترتیب دیں</string>
     <string name="delete_all">تمام حذف کریں</string>
-    <string name="open_saved_locations">محفوظ جگہیں کھولیں</string>
     <string name="open_specified_location_documentation">مخصوص مقام کی دستاویزات کو کھولیں</string>
     <!-- Legal Menu -->
     <string name="disclaimer">دستبرداری</string>
@@ -252,13 +247,10 @@
     <string name="tick_oscillate">ٹک ؤسکلیت</string>
     <string name="use_physical_properties">طبیعیات کی خصوصیات کو استعمال کریں</string>
     <string name="seconds_precision">\"سیکنڈز\" پریسجن</string>
-    <string name="bearing_rotation">بیئرنگ گھماؤ</string>
     <string name="accent_colors">لہجہ رنگین</string>
     <string name="opacity">شفافیت</string>
     <string name="size">سائز</string>
     <string name="customize_pin">پن کو اپنی مرضی کے مطابق بنائیں</string>
-    <string name="map_tile_source">نقشہ کا ٹائل ماخذ</string>
-    <string name="maps_provider">نقشہ جات فراہم کرنے والا</string>
     <string name="twenty_four_hours_clock">24 گھنٹے کی گھڑی</string>
     <string name="gimbal_lock">جیمبل لاک</string>
     <string name="clock_widget_notification">گھڑی ویجیٹ چل رہا ہے۔</string>
@@ -269,10 +261,8 @@
     <string name="set_only">صرف سیٹ کریں</string>
     <string name="sure">ضرور</string>
     <string name="desc_custom_coord_dialog">فی الحال یہ اعداد و شمار معلومات کے حساب کتاب کرنے کے لئے استعمال ہو رہے ہیں۔</string>
-    <string name="inverted_colors">رنگ بدلیں</string>
     <string name="trail">پگڈنڈی</string>
     <string name="geodesic_trail">جیوڈیسک پگڈنڈی</string>
-    <string name="name">نام</string>
     <string name="sensor_error">آپ کا آلہ ضروری سینسر پر مشتمل نہیں ہے.</string>
     <string name="play_services_error">آپ کا آلہ ضروری Google Play انحصار کی حمایت نہیں کرتا.</string>
     <string name="enter_trail_name">ٹریل کا نام درج کریں</string>

@@ -101,17 +101,14 @@
     <!-- Alert -->
     <string name="info_copied">Copied to Clipboard</string>
     <string name="info_error">Info couldn\'t be copied!!</string>
-    <string name="reset_complete">Reset Complete</string>
     <string name="invalid_coordinates">Invalid Coordinates</string>
     <string name="internet_connection_alert">Internet connection not available</string>
     <string name="error">Error</string>
     <string name="not_available">N/A</string>
     <string name="no_address_found">No address found for current location</string>
     <string name="location_saved">Saved Successfully</string>
-    <string name="already_saved">Already Saved!</string>
     <string name="location_not_saved">Could not be saved!</string>
     <string name="no_update">No Update Available</string>
-    <string name="only_full_version">This feature is only available in full version.</string>
     <string name="location_not_available">Location is not yet available</string>
     <!-- Settings Categories -->
     <string name="appearance">Appearance</string>
@@ -163,7 +160,6 @@
     <string name="unit_imperial">Imperial</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Enter Location Data</string>
-    <string name="specified_data_list_locations">Locations</string>
     <string name="specified_hint_latitude">Latitude (±90)</string>
     <string name="specified_hint_longitude">Longitude (±180)</string>
     <!-- Info -->
@@ -189,7 +185,6 @@
     <string name="gps_options">GPS Menu</string>
     <string name="gps_reset_location">Reset location</string>
     <string name="delete_all">Delete all</string>
-    <string name="open_saved_locations">Open saved locations</string>
     <string name="open_specified_location_documentation">Open specified location documentation</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Disclaimer</string>
@@ -252,13 +247,10 @@
     <string name="tick_oscillate">Tick Oscillate</string>
     <string name="use_physical_properties">Use Physical Properties</string>
     <string name="seconds_precision">Seconds Precision</string>
-    <string name="bearing_rotation">Bearing Rotation</string>
     <string name="accent_colors">Accent Colors</string>
     <string name="opacity">Opacity</string>
     <string name="size">Size</string>
     <string name="customize_pin">Customize Pin</string>
-    <string name="map_tile_source">Map Tile Source</string>
-    <string name="maps_provider">Maps Provider</string>
     <string name="twenty_four_hours_clock">24 Hour Clock</string>
     <string name="gimbal_lock">Gimbal Lock</string>
     <string name="clock_widget_notification">Clock widget is running.</string>
@@ -269,10 +261,8 @@
     <string name="set_only">Set Only</string>
     <string name="sure">Sure</string>
     <string name="desc_custom_coord_dialog">These parameters are currently being used for calculating information.</string>
-    <string name="inverted_colors">Inverted Colors</string>
     <string name="trail">Trail</string>
     <string name="geodesic_trail">Geodesic Trail</string>
-    <string name="name">Name</string>
     <string name="sensor_error">Your device does not have required sensors.</string>
     <string name="play_services_error">Your device does not support required Google Play dependencies.</string>
     <string name="enter_trail_name">Enter Trail Name</string>

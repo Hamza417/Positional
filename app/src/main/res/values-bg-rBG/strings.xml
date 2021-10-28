@@ -101,17 +101,14 @@
     <!-- Alert -->
     <string name="info_copied">Копирано в клипборда</string>
     <string name="info_error">Информацията не може да бъде копирана!!</string>
-    <string name="reset_complete">Настройките са върнати</string>
     <string name="invalid_coordinates">Невалидни координати</string>
     <string name="internet_connection_alert">Не е налична мрежова връзка</string>
     <string name="error">Грешка</string>
     <string name="not_available">N/A</string>
     <string name="no_address_found">Не са открити адреси за вашето местоположение</string>
     <string name="location_saved">Запазено успешно</string>
-    <string name="already_saved">Вече запазено!</string>
     <string name="location_not_saved">Не може да бъде запазено!</string>
     <string name="no_update">Няма нови актуализации</string>
-    <string name="only_full_version">Тази функция е налична само в пълната версия.</string>
     <string name="location_not_available">Местоположението все още не е налично</string>
     <!-- Settings Categories -->
     <string name="appearance">Външен вид</string>
@@ -163,7 +160,6 @@
     <string name="unit_imperial">Британски</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Въведете местоположение</string>
-    <string name="specified_data_list_locations">Местоположения</string>
     <string name="specified_hint_latitude">Географска ширина (±90)</string>
     <string name="specified_hint_longitude">Географска дължина (±180)</string>
     <!-- Info -->
@@ -189,7 +185,6 @@
     <string name="gps_options">GPS меню</string>
     <string name="gps_reset_location">Нулиране на локацията</string>
     <string name="delete_all">Изтрий всичко</string>
-    <string name="open_saved_locations">Отвори запазени локации</string>
     <string name="open_specified_location_documentation">Отворете документацията за определено местоположение</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Отказване от права</string>
@@ -252,13 +247,10 @@
     <string name="tick_oscillate">Трептящо тиктакане</string>
     <string name="use_physical_properties">Използвайте физически свойства</string>
     <string name="seconds_precision">Секунди Прецизност</string>
-    <string name="bearing_rotation">Въртене на лагера</string>
     <string name="accent_colors">Акцентиращ цвят</string>
     <string name="opacity">Прозрачност</string>
     <string name="size">Размер</string>
     <string name="customize_pin">Персонализиран Пин</string>
-    <string name="map_tile_source">Източник на плочки на картата</string>
-    <string name="maps_provider">Доставчик на карти</string>
     <string name="twenty_four_hours_clock">24 часов часовник</string>
     <string name="gimbal_lock">Стабилизация</string>
     <string name="clock_widget_notification">Приспособлението за часовник работи.</string>
@@ -269,10 +261,8 @@
     <string name="set_only">Приложи</string>
     <string name="sure">Разбира се</string>
     <string name="desc_custom_coord_dialog">Понастоящем тези параметри се използват за изчисляване на информация.</string>
-    <string name="inverted_colors">Обърнати цветове</string>
     <string name="trail">Пътека</string>
     <string name="geodesic_trail">Геодезическа пътека</string>
-    <string name="name">Име</string>
     <string name="sensor_error">Вашето устройство няма необходимите сензори.</string>
     <string name="play_services_error">Вашето устройство не поддържа необходимите услуги от Google Play.</string>
     <string name="enter_trail_name">Въведете име на пътека</string>

@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <app.simple.positional.decorations.padding.PaddingAwareNestedScrollView
-        android:id="@+id/web_page_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"

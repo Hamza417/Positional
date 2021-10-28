@@ -101,17 +101,14 @@
     <!-- Alert -->
     <string name="info_copied">क्लिपबोर्ड पर कॉपी किया गया</string>
     <string name="info_error">जानकारी कॉपी नहीं की जा सकी!</string>
-    <string name="reset_complete">रीसेट</string>
     <string name="invalid_coordinates">अमान्य निर्देशांक</string>
     <string name="internet_connection_alert">इंटरनेट कनेक्शन उपलब्ध नहीं</string>
     <string name="error">एरर!</string>
     <string name="not_available">अनुपलब्ध</string>
     <string name="no_address_found">वर्तमान स्थान के लिए कोई पता नहीं मिला</string>
     <string name="location_saved">सफलतापूर्वक सहेजा गया।</string>
-    <string name="already_saved">पहले ही सहेजा गया</string>
     <string name="location_not_saved">सहेजा नहीं जा सका</string>
     <string name="no_update">कोई अद्यतन उपलब्ध नहीं है</string>
-    <string name="only_full_version">यह सुविधा केवल पूर्ण संस्करण में उपलब्ध है|</string>
     <string name="location_not_available">स्थान उपलब्ध नहीं है</string>
     <!-- Settings Categories -->
     <string name="appearance">दिखावट</string>
@@ -163,7 +160,6 @@
     <string name="unit_imperial">इम्पीरियल</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">स्थान डेटा दर्ज करें</string>
-    <string name="specified_data_list_locations">स्थान</string>
     <string name="specified_hint_latitude">अक्षांश (±90)</string>
     <string name="specified_hint_longitude">देशान्तर (±180)</string>
     <!-- Info -->
@@ -189,7 +185,6 @@
     <string name="gps_options">GPS Menu</string>
     <string name="gps_reset_location">स्थान रीसेट करें</string>
     <string name="delete_all">सब मिटाएं</string>
-    <string name="open_saved_locations">सहेजे गए स्थान खोलें</string>
     <string name="open_specified_location_documentation">निर्दिष्ट स्थान प्रलेखन खोलें</string>
     <!-- Legal Menu -->
     <string name="disclaimer">अस्वीकरण</string>
@@ -252,13 +247,10 @@
     <string name="tick_oscillate">टिक ऑसिलेट</string>
     <string name="use_physical_properties">भौतिक गुणों का उपयोग करें</string>
     <string name="seconds_precision">सेकंड्स परिशुद्धता</string>
-    <string name="bearing_rotation">असर रोटेशन</string>
     <string name="accent_colors">एक्सेंट रंग</string>
     <string name="opacity">अपारदर्शिता</string>
     <string name="size">आकार</string>
     <string name="customize_pin">पिन अनुकूलित करें</string>
-    <string name="map_tile_source">मानचित्र का टाइल स्रोत</string>
-    <string name="maps_provider">नक्शा प्रदाता</string>
     <string name="twenty_four_hours_clock">24 घंटे की घड़ी</string>
     <string name="gimbal_lock">जिम्बल लॉक</string>
     <string name="clock_widget_notification">घड़ी विजेट चल रहा है।</string>
@@ -269,10 +261,8 @@
     <string name="set_only">केवल सेट करें</string>
     <string name="sure">ज़रूर</string>
     <string name="desc_custom_coord_dialog">इन मापदंडों का उपयोग वर्तमान में जानकारी की गणना के लिए किया जा रहा है।</string>
-    <string name="inverted_colors">रंग उलटें</string>
     <string name="trail">पगडंडी</string>
     <string name="geodesic_trail">जियोडेसिक पगडंडी</string>
-    <string name="name">नाम</string>
     <string name="sensor_error">आपके डिवाइस में आवश्यक सेंसर नहीं हैं।</string>
     <string name="play_services_error">आपका उपकरण आवश्यक Google Play निर्भरता का समर्थन नहीं करता है।</string>
     <string name="enter_trail_name">ट्रेल का नाम दर्ज करें</string>

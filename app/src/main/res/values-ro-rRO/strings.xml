@@ -101,17 +101,14 @@
     <!-- Alert -->
     <string name="info_copied">Copiat în clipboard</string>
     <string name="info_error">Informațiile nu au putut fi copiate!!</string>
-    <string name="reset_complete">Resetare finalizată</string>
     <string name="invalid_coordinates">Coordonate incorecte</string>
     <string name="internet_connection_alert">Conexiune la internet indisponibilă</string>
     <string name="error">Eroare</string>
     <string name="not_available">Indisponibil</string>
     <string name="no_address_found">Nu s-a găsit nicio adresă pentru locația curentă</string>
     <string name="location_saved">Salvat cu succes</string>
-    <string name="already_saved">Deja salvat!</string>
     <string name="location_not_saved">Nu a putut fi salvat!</string>
     <string name="no_update">Nicio actualizare disponibilă</string>
-    <string name="only_full_version">Această caracteristică este disponibilă doar în versiunea completă.</string>
     <string name="location_not_available">Locația nu este încă disponibilă</string>
     <!-- Settings Categories -->
     <string name="appearance">Aspect</string>
@@ -163,7 +160,6 @@
     <string name="unit_imperial">Imperiale</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Introduceți datele de localizare</string>
-    <string name="specified_data_list_locations">Locații</string>
     <string name="specified_hint_latitude">Latitudine (±90)</string>
     <string name="specified_hint_longitude">Longitudine (±180)</string>
     <!-- Info -->
@@ -189,7 +185,6 @@
     <string name="gps_options">Meniu GPS</string>
     <string name="gps_reset_location">Resetare locație</string>
     <string name="delete_all">Ștergeți tot</string>
-    <string name="open_saved_locations">Deschideți locațiile salvate</string>
     <string name="open_specified_location_documentation">Deschide documentația locației specificate</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Act de renunțare</string>
@@ -252,13 +247,10 @@
     <string name="tick_oscillate">Tic oscilat</string>
     <string name="use_physical_properties">Utilizare proprietăți fizice</string>
     <string name="seconds_precision">Precizie secunde</string>
-    <string name="bearing_rotation">Rotire</string>
     <string name="accent_colors">Culori accent</string>
     <string name="opacity">Opacitate</string>
     <string name="size">Dimensiune</string>
     <string name="customize_pin">Personalizare marcator</string>
-    <string name="map_tile_source">Sursa hărții</string>
-    <string name="maps_provider">Furnizor de hărți</string>
     <string name="twenty_four_hours_clock">Ceas 24 ore</string>
     <string name="gimbal_lock">Stabilizare</string>
     <string name="clock_widget_notification">Widget-ul Ceas rulează.</string>
@@ -269,10 +261,8 @@
     <string name="set_only">Setare doar</string>
     <string name="sure">Desigur</string>
     <string name="desc_custom_coord_dialog">Acești parametri sunt utilizați în prezent pentru calcularea informațiilor.</string>
-    <string name="inverted_colors">Culori inversate</string>
     <string name="trail">Traseu</string>
     <string name="geodesic_trail">Traseu geodezic</string>
-    <string name="name">Nume</string>
     <string name="sensor_error">Dispozitivul dvs. nu are senzorii necesari.</string>
     <string name="play_services_error">Dispozitivul dvs. nu suportă dependențele necesare Google Play.</string>
     <string name="enter_trail_name">Introduceți numele traseului</string>

@@ -81,7 +81,7 @@ class LocationParameters : CustomBottomSheetDialogFragment() {
             runCatching {
                 address = try {
                     if (!isNetworkAvailable(requireContext())) {
-                        getString(app.simple.positional.R.string.internet_connection_alert)
+                        getString(R.string.internet_connection_alert)
                     } else {
                         val geocoder = Geocoder(requireContext(), Locale.getDefault())
 
@@ -96,7 +96,7 @@ class LocationParameters : CustomBottomSheetDialogFragment() {
                 } catch (e: IOException) {
                     "${e.message}"
                 } catch (e: NullPointerException) {
-                    "${e.message}\n${getString(app.simple.positional.R.string.no_address_found)}"
+                    "${e.message}\n${getString(R.string.no_address_found)}"
                 } catch (e: IllegalArgumentException) {
                     getString(R.string.invalid_coordinates)
                 }

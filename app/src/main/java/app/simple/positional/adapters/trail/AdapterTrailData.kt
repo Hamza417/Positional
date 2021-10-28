@@ -143,7 +143,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
         }
     }
 
-    fun getUnit(float: Float, context: Context): String {
+    private fun getUnit(float: Float, context: Context): String {
         return if (MainPreferences.getUnit()) {
             if (float < 1000F) {
                 context.getString(R.string.meter)

@@ -7,11 +7,9 @@
     <string name="moon_azimuth" translatable="false">@string/sun_azimuth</string>
     <string name="moon_distance" translatable="false">@string/sun_distance</string>
     <string name="moon_altitude" translatable="false">@string/sun_altitude</string>
-    <string name="specified_hint_address" translatable="false">@string/gps_address</string>
     <string name="fused_location_provider" translatable="false">Fused Location Provider</string>
     <string name="android_location_provider" translatable="false">Android Location Provider</string>
     <string name="coordinates_format" translatable="false">%1$s  |  %2$s</string>
 
     <!-- Bottom Bar -->
-    <string name="ellipsis" translatable="false">&#8230;</string>
 </resources>

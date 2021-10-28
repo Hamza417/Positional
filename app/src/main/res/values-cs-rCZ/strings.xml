@@ -101,17 +101,14 @@
     <!-- Alert -->
     <string name="info_copied">Zkopírováno do schránky</string>
     <string name="info_error">Informace nelze zkopírovat!!</string>
-    <string name="reset_complete">Resetování dokončeno</string>
     <string name="invalid_coordinates">Neplatné souřadnice</string>
     <string name="internet_connection_alert">Není k dispozici připojení k Internetu</string>
     <string name="error">Chyba</string>
     <string name="not_available">Není k dispozici</string>
     <string name="no_address_found">Nebyla nalezena žádná adresa pro aktuální polohu</string>
     <string name="location_saved">Úspěšně uloženo</string>
-    <string name="already_saved">Již uloženo!</string>
     <string name="location_not_saved">Nelze uložit!</string>
     <string name="no_update">Nejsou k dispozici žádné aktualizace</string>
-    <string name="only_full_version">Tato funkce je dostupná pouze v plné verzi.</string>
     <string name="location_not_available">Poloha ještě není k dispozici</string>
     <!-- Settings Categories -->
     <string name="appearance">Vzhled</string>
@@ -163,7 +160,6 @@
     <string name="unit_imperial">Imperiální jednotky</string>
     <!-- Specified Coordinates Menu -->
     <string name="specified_hint_header">Zadejte údaje o poloze</string>
-    <string name="specified_data_list_locations">Lokace</string>
     <string name="specified_hint_latitude">Zeměpisná šířka (±90)</string>
     <string name="specified_hint_longitude">Zeměpisná délka (±180)</string>
     <!-- Info -->
@@ -189,7 +185,6 @@
     <string name="gps_options">GPS nabídka</string>
     <string name="gps_reset_location">Resetovat polohu</string>
     <string name="delete_all">Smazat vše</string>
-    <string name="open_saved_locations">Otevřít uložená místa</string>
     <string name="open_specified_location_documentation">Otevřít specifikovanou dokumentaci polohy</string>
     <!-- Legal Menu -->
     <string name="disclaimer">Upozornění</string>
@@ -252,13 +247,10 @@
     <string name="tick_oscillate">Oscilovaný tik</string>
     <string name="use_physical_properties">Použít fyzické vlastnosti</string>
     <string name="seconds_precision">Sekundová přesnost</string>
-    <string name="bearing_rotation">Otáčení ložiska</string>
     <string name="accent_colors">Barva zvýraznění</string>
     <string name="opacity">Průhlednost</string>
     <string name="size">Velikost</string>
     <string name="customize_pin">Přizpůsobení špendlíku</string>
-    <string name="map_tile_source">Zdroj dlaždic mapy</string>
-    <string name="maps_provider">Poskytovatel map</string>
     <string name="twenty_four_hours_clock">24hodinové hodiny</string>
     <string name="gimbal_lock">Uzamčení gimbalu</string>
     <string name="clock_widget_notification">Widget hodin je spuštěn.</string>
@@ -269,10 +261,8 @@
     <string name="set_only">Pouze nastavit</string>
     <string name="sure">Jistě</string>
     <string name="desc_custom_coord_dialog">Tyto parametry se v současné době používají pro výpočet informací.</string>
-    <string name="inverted_colors">Převrácené barvy</string>
     <string name="trail">Trasa</string>
     <string name="geodesic_trail">Geodetická trasa</string>
-    <string name="name">Jméno</string>
     <string name="sensor_error">Vaše zařízení nemá potřebné senzory.</string>
     <string name="play_services_error">Vaše zařízení nepodporuje požadované závislosti Google Play.</string>
     <string name="enter_trail_name">Zadejte název trasy</string>

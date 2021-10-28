@@ -89,7 +89,6 @@
                     android:textSize="@dimen/settings_secondary_text_size" />
 
                 <ImageView
-                    android:id="@+id/permission_button"
                     android:layout_width="@dimen/app_button_size"
                     android:layout_height="@dimen/app_button_size"
                     android:padding="5dp"
