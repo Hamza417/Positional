@@ -49,7 +49,7 @@ public class StatusBarHeight {
                 return 0;
             }
             else {
-                resources.getDimensionPixelSize(resourceId);
+                return resources.getDimensionPixelSize(resourceId);
             }
         }
         return 0;

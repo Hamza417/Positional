@@ -1,7 +1,6 @@
 package app.simple.positional.util
 
 import android.icu.text.MessageFormat
-import java.util.*
 
 object Ordinal {
     fun Number?.toOrdinal(): String {

@@ -1,3 +1,5 @@
+@file:Suppress("LeakingThis")
+
 package app.simple.positional.decorations.views
 
 import android.content.Context

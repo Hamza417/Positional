@@ -50,6 +50,7 @@ import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.TextViewUtils.setTextAnimation
+import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
@@ -187,6 +188,7 @@ class GPS : ScopedFragment() {
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
             divider.isVisible = true
+            save.gone()
             updateCoordinates(customLatitude, customLongitude)
             getAddress(LatLng(customLatitude, customLongitude))
         }

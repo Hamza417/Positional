@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.SystemClock;
 
 import app.simple.positional.services.ClockWidgetService;
-import app.simple.positional.services.ClockWidgetService2x2;
 import app.simple.positional.services.ClockWidgetService3x3;
 
 public class ClockWidget3x3 extends AppWidgetProvider {

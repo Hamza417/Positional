@@ -63,7 +63,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private val viewHandler = Handler(Looper.getMainLooper())
 
     var location: Location? = null
-    var markerBitmap: Bitmap? = null
+    private var markerBitmap: Bitmap? = null
     var onTouch: ((event: MotionEvent, b: Boolean) -> Unit)? = null
     val sensorRegistrationRunnable = Runnable { register() }
     val cameraSpeed = 1000

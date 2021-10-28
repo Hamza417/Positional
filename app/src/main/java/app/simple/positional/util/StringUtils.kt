@@ -53,7 +53,7 @@ object StringUtils {
     }
 
     fun generateRandomWords(wordLength: Int): String {
-        val r = Random() // Intialize a Random Number Generator with SysTime as the seed
+        val r = Random() // Initialize a Random Number Generator with SysTime as the seed
         val sb = StringBuilder(wordLength)
         for (i in 0 until wordLength) { // For each letter in the word
             val tmp = 'a' + r.nextInt('z' - 'a') // Generate a letter between a and z

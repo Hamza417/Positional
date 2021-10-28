@@ -59,7 +59,6 @@ class TimeZoneAdapter(var timeZones: MutableList<Pair<String, String>>, var sear
             holder.format.text = formattedTime(timeZones[position].first)
 
             holder.layout.setOnClickListener {
-                ClockPreferences.setTimezoneSelectedPosition(position)
                 ClockPreferences.setTimeZone(timeZones[position].first)
                 currentSelectedTimezone = timeZones[position].first
                 notifyDataSetChanged()

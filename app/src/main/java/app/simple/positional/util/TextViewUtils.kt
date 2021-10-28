@@ -41,7 +41,7 @@ object TextViewUtils {
     }
 
     fun String.capitalizeText(): String {
-        return this.lowercase(LocaleHelper.getAppLocale()).split(" ").joinToString(" ") {
+        return this.lowercase(LocaleHelper.getAppLocale()).split(" ").joinToString(" ") { it ->
             if (it.length <= 1) {
                 it
             } else {

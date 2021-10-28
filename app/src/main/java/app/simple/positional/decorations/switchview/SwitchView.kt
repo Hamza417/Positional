@@ -28,7 +28,7 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private val tension = 3.5F
     val w = context.resources.getDimensionPixelOffset(R.dimen.switch_width)
     val p = context.resources.getDimensionPixelOffset(R.dimen.switch_padding)
-    val thumbWidth = context.resources.getDimensionPixelOffset(R.dimen.switch_thumb_dimensions)
+    private val thumbWidth = context.resources.getDimensionPixelOffset(R.dimen.switch_thumb_dimensions)
 
     var isChecked: Boolean = false
         set(value) {

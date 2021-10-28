@@ -19,7 +19,7 @@ import com.google.android.material.card.MaterialCardView
 class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
 
     private var locations: MutableList<Locations> = arrayListOf()
-    var locationsAdapterCallback: LocationsCallback? = null
+    private var locationsAdapterCallback: LocationsCallback? = null
 
     private val radius = MainPreferences.getCornerRadius()
 

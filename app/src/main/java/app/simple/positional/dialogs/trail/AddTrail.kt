@@ -109,7 +109,7 @@ class AddTrail : CustomDialogFragment() {
         }
     }
 
-    fun saveButtonState(text: String) {
+    private fun saveButtonState(text: String) {
         if (text.lowercase() == "%%_trails" || text.length.isZero()) {
             save.gone()
         } else {

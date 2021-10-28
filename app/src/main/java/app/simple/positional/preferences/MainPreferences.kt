@@ -12,7 +12,6 @@ object MainPreferences {
     private const val launchCount = "launch_count"
     private const val dayNightMode = "is_day_night_mode"
     private const val showAgain = "show_permission_dialog_again"
-    private const val showPlayServicesAgain = "show_play_services_dialog_again"
     private const val licenseStatus = "license_status"
     private const val address = "specified_address"
     private const val screenOn = "keep_the_screen_on"
@@ -20,7 +19,6 @@ object MainPreferences {
     private const val appCornerRadius = "corner_radius"
     private const val skipSplashScreen = "skip_splash_screen"
     private const val ratingDialog = "is_showing_rating_dialog"
-    private const val wideColor = "is_wide_color_gamut"
     private const val currentArt = "current_art_position"
 
     const val isCustomCoordinate = "is_custom_coordinate_set"
@@ -231,16 +229,6 @@ object MainPreferences {
 
     fun getAccentColor(): Int {
         return getSharedPreferences().getInt(accentColor, 0)
-    }
-
-    //--------------------------------------------------------------------------------------------------//
-
-    fun setWideColorGamut(value: Boolean) {
-        getSharedPreferences().edit().putBoolean(wideColor, value).apply()
-    }
-
-    fun isWideColorGamut(): Boolean {
-        return getSharedPreferences().getBoolean(wideColor, false)
     }
 
     //--------------------------------------------------------------------------------------------------//
