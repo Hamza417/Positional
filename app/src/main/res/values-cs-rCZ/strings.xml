@@ -276,4 +276,5 @@
     <string name="copy">Kopírovat</string>
     <string name="trail_data_accuracy">V rámci %1$s %2$s místa</string>
     <string name="rate_text">Jak jste spokojeni s touto aplikací? Klikněte zde pro ohodnocení aplikace v Obchodě Play.</string>
+    <string name="target">Cíl</string>
 </resources>
