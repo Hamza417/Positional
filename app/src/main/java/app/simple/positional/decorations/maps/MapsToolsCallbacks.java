@@ -13,7 +13,7 @@ public interface MapsToolsCallbacks {
 
     }
 
-    default void onTargetAdd() {
+    default void onTargetAdd(boolean longpress) {
 
     }
 

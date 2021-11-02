@@ -20,6 +20,7 @@
         android:layout_gravity="center"
         android:scaleType="fitCenter"
         android:visibility="gone"
+        android:src="@drawable/ic_crosshair"
         tools:ignore="ContentDescription"
         app:tint="@color/iconColor" />
 

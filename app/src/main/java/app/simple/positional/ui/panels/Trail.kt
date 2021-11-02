@@ -284,10 +284,7 @@ class Trail : ScopedFragment() {
             }
 
             override fun onRemove(remove: View) {
-                val popup = DeletePopupMenu(
-                        remove)
-
-                popup.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
+                DeletePopupMenu(remove).setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                     override fun delete() {
                         maps?.removePolyline()
                     }
@@ -310,7 +307,7 @@ class Trail : ScopedFragment() {
 
             override fun onMenuClicked() {
                 TrailMenu.newInstance()
-                    .show(requireActivity().supportFragmentManager, "trail_menu")
+                    .show(childFragmentManager, "trail_menu")
             }
 
         })

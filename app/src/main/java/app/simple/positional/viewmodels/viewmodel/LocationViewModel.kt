@@ -26,6 +26,7 @@ import app.simple.positional.util.DMSConverter.latitudeAsDMS
 import app.simple.positional.util.DMSConverter.longitudeAsDD
 import app.simple.positional.util.DMSConverter.longitudeAsDM
 import app.simple.positional.util.DMSConverter.longitudeAsDMS
+import app.simple.positional.util.Direction
 import app.simple.positional.util.HtmlHelper
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.UTMConverter
@@ -36,6 +37,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.abs
 
 /**
  * This viewmodel receives the location updated by location services
@@ -61,6 +63,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
     val utm = MutableLiveData<UTMConverter.UTM>()
     val latency = MutableLiveData<Pair<Number, Boolean>>()
     val targetDisplacement = MutableLiveData<Spanned>()
+    val targetDirection = MutableLiveData<Spanned>()
 
     val accuracyGraphData = MutableLiveData<ArrayList<Float>>()
     val altitudeGraphData = MutableLiveData<ArrayList<Float>>()
@@ -93,7 +96,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                                     targetData(
                                             LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
                                                     GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
-                                            LatLng(this.latitude, this.longitude))
+                                            this)
                                 }
 
                                 Log.d("LocationViewModel", "Location Posted")
@@ -135,8 +138,9 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
         }
     }
 
-    fun targetData(target: LatLng, current: LatLng) {
-        targetDisplacement(target, current)
+    fun targetData(target: LatLng, current: Location) {
+        targetDisplacement(target, LatLng(current.latitude, current.longitude))
+        targetBearing(target, current)
     }
 
     private fun targetDisplacement(target: LatLng, current: LatLng) {
@@ -170,6 +174,26 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
             }
 
             this@LocationViewModel.targetDisplacement.postValue(HtmlHelper.fromHtml(builder.toString()))
+        }
+    }
+
+    private fun targetBearing(target: LatLng, current: Location) {
+        viewModelScope.launch(Dispatchers.Default) {
+            val p0 = LocationExtension.calculateBearingAngle(
+                    current.latitude,
+                    current.longitude,
+                    target.latitude,
+                    target.longitude
+            )
+
+            println(p0)
+
+            val builder = StringBuilder().also {
+                it.append("<b>${getString(R.string.gps_direction)} </b>")
+                it.append(Direction.getDirectionNameFromAzimuth(getContext(), abs(p0)))
+            }
+
+            targetDirection.postValue(HtmlHelper.fromHtml(builder.toString()))
         }
     }
 

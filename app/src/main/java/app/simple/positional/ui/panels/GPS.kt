@@ -31,10 +31,7 @@ import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.maps.*
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.app.LocationParameters
-import app.simple.positional.dialogs.gps.CoordinatesExpansion
-import app.simple.positional.dialogs.gps.GPSMenu
-import app.simple.positional.dialogs.gps.LocationExpansion
-import app.simple.positional.dialogs.gps.MovementExpansion
+import app.simple.positional.dialogs.gps.*
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
@@ -351,6 +348,10 @@ class GPS : ScopedFragment() {
             targetDisplacement.text = it
         })
 
+        locationViewModel.targetDirection.observe(viewLifecycleOwner, {
+            targetDirection.text = it
+        })
+
         bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
@@ -415,8 +416,13 @@ class GPS : ScopedFragment() {
                 }
             }
 
-            override fun onTargetAdd() {
-                maps?.setTargetMarker()
+            override fun onTargetAdd(longpress: Boolean) {
+                if(longpress) {
+                    TargetCoordinates.newInstance()
+                        .show(childFragmentManager, "target_coordinates")
+                } else {
+                    maps?.setTargetMarker()
+                }
             }
 
             override fun removeTarget(view: View) {
@@ -542,7 +548,9 @@ class GPS : ScopedFragment() {
             }
 
             override fun onTargetUpdated(target: LatLng?, current: LatLng?) {
-                locationViewModel.targetData(target!!, current!!)
+                kotlin.runCatching {
+                    locationViewModel.targetData(target!!, location!!)
+                }
             }
         })
 

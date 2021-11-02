@@ -5,6 +5,9 @@ import android.location.Location
 import android.location.LocationManager
 import app.simple.positional.model.TrailData
 import com.google.android.gms.maps.model.LatLng
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.sin
 
 object LocationExtension {
 
@@ -73,5 +76,14 @@ object LocationExtension {
         }
 
         return distance
+    }
+
+    fun calculateBearingAngle(startLatitude: Double, startLongitude: Double, endLatitude: Double, endLongitude: Double): Double {
+        val phi1 = Math.toRadians(startLatitude)
+        val phi2 = Math.toRadians(endLatitude)
+        val deltaLambda = Math.toRadians(endLongitude - startLongitude)
+        val theta: Double =
+            atan2(sin(deltaLambda) * cos(phi2), cos(phi1) * sin(phi2) - sin(phi1) * cos(phi2) * cos(deltaLambda))
+        return Math.toDegrees(theta)
     }
 }

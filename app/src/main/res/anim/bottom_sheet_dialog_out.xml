@@ -6,7 +6,8 @@
 
     <translate
         android:fromYDelta="0"
-        android:toYDelta="500" />
+        android:toYDelta="300" />
+
     <alpha
         android:fromAlpha="1"
         android:toAlpha="0" />

@@ -82,9 +82,14 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
             }
         }
 
+        target.setOnLongClickListener {
+            mapsToolsCallbacks.onTargetAdd(true)
+            true
+        }
+
         check.setOnClickListener {
             GPSPreferences.setTargetMarkerMode(false)
-            mapsToolsCallbacks.onTargetAdd()
+            mapsToolsCallbacks.onTargetAdd(false)
         }
 
         align.setOnClickListener {
