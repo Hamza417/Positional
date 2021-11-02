@@ -276,4 +276,5 @@
     <string name="copy">Copie</string>
     <string name="trail_data_accuracy">Dans %1$s %2$s de l\'emplacement</string>
     <string name="rate_text">Êtes-vous satisfait de cette application ? Cliquez ici pour évaluer l\'application sur le Play Store.</string>
+    <string name="target">Cible</string>
 </resources>
