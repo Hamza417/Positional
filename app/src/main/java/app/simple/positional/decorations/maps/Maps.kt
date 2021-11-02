@@ -18,6 +18,7 @@ import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter
+import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
@@ -330,11 +331,19 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                     if (location.isNotNull()) {
                         if (!LocationExtension.getLocationStatus(context)) return@withContext
 
-                        markerBitmap = LocationPins.locationsPins[GPSPreferences.getPinSkin()]
-                            .toBitmapKeepingSize(
-                                    context,
-                                    GPSPreferences.getPinSize(),
-                                    GPSPreferences.getPinOpacity())
+                        markerBitmap = if (location!!.speed == 0.0F) {
+                            LocationPins.locationsPins[GPSPreferences.getPinSkin()]
+                                .toBitmapKeepingSize(
+                                        context,
+                                        GPSPreferences.getPinSize(),
+                                        GPSPreferences.getPinOpacity())
+                        } else {
+                            R.drawable.ic_bearing_marker
+                                .toBitmapKeepingSize(
+                                        context,
+                                        GPSPreferences.getPinSize(),
+                                        GPSPreferences.getPinOpacity())
+                        }
                     }
                 }
             }
@@ -345,16 +354,19 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                     circle?.remove()
 
                     marker = googleMap?.addMarker(MarkerOptions().position(latLng)
+                        .rotation(if (location!!.speed > 0F) location!!.bearing else 0F)
+                        .anchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
+                        .flat(location!!.speed > 0F)
                         .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
 
                     drawMarkerToTargetPolyline()
 
                     circle = googleMap?.addCircle(CircleOptions()
                         .center(latLng)
-                        .radius(location?.accuracy?.toDouble() ?: 0.0)
+                        .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble() ?: 0.0)
                         .clickable(false)
-                        .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
-                        .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
+                        .fillColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.map_circle_color))
+                        .strokeColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.compass_pin_color))
                         .strokeWidth(3F))
                 }
 
