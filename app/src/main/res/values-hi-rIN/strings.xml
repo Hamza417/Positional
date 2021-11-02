@@ -276,4 +276,5 @@
     <string name="copy">कॉपी करें</string>
     <string name="trail_data_accuracy">स्थान के %1$s %2$s के भीतर</string>
     <string name="rate_text">आप इस ऐप से कितने संतुष्ट हैं? Play Store पर ऐप को रेट करने के लिए यहां क्लिक करें।</string>
+    <string name="target">लक्ष्य</string>
 </resources>
