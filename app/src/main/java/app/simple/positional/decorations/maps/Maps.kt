@@ -22,7 +22,9 @@ import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
+import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
+import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension
@@ -35,10 +37,10 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
-        OnMapReadyCallback,
-        SharedPreferences.OnSharedPreferenceChangeListener,
-        SensorEventListener,
-        CoroutineScope {
+                                                           OnMapReadyCallback,
+                                                           SharedPreferences.OnSharedPreferenceChangeListener,
+                                                           SensorEventListener,
+                                                           CoroutineScope {
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
@@ -59,6 +61,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private var marker: Marker? = null
     private var circle: Circle? = null
     private var latLng: LatLng? = null
+    private var polylineOptions: PolylineOptions? = null
+    private var targetPolyline: Polyline? = null
     private var mapsCallbacks: MapsCallbacks? = null
     private val viewHandler = Handler(Looper.getMainLooper())
 
@@ -89,6 +93,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         isBearingRotation = GPSPreferences.isBearingRotation()
         isCompassRotation = GPSPreferences.isCompassRotation()
         isNorthOnly = GPSPreferences.isNorthOnly()
+
+        polylineOptions = PolylineOptions()
+            .width(10f)
+            .jointType(JointType.ROUND)
+            .color(context.resolveAttrColor(R.attr.colorAppAccent))
+            .geodesic(false)
 
         if (isCustomCoordinate) {
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
@@ -312,42 +322,53 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             withContext(Dispatchers.Default) {
                 if (isCustomCoordinate) {
                     markerBitmap = R.drawable.ic_place_custom
-                            .toBitmapKeepingSize(
-                                    context,
-                                    GPSPreferences.getPinSize(),
-                                    GPSPreferences.getPinOpacity())
+                        .toBitmapKeepingSize(
+                                context,
+                                GPSPreferences.getPinSize(),
+                                GPSPreferences.getPinOpacity())
                 } else {
                     if (location.isNotNull()) {
                         if (!LocationExtension.getLocationStatus(context)) return@withContext
 
                         markerBitmap = LocationPins.locationsPins[GPSPreferences.getPinSkin()]
-                                .toBitmapKeepingSize(
-                                        context,
-                                        GPSPreferences.getPinSize(),
-                                        GPSPreferences.getPinOpacity())
+                            .toBitmapKeepingSize(
+                                    context,
+                                    GPSPreferences.getPinSize(),
+                                    GPSPreferences.getPinOpacity())
                     }
                 }
             }
 
             if (googleMap.isNotNull()) {
-                try {
+                runCatching {
                     marker?.remove()
                     circle?.remove()
 
-                    marker = googleMap?.addMarker(MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                    marker = googleMap?.addMarker(MarkerOptions().position(latLng)
+                        .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+
+                    drawMarkerToTargetPolyline()
 
                     circle = googleMap?.addCircle(CircleOptions()
-                            .center(latLng)
-                            .radius(location?.accuracy?.toDouble() ?: 0.0)
-                            .clickable(false)
-                            .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
-                            .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
-                            .strokeWidth(3F))
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                        .center(latLng)
+                        .radius(location?.accuracy?.toDouble() ?: 0.0)
+                        .clickable(false)
+                        .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
+                        .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
+                        .strokeWidth(3F))
                 }
 
                 invalidate()
+            }
+        }
+    }
+
+    fun setTargetMarker() {
+        if (googleMap.isNotNull()) {
+            with(googleMap?.cameraPosition!!) {
+                GPSPreferences.setTargetMarkerLatitude(this.target.latitude.toFloat())
+                GPSPreferences.setTargetMarkerLongitude(this.target.longitude.toFloat())
+                GPSPreferences.setTargetMarker(true)
             }
         }
     }
@@ -357,6 +378,22 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             markerBitmap?.recycle()
             marker?.remove()
             circle?.remove()
+        }
+    }
+
+    private fun drawMarkerToTargetPolyline() {
+        targetPolyline?.remove()
+        polylineOptions?.points?.clear()
+
+        if(GPSPreferences.isTargetMarkerSet()) {
+            polylineOptions?.add(latLng)
+            polylineOptions?.add(LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
+                    GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
+
+            targetPolyline = googleMap?.addPolyline(polylineOptions!!)
+
+            polylineOptions?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
+            polylineOptions?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
         }
     }
 
@@ -412,15 +449,14 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(
                 CameraPosition.builder()
-                        .target(latLng)
-                        .tilt(GPSPreferences.getMapTilt())
-                        .zoom(zoom)
-                        .bearing(bearing ?: 0F)
-                        .build()),
+                    .target(latLng)
+                    .tilt(GPSPreferences.getMapTilt())
+                    .zoom(zoom)
+                    .bearing(bearing ?: 0F)
+                    .build()),
                 cameraSpeed,
                 object : GoogleMap.CancelableCallback {
                     override fun onFinish() {
-                        println("Finished")
                         viewHandler.postDelayed(sensorRegistrationRunnable, cameraSpeed.toLong())
                     }
 
@@ -463,15 +499,18 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         when (event.sensor.type) {
             Sensor.TYPE_ACCELEROMETER -> {
                 LowPassFilter.smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
-                accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
+                accelerometer =
+                    Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
             }
             Sensor.TYPE_MAGNETIC_FIELD -> {
                 LowPassFilter.smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
-                magnetometer = Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
+                magnetometer =
+                    Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
             }
         }
 
-        rotationAngle = CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+        rotationAngle =
+            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
 
         if (isCompassRotation) {
             if (googleMap.isNotNull())
@@ -512,8 +551,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                     }
 
                     isRegistered = true
-
-                    println("Registered")
                 }
             }
         }
@@ -528,8 +565,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 sensorManager.unregisterListener(this, sensorMagneticField)
 
                 isRegistered = false
-
-                println("Unregistered")
 
                 if (googleMap.isNotNull()) {
                     with(googleMap!!.uiSettings) {
@@ -603,6 +638,9 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                         )), cameraSpeed, null)
                     }
                 }
+            }
+            GPSPreferences.mapTargetMarker -> {
+                drawMarkerToTargetPolyline()
             }
         }
     }

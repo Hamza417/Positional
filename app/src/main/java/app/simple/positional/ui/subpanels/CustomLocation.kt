@@ -28,7 +28,6 @@ import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.adapters.settings.LocationsAdapter
 import app.simple.positional.database.instances.LocationDatabase
-import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.padding.PaddingAwareLinearLayout
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
@@ -173,8 +172,7 @@ class CustomLocation : ScopedFragment() {
 
                     getString(R.string.delete_all) -> {
                         val deletePopupMenu = DeletePopupMenu(
-                                layoutInflater.inflate(R.layout.popup_delete_confirmation,
-                                        DynamicCornerLinearLayout(requireContext())), view)
+                                view)
 
                         deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                             override fun delete() {

@@ -151,7 +151,9 @@ object MainPreferences {
                 getSharedPreferences().getFloat(longitude, 0f)
         )
     }
+
     //--------------------------------------------------------------------------------------------------//
+
     fun setLastLatitude(@NotNull value: Float) {
         getSharedPreferences().edit().putFloat(lastLatitude, value).apply()
     }

@@ -10,6 +10,9 @@ object GPSPreferences {
 
     private const val mapZoom = "map_zoom_value"
     private const val mapTilt = "map_tilt_value"
+    private const val mapTargetMarkerLatitude = "target_marker_latitude"
+    private const val mapTargetMarkerLongitude = "target_marker_longitude"
+
     const val pinSize = "map_pin_size"
     const val pinOpacity = "pin_opacity"
     const val useBearingRotation = "use_bearing_rotation"
@@ -23,6 +26,7 @@ object GPSPreferences {
     const val compassRotation = "is_location_map_compass_rotation"
     const val toolsGravity = "is_tools_gravity_left"
     const val isNorthOnly = "is_map_north_only"
+    const val mapTargetMarker = "target_marker_state"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -173,4 +177,33 @@ object GPSPreferences {
     fun getPinSkin(): Int {
         return getSharedPreferences().getInt(pinSkin, 0)
     }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setTargetMarkerLatitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(mapTargetMarkerLatitude, value).apply()
+    }
+
+    fun setTargetMarkerLongitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(mapTargetMarkerLongitude, value).apply()
+    }
+
+    fun getTargetMarkerCoordinates(): FloatArray {
+        return floatArrayOf(
+                getSharedPreferences().getFloat(mapTargetMarkerLatitude, 48.8584f),
+                getSharedPreferences().getFloat(mapTargetMarkerLongitude, 2.2945f)
+        )
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setTargetMarker(boolean: Boolean) {
+        getSharedPreferences().edit().putBoolean(mapTargetMarker, boolean).apply()
+    }
+
+    fun isTargetMarkerSet(): Boolean {
+        return getSharedPreferences().getBoolean(mapTargetMarker, false)
+    }
+
+
 }

@@ -158,6 +158,51 @@
         </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
         <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+            android:id="@+id/gps_panel_target"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:background="@drawable/ripple"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/PrimaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:text="@string/target"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/info_text_primary_size" />
+
+            <TextView
+                android:id="@+id/gps_target_displacement"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:text="@string/gps_displacement"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+            <TextView
+                android:id="@+id/gps_target_direction"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:text="@string/gps_direction"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_panel_movement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

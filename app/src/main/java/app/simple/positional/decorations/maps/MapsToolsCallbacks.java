@@ -13,6 +13,14 @@ public interface MapsToolsCallbacks {
 
     }
 
+    default void onTargetAdd() {
+
+    }
+
+    default void removeTarget(View view) {
+
+    }
+
     default void onCompassClicked(@NonNull View view) {
 
     }

@@ -86,8 +86,7 @@ class Trails : ScopedFragment() {
 
                         override fun onDelete() {
                             val deletePopupMenu = DeletePopupMenu(
-                                    layoutInflater.inflate(R.layout.popup_delete_confirmation,
-                                                           DynamicCornerLinearLayout(requireContext())), anchor)
+                                    anchor)
 
                             deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                                 override fun delete() {

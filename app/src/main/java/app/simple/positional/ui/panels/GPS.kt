@@ -41,6 +41,7 @@ import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.model.Locations
+import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.*
@@ -400,6 +401,18 @@ class GPS : ScopedFragment() {
                 } else {
                     LocationPrompt.displayLocationSettingsRequest(requireActivity())
                 }
+            }
+
+            override fun onTargetAdd() {
+                maps?.setTargetMarker()
+            }
+
+            override fun removeTarget(view: View) {
+                DeletePopupMenu(view).setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
+                    override fun delete() {
+                        GPSPreferences.setTargetMarker(false)
+                    }
+                })
             }
         })
 

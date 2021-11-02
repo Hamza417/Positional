@@ -3,8 +3,6 @@ package app.simple.positional.decorations.maps
 import android.animation.LayoutTransition
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.DecelerateInterpolator
@@ -15,19 +13,18 @@ import app.simple.positional.decorations.views.LocationButton
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ImageLoader
-import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.ViewUtils.gone
 
 class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var align: DynamicRippleImageButton
     private lateinit var location: LocationButton
+    private lateinit var target: DynamicRippleImageButton
     private lateinit var compass: DynamicRippleImageButton
     private lateinit var bearing: DynamicRippleImageButton
     private lateinit var northOnly: DynamicRippleImageButton
 
     private lateinit var mapsToolsCallbacks: MapsToolsCallbacks
-    private val viewHandler = Handler(Looper.getMainLooper())
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {
         setProperties()
@@ -48,6 +45,7 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
 
         align = view.findViewById(R.id.tools_align_btn)
         location = view.findViewById(R.id.current_location)
+        target = view.findViewById(R.id.current_target)
         compass = view.findViewById(R.id.compass)
         bearing = view.findViewById(R.id.bearing)
         northOnly = view.findViewById(R.id.north_up)
@@ -56,6 +54,7 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         updateNorthOnlyIcon(animate = false)
         updateBearingIcon(animate = false)
         updateCompassIcon(animate = false)
+        setTargetButtonState(animate = false)
 
         location.setOnClickListener {
             mapsToolsCallbacks.onLocationClicked(it, false)
@@ -64,6 +63,14 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         location.setOnLongClickListener {
             mapsToolsCallbacks.onLocationClicked(it, true)
             true
+        }
+
+        target.setOnClickListener {
+            if(GPSPreferences.isTargetMarkerSet()) {
+                mapsToolsCallbacks.removeTarget(it)
+            } else {
+                mapsToolsCallbacks.onTargetAdd()
+            }
         }
 
         align.setOnClickListener {
@@ -120,6 +127,22 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
     fun locationIndicatorUpdate(isFixed: Boolean) = location.locationIndicatorUpdate(isFixed)
     fun locationIconStatusUpdates() = location.locationIconStatusUpdate()
 
+    private fun setTargetButtonState(animate: Boolean) {
+        if (GPSPreferences.isTargetMarkerSet()) {
+            if (animate) {
+                ImageLoader.setImage(R.drawable.ic_clear, target, context, 0)
+            } else {
+                target.setImageResource(R.drawable.ic_clear)
+            }
+        } else {
+            if (animate) {
+                ImageLoader.setImage(R.drawable.ic_target, target, context, 0)
+            } else {
+                target.setImageResource(R.drawable.ic_target)
+            }
+        }
+    }
+
     private fun updateCompassIcon(animate: Boolean) {
         if (GPSPreferences.isCompassRotation()) {
             if (animate) {
@@ -175,16 +198,19 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             GPSPreferences.isNorthOnly -> {
-                updateNorthOnlyIcon(true)
+                updateNorthOnlyIcon(animate = true)
             }
             GPSPreferences.compassRotation -> {
-                updateCompassIcon(true)
+                updateCompassIcon(animate = true)
             }
             GPSPreferences.useBearingRotation -> {
-                updateBearingIcon(true)
+                updateBearingIcon(animate = true)
             }
             GPSPreferences.toolsGravity -> {
                 setAlignButtonState(animate = true)
+            }
+            GPSPreferences.mapTargetMarker -> {
+                setTargetButtonState(animate = true)
             }
         }
     }

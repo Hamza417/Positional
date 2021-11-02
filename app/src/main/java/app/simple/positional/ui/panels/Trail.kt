@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.TrailsViewerActivity
 import app.simple.positional.adapters.trail.AdapterTrailData
 import app.simple.positional.callbacks.BottomSheetSlide
@@ -32,6 +31,7 @@ import app.simple.positional.decorations.trails.TrailTools
 import app.simple.positional.dialogs.trail.AddMarker
 import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.dialogs.trail.TrailMenu
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.model.TrailData
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.popups.trail.PopupMarkers
@@ -97,7 +97,8 @@ class Trail : ScopedFragment() {
 
         currentTrail = TrailPreferences.getCurrentTrail()
         val trailDataFactory = TrailDataFactory(currentTrail!!, requireActivity().application)
-        trailDataViewModel = ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
+        trailDataViewModel =
+            ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
         locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
 
         maps = view.findViewById(R.id.map_view)
@@ -160,11 +161,7 @@ class Trail : ScopedFragment() {
 
                     popup.setOnPopupCallbacksListener(object : PopupTrailsDataMenu.Companion.PopupTrailsCallbacks {
                         override fun onDelete() {
-                            val deletePopupMenu = DeletePopupMenu(
-                                    layoutInflater.inflate(R.layout.popup_delete_confirmation,
-                                            DynamicCornerLinearLayout(requireContext())), view)
-
-                            deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
+                            DeletePopupMenu(view).setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                                 override fun delete() {
                                     trailDataViewModel.deleteTrailData(trailData)
                                 }
@@ -183,16 +180,19 @@ class Trail : ScopedFragment() {
                             }
 
                             val clip: ClipData = ClipData.newPlainText("GPS Data", builder)
-                            val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                            val clipboard: ClipboardManager =
+                                requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             clipboard.setPrimaryClip(clip)
                         }
 
                         override fun onShare() {
                             kotlin.runCatching {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("geo:${trailData.latitude},${trailData.longitude}"))
+                                val intent =
+                                    Intent(Intent.ACTION_VIEW, Uri.parse("geo:${trailData.latitude},${trailData.longitude}"))
                                 startActivity(intent)
                             }.getOrElse { throwable ->
-                                Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                     })
@@ -203,7 +203,8 @@ class Trail : ScopedFragment() {
                         addTrail()
                     } else {
                         location
-                                ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
+                            ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT)
+                                .show().also {
                                     return
                                 }
 
@@ -253,7 +254,7 @@ class Trail : ScopedFragment() {
 
         tools.setTrailCallbacksListener(object : TrailTools.Companion.TrailCallbacks {
             override fun onLocation(reset: Boolean) {
-                if(LocationExtension.getLocationStatus(requireContext())) {
+                if (LocationExtension.getLocationStatus(requireContext())) {
                     if (location.isNotNull()) {
                         if (reset) {
                             maps?.resetCamera(18F)
@@ -273,7 +274,8 @@ class Trail : ScopedFragment() {
                     addTrail()
                 } else {
                     location
-                            ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT).show().also {
+                        ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT)
+                            .show().also {
                                 return
                             }
 
@@ -283,8 +285,7 @@ class Trail : ScopedFragment() {
 
             override fun onRemove(remove: View) {
                 val popup = DeletePopupMenu(
-                        layoutInflater.inflate(R.layout.popup_delete_confirmation,
-                                DynamicCornerLinearLayout(requireContext())), remove)
+                        remove)
 
                 popup.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                     override fun delete() {
@@ -309,7 +310,7 @@ class Trail : ScopedFragment() {
 
             override fun onMenuClicked() {
                 TrailMenu.newInstance()
-                        .show(requireActivity().supportFragmentManager, "trail_menu")
+                    .show(requireActivity().supportFragmentManager, "trail_menu")
             }
 
         })
@@ -429,7 +430,7 @@ class Trail : ScopedFragment() {
         TransitionManager.beginDelayedTransition(
                 view as ViewGroup,
                 TransitionInflater.from(requireContext())
-                        .inflateTransition(R.transition.tools_transition))
+                    .inflateTransition(R.transition.tools_transition))
 
         val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT)

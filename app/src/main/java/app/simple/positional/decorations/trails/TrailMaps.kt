@@ -27,7 +27,6 @@ import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
-import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.LocationExtension
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -77,7 +76,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private var lastZoom = 20F
     private var lastTilt = 0F
     private val incrementFactor = 2
-    private var options: PolylineOptions? = null
+    private var polylineOptions: PolylineOptions? = null
 
     var location: Location? = null
     val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
@@ -90,7 +89,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         get() = job + Dispatchers.Main
 
     init {
-        options = PolylineOptions()
+        polylineOptions = PolylineOptions()
                 .width(10f)
                 .jointType(JointType.ROUND)
                 .color(context.resolveAttrColor(R.attr.colorAppAccent))
@@ -206,7 +205,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     fun clear() {
         polylines.clear()
         flagMarkers.clear()
-        options!!.points.clear()
+        polylineOptions!!.points.clear()
         googleMap?.clear()
         invalidate()
     }
@@ -282,7 +281,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         polylines.clear()
         currentPolyline.clear()
         flagMarkers.clear()
-        options?.points?.clear()
+        polylineOptions?.points?.clear()
 
         for (trailData in arrayList) {
             val latLng = LatLng(trailData.latitude, trailData.longitude)
@@ -297,16 +296,16 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                                             .toBitmap(context, 50))))
 
             flagMarkers.add(marker!!)
-            options?.add(latLng)
-            polylines.add(googleMap?.addPolyline(options!!)!!)
+            polylineOptions?.add(latLng)
+            polylines.add(googleMap?.addPolyline(polylineOptions!!)!!)
         }
 
         invalidate()
 
-        options?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
-        options?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
+        polylineOptions?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
+        polylineOptions?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
 
-        trailMapCallbacks.onLineCountChanged(options!!.points.size)
+        trailMapCallbacks.onLineCountChanged(polylineOptions!!.points.size)
 
         if (TrailPreferences.arePolylinesWrapped()) {
             wrap(false)
@@ -319,7 +318,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         currentPolyline.clear()
         flagMarkers.clear()
         trailData.clear()
-        options?.points?.clear()
+        polylineOptions?.points?.clear()
 
         for (trailData in arrayList) {
             val latLng = LatLng(trailData.latitude, trailData.longitude)
@@ -334,17 +333,17 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                                             .toBitmap(context, 50))))
 
             flagMarkers.add(marker!!)
-            options?.add(latLng)
-            polylines.add(googleMap?.addPolyline(options!!)!!)
+            polylineOptions?.add(latLng)
+            polylines.add(googleMap?.addPolyline(polylineOptions!!)!!)
         }
 
         invalidate()
 
-        options?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
-        options?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
+        polylineOptions?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
+        polylineOptions?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
 
         trailData.addAll(arrayList)
-        trailMapCallbacks.onLineCountChanged(options!!.points.size)
+        trailMapCallbacks.onLineCountChanged(polylineOptions!!.points.size)
 
         if (TrailPreferences.arePolylinesWrapped()) {
             wrap(false)
@@ -365,10 +364,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
         this.trailData.add(trailData)
         flagMarkers.add(marker!!)
-        options?.add(latLng)
-        polylines.add(googleMap?.addPolyline(options!!)!!)
+        polylineOptions?.add(latLng)
+        polylines.add(googleMap?.addPolyline(polylineOptions!!)!!)
 
-        trailMapCallbacks.onLineCountChanged(options!!.points.size)
+        trailMapCallbacks.onLineCountChanged(polylineOptions!!.points.size)
 
         invalidate()
 
@@ -383,9 +382,9 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         polylines.lastOrNull()?.remove()
         flagMarkers.lastOrNull()?.remove()
         currentPolyline.removeLastOrNull()
-        options?.points?.removeLastOrNull()
+        polylineOptions?.points?.removeLastOrNull()
         trailMapCallbacks.onLineDeleted(trailData.lastOrNull())
-        trailMapCallbacks.onLineCountChanged(options!!.points.size)
+        trailMapCallbacks.onLineCountChanged(polylineOptions!!.points.size)
         trailData.removeLastOrNull()
 
         kotlin.runCatching {
@@ -577,7 +576,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 setBuildings(TrailPreferences.getShowBuildingsOnMap())
             }
             TrailPreferences.geodesic -> {
-                options!!.geodesic(TrailPreferences.isTrailGeodesic())
+                polylineOptions!!.geodesic(TrailPreferences.isTrailGeodesic())
                 updatePolylines(trailData)
                 invalidate()
             }
