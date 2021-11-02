@@ -5,19 +5,19 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
-import android.location.Geocoder
 import android.location.Location
-import android.text.Spannable
-import android.text.style.ForegroundColorSpan
+import android.text.Spanned
 import android.util.Log
-import androidx.core.text.toSpannable
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
-import app.simple.positional.math.MathExtensions
+import app.simple.positional.extensions.viewmodel.WrappedViewModel
+import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.UnitConverter.toFeet
+import app.simple.positional.math.UnitConverter.toKilometers
+import app.simple.positional.math.UnitConverter.toMiles
+import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ArrayHelper.isLastValueSame
 import app.simple.positional.util.DMSConverter.latitudeAsDD
@@ -26,15 +26,14 @@ import app.simple.positional.util.DMSConverter.latitudeAsDMS
 import app.simple.positional.util.DMSConverter.longitudeAsDD
 import app.simple.positional.util.DMSConverter.longitudeAsDM
 import app.simple.positional.util.DMSConverter.longitudeAsDMS
-import app.simple.positional.util.HtmlHelper.fromHtml
+import app.simple.positional.util.HtmlHelper
+import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.UTMConverter
-import app.simple.positional.util.isNetworkAvailable
 import com.google.android.gms.maps.model.LatLng
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,7 +43,7 @@ import kotlin.collections.ArrayList
  * viewmodel is to prevent loss of location data between switching
  * fragments.
  */
-class LocationViewModel(application: Application) : AndroidViewModel(application) {
+class LocationViewModel(application: Application) : WrappedViewModel(application) {
 
     private var filter: IntentFilter = IntentFilter()
     private var locationBroadcastReceiver: BroadcastReceiver
@@ -61,6 +60,7 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
     val mgrs = MutableLiveData<String>()
     val utm = MutableLiveData<UTMConverter.UTM>()
     val latency = MutableLiveData<Pair<Number, Boolean>>()
+    val targetDisplacement = MutableLiveData<Spanned>()
 
     val accuracyGraphData = MutableLiveData<ArrayList<Float>>()
     val altitudeGraphData = MutableLiveData<ArrayList<Float>>()
@@ -88,6 +88,13 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
                                 utm(this)
 
                                 graphData(this)
+
+                                if (GPSPreferences.isTargetMarkerSet()) {
+                                    targetData(
+                                            LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
+                                                    GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
+                                            LatLng(this.latitude, this.longitude))
+                                }
 
                                 Log.d("LocationViewModel", "Location Posted")
                             }
@@ -118,13 +125,51 @@ class LocationViewModel(application: Application) : AndroidViewModel(application
 
             currentLatency = if (currentLatency.toDouble() > 999) {
                 inSeconds = true
-                MathExtensions.round(currentLatency.toDouble() / 1000.0, 3)
+                round(currentLatency.toDouble() / 1000.0, 3)
             } else {
                 inSeconds = false
                 currentLatency.toInt()
             }
 
             latency.postValue(Pair(currentLatency, inSeconds))
+        }
+    }
+
+    fun targetData(target: LatLng, current: LatLng) {
+        targetDisplacement(target, current)
+    }
+
+    private fun targetDisplacement(target: LatLng, current: LatLng) {
+        viewModelScope.launch(Dispatchers.Default) {
+            val builder = StringBuilder().also {
+                it.append("<b>${getString(R.string.gps_displacement)} </b>")
+
+                val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
+
+                if (MainPreferences.getUnit()) {
+                    if (p0 < 1000) {
+                        it.append(p0.round(2))
+                        it.append(" ")
+                        it.append(getContext().getString(R.string.meter))
+                    } else {
+                        it.append(p0.toKilometers().round(2))
+                        it.append(" ")
+                        it.append(getContext().getString(R.string.kilometer))
+                    }
+                } else {
+                    if (p0 < 1000) {
+                        it.append(p0.toDouble().toFeet().toFloat().round(2))
+                        it.append(" ")
+                        it.append(getContext().getString(R.string.feet))
+                    } else {
+                        it.append(p0.toMiles().round(2))
+                        it.append(" ")
+                        it.append(getContext().getString(R.string.miles))
+                    }
+                }
+            }
+
+            this@LocationViewModel.targetDisplacement.postValue(HtmlHelper.fromHtml(builder.toString()))
         }
     }
 

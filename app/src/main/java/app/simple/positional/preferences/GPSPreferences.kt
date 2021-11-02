@@ -27,6 +27,7 @@ object GPSPreferences {
     const val toolsGravity = "is_tools_gravity_left"
     const val isNorthOnly = "is_map_north_only"
     const val mapTargetMarker = "target_marker_state"
+    const val isTargetMarkerMode = "target_marker_mode"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -205,5 +206,13 @@ object GPSPreferences {
         return getSharedPreferences().getBoolean(mapTargetMarker, false)
     }
 
+    //--------------------------------------------------------------------------------------------------//
 
+    fun setTargetMarkerMode(boolean: Boolean) {
+        getSharedPreferences().edit().putBoolean(isTargetMarkerMode, boolean).apply()
+    }
+
+    fun isTargetMarkerMode(): Boolean {
+        return getSharedPreferences().getBoolean(isTargetMarkerMode, false)
+    }
 }

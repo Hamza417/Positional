@@ -25,7 +25,6 @@ import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
@@ -36,6 +35,7 @@ import app.simple.positional.dialogs.gps.CoordinatesExpansion
 import app.simple.positional.dialogs.gps.GPSMenu
 import app.simple.positional.dialogs.gps.LocationExpansion
 import app.simple.positional.dialogs.gps.MovementExpansion
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
@@ -52,6 +52,7 @@ import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
@@ -63,6 +64,7 @@ import java.util.*
 class GPS : ScopedFragment() {
 
     private lateinit var expandUp: ImageView
+    private lateinit var crossHair: ImageView
     private lateinit var scrollView: NestedScrollView
     private lateinit var toolbar: MapToolbar
     private lateinit var tools: MapsTools
@@ -83,6 +85,8 @@ class GPS : ScopedFragment() {
     private lateinit var altitude: TextView
     private lateinit var bearing: TextView
     private lateinit var latency: TextView
+    private lateinit var targetDisplacement: TextView
+    private lateinit var targetDirection: TextView
     private lateinit var direction: TextView
     private lateinit var speed: TextView
     private lateinit var specifiedLocationTextView: TextView
@@ -117,6 +121,7 @@ class GPS : ScopedFragment() {
         dim = view.findViewById(R.id.gps_dim)
         copy = view.findViewById(R.id.gps_copy)
         save = view.findViewById(R.id.gps_save)
+        crossHair = view.findViewById(R.id.cross_hair)
         expandUp = view.findViewById(R.id.expand_up_gps_sheet)
         bottomSheetInfoPanel =
             BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
@@ -133,6 +138,8 @@ class GPS : ScopedFragment() {
         providerStatus = view.findViewById(R.id.provider_status)
         altitude = view.findViewById(R.id.gps_altitude)
         latency = view.findViewById(R.id.gps_time_taken)
+        targetDisplacement = view.findViewById(R.id.gps_target_displacement)
+        targetDirection = view.findViewById(R.id.gps_target_direction)
         bearing = view.findViewById(R.id.gps_bearing)
         direction = view.findViewById(R.id.gps_direction)
         speed = view.findViewById(R.id.gps_speed)
@@ -185,6 +192,7 @@ class GPS : ScopedFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setLocationPin()
+        targetMode()
 
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
@@ -337,6 +345,10 @@ class GPS : ScopedFragment() {
 
             tools.locationIconStatusUpdates()
             maps?.clearMarkers()
+        })
+
+        locationViewModel.targetDisplacement.observe(viewLifecycleOwner, {
+            targetDisplacement.text = it
         })
 
         bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -528,6 +540,10 @@ class GPS : ScopedFragment() {
             override fun onMapClicked(view: MapView?) {
                 setFullScreen(true)
             }
+
+            override fun onTargetUpdated(target: LatLng?, current: LatLng?) {
+                locationViewModel.targetData(target!!, current!!)
+            }
         })
 
         view.setOnKeyListener { _, keyCode, event ->
@@ -673,6 +689,14 @@ class GPS : ScopedFragment() {
             .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
     }
 
+    private fun targetMode() {
+        if (GPSPreferences.isTargetMarkerMode()) {
+            crossHair.visible(true)
+        } else {
+            crossHair.gone(true)
+        }
+    }
+
     private fun backPressed(value: Boolean) {
         /**
          * @see Clock.backPressed
@@ -756,6 +780,9 @@ class GPS : ScopedFragment() {
             }
             GPSPreferences.toolsGravity -> {
                 updateToolsGravity(requireView())
+            }
+            GPSPreferences.isTargetMarkerMode -> {
+                targetMode()
             }
         }
     }

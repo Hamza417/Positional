@@ -12,7 +12,6 @@
     android:overScrollMode="always"
     android:paddingHorizontal="10dp">
 
-    <!-- TODO remove unnecessary views -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

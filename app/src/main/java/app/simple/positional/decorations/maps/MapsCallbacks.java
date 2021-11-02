@@ -1,6 +1,7 @@
 package app.simple.positional.decorations.maps;
 
 import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.model.LatLng;
 
 public interface MapsCallbacks {
     default void onMapClicked(MapView view) {
@@ -8,6 +9,10 @@ public interface MapsCallbacks {
     }
 
     default void onMapInitialized() {
+
+    }
+
+    default void onTargetUpdated(LatLng target, LatLng current) {
 
     }
 }

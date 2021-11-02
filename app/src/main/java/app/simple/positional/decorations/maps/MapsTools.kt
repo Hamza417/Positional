@@ -14,12 +14,14 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ImageLoader
 import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.util.ViewUtils.visible
 
 class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var align: DynamicRippleImageButton
     private lateinit var location: LocationButton
     private lateinit var target: DynamicRippleImageButton
+    private lateinit var check: DynamicRippleImageButton
     private lateinit var compass: DynamicRippleImageButton
     private lateinit var bearing: DynamicRippleImageButton
     private lateinit var northOnly: DynamicRippleImageButton
@@ -37,7 +39,8 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
     private fun setProperties() {
         initViews()
         layoutTransition = LayoutTransition()
-        app.simple.positional.singleton.SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
+        app.simple.positional.singleton.SharedPreferences.getSharedPreferences()
+            .registerOnSharedPreferenceChangeListener(this)
     }
 
     private fun initViews() {
@@ -46,6 +49,7 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         align = view.findViewById(R.id.tools_align_btn)
         location = view.findViewById(R.id.current_location)
         target = view.findViewById(R.id.current_target)
+        check = view.findViewById(R.id.current_target_check)
         compass = view.findViewById(R.id.compass)
         bearing = view.findViewById(R.id.bearing)
         northOnly = view.findViewById(R.id.north_up)
@@ -55,6 +59,7 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         updateBearingIcon(animate = false)
         updateCompassIcon(animate = false)
         setTargetButtonState(animate = false)
+        setCheckButtonState(animate = false)
 
         location.setOnClickListener {
             mapsToolsCallbacks.onLocationClicked(it, false)
@@ -66,11 +71,20 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         }
 
         target.setOnClickListener {
-            if(GPSPreferences.isTargetMarkerSet()) {
+            if (GPSPreferences.isTargetMarkerSet()) {
                 mapsToolsCallbacks.removeTarget(it)
             } else {
-                mapsToolsCallbacks.onTargetAdd()
+                if (GPSPreferences.isTargetMarkerMode()) {
+                    GPSPreferences.setTargetMarkerMode(false)
+                } else {
+                    GPSPreferences.setTargetMarkerMode(true)
+                }
             }
+        }
+
+        check.setOnClickListener {
+            GPSPreferences.setTargetMarkerMode(false)
+            mapsToolsCallbacks.onTargetAdd()
         }
 
         align.setOnClickListener {
@@ -108,6 +122,14 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         }
     }
 
+    private fun setCheckButtonState(animate: Boolean) {
+        if (GPSPreferences.isTargetMarkerMode()) {
+            check.visible(animate)
+        } else {
+            check.gone()
+        }
+    }
+
     private fun setAlignButtonState(animate: Boolean) {
         if (GPSPreferences.isToolsGravityLeft()) {
             if (animate) {
@@ -128,7 +150,7 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
     fun locationIconStatusUpdates() = location.locationIconStatusUpdate()
 
     private fun setTargetButtonState(animate: Boolean) {
-        if (GPSPreferences.isTargetMarkerSet()) {
+        if (GPSPreferences.isTargetMarkerSet() || GPSPreferences.isTargetMarkerMode()) {
             if (animate) {
                 ImageLoader.setImage(R.drawable.ic_clear, target, context, 0)
             } else {
@@ -136,9 +158,9 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
             }
         } else {
             if (animate) {
-                ImageLoader.setImage(R.drawable.ic_target, target, context, 0)
+                ImageLoader.setImage(R.drawable.ic_crosshair, target, context, 0)
             } else {
-                target.setImageResource(R.drawable.ic_target)
+                target.setImageResource(R.drawable.ic_crosshair)
             }
         }
     }
@@ -209,8 +231,10 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
             GPSPreferences.toolsGravity -> {
                 setAlignButtonState(animate = true)
             }
-            GPSPreferences.mapTargetMarker -> {
+            GPSPreferences.mapTargetMarker,
+            GPSPreferences.isTargetMarkerMode -> {
                 setTargetButtonState(animate = true)
+                setCheckButtonState(animate = true)
             }
         }
     }

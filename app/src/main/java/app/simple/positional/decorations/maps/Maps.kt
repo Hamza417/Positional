@@ -385,21 +385,25 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         targetPolyline?.remove()
         polylineOptions?.points?.clear()
 
-        if(GPSPreferences.isTargetMarkerSet()) {
-            polylineOptions?.add(latLng)
+        if (GPSPreferences.isTargetMarkerSet()) {
+            polylineOptions?.add(LatLng(location?.latitude!!, location?.longitude!!))
             polylineOptions?.add(LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
                     GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
 
             targetPolyline = googleMap?.addPolyline(polylineOptions!!)
 
+            mapsCallbacks?.onTargetUpdated(polylineOptions?.points?.get(1), polylineOptions?.points?.get(0))
+
             polylineOptions?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
             polylineOptions?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
+        } else {
+            mapsCallbacks?.onTargetUpdated(null, null)
         }
     }
 
     private val mapAutoCenter = object : Runnable {
         override fun run() {
-            if (GPSPreferences.isMapAutoCenter()) {
+            if (GPSPreferences.isMapAutoCenter() && !GPSPreferences.isTargetMarkerMode()) {
                 if (isCustomCoordinate) {
                     moveMapCamera(LatLng(customLatitude, customLongitude), GPSPreferences.getMapZoom())
                 } else {

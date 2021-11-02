@@ -53,6 +53,44 @@ object ViewUtils {
      *
      * @param animate adds animation to the process
      */
+    fun View.gone(animate: Boolean) {
+        clearAnimation()
+
+        if (animate) {
+            this.animate()
+                .scaleY(0F)
+                .scaleX(0F)
+                .alpha(0F)
+                .setInterpolator(AccelerateInterpolator())
+                .setDuration(this.resources.getInteger(R.integer.animation_duration).toLong())
+                .setListener(object : Animator.AnimatorListener {
+                    override fun onAnimationStart(animation: Animator?) {
+                        /* no-op */
+                    }
+
+                    override fun onAnimationEnd(animation: Animator?) {
+                        this@gone.visibility = View.GONE
+                    }
+
+                    override fun onAnimationCancel(animation: Animator?) {
+                        /* no-op */
+                    }
+
+                    override fun onAnimationRepeat(animation: Animator?) {
+                        /* no-op */
+                    }
+                })
+                .start()
+        } else {
+            this.visibility = View.GONE
+        }
+    }
+
+    /**
+     * Makes the view go away
+     *
+     * @param animate adds animation to the process
+     */
     fun View.invisible(animate: Boolean) {
         clearAnimation()
 
