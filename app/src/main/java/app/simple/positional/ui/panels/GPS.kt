@@ -406,6 +406,11 @@ class GPS : ScopedFragment() {
                 LocationParameters.newInstance()
                     .show(parentFragmentManager, "location_params")
             }
+
+            override fun onCustomLocationLongPressed(view: View) {
+                PinCustomization.newInstance()
+                    .show(parentFragmentManager, "pin_customization")
+            }
         })
 
         tools.setOnToolsCallbacksListener(object : MapsToolsCallbacks {

@@ -17,7 +17,6 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.GPSPreferences.getPinSkin
 import app.simple.positional.preferences.MainPreferences.isCustomCoordinate
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
-import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.StatusBarHeight
 
 class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
@@ -38,15 +37,15 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
         initViews()
         layoutTransition = LayoutTransition()
         getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this)
+            .registerOnSharedPreferenceChangeListener(this)
     }
 
     private fun initViews() {
         val view = LayoutInflater.from(context).inflate(R.layout.toolbar_map_panel, this, true)
         setPadding(resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
-                resources.getDimensionPixelOffset(R.dimen.toolbar_padding) + StatusBarHeight.getStatusBarHeight(resources),
-                resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
-                resources.getDimensionPixelOffset(R.dimen.toolbar_padding))
+                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding) + StatusBarHeight.getStatusBarHeight(resources),
+                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
+                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding))
 
         menu = view.findViewById(R.id.gps_menu)
         customLocationButton = view.findViewById(R.id.gps_custom_location)
@@ -62,7 +61,15 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
         }
 
         menu.setOnClickListener { mapToolbarCallbacks.onMenuClicked(it) }
-        customLocationButton.setOnClickListener { mapToolbarCallbacks.onCustomLocationClicked(it) }
+
+        customLocationButton.setOnClickListener {
+            mapToolbarCallbacks.onCustomLocationClicked(it)
+        }
+
+        customLocationButton.setOnLongClickListener {
+            mapToolbarCallbacks.onCustomLocationLongPressed(it)
+            true
+        }
     }
 
     fun hide() {
@@ -80,7 +87,7 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(this)
+            .unregisterOnSharedPreferenceChangeListener(this)
     }
 
     fun setOnMapToolbarCallbacks(mapToolbarCallbacks: MapToolbarCallbacks) {
@@ -98,5 +105,6 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
     interface MapToolbarCallbacks {
         fun onMenuClicked(view: View)
         fun onCustomLocationClicked(view: View)
+        fun onCustomLocationLongPressed(view: View)
     }
 }
