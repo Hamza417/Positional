@@ -276,4 +276,5 @@
     <string name="copy">نقل کریں</string>
     <string name="trail_data_accuracy">مقام کے %1$s %2$s کے اندر۔</string>
     <string name="rate_text">آپ اس ایپ سے کتنے مطمئن ہیں؟ پلے سٹور پر ایپ کی درجہ بندی کے لیے یہاں کلک کریں۔</string>
+    <string name="target">ہدف</string>
 </resources>
