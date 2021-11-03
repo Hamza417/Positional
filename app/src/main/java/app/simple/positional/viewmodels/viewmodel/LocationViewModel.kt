@@ -186,8 +186,6 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                     target.longitude
             )
 
-            println(p0)
-
             val builder = StringBuilder().also {
                 it.append("<b>${getString(R.string.gps_direction)} </b>")
                 it.append(Direction.getDirectionNameFromAzimuth(getContext(), abs(p0)))

@@ -15,6 +15,8 @@ import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.constants.TrailIcons
+import app.simple.positional.decorations.maputils.CircleUtils
+import app.simple.positional.decorations.maputils.MarkerUtils
 import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter
 import app.simple.positional.math.Vector3
@@ -75,7 +77,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private var isCompassRotation = true
     private var lastZoom = 20F
     private var lastTilt = 0F
-    private val incrementFactor = 3
+    private val incrementFactor = 2
     private var polylineOptions: PolylineOptions? = null
 
     var location: Location? = null
@@ -209,8 +211,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     fun clearMarkers() {
         if (!LocationExtension.getLocationStatus(context)) {
-            marker?.remove()
-            circle?.remove()
+            // marker?.remove()
+            // circle?.remove()
         }
     }
 
@@ -250,23 +252,37 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                     }
 
                 withContext(Dispatchers.Main) {
-                    marker?.remove()
-                    marker = googleMap?.addMarker(MarkerOptions()
-                        .position(latLng)
-                        .rotation(if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing
-                            ?: 0F)
-                        .anchor(0.5F, 0.5F)
-                        .flat(true)
-                        .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                    runCatching {
+                        marker!!.apply {
+                            setIcon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
+                        }
 
-                    circle?.remove()
-                    circle = googleMap?.addCircle(CircleOptions()
-                        .center(latLng)
-                        .radius(location?.accuracy?.toDouble() ?: 0.0)
-                        .clickable(false)
-                        .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
-                        .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
-                        .strokeWidth(3F))
+                        MarkerUtils.animateMarker(
+                                location,
+                                marker,
+                                if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing
+                                    ?: 0F)
+                    }.onFailure {
+                        marker = googleMap?.addMarker(MarkerOptions()
+                            .position(latLng)
+                            .rotation(if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing
+                                ?: 0F)
+                            .anchor(0.5F, 0.5F)
+                            .flat(true)
+                            .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                    }
+
+                    runCatching {
+                        CircleUtils.animateCircle(location, circle)
+                    }.onFailure {
+                        circle = googleMap?.addCircle(CircleOptions()
+                            .center(latLng)
+                            .radius(location?.accuracy?.toDouble() ?: 0.0)
+                            .clickable(false)
+                            .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
+                            .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
+                            .strokeWidth(3F))
+                    }
 
                     invalidate()
                 }
@@ -274,7 +290,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         }
     }
 
-    fun updatePolylines(arrayList: ArrayList<TrailData>) {
+    private fun updatePolylines(arrayList: ArrayList<TrailData>) {
         googleMap?.clear()
         polylines.clear()
         currentPolyline.clear()
@@ -311,8 +327,14 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     }
 
     fun addPolylines(arrayList: ArrayList<TrailData>) {
-        googleMap?.clear()
-        polylines.clear()
+        for(i in polylines) {
+            i.remove()
+        }
+
+        for(i in flagMarkers) {
+            i.remove()
+        }
+
         currentPolyline.clear()
         flagMarkers.clear()
         trailData.clear()

@@ -57,7 +57,6 @@ object LocationExtension {
     }
 
     fun measureDisplacement(list: Array<LatLng>): Float {
-
         val result = floatArrayOf(0f)
         var distance = 0F
 

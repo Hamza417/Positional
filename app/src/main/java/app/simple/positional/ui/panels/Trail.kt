@@ -155,11 +155,7 @@ class Trail : ScopedFragment() {
 
             adapter.setOnTrailsDataCallbackListener(object : AdapterTrailData.Companion.AdapterTrailsDataCallbacks {
                 override fun onTrailsDataLongPressed(trailData: TrailData, view: View, position: Int) {
-                    val popup = PopupTrailsDataMenu(
-                            layoutInflater.inflate(R.layout.popup_trails_data,
-                                    DynamicCornerLinearLayout(requireContext())), view)
-
-                    popup.setOnPopupCallbacksListener(object : PopupTrailsDataMenu.Companion.PopupTrailsCallbacks {
+                    PopupTrailsDataMenu(view).setOnPopupCallbacksListener(object : PopupTrailsDataMenu.Companion.PopupTrailsCallbacks {
                         override fun onDelete() {
                             DeletePopupMenu(view).setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                                 override fun delete() {
@@ -187,9 +183,10 @@ class Trail : ScopedFragment() {
 
                         override fun onShare() {
                             kotlin.runCatching {
-                                val intent =
-                                    Intent(Intent.ACTION_VIEW, Uri.parse("geo:${trailData.latitude},${trailData.longitude}"))
-                                startActivity(intent)
+                                startActivity(
+                                        Intent(
+                                                Intent.ACTION_VIEW,
+                                                Uri.parse("geo:${trailData.latitude},${trailData.longitude}")))
                             }.getOrElse { throwable ->
                                 Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT)
                                     .show()

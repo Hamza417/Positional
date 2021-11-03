@@ -16,9 +16,10 @@ import android.view.MotionEvent
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
+import app.simple.positional.decorations.maputils.CircleUtils
+import app.simple.positional.decorations.maputils.MarkerUtils
 import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter
-import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
@@ -350,27 +351,39 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
             if (googleMap.isNotNull()) {
                 runCatching {
-                    marker?.remove()
-                    circle?.remove()
+                    if (marker.isNull()) {
+                        marker = googleMap?.addMarker(MarkerOptions().position(latLng)
+                            .rotation(if (location!!.speed > 0F) location!!.bearing else 0F)
+                            .anchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
+                            .flat(location!!.speed > 0F)
+                            .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                    } else {
+                        marker!!.apply {
+                            setAnchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
+                            setIcon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
+                        }
 
-                    marker = googleMap?.addMarker(MarkerOptions().position(latLng)
-                        .rotation(if (location!!.speed > 0F) location!!.bearing else 0F)
-                        .anchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
-                        .flat(location!!.speed > 0F)
-                        .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                        MarkerUtils.animateMarker(location, marker)
+                    }
+
+                    if (circle.isNull()) {
+                        circle = googleMap?.addCircle(CircleOptions()
+                            .center(latLng)
+                            .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble()
+                                ?: 0.0)
+                            .clickable(false)
+                            .fillColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.map_circle_color))
+                            .strokeColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_stroke else R.color.compass_pin_color))
+                            .strokeWidth(2F))
+                    } else {
+                        CircleUtils.animateCircle(location, circle)
+                    }
+
 
                     drawMarkerToTargetPolyline()
 
-                    circle = googleMap?.addCircle(CircleOptions()
-                        .center(latLng)
-                        .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble() ?: 0.0)
-                        .clickable(false)
-                        .fillColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.map_circle_color))
-                        .strokeColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.compass_pin_color))
-                        .strokeWidth(3F))
+                    invalidate()
                 }
-
-                invalidate()
             }
         }
     }
@@ -388,8 +401,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     fun clearMarkers() {
         if (!LocationExtension.getLocationStatus(context)) {
             markerBitmap?.recycle()
-            marker?.remove()
-            circle?.remove()
+            // marker?.remove()
+            // circle?.remove()
         }
     }
 
