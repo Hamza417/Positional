@@ -29,8 +29,10 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.maps.*
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
+import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.gps.*
@@ -72,7 +74,7 @@ class GPS : ScopedFragment() {
     private lateinit var divider: View
     private lateinit var dim: View
     private lateinit var locationBox: LinearLayout
-    private lateinit var targetBox: DynamicRippleConstraintLayout
+    private lateinit var targetBox: DynamicRippleLinearLayout
     private lateinit var movementBox: LinearLayout
     private lateinit var coordinatesBox: FrameLayout
     private lateinit var copy: ImageButton
@@ -86,8 +88,7 @@ class GPS : ScopedFragment() {
     private lateinit var altitude: TextView
     private lateinit var bearing: TextView
     private lateinit var latency: TextView
-    private lateinit var targetDisplacement: TextView
-    private lateinit var targetDirection: TextView
+    private lateinit var targetData: TextView
     private lateinit var direction: TextView
     private lateinit var speed: TextView
     private lateinit var specifiedLocationTextView: TextView
@@ -142,8 +143,7 @@ class GPS : ScopedFragment() {
         providerStatus = view.findViewById(R.id.provider_status)
         altitude = view.findViewById(R.id.gps_altitude)
         latency = view.findViewById(R.id.gps_time_taken)
-        targetDisplacement = view.findViewById(R.id.gps_target_displacement)
-        targetDirection = view.findViewById(R.id.gps_target_direction)
+        targetData = view.findViewById(R.id.gps_target_data)
         bearing = view.findViewById(R.id.gps_bearing)
         direction = view.findViewById(R.id.gps_direction)
         speed = view.findViewById(R.id.gps_speed)
@@ -352,12 +352,8 @@ class GPS : ScopedFragment() {
             maps?.clearMarkers()
         })
 
-        locationViewModel.targetDisplacement.observe(viewLifecycleOwner, {
-            targetDisplacement.text = it
-        })
-
-        locationViewModel.targetDirection.observe(viewLifecycleOwner, {
-            targetDirection.text = it
+        locationViewModel.targetData.observe(viewLifecycleOwner, {
+            targetData.text = it
         })
 
         bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -575,7 +571,7 @@ class GPS : ScopedFragment() {
 
             override fun onTargetUpdated(target: LatLng?, current: LatLng?) {
                 kotlin.runCatching {
-                    locationViewModel.targetData(target!!, location!!)
+                    locationViewModel.targetData(target!!, current!!)
                 }
             }
         })

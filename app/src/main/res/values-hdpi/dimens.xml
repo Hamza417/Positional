@@ -20,6 +20,7 @@
     <!-- Information Panel -->
     <dimen name="info_text_item_margin_horizontal">0dp</dimen>
     <dimen name="info_text_item_margin_vertical">5dp</dimen>
+    <dimen name="info_text_item_line_spacing">10dp</dimen>
     <dimen name="peek_height">80dp</dimen>
     <dimen name="expand_up_image_size">20dp</dimen>
     <dimen name="info_text_primary_size">20sp</dimen>

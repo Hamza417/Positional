@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.decorations.fastscroll.FastScrollWebView
 import app.simple.positional.decorations.fastscroll.FastScrollerBuilder
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.isNetworkAvailable
 import kotlinx.coroutines.Dispatchers
@@ -25,11 +25,7 @@ class HtmlViewer : ScopedFragment() {
 
     private lateinit var webView: FastScrollWebView
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_webpage, container, false)
     }
 
@@ -57,7 +53,7 @@ class HtmlViewer : ScopedFragment() {
                 getString(R.string.permissions) -> {
                     webView.loadUrl("file:///android_asset/html/required_permissions.html")
                 }
-                "Credits" -> {
+                getString(R.string.credits) -> {
                     webView.loadUrl("file:///android_asset/html/credits.html")
                 }
                 "license_failed" -> {
@@ -121,14 +117,15 @@ class HtmlViewer : ScopedFragment() {
                 }
 
                 webView.loadUrl(
-                    Uri.fromFile(File("${requireContext().cacheDir}/translation.html")).toString()
+                        Uri.fromFile(File("${requireContext().cacheDir}/translation.html"))
+                            .toString()
                 )
 
             } else {
                 Toast.makeText(
-                    requireContext(),
-                    R.string.internet_connection_alert,
-                    Toast.LENGTH_SHORT
+                        requireContext(),
+                        R.string.internet_connection_alert,
+                        Toast.LENGTH_SHORT
                 ).show()
                 requireActivity().onBackPressed()
             }

@@ -355,12 +355,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
             if (googleMap.isNotNull()) {
                 runCatching {
-                    if (marker.isNull()) {
-                        marker = googleMap?.addMarker(MarkerOptions().position(latLng)
-                            .rotation(if (location!!.speed > 0F) location!!.bearing else 0F)
-                            .anchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
-                            .flat(location!!.speed > 0F)
-                            .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                    if (!isCustomCoordinate) {
+                        throw IllegalStateException()
                     } else {
                         marker!!.apply {
                             setAnchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
@@ -369,8 +365,25 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
                         MarkerUtils.animateMarker(location, marker)
                     }
+                }.onFailure {
+                    marker = if (isCustomCoordinate) {
+                        googleMap?.addMarker(MarkerOptions().position(latLng)
+                            .rotation(0F)
+                            .flat(false)
+                            .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                    } else {
+                        googleMap?.addMarker(MarkerOptions().position(latLng)
+                            .rotation(if (location!!.speed > 0F) location!!.bearing else 0F)
+                            .anchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
+                            .flat(location!!.speed > 0F)
+                            .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                    }
+                }
 
-                    if (circle.isNull()) {
+                if (!isCustomCoordinate) {
+                    runCatching {
+                        CircleUtils.animateCircle(location, circle)
+                    }.onFailure {
                         circle = googleMap?.addCircle(CircleOptions()
                             .center(latLng)
                             .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble()
@@ -379,15 +392,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                             .fillColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.map_circle_color))
                             .strokeColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_stroke else R.color.compass_pin_color))
                             .strokeWidth(2F))
-                    } else {
-                        CircleUtils.animateCircle(location, circle)
                     }
-
-
-                    drawMarkerToTargetPolyline()
-
-                    invalidate()
                 }
+
+                drawMarkerToTargetPolyline()
+
+                invalidate()
             }
         }
     }
@@ -429,7 +439,11 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         polylineOptions?.points?.clear()
 
         if (GPSPreferences.isTargetMarkerSet()) {
-            polylineOptions?.add(LatLng(location?.latitude!!, location?.longitude!!))
+            if (isCustomCoordinate) {
+                polylineOptions?.add(LatLng(customLatitude, customLongitude))
+            } else {
+                polylineOptions?.add(LatLng(location?.latitude!!, location?.longitude!!))
+            }
             polylineOptions?.add(LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
                     GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
 
