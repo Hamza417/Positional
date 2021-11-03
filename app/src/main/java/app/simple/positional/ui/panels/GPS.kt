@@ -687,8 +687,11 @@ class GPS : ScopedFragment() {
 
     private val compassMapCamera = object : Runnable {
         override fun run() {
-            if (isCompassRotation) {
-                maps?.resetCamera(GPSPreferences.getMapZoom())
+            kotlin.runCatching {
+                if (isCompassRotation &&
+                    !maps?.googleMap?.projection?.visibleRegion?.latLngBounds?.contains(LatLng(location!!.latitude, location!!.longitude))!!) {
+                    maps?.resetCamera(GPSPreferences.getMapZoom())
+                }
             }
 
             handler.postDelayed(this, 6000L)

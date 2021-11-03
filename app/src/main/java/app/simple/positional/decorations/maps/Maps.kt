@@ -235,11 +235,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             moveMapCamera(LatLng(customLatitude, customLongitude), zoom)
         } else
             if (location.isNotNull()) {
-                if (isCompassRotation &&
-                    googleMap?.projection?.visibleRegion?.latLngBounds?.contains(LatLng(location!!.latitude, location!!.longitude))!!) {
-                    return
-                }
-
                 moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
                 addMarker(LatLng(location!!.latitude, location!!.longitude))
                 viewHandler.removeCallbacks(mapAutoCenter)
