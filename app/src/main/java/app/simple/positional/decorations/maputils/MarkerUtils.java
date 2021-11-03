@@ -10,7 +10,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import app.simple.positional.decorations.interpolators.LatLngInterpolator;
-import app.simple.positional.preferences.TrailPreferences;
 
 public class MarkerUtils {
     /**
@@ -20,7 +19,7 @@ public class MarkerUtils {
      *                 marker rotation will work correctly)
      * @param marker   marker to be animated
      */
-    public static void animateMarker(Location location, Marker marker) {
+    public static ValueAnimator animateMarker(Location location, Marker marker) {
         if (marker != null) {
             LatLng startPosition = marker.getPosition();
             LatLng endPosition = new LatLng(location.getLatitude(), location.getLongitude());
@@ -49,7 +48,10 @@ public class MarkerUtils {
             });
 
             valueAnimator.start();
+
+            return valueAnimator;
         }
+        return null;
     }
 
     /**
@@ -58,8 +60,9 @@ public class MarkerUtils {
      * @param location destination location (must contain bearing attribute, to ensure
      *                 marker rotation will work correctly)
      * @param marker   marker to be animated
+     * @return @link ValueAnimator
      */
-    public static void animateMarker(Location location, Marker marker, float rotation) {
+    public static ValueAnimator animateMarker(Location location, Marker marker, float rotation, boolean isCompassRotation) {
         if (marker != null) {
             LatLng startPosition = marker.getPosition();
             LatLng endPosition = new LatLng(location.getLatitude(), location.getLongitude());
@@ -75,13 +78,18 @@ public class MarkerUtils {
                     float v = animation.getAnimatedFraction();
                     LatLng newPosition = latLngInterpolator.interpolate(v, startPosition, endPosition);
                     marker.setPosition(newPosition);
-                    marker.setRotation(computeRotation(v, startRotation, rotation));
+                    if (!isCompassRotation) {
+                        marker.setRotation(computeRotation(v, startRotation, rotation));
+                    }
                 } catch (Exception ignored) {
                 }
             });
 
             valueAnimator.start();
+
+            return valueAnimator;
         }
+        return null;
     }
 
     private static float computeRotation(float fraction, float start, float end) {

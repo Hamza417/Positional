@@ -1,5 +1,6 @@
 package app.simple.positional.decorations.trails
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -29,7 +30,6 @@ import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
-import app.simple.positional.util.LocationExtension
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -66,6 +66,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private val viewHandler = Handler(Looper.getMainLooper())
     private var marker: Marker? = null
     private var circle: Circle? = null
+    private var markerAnimator: ValueAnimator? = null
+    private var circleAnimator: ValueAnimator? = null
 
     private val currentPolyline = arrayListOf<LatLng>()
     private val flagMarkers = arrayListOf<Marker>()
@@ -98,17 +100,17 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             .geodesic(TrailPreferences.isTrailGeodesic())
 
         latLng = LatLng(MainPreferences.getLastCoordinates()[0].toDouble(),
-                MainPreferences.getLastCoordinates()[1].toDouble())
+                        MainPreferences.getLastCoordinates()[1].toDouble())
 
         isCompassRotation = TrailPreferences.isCompassRotation()
 
         viewHandler.postDelayed({
-            /**
-             * This prevents the lag when fragment is switched
-             */
-            this.alpha = 0F
-            getMapAsync(this)
-        }, 500)
+                                    /**
+                                     * This prevents the lag when fragment is switched
+                                     */
+                                    this.alpha = 0F
+                                    getMapAsync(this)
+                                }, 500)
 
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -209,13 +211,6 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         invalidate()
     }
 
-    fun clearMarkers() {
-        if (!LocationExtension.getLocationStatus(context)) {
-            // marker?.remove()
-            // circle?.remove()
-        }
-    }
-
     fun addMarker(latLng: LatLng) {
         launch {
 
@@ -257,31 +252,32 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                             setIcon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
                         }
 
-                        MarkerUtils.animateMarker(
+                        markerAnimator?.cancel()
+                        markerAnimator = MarkerUtils.animateMarker(
                                 location,
                                 marker,
-                                if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing
-                                    ?: 0F)
+                                location?.bearing ?: 0F,
+                                isCompassRotation)
                     }.onFailure {
                         marker = googleMap?.addMarker(MarkerOptions()
-                            .position(latLng)
-                            .rotation(if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing
-                                ?: 0F)
-                            .anchor(0.5F, 0.5F)
-                            .flat(true)
-                            .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                                                          .position(latLng)
+                                                          .rotation(if (TrailPreferences.isCompassRotation()) rotationAngle else location?.bearing ?: 0F)
+                                                          .anchor(0.5F, 0.5F)
+                                                          .flat(true)
+                                                          .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
                     }
 
                     runCatching {
-                        CircleUtils.animateCircle(location, circle)
+                        circleAnimator?.cancel()
+                        circleAnimator = CircleUtils.animateCircle(location, circle)
                     }.onFailure {
                         circle = googleMap?.addCircle(CircleOptions()
-                            .center(latLng)
-                            .radius(location?.accuracy?.toDouble() ?: 0.0)
-                            .clickable(false)
-                            .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
-                            .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
-                            .strokeWidth(3F))
+                                                          .center(latLng)
+                                                          .radius(location?.accuracy?.toDouble() ?: 0.0)
+                                                          .clickable(false)
+                                                          .fillColor(ContextCompat.getColor(context, R.color.map_circle_color))
+                                                          .strokeColor(ContextCompat.getColor(context, R.color.compass_pin_color))
+                                                          .strokeWidth(3F))
                     }
 
                     invalidate()
@@ -445,10 +441,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
             //BOUND_PADDING is an int to specify padding of bound.. try 100.
             if (animate) {
                 googleMap!!.animateCamera(CameraUpdateFactory
-                    .newLatLngBounds(bounds, 250))
+                                              .newLatLngBounds(bounds, 250))
             } else {
                 googleMap!!.moveCamera(CameraUpdateFactory
-                    .newLatLngBounds(bounds, 250))
+                                           .newLatLngBounds(bounds, 250))
             }
 
             TrailPreferences.setWrapStatus(true)
@@ -532,12 +528,12 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         if (googleMap.isNull() && latLng.isNull()) return
 
         googleMap?.animateCamera(CameraUpdateFactory
-            .newCameraPosition(CameraPosition.builder()
-                .target(latLng)
-                .tilt(tilt)
-                .zoom(zoom)
-                .bearing(TrailPreferences.getMapBearing())
-                .build()), duration, null)
+                                     .newCameraPosition(CameraPosition.builder()
+                                                            .target(latLng)
+                                                            .tilt(tilt)
+                                                            .zoom(zoom)
+                                                            .bearing(TrailPreferences.getMapBearing())
+                                                            .build()), duration, null)
 
         isWrapped = false
         TrailPreferences.setWrapStatus(false)

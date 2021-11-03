@@ -145,7 +145,6 @@ class Trail : ScopedFragment() {
         })
 
         locationViewModel.provider.observe(viewLifecycleOwner, {
-            maps?.clearMarkers()
             tools.locationIconStatusUpdates()
         })
 
@@ -360,7 +359,7 @@ class Trail : ScopedFragment() {
 
     override fun onPause() {
         super.onPause()
-        maps?.onPause()
+        maps?.pause()
     }
 
     override fun onLowMemory() {

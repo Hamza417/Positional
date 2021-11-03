@@ -16,8 +16,9 @@ public class CircleUtils {
      *
      * @param location destination location
      * @param circle   circle to be animated
+     * @return value animator
      */
-    public static void animateCircle(Location location, Circle circle) {
+    public static ValueAnimator animateCircle(Location location, Circle circle) {
         if (circle != null) {
             LatLng startPosition = circle.getCenter();
             LatLng endPosition = new LatLng(location.getLatitude(), location.getLongitude());
@@ -39,6 +40,8 @@ public class CircleUtils {
             });
 
             valueAnimator.start();
+
+            return valueAnimator;
         } else {
             throw new IllegalStateException();
         }

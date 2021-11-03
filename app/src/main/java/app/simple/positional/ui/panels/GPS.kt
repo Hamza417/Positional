@@ -199,6 +199,8 @@ class GPS : ScopedFragment() {
         setLocationPin()
         targetMode()
 
+        if(AppUtils.isLiteFlavor()) save.gone()
+
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
             divider.isVisible = true
@@ -503,7 +505,7 @@ class GPS : ScopedFragment() {
 
                     append("${getString(R.string.gps_address)}: ${address.text}")
 
-                    if (BuildConfig.FLAVOR == "lite") {
+                    if (AppUtils.isLiteFlavor()) {
                         append("\n\nInformation is copied using Positional\n")
                         append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
                     }

@@ -1,5 +1,6 @@
 package app.simple.positional.decorations.maps
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -70,6 +71,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
     var location: Location? = null
     private var markerBitmap: Bitmap? = null
+    private var markerAnimator: ValueAnimator? = null
+    private var circleAnimator: ValueAnimator? = null
     var onTouch: ((event: MotionEvent, b: Boolean) -> Unit)? = null
     val sensorRegistrationRunnable = Runnable { register() }
     val cameraSpeed = 1000
@@ -226,6 +229,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         viewHandler.removeCallbacks(mapAutoCenter)
         viewHandler.removeCallbacks(sensorRegistrationRunnable)
         viewHandler.removeCallbacksAndMessages(null)
+        circleAnimator?.cancel()
+        markerAnimator?.cancel()
         job.cancel()
     }
 
@@ -361,9 +366,11 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                         marker!!.apply {
                             setAnchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
                             setIcon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
+                            isFlat = location!!.speed > 0F
                         }
 
-                        MarkerUtils.animateMarker(location, marker)
+                        markerAnimator?.cancel()
+                        markerAnimator = MarkerUtils.animateMarker(location, marker)
                     }
                 }.onFailure {
                     marker = if (isCustomCoordinate) {
@@ -382,7 +389,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
                 if (!isCustomCoordinate) {
                     runCatching {
-                        CircleUtils.animateCircle(location, circle)
+                        circleAnimator?.cancel()
+                        circleAnimator = CircleUtils.animateCircle(location, circle)
                     }.onFailure {
                         circle = googleMap?.addCircle(CircleOptions()
                             .center(latLng)
