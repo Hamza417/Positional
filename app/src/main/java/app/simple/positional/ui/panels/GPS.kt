@@ -349,7 +349,6 @@ class GPS : ScopedFragment() {
             )
 
             tools.locationIconStatusUpdates()
-            maps?.clearMarkers()
         })
 
         locationViewModel.targetData.observe(viewLifecycleOwner, {

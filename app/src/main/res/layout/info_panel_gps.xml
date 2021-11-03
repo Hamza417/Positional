@@ -270,7 +270,6 @@
                 android:layout_marginBottom="6dp"
                 android:lines="3"
                 android:lineSpacingExtra="@dimen/info_text_item_line_spacing"
-                android:text="@string/gps_displacement"
                 android:textSize="@dimen/info_text_secondary_size"
                 app:layout_constraintBottom_toTopOf="@+id/gps_target_bearing"
                 app:layout_constraintEnd_toEndOf="parent"

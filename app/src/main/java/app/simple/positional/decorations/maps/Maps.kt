@@ -59,7 +59,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private lateinit var sensorAccelerometer: Sensor
     private lateinit var sensorMagneticField: Sensor
 
-    private var googleMap: GoogleMap? = null
+    var googleMap: GoogleMap? = null
     private var marker: Marker? = null
     private var circle: Circle? = null
     private var latLng: LatLng? = null
@@ -234,7 +234,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             addMarker(LatLng(customLatitude, customLongitude))
             moveMapCamera(LatLng(customLatitude, customLongitude), zoom)
         } else
-            if (location != null) {
+            if (location.isNotNull()) {
+                if (isCompassRotation &&
+                    googleMap?.projection?.visibleRegion?.latLngBounds?.contains(LatLng(location!!.latitude, location!!.longitude))!!) {
+                    return
+                }
+
                 moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
                 addMarker(LatLng(location!!.latitude, location!!.longitude))
                 viewHandler.removeCallbacks(mapAutoCenter)
@@ -355,7 +360,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
             if (googleMap.isNotNull()) {
                 runCatching {
-                    if (!isCustomCoordinate) {
+                    if (isCustomCoordinate) {
                         throw IllegalStateException()
                     } else {
                         marker!!.apply {
@@ -426,14 +431,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         }
     }
 
-    fun clearMarkers() {
-        if (!LocationExtension.getLocationStatus(context)) {
-            markerBitmap?.recycle()
-            // marker?.remove()
-            // circle?.remove()
-        }
-    }
-
     private fun drawMarkerToTargetPolyline() {
         targetPolyline?.remove()
         polylineOptions?.points?.clear()
@@ -471,7 +468,9 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                                     moveMapCamera(LatLng(latitude, longitude), GPSPreferences.getMapZoom())
                                 }
                                 isCompassRotation -> {
-                                    moveMapCamera(LatLng(latitude, longitude), GPSPreferences.getMapZoom())
+                                    if (!googleMap?.projection?.visibleRegion?.latLngBounds?.contains(LatLng(latitude, longitude))!!) {
+                                        moveMapCamera(LatLng(latitude, longitude), GPSPreferences.getMapZoom())
+                                    }
                                 }
                                 isNorthOnly -> {
                                     moveMapCamera(LatLng(latitude, longitude), GPSPreferences.getMapZoom())
