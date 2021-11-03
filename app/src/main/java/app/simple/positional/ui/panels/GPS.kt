@@ -1,5 +1,6 @@
 package app.simple.positional.ui.panels
 
+import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Color
 import android.location.Geocoder
@@ -29,6 +30,7 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.maps.*
+import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.gps.*
@@ -38,6 +40,7 @@ import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.model.Locations
+import app.simple.positional.popups.location.PopupLocationMenu
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
@@ -69,6 +72,7 @@ class GPS : ScopedFragment() {
     private lateinit var divider: View
     private lateinit var dim: View
     private lateinit var locationBox: LinearLayout
+    private lateinit var targetBox: DynamicRippleConstraintLayout
     private lateinit var movementBox: LinearLayout
     private lateinit var coordinatesBox: FrameLayout
     private lateinit var copy: ImageButton
@@ -104,6 +108,8 @@ class GPS : ScopedFragment() {
     private var lastLatitude = 0.0
     private var lastLongitude = 0.0
     private var peekHeight = 0
+    private var x = 0F
+    private var y = 0F
 
     private var maps: Maps? = null
 
@@ -124,6 +130,7 @@ class GPS : ScopedFragment() {
             BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
 
         locationBox = view.findViewById(R.id.gps_panel_location)
+        targetBox = view.findViewById(R.id.gps_panel_target)
         movementBox = view.findViewById(R.id.gps_panel_movement)
         coordinatesBox = view.findViewById(R.id.gps_panel_coordinates)
 
@@ -185,6 +192,7 @@ class GPS : ScopedFragment() {
         return view
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -417,11 +425,11 @@ class GPS : ScopedFragment() {
             }
 
             override fun onTargetAdd(longpress: Boolean) {
-                if(longpress) {
+                if (longpress) {
                     TargetCoordinates.newInstance()
                         .show(childFragmentManager, "target_coordinates")
                 } else {
-                    maps?.setTargetMarker()
+                    maps?.setTargetMarker(null)
                 }
             }
 
@@ -523,6 +531,16 @@ class GPS : ScopedFragment() {
             LocationExpansion.newInstance().show(childFragmentManager, "location_expansion")
         }
 
+        targetBox.setOnClickListener {
+            bottomSheetInfoPanel.state = BottomSheetBehavior.STATE_COLLAPSED
+
+            if (GPSPreferences.isTargetMarkerSet()) {
+                maps?.moveCameraToTarget()
+            } else {
+                GPSPreferences.setTargetMarkerMode(true)
+            }
+        }
+
         movementBox.setOnClickListener {
             MovementExpansion.newInstance().show(childFragmentManager, "movement_expansion")
         }
@@ -547,12 +565,30 @@ class GPS : ScopedFragment() {
                 setFullScreen(true)
             }
 
+            override fun onMapLongClicked(latLng: LatLng?) {
+                PopupLocationMenu(dim, x, y).setOnMapsCallBackListener(object : MapsCallbacks {
+                    override fun onTargetAdd() {
+                        maps?.setTargetMarker(latLng)
+                    }
+                })
+            }
+
             override fun onTargetUpdated(target: LatLng?, current: LatLng?) {
                 kotlin.runCatching {
                     locationViewModel.targetData(target!!, location!!)
                 }
             }
         })
+
+        dim.setOnTouchListener { _, event ->
+            when (event!!.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    x = event.x
+                    y = event.y
+                }
+            }
+            false
+        }
 
         view.setOnKeyListener { _, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN) {

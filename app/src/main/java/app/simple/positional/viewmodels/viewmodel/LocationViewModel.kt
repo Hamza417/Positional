@@ -92,12 +92,10 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
 
                                 graphData(this)
 
-                                if (GPSPreferences.isTargetMarkerSet()) {
-                                    targetData(
-                                            LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
-                                                    GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
-                                            this)
-                                }
+                                targetData(
+                                        LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
+                                                GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
+                                        this)
 
                                 Log.d("LocationViewModel", "Location Posted")
                             }
@@ -148,28 +146,32 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
             val builder = StringBuilder().also {
                 it.append("<b>${getString(R.string.gps_displacement)} </b>")
 
-                val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
+                if (GPSPreferences.isTargetMarkerSet()) {
+                    val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
 
-                if (MainPreferences.getUnit()) {
-                    if (p0 < 1000) {
-                        it.append(p0.round(2))
-                        it.append(" ")
-                        it.append(getContext().getString(R.string.meter))
+                    if (MainPreferences.getUnit()) {
+                        if (p0 < 1000) {
+                            it.append(p0.round(2))
+                            it.append(" ")
+                            it.append(getContext().getString(R.string.meter))
+                        } else {
+                            it.append(p0.toKilometers().round(2))
+                            it.append(" ")
+                            it.append(getContext().getString(R.string.kilometer))
+                        }
                     } else {
-                        it.append(p0.toKilometers().round(2))
-                        it.append(" ")
-                        it.append(getContext().getString(R.string.kilometer))
+                        if (p0 < 1000) {
+                            it.append(p0.toDouble().toFeet().toFloat().round(2))
+                            it.append(" ")
+                            it.append(getContext().getString(R.string.feet))
+                        } else {
+                            it.append(p0.toMiles().round(2))
+                            it.append(" ")
+                            it.append(getContext().getString(R.string.miles))
+                        }
                     }
                 } else {
-                    if (p0 < 1000) {
-                        it.append(p0.toDouble().toFeet().toFloat().round(2))
-                        it.append(" ")
-                        it.append(getContext().getString(R.string.feet))
-                    } else {
-                        it.append(p0.toMiles().round(2))
-                        it.append(" ")
-                        it.append(getContext().getString(R.string.miles))
-                    }
+                    it.append(getString(R.string.not_available))
                 }
             }
 
@@ -179,16 +181,22 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
 
     private fun targetBearing(target: LatLng, current: Location) {
         viewModelScope.launch(Dispatchers.Default) {
-            val p0 = LocationExtension.calculateBearingAngle(
-                    current.latitude,
-                    current.longitude,
-                    target.latitude,
-                    target.longitude
-            )
-
             val builder = StringBuilder().also {
+
                 it.append("<b>${getString(R.string.gps_direction)} </b>")
-                it.append(Direction.getDirectionNameFromAzimuth(getContext(), abs(p0)))
+
+                if (GPSPreferences.isTargetMarkerSet()) {
+                    val p0 = LocationExtension.calculateBearingAngle(
+                            current.latitude,
+                            current.longitude,
+                            target.latitude,
+                            target.longitude
+                    )
+
+                    it.append(Direction.getDirectionNameFromAzimuth(getContext(), abs(p0)))
+                } else {
+                    it.append(getString(R.string.not_available))
+                }
             }
 
             targetDirection.postValue(HtmlHelper.fromHtml(builder.toString()))

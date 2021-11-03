@@ -188,6 +188,10 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             mapsCallbacks?.onMapClicked(this)
         }
 
+        this.googleMap?.setOnMapLongClickListener {
+            mapsCallbacks?.onMapLongClicked(it)
+        }
+
         mapsCallbacks?.onMapInitialized()
 
         viewHandler.postDelayed(sensorRegistrationRunnable, 0L)
@@ -388,13 +392,27 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         }
     }
 
-    fun setTargetMarker() {
+    fun setTargetMarker(latLng: LatLng?) {
         if (googleMap.isNotNull()) {
-            with(googleMap?.cameraPosition!!) {
-                GPSPreferences.setTargetMarkerLatitude(this.target.latitude.toFloat())
-                GPSPreferences.setTargetMarkerLongitude(this.target.longitude.toFloat())
+            if (latLng.isNull()) {
+                with(googleMap?.cameraPosition!!) {
+                    GPSPreferences.setTargetMarkerLatitude(this.target.latitude.toFloat())
+                    GPSPreferences.setTargetMarkerLongitude(this.target.longitude.toFloat())
+                    GPSPreferences.setTargetMarker(true)
+                }
+            } else {
+                GPSPreferences.setTargetMarkerLatitude(latLng!!.latitude.toFloat())
+                GPSPreferences.setTargetMarkerLongitude(latLng.longitude.toFloat())
                 GPSPreferences.setTargetMarker(true)
             }
+        }
+    }
+
+    fun moveCameraToTarget() {
+        with(GPSPreferences.getTargetMarkerCoordinates()) {
+            moveMapCamera(
+                    LatLng(this[0].toDouble(), this[1].toDouble()),
+                    GPSPreferences.getMapZoom())
         }
     }
 

@@ -1,6 +1,5 @@
 package app.simple.positional.dialogs.trail
 
-import android.app.ActionBar
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import app.simple.positional.R
 import app.simple.positional.constants.TrailIcons
-import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
@@ -78,8 +76,7 @@ class AddMarker : CustomDialogFragment() {
 
         icon.setOnClickListener {
             val popup = PopupMarkers(
-                    layoutInflater.inflate(R.layout.popup_trail_markers,
-                                           DynamicCornerLinearLayout(requireContext())), icon, it.x, it.y)
+                    icon, it.x, it.y)
 
             popup.setOnPopupMarkersCallbackListener(object : PopupMarkers.Companion.PopupMarkersCallbacks {
                 override fun onMarkerClicked(position: Int) {

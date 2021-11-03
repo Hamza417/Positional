@@ -23,7 +23,6 @@ import app.simple.positional.R
 import app.simple.positional.activities.subactivity.TrailsViewerActivity
 import app.simple.positional.adapters.trail.AdapterTrailData
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.trails.TrailMapCallbacks
 import app.simple.positional.decorations.trails.TrailMaps
 import app.simple.positional.decorations.trails.TrailToolbar
@@ -454,11 +453,7 @@ class Trail : ScopedFragment() {
     }
 
     private fun addMarker(view: View, lat: Double, lon: Double, accuracy: Float, x: Float, y: Float) {
-        val popup = PopupMarkers(
-                layoutInflater.inflate(R.layout.popup_trail_markers,
-                        DynamicCornerLinearLayout(requireContext())), view, x, y)
-
-        popup.setOnPopupMarkersCallbackListener(object : PopupMarkers.Companion.PopupMarkersCallbacks {
+        PopupMarkers(view, x, y).setOnPopupMarkersCallbackListener(object : PopupMarkers.Companion.PopupMarkersCallbacks {
             override fun onMarkerClicked(position: Int) {
                 val dialog = AddMarker.newInstance(position, LatLng(lat, lon), accuracy)
 

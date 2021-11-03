@@ -114,9 +114,9 @@
             <TextView
                 style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
-                android:gravity="center_vertical"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
+                android:gravity="center_vertical"
                 android:text="@string/gps_location"
                 android:textSize="@dimen/info_text_primary_size"
                 app:drawableRightCompat="@drawable/ic_arrow_right" />
@@ -156,26 +156,30 @@
 
         </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
             android:id="@+id/gps_panel_target"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
-            android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/textView9"
                 style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="6dp"
                 android:layout_weight="1"
-                android:text="@string/target"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/info_text_primary_size" />
+                android:text="@string/target"
+                android:textSize="@dimen/info_text_primary_size"
+                app:layout_constraintBottom_toTopOf="@+id/gps_target_displacement"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/gps_target_displacement"
@@ -186,7 +190,11 @@
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
                 android:text="@string/gps_displacement"
-                android:textSize="@dimen/info_text_secondary_size" />
+                android:textSize="@dimen/info_text_secondary_size"
+                app:layout_constraintBottom_toTopOf="@id/gps_target_direction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView9" />
 
             <TextView
                 android:id="@+id/gps_target_direction"
@@ -197,9 +205,13 @@
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
                 android:text="@string/gps_direction"
-                android:textSize="@dimen/info_text_secondary_size" />
+                android:textSize="@dimen/info_text_secondary_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/gps_target_displacement" />
 
-        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+        </app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>
 
         <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_panel_movement"
@@ -218,8 +230,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="@string/gps_movement"
                 android:gravity="center_vertical"
+                android:text="@string/gps_movement"
                 android:textSize="@dimen/info_text_primary_size"
                 app:drawableEndCompat="@drawable/ic_arrow_right" />
 

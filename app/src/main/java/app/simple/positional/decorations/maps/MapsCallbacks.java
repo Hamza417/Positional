@@ -12,7 +12,15 @@ public interface MapsCallbacks {
 
     }
 
+    default void onMapLongClicked(LatLng latLng) {
+
+    }
+
     default void onTargetUpdated(LatLng target, LatLng current) {
+
+    }
+
+    default void onTargetAdd() {
 
     }
 }
