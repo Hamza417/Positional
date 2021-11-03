@@ -209,7 +209,7 @@ class Trail : ScopedFragment() {
                 }
 
                 override fun onTrailClicked(latLng: LatLng) {
-                    maps?.moveMapCamera(latLng, 15F, 1500)
+                    maps?.moveMapCamera(latLng, 15F, TrailPreferences.getMapTilt(), 1500)
 
                     if (bottomSheetPanel.state == BottomSheetBehavior.STATE_EXPANDED) {
                         bottomSheetPanel.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -257,6 +257,7 @@ class Trail : ScopedFragment() {
                         } else {
                             maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
                                     TrailPreferences.getMapZoom(),
+                                    TrailPreferences.getMapTilt(),
                                     1000)
                         }
                     }

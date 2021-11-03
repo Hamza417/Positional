@@ -327,11 +327,11 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     }
 
     fun addPolylines(arrayList: ArrayList<TrailData>) {
-        for(i in polylines) {
+        for (i in polylines) {
             i.remove()
         }
 
-        for(i in flagMarkers) {
+        for (i in flagMarkers) {
             i.remove()
         }
 
@@ -394,7 +394,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         if (TrailPreferences.arePolylinesWrapped()) {
             wrap(true)
         } else {
-            moveMapCamera(latLng, TrailPreferences.getMapZoom(), cameraSpeed)
+            moveMapCamera(latLng, TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt(), cameraSpeed)
         }
     }
 
@@ -412,11 +412,11 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                 wrap(true)
             } else {
                 with(trailData.lastOrNull()!!) {
-                    moveMapCamera(LatLng(latitude, longitude), TrailPreferences.getMapZoom(), cameraSpeed)
+                    moveMapCamera(LatLng(latitude, longitude), TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt(), cameraSpeed)
                 }
             }
         }.getOrElse {
-            moveMapCamera(latLng!!, TrailPreferences.getMapZoom(), cameraSpeed)
+            moveMapCamera(latLng!!, TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt(), cameraSpeed)
         }
 
         invalidate()
@@ -424,7 +424,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     fun wrapUnwrap() {
         if (isWrapped) {
-            moveMapCamera(latLng!!, lastZoom, cameraSpeed)
+            moveMapCamera(latLng!!, lastZoom, lastTilt, cameraSpeed)
         } else {
             wrap(true)
         }
@@ -433,7 +433,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
     private fun wrap(animate: Boolean) {
         kotlin.runCatching {
             lastZoom = TrailPreferences.getMapZoom()
-            // lastTilt = TrailPreferences.getMapTilt()
+            lastTilt = TrailPreferences.getMapTilt()
 
             val builder = LatLngBounds.Builder()
             for (latLng in currentPolyline) {
@@ -460,7 +460,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
 
     fun resetCamera(zoom: Float) {
         if (location != null) {
-            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, cameraSpeed)
+            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, TrailPreferences.getMapTilt(), cameraSpeed)
         }
     }
 
@@ -528,16 +528,17 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
         googleMap?.animateCamera(CameraUpdateFactory.zoomOut())
     }
 
-    fun moveMapCamera(latLng: LatLng, zoom: Float, duration: Int) {
+    fun moveMapCamera(latLng: LatLng, zoom: Float, tilt: Float, duration: Int) {
         if (googleMap.isNull() && latLng.isNull()) return
 
         googleMap?.animateCamera(CameraUpdateFactory
             .newCameraPosition(CameraPosition.builder()
                 .target(latLng)
-                .tilt(lastTilt)
+                .tilt(tilt)
                 .zoom(zoom)
                 .bearing(TrailPreferences.getMapBearing())
                 .build()), duration, null)
+
         isWrapped = false
         TrailPreferences.setWrapStatus(false)
     }
@@ -578,7 +579,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : MapView(context,
                     LatLng(lastLatitude, lastLongitude)
                 }
 
-                moveMapCamera(latLng, TrailPreferences.getMapZoom(), cameraSpeed)
+                moveMapCamera(latLng, TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt(), cameraSpeed)
             }
             viewHandler.postDelayed(this, 6000L)
         }
