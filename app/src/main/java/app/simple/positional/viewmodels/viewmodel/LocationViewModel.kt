@@ -135,7 +135,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
     }
 
     fun targetData(target: LatLng, current: LatLng) {
-        viewModelScope.launch(Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.IO) {
             with(StringBuilder()) {
                 append(targetDisplacement(target, current))
                 append(targetBearing(target, current))
@@ -194,7 +194,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                         target.longitude
                 )
 
-                it.append(Direction.getDirectionNameFromAzimuth(getContext(), ((p0 % 360) + 360) % 360))
+                it.append(Direction.getDirectionNameFromAzimuth(getContext(), (p0 % 360 + 360) % 360))
             } else {
                 it.append(getString(R.string.not_available))
             }
@@ -213,7 +213,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                         target.longitude
                 )
 
-                it.append(round(((p0 % 360) + 360) % 360, 2))
+                it.append(round((p0 % 360 + 360) % 360, 2))
                 it.append("°")
             } else {
                 it.append(getString(R.string.not_available))

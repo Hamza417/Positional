@@ -127,19 +127,16 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
         objectAnimator?.cancel()
         opacity.clearAnimation()
         size.clearAnimation()
-        if (!requireActivity().isDestroyed) {
+        if (!requireActivity().isDestroyed && !requireArguments().getBoolean("long_pressed")) {
             GPSMenu.newInstance()
                 .show(parentFragmentManager, "gps_menu")
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-
-    }
-
     companion object {
-        fun newInstance(): PinCustomization {
+        fun newInstance(longPressed: Boolean): PinCustomization {
             val args = Bundle()
+            args.putBoolean("long_pressed", longPressed)
             val fragment = PinCustomization()
             fragment.arguments = args
             return fragment

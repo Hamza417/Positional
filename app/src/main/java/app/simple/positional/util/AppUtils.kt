@@ -8,4 +8,8 @@ object AppUtils {
         return BuildConfig.FLAVOR == "lite"
     }
 
+    fun isFullFlavor() : Boolean {
+        return BuildConfig.FLAVOR == "full"
+    }
+
 }

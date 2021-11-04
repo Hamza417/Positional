@@ -41,6 +41,9 @@
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_needle_minimal_hour.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_needle_minimal_minute.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_needle_minimal_second.xml" value="0.2523076923076923" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_needle_mod_hour.xml" value="0.22465753424657534" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_needle_mod_minute.xml" value="0.22465753424657534" />
+        <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_needle_mod_seconds.xml" value="0.5" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_needle_pointy_hour.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_needle_red_pointy_hour.xml" value="0.2523076923076923" />
         <entry key="..\:/Android_Apps/Positional/app/src/main/res/drawable/clock_needle_red_pointy_minute.xml" value="0.2523076923076923" />

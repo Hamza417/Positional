@@ -24,14 +24,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
-import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.maps.*
-import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.app.LocationParameters
@@ -127,8 +124,7 @@ class GPS : ScopedFragment() {
         save = view.findViewById(R.id.gps_save)
         crossHair = view.findViewById(R.id.cross_hair)
         expandUp = view.findViewById(R.id.expand_up_gps_sheet)
-        bottomSheetInfoPanel =
-            BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
+        bottomSheetInfoPanel = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
 
         locationBox = view.findViewById(R.id.gps_panel_location)
         targetBox = view.findViewById(R.id.gps_panel_target)
@@ -199,7 +195,7 @@ class GPS : ScopedFragment() {
         setLocationPin()
         targetMode()
 
-        if(AppUtils.isLiteFlavor()) save.gone()
+        if (AppUtils.isLiteFlavor()) save.gone()
 
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
@@ -281,7 +277,7 @@ class GPS : ScopedFragment() {
                     } else {
                         fromHtml("<b>${getString(R.string.gps_speed)}</b> ${
                             round(location!!.speed.toDouble().toKiloMetersPerHour()
-                                .toMilesPerHour(), 2)
+                                      .toMilesPerHour(), 2)
                         } ${getString(R.string.miles_hour)}")
                     }
 
@@ -323,8 +319,8 @@ class GPS : ScopedFragment() {
 
         locationViewModel.latency.observe(viewLifecycleOwner, {
             val str: Spannable = fromHtml("<b>${getString(R.string.gps_latency)}</b> " +
-                    "${it.first} " +
-                    if (it.second) getString(R.string.seconds) else getString(R.string.milliseconds)).toSpannable()
+                                                  "${it.first} " +
+                                                  if (it.second) getString(R.string.seconds) else getString(R.string.milliseconds)).toSpannable()
 
             if (it.second) {
                 if (it.first.toDouble() > 5.0) {
@@ -408,8 +404,10 @@ class GPS : ScopedFragment() {
             }
 
             override fun onCustomLocationLongPressed(view: View) {
-                PinCustomization.newInstance()
-                    .show(parentFragmentManager, "pin_customization")
+                if (AppUtils.isFullFlavor()) {
+                    PinCustomization.newInstance(true)
+                        .show(parentFragmentManager, "pin_customization")
+                }
             }
         })
 
@@ -786,7 +784,7 @@ class GPS : ScopedFragment() {
                     .inflateTransition(R.transition.tools_transition))
 
         val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
+                                                    ViewGroup.LayoutParams.WRAP_CONTENT)
 
         params.apply {
             gravity = if (GPSPreferences.isToolsGravityLeft()) {

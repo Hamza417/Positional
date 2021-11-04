@@ -35,7 +35,7 @@ class ArtsAdapter : RecyclerView.Adapter<ArtsAdapter.Holder>() {
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.art.setImageResource(list[position])
-        holder.count.text = position.toString() + "/" + list.size
+        holder.count.text = position.plus(1).toString() + "/" + list.size
 
         holder.icon.setImageBitmap(LocationPins.locationsPins[GPSPreferences.getPinSkin()]
             .toBitmapKeepingSize(holder.itemView.context, 6, 255).let {

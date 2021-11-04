@@ -11,12 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.CompassPreferences
+import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences
+import app.simple.positional.util.AppUtils
 import app.simple.positional.util.ContextUtils
 import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.ThemeSetter
@@ -74,7 +75,7 @@ open class BaseActivity : AppCompatActivity() {
          */
         LocaleHelper.setAppLocale(ConfigurationCompat.getLocales(resources.configuration)[0])
 
-        if (BuildConfig.FLAVOR == "lite") {
+        if (AppUtils.isLiteFlavor()) {
             resetLitePrefs()
         }
 
@@ -85,6 +86,7 @@ open class BaseActivity : AppCompatActivity() {
         CompassPreferences.setFlowerBloom(false)
         ClockPreferences.setClockNeedleTheme(1)
         MainPreferences.setCustomCoordinates(false)
+        GPSPreferences.setPinSkin(0)
     }
 
     private fun setTheme() {
