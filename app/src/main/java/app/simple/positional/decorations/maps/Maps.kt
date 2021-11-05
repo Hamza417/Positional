@@ -346,7 +346,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                         if (!LocationExtension.getLocationStatus(context)) return@withContext
 
                         markerBitmap = if (location!!.speed == 0.0F) {
-                            LocationPins.locationsPins[GPSPreferences.getPinSkin()]
+                            LocationPins.getLocationPin()
                                 .toBitmapKeepingSize(
                                         context,
                                         GPSPreferences.getPinSize(),
@@ -397,19 +397,17 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                         fillAnimator?.cancel()
                         strokeAnimator?.cancel()
                         circleAnimator = CircleUtils.animateCircle(location, circle)
-                        fillAnimator = CircleUtils.animateFillColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.map_circle_color), circle)
-                        strokeAnimator = CircleUtils.animateStrokeColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_stroke else R.color.compass_pin_color), circle)
+                        fillAnimator = CircleUtils.animateFillColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_color) else LocationPins.getCircleFillColor(), circle)
+                        strokeAnimator = CircleUtils.animateStrokeColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_stroke) else LocationPins.getCircleStrokeColor(), circle)
                     }.onFailure {
                         circle = googleMap?.addCircle(CircleOptions()
                                                           .center(latLng)
                                                           .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble()
                                                               ?: 0.0)
                                                           .clickable(false)
-                                                          .fillColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.map_circle_color))
-                                                          .strokeColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_stroke else R.color.compass_pin_color))
+                                                          .fillColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_color) else LocationPins.getCircleFillColor())
+                                                          .strokeColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_stroke) else LocationPins.getCircleStrokeColor())
                                                           .strokeWidth(2F))
-
-                        it.printStackTrace()
                     }
                 }
 

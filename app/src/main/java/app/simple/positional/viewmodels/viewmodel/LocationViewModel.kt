@@ -77,9 +77,6 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                     when (intent.action) {
                         "location" -> {
                             with(intent.getParcelableExtra<Location>("location")!!) {
-
-                                this.speed = (0..4).random().toFloat()
-
                                 location.postValue(this)
 
                                 measureLatency()
