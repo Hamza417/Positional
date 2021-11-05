@@ -271,5 +271,14 @@
         "color": "#88adec"
       }
     ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
   }
 ]

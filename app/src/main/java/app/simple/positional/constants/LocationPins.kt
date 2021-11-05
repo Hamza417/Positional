@@ -25,7 +25,7 @@ object LocationPins {
             Color.parseColor("#4D4c9acc"), // 04
             Color.parseColor("#4Ded765e"), // 05
             Color.parseColor("#4DEB2A2E"), // 06
-            Color.parseColor("#4Dd84e55"), // 07
+            Color.parseColor("#4D943b5e"), // 07
             Color.parseColor("#4D8B3B94"), // 08
             Color.parseColor("#4Df38630"), // 09
             Color.parseColor("#4DFF695B"), // 10
@@ -38,7 +38,7 @@ object LocationPins {
             Color.parseColor("#4c9acc"), // 04
             Color.parseColor("#ed765e"), // 05
             Color.parseColor("#EB2A2E"), // 06
-            Color.parseColor("#d84e55"), // 07
+            Color.parseColor("#943b5e"), // 07
             Color.parseColor("#8B3B94"), // 08
             Color.parseColor("#f38630"), // 09
             Color.parseColor("#FF695B"), // 10

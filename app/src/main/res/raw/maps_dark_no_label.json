@@ -213,7 +213,7 @@
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "visibility": "on"
+        "visibility": "off"
       }
     ]
   },

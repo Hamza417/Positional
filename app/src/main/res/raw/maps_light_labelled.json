@@ -143,7 +143,7 @@
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#9e9e9e"
+        "color": "#515151"
       }
     ]
   },
@@ -221,10 +221,13 @@
   },
   {
     "featureType": "water",
-    "elementType": "labels.text.fill",
+    "elementType": "labels.text",
     "stylers": [
       {
-        "color": "#9e9e9e"
+        "color": "#383838"
+      },
+      {
+        "lightness": -55
       }
     ]
   }
