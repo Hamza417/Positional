@@ -73,6 +73,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private var markerBitmap: Bitmap? = null
     private var markerAnimator: ValueAnimator? = null
     private var circleAnimator: ValueAnimator? = null
+    private var fillAnimator: ValueAnimator? = null
+    private var strokeAnimator: ValueAnimator? = null
     var onTouch: ((event: MotionEvent, b: Boolean) -> Unit)? = null
     val sensorRegistrationRunnable = Runnable { register() }
     val cameraSpeed = 1000
@@ -116,12 +118,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         }
 
         viewHandler.postDelayed({
-            /**
-             * This prevents the lag when fragment is switched
-             */
-            this.alpha = 0F
-            getMapAsync(this)
-        }, 500)
+                                    /**
+                                     * This prevents the lag when fragment is switched
+                                     */
+                                    this.alpha = 0F
+                                    getMapAsync(this)
+                                }, 500)
 
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -231,6 +233,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         viewHandler.removeCallbacksAndMessages(null)
         circleAnimator?.cancel()
         markerAnimator?.cancel()
+        fillAnimator?.cancel()
+        strokeAnimator?.cancel()
         job.cancel()
     }
 
@@ -375,31 +379,37 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 }.onFailure {
                     marker = if (isCustomCoordinate) {
                         googleMap?.addMarker(MarkerOptions().position(latLng)
-                            .rotation(0F)
-                            .flat(false)
-                            .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                                                 .rotation(0F)
+                                                 .flat(false)
+                                                 .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
                     } else {
                         googleMap?.addMarker(MarkerOptions().position(latLng)
-                            .rotation(if (location!!.speed > 0F) location!!.bearing else 0F)
-                            .anchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
-                            .flat(location!!.speed > 0F)
-                            .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                                                 .rotation(if (location!!.speed > 0F) location!!.bearing else 0F)
+                                                 .anchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
+                                                 .flat(location!!.speed > 0F)
+                                                 .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
                     }
                 }
 
                 if (!isCustomCoordinate) {
                     runCatching {
                         circleAnimator?.cancel()
+                        fillAnimator?.cancel()
+                        strokeAnimator?.cancel()
                         circleAnimator = CircleUtils.animateCircle(location, circle)
+                        fillAnimator = CircleUtils.animateFillColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.map_circle_color), circle)
+                        strokeAnimator = CircleUtils.animateStrokeColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_stroke else R.color.compass_pin_color), circle)
                     }.onFailure {
                         circle = googleMap?.addCircle(CircleOptions()
-                            .center(latLng)
-                            .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble()
-                                ?: 0.0)
-                            .clickable(false)
-                            .fillColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.map_circle_color))
-                            .strokeColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_stroke else R.color.compass_pin_color))
-                            .strokeWidth(2F))
+                                                          .center(latLng)
+                                                          .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble()
+                                                              ?: 0.0)
+                                                          .clickable(false)
+                                                          .fillColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_color else R.color.map_circle_color))
+                                                          .strokeColor(ContextCompat.getColor(context, if (location!!.speed > 0F) R.color.bearing_circle_stroke else R.color.compass_pin_color))
+                                                          .strokeWidth(2F))
+
+                        it.printStackTrace()
                     }
                 }
 
@@ -445,7 +455,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 polylineOptions?.add(LatLng(location?.latitude!!, location?.longitude!!))
             }
             polylineOptions?.add(LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
-                    GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
+                                        GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
 
             targetPolyline = googleMap?.addPolyline(polylineOptions!!)
 
@@ -517,16 +527,16 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                     .zoom(zoom)
                     .bearing(bearing ?: 0F)
                     .build()),
-                cameraSpeed,
-                object : GoogleMap.CancelableCallback {
-                    override fun onFinish() {
-                        viewHandler.postDelayed(sensorRegistrationRunnable, cameraSpeed.toLong())
-                    }
+                                 cameraSpeed,
+                                 object : GoogleMap.CancelableCallback {
+                                     override fun onFinish() {
+                                         viewHandler.postDelayed(sensorRegistrationRunnable, cameraSpeed.toLong())
+                                     }
 
-                    override fun onCancel() {
+                                     override fun onCancel() {
 
-                    }
-                })
+                                     }
+                                 })
     }
 
     fun getCamera(): CameraPosition? {

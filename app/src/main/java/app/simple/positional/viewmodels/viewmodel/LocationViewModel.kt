@@ -12,7 +12,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.R
 import app.simple.positional.extensions.viewmodel.WrappedViewModel
-import app.simple.positional.math.MathExtensions
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKilometers
@@ -78,6 +77,9 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                     when (intent.action) {
                         "location" -> {
                             with(intent.getParcelableExtra<Location>("location")!!) {
+
+                                this.speed = (0..4).random().toFloat()
+
                                 location.postValue(this)
 
                                 measureLatency()
@@ -93,7 +95,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                                 if (!MainPreferences.isCustomCoordinate()) {
                                     targetData(
                                             LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
-                                                    GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
+                                                   GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
                                             LatLng(this.latitude, this.longitude))
                                 }
                             }

@@ -1,7 +1,9 @@
 package app.simple.positional.decorations.maputils;
 
+import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.location.Location;
+import android.view.animation.DecelerateInterpolator;
 
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
@@ -11,6 +13,9 @@ import com.google.android.gms.maps.model.LatLng;
 import app.simple.positional.decorations.interpolators.LatLngInterpolator;
 
 public class CircleUtils {
+
+    static int duration = 1000;
+
     /**
      * Method to animate circle to destination location
      *
@@ -27,7 +32,7 @@ public class CircleUtils {
 
             LatLngInterpolator latLngInterpolator = new LatLngInterpolator.LinearFixed();
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-            valueAnimator.setDuration(1000);
+            valueAnimator.setDuration(duration);
             valueAnimator.setInterpolator(new LinearOutSlowInInterpolator());
             valueAnimator.addUpdateListener(animation -> {
                 try {
@@ -43,8 +48,28 @@ public class CircleUtils {
 
             return valueAnimator;
         } else {
-            throw new IllegalStateException();
+            throw new IllegalStateException("Circle object must not be null");
         }
+    }
+
+    public static ValueAnimator animateStrokeColor(int endColor, Circle circle) {
+        ValueAnimator valueAnimator = ValueAnimator.ofArgb(circle.getStrokeColor(), endColor);
+        valueAnimator.setEvaluator(new ArgbEvaluator());
+        valueAnimator.setInterpolator(new DecelerateInterpolator(1.5F));
+        valueAnimator.setDuration(duration);
+        valueAnimator.addUpdateListener(animation -> circle.setStrokeColor((int) animation.getAnimatedValue()));
+        valueAnimator.start();
+        return valueAnimator;
+    }
+
+    public static ValueAnimator animateFillColor(int endColor, Circle circle) {
+        ValueAnimator valueAnimator = ValueAnimator.ofArgb(circle.getFillColor(), endColor);
+        valueAnimator.setEvaluator(new ArgbEvaluator());
+        valueAnimator.setInterpolator(new DecelerateInterpolator(1.5F));
+        valueAnimator.setDuration(duration);
+        valueAnimator.addUpdateListener(animation -> circle.setFillColor((int) animation.getAnimatedValue()));
+        valueAnimator.start();
+        return valueAnimator;
     }
 
     private static float computeRadius(float fraction, float start, float end) {
