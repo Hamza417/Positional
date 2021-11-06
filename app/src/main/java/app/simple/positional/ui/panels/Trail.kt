@@ -23,7 +23,6 @@ import app.simple.positional.R
 import app.simple.positional.activities.subactivity.TrailsViewerActivity
 import app.simple.positional.adapters.trail.AdapterTrailData
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.decorations.trails.TrailMapCallbacks
 import app.simple.positional.decorations.trails.TrailMaps
 import app.simple.positional.decorations.trails.TrailToolbar
 import app.simple.positional.decorations.trails.TrailTools
@@ -31,6 +30,7 @@ import app.simple.positional.dialogs.trail.AddMarker
 import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
+import app.simple.positional.extensions.maps.MapsCallbacks
 import app.simple.positional.model.TrailData
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.popups.trail.PopupMarkers
@@ -102,7 +102,6 @@ class Trail : ScopedFragment() {
 
         maps = view.findViewById(R.id.map_view)
         maps?.onCreate(savedInstanceState)
-        maps?.resume()
 
         backPress = requireActivity().onBackPressedDispatcher
 
@@ -112,9 +111,9 @@ class Trail : ScopedFragment() {
 
         trailRecyclerView.apply {
             setPadding(paddingLeft,
-                    paddingTop + StatusBarHeight.getStatusBarHeight(resources),
-                    paddingRight,
-                    paddingBottom)
+                       paddingTop + StatusBarHeight.getStatusBarHeight(resources),
+                       paddingRight,
+                       paddingBottom)
         }
 
         peekHeight = bottomSheetPanel.peekHeight
@@ -255,9 +254,9 @@ class Trail : ScopedFragment() {
                             maps?.resetCamera(18F)
                         } else {
                             maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
-                                    TrailPreferences.getMapZoom(),
-                                    TrailPreferences.getMapTilt(),
-                                    1000)
+                                                TrailPreferences.getMapZoom(),
+                                                TrailPreferences.getMapTilt(),
+                                                1000)
                         }
                     }
                 } else {
@@ -308,7 +307,7 @@ class Trail : ScopedFragment() {
 
         })
 
-        maps?.setOnTrailMapCallbackListener(object : TrailMapCallbacks {
+        maps?.setOnMapsCallbackListener(object : MapsCallbacks {
             override fun onMapInitialized() {
                 if (savedInstanceState.isNotNull()) {
                     maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
@@ -353,18 +352,18 @@ class Trail : ScopedFragment() {
 
     override fun onResume() {
         super.onResume()
-        maps?.resume()
+        maps?.onResume()
         currentTrail = TrailPreferences.getCurrentTrail()
     }
 
     override fun onPause() {
         super.onPause()
-        maps?.pause()
+        maps?.onPause()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        maps?.lowMemory()
+        maps?.onLowMemory()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -399,8 +398,7 @@ class Trail : ScopedFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        maps?.removeCallbacks { }
-        maps?.destroy()
+        maps?.onDestroy()
         handler.removeCallbacksAndMessages(null)
     }
 
@@ -416,6 +414,8 @@ class Trail : ScopedFragment() {
         if (forBottomBar) {
             bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
         }
+
+        maps?.setGooglePadding(!isFullScreen)
         isFullScreen = !isFullScreen
     }
 
@@ -426,7 +426,7 @@ class Trail : ScopedFragment() {
                     .inflateTransition(R.transition.tools_transition))
 
         val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
+                                                    ViewGroup.LayoutParams.WRAP_CONTENT)
 
         params.apply {
             gravity = if (TrailPreferences.isToolsGravityToLeft()) {

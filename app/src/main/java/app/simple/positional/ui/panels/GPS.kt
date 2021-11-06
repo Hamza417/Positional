@@ -34,6 +34,7 @@ import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.gps.*
 import app.simple.positional.extensions.fragment.ScopedFragment
+import app.simple.positional.extensions.maps.MapsCallbacks
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
@@ -151,10 +152,7 @@ class GPS : ScopedFragment() {
 
         maps = view.findViewById(R.id.map)
 
-        MapsInitializer.initialize(requireContext(), MapsInitializer.Renderer.LATEST, null)
-
         maps?.onCreate(savedInstanceState)
-        maps?.resume()
 
         if (requireActivity().intent.isNotNull()) {
             if (requireActivity().intent.action == "action_map_panel_full") {
@@ -561,11 +559,11 @@ class GPS : ScopedFragment() {
                 }
             }
 
-            override fun onMapClicked(view: MapView?) {
+            override fun onMapClicked() {
                 setFullScreen(true)
             }
 
-            override fun onMapLongClicked(latLng: LatLng?) {
+            override fun onMapLongClicked(latLng: LatLng) {
                 PopupLocationMenu(dim, x, y).setOnMapsCallBackListener(object : MapsCallbacks {
                     override fun onTargetAdd() {
                         maps?.setTargetMarker(latLng)
@@ -649,6 +647,8 @@ class GPS : ScopedFragment() {
         if (forBottomBar) {
             bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
         }
+
+        maps?.setGooglePadding(!isFullScreen)
         isFullScreen = !isFullScreen
     }
 
@@ -703,9 +703,14 @@ class GPS : ScopedFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        maps?.onResume()
+    }
+
     override fun onPause() {
         super.onPause()
-        maps?.pause()
+        maps?.onPause()
         if (backPress!!.hasEnabledCallbacks()) {
             backPressed(false)
         }
@@ -714,21 +719,16 @@ class GPS : ScopedFragment() {
     override fun onDestroy() {
         super.onDestroy()
         maps?.removeCallbacks { }
-        maps?.destroy()
+        maps?.onDestroy()
         handler.removeCallbacks(textAnimationRunnable)
         handler.removeCallbacks(compassMapCamera)
         infoText.clearAnimation()
         handler.removeCallbacksAndMessages(null)
     }
 
-    override fun onResume() {
-        super.onResume()
-        maps?.resume()
-    }
-
     override fun onLowMemory() {
         super.onLowMemory()
-        maps?.lowMemory()
+        maps?.onLowMemory()
     }
 
     private fun setLocationPin() {

@@ -1,4 +1,4 @@
-package app.simple.positional.decorations.maputils;
+package app.simple.positional.decorations.utils;
 
 import android.animation.ValueAnimator;
 import android.location.Location;

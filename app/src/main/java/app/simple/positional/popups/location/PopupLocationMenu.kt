@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.PopupWindow
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
-import app.simple.positional.decorations.maps.MapsCallbacks
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
+import app.simple.positional.extensions.maps.MapsCallbacks
 import app.simple.positional.util.ViewUtils
 
 class PopupLocationMenu(anchor: View, x: Float, y: Float) : PopupWindow() {

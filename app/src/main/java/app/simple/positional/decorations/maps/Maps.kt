@@ -10,21 +10,18 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
-import android.view.MotionEvent
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
-import app.simple.positional.decorations.maputils.CircleUtils
-import app.simple.positional.decorations.maputils.MarkerUtils
+import app.simple.positional.decorations.utils.CircleUtils
+import app.simple.positional.decorations.utils.MarkerUtils
+import app.simple.positional.extensions.maps.CustomMaps
 import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter
 import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ColorUtils.resolveAttrColor
@@ -33,17 +30,11 @@ import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.*
-import kotlin.coroutines.CoroutineContext
 
-class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attributeSet),
-                                                           OnMapReadyCallback,
-                                                           SharedPreferences.OnSharedPreferenceChangeListener,
-                                                           SensorEventListener,
-                                                           CoroutineScope {
+class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, attributeSet),
+                                                           SensorEventListener {
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
@@ -60,24 +51,18 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
     private lateinit var sensorAccelerometer: Sensor
     private lateinit var sensorMagneticField: Sensor
 
-    var googleMap: GoogleMap? = null
     private var marker: Marker? = null
     private var circle: Circle? = null
-    private var latLng: LatLng? = null
     private var polylineOptions: PolylineOptions? = null
     private var targetPolyline: Polyline? = null
-    private var mapsCallbacks: MapsCallbacks? = null
-    private val viewHandler = Handler(Looper.getMainLooper())
 
-    var location: Location? = null
     private var markerBitmap: Bitmap? = null
     private var markerAnimator: ValueAnimator? = null
     private var circleAnimator: ValueAnimator? = null
     private var fillAnimator: ValueAnimator? = null
     private var strokeAnimator: ValueAnimator? = null
-    var onTouch: ((event: MotionEvent, b: Boolean) -> Unit)? = null
+
     val sensorRegistrationRunnable = Runnable { register() }
-    val cameraSpeed = 1000
 
     private var isCustomCoordinate = false
     private var isBearingRotation = false
@@ -87,13 +72,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
     private var customLatitude = 0.0
     private var customLongitude = 0.0
-
-    private val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
-    private val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
-
-    private val job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
 
     init {
         isCustomCoordinate = MainPreferences.isCustomCoordinate()
@@ -117,14 +95,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             this.requestFocus()
         }
 
-        viewHandler.postDelayed({
-                                    /**
-                                     * This prevents the lag when fragment is switched
-                                     */
-                                    this.alpha = 0F
-                                    getMapAsync(this)
-                                }, 500)
-
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         kotlin.runCatching {
@@ -138,14 +108,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         }
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        this.googleMap = googleMap
-
-        /**
-         * Workaround for flashing of view when map is
-         * Initialized
-         */
-        this.animate().alpha(1F).setDuration(500).start()
+    override fun onMapReady(p0: GoogleMap) {
+        super.onMapReady(p0)
 
         latLng = if (isCustomCoordinate)
             LatLng(customLatitude, customLongitude)
@@ -154,15 +118,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
 
         if (isCustomCoordinate) {
             addMarker(latLng!!)
-        }
-
-        googleMap.uiSettings.isCompassEnabled = false
-        googleMap.uiSettings.isMapToolbarEnabled = false
-        googleMap.uiSettings.isMyLocationButtonEnabled = false
-
-        this.googleMap = googleMap
-
-        if (!isCustomCoordinate) {
+        } else {
             if (location.isNotNull()) {
                 setFirstLocation(location!!)
             }
@@ -189,45 +145,23 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             viewHandler.postDelayed(mapAutoCenter, 6000)
         }
 
-        this.googleMap?.setOnMapClickListener {
-            mapsCallbacks?.onMapClicked(this)
-        }
-
-        this.googleMap?.setOnMapLongClickListener {
-            mapsCallbacks?.onMapLongClicked(it)
-        }
+        viewHandler.postDelayed(sensorRegistrationRunnable, 0L)
 
         mapsCallbacks?.onMapInitialized()
-
-        viewHandler.postDelayed(sensorRegistrationRunnable, 0L)
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        with(super.dispatchTouchEvent(ev)) {
-            onTouch?.invoke(ev, this)
-            return this
-        }
-    }
-
-    fun pause() {
+    override fun onPause() {
+        super.onPause()
         unregister()
-        onPause()
     }
 
-    fun lowMemory() {
-        onLowMemory()
-    }
-
-    fun resume() {
-        onResume()
-        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
+    override fun onResume() {
+        super.onResume()
         viewHandler.postDelayed(sensorRegistrationRunnable, 250L)
     }
 
-    fun destroy() {
-        onDestroy()
-        getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
-        clearAnimation()
+    override fun onDestroy() {
+        super.onDestroy()
         viewHandler.removeCallbacks(mapAutoCenter)
         viewHandler.removeCallbacks(sensorRegistrationRunnable)
         viewHandler.removeCallbacksAndMessages(null)
@@ -235,7 +169,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         markerAnimator?.cancel()
         fillAnimator?.cancel()
         strokeAnimator?.cancel()
-        job.cancel()
     }
 
     fun resetCamera(zoom: Float) {
@@ -261,10 +194,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
             } else {
                 GoogleMap.MAP_TYPE_NORMAL
             }
-    }
-
-    private fun setBuildings(value: Boolean) {
-        googleMap!!.isBuildingsEnabled = value
     }
 
     private fun setMapStyle(value: Boolean) {
@@ -537,15 +466,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                                  })
     }
 
-    fun getCamera(): CameraPosition? {
-        return googleMap?.cameraPosition
-    }
-
-    fun setCamera(cameraPosition: CameraPosition?) {
-        cameraPosition ?: return
-        googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-    }
-
     fun setFirstLocation(location: Location?) {
         if (googleMap.isNotNull() && isFirstLocation) {
             this.location = location
@@ -570,13 +490,11 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
         when (event.sensor.type) {
             Sensor.TYPE_ACCELEROMETER -> {
                 LowPassFilter.smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
-                accelerometer =
-                    Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
+                accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
             }
             Sensor.TYPE_MAGNETIC_FIELD -> {
                 LowPassFilter.smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
-                magnetometer =
-                    Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
+                magnetometer = Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
             }
         }
 
@@ -646,10 +564,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : MapView(context, attr
                 }
             }
         }
-    }
-
-    fun setOnMapsCallbackListener(mapsCallbacks: MapsCallbacks) {
-        this.mapsCallbacks = mapsCallbacks
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
