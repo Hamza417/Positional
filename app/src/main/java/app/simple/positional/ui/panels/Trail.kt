@@ -415,7 +415,6 @@ class Trail : ScopedFragment() {
             bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
         }
 
-        maps?.setGooglePadding(!isFullScreen)
         isFullScreen = !isFullScreen
     }
 

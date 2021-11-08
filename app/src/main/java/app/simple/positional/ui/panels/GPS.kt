@@ -648,7 +648,6 @@ class GPS : ScopedFragment() {
             bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
         }
 
-        maps?.setGooglePadding(!isFullScreen)
         isFullScreen = !isFullScreen
     }
 

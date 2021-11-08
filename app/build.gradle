@@ -50,8 +50,8 @@ android {
 
     compileSdkVersion 31
 
-    def appVersionCode = 152
-    def appVersionName = "build_${appVersionCode}_targetV1"
+    def appVersionCode = 153
+    def appVersionName = "//${appVersionCode}_final"
 
     defaultConfig {
         applicationId "app.simple.positional"

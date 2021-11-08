@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
-import app.simple.positional.R
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -64,8 +63,6 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
          */
         this.animate().alpha(1F).setDuration(500).start()
 
-        setGooglePadding(fullscreen = false)
-
         googleMap?.uiSettings?.isCompassEnabled = false
         googleMap?.uiSettings?.isMapToolbarEnabled = false
         googleMap?.uiSettings?.isMyLocationButtonEnabled = false
@@ -110,14 +107,6 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     }
 
     // -------------------------------------------------------------------------------------------------------- //
-
-    open fun setGooglePadding(fullscreen: Boolean) {
-        if (fullscreen) {
-            this.googleMap?.setPadding(0, 0, 0, 0)
-        } else {
-            this.googleMap?.setPadding(0, 0, 0, resources.getDimensionPixelOffset(R.dimen.bottom_nav_height))
-        }
-    }
 
     open fun getCamera(): CameraPosition? {
         return googleMap?.cameraPosition

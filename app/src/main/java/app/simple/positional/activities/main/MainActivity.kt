@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -32,11 +33,14 @@ import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.OnMapsSdkInitializedCallback
 
 class MainActivity : BaseActivity(),
                      PermissionCallbacks,
                      BottomSheetSlide,
-                     android.content.SharedPreferences.OnSharedPreferenceChangeListener {
+                     android.content.SharedPreferences.OnSharedPreferenceChangeListener,
+                     OnMapsSdkInitializedCallback {
 
     private val defaultPermissionRequestCode = 123
     private lateinit var bottomBar: DynamicCornerRecyclerView
@@ -45,7 +49,7 @@ class MainActivity : BaseActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        MapsInitializer.initialize(baseContext, MapsInitializer.Renderer.LATEST, this)
         setContentView(R.layout.activity_main)
 
         bottomBarAdapter = BottomBarAdapter(BottomBarItems.getBottomBarItems(baseContext))
@@ -80,7 +84,7 @@ class MainActivity : BaseActivity(),
 
         if (savedInstanceState.isNull()) {
             openFragment(FragmentPreferences.getCurrentTag(),
-                    FragmentPreferences.getCurrentPage())
+                         FragmentPreferences.getCurrentPage())
         }
     }
 
@@ -259,5 +263,9 @@ class MainActivity : BaseActivity(),
             bottomBar.translationY = savedInstanceState.getFloat("translation")
         }
         super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    override fun onMapsSdkInitialized(p0: MapsInitializer.Renderer) {
+        Log.d("Map Initialized", p0.name)
     }
 }

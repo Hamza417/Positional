@@ -331,8 +331,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                     }.onFailure {
                         circle = googleMap?.addCircle(CircleOptions()
                                                           .center(latLng)
-                                                          .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble()
-                                                              ?: 0.0)
+                                                          .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble() ?: 0.0)
                                                           .clickable(false)
                                                           .fillColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_color) else LocationPins.getCircleFillColor())
                                                           .strokeColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_stroke) else LocationPins.getCircleStrokeColor())

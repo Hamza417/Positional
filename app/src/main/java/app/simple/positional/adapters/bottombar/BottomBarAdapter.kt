@@ -10,7 +10,6 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
@@ -32,11 +31,9 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerVi
     override fun onBindViewHolder(holder: Holder, @SuppressLint("RecyclerView") position: Int) {
         if (currentTag == list[position].tag) {
             holder.bg.visible(animate = true)
-
             holder.icon.animateColor(ContextCompat.getColor(holder.itemView.context, R.color.iconColor))
         } else {
             holder.bg.invisible(animate = true)
-
             holder.icon.animateColor(ContextCompat.getColor(holder.itemView.context, R.color.iconRegular))
         }
 

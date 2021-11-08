@@ -17,7 +17,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.TimezonePickerActivity
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
@@ -27,6 +26,7 @@ import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.clock.ClockMenu
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
 import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
@@ -315,14 +315,12 @@ class Clock : ScopedFragment() {
                     sweepSeconds.setPhysical(-1F, 5F, 5000F)
                     sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false) - 90F, true)
                 }
-                "smooth",
+                "smooth" -> {
+                    seconds.rotation = getSecondsInDegrees(getCurrentTimeData(), true)
+                    sweepSeconds.rotation = seconds.rotation - 90
+                }
                 "tick" -> {
-                    seconds.rotation = if (delay < 1000) {
-                        getSecondsInDegrees(getCurrentTimeData(), true)
-                    } else {
-                        getSecondsInDegrees(getCurrentTimeData(), false)
-                    }
-
+                    seconds.rotation = getSecondsInDegrees(getCurrentTimeData(), false)
                     sweepSeconds.rotation = seconds.rotation - 90
                 }
             }
@@ -558,8 +556,7 @@ class Clock : ScopedFragment() {
     }
 
     private fun getCurrentTimeData(): ZonedDateTime {
-        val zoneId = ZoneId.of(timezone)
-        return Instant.now().atZone(zoneId)
+        return Instant.now().atZone(ZoneId.of(timezone))
     }
 
     private fun backPressed(value: Boolean) {
