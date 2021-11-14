@@ -378,14 +378,19 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             if (isCustomCoordinate) {
                 polylineOptions?.add(LatLng(customLatitude, customLongitude))
             } else {
-                polylineOptions?.add(LatLng(location?.latitude!!, location?.longitude!!))
+                if (location.isNotNull()) {
+                    polylineOptions?.add(LatLng(location?.latitude!!, location?.longitude!!))
+                }
             }
+
             polylineOptions?.add(LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
                                         GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
 
             targetPolyline = googleMap?.addPolyline(polylineOptions!!)
 
-            mapsCallbacks?.onTargetUpdated(polylineOptions?.points?.get(1), polylineOptions?.points?.get(0))
+            if (location.isNotNull() || isCustomCoordinate) {
+                mapsCallbacks?.onTargetUpdated(polylineOptions?.points?.get(1), polylineOptions?.points?.get(0))
+            }
 
             polylineOptions?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
             polylineOptions?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))

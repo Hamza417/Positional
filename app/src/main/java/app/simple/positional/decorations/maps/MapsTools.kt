@@ -14,6 +14,7 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ImageLoader
 import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.util.ViewUtils.isNotVisible
 import app.simple.positional.util.ViewUtils.visible
 
 class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -83,7 +84,9 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
         }
 
         target.setOnLongClickListener {
-            mapsToolsCallbacks.onTargetAdd(true)
+            if(!GPSPreferences.isTargetMarkerSet()) {
+                mapsToolsCallbacks.onTargetAdd(true)
+            }
             true
         }
 
