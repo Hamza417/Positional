@@ -22,7 +22,6 @@ public class CustomRadioButton extends androidx.appcompat.widget.AppCompatRadioB
     
     @Override
     public void setChecked(boolean checked) {
-        
         if (checked) {
             animateTint(ColorUtils.INSTANCE.resolveAttrColor(getContext(), R.attr.colorAppAccent), this);
         }

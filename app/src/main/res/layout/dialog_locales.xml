@@ -19,8 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
-            android:clipToPadding="false"
+            android:clipToPadding="true"
             android:fadingEdge="vertical"
+            android:padding="10dp"
             android:fadingEdgeLength="25dp"
             android:requiresFadingEdge="vertical" />
 

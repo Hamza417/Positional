@@ -46,8 +46,6 @@ class FusedLocationService : Service() {
                 .setFastestInterval(delay)
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
 
-        requestLastLocation()
-
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
                 super.onLocationResult(result)
@@ -61,6 +59,8 @@ class FusedLocationService : Service() {
                 /* no-op */
             }
         }
+
+        requestCurrentLocation()
 
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
@@ -76,9 +76,9 @@ class FusedLocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        requestLastLocation()
         if (!handlerThread.isAlive) {
             handlerThread.start()
+            requestCurrentLocation()
         }
         return START_REDELIVER_INTENT
     }

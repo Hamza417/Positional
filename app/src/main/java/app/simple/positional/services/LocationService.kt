@@ -30,7 +30,7 @@ class LocationService : Service(), LocationListener {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        requestLastKnownLocation()
+        postLocationRunnable()
         return START_REDELIVER_INTENT
     }
 
@@ -58,7 +58,7 @@ class LocationService : Service(), LocationListener {
     }
 
     override fun onProviderEnabled(provider: String) {
-        requestLastKnownLocation()
+        postLocationRunnable()
         Intent().also { intent ->
             intent.action = "provider"
             intent.putExtra("location_provider", provider)
@@ -82,31 +82,6 @@ class LocationService : Service(), LocationListener {
         }
     }
 
-    private fun requestLastKnownLocation() {
-        if (PermissionUtils.checkPermission(applicationContext)) {
-            var location: Location? = null
-
-            when {
-                locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER) -> {
-                    location = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                }
-                locationManager!!.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> {
-                    location = locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                }
-                locationManager!!.isProviderEnabled(LocationManager.PASSIVE_PROVIDER) -> {
-                    location = locationManager?.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER)
-                }
-            }
-
-            if (location.isNull()) {
-                handler.post(locationUpdater)
-            } else {
-                onLocationChanged(location!!)
-                handler.post(locationUpdater)
-            }
-        }
-    }
-
     private fun requestLocation() {
         if (PermissionUtils.checkPermission(applicationContext)) {
             when {
@@ -121,5 +96,10 @@ class LocationService : Service(), LocationListener {
                 }
             }
         }
+    }
+
+    private fun postLocationRunnable() {
+        handler.removeCallbacks(locationUpdater)
+        handler.post(locationUpdater)
     }
 }
