@@ -42,9 +42,11 @@ class FusedLocationService : Service() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(applicationContext)
         locationRequest = LocationRequest.create()
-                .setInterval(delay)
-                .setFastestInterval(delay)
-                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .setInterval(delay)
+            .setFastestInterval(delay)
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+
+        requestLastLocation()
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
@@ -60,8 +62,6 @@ class FusedLocationService : Service() {
             }
         }
 
-        requestCurrentLocation()
-
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 Intent().also {
@@ -76,9 +76,9 @@ class FusedLocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        requestLastLocation()
         if (!handlerThread.isAlive) {
             handlerThread.start()
-            requestCurrentLocation()
         }
         return START_REDELIVER_INTENT
     }
@@ -87,6 +87,7 @@ class FusedLocationService : Service() {
         if (PermissionUtils.checkPermission(applicationContext)) {
             fusedLocationProviderClient.lastLocation.addOnCompleteListener {
                 if (it.isSuccessful && it.result.isNotNull()) {
+                    it.result.provider = "Last Location"
                     broadcastLocation(it.result)
                 }
 
