@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import androidx.viewpager2.widget.ViewPager2
 import app.simple.positional.R
-import app.simple.positional.extensions.activity.BaseActivity
 import app.simple.positional.adapters.miscellaneous.ArtsAdapter
-import app.simple.positional.decorations.transformers.DepthTransformer
+import app.simple.positional.extensions.activity.BaseActivity
 import app.simple.positional.preferences.MainPreferences
 
 class ArtsActivity : BaseActivity() {
@@ -25,7 +24,7 @@ class ArtsActivity : BaseActivity() {
 
         viewPager2.adapter = ArtsAdapter()
         viewPager2.offscreenPageLimit = 3
-        viewPager2.setPageTransformer(DepthTransformer())
+        // viewPager2.setPageTransformer(DepthTransformer())
         viewPager2.setCurrentItem(MainPreferences.getCurrentArt(), false)
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {

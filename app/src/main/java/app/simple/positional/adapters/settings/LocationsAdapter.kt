@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.model.Locations
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.DMSConverter
-import app.simple.positional.util.ViewUtils
 import com.google.android.material.card.MaterialCardView
 
 class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
@@ -85,7 +83,7 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
 
         init {
             container.radius = radius.toFloat()
-            ViewUtils.addShadow(container)
+            // ViewUtils.addShadow(container)
         }
     }
 

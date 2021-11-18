@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/options_container_horizontal_padding"
     android:layout_marginVertical="5dp"
-    app:cardElevation="5dp"
+    app:cardElevation="3dp"
     app:rippleColor="?attr/colorAppAccentLight">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
