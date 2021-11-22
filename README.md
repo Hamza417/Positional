@@ -60,13 +60,14 @@ On top of all the core functionality Positional is a highly polished app and pro
   * Compass bloom
   * Gimbal lock
   * Minimal Map (with and without labels)</br>
-  * Google and Open Source Maps Support<br/>
+  * Google Maps Support<br/>
   * Dark mode for maps<br/>
   * High contrast map<br/>
   * Satellite map<br/>
   * Many pin styles for the whole app<br/>
-  * Various tiles servers for Open Maps including OpenTopo and Mapnik<br/>
   * Media keys support for map<br/>
+  * Target location mode
+  * Displacement information
   * GPS information</br>
   * Speedometer</br>
   * Altitude</br>
