@@ -11,14 +11,14 @@
 
     <app.simple.positional.decorations.corners.DynamicCornerRecyclerView
         android:id="@+id/bottom_bar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/bottom_nav_height"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|center_horizontal"
         android:backgroundTint="@color/mainBackground"
         android:elevation="20dp"
         android:overScrollMode="never"
         android:paddingHorizontal="10dp"
-        android:clipChildren="true"
+        android:clipChildren="false"
         android:clipToPadding="false"
         android:layoutAnimation="@anim/grid_list_animation_controller"
         app:roundTopCorners="true" />
