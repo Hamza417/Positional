@@ -212,7 +212,7 @@ class Clock : ScopedFragment() {
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     copyButton.isClickable = false
                     backPressed(false)
-                    if (backPress!!.hasEnabledCallbacks()) {
+                    while (backPress!!.hasEnabledCallbacks()) {
                         backPress?.onBackPressed()
                     }
                 }

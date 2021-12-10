@@ -27,7 +27,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
@@ -36,6 +35,7 @@ import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.compass.CompassMenu
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.math.Angle.getAngle
 import app.simple.positional.math.Angle.normalizeEulerAngle
 import app.simple.positional.math.CompassAzimuth
@@ -231,7 +231,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                     backPressed(true)
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     backPressed(false)
-                    if (backPress!!.hasEnabledCallbacks()) {
+                    while (backPress!!.hasEnabledCallbacks()) {
                         /**
                          * This is a workaround and not a full fledged method to
                          * remove any existing callbacks

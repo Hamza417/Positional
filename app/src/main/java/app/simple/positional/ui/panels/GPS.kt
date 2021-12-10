@@ -363,7 +363,7 @@ class GPS : ScopedFragment() {
                     }
                     BottomSheetBehavior.STATE_COLLAPSED -> {
                         backPressed(false)
-                        if (backPress!!.hasEnabledCallbacks()) {
+                        while (backPress!!.hasEnabledCallbacks()) {
                             backPress?.onBackPressed()
                         }
                         maps?.registerWithRunnable()

@@ -33,7 +33,7 @@ object ClockPreferences {
     }
 
     fun getClockNeedleTheme(): Int {
-        return getSharedPreferences().getInt(clockNeedle, 1)
+        return getSharedPreferences().getInt(clockNeedle, 0)
     }
 
     //--------------------------------------------------------------------------------------------------//
