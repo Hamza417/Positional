@@ -360,6 +360,11 @@
             android:screenOrientation="portrait"
             tools:targetApi="o" />
 
+        <activity
+            android:name=".activities.subactivity.TargetAddressActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
         <!-- Services -->
 
         <service

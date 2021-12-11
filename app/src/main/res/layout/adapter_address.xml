@@ -1,0 +1,64 @@
+<app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/adapter_address_container"
+    android:layout_margin="@dimen/options_container_horizontal_padding"
+    android:focusable="true"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_crosshair_dec"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/adapter_address_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/medium"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/info_text_secondary_size"
+        app:layout_constraintBottom_toTopOf="@id/adapter_address_latitude"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/adapter_address_latitude"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/regular"
+        android:maxLines="1"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/description_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/adapter_address_longitude"
+        app:layout_constraintStart_toStartOf="@+id/adapter_address_address"
+        app:layout_constraintTop_toBottomOf="@id/adapter_address_address" />
+
+    <TextView
+        android:id="@+id/adapter_address_longitude"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/regular"
+        android:maxLines="1"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/description_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/adapter_address_address"
+        app:layout_constraintStart_toEndOf="@+id/adapter_address_latitude"
+        app:layout_constraintTop_toBottomOf="@+id/adapter_address_address" />
+
+</app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>
