@@ -77,6 +77,8 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                     when (intent.action) {
                         "location" -> {
                             with(intent.getParcelableExtra<Location>("location")!!) {
+                                this.latitude = (-45..45).random().toDouble()
+                                this.longitude = (-90..90).random().toDouble()
                                 location.postValue(this)
 
                                 measureLatency()

@@ -505,6 +505,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
         }
     }
 
+    private fun moveMap() {
+
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             TrailPreferences.trailHighContrastMap, TrailPreferences.trailLabelMode -> {

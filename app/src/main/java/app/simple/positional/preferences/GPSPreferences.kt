@@ -10,6 +10,7 @@ object GPSPreferences {
 
     private const val mapZoom = "map_zoom_value"
     private const val mapTilt = "map_tilt_value"
+    private const val mapBearing = "map_bearing_value"
     private const val mapTargetMarkerLatitude = "target_marker_latitude"
     private const val mapTargetMarkerLongitude = "target_marker_longitude"
 
@@ -111,12 +112,12 @@ object GPSPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setMapAutoCenter(boolean: Boolean) {
-        getSharedPreferences().edit().putBoolean(mapAutoCenter, boolean).apply()
+    fun setMapBearing(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(mapBearing, value).apply()
     }
 
-    fun isMapAutoCenter(): Boolean {
-        return getSharedPreferences().getBoolean(mapAutoCenter, true)
+    fun getMapBearing(): Float {
+        return getSharedPreferences().getFloat(mapBearing, 15F)
     }
 
     //--------------------------------------------------------------------------------------------------//

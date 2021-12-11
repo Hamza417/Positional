@@ -132,17 +132,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 latLng!!,
                 GPSPreferences.getMapZoom(),
                 GPSPreferences.getMapTilt(),
-                0F)))
-
-        this.googleMap?.setOnCameraMoveListener {
-            viewHandler.removeCallbacks(mapAutoCenter)
-        }
+                GPSPreferences.getMapBearing())))
 
         this.googleMap?.setOnCameraIdleListener {
             GPSPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
             GPSPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)
-            viewHandler.removeCallbacks(mapAutoCenter)
-            viewHandler.postDelayed(mapAutoCenter, 6000)
+            GPSPreferences.setMapBearing(this.googleMap?.cameraPosition!!.bearing)
         }
 
         viewHandler.postDelayed(sensorRegistrationRunnable, 0L)
@@ -162,7 +157,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
 
     override fun onDestroy() {
         super.onDestroy()
-        viewHandler.removeCallbacks(mapAutoCenter)
         viewHandler.removeCallbacks(sensorRegistrationRunnable)
         viewHandler.removeCallbacksAndMessages(null)
         circleAnimator?.cancel()
@@ -179,7 +173,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             if (location.isNotNull()) {
                 moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
                 addMarker(LatLng(location!!.latitude, location!!.longitude))
-                viewHandler.removeCallbacks(mapAutoCenter)
             }
     }
 
@@ -342,6 +335,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 drawMarkerToTargetPolyline()
 
                 invalidate()
+
+                if (isMapMovementEnabled) moveMap()
             }
         }
     }
@@ -399,33 +394,29 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
         }
     }
 
-    private val mapAutoCenter = object : Runnable {
-        override fun run() {
-            if (GPSPreferences.isMapAutoCenter() && !GPSPreferences.isTargetMarkerMode()) {
-                if (isCustomCoordinate) {
-                    moveMapCamera(LatLng(customLatitude, customLongitude), GPSPreferences.getMapZoom())
-                } else {
-                    if (location.isNotNull()) {
-                        with(location!!) {
-                            when {
-                                isBearingRotation -> {
+    private fun moveMap() {
+        if (!GPSPreferences.isTargetMarkerMode()) {
+            if (isCustomCoordinate) {
+                moveMapCamera(LatLng(customLatitude, customLongitude), GPSPreferences.getMapZoom())
+            } else {
+                if (location.isNotNull()) {
+                    with(location!!) {
+                        when {
+                            isBearingRotation -> {
+                                moveMapCamera(LatLng(latitude, longitude), GPSPreferences.getMapZoom())
+                            }
+                            isCompassRotation -> {
+                                if (!googleMap?.projection?.visibleRegion?.latLngBounds?.contains(LatLng(latitude, longitude))!! || speed > 0F) {
                                     moveMapCamera(LatLng(latitude, longitude), GPSPreferences.getMapZoom())
                                 }
-                                isCompassRotation -> {
-                                    if (!googleMap?.projection?.visibleRegion?.latLngBounds?.contains(LatLng(latitude, longitude))!!) {
-                                        moveMapCamera(LatLng(latitude, longitude), GPSPreferences.getMapZoom())
-                                    }
-                                }
-                                isNorthOnly -> {
-                                    moveMapCamera(LatLng(latitude, longitude), GPSPreferences.getMapZoom())
-                                }
+                            }
+                            isNorthOnly -> {
+                                moveMapCamera(LatLng(latitude, longitude), GPSPreferences.getMapZoom())
                             }
                         }
                     }
                 }
             }
-
-            viewHandler.postDelayed(this, 6000L)
         }
     }
 
@@ -465,7 +456,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                                      }
 
                                      override fun onCancel() {
-
+                                         viewHandler.postDelayed(sensorRegistrationRunnable, cameraSpeed.toLong())
                                      }
                                  })
     }
@@ -480,7 +471,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                         this,
                         GPSPreferences.getMapZoom(),
                         GPSPreferences.getMapTilt(),
-                        0F)))
+                        GPSPreferences.getMapBearing())))
 
                 latLng = this
                 isFirstLocation = false
@@ -535,14 +526,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                     sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
                     sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
 
-                    if (googleMap.isNotNull()) {
-                        with(googleMap!!.uiSettings) {
-                            isScrollGesturesEnabled = false
-                            isZoomGesturesEnabled = false
-                            isRotateGesturesEnabled = false
-                        }
-                    }
-
                     isRegistered = true
                 }
             }
@@ -558,14 +541,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 sensorManager.unregisterListener(this, sensorMagneticField)
 
                 isRegistered = false
-
-                if (googleMap.isNotNull()) {
-                    with(googleMap!!.uiSettings) {
-                        isScrollGesturesEnabled = true
-                        isZoomGesturesEnabled = true
-                        isRotateGesturesEnabled = true
-                    }
-                }
             }
         }
     }
@@ -580,10 +555,6 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             }
             GPSPreferences.showBuilding -> {
                 setBuildings(GPSPreferences.getShowBuildingsOnMap())
-            }
-            GPSPreferences.mapAutoCenter -> {
-                viewHandler.removeCallbacks(mapAutoCenter)
-                viewHandler.post(mapAutoCenter)
             }
             GPSPreferences.pinSize,
             GPSPreferences.pinOpacity -> {

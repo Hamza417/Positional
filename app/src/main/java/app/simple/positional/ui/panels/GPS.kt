@@ -417,6 +417,8 @@ class GPS : ScopedFragment() {
                     } else {
                         maps?.resetCamera(GPSPreferences.getMapZoom())
                     }
+
+                    maps?.isMapMovementEnabled = true
                 } else {
                     LocationPrompt.displayLocationSettingsRequest(requireActivity())
                 }
@@ -553,7 +555,7 @@ class GPS : ScopedFragment() {
                 if (savedInstanceState.isNotNull()) {
                     maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
 
-                    if (isCompassRotation && GPSPreferences.isMapAutoCenter()) {
+                    if (isCompassRotation) {
                         handler.postDelayed(compassMapCamera, 6000L)
                     }
                 }
@@ -619,7 +621,7 @@ class GPS : ScopedFragment() {
                     if (bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_EXPANDED) {
                         maps?.registerWithRunnable()
 
-                        if (isCompassRotation && GPSPreferences.isMapAutoCenter()) {
+                        if (isCompassRotation) {
                             handler.postDelayed(compassMapCamera, 6000L)
                         }
                     }
@@ -817,11 +819,9 @@ class GPS : ScopedFragment() {
                 isCompassRotation = GPSPreferences.isCompassRotation()
 
                 if (isCompassRotation) {
-                    if (GPSPreferences.isMapAutoCenter()) {
-                        handler.postDelayed(compassMapCamera, 6000L)
-                    } else {
-                        handler.removeCallbacks(compassMapCamera)
-                    }
+                    handler.postDelayed(compassMapCamera, 6000L)
+                } else {
+                    handler.removeCallbacks(compassMapCamera)
                 }
             }
             GPSPreferences.toolsGravity -> {

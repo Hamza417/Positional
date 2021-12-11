@@ -35,6 +35,8 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     val cameraSpeed = 1000
     val autoCenterDelay = 6000L
 
+    var isMapMovementEnabled = true
+
     var googleMap: GoogleMap? = null
 
     private val job = Job()
@@ -83,6 +85,13 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         with(super.dispatchTouchEvent(ev)) {
             onTouch?.invoke(ev, this)
+
+            when (ev.action) {
+                MotionEvent.ACTION_MOVE -> {
+                    isMapMovementEnabled = false
+                }
+            }
+
             return this
         }
     }
