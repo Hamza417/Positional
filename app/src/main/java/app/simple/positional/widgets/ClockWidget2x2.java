@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.SystemClock;
 
-import app.simple.positional.services.ClockWidgetService;
 import app.simple.positional.services.ClockWidgetService2x2;
 
 public class ClockWidget2x2 extends AppWidgetProvider {
@@ -17,7 +16,7 @@ public class ClockWidget2x2 extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-
+        startService(context);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, getService(context));
     }
@@ -25,13 +24,7 @@ public class ClockWidget2x2 extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(new Intent(context, ClockWidgetService.class));
-        }
-        else {
-            context.startService(new Intent(context, ClockWidgetService.class));
-        }
+        startService(context);
     }
 
     @Override
@@ -52,6 +45,14 @@ public class ClockWidget2x2 extends AppWidgetProvider {
         } catch (IllegalStateException ignored) {
         }
         ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE)).cancel(getService(context));
+    }
+
+    private void startService(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(new Intent(context, ClockWidgetService2x2.class));
+        } else {
+            context.startService(new Intent(context, ClockWidgetService2x2.class));
+        }
     }
 
     private PendingIntent getService(Context context) {

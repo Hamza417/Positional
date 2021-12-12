@@ -482,7 +482,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
                         this,
                         TrailPreferences.getMapZoom(),
                         TrailPreferences.getMapTilt(),
-                        0F)))
+                        TrailPreferences.getMapBearing())))
 
                 latLng = this
                 isFirstLocation = false
