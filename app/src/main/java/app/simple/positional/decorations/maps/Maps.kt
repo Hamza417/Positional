@@ -140,10 +140,10 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                     isMapMovementEnabled = false
                 }
                 GoogleMap.OnCameraMoveStartedListener.REASON_API_ANIMATION -> {
-
+                    isAnimating = true
                 }
                 GoogleMap.OnCameraMoveStartedListener.REASON_DEVELOPER_ANIMATION -> {
-
+                    isAnimating = true
                 }
             }
         }
@@ -247,10 +247,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
         googleMap?.animateCamera(CameraUpdateFactory.zoomIn(), object : GoogleMap.CancelableCallback {
             override fun onFinish() {
                 registerWithRunnable()
+                isAnimating = false
             }
 
             override fun onCancel() {
                 registerWithRunnable()
+                isAnimating = false
             }
         })
     }
@@ -260,10 +262,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
         googleMap?.animateCamera(CameraUpdateFactory.zoomOut(), object : GoogleMap.CancelableCallback {
             override fun onFinish() {
                 registerWithRunnable()
+                isAnimating = false
             }
 
             override fun onCancel() {
                 registerWithRunnable()
+                isAnimating = false
             }
         })
     }
@@ -350,7 +354,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
 
                 invalidate()
 
-                if (isMapMovementEnabled) moveMap()
+                if (isMapMovementEnabled && !isAnimating) moveMap()
             }
         }
     }
@@ -467,10 +471,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                                  object : GoogleMap.CancelableCallback {
                                      override fun onFinish() {
                                          viewHandler.postDelayed(sensorRegistrationRunnable, cameraSpeed.toLong())
+                                         isAnimating = false
                                      }
 
                                      override fun onCancel() {
                                          viewHandler.postDelayed(sensorRegistrationRunnable, cameraSpeed.toLong())
+                                         isAnimating = false
                                      }
                                  })
     }

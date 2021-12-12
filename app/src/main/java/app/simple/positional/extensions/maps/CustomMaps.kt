@@ -36,6 +36,7 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     val autoCenterDelay = 6000L
 
     var isMapMovementEnabled = true
+    var isAnimating = false
 
     var googleMap: GoogleMap? = null
 
