@@ -134,6 +134,20 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 GPSPreferences.getMapTilt(),
                 GPSPreferences.getMapBearing())))
 
+        this.googleMap?.setOnCameraMoveStartedListener { reason ->
+            when (reason) {
+                GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE -> {
+                    isMapMovementEnabled = false
+                }
+                GoogleMap.OnCameraMoveStartedListener.REASON_API_ANIMATION -> {
+
+                }
+                GoogleMap.OnCameraMoveStartedListener.REASON_DEVELOPER_ANIMATION -> {
+
+                }
+            }
+        }
+
         this.googleMap?.setOnCameraIdleListener {
             GPSPreferences.setMapZoom(this.googleMap?.cameraPosition!!.zoom)
             GPSPreferences.setMapTilt(this.googleMap?.cameraPosition!!.tilt)

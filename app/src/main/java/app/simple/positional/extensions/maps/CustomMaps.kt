@@ -68,12 +68,13 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
         googleMap?.uiSettings?.isCompassEnabled = false
         googleMap?.uiSettings?.isMapToolbarEnabled = false
         googleMap?.uiSettings?.isMyLocationButtonEnabled = false
+        googleMap?.isTrafficEnabled = true
 
-        this.googleMap?.setOnMapClickListener {
+        googleMap?.setOnMapClickListener {
             mapsCallbacks?.onMapClicked()
         }
 
-        this.googleMap?.setOnMapLongClickListener {
+        googleMap?.setOnMapLongClickListener {
             mapsCallbacks?.onMapLongClicked(it)
         }
     }
@@ -85,13 +86,6 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         with(super.dispatchTouchEvent(ev)) {
             onTouch?.invoke(ev, this)
-
-            when (ev.action) {
-                MotionEvent.ACTION_MOVE -> {
-                    isMapMovementEnabled = false
-                }
-            }
-
             return this
         }
     }
