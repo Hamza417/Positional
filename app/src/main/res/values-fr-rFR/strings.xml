@@ -151,10 +151,11 @@
     <string name="bloom_skins">Apparences Floraison</string>
     <string name="show_code">Afficher le code</string>
     <!-- GPS Menu -->
-    <string name="show_label">Afficher l\'étiquette</string>
+    <string name="labels">Étiquettes</string>
+    <string name="buildings">Bâtiments</string>
+    <string name="traffic">Trafic</string>
     <string name="satellite_mode">Mode satellite</string>
     <string name="high_contrast_mode">Contraste élevé</string>
-    <string name="show_building">Afficher les bâtiments</string>
     <!-- Settings Menus -->
     <string name="unit_metric">Métrique</string>
     <string name="unit_imperial">Impériale</string>
