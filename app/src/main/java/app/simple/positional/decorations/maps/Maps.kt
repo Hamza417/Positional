@@ -126,6 +126,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
 
         setMapStyle(GPSPreferences.isLabelOn())
         setSatellite()
+        setTraffic(GPSPreferences.isTrafficShown())
         setBuildings(GPSPreferences.getShowBuildingsOnMap())
 
         this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
@@ -621,6 +622,9 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             }
             GPSPreferences.mapTargetMarker -> {
                 drawMarkerToTargetPolyline()
+            }
+            GPSPreferences.trafficMode -> {
+                setTraffic(GPSPreferences.isTrafficShown())
             }
         }
     }

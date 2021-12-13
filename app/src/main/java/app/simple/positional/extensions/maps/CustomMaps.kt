@@ -122,7 +122,11 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     }
 
     open fun setBuildings(value: Boolean) {
-        googleMap!!.isBuildingsEnabled = value
+        googleMap?.isBuildingsEnabled = value
+    }
+
+    open fun setTraffic(value: Boolean) {
+        googleMap?.isTrafficEnabled = value
     }
 
     fun setOnMapsCallbackListener(mapsCallbacks: MapsCallbacks) {

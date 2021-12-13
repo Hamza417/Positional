@@ -141,9 +141,9 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
     // Google Services and Default android libs
-    implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation 'com.google.android.gms:play-services-location:19.0.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
-    implementation 'com.google.android.gms:play-services-maps:18.0.0'
+    implementation 'com.google.android.gms:play-services-maps:18.0.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'com.google.maps.android:android-maps-utils:2.2.4'
 
@@ -153,9 +153,9 @@ dependencies {
     implementation 'com.github.vipulasri:timelineview:1.1.5'
 
     // Room components
-    implementation "androidx.room:room-ktx:2.4.0-beta02"
-    kapt "androidx.room:room-compiler:2.4.0-beta02"
-    androidTestImplementation "androidx.room:room-testing:2.4.0-beta02"
+    implementation "androidx.room:room-ktx:2.4.0-rc01"
+    kapt "androidx.room:room-compiler:2.4.0-rc01"
+    androidTestImplementation "androidx.room:room-testing:2.4.0-rc01"
 
     // Leak Canary -- debugImplementation because LeakCanary should only run in debug builds.
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'

@@ -17,29 +17,34 @@ import app.simple.positional.preferences.GPSPreferences
 class GPSMenu : CustomBottomSheetDialogFragment() {
 
     private lateinit var toggleLabel: SwitchView
+    private lateinit var toggleBuilding: SwitchView
+    private lateinit var toggleTraffic: SwitchView
     private lateinit var toggleSatellite: SwitchView
     private lateinit var toggleHighContrast: SwitchView
-    private lateinit var toggleBuilding: SwitchView
     private lateinit var toggleVolumeKeys: SwitchView
     private lateinit var togglePinCustomization: DynamicRippleTextView
 
     private lateinit var toggleLabelContainer: DynamicRippleLinearLayout
+    private lateinit var toggleBuildingContainer: DynamicRippleLinearLayout
+    private lateinit var toggleTrafficContainer: DynamicRippleLinearLayout
     private lateinit var toggleSatelliteContainer: DynamicRippleLinearLayout
     private lateinit var toggleHighContrastContainer: DynamicRippleLinearLayout
-    private lateinit var toggleBuildingContainer: DynamicRippleLinearLayout
     private lateinit var toggleVolumeKeysContainer: DynamicRippleLinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_gps_menu, container, false)
 
         toggleLabel = view.findViewById(R.id.toggle_label)
+        toggleBuilding = view.findViewById(R.id.toggle_buildings)
+        toggleTraffic = view.findViewById(R.id.toggle_traffic)
         toggleSatellite = view.findViewById(R.id.toggle_satellite)
         toggleHighContrast = view.findViewById(R.id.toggle_high_contrast)
-        toggleBuilding = view.findViewById(R.id.toggle_buildings)
         toggleVolumeKeys = view.findViewById(R.id.toggle_use_volume_keys)
         togglePinCustomization = view.findViewById(R.id.gps_pin_customization)
 
         toggleLabelContainer = view.findViewById(R.id.gps_menu_show_label_container)
+        toggleBuildingContainer = view.findViewById(R.id.gps_menu_show_building_container)
+        toggleTrafficContainer = view.findViewById(R.id.gps_menu_traffic_container)
         toggleSatelliteContainer = view.findViewById(R.id.gps_menu_satellite_mode_container)
         toggleHighContrastContainer = view.findViewById(R.id.gps_menu_high_contrast_container)
         toggleBuildingContainer = view.findViewById(R.id.gps_menu_show_building_container)
@@ -52,9 +57,10 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         toggleLabel.isChecked = GPSPreferences.isLabelOn()
+        toggleBuilding.isChecked = GPSPreferences.getShowBuildingsOnMap()
+        toggleTraffic.isChecked = GPSPreferences.isTrafficShown()
         toggleSatellite.isChecked = GPSPreferences.isSatelliteOn()
         toggleHighContrast.isChecked = GPSPreferences.getHighContrastMap()
-        toggleBuilding.isChecked = GPSPreferences.getShowBuildingsOnMap()
         toggleVolumeKeys.isChecked = GPSPreferences.isUsingVolumeKeys()
 
         toggleLabel.setOnCheckedChangeListener { isChecked ->
@@ -78,13 +84,17 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
             GPSPreferences.setShowBuildingsOnMap(it)
         }
 
+        toggleTraffic.setOnCheckedChangeListener {
+            GPSPreferences.setTrafficMode(it)
+        }
+
         toggleVolumeKeys.setOnCheckedChangeListener {
             GPSPreferences.setUseVolumeKeys(it)
         }
 
         togglePinCustomization.setOnClickListener {
             PinCustomization.newInstance(false)
-                    .show(requireActivity().supportFragmentManager, "pin_customization")
+                .show(requireActivity().supportFragmentManager, "pin_customization")
             dismiss()
         }
 
@@ -102,6 +112,10 @@ class GPSMenu : CustomBottomSheetDialogFragment() {
 
         toggleBuildingContainer.setOnClickListener {
             toggleBuilding.invertCheckedStatus()
+        }
+
+        toggleTrafficContainer.setOnClickListener {
+            toggleTraffic.invertCheckedStatus()
         }
 
         toggleVolumeKeysContainer.setOnClickListener {

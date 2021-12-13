@@ -36,7 +36,7 @@
                 android:drawablePadding="@dimen/options_text_margin_start"
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
-                android:text="@string/show_label"
+                android:text="@string/labels"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:drawableStartCompat="@drawable/ic_label"
@@ -44,39 +44,6 @@
 
             <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_label"
-                android:layout_width="@dimen/switch_width"
-                android:layout_height="wrap_content" />
-
-        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
-
-        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
-            android:id="@+id/gps_menu_high_contrast_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ripple_btn"
-            android:clickable="true"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:focusable="true"
-            android:orientation="horizontal"
-            android:padding="@dimen/options_item_padding">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:drawablePadding="@dimen/options_text_margin_start"
-                android:fontFamily="@font/regular"
-                android:gravity="center_vertical"
-                android:text="@string/high_contrast_mode"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/options_item_text_size"
-                app:drawableStartCompat="@drawable/ic_filter_b_and_w"
-                app:drawableTint="@color/iconRegular" />
-
-            <app.simple.positional.decorations.switchview.SwitchView
-                android:id="@+id/toggle_high_contrast"
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
@@ -102,7 +69,7 @@
                 android:drawablePadding="@dimen/options_text_margin_start"
                 android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
-                android:text="@string/show_building"
+                android:text="@string/buildings"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size"
                 app:drawableStartCompat="@drawable/ic_home"
@@ -110,6 +77,39 @@
 
             <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_buildings"
+                android:layout_width="@dimen/switch_width"
+                android:layout_height="wrap_content" />
+
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+            android:id="@+id/gps_menu_traffic_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="@string/traffic"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableStartCompat="@drawable/ic_traffic"
+                app:drawableTint="@color/iconRegular" />
+
+            <app.simple.positional.decorations.switchview.SwitchView
+                android:id="@+id/toggle_traffic"
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 
@@ -149,6 +149,39 @@
 
             <app.simple.positional.decorations.switchview.SwitchView
                 android:id="@+id/toggle_satellite"
+                android:layout_width="@dimen/switch_width"
+                android:layout_height="wrap_content" />
+
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+            android:id="@+id/gps_menu_high_contrast_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ripple_btn"
+            android:clickable="true"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/options_item_padding">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:gravity="center_vertical"
+                android:text="@string/high_contrast_mode"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableStartCompat="@drawable/ic_filter_b_and_w"
+                app:drawableTint="@color/iconRegular" />
+
+            <app.simple.positional.decorations.switchview.SwitchView
+                android:id="@+id/toggle_high_contrast"
                 android:layout_width="@dimen/switch_width"
                 android:layout_height="wrap_content" />
 

@@ -29,6 +29,7 @@ object GPSPreferences {
     const val isNorthOnly = "is_map_north_only"
     const val mapTargetMarker = "target_marker_state"
     const val isTargetMarkerMode = "target_marker_mode"
+    const val trafficMode = "traffic_on_maps"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -215,5 +216,15 @@ object GPSPreferences {
 
     fun isTargetMarkerMode(): Boolean {
         return getSharedPreferences().getBoolean(isTargetMarkerMode, false)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun isTrafficShown(): Boolean {
+        return getSharedPreferences().getBoolean(trafficMode, false)
+    }
+
+    fun setTrafficMode(@NotNull value: Boolean) {
+        getSharedPreferences().edit().putBoolean(trafficMode, value).apply()
     }
 }
