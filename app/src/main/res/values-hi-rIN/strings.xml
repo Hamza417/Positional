@@ -151,10 +151,11 @@
     <string name="bloom_skins">ब्लूम की थीम</string>
     <string name="show_code">कोड दिखाएं</string>
     <!-- GPS Menu -->
-    <string name="show_label">लेबल दिखाएं</string>
+    <string name="labels">लेबल्स</string>
+    <string name="buildings">इमारतें</string>
+    <string name="traffic">यातायात</string>
     <string name="satellite_mode">सैटेलाइट मोड</string>
     <string name="high_contrast_mode">उच्च कंट्रास्ट नक्शा</string>
-    <string name="show_building">भवन दिखाएं</string>
     <!-- Settings Menus -->
     <string name="unit_metric">मीट्रिक</string>
     <string name="unit_imperial">इम्पीरियल</string>
