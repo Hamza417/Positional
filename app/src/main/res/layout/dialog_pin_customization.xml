@@ -44,56 +44,69 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/regular"
-            android:text="@string/opacity"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
-
-        <SeekBar
-            android:id="@+id/pin_opacity_seekbar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/options_text_margin_start"
-            android:layout_marginTop="@dimen/options_text_margin_start"
-            android:layout_marginBottom="20dp"
-            android:max="255"
-            android:maxHeight="4dp"
-            android:progressDrawable="@drawable/seek_bar"
-            android:progressTint="?attr/colorAppAccent"
-            android:splitTrack="true"
-            android:thumb="@drawable/seekbar_thumb"
-            android:translationZ="8dp" />
+            android:layout_marginVertical="15dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/options_text_margin_start"
-            android:fontFamily="@font/regular"
-            android:text="@string/size"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/options_item_text_size" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:text="@string/opacity"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
 
-        <SeekBar
-            android:id="@+id/pin_size_seekbar"
+            <SeekBar
+                android:id="@+id/pin_opacity_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/options_text_margin_start"
+                android:max="255"
+                android:layout_gravity="center_vertical"
+                android:maxHeight="4dp"
+                android:progressDrawable="@drawable/seek_bar"
+                android:progressTint="?attr/colorAppAccent"
+                android:splitTrack="true"
+                android:thumb="@drawable/seekbar_thumb"
+                android:translationZ="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/options_text_margin_start"
-            android:layout_marginTop="@dimen/options_text_margin_start"
-            android:layout_marginBottom="20dp"
-            android:max="12"
-            android:maxHeight="4dp"
-            android:progressDrawable="@drawable/seek_bar"
-            android:progressTint="?attr/colorAppAccent"
-            android:splitTrack="true"
-            android:thumb="@drawable/seekbar_thumb"
-            android:translationZ="8dp" />
+            android:orientation="horizontal"
+            android:layout_marginBottom="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/options_text_margin_start"
+                android:fontFamily="@font/regular"
+                android:text="@string/size"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/options_item_text_size" />
+
+            <SeekBar
+                android:id="@+id/pin_size_seekbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/options_text_margin_start"
+                android:max="12"
+                android:layout_gravity="center_vertical"
+                android:maxHeight="4dp"
+                android:progressDrawable="@drawable/seek_bar"
+                android:progressTint="?attr/colorAppAccent"
+                android:splitTrack="true"
+                android:thumb="@drawable/seekbar_thumb"
+                android:translationZ="8dp" />
+
+        </LinearLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pins_view_pager"
