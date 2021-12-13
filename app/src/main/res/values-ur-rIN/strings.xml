@@ -151,10 +151,11 @@
     <string name="bloom_skins">پھول کی تھیم</string>
     <string name="show_code">صرف کوڈ دکھائیں</string>
     <!-- GPS Menu -->
-    <string name="show_label">لیبل دکھائیں</string>
+    <string name="labels">لیبل</string>
+    <string name="buildings">عمارتیں</string>
+    <string name="traffic">ٹریفک</string>
     <string name="satellite_mode">سیٹلائٹ وضع</string>
     <string name="high_contrast_mode">اعلی کنٹراسٹ نقشہ</string>
-    <string name="show_building">عمارتیں دکھائیں</string>
     <!-- Settings Menus -->
     <string name="unit_metric">میٹرک</string>
     <string name="unit_imperial">امپیریل</string>

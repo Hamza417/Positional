@@ -151,10 +151,11 @@
     <string name="bloom_skins">Скины цветка</string>
     <string name="show_code">Показать код</string>
     <!-- GPS Menu -->
-    <string name="show_label">Показать метку</string>
+    <string name="labels">Этикетки</string>
+    <string name="buildings">Строительство</string>
+    <string name="traffic">Трафик</string>
     <string name="satellite_mode">Режим спутника</string>
     <string name="high_contrast_mode">Высоко-контрастная карта</string>
-    <string name="show_building">Показать строения</string>
     <!-- Settings Menus -->
     <string name="unit_metric">Метрическая</string>
     <string name="unit_imperial">Английская</string>
