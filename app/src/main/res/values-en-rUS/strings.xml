@@ -151,10 +151,11 @@
     <string name="bloom_skins">Bloom Skins</string>
     <string name="show_code">Show Code</string>
     <!-- GPS Menu -->
-    <string name="show_label">Show Label</string>
+    <string name="labels">Labels</string>
+    <string name="buildings">Buildings</string>
+    <string name="traffic">Traffic</string>
     <string name="satellite_mode">Satellite Mode</string>
     <string name="high_contrast_mode">High Contrast Map</string>
-    <string name="show_building">Show Buildings</string>
     <!-- Settings Menus -->
     <string name="unit_metric">Metric</string>
     <string name="unit_imperial">Imperial</string>
