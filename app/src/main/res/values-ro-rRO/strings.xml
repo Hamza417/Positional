@@ -151,10 +151,11 @@
     <string name="bloom_skins">Teme floare</string>
     <string name="show_code">Afișare cod</string>
     <!-- GPS Menu -->
-    <string name="show_label">Afișare etichete</string>
+    <string name="labels">Etichete</string>
+    <string name="buildings">Clădiri</string>
+    <string name="traffic">Trafic</string>
     <string name="satellite_mode">Mod satelit</string>
     <string name="high_contrast_mode">Hartă contrast mare</string>
-    <string name="show_building">Afișare clădiri</string>
     <!-- Settings Menus -->
     <string name="unit_metric">Metrice</string>
     <string name="unit_imperial">Imperiale</string>
