@@ -151,10 +151,11 @@
     <string name="bloom_skins">Дизайн на цветенцата</string>
     <string name="show_code">Показване на кода</string>
     <!-- GPS Menu -->
-    <string name="show_label">Покажи етикетите</string>
+    <string name="labels">Етикети</string>
+    <string name="buildings">Сгради</string>
+    <string name="traffic">Трафик</string>
     <string name="satellite_mode">Сателит</string>
     <string name="high_contrast_mode">Висок контраст на картата</string>
-    <string name="show_building">Показване на сградите</string>
     <!-- Settings Menus -->
     <string name="unit_metric">Метрични</string>
     <string name="unit_imperial">Британски</string>
