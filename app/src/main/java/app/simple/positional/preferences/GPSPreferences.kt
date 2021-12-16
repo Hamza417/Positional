@@ -17,7 +17,6 @@ object GPSPreferences {
     const val pinSize = "map_pin_size"
     const val pinOpacity = "pin_opacity"
     const val useBearingRotation = "use_bearing_rotation"
-    const val mapAutoCenter = "auto_center_map"
     const val GPSLabelMode = "gps_label_mode"
     const val GPSSatellite = "gps_satellite_mode"
     const val highContrastMap = "high_contrast_map"

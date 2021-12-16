@@ -111,7 +111,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pins_view_pager"
             android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
+            android:layout_marginVertical="10dp"
             android:layout_height="150dp" />
 
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>

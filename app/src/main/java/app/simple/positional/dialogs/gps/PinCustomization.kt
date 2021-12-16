@@ -76,7 +76,7 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
                     GPSPreferences.setPinSize(progress)
                 } else {
                     if (progress == 0) {
-                        GPSPreferences.setPinSize(50)
+                        GPSPreferences.setPinSize(1)
                     } else {
                         GPSPreferences.setPinSize(progress)
                     }
@@ -110,7 +110,7 @@ class PinCustomization : CustomBottomSheetDialogFragment() {
 
         reset.setOnClickListener {
             updateSeekbar(opacity, 255)
-            updateSeekbar(size, 400)
+            updateSeekbar(size, 4)
         }
     }
 

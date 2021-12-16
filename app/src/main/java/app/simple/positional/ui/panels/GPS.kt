@@ -268,6 +268,7 @@ class GPS : ScopedFragment() {
                     } else {
                         fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
                     }
+
                     val speed = if (isMetric) {
                         fromHtml("<b>${getString(R.string.gps_speed)}</b> ${
                             round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)
@@ -554,10 +555,6 @@ class GPS : ScopedFragment() {
             override fun onMapInitialized() {
                 if (savedInstanceState.isNotNull()) {
                     maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
-
-                    if (isCompassRotation) {
-                        handler.postDelayed(compassMapCamera, 6000L)
-                    }
                 }
             }
 
@@ -615,15 +612,10 @@ class GPS : ScopedFragment() {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     maps?.unregister()
-                    handler.removeCallbacks(compassMapCamera)
                 }
                 MotionEvent.ACTION_UP -> {
                     if (bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_EXPANDED) {
                         maps?.registerWithRunnable()
-
-                        if (isCompassRotation) {
-                            handler.postDelayed(compassMapCamera, 6000L)
-                        }
                     }
                 }
             }
@@ -691,19 +683,6 @@ class GPS : ScopedFragment() {
         }
     }
 
-    private val compassMapCamera = object : Runnable {
-        override fun run() {
-            kotlin.runCatching {
-                if (isCompassRotation &&
-                    !maps?.googleMap?.projection?.visibleRegion?.latLngBounds?.contains(LatLng(location!!.latitude, location!!.longitude))!!) {
-                    maps?.resetCamera(GPSPreferences.getMapZoom())
-                }
-            }
-
-            handler.postDelayed(this, 6000L)
-        }
-    }
-
     override fun onResume() {
         super.onResume()
         maps?.onResume()
@@ -722,7 +701,6 @@ class GPS : ScopedFragment() {
         maps?.removeCallbacks { }
         maps?.onDestroy()
         handler.removeCallbacks(textAnimationRunnable)
-        handler.removeCallbacks(compassMapCamera)
         infoText.clearAnimation()
         handler.removeCallbacksAndMessages(null)
     }
@@ -813,16 +791,6 @@ class GPS : ScopedFragment() {
             }
             GPSPreferences.pinSkin -> {
                 setLocationPin()
-            }
-            GPSPreferences.compassRotation,
-            GPSPreferences.mapAutoCenter -> {
-                isCompassRotation = GPSPreferences.isCompassRotation()
-
-                if (isCompassRotation) {
-                    handler.postDelayed(compassMapCamera, 6000L)
-                } else {
-                    handler.removeCallbacks(compassMapCamera)
-                }
             }
             GPSPreferences.toolsGravity -> {
                 updateToolsGravity(requireView())

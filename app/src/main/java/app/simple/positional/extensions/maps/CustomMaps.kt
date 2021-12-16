@@ -129,6 +129,14 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
         googleMap?.isTrafficEnabled = value
     }
 
+    // -------------------------------------------------------------------------------------------------------- //
+
+    internal fun isCameraWithinBounds(latLng: LatLng): Boolean {
+        return googleMap?.projection?.visibleRegion?.latLngBounds?.contains(latLng)!!
+    }
+
+    // -------------------------------------------------------------------------------------------------------- //
+
     fun setOnMapsCallbackListener(mapsCallbacks: MapsCallbacks) {
         this.mapsCallbacks = mapsCallbacks
     }
