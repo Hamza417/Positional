@@ -151,10 +151,11 @@
     <string name="bloom_skins">Vzhled rozostření</string>
     <string name="show_code">Zobrazit kód</string>
     <!-- GPS Menu -->
-    <string name="show_label">Zobrazit štítek</string>
+    <string name="labels">Štítky</string>
+    <string name="buildings">Budovy</string>
+    <string name="traffic">Doprava</string>
     <string name="satellite_mode">Satelitní zobrazení</string>
     <string name="high_contrast_mode">Mapa s vysokým kontrastem</string>
-    <string name="show_building">Zobrazit budovy</string>
     <!-- Settings Menus -->
     <string name="unit_metric">Metrické jednotky</string>
     <string name="unit_imperial">Imperiální jednotky</string>
