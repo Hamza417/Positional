@@ -14,7 +14,6 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ImageLoader
 import app.simple.positional.util.ViewUtils.gone
-import app.simple.positional.util.ViewUtils.isNotVisible
 import app.simple.positional.util.ViewUtils.visible
 
 class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -45,7 +44,7 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
     }
 
     private fun initViews() {
-        val view = LayoutInflater.from(context).inflate(R.layout.maps_tools, this, true)
+        val view = LayoutInflater.from(context).inflate(R.layout.tools_maps, this, true)
 
         align = view.findViewById(R.id.tools_align_btn)
         location = view.findViewById(R.id.current_location)

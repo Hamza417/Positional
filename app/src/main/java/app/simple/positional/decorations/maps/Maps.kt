@@ -34,7 +34,7 @@ import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.*
 
 class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, attributeSet),
-                                                           SensorEventListener {
+        SensorEventListener {
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
@@ -80,10 +80,10 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
         isNorthOnly = GPSPreferences.isNorthOnly()
 
         polylineOptions = PolylineOptions()
-            .width(10f)
-            .jointType(JointType.ROUND)
-            .color(context.resolveAttrColor(R.attr.colorAppAccent))
-            .geodesic(false)
+                .width(10f)
+                .jointType(JointType.ROUND)
+                .color(context.resolveAttrColor(R.attr.colorAppAccent))
+                .geodesic(false)
 
         if (isCustomCoordinate) {
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
@@ -182,6 +182,10 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             if (location.isNotNull()) {
                 moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
                 addMarker(LatLng(location!!.latitude, location!!.longitude))
+            } else {
+                kotlin.runCatching {
+                    moveMapCamera(googleMap?.cameraPosition?.target!!, zoom)
+                }
             }
     }
 
@@ -340,7 +344,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                     }.onFailure {
                         circle = googleMap?.addCircle(CircleOptions()
                                 .center(latLng)
-                                .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble() ?: 0.0)
+                                .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble()
+                                        ?: 0.0)
                                 .clickable(false)
                                 .fillColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_color) else LocationPins.getCircleFillColor())
                                 .strokeColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_stroke) else LocationPins.getCircleStrokeColor())
@@ -398,7 +403,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             }
 
             polylineOptions?.add(LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
-                                        GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
+                    GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
 
             targetPolyline = googleMap?.addPolyline(polylineOptions!!)
 
@@ -452,23 +457,23 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
         isAnimating = true
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(
                 CameraPosition.builder()
-                    .target(latLng)
-                    .tilt(GPSPreferences.getMapTilt())
-                    .zoom(zoom)
-                    .bearing(bearing ?: 0F)
-                    .build()),
-                                 cameraSpeed,
-                                 object : GoogleMap.CancelableCallback {
-                                     override fun onFinish() {
-                                         viewHandler.postDelayed(sensorRegistrationRunnable, 100L)
-                                         isAnimating = false
-                                     }
+                        .target(latLng)
+                        .tilt(GPSPreferences.getMapTilt())
+                        .zoom(zoom)
+                        .bearing(bearing ?: 0F)
+                        .build()),
+                cameraSpeed,
+                object : GoogleMap.CancelableCallback {
+                    override fun onFinish() {
+                        viewHandler.postDelayed(sensorRegistrationRunnable, 100L)
+                        isAnimating = false
+                    }
 
-                                     override fun onCancel() {
-                                         viewHandler.postDelayed(sensorRegistrationRunnable, 100L)
-                                         isAnimating = false
-                                     }
-                                 })
+                    override fun onCancel() {
+                        viewHandler.postDelayed(sensorRegistrationRunnable, 100L)
+                        isAnimating = false
+                    }
+                })
     }
 
     fun setFirstLocation(location: Location?) {
@@ -504,7 +509,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
         }
 
         rotationAngle =
-            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+                CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
 
         if (isCompassRotation) {
             if (googleMap.isNotNull())

@@ -10,11 +10,9 @@ import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.LocationButton
-import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.ImageLoader
-import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
 
@@ -44,7 +42,7 @@ class TrailTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferen
     }
 
     private fun initViews() {
-        val view = LayoutInflater.from(context).inflate(R.layout.trail_tools, this, true)
+        val view = LayoutInflater.from(context).inflate(R.layout.tools_trails, this, true)
 
         location = view.findViewById(R.id.current_location)
         remove = view.findViewById(R.id.remove_flag)
