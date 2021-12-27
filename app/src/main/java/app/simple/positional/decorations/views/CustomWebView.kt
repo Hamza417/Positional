@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 
-
 open class CustomWebView(context: Context, attributeSet: AttributeSet) : WebView(context, attributeSet) {
     init {
         setBackgroundColor(0)
