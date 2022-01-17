@@ -89,12 +89,10 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
 
                                 graphData(this)
 
-                                if (!MainPreferences.isCustomCoordinate()) {
-                                    targetData(
-                                            LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
-                                                   GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
-                                            LatLng(this.latitude, this.longitude))
-                                }
+                                targetData(
+                                        LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
+                                                GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
+                                        LatLng(this.latitude, this.longitude))
                             }
                         }
                         "provider" -> {
@@ -214,6 +212,24 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
 
                 it.append(round((p0 % 360 + 360) % 360, 2))
                 it.append("°")
+            } else {
+                it.append(getString(R.string.not_available))
+            }
+
+            it.append("<br>")
+        }
+    }
+
+    private fun targetETA(target: LatLng, current: LatLng, speed: Double): StringBuilder {
+        return StringBuilder().also {
+            it.append("<b>ETA: </b>")
+
+            if (GPSPreferences.isTargetMarkerSet()) {
+                val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
+
+                val time = p0 / speed
+
+
             } else {
                 it.append(getString(R.string.not_available))
             }

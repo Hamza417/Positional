@@ -307,7 +307,11 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             if (googleMap.isNotNull()) {
                 runCatching {
                     if (isCustomCoordinate) {
-                        throw IllegalStateException()
+                        marker!!.apply {
+                            setAnchor(0.5F, 1F)
+                            setIcon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
+                            isFlat = false
+                        }
                     } else {
                         marker!!.apply {
                             setAnchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)

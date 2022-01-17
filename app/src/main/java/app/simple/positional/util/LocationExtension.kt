@@ -56,6 +56,9 @@ object LocationExtension {
         return distance
     }
 
+    /**
+     * Calculated distance in meters
+     */
     fun measureDisplacement(list: Array<LatLng>): Float {
         val result = floatArrayOf(0f)
         var distance = 0F
