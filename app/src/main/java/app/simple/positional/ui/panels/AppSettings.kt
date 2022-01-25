@@ -18,7 +18,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.AccentColorsActivity
 import app.simple.positional.activities.subactivity.ArtsActivity
 import app.simple.positional.activities.subactivity.CustomLocationsActivity
@@ -36,6 +35,7 @@ import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.settings.*
 import app.simple.positional.dialogs.settings.RoundedCorner
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.popups.settings.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.LocaleHelper.localeList
@@ -84,6 +84,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var currentLanguage: TextView
     private lateinit var currentLocationProvider: TextView
     private lateinit var foundIssues: TextView
+    private lateinit var myOtherApps: DynamicRippleTextView
 
     private lateinit var permissionContracts: ActivityResultLauncher<Array<String>>
     private var opened = false
@@ -130,6 +131,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         legalNotes = view.findViewById(R.id.legal_notes)
         github = view.findViewById(R.id.github)
         foundIssues = view.findViewById(R.id.found_issues)
+        myOtherApps = view.findViewById(R.id.my_other_apps)
         translate = view.findViewById(R.id.translate)
         keepScreenOn = view.findViewById(R.id.setting_keep_screen_on)
 
@@ -283,6 +285,12 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         foundIssues.setOnClickListener {
             val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
             intent.putExtra("source", "Found Issue")
+            startActivity(intent)
+        }
+
+        myOtherApps.setOnClickListener {
+            val uri: Uri = Uri.parse("https://play.google.com/store/apps/dev?id=9002962740272949113")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
 
