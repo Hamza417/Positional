@@ -31,10 +31,13 @@ import app.simple.positional.util.LocationExtension
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, attributeSet),
-        SensorEventListener {
+    SensorEventListener {
 
     private val accelerometerReadings = FloatArray(3)
     private val magnetometerReadings = FloatArray(3)
@@ -80,10 +83,10 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
         isNorthOnly = GPSPreferences.isNorthOnly()
 
         polylineOptions = PolylineOptions()
-                .width(10f)
-                .jointType(JointType.ROUND)
-                .color(context.resolveAttrColor(R.attr.colorAppAccent))
-                .geodesic(false)
+            .width(10f)
+            .jointType(JointType.ROUND)
+            .color(context.resolveAttrColor(R.attr.colorAppAccent))
+            .geodesic(false)
 
         if (isCustomCoordinate) {
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
@@ -129,11 +132,16 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
         setTraffic(GPSPreferences.isTrafficShown())
         setBuildings(GPSPreferences.getShowBuildingsOnMap())
 
-        this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
-                latLng!!,
-                GPSPreferences.getMapZoom(),
-                GPSPreferences.getMapTilt(),
-                GPSPreferences.getMapBearing())))
+        this.googleMap?.moveCamera(
+            CameraUpdateFactory.newCameraPosition(
+                CameraPosition(
+                    latLng!!,
+                    GPSPreferences.getMapZoom(),
+                    GPSPreferences.getMapTilt(),
+                    GPSPreferences.getMapBearing()
+                )
+            )
+        )
 
         this.googleMap?.setOnCameraMoveStartedListener { reason ->
             when (reason) {
@@ -175,18 +183,23 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
     }
 
     fun resetCamera(zoom: Float) {
-        if (isCustomCoordinate) {
-            moveMapCamera(LatLng(customLatitude, customLongitude), zoom)
-            addMarker(LatLng(customLatitude, customLongitude))
-        } else
-            if (location.isNotNull()) {
+        when {
+            isCustomCoordinate -> {
+                moveMapCamera(LatLng(customLatitude, customLongitude), zoom)
+                // addMarker(LatLng(customLatitude, customLongitude))
+            }
+            location.isNotNull() -> {
                 moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
-                addMarker(LatLng(location!!.latitude, location!!.longitude))
-            } else {
+                // addMarker(LatLng(location!!.latitude, location!!.longitude))
+            }
+            else -> {
                 kotlin.runCatching {
                     moveMapCamera(googleMap?.cameraPosition?.target!!, zoom)
+                }.getOrElse {
+                    it.printStackTrace()
                 }
             }
+        }
     }
 
     private fun setSatellite() {
@@ -207,16 +220,19 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
 
         if (!googleMap.isNull()) {
             if (GPSPreferences.getHighContrastMap()) {
-                googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
+                googleMap?.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
                         context,
                         if (value) {
                             R.raw.map_high_contrast_labelled
                         } else {
                             R.raw.map_high_contrast_non_labelled
                         }
-                ))
+                    )
+                )
             } else {
-                googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(
+                googleMap?.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
                         context,
                         when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
                             Configuration.UI_MODE_NIGHT_YES -> {
@@ -235,7 +251,8 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                             }
                             else -> 0
                         }
-                ))
+                    )
+                )
             }
         }
     }
@@ -243,33 +260,37 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
     fun zoomIn() {
         unregister()
         isAnimating = true
-        googleMap?.animateCamera(CameraUpdateFactory.zoomIn(), object : GoogleMap.CancelableCallback {
-            override fun onFinish() {
-                registerWithRunnable()
-                isAnimating = false
-            }
+        googleMap?.animateCamera(
+            CameraUpdateFactory.zoomIn(),
+            object : GoogleMap.CancelableCallback {
+                override fun onFinish() {
+                    registerWithRunnable()
+                    isAnimating = false
+                }
 
-            override fun onCancel() {
-                registerWithRunnable()
-                isAnimating = false
-            }
-        })
+                override fun onCancel() {
+                    registerWithRunnable()
+                    isAnimating = false
+                }
+            })
     }
 
     fun zoomOut() {
         unregister()
         isAnimating = true
-        googleMap?.animateCamera(CameraUpdateFactory.zoomOut(), object : GoogleMap.CancelableCallback {
-            override fun onFinish() {
-                registerWithRunnable()
-                isAnimating = false
-            }
+        googleMap?.animateCamera(
+            CameraUpdateFactory.zoomOut(),
+            object : GoogleMap.CancelableCallback {
+                override fun onFinish() {
+                    registerWithRunnable()
+                    isAnimating = false
+                }
 
-            override fun onCancel() {
-                registerWithRunnable()
-                isAnimating = false
-            }
-        })
+                override fun onCancel() {
+                    registerWithRunnable()
+                    isAnimating = false
+                }
+            })
     }
 
     fun addMarker(latLng: LatLng) {
@@ -279,26 +300,29 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             withContext(Dispatchers.Default) {
                 if (isCustomCoordinate) {
                     markerBitmap = R.drawable.ic_place_custom
-                            .toBitmapKeepingSize(
-                                    context,
-                                    GPSPreferences.getPinSize(),
-                                    GPSPreferences.getPinOpacity())
+                        .toBitmapKeepingSize(
+                            context,
+                            GPSPreferences.getPinSize(),
+                            GPSPreferences.getPinOpacity()
+                        )
                 } else {
                     if (location.isNotNull()) {
                         if (!LocationExtension.getLocationStatus(context)) return@withContext
 
                         markerBitmap = if (location!!.speed == 0.0F) {
                             LocationPins.getLocationPin()
-                                    .toBitmapKeepingSize(
-                                            context,
-                                            GPSPreferences.getPinSize(),
-                                            GPSPreferences.getPinOpacity())
+                                .toBitmapKeepingSize(
+                                    context,
+                                    GPSPreferences.getPinSize(),
+                                    GPSPreferences.getPinOpacity()
+                                )
                         } else {
                             R.drawable.ic_bearing_marker
-                                    .toBitmapKeepingSize(
-                                            context,
-                                            GPSPreferences.getPinSize(),
-                                            GPSPreferences.getPinOpacity())
+                                .toBitmapKeepingSize(
+                                    context,
+                                    GPSPreferences.getPinSize(),
+                                    GPSPreferences.getPinOpacity()
+                                )
                         }
                     }
                 }
@@ -306,34 +330,40 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
 
             if (googleMap.isNotNull()) {
                 runCatching {
-                    if (isCustomCoordinate) {
-                        marker!!.apply {
-                            setAnchor(0.5F, 1F)
-                            setIcon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
-                            isFlat = false
+                    if (marker.isNull()) {
+                        marker = if (isCustomCoordinate) {
+                            googleMap?.addMarker(
+                                MarkerOptions().position(latLng)
+                                    .rotation(0F)
+                                    .flat(false)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
+                            )
+                        } else {
+                            googleMap?.addMarker(
+                                MarkerOptions().position(latLng)
+                                    .rotation(if (location!!.speed > 0F) location!!.bearing else 0F)
+                                    .anchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
+                                    .flat(location!!.speed > 0F)
+                                    .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
+                            )
                         }
                     } else {
-                        marker!!.apply {
-                            setAnchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
-                            setIcon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
-                            isFlat = location!!.speed > 0F
-                        }
+                        if (isCustomCoordinate) {
+                            marker!!.apply {
+                                setAnchor(0.5F, 1F)
+                                setIcon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
+                                isFlat = false
+                            }
+                        } else {
+                            marker!!.apply {
+                                setAnchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
+                                setIcon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!))
+                                isFlat = location!!.speed > 0F
+                            }
 
-                        markerAnimator?.cancel()
-                        markerAnimator = MarkerUtils.animateMarker(location, marker)
-                    }
-                }.onFailure {
-                    marker = if (isCustomCoordinate) {
-                        googleMap?.addMarker(MarkerOptions().position(latLng)
-                                .rotation(0F)
-                                .flat(false)
-                                .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
-                    } else {
-                        googleMap?.addMarker(MarkerOptions().position(latLng)
-                                .rotation(if (location!!.speed > 0F) location!!.bearing else 0F)
-                                .anchor(0.5F, if (location!!.speed > 0F) 0.5F else 1F)
-                                .flat(location!!.speed > 0F)
-                                .icon(BitmapDescriptorFactory.fromBitmap(markerBitmap!!)))
+                            markerAnimator?.cancel()
+                            markerAnimator = MarkerUtils.animateMarker(location, marker)
+                        }
                     }
                 }
 
@@ -343,17 +373,41 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                         fillAnimator?.cancel()
                         strokeAnimator?.cancel()
                         circleAnimator = CircleUtils.animateCircle(location, circle)
-                        fillAnimator = CircleUtils.animateFillColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_color) else LocationPins.getCircleFillColor(), circle)
-                        strokeAnimator = CircleUtils.animateStrokeColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_stroke) else LocationPins.getCircleStrokeColor(), circle)
+                        fillAnimator = CircleUtils.animateFillColor(
+                            if (location!!.speed > 0F) ContextCompat.getColor(
+                                context,
+                                R.color.bearing_circle_color
+                            ) else LocationPins.getCircleFillColor(), circle
+                        )
+                        strokeAnimator = CircleUtils.animateStrokeColor(
+                            if (location!!.speed > 0F) ContextCompat.getColor(
+                                context,
+                                R.color.bearing_circle_stroke
+                            ) else LocationPins.getCircleStrokeColor(), circle
+                        )
                     }.onFailure {
-                        circle = googleMap?.addCircle(CircleOptions()
+                        circle = googleMap?.addCircle(
+                            CircleOptions()
                                 .center(latLng)
-                                .radius(if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble()
-                                        ?: 0.0)
+                                .radius(
+                                    if (location!!.speed > 0F) location!!.speed.toDouble() else location?.accuracy?.toDouble()
+                                        ?: 0.0
+                                )
                                 .clickable(false)
-                                .fillColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_color) else LocationPins.getCircleFillColor())
-                                .strokeColor(if (location!!.speed > 0F) ContextCompat.getColor(context, R.color.bearing_circle_stroke) else LocationPins.getCircleStrokeColor())
-                                .strokeWidth(2F))
+                                .fillColor(
+                                    if (location!!.speed > 0F) ContextCompat.getColor(
+                                        context,
+                                        R.color.bearing_circle_color
+                                    ) else LocationPins.getCircleFillColor()
+                                )
+                                .strokeColor(
+                                    if (location!!.speed > 0F) ContextCompat.getColor(
+                                        context,
+                                        R.color.bearing_circle_stroke
+                                    ) else LocationPins.getCircleStrokeColor()
+                                )
+                                .strokeWidth(2F)
+                        )
                     }
                 }
 
@@ -388,8 +442,9 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
     fun moveCameraToTarget() {
         with(GPSPreferences.getTargetMarkerCoordinates()) {
             moveMapCamera(
-                    LatLng(this[0].toDouble(), this[1].toDouble()),
-                    GPSPreferences.getMapZoom())
+                LatLng(this[0].toDouble(), this[1].toDouble()),
+                GPSPreferences.getMapZoom()
+            )
         }
     }
 
@@ -406,17 +461,42 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 }
             }
 
-            polylineOptions?.add(LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
-                    GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
+            polylineOptions?.add(
+                LatLng(
+                    GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
+                    GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()
+                )
+            )
 
             targetPolyline = googleMap?.addPolyline(polylineOptions!!)
 
             if (location.isNotNull() || isCustomCoordinate) {
-                mapsCallbacks?.onTargetUpdated(polylineOptions?.points?.get(1), polylineOptions?.points?.get(0))
+                mapsCallbacks?.onTargetUpdated(
+                    polylineOptions?.points?.get(1),
+                    polylineOptions?.points?.get(0)
+                )
             }
 
-            polylineOptions?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
-            polylineOptions?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
+            polylineOptions?.startCap(
+                CustomCap(
+                    BitmapDescriptorFactory.fromBitmap(
+                        R.drawable.ic_trail_start.toBitmap(
+                            context,
+                            30
+                        )
+                    )
+                )
+            )
+            polylineOptions?.endCap(
+                CustomCap(
+                    BitmapDescriptorFactory.fromBitmap(
+                        R.drawable.seekbar_thumb.toBitmap(
+                            context,
+                            30
+                        )
+                    )
+                )
+            )
         } else {
             mapsCallbacks?.onTargetUpdated(null, null)
         }
@@ -460,24 +540,24 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
 
         isAnimating = true
         googleMap?.animateCamera(CameraUpdateFactory.newCameraPosition(
-                CameraPosition.builder()
-                        .target(latLng)
-                        .tilt(GPSPreferences.getMapTilt())
-                        .zoom(zoom)
-                        .bearing(bearing ?: 0F)
-                        .build()),
-                cameraSpeed,
-                object : GoogleMap.CancelableCallback {
-                    override fun onFinish() {
-                        viewHandler.postDelayed(sensorRegistrationRunnable, 100L)
-                        isAnimating = false
-                    }
+            CameraPosition.builder()
+                .target(latLng)
+                .tilt(GPSPreferences.getMapTilt())
+                .zoom(zoom)
+                .bearing(bearing ?: 0F)
+                .build()
+        ),
+            cameraSpeed, object : GoogleMap.CancelableCallback {
+                override fun onFinish() {
+                    viewHandler.postDelayed(sensorRegistrationRunnable, 100L)
+                    isAnimating = false
+                }
 
-                    override fun onCancel() {
-                        viewHandler.postDelayed(sensorRegistrationRunnable, 100L)
-                        isAnimating = false
-                    }
-                })
+                override fun onCancel() {
+                    viewHandler.postDelayed(sensorRegistrationRunnable, 100L)
+                    isAnimating = false
+                }
+            })
     }
 
     fun setFirstLocation(location: Location?) {
@@ -486,11 +566,16 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
 
             with(LatLng(location!!.latitude, location.longitude)) {
                 addMarker(this)
-                googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
-                        this,
-                        GPSPreferences.getMapZoom(),
-                        GPSPreferences.getMapTilt(),
-                        GPSPreferences.getMapBearing())))
+                googleMap?.moveCamera(
+                    CameraUpdateFactory.newCameraPosition(
+                        CameraPosition(
+                            this,
+                            GPSPreferences.getMapZoom(),
+                            GPSPreferences.getMapTilt(),
+                            GPSPreferences.getMapBearing()
+                        )
+                    )
+                )
 
                 latLng = this
                 isFirstLocation = false
@@ -503,27 +588,47 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
 
         when (event.sensor.type) {
             Sensor.TYPE_ACCELEROMETER -> {
-                LowPassFilter.smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
-                accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
+                LowPassFilter.smoothAndSetReadings(
+                    accelerometerReadings,
+                    event.values,
+                    readingsAlpha
+                )
+                accelerometer = Vector3(
+                    accelerometerReadings[0],
+                    accelerometerReadings[1],
+                    accelerometerReadings[2]
+                )
             }
             Sensor.TYPE_MAGNETIC_FIELD -> {
-                LowPassFilter.smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
-                magnetometer = Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
+                LowPassFilter.smoothAndSetReadings(
+                    magnetometerReadings,
+                    event.values,
+                    readingsAlpha
+                )
+                magnetometer = Vector3(
+                    magnetometerReadings[0],
+                    magnetometerReadings[1],
+                    magnetometerReadings[2]
+                )
             }
         }
 
         rotationAngle =
-                CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
 
         if (isCompassRotation) {
             if (googleMap.isNotNull())
                 with(googleMap!!) {
-                    moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
-                            cameraPosition.target,
-                            cameraPosition.zoom,
-                            cameraPosition.tilt,
-                            rotationAngle
-                    )))
+                    moveCamera(
+                        CameraUpdateFactory.newCameraPosition(
+                            CameraPosition(
+                                cameraPosition.target,
+                                cameraPosition.zoom,
+                                cameraPosition.tilt,
+                                rotationAngle
+                            )
+                        )
+                    )
                 }
         }
     }
@@ -542,8 +647,16 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             if (haveAccelerometerSensor && haveMagnetometerSensor) {
                 unregister()
                 if (isCompassRotation) {
-                    sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
-                    sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+                    sensorManager.registerListener(
+                        this,
+                        sensorAccelerometer,
+                        SensorManager.SENSOR_DELAY_GAME
+                    )
+                    sensorManager.registerListener(
+                        this,
+                        sensorMagneticField,
+                        SensorManager.SENSOR_DELAY_GAME
+                    )
 
                     isRegistered = true
                 }
@@ -596,12 +709,14 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 if (googleMap.isNotNull() && isBearingRotation) {
                     with(googleMap!!) {
                         isAnimating = true
-                        animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
+                        animateCamera(CameraUpdateFactory.newCameraPosition(
+                            CameraPosition(
                                 cameraPosition.target,
                                 cameraPosition.zoom,
                                 cameraPosition.tilt,
                                 location?.bearing ?: 0F
-                        )), cameraSpeed, object : GoogleMap.CancelableCallback {
+                            )
+                        ), cameraSpeed, object : GoogleMap.CancelableCallback {
                             override fun onCancel() {
                                 isAnimating = false
                             }
@@ -619,12 +734,14 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 if (googleMap.isNotNull() && isNorthOnly) {
                     with(googleMap!!) {
                         isAnimating = true
-                        animateCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
+                        animateCamera(CameraUpdateFactory.newCameraPosition(
+                            CameraPosition(
                                 cameraPosition.target,
                                 cameraPosition.zoom,
                                 cameraPosition.tilt,
                                 0F
-                        )), cameraSpeed, object : GoogleMap.CancelableCallback {
+                            )
+                        ), cameraSpeed, object : GoogleMap.CancelableCallback {
                             override fun onFinish() {
                                 isAnimating = false
                             }

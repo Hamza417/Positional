@@ -413,13 +413,13 @@ class GPS : ScopedFragment() {
         tools.setOnToolsCallbacksListener(object : MapsToolsCallbacks {
             override fun onLocationClicked(view: View, longPressed: Boolean) {
                 if (getLocationStatus(requireContext())) {
+                    maps?.isMapMovementEnabled = true
+
                     if (longPressed) {
                         maps?.resetCamera(18F)
                     } else {
                         maps?.resetCamera(GPSPreferences.getMapZoom())
                     }
-
-                    maps?.isMapMovementEnabled = true
                 } else {
                     LocationPrompt.displayLocationSettingsRequest(requireActivity())
                 }

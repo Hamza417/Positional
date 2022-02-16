@@ -43,13 +43,13 @@ class TargetAddress : ScopedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        searchView.setSearchViewEventListener { keywords, count ->
+        searchView.setSearchViewEventListener { keywords, _ ->
             addressViewModel.getCoordinatesFromAddress(keywords)
         }
 
-        addressViewModel.address.observe(viewLifecycleOwner, {
+        addressViewModel.address.observe(viewLifecycleOwner) {
             recyclerView.adapter = AdapterTargetAddress(it)
-        })
+        }
     }
 
     companion object {

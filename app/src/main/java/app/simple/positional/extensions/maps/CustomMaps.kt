@@ -32,7 +32,7 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     open var location: Location? = null
     open var latLng: LatLng? = null
 
-    val cameraSpeed = 1000
+    val cameraSpeed = 500
     val autoCenterDelay = 6000L
 
     var isMapMovementEnabled = true
