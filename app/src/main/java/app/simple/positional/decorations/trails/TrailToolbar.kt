@@ -8,7 +8,11 @@ import android.view.animation.DecelerateInterpolator
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.preferences.MainPreferences.getCornerRadius
 import app.simple.positional.util.StatusBarHeight
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 
 class TrailToolbar : DynamicCornerLinearLayout {
 
@@ -28,6 +32,14 @@ class TrailToolbar : DynamicCornerLinearLayout {
     private fun setProperties() {
         initViews()
         layoutTransition = LayoutTransition()
+
+        val shapeAppearanceModel = ShapeAppearanceModel()
+            .toBuilder()
+            .setBottomLeftCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
+            .setBottomRightCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
+            .build()
+
+        background = MaterialShapeDrawable(shapeAppearanceModel)
     }
 
     private fun initViews() {

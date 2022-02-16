@@ -15,9 +15,13 @@ import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.GPSPreferences.getPinSkin
+import app.simple.positional.preferences.MainPreferences.getCornerRadius
 import app.simple.positional.preferences.MainPreferences.isCustomCoordinate
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.StatusBarHeight
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.MaterialShapeDrawable
+import com.google.android.material.shape.ShapeAppearanceModel
 
 class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
 
@@ -35,6 +39,15 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
 
     private fun setProperties() {
         initViews()
+
+        val shapeAppearanceModel = ShapeAppearanceModel()
+            .toBuilder()
+            .setBottomLeftCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
+            .setBottomRightCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
+            .build()
+
+        background = MaterialShapeDrawable(shapeAppearanceModel)
+
         layoutTransition = LayoutTransition()
         getSharedPreferences()
             .registerOnSharedPreferenceChangeListener(this)
