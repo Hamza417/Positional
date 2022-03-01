@@ -37,7 +37,7 @@ public interface MapsCallbacks {
 
     }
 
-    default void onTargetUpdated(LatLng target, LatLng current) {
+    default void onTargetUpdated(LatLng target, LatLng current, float speed) {
 
     }
 

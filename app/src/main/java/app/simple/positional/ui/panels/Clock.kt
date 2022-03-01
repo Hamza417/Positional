@@ -8,7 +8,8 @@ import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -36,10 +37,10 @@ import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.util.*
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.ImageLoader.loadImage
+import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
@@ -48,16 +49,17 @@ import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.util.getDisplayRefreshRate
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.shredzone.commons.suncalc.*
-import java.lang.Runnable
 import java.text.ParseException
 import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.temporal.IsoFields
-import java.util.*
 
 class Clock : ScopedFragment() {
 
@@ -199,10 +201,10 @@ class Clock : ScopedFragment() {
 
         clockMainLayout.setProxyView(view)
 
-        locationViewModel.location.observe(viewLifecycleOwner, {
+        locationViewModel.location.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             calculateAndUpdateData(it.latitude, it.longitude)
-        })
+        }
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {

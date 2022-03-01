@@ -308,4 +308,9 @@
     <string name="rate_text">How satisfied are you with this app? Click here to rate the app on Play Store.</string>
     <string name="target">Target</string>
     <string name="my_developer_profile">My Developer Profile</string>
+    <string name="eta_seconds">%1$s seconds</string>
+    <string name="eta_minutes">%1$s minutes</string>
+    <string name="eta_hours">%1$s hours %2$s minutes</string>
+    <string name="eta_days">%1$s days %2$s hours %3$s minutes</string>
+    <string name="eta">ETA:</string>
 </resources>

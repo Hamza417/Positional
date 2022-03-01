@@ -18,4 +18,8 @@ open class WrappedViewModel(application: Application) : AndroidViewModel(applica
     open fun getString(resourceID: Int): String {
         return getContext().getString(resourceID)
     }
+
+    fun getString(resId: Int, vararg formatArgs: Any?): String {
+        return getContext().getString(resId, *formatArgs)
+    }
 }

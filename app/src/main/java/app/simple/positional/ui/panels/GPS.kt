@@ -54,7 +54,6 @@ import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
-import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.*
@@ -216,7 +215,7 @@ class GPS : ScopedFragment() {
                 .show(childFragmentManager, "error_dialog")
         }
 
-        locationViewModel.location.observe(viewLifecycleOwner, {
+        locationViewModel.location.observe(viewLifecycleOwner) {
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.Default) {
                     location = it
@@ -276,12 +275,12 @@ class GPS : ScopedFragment() {
                     } else {
                         fromHtml("<b>${getString(R.string.gps_speed)}</b> ${
                             round(location!!.speed.toDouble().toKiloMetersPerHour()
-                                      .toMilesPerHour(), 2)
+                                    .toMilesPerHour(), 2)
                         } ${getString(R.string.miles_hour)}")
                     }
 
                     val bearing =
-                        fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${location!!.bearing}°")
+                            fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${location!!.bearing}°")
 
                     val direction: Spanned = if (location!!.speed > 0f) {
                         fromHtml("<b>${getString(R.string.gps_direction)}</b> ${getDirectionNameFromAzimuth(requireContext(), location!!.bearing.toDouble())}")
@@ -308,18 +307,18 @@ class GPS : ScopedFragment() {
                     }
                 }
             }
-        })
+        }
 
-        locationViewModel.dms.observe(viewLifecycleOwner, {
+        locationViewModel.dms.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " + it.first)
             longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " + it.second)
-        })
+        }
 
-        locationViewModel.latency.observe(viewLifecycleOwner, {
+        locationViewModel.latency.observe(viewLifecycleOwner) {
             val str: Spannable = fromHtml("<b>${getString(R.string.gps_latency)}</b> " +
-                                                  "${it.first} " +
-                                                  if (it.second) getString(R.string.seconds) else getString(R.string.milliseconds)).toSpannable()
+                    "${it.first} " +
+                    if (it.second) getString(R.string.seconds) else getString(R.string.milliseconds)).toSpannable()
 
             if (it.second) {
                 if (it.first.toDouble() > 5.0) {
@@ -328,9 +327,9 @@ class GPS : ScopedFragment() {
             }
 
             latency.text = str
-        })
+        }
 
-        locationViewModel.provider.observe(viewLifecycleOwner, {
+        locationViewModel.provider.observe(viewLifecycleOwner) {
             providerStatus.text = fromHtml(
                     "<b>${getString(R.string.gps_status)}</b> ${
                         if (getLocationStatus(requireContext())) {
@@ -346,11 +345,11 @@ class GPS : ScopedFragment() {
             )
 
             tools.locationIconStatusUpdates()
-        })
+        }
 
-        locationViewModel.targetData.observe(viewLifecycleOwner, {
+        locationViewModel.targetData.observe(viewLifecycleOwner) {
             targetData.text = it
-        })
+        }
 
         bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -570,9 +569,9 @@ class GPS : ScopedFragment() {
                 })
             }
 
-            override fun onTargetUpdated(target: LatLng?, current: LatLng?) {
+            override fun onTargetUpdated(target: LatLng?, current: LatLng?, speed: Float) {
                 kotlin.runCatching {
-                    locationViewModel.targetData(target!!, current!!)
+                    locationViewModel.targetData(target!!, current!!, speed)
                 }
             }
         })

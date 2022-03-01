@@ -35,7 +35,7 @@ import gov.nasa.worldwind.geom.coords.MGRSCoord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.collections.ArrayList
+import java.util.concurrent.TimeUnit
 
 /**
  * This viewmodel receives the location updated by location services
@@ -90,14 +90,14 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                                 graphData(this)
 
                                 targetData(
-                                        LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
-                                                GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
-                                        LatLng(this.latitude, this.longitude))
+                                        LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(), GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
+                                        if (MainPreferences.isCustomCoordinate()) LatLng(MainPreferences.getCoordinates()[0].toDouble(), MainPreferences.getCoordinates()[1].toDouble()) else LatLng(this.latitude, this.longitude),
+                                        this.speed)
                             }
                         }
                         "provider" -> {
                             provider.postValue(intent.getStringExtra("location_provider")
-                                ?.uppercase(Locale.getDefault()))
+                                    ?.uppercase(Locale.getDefault()))
                         }
                     }
                 }
@@ -105,7 +105,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
         }
 
         LocalBroadcastManager.getInstance(getApplication())
-            .registerReceiver(locationBroadcastReceiver, filter)
+                .registerReceiver(locationBroadcastReceiver, filter)
     }
 
     private fun measureLatency() {
@@ -131,12 +131,14 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
         }
     }
 
-    fun targetData(target: LatLng, current: LatLng) {
+    // TODO - this method is getting called two times, fix it
+    fun targetData(target: LatLng, current: LatLng, speed: Float) {
         viewModelScope.launch(Dispatchers.IO) {
             with(StringBuilder()) {
                 append(targetDisplacement(target, current))
                 append(targetBearing(target, current))
                 append(targetDirection(target, current))
+                append(targetETA(target, current, speed))
 
                 targetData.postValue(HtmlHelper.fromHtml(this.toString()))
             }
@@ -195,6 +197,8 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
             } else {
                 it.append(getString(R.string.not_available))
             }
+
+            it.append("<br>")
         }
     }
 
@@ -220,21 +224,39 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
         }
     }
 
-    private fun targetETA(target: LatLng, current: LatLng, speed: Double): StringBuilder {
+    private fun targetETA(target: LatLng, current: LatLng, speed: Float): StringBuilder {
         return StringBuilder().also {
-            it.append("<b>ETA: </b>")
+            it.append("<b>${getString(R.string.eta)} </b>")
 
-            if (GPSPreferences.isTargetMarkerSet()) {
+            if (GPSPreferences.isTargetMarkerSet() && speed != 0.0F) {
                 val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
 
-                val time = p0 / speed
+                val time = (p0 / speed).toLong()
+                println("time: $time")
+                val txt = when {
+                    TimeUnit.SECONDS.toSeconds(time) < 60 -> {
+                        getString(R.string.eta_seconds, TimeUnit.SECONDS.toSeconds(time).toString())
+                    }
+                    TimeUnit.SECONDS.toMinutes(time) < 60 -> {
+                        getString(R.string.eta_minutes, TimeUnit.SECONDS.toMinutes(time).toString())
+                    }
+                    TimeUnit.SECONDS.toHours(time) < 24 -> {
+                        getString(R.string.eta_hours,
+                                TimeUnit.SECONDS.toHours(time).toString(),
+                                (TimeUnit.SECONDS.toMinutes(time) % 60).toString())
+                    }
+                    else -> {
+                        getString(R.string.eta_days,
+                                TimeUnit.SECONDS.toDays(time).toString(),
+                                (TimeUnit.SECONDS.toHours(time) % 24).toString(),
+                                (TimeUnit.SECONDS.toMinutes(time) % 60).toString())
+                    }
+                }
 
-
+                it.append(txt)
             } else {
                 it.append(getString(R.string.not_available))
             }
-
-            it.append("<br>")
         }
     }
 
@@ -295,6 +317,6 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
     override fun onCleared() {
         super.onCleared()
         LocalBroadcastManager.getInstance(getApplication())
-            .unregisterReceiver(locationBroadcastReceiver)
+                .unregisterReceiver(locationBroadcastReceiver)
     }
 }
