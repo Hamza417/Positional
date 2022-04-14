@@ -278,4 +278,10 @@
     <string name="trail_data_accuracy">مقام کے %1$s %2$s کے اندر۔</string>
     <string name="rate_text">آپ اس ایپ سے کتنے مطمئن ہیں؟ پلے سٹور پر ایپ کی درجہ بندی کے لیے یہاں کلک کریں۔</string>
     <string name="target">ہدف</string>
+    <string name="my_developer_profile">میرا ڈیولپر پروفائل</string>
+    <string name="eta_seconds">%1$s سیکنڈ</string>
+    <string name="eta_minutes">%1$s منٹ</string>
+    <string name="eta_hours">%1$s hours %2$s minutes</string>
+    <string name="eta_days">%1$s days %2$s hours %3$s minutes</string>
+    <string name="eta">ETA:</string>
 </resources>
