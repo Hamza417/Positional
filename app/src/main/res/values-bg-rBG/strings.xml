@@ -279,4 +279,9 @@
     <string name="rate_text">Доколко сте доволни от това приложение? Щракнете тук, за да оцените приложението в Play Store.</string>
     <string name="target">Цел</string>
     <string name="my_developer_profile">Моят профил на програмист</string>
+    <string name="eta_seconds">%1$s секунди</string>
+    <string name="eta_minutes">%1$s минути</string>
+    <string name="eta_hours">%1$s часове %2$s минути</string>
+    <string name="eta_days">%1$s дни %2$s часове %3$s минути</string>
+    <string name="eta">ПВП:</string>
 </resources>

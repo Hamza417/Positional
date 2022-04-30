@@ -278,4 +278,10 @@
     <string name="trail_data_accuracy">Dans %1$s %2$s de l\'emplacement</string>
     <string name="rate_text">Êtes-vous satisfait de cette application ? Cliquez ici pour évaluer l\'application sur le Play Store.</string>
     <string name="target">Cible</string>
+    <string name="my_developer_profile">Mon Profil de Développeur</string>
+    <string name="eta_seconds">%1$s secondes</string>
+    <string name="eta_minutes">%1$s minutes</string>
+    <string name="eta_hours">%1$s heures %2$s minutes</string>
+    <string name="eta_days">%1$s jours %2$s heures %3$s minutes</string>
+    <string name="eta">ETA:</string>
 </resources>

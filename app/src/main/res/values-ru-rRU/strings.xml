@@ -278,4 +278,10 @@
     <string name="trail_data_accuracy">В пределах %1$s %2$s местоположения</string>
     <string name="rate_text">Насколько вы довольны этим приложением? Нажмите здесь, чтобы оценить приложение в Play Store.</string>
     <string name="target">Цель</string>
+    <string name="my_developer_profile">Мой профиль разработчика</string>
+    <string name="eta_seconds">%1$s секунд</string>
+    <string name="eta_minutes">%1$s минут</string>
+    <string name="eta_hours">%1$s часов %2$s минут</string>
+    <string name="eta_days">%1$s дней %2$s часов %3$s минут</string>
+    <string name="eta">ETA:</string>
 </resources>

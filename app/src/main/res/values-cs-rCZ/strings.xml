@@ -278,4 +278,10 @@
     <string name="trail_data_accuracy">V rámci %1$s %2$s místa</string>
     <string name="rate_text">Jak jste spokojeni s touto aplikací? Klikněte zde pro ohodnocení aplikace v Obchodě Play.</string>
     <string name="target">Cíl</string>
+    <string name="my_developer_profile">Můj profil vývojáře</string>
+    <string name="eta_seconds">%1$s sekund</string>
+    <string name="eta_minutes">%1$s minut</string>
+    <string name="eta_hours">%1$s hodin %2$s minut</string>
+    <string name="eta_days">%1$s dnů %2$s hodin %3$s minut</string>
+    <string name="eta">ETA:</string>
 </resources>
