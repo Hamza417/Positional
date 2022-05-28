@@ -91,6 +91,116 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/PrimaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="center_vertical"
+                android:text="Accelerometer"
+                android:textSize="@dimen/info_text_primary_size"
+                app:layout_constraintBottom_toTopOf="@+id/gps_target_displacement"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/accelerometer_x"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+            <TextView
+                android:id="@+id/accelerometer_y"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+            <TextView
+                android:id="@+id/accelerometer_z"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                style="@style/PrimaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="center_vertical"
+                android:text="Magnetometer"
+                android:textSize="@dimen/info_text_primary_size"
+                app:layout_constraintBottom_toTopOf="@+id/gps_target_displacement"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/magnetometer_x"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+            <TextView
+                android:id="@+id/magnetometer_y"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+            <TextView
+                android:id="@+id/magnetometer_z"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+        </LinearLayout>
+
         <View
             android:id="@+id/gps_divider"
             android:layout_width="match_parent"
@@ -176,7 +286,5 @@
 
             </LinearLayout>
         </FrameLayout>
-
     </LinearLayout>
-
 </app.simple.positional.decorations.corners.DynamicCornersNestedScrollView>

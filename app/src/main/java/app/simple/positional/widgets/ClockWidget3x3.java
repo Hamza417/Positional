@@ -2,6 +2,7 @@ package app.simple.positional.widgets;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;

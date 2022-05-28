@@ -17,6 +17,5 @@ data class Euler(val roll: Float, val pitch: Float, val yaw: Float) {
         fun from(quaternion: Quaternion): Euler {
             return quaternion.toEuler()
         }
-
     }
 }

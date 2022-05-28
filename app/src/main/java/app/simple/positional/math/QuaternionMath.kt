@@ -41,20 +41,20 @@ object QuaternionMath {
         out[2] = sum[2]
     }
 
-    fun toEuler(quat: FloatArray, out: FloatArray) {
+    fun toEuler(quaternion: FloatArray, out: FloatArray) {
         val yaw = atan2(
-                2 * (quat[W] * quat[Z] + quat[X] * quat[Y]),
-                1 - 2 * (quat[Y] * quat[Y] + quat[Z] * quat[Z])
+                2 * (quaternion[W] * quaternion[Z] + quaternion[X] * quaternion[Y]),
+                1 - 2 * (quaternion[Y] * quaternion[Y] + quaternion[Z] * quaternion[Z])
         )
-        val sinP = 2 * (quat[W] * quat[Y] - quat[Z] * quat[X])
+        val sinP = 2 * (quaternion[W] * quaternion[Y] - quaternion[Z] * quaternion[X])
         val pitch = if (sinP.absoluteValue >= 1) {
             (Math.PI / 2).withSign(sinP.toDouble()).toFloat()
         } else {
             asin(sinP)
         }
         val roll = atan2(
-                2 * (quat[W] * quat[X] + quat[Y] * quat[Z]),
-                1 - 2 * (quat[X] * quat[X] + quat[Y] * quat[Y])
+                2 * (quaternion[W] * quaternion[X] + quaternion[Y] * quaternion[Z]),
+                1 - 2 * (quaternion[X] * quaternion[X] + quaternion[Y] * quaternion[Y])
         )
 
         out[0] = roll.toDegrees()

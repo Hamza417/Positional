@@ -16,7 +16,7 @@ object LowPassFilter {
     fun processWithMovingAverageGravity(list: ArrayList<Float>, gList: ArrayList<Float?>): ArrayList<Float?> {
         val listSize: Int = list.size //input list
         val iterations = listSize / SMOOTH_FACTOR_MAA
-        if (!gList.isNullOrEmpty()) {
+        if (gList.isNotEmpty()) {
             gList.clear()
         }
         var i = 0

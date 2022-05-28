@@ -3,7 +3,10 @@ package app.simple.positional.ui.panels
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.hardware.*
 import android.os.Bundle
@@ -49,6 +52,7 @@ import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.ImageLoader.loadImage
+import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -57,6 +61,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 import kotlin.math.abs
+import kotlin.system.measureTimeMillis
 
 class Compass : ScopedFragment(), SensorEventListener {
 
@@ -72,6 +77,8 @@ class Compass : ScopedFragment(), SensorEventListener {
     private val magnetometerReadings = FloatArray(3)
     private val rotation = FloatArray(9)
     private val inclination = FloatArray(9)
+    private var accelerometerValues: String? = null
+    private var magnetometerValues: String? = null
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
@@ -97,6 +104,13 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private lateinit var accuracyAccelerometer: TextView
     private lateinit var accuracyMagnetometer: TextView
+    private lateinit var accelerometerX: TextView
+    private lateinit var accelerometerY: TextView
+    private lateinit var accelerometerZ: TextView
+    private lateinit var magnetometerX: TextView
+    private lateinit var magnetometerY: TextView
+    private lateinit var magnetometerZ: TextView
+    private lateinit var magnetometerData: TextView
     private lateinit var inclinationTextView: TextView
     private lateinit var declination: TextView
     private lateinit var fieldStrength: TextView
@@ -126,6 +140,12 @@ class Compass : ScopedFragment(), SensorEventListener {
 
         accuracyAccelerometer = view.findViewById(R.id.compass_accuracy_accelerometer)
         accuracyMagnetometer = view.findViewById(R.id.compass_accuracy_magnetometer)
+        accelerometerX = view.findViewById(R.id.accelerometer_x)
+        accelerometerY = view.findViewById(R.id.accelerometer_y)
+        accelerometerZ = view.findViewById(R.id.accelerometer_z)
+        magnetometerX = view.findViewById(R.id.magnetometer_x)
+        magnetometerY = view.findViewById(R.id.magnetometer_y)
+        magnetometerZ = view.findViewById(R.id.magnetometer_z)
         inclinationTextView = view.findViewById(R.id.compass_inclination)
         declination = view.findViewById(R.id.compass_declination)
         fieldStrength = view.findViewById(R.id.compass_field_strength)
@@ -258,7 +278,7 @@ class Compass : ScopedFragment(), SensorEventListener {
             }
         })
 
-        locationViewModel.location.observe(viewLifecycleOwner, { location ->
+        locationViewModel.location.observe(viewLifecycleOwner) { location ->
             var declination: Spanned
             var inclination: Spanned
             var fieldStrength: Spanned
@@ -298,7 +318,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                     this@Compass.fieldStrength.text = fieldStrength
                 }
             }
-        })
+        }
     }
 
     override fun onResume() {
@@ -334,13 +354,16 @@ class Compass : ScopedFragment(), SensorEventListener {
     private val textAnimationRunnable: Runnable = Runnable { compassInfoText.setTextAnimation(getString(R.string.compass_info), 300) }
 
     override fun onSensorChanged(event: SensorEvent?) {
-
         if (event == null) return
 
         when (event.sensor.type) {
             Sensor.TYPE_ACCELEROMETER -> {
                 smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
                 accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
+
+                accelerometerValues += "x: ${accelerometerReadings[0]}"
+                accelerometerValues += "y: ${accelerometerReadings[1]}\n"
+                accelerometerValues += "z: ${accelerometerReadings[2]}\n"
             }
             Sensor.TYPE_MAGNETIC_FIELD -> {
                 smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
@@ -365,6 +388,18 @@ class Compass : ScopedFragment(), SensorEventListener {
             } else {
                 0F
             }
+        }
+
+        run {
+            accelerometerX.text = fromHtml("<b>X:</b> ${round(accelerometerReadings[0].toDouble(), 3)}")
+            accelerometerY.text = fromHtml("<b>Y:</b> ${round(accelerometerReadings[1].toDouble(), 3)}")
+            accelerometerZ.text = fromHtml("<b>Z:</b> ${round(accelerometerReadings[2].toDouble(), 3)}")
+        }
+
+        run {
+            magnetometerX.text = fromHtml("<b>X:</b> ${round(magnetometerReadings[0].toDouble(), 3)}")
+            magnetometerY.text = fromHtml("<b>Y:</b> ${round(magnetometerReadings[1].toDouble(), 3)}")
+            magnetometerZ.text = fromHtml("<b>Z:</b> ${round(magnetometerReadings[2].toDouble(), 3)}")
         }
 
         if (!isUserRotatingDial) {
@@ -432,19 +467,9 @@ class Compass : ScopedFragment(), SensorEventListener {
         degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append("°")
 
         direction.text = if (showDirectionCode) {
-            getDirectionCodeFromAzimuth(
-                    requireContext(),
-                    azimuth = rotationAngle.toDouble()
-            ).uppercase(
-                    Locale.getDefault()
-            )
+            getDirectionCodeFromAzimuth(requireContext(), azimuth = rotationAngle.toDouble()).uppercase(LocaleHelper.getAppLocale())
         } else {
-            getDirectionNameFromAzimuth(
-                    requireContext(),
-                    azimuth = rotationAngle.toDouble()
-            ).uppercase(
-                    Locale.getDefault()
-            )
+            getDirectionNameFromAzimuth(requireContext(), azimuth = rotationAngle.toDouble()).uppercase(LocaleHelper.getAppLocale())
         }
     }
 

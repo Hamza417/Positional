@@ -15,23 +15,23 @@ import android.util.AttributeSet;
  * Use `rotationUpdate()` to change angle of "magnetic field" at which image should rotate.
  */
 public class PhysicalRotationImageView extends androidx.appcompat.widget.AppCompatImageView {
-    
+
     static final public float TIME_DELTA_THRESHOLD = 0.25f; // maximum time difference between iterations, s
     static final public float ANGLE_DELTA_THRESHOLD = 0.1f; // minimum rotation change to be redrawn, deg
-    
+
     static final public float INERTIA_MOMENT_DEFAULT = 0.1f;    // default physical properties
     static final public float ALPHA_DEFAULT = 10f;
     static final public float MB_DEFAULT = 1000f;
-    
+
     long time1, time2;              // timestamps of previous iterations--used in numerical integration
     float angle1, angle2, angle0;   // angles of previous iterations
     float angleLastDrawn;           // last drawn angular position
     boolean animationOn = false;    // if animation should be performed
-    
+
     float inertiaMoment = INERTIA_MOMENT_DEFAULT;   // moment of inertia
     float alpha = ALPHA_DEFAULT;    // damping coefficient
     float mB = MB_DEFAULT;  // magnetic field coefficient
-    
+
     /**
      * Constructor inherited from ImageView
      *
@@ -40,7 +40,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
     public PhysicalRotationImageView(Context context) {
         super(context);
     }
-    
+
     /**
      * Constructor inherited from ImageView
      *
@@ -50,7 +50,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
     public PhysicalRotationImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-    
+
     /**
      * Constructor inherited from ImageView
      *
@@ -61,7 +61,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
     public PhysicalRotationImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
-    
+
     /**
      * onDraw override.
      * If animation is "on", view is invalidated after each redraw,
@@ -77,14 +77,14 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
         else {
             this.setRotation(angle1);
         }
-    
+
         super.onDraw(canvas);
-    
+
         if (animationOn) {
             this.invalidate();
         }
     }
-    
+
     /**
      * Use this to set physical properties.
      * Negative values will be replaced by default values
@@ -98,8 +98,8 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
         this.alpha = alpha >= 0 ? alpha : ALPHA_DEFAULT;
         this.mB = mB >= 0 ? mB : MB_DEFAULT;
     }
-    
-    
+
+
     /**
      * Use this to set new "magnetic field" angle at which image should rotate
      *
@@ -123,7 +123,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
             animationOn = false;
         }
     }
-    
+
     /**
      * Recalculate angles using equation of dipole circular motion
      *
@@ -131,7 +131,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
      * @return if there is a need to redraw rotation
      */
     protected boolean angleRecalculate(final long timeNew) {
-        
+
         // recalculate angle using simple numerical integration of motion equation
         float deltaT1 = (timeNew - time1) / 1000f;
         if (deltaT1 > TIME_DELTA_THRESHOLD) {
@@ -142,25 +142,25 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
         if (deltaT2 > TIME_DELTA_THRESHOLD) {
             deltaT2 = TIME_DELTA_THRESHOLD;
         }
-        
+
         // circular acceleration coefficient
         float coefI = inertiaMoment / deltaT1 / deltaT2;
-        
+
         // circular velocity coefficient
         float coefAlpha = alpha / deltaT1;
-        
+
         // angular momentum coefficient
         float coefk = mB * (float) (Math.sin(Math.toRadians(angle0)) * Math.cos(Math.toRadians(angle1)) -
                 (Math.sin(Math.toRadians(angle1)) * Math.cos(Math.toRadians(angle0))));
-        
+
         float angleNew = (coefI * (angle1 * 2f - angle2) + coefAlpha * angle1 + coefk) / (coefI + coefAlpha);
-        
+
         // reassign previous iteration variables
         angle2 = angle1;
         angle1 = angleNew;
         time2 = time1;
         time1 = timeNew;
-        
+
         // if angles changed less then threshold, return false - no need to redraw the view
         if (Math.abs(angleLastDrawn - angle1) < ANGLE_DELTA_THRESHOLD) {
             return false;
