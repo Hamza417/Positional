@@ -176,7 +176,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
      */
     @Override
     public void clearAnimation() {
-        animationOn = false;
+        rotationUpdate(getRotation(), false);
         super.clearAnimation();
     }
 }

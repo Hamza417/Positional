@@ -75,8 +75,6 @@ class Compass : ScopedFragment(), SensorEventListener {
     private val magnetometerReadings = FloatArray(3)
     private val rotation = FloatArray(9)
     private val inclination = FloatArray(9)
-    private var accelerometerValues: String? = null
-    private var magnetometerValues: String? = null
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
@@ -108,7 +106,6 @@ class Compass : ScopedFragment(), SensorEventListener {
     private lateinit var magnetometerX: TextView
     private lateinit var magnetometerY: TextView
     private lateinit var magnetometerZ: TextView
-    private lateinit var magnetometerData: TextView
     private lateinit var inclinationTextView: TextView
     private lateinit var declination: TextView
     private lateinit var fieldStrength: TextView
@@ -345,10 +342,6 @@ class Compass : ScopedFragment(), SensorEventListener {
             Sensor.TYPE_ACCELEROMETER -> {
                 smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
                 accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
-
-                accelerometerValues += "x: ${accelerometerReadings[0]}"
-                accelerometerValues += "y: ${accelerometerReadings[1]}\n"
-                accelerometerValues += "z: ${accelerometerReadings[2]}\n"
             }
             Sensor.TYPE_MAGNETIC_FIELD -> {
                 smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
@@ -504,13 +497,10 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private inner class MyOnTouchListener : View.OnTouchListener {
 
-        var animate = false
-
         @SuppressLint("ClickableViewAccessibility")
         override fun onTouch(v: View?, event: MotionEvent): Boolean {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    animate = CompassPreferences.isUsingPhysicalProperties()
                     isUserRotatingDial = true
                     objectAnimator?.removeAllListeners()
                     objectAnimator?.cancel()
@@ -518,7 +508,6 @@ class Compass : ScopedFragment(), SensorEventListener {
                     handler.removeCallbacks(compassDialAnimationRunnable)
                     lastDialAngle = dial.rotation //if (dial.rotation < -180) abs(dial.rotation) else dial.rotation
                     startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
-                    dial.clearAnimation()
                     return true
                 }
                 MotionEvent.ACTION_MOVE -> {
@@ -527,7 +516,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                     viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)), animate = false)
                     return true
                 }
-                MotionEvent.ACTION_UP -> {
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     handler.postDelayed(compassDialAnimationRunnable, 1000)
                     return true
                 }
