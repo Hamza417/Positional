@@ -182,7 +182,8 @@ class Clock : ScopedFragment() {
         minutes.setPhysical(0.5F, 8F, 5000F)
 
         calculateAndUpdateData(MainPreferences.getLastCoordinates()[0].toDouble(),
-                MainPreferences.getLastCoordinates()[1].toDouble())
+                MainPreferences.getLastCoordinates()[1].toDouble(),
+                MainPreferences.getLastAltitude().toDouble())
 
         if (BuildConfig.FLAVOR == "lite") {
             timezoneButton.gone()
@@ -203,7 +204,7 @@ class Clock : ScopedFragment() {
 
         locationViewModel.location.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
-            calculateAndUpdateData(it.latitude, it.longitude)
+            calculateAndUpdateData(it.latitude, it.longitude, it.altitude)
         }
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -350,7 +351,7 @@ class Clock : ScopedFragment() {
     }
     private val customDataUpdater = object : Runnable {
         override fun run() {
-            calculateAndUpdateData(customLatitude, customLongitude)
+            calculateAndUpdateData(customLatitude, customLongitude, 0.0)
             handler.postDelayed(this, 2500)
         }
     }
@@ -398,7 +399,7 @@ class Clock : ScopedFragment() {
         handler.post(clock)
     }
 
-    private fun calculateAndUpdateData(latitude: Double, longitude: Double) {
+    private fun calculateAndUpdateData(latitude: Double, longitude: Double, altitude: Double) {
         viewLifecycleOwner.lifecycleScope.launch {
 
             var sunTimeData: Spanned
@@ -427,7 +428,7 @@ class Clock : ScopedFragment() {
                 }
 
                 sunTimeData =
-                        with(SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()) {
+                        with(SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).height(altitude).execute()) {
                             fromHtml("<b>${getString(R.string.sun_sunrise)}</b> ${pattern.format(rise)}<br>" +
                                     "<b>${getString(R.string.sun_sunset)}</b> ${pattern.format(set)}<br>" +
                                     "<b>${getString(R.string.sun_noon)}</b> ${pattern.format(noon)}<br>" +
@@ -435,13 +436,13 @@ class Clock : ScopedFragment() {
                         }
 
                 moonTimeData =
-                        with(MoonTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude).execute()) {
+                        with(MoonTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude).height(altitude).execute()) {
                             fromHtml("<b>${getString(R.string.moon_moonrise)}</b> ${pattern.format(rise)}<br>" +
                                     "<b>${getString(R.string.moon_moonset)}</b> ${pattern.format(set)}")
                         }
 
                 twilightData =
-                        with(SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude)) {
+                        with(SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).height(altitude)) {
                             fromHtml("<b>${getString(R.string.twilight_astronomical_dawn)}</b> ${pattern.format(twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise)}<br>" +
                                     "<b>${getString(R.string.twilight_nautical_dawn)}</b> ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().rise)}<br>" +
                                     "<b>${getString(R.string.twilight_civil_dawn)}</b> ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().rise)}<br>" +
@@ -451,7 +452,7 @@ class Clock : ScopedFragment() {
                         }
 
                 sunPositionData =
-                        with(SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).execute()) {
+                        with(SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).height(altitude).execute()) {
                             fromHtml("<b>${getString(R.string.sun_azimuth)}</b> ${round(azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), azimuth)}<br>" +
                                     "<b>${getString(R.string.sun_altitude)}</b> ${round(trueAltitude, 2)}°<br>" +
                                     if (isMetric) {
@@ -462,7 +463,7 @@ class Clock : ScopedFragment() {
                         }
 
                 moonPositionData =
-                        with(MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).execute()) {
+                        with(MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).height(altitude).execute()) {
                             fromHtml("<b>${getString(R.string.moon_azimuth)}</b> ${round(azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), azimuth)}<br>" +
                                     "<b>${getString(R.string.moon_altitude)}</b> ${round(altitude, 2)}°<br>" +
                                     (if (isMetric) {

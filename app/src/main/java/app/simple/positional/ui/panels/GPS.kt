@@ -1,7 +1,10 @@
 package app.simple.positional.ui.panels
 
 import android.annotation.SuppressLint
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
@@ -28,7 +31,10 @@ import app.simple.positional.R
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.database.instances.LocationDatabase
-import app.simple.positional.decorations.maps.*
+import app.simple.positional.decorations.maps.MapToolbar
+import app.simple.positional.decorations.maps.Maps
+import app.simple.positional.decorations.maps.MapsTools
+import app.simple.positional.decorations.maps.MapsToolsCallbacks
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.app.LocationParameters
@@ -44,19 +50,25 @@ import app.simple.positional.popups.location.PopupLocationMenu
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.util.*
+import app.simple.positional.util.AppUtils
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
+import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
+import app.simple.positional.util.LocationPrompt
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
+import app.simple.positional.util.isNetworkAvailable
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.*
 
@@ -208,11 +220,11 @@ class GPS : ScopedFragment() {
         }
 
         providerStatus.text =
-            fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
+                fromHtml("<b>${getString(R.string.gps_status)}</b> ${if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(R.string.gps_disabled)}")
 
         if (!LocationPrompt.checkGooglePlayServices(requireContext())) {
             ErrorDialog.newInstance(getString(R.string.play_services_error))
-                .show(childFragmentManager, "error_dialog")
+                    .show(childFragmentManager, "error_dialog")
         }
 
         locationViewModel.location.observe(viewLifecycleOwner) {
@@ -222,65 +234,30 @@ class GPS : ScopedFragment() {
 
                     MainPreferences.setLastLatitude(location!!.latitude.toFloat())
                     MainPreferences.setLastLongitude(location!!.longitude.toFloat())
-                    val providerSource = fromHtml(
-                            "<b>${getString(R.string.gps_source)}</b> ${
-                                location!!.provider.uppercase(
-                                        Locale.getDefault()
-                                )
-                            }"
-                    )
-                    val providerStatus = fromHtml(
-                            "<b>${getString(R.string.gps_status)}</b> ${
-                                if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
-                                        R.string.gps_disabled
-                                )
-                            }"
-                    )
-                    val accuracy = if (isMetric) {
-                        fromHtml(
-                                "<b>${getString(R.string.gps_accuracy)}</b> ${
-                                    round(
-                                            location!!.accuracy.toDouble(),
-                                            2
-                                    )
-                                } ${getString(R.string.meter)}"
+                    MainPreferences.setLastAltitude(location!!.altitude.toFloat())
+
+                    val accuracy: Spanned
+                    val altitude: Spanned
+                    val speed: Spanned
+
+                    val providerSource = fromHtml("<b>${getString(R.string.gps_source)}</b> ${location!!.provider.uppercase(Locale.getDefault())}")
+                    val providerStatus = fromHtml("<b>${getString(R.string.gps_status)}</b> ${
+                        if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
+                                R.string.gps_disabled
                         )
+                    }")
+
+                    if (isMetric) {
+                        accuracy = fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${round(location!!.accuracy.toDouble(), 2)} ${getString(R.string.meter)}")
+                        altitude = fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude, 2)} ${getString(R.string.meter)}")
+                        speed = fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)} ${getString(R.string.kilometer_hour)}")
                     } else {
-                        fromHtml(
-                                "<b>${getString(R.string.gps_accuracy)}</b> ${
-                                    round(
-                                            location!!.accuracy.toDouble().toFeet(),
-                                            2
-                                    )
-                                } ${getString(R.string.feet)}"
-                        )
-                    }
-                    val altitude = if (isMetric) {
-                        fromHtml(
-                                "<b>${getString(R.string.gps_altitude)}</b> ${
-                                    round(
-                                            location!!.altitude,
-                                            2
-                                    )
-                                } ${getString(R.string.meter)}"
-                        )
-                    } else {
-                        fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
+                        accuracy = fromHtml("<b>${getString(R.string.gps_accuracy)}</b> ${round(location!!.accuracy.toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
+                        altitude = fromHtml("<b>${getString(R.string.gps_altitude)}</b> ${round(location!!.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
+                        speed = fromHtml("<b>${getString(R.string.gps_speed)}</b> ${round(location!!.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} ${getString(R.string.miles_hour)}")
                     }
 
-                    val speed = if (isMetric) {
-                        fromHtml("<b>${getString(R.string.gps_speed)}</b> ${
-                            round(location!!.speed.toDouble().toKiloMetersPerHour(), 2)
-                        } ${getString(R.string.kilometer_hour)}")
-                    } else {
-                        fromHtml("<b>${getString(R.string.gps_speed)}</b> ${
-                            round(location!!.speed.toDouble().toKiloMetersPerHour()
-                                    .toMilesPerHour(), 2)
-                        } ${getString(R.string.miles_hour)}")
-                    }
-
-                    val bearing =
-                            fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${location!!.bearing}°")
+                    val bearing: Spanned = fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${location!!.bearing}°")
 
                     val direction: Spanned = if (location!!.speed > 0f) {
                         fromHtml("<b>${getString(R.string.gps_direction)}</b> ${getDirectionNameFromAzimuth(requireContext(), location!!.bearing.toDouble())}")
@@ -398,13 +375,13 @@ class GPS : ScopedFragment() {
 
             override fun onCustomLocationClicked(view: View) {
                 LocationParameters.newInstance()
-                    .show(parentFragmentManager, "location_params")
+                        .show(parentFragmentManager, "location_params")
             }
 
             override fun onCustomLocationLongPressed(view: View) {
                 if (AppUtils.isFullFlavor()) {
                     PinCustomization.newInstance(true)
-                        .show(parentFragmentManager, "pin_customization")
+                            .show(parentFragmentManager, "pin_customization")
                 }
             }
         })
@@ -427,7 +404,7 @@ class GPS : ScopedFragment() {
             override fun onTargetAdd(longpress: Boolean) {
                 if (longpress) {
                     TargetCoordinates.newInstance()
-                        .show(childFragmentManager, "target_coordinates")
+                            .show(childFragmentManager, "target_coordinates")
                 } else {
                     maps?.setTargetMarker(null)
                 }
@@ -446,8 +423,8 @@ class GPS : ScopedFragment() {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
                 val isLocationSaved: Boolean
                 val db =
-                    Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db")
-                        .fallbackToDestructiveMigration().build()
+                        Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db")
+                                .fallbackToDestructiveMigration().build()
                 val locations = Locations()
 
                 if (location.isNull()) {
@@ -481,7 +458,7 @@ class GPS : ScopedFragment() {
         copy.setOnClickListener {
             handler.removeCallbacks(textAnimationRunnable)
             val clipboard: ClipboardManager =
-                requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
             if (accuracy.text != "") {
                 val stringBuilder = StringBuilder().apply {
@@ -547,7 +524,7 @@ class GPS : ScopedFragment() {
 
         coordinatesBox.setOnClickListener {
             CoordinatesExpansion.newInstance()
-                .show(childFragmentManager, "coordinates_expansion")
+                    .show(childFragmentManager, "coordinates_expansion")
         }
 
         maps?.setOnMapsCallbackListener(object : MapsCallbacks {
@@ -623,9 +600,9 @@ class GPS : ScopedFragment() {
 
     private fun updateCoordinates(latitude_: Double, longitude_: Double) {
         latitude.text =
-            fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude_, requireContext())}")
+                fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude_, requireContext())}")
         longitude.text =
-            fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, requireContext())}")
+                fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, requireContext())}")
     }
 
     private fun setFullScreen(forBottomBar: Boolean) {
@@ -711,7 +688,7 @@ class GPS : ScopedFragment() {
 
     private fun setLocationPin() {
         view?.findViewById<ImageView>(R.id.coordinates_icon)!!
-            .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
+                .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
     }
 
     private fun targetMode() {
@@ -759,10 +736,10 @@ class GPS : ScopedFragment() {
         TransitionManager.beginDelayedTransition(
                 view as ViewGroup,
                 TransitionInflater.from(requireContext())
-                    .inflateTransition(R.transition.tools_transition))
+                        .inflateTransition(R.transition.tools_transition))
 
         val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                                    ViewGroup.LayoutParams.WRAP_CONTENT)
+                ViewGroup.LayoutParams.WRAP_CONTENT)
 
         params.apply {
             gravity = if (GPSPreferences.isToolsGravityLeft()) {

@@ -30,6 +30,7 @@ object MainPreferences {
     const val accentColor = "app_accent_color"
     const val lastLatitude = "last_latitude"
     const val lastLongitude = "last_longitude"
+    const val lastAltitude = "last_altitude"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -167,6 +168,16 @@ object MainPreferences {
                 getSharedPreferences().getFloat(lastLatitude, 48.8584f),
                 getSharedPreferences().getFloat(lastLongitude, 2.2945f)
         )
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setLastAltitude(value: Float) {
+        getSharedPreferences().edit().putFloat(lastAltitude, value).apply()
+    }
+
+    fun getLastAltitude(): Float {
+        return getSharedPreferences().getFloat(lastAltitude, 0F)
     }
 
     //--------------------------------------------------------------------------------------------------//

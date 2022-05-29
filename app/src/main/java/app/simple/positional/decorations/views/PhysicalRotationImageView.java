@@ -19,7 +19,8 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
     static final public float TIME_DELTA_THRESHOLD = 0.25f; // maximum time difference between iterations, s
     static final public float ANGLE_DELTA_THRESHOLD = 0.1f; // minimum rotation change to be redrawn, deg
 
-    static final public float INERTIA_MOMENT_DEFAULT = 0.1f;    // default physical properties
+    // default physical properties
+    static final public float INERTIA_MOMENT_DEFAULT = 0.1f;
     static final public float ALPHA_DEFAULT = 10f;
     static final public float MB_DEFAULT = 1000f;
 
@@ -129,7 +130,6 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
      * @return if there is a need to redraw rotation
      */
     protected boolean angleRecalculate(final long timeNew) {
-
         // recalculate angle using simple numerical integration of motion equation
         float deltaT1 = (timeNew - time1) / 1000f;
         if (deltaT1 > TIME_DELTA_THRESHOLD) {
@@ -176,6 +176,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
      */
     @Override
     public void clearAnimation() {
+        time1 = time2 = 0;
         rotationUpdate(getRotation(), false);
         super.clearAnimation();
     }
