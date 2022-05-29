@@ -73,8 +73,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
             if (angleRecalculate(System.currentTimeMillis())) {
                 this.setRotation(angle1);
             }
-        }
-        else {
+        } else {
             this.setRotation(angle1);
         }
 
@@ -113,8 +112,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
                 this.invalidate();
             }
             animationOn = true;
-        }
-        else {
+        } else {
             angle1 = angleNew;
             angle2 = angleNew;
             angle0 = angleNew;
@@ -164,10 +162,21 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
         // if angles changed less then threshold, return false - no need to redraw the view
         if (Math.abs(angleLastDrawn - angle1) < ANGLE_DELTA_THRESHOLD) {
             return false;
-        }
-        else {
+        } else {
             angleLastDrawn = angle1;
             return true;
         }
+    }
+
+    /**
+     * Set animationOn to false as well
+     * to free up view from animating
+     * if the animation cancellation is
+     * required
+     */
+    @Override
+    public void clearAnimation() {
+        animationOn = false;
+        super.clearAnimation();
     }
 }

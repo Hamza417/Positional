@@ -59,9 +59,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 import kotlin.math.abs
-import kotlin.system.measureTimeMillis
 
 class Compass : ScopedFragment(), SensorEventListener {
 
@@ -224,6 +222,10 @@ class Compass : ScopedFragment(), SensorEventListener {
                 append("${getString(R.string.compass_accuracy)}\n")
                 append("${accuracyAccelerometer.text}\n")
                 append("${accuracyMagnetometer.text}\n")
+                append("Accelerometer\n")
+                append("${accelerometerX.text}, ${accelerometerY.text}, ${accelerometerZ.text}\n")
+                append("Magnetometer\n")
+                append("${magnetometerX.text}, ${magnetometerY.text}, ${magnetometerZ.text}\n")
                 append("\n${getString(R.string.compass_field)}\n")
                 append("${inclinationTextView.text}\n")
                 append("${declination.text}\n")
@@ -291,26 +293,9 @@ class Compass : ScopedFragment(), SensorEventListener {
                         location.time
                 )
 
-                declination = fromHtml("<b>${getString(R.string.compass_declination)}</b> ${
-                    round(
-                            geomagneticField.declination.toDouble(),
-                            2
-                    )
-                }°")
-
-                inclination = fromHtml("<b>${getString(R.string.compass_inclination)}</b> ${
-                    round(
-                            geomagneticField.inclination.toDouble(),
-                            2
-                    )
-                }°")
-
-                fieldStrength = fromHtml("<b>${getString(R.string.compass_field_strength)}</b> ${
-                    round(
-                            geomagneticField.fieldStrength.toDouble(),
-                            2
-                    )
-                } nT")
+                declination = fromHtml("<b>${getString(R.string.compass_declination)}</b> ${round(geomagneticField.declination.toDouble(), 2)}°")
+                inclination = fromHtml("<b>${getString(R.string.compass_inclination)}</b> ${round(geomagneticField.inclination.toDouble(), 2)}°")
+                fieldStrength = fromHtml("<b>${getString(R.string.compass_field_strength)}</b> ${round(geomagneticField.fieldStrength.toDouble(), 2)} nT")
 
                 withContext(Dispatchers.Main) {
                     this@Compass.declination.text = declination
@@ -374,12 +359,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         val angle = if (isGimbalLock) {
             CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
         } else {
-            val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(
-                    rotation,
-                    inclination,
-                    accelerometerReadings,
-                    magnetometerReadings
-            )
+            val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(rotation, inclination, accelerometerReadings, magnetometerReadings)
 
             if (successfullyCalculatedRotationMatrix) {
                 val orientation = FloatArray(3)
@@ -391,15 +371,16 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         run {
-            accelerometerX.text = fromHtml("<b>X:</b> ${round(accelerometerReadings[0].toDouble(), 3)}")
-            accelerometerY.text = fromHtml("<b>Y:</b> ${round(accelerometerReadings[1].toDouble(), 3)}")
-            accelerometerZ.text = fromHtml("<b>Z:</b> ${round(accelerometerReadings[2].toDouble(), 3)}")
-        }
+            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_DRAGGING ||
+                    bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                accelerometerX.text = fromHtml("<b>X:</b> ${round(accelerometerReadings[0].toDouble(), 3)}")
+                accelerometerY.text = fromHtml("<b>Y:</b> ${round(accelerometerReadings[1].toDouble(), 3)}")
+                accelerometerZ.text = fromHtml("<b>Z:</b> ${round(accelerometerReadings[2].toDouble(), 3)}")
 
-        run {
-            magnetometerX.text = fromHtml("<b>X:</b> ${round(magnetometerReadings[0].toDouble(), 3)}")
-            magnetometerY.text = fromHtml("<b>Y:</b> ${round(magnetometerReadings[1].toDouble(), 3)}")
-            magnetometerZ.text = fromHtml("<b>Z:</b> ${round(magnetometerReadings[2].toDouble(), 3)}")
+                magnetometerX.text = fromHtml("<b>X:</b> ${round(magnetometerReadings[0].toDouble(), 3)}")
+                magnetometerY.text = fromHtml("<b>Y:</b> ${round(magnetometerReadings[1].toDouble(), 3)}")
+                magnetometerZ.text = fromHtml("<b>Z:</b> ${round(magnetometerReadings[2].toDouble(), 3)}")
+            }
         }
 
         if (!isUserRotatingDial) {
@@ -537,12 +518,13 @@ class Compass : ScopedFragment(), SensorEventListener {
                     handler.removeCallbacks(compassDialAnimationRunnable)
                     lastDialAngle = dial.rotation //if (dial.rotation < -180) abs(dial.rotation) else dial.rotation
                     startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
+                    dial.clearAnimation()
                     return true
                 }
                 MotionEvent.ACTION_MOVE -> {
                     val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     val finalAngle = currentAngle - startAngle + lastDialAngle
-                    viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)), animate)
+                    viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)), animate = false)
                     return true
                 }
                 MotionEvent.ACTION_UP -> {
