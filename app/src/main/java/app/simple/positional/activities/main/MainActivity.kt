@@ -37,10 +37,10 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapsSdkInitializedCallback
 
 class MainActivity : BaseActivity(),
-                     PermissionCallbacks,
-                     BottomSheetSlide,
-                     android.content.SharedPreferences.OnSharedPreferenceChangeListener,
-                     OnMapsSdkInitializedCallback {
+        PermissionCallbacks,
+        BottomSheetSlide,
+        android.content.SharedPreferences.OnSharedPreferenceChangeListener,
+        OnMapsSdkInitializedCallback {
 
     private val defaultPermissionRequestCode = 123
     private lateinit var bottomBar: DynamicCornerRecyclerView
@@ -84,7 +84,7 @@ class MainActivity : BaseActivity(),
 
         if (savedInstanceState.isNull()) {
             openFragment(FragmentPreferences.getCurrentTag(),
-                         FragmentPreferences.getCurrentPage())
+                    FragmentPreferences.getCurrentPage())
         }
     }
 
@@ -107,7 +107,7 @@ class MainActivity : BaseActivity(),
 
     private fun checkRunTimePermission() {
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
         ) {
             if (MainPreferences.getShowPermissionDialog()) {
                 val permissionDialog = Permission.newInstance()
@@ -128,8 +128,7 @@ class MainActivity : BaseActivity(),
                 runService()
             } else {
                 Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_LONG).show()
-                Toast.makeText(this, R.string.no_location_permission_alert, Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(this, R.string.no_location_permission_alert, Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -171,9 +170,9 @@ class MainActivity : BaseActivity(),
         bottomBar.smoothScrollToPosition(position)
         getFragment(tag).let {
             supportFragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                .replace(R.id.containers, it, tag)
-                .commit()
+                    .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                    .replace(R.id.containers, it, tag)
+                    .commit()
         }
     }
 
@@ -181,31 +180,35 @@ class MainActivity : BaseActivity(),
         when (name) {
             "clock" -> {
                 return supportFragmentManager.findFragmentByTag("clock") as Clock?
-                    ?: Clock.newInstance()
+                        ?: Clock.newInstance()
             }
             "compass" -> {
                 return supportFragmentManager.findFragmentByTag("compass") as Compass?
-                    ?: Compass.newInstance()
+                        ?: Compass.newInstance()
+            }
+            "direction" -> {
+                return supportFragmentManager.findFragmentByTag("direction") as Direction?
+                        ?: Direction.newInstance()
             }
             "location" -> {
                 return supportFragmentManager.findFragmentByTag("location") as GPS?
-                    ?: GPS.newInstance()
+                        ?: GPS.newInstance()
             }
             "trail" -> {
                 return supportFragmentManager.findFragmentByTag("trail") as Trail?
-                    ?: Trail.newInstance()
+                        ?: Trail.newInstance()
             }
             "level" -> {
                 return supportFragmentManager.findFragmentByTag("level") as Level?
-                    ?: Level.newInstance()
+                        ?: Level.newInstance()
             }
             "settings" -> {
                 return supportFragmentManager.findFragmentByTag("settings") as AppSettings?
-                    ?: AppSettings.newInstance()
+                        ?: AppSettings.newInstance()
             }
             else -> {
                 return supportFragmentManager.findFragmentByTag("location") as GPS?
-                    ?: GPS.newInstance()
+                        ?: GPS.newInstance()
             }
         }
     }
@@ -217,10 +220,10 @@ class MainActivity : BaseActivity(),
     override fun onMapClicked(fullScreen: Boolean) {
         if (fullScreen) {
             bottomBar.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F))
-                .start()
+                    .start()
         } else {
             bottomBar.animate().translationY(bottomBar.height.toFloat())
-                .setInterpolator(DecelerateInterpolator(1.5F)).start()
+                    .setInterpolator(DecelerateInterpolator(1.5F)).start()
         }
     }
 
