@@ -44,7 +44,7 @@ class FusedLocationService : Service() {
         locationRequest = LocationRequest.create()
             .setInterval(delay)
             .setFastestInterval(delay)
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
 
         requestLastLocation()
 
@@ -52,7 +52,7 @@ class FusedLocationService : Service() {
             override fun onLocationResult(result: LocationResult) {
                 super.onLocationResult(result)
                 if (result.lastLocation.isNotNull()) {
-                    broadcastLocation(result.lastLocation)
+                    broadcastLocation(result.lastLocation!!)
                 }
             }
 

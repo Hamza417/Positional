@@ -457,16 +457,14 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 polylineOptions?.add(LatLng(customLatitude, customLongitude))
             } else {
                 if (location.isNotNull()) {
+                    polylineOptions?.add(LatLng(GPSPreferences.getTargetMarkerStartCoordinates()[0].toDouble(),
+                            GPSPreferences.getTargetMarkerStartCoordinates()[1].toDouble()))
                     polylineOptions?.add(LatLng(location?.latitude!!, location?.longitude!!))
                 }
             }
 
-            polylineOptions?.add(
-                    LatLng(
-                            GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
-                            GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()
-                    )
-            )
+            polylineOptions?.add(LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
+                    GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()))
 
             targetPolyline = googleMap?.addPolyline(polylineOptions!!)
 
@@ -488,6 +486,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                             )
                     )
             )
+
             polylineOptions?.endCap(
                     CustomCap(
                             BitmapDescriptorFactory.fromBitmap(

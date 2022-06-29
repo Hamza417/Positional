@@ -54,4 +54,14 @@ object ConditionUtils {
     fun Number.isEqualTo(number: Number): Boolean {
         return this == number
     }
+
+    /**
+     * Inverts the current boolean such that true == false
+     * and vice-versa
+     *
+     * @return [Boolean]
+     */
+    fun Boolean.invert(): Boolean {
+        return !this
+    }
 }

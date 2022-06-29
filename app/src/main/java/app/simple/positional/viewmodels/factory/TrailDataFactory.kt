@@ -8,7 +8,7 @@ import app.simple.positional.viewmodels.viewmodel.TrailDataViewModel
 class TrailDataFactory(private val trailDataName: String, private val application: Application) :
         ViewModelProvider.AndroidViewModelFactory(application) {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST") // Cast is checked
         when {
             modelClass.isAssignableFrom(TrailDataViewModel::class.java) -> {

@@ -13,6 +13,8 @@ object GPSPreferences {
     private const val mapBearing = "map_bearing_value"
     private const val mapTargetMarkerLatitude = "target_marker_latitude"
     private const val mapTargetMarkerLongitude = "target_marker_longitude"
+    private const val mapTargetMarkerStartLatitude = "target_start_latitude"
+    private const val mapTargetMarkerStartLongitude = "target_start_longitude"
 
     const val pinSize = "map_pin_size"
     const val pinOpacity = "pin_opacity"
@@ -194,6 +196,21 @@ object GPSPreferences {
         return floatArrayOf(
                 getSharedPreferences().getFloat(mapTargetMarkerLatitude, 48.8584f),
                 getSharedPreferences().getFloat(mapTargetMarkerLongitude, 2.2945f)
+        )
+    }
+
+    fun setTargetMarkerStartLatitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(mapTargetMarkerStartLatitude, value).apply()
+    }
+
+    fun setTargetMarkerStartLongitude(@NotNull value: Float) {
+        getSharedPreferences().edit().putFloat(mapTargetMarkerStartLongitude, value).apply()
+    }
+
+    fun getTargetMarkerStartCoordinates(): FloatArray {
+        return floatArrayOf(
+                getSharedPreferences().getFloat(mapTargetMarkerStartLatitude, 48.8584f),
+                getSharedPreferences().getFloat(mapTargetMarkerStartLongitude, 2.2945f)
         )
     }
 

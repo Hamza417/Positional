@@ -25,7 +25,7 @@ object LocationPrompt {
 
     fun displayLocationSettingsRequest(activity: Activity) {
         val locationRequest = LocationRequest.create()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.priority = Priority.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 10000
         locationRequest.fastestInterval = 10000 / 2.toLong()
 

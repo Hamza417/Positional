@@ -22,4 +22,8 @@ object TimeConverter {
     fun getHoursInDegreesFor24(zonedDateTime: ZonedDateTime): Float {
         return zonedDateTime.hour * (360.0F / 24F) + zonedDateTime.minute * (360.0F / 24F / 60F)
     }
+
+    fun Long.toMilliseconds(): Long {
+        return this.div(1000)
+    }
 }

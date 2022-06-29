@@ -349,6 +349,7 @@ class Clock : ScopedFragment() {
             handler.postDelayed(this, 1000)
         }
     }
+
     private val customDataUpdater = object : Runnable {
         override fun run() {
             calculateAndUpdateData(customLatitude, customLongitude, 0.0)

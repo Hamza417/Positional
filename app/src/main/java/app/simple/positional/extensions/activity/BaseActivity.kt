@@ -73,7 +73,7 @@ open class BaseActivity : AppCompatActivity() {
         /**
          * Keeps the instance of current locale of the app
          */
-        LocaleHelper.setAppLocale(ConfigurationCompat.getLocales(resources.configuration)[0])
+        LocaleHelper.setAppLocale(ConfigurationCompat.getLocales(resources.configuration)[0]!!)
 
         if (AppUtils.isLiteFlavor()) {
             resetLitePrefs()

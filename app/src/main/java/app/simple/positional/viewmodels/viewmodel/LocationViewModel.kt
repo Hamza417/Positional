@@ -19,6 +19,7 @@ import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ArrayHelper.isLastValueSame
+import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.DMSConverter.latitudeAsDD
 import app.simple.positional.util.DMSConverter.latitudeAsDM
 import app.simple.positional.util.DMSConverter.latitudeAsDMS
@@ -88,6 +89,11 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                                 utm(this)
 
                                 graphData(this)
+
+                                if (GPSPreferences.isTargetMarkerSet().invert()) {
+                                    GPSPreferences.setTargetMarkerStartLatitude(this.latitude.toFloat())
+                                    GPSPreferences.setTargetMarkerStartLongitude(this.longitude.toFloat())
+                                }
 
                                 targetData(
                                         LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(), GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
