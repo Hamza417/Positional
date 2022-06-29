@@ -313,4 +313,6 @@
     <string name="eta_hours">%1$s hours %2$s minutes</string>
     <string name="eta_days">%1$s days %2$s hours %3$s minutes</string>
     <string name="eta">ETA:</string>
+    <string name="gps_displacement_from_origin">Displacement from Origin:</string>
+    <string name="gps_displacement_from_dest">Displacement from Dest:</string>
 </resources>

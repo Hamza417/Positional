@@ -472,31 +472,20 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 mapsCallbacks?.onTargetUpdated(
                         polylineOptions?.points?.get(1),
                         polylineOptions?.points?.get(0),
-                        location?.speed ?: 0F
-                )
+                        location?.speed ?: 0F)
             }
 
             polylineOptions?.startCap(
-                    CustomCap(
-                            BitmapDescriptorFactory.fromBitmap(
-                                    R.drawable.ic_trail_start.toBitmap(
-                                            context,
-                                            30
-                                    )
-                            )
-                    )
-            )
+                    CustomCap(BitmapDescriptorFactory.fromBitmap(
+                            R.drawable.ic_trail_start.toBitmap(
+                                    context,
+                                    30))))
 
             polylineOptions?.endCap(
-                    CustomCap(
-                            BitmapDescriptorFactory.fromBitmap(
-                                    R.drawable.seekbar_thumb.toBitmap(
-                                            context,
-                                            30
-                                    )
-                            )
-                    )
-            )
+                    CustomCap(BitmapDescriptorFactory.fromBitmap(
+                            R.drawable.seekbar_thumb.toBitmap(
+                                    context,
+                                    30))))
         } else {
             mapsCallbacks?.onTargetUpdated(null, null, 0F)
         }

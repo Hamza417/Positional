@@ -137,11 +137,11 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
         }
     }
 
-    // TODO - this method is getting called two times, fix it
     fun targetData(target: LatLng, current: LatLng, speed: Float) {
         viewModelScope.launch(Dispatchers.IO) {
             with(StringBuilder()) {
                 append(targetDisplacement(target, current))
+                append(targetDisplacementFromOrigin(current))
                 append(targetBearing(target, current))
                 append(targetDirection(target, current))
                 append(targetETA(target, current, speed))
@@ -153,7 +153,46 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
 
     private fun targetDisplacement(target: LatLng, current: LatLng): StringBuilder {
         return StringBuilder().also {
-            it.append("<b>${getString(R.string.gps_displacement)} </b>")
+            it.append("<b>${getString(R.string.gps_displacement_from_dest)} </b>")
+
+            if (GPSPreferences.isTargetMarkerSet()) {
+                val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
+
+                if (MainPreferences.getUnit()) {
+                    if (p0 < 1000) {
+                        it.append(p0.round(2))
+                        it.append(" ")
+                        it.append(getContext().getString(R.string.meter))
+                    } else {
+                        it.append(p0.toKilometers().round(2))
+                        it.append(" ")
+                        it.append(getContext().getString(R.string.kilometer))
+                    }
+                } else {
+                    if (p0 < 1000) {
+                        it.append(p0.toDouble().toFeet().toFloat().round(2))
+                        it.append(" ")
+                        it.append(getContext().getString(R.string.feet))
+                    } else {
+                        it.append(p0.toMiles().round(2))
+                        it.append(" ")
+                        it.append(getContext().getString(R.string.miles))
+                    }
+                }
+            } else {
+                it.append(getString(R.string.not_available))
+            }
+
+            it.append("<br>")
+        }
+    }
+
+    private fun targetDisplacementFromOrigin(current: LatLng): StringBuilder {
+        return StringBuilder().also {
+            val target = LatLng(GPSPreferences.getTargetMarkerStartCoordinates()[0].toDouble(),
+                    GPSPreferences.getTargetMarkerStartCoordinates()[1].toDouble())
+
+            it.append("<b>${getString(R.string.gps_displacement_from_origin)} </b>")
 
             if (GPSPreferences.isTargetMarkerSet()) {
                 val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))

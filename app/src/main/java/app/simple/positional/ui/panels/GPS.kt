@@ -548,7 +548,11 @@ class GPS : ScopedFragment() {
 
             override fun onTargetUpdated(target: LatLng?, current: LatLng?, speed: Float) {
                 kotlin.runCatching {
-                    locationViewModel.targetData(target!!, current!!, speed)
+                    /**
+                     * Not needed to call here, the viewmodel
+                     * will update the required information itself
+                     */
+                    // locationViewModel.targetData(target!!, current!!, speed)
                 }
             }
         })
