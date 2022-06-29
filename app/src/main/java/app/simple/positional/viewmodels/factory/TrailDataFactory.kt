@@ -1,26 +1,20 @@
 package app.simple.positional.viewmodels.factory
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import app.simple.positional.viewmodels.viewmodel.TrailDataViewModel
 
-class TrailDataFactory(private val trailDataName: String, private val application: Application) :
-        ViewModelProvider.AndroidViewModelFactory(application) {
+class TrailDataFactory : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
         @Suppress("UNCHECKED_CAST") // Cast is checked
-        when {
-            modelClass.isAssignableFrom(TrailDataViewModel::class.java) -> {
-                return TrailDataViewModel(application, trailDataName) as T
+        when (modelClass) {
+            TrailDataViewModel::class.java -> {
+                return TrailDataViewModel(checkNotNull(extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY])) as T
             }
             else -> {
-                /**
-                 * This viewmodel factory is specific to
-                 * [TrailDataViewModel] and assigning it properly
-                 * won't throw this exception
-                 */
-                throw IllegalArgumentException("Nope!!, Wrong Viewmodel!!")
+                throw IllegalArgumentException("Unknown class $modelClass")
             }
         }
     }

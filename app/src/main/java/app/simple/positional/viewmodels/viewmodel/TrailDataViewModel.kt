@@ -14,6 +14,7 @@ import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.model.TrailData
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.HtmlHelper
 import app.simple.positional.util.LocationExtension
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.system.measureTimeMillis
 
-class TrailDataViewModel(application: Application, private var trailName: String) : WrappedViewModel(application) {
+class TrailDataViewModel(application: Application) : WrappedViewModel(application) {
+
+    private var trailName = TrailPreferences.getCurrentTrail()
 
     val trailDataAscending: MutableLiveData<ArrayList<TrailData>> by lazy {
         MutableLiveData<ArrayList<TrailData>>().also {

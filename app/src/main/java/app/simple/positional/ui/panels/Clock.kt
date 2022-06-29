@@ -109,7 +109,7 @@ class Clock : ScopedFragment() {
     private var customLatitude = 0.0
     private var customLongitude = 0.0
     private var timezone: String = "Asia/Tokyo"
-    private var movementType = "smooth"
+    private var movementType = "tick"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_clock, container, false)
@@ -159,6 +159,7 @@ class Clock : ScopedFragment() {
         backPress = requireActivity().onBackPressedDispatcher
 
         setMotionDelay(ClockPreferences.getMovementType())
+
         isMetric = MainPreferences.getUnit()
         is24HourFace = if (ClockPreferences.isClockFace24Hour()) {
             face.setImageResource(R.drawable.clock_face_24)
@@ -167,6 +168,7 @@ class Clock : ScopedFragment() {
             face.setImageResource(R.drawable.clock_face)
             false
         }
+
         if (MainPreferences.isCustomCoordinate()) {
             isCustomCoordinate = true
             customLatitude = MainPreferences.getCoordinates()[0].toDouble()
@@ -389,15 +391,11 @@ class Clock : ScopedFragment() {
     }
 
     private fun setMotionDelay(value: String) {
-        handler.removeCallbacks(clock)
-
         delay = if (value == "smooth") {
             (1000 / getDisplayRefreshRate(requireContext(), requireActivity())!!).toLong()
         } else {
             1000
         }
-
-        handler.post(clock)
     }
 
     private fun calculateAndUpdateData(latitude: Double, longitude: Double, altitude: Double) {

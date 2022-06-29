@@ -95,10 +95,8 @@ class Trail : ScopedFragment() {
         bottomSheetSlide = requireActivity() as BottomSheetSlide
 
         currentTrail = TrailPreferences.getCurrentTrail()
-        val trailDataFactory = TrailDataFactory(currentTrail!!, requireActivity().application)
-        trailDataViewModel =
-            ViewModelProvider(this, trailDataFactory).get(TrailDataViewModel::class.java)
-        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
+        trailDataViewModel = ViewModelProvider(this, TrailDataFactory())[TrailDataViewModel::class.java]
+        locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
 
         maps = view.findViewById(R.id.map_view)
         maps?.onCreate(savedInstanceState)
@@ -125,7 +123,7 @@ class Trail : ScopedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        locationViewModel.location.observe(viewLifecycleOwner, {
+        locationViewModel.location.observe(viewLifecycleOwner) {
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.Default) {
                     location = it
@@ -141,13 +139,13 @@ class Trail : ScopedFragment() {
                     }
                 }
             }
-        })
+        }
 
-        locationViewModel.provider.observe(viewLifecycleOwner, {
+        locationViewModel.provider.observe(viewLifecycleOwner) {
             tools.locationIconStatusUpdates()
-        })
+        }
 
-        trailDataViewModel.trailDataDescendingWithInfo.observe(viewLifecycleOwner, {
+        trailDataViewModel.trailDataDescendingWithInfo.observe(viewLifecycleOwner) {
             val adapter = AdapterTrailData(it)
 
             adapter.setOnTrailsDataCallbackListener(object : AdapterTrailData.Companion.AdapterTrailsDataCallbacks {
@@ -174,7 +172,7 @@ class Trail : ScopedFragment() {
 
                             val clip: ClipData = ClipData.newPlainText("GPS Data", builder)
                             val clipboard: ClipboardManager =
-                                requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                                    requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             clipboard.setPrimaryClip(clip)
                         }
 
@@ -186,7 +184,7 @@ class Trail : ScopedFragment() {
                                                 Uri.parse("geo:${trailData.latitude},${trailData.longitude}")))
                             }.getOrElse { throwable ->
                                 Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT)
-                                    .show()
+                                        .show()
                             }
                         }
                     })
@@ -197,10 +195,10 @@ class Trail : ScopedFragment() {
                         addTrail()
                     } else {
                         location
-                            ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT)
-                                .show().also {
-                                    return
-                                }
+                                ?: Toast.makeText(requireContext(), R.string.location_not_available, Toast.LENGTH_SHORT)
+                                        .show().also {
+                                            return
+                                        }
 
                         addMarker(view, location!!.latitude, location!!.longitude, location!!.accuracy, view.x, view.y)
                     }
@@ -215,14 +213,14 @@ class Trail : ScopedFragment() {
                 }
             })
 
-            if (it.first.isNullOrEmpty()) {
+            if (it.first.isEmpty()) {
                 art.visible(false)
                 trailRecyclerView.adapter = null
             } else {
                 art.invisible(false)
                 trailRecyclerView.adapter = adapter
             }
-        })
+        }
 
         bottomSheetPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -313,9 +311,9 @@ class Trail : ScopedFragment() {
                     maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
                 }
 
-                trailDataViewModel.trailDataAscending.observe(viewLifecycleOwner, {
+                trailDataViewModel.trailDataAscending.observe(viewLifecycleOwner) {
                     maps?.addPolylines(it)
-                })
+                }
             }
 
             override fun onMapClicked() {
