@@ -527,6 +527,7 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private val compassDialAnimationRunnable = Runnable {
         if (isAnimated) {
+            dial.clearAnimation()
             isUserRotatingDial = false
         } else {
             objectAnimator = ObjectAnimator.ofFloat(dial, "rotation", dial.rotation, rotationAngle * -1)
