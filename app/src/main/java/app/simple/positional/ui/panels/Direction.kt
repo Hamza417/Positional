@@ -24,6 +24,7 @@ import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.direction.DirectionMenu
+import app.simple.positional.dialogs.direction.DirectionTarget
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.math.Angle.normalizeEulerAngle
 import app.simple.positional.math.CompassAzimuth
@@ -53,10 +54,11 @@ class Direction : ScopedFragment(), SensorEventListener {
     private lateinit var displacement: TextView
     private lateinit var azimuth: TextView
     private lateinit var menu: DynamicRippleImageButton
+    private lateinit var targetSet: DynamicRippleImageButton
     private lateinit var calibrate: DynamicRippleImageButton
     private lateinit var compassListScrollView: NestedScrollView
     private lateinit var expandUp: ImageView
-    private lateinit var dim : View
+    private lateinit var dim: View
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var bottomSheetSlide: BottomSheetSlide
@@ -99,6 +101,7 @@ class Direction : ScopedFragment(), SensorEventListener {
         displacement = view.findViewById(R.id.direction_displacement)
         azimuth = view.findViewById(R.id.direction_compass_azimuth)
         menu = view.findViewById(R.id.direction_menu)
+        targetSet = view.findViewById(R.id.direction_target_btn)
         calibrate = view.findViewById(R.id.compass_calibrate)
         compassListScrollView = view.findViewById(R.id.direction_list_scroll_view)
         expandUp = view.findViewById(R.id.expand_up_direction_sheet)
@@ -112,7 +115,7 @@ class Direction : ScopedFragment(), SensorEventListener {
         /**
          * Qibla latlng
          */
-        targetLatLng = LatLng(21.422487, 39.826206)
+        targetLatLng = LatLng(DirectionPreferences.getTargetCoordinates()[0].toDouble(), DirectionPreferences.getTargetCoordinates()[1].toDouble())
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         kotlin.runCatching {
@@ -136,7 +139,7 @@ class Direction : ScopedFragment(), SensorEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        target.text = "Qibla"
+        target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel()}")
 
         locationViewModel.location.observe(viewLifecycleOwner) {
             directionAngle = LocationExtension.calculateBearingAngle(
@@ -151,6 +154,11 @@ class Direction : ScopedFragment(), SensorEventListener {
         menu.setOnClickListener {
             DirectionMenu.newInstance()
                     .show(childFragmentManager, "direction_menu")
+        }
+
+        targetSet.setOnClickListener {
+            DirectionTarget.newInstance()
+                    .show(childFragmentManager, "direction_target")
         }
 
         calibrate.setOnClickListener {
@@ -280,6 +288,11 @@ class Direction : ScopedFragment(), SensorEventListener {
             DirectionPreferences.directionLatitude -> {
                 targetLatLng = LatLng(DirectionPreferences.getTargetCoordinates()[0].toDouble(),
                         DirectionPreferences.getTargetCoordinates()[1].toDouble())
+
+                target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel()}")
+            }
+            DirectionPreferences.directionGimbalLock -> {
+                isGimbalLock = DirectionPreferences.isGimbalLock()
             }
         }
     }
