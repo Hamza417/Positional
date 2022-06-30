@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/direction_info_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="@dimen/peek_height"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <ImageView
+        android:id="@+id/expand_up_direction_sheet"
+        android:layout_width="@dimen/expand_up_image_size"
+        android:layout_height="@dimen/expand_up_image_size"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_expand_up"
+        app:tint="@color/iconColor"
+        tools:ignore="ContentDescription" />
+
+    <include layout="@layout/info_panel_direction" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

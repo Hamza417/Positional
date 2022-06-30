@@ -41,13 +41,13 @@
             android:src="@drawable/ic_compass_calibration"
             android:tint="@color/iconColor"
             app:layout_constraintBottom_toBottomOf="@+id/textView8"
-            app:layout_constraintEnd_toStartOf="@id/compass_menu"
+            app:layout_constraintEnd_toStartOf="@+id/direction_menu"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/textView8"
             app:layout_constraintTop_toTopOf="@+id/textView8" />
 
         <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-            android:id="@+id/compass_menu"
+            android:id="@+id/direction_menu"
             android:layout_width="@dimen/app_button_size"
             android:layout_height="@dimen/app_button_size"
             android:layout_gravity="center_vertical|end"
@@ -62,7 +62,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView8" />
 
         <TextView
-            android:id="@+id/direction"
+            android:id="@+id/compass_degrees"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -90,18 +90,31 @@
         tools:ignore="ContentDescription" />
 
     <app.simple.positional.decorations.views.PhysicalRotationImageView
-        android:id="@+id/needle"
+        android:id="@+id/direction"
         android:layout_width="@dimen/compass_bloom_dimension"
         android:layout_height="@dimen/compass_bloom_dimension"
         android:layout_gravity="center"
-        android:src="@drawable/ic_near_me"
+        android:src="@drawable/ic_direction_indicator"
         tools:ignore="ContentDescription" />
 
+    <TextView
+        android:id="@+id/degrees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/degrees"
+        android:textColor="?attr/colorAppAccent"
+        android:textSize="@dimen/compass_degrees_text_size" />
+
     <View
-        android:id="@+id/compass_dim"
+        android:id="@+id/direction_dim"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
-        android:background="#7E000000" />
+        android:background="#7E000000"
+        app:layout_anchor="@+id/direction"
+        app:layout_anchorGravity="center" />
+
+    <include layout="@layout/bottom_sheet_direction" />
 
 </app.simple.positional.decorations.views.CustomCoordinatorLayout>

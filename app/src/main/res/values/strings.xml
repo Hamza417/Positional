@@ -316,4 +316,6 @@
     <string name="gps_displacement_from_origin">Displacement from Origin:</string>
     <string name="gps_displacement_from_dest">Displacement from Dest:</string>
     <string name="direction">Direction</string>
+    <string name="targets">Targets</string>
+    <string name="direction_info">Direction Information</string>
 </resources>

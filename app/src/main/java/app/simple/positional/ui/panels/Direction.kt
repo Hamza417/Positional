@@ -1,20 +1,369 @@
 package app.simple.positional.ui.panels
 
+import android.content.Context
+import android.content.SharedPreferences
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.ViewModelProvider
 import app.simple.positional.R
+import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.decorations.views.PhysicalRotationImageView
+import app.simple.positional.dialogs.app.ErrorDialog
+import app.simple.positional.dialogs.compass.CompassCalibration
+import app.simple.positional.dialogs.direction.DirectionMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
+import app.simple.positional.math.Angle.normalizeEulerAngle
+import app.simple.positional.math.CompassAzimuth
+import app.simple.positional.math.LowPassFilter
+import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.UnitConverter.toFeet
+import app.simple.positional.math.UnitConverter.toKilometers
+import app.simple.positional.math.UnitConverter.toMiles
+import app.simple.positional.math.Vector3
+import app.simple.positional.preferences.DirectionPreferences
+import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.HtmlHelper
+import app.simple.positional.util.LocationExtension
+import app.simple.positional.viewmodels.viewmodel.LocationViewModel
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlin.math.abs
 
-class Direction : ScopedFragment() {
+class Direction : ScopedFragment(), SensorEventListener {
+
+    private lateinit var direction: PhysicalRotationImageView
+    private lateinit var dial: PhysicalRotationImageView
+    private lateinit var degrees: TextView
+    private lateinit var directionDegrees: TextView
+    private lateinit var target: TextView
+    private lateinit var bearing: TextView
+    private lateinit var displacement: TextView
+    private lateinit var azimuth: TextView
+    private lateinit var menu: DynamicRippleImageButton
+    private lateinit var calibrate: DynamicRippleImageButton
+    private lateinit var compassListScrollView: NestedScrollView
+    private lateinit var expandUp: ImageView
+    private lateinit var dim : View
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
+    private lateinit var bottomSheetSlide: BottomSheetSlide
+    private var backPress: OnBackPressedDispatcher? = null
+    private var calibrationDialog: CompassCalibration? = null
+    private var targetLatLng: LatLng? = null
+    private lateinit var locationViewModel: LocationViewModel
+
+    private val accelerometerReadings = FloatArray(3)
+    private val magnetometerReadings = FloatArray(3)
+    private val rotation = FloatArray(9)
+    private val inclination = FloatArray(9)
+
+    private var accelerometer = Vector3.zero
+    private var magnetometer = Vector3.zero
+
+    private var readingsAlpha = 0.03f
+    private var rotationAngle = 0f
+    private var directionAngle = 0F
+    private val degreesPerRadian = 180 / Math.PI
+    private val twoTimesPi = 2.0 * Math.PI
+
+    private var haveAccelerometerSensor = false
+    private var haveMagnetometerSensor = false
+    private var isGimbalLock = true
+
+    private lateinit var sensorManager: SensorManager
+    private lateinit var sensorAccelerometer: Sensor
+    private lateinit var sensorMagneticField: Sensor
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_direction, container, false)
 
+        direction = view.findViewById(R.id.direction)
+        dial = view.findViewById(R.id.dial)
+        degrees = view.findViewById(R.id.compass_degrees)
+        directionDegrees = view.findViewById(R.id.degrees)
+        target = view.findViewById(R.id.direction_target)
+        bearing = view.findViewById(R.id.direction_bearing)
+        displacement = view.findViewById(R.id.direction_displacement)
+        azimuth = view.findViewById(R.id.direction_compass_azimuth)
+        menu = view.findViewById(R.id.direction_menu)
+        calibrate = view.findViewById(R.id.compass_calibrate)
+        compassListScrollView = view.findViewById(R.id.direction_list_scroll_view)
+        expandUp = view.findViewById(R.id.expand_up_direction_sheet)
+        dim = view.findViewById(R.id.direction_dim)
 
+        bottomSheetSlide = requireActivity() as BottomSheetSlide
+        backPress = requireActivity().onBackPressedDispatcher
+        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.direction_info_bottom_sheet))
+        locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
+
+        /**
+         * Qibla latlng
+         */
+        targetLatLng = LatLng(21.422487, 39.826206)
+        sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        kotlin.runCatching {
+            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            haveMagnetometerSensor = true
+            haveAccelerometerSensor = true
+        }.getOrElse {
+            haveAccelerometerSensor = false
+            haveMagnetometerSensor = false
+
+            ErrorDialog.newInstance(getString(R.string.sensor_error))
+                    .show(childFragmentManager, "error_dialog")
+        }
+
+        setPhysicalProperties()
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        target.text = "Qibla"
+
+        locationViewModel.location.observe(viewLifecycleOwner) {
+            directionAngle = LocationExtension.calculateBearingAngle(
+                    it.latitude,
+                    it.longitude,
+                    targetLatLng!!.latitude,
+                    targetLatLng!!.longitude).toFloat()
+
+            displacement.text = HtmlHelper.fromHtml(targetDisplacement(LatLng(it.latitude, it.longitude), targetLatLng!!).toString())
+        }
+
+        menu.setOnClickListener {
+            DirectionMenu.newInstance()
+                    .show(childFragmentManager, "direction_menu")
+        }
+
+        calibrate.setOnClickListener {
+            CompassCalibration.newInstance()
+                    .show(parentFragmentManager, "calibration_dialog")
+        }
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    backPressed(true)
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    backPressed(false)
+                    while (backPress!!.hasEnabledCallbacks()) {
+                        /**
+                         * This is a workaround and not a full fledged method to
+                         * remove any existing callbacks
+                         *
+                         * The [bottomSheetBehavior] adds a new callback every time it is expanded
+                         * and it is a feasible approach to remove any existing callbacks
+                         * as soon as it is collapsed, the callback number will always remain
+                         * one
+                         *
+                         * What makes this approach a slightly less reliable is because so
+                         * many presumption has been taken here
+                         */
+                        backPress?.onBackPressed()
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                compassListScrollView.alpha = slideOffset
+                expandUp.alpha = 1 - slideOffset
+                dim.alpha = slideOffset
+                bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                //toolbar.translationY = toolbar.height * -slideOffset
+            }
+        })
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event == null) return
+
+        when (event.sensor.type) {
+            Sensor.TYPE_ACCELEROMETER -> {
+                LowPassFilter.smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
+                accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
+            }
+            Sensor.TYPE_MAGNETIC_FIELD -> {
+                LowPassFilter.smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
+                magnetometer = Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
+            }
+        }
+
+        rotationAngle = if (isGimbalLock) {
+            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+        } else {
+            val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(rotation, inclination, accelerometerReadings, magnetometerReadings)
+
+            if (successfullyCalculatedRotationMatrix) {
+                val orientation = FloatArray(3)
+                SensorManager.getOrientation(rotation, orientation)
+                ((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat()
+            } else {
+                0F
+            }
+        }
+
+        dial.rotationUpdate(rotationAngle * -1, true)
+        direction.rotationUpdate((directionAngle.minus(rotationAngle)).normalizeEulerAngle(false), true)
+
+        degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append("°")
+        directionDegrees.text = StringBuilder().append(abs(direction.rotation.normalizeEulerAngle(false).toInt())).append("°")
+        azimuth.text = HtmlHelper.fromHtml("<b>${getString(R.string.moon_azimuth)}</b> ${degrees.text}")
+        bearing.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${directionDegrees.text}")
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
+        if (sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
+            when (accuracy) {
+                SensorManager.SENSOR_STATUS_UNRELIABLE -> {
+                    openCalibrationDialog()
+                    HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
+                }
+                SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
+                    openCalibrationDialog()
+                    HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
+                }
+                SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
+                    HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
+                }
+                SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
+                    HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
+                }
+                else -> {
+                    HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
+                }
+            }
+        }
+
+        if (sensor.type == Sensor.TYPE_ACCELEROMETER) {
+            when (accuracy) {
+                SensorManager.SENSOR_STATUS_UNRELIABLE -> {
+                    openCalibrationDialog()
+                    HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
+                }
+                SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
+                    openCalibrationDialog()
+                    HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
+                }
+                SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
+                    HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
+                }
+                SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
+                    HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
+                }
+                else -> {
+                    HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
+                }
+            }
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            DirectionPreferences.directionLatitude -> {
+                targetLatLng = LatLng(DirectionPreferences.getTargetCoordinates()[0].toDouble(),
+                        DirectionPreferences.getTargetCoordinates()[1].toDouble())
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        register()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregister()
+    }
+
+    private fun register() {
+        if (haveAccelerometerSensor && haveMagnetometerSensor) {
+            sensorManager.registerListener(this, sensorAccelerometer, SensorManager.SENSOR_DELAY_GAME)
+            sensorManager.registerListener(this, sensorMagneticField, SensorManager.SENSOR_DELAY_GAME)
+        }
+    }
+
+    private fun unregister() {
+        if (haveAccelerometerSensor && haveMagnetometerSensor) {
+            sensorManager.unregisterListener(this, sensorAccelerometer)
+            sensorManager.unregisterListener(this, sensorMagneticField)
+        }
+    }
+
+    private fun setPhysicalProperties() {
+        dial.setPhysical(0.5F, 8F, 5000F)
+        direction.setPhysical(1.0F, 8F, 5000F)
+    }
+
+    private fun openCalibrationDialog() {
+        if (calibrationDialog == null) {
+            calibrationDialog = CompassCalibration.newInstance()
+            calibrationDialog!!.show(parentFragmentManager, "calibration_dialog")
+        }
+    }
+
+    private fun targetDisplacement(target: LatLng, current: LatLng): StringBuilder {
+        return StringBuilder().also { stringBuilder ->
+            stringBuilder.append("<b>${getString(R.string.gps_displacement)} </b>")
+
+            kotlin.runCatching {
+                val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
+
+                if (MainPreferences.getUnit()) {
+                    if (p0 < 1000) {
+                        stringBuilder.append(p0.round(2))
+                        stringBuilder.append(" ")
+                        stringBuilder.append(requireContext().getString(R.string.meter))
+                    } else {
+                        stringBuilder.append(p0.toKilometers().round(2))
+                        stringBuilder.append(" ")
+                        stringBuilder.append(requireContext().getString(R.string.kilometer))
+                    }
+                } else {
+                    if (p0 < 1000) {
+                        stringBuilder.append(p0.toDouble().toFeet().toFloat().round(2))
+                        stringBuilder.append(" ")
+                        stringBuilder.append(requireContext().getString(R.string.feet))
+                    } else {
+                        stringBuilder.append(p0.toMiles().round(2))
+                        stringBuilder.append(" ")
+                        stringBuilder.append(requireContext().getString(R.string.miles))
+                    }
+                }
+            }.getOrElse {
+                stringBuilder.append(getString(R.string.not_available))
+            }
+        }
+    }
+
+    private fun backPressed(value: Boolean) {
+        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
+            override fun handleOnBackPressed() {
+                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+
+                remove()
+            }
+        })
     }
 
     companion object {

@@ -26,10 +26,6 @@ class CompassCalibration : CustomBottomSheetDialogFragment(), SensorEventListene
     private lateinit var magAccuracy: TextView
     private lateinit var accAccuracy: TextView
 
-    fun newInstance(): CompassCalibration {
-        return CompassCalibration()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.dialog_compass_calibration, container, false)
         magAccuracy = v.findViewById(R.id.mag_accuracy)
@@ -119,6 +115,12 @@ class CompassCalibration : CustomBottomSheetDialogFragment(), SensorEventListene
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             sensorManager.unregisterListener(this, sensorAccelerometer)
             sensorManager.unregisterListener(this, sensorMagneticField)
+        }
+    }
+
+    companion object {
+        fun newInstance(): CompassCalibration {
+            return CompassCalibration()
         }
     }
 }

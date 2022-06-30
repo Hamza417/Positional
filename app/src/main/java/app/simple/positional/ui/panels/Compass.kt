@@ -206,7 +206,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         calibrate.setOnClickListener {
-            CompassCalibration().newInstance()
+            CompassCalibration.newInstance()
                     .show(parentFragmentManager, "calibration_dialog")
         }
 
@@ -549,7 +549,7 @@ class Compass : ScopedFragment(), SensorEventListener {
 
     private fun openCalibrationDialog() {
         if (calibrationDialog == null) {
-            calibrationDialog = CompassCalibration().newInstance()
+            calibrationDialog = CompassCalibration.newInstance()
             calibrationDialog!!.show(parentFragmentManager, "calibration_dialog")
         }
     }
