@@ -365,6 +365,11 @@
             android:exported="true"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activities.subactivity.DirectionsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait" />
+
         <!-- Services -->
 
         <service

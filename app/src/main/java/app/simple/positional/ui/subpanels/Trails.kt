@@ -8,11 +8,11 @@ import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.adapters.trail.AdapterTrails
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.dialogs.trail.AddTrail
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.model.TrailModel
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.popups.trail.PopupTrailsMenu
@@ -61,7 +61,7 @@ class Trails : ScopedFragment() {
             p0.show(parentFragmentManager, "add_trail")
         }
 
-        trailViewModel.getTrails().observe(viewLifecycleOwner, {
+        trailViewModel.getTrails().observe(viewLifecycleOwner) {
             adapterTrails = AdapterTrails(it)
             adapterTrails.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
 
@@ -74,7 +74,7 @@ class Trails : ScopedFragment() {
                 override fun onTrailMenu(trailModel: TrailModel, anchor: View) {
                     val popup = PopupTrailsMenu(
                             layoutInflater.inflate(R.layout.popup_trails,
-                                                   DynamicCornerLinearLayout(requireContext())), anchor)
+                                    DynamicCornerLinearLayout(requireContext())), anchor)
 
 
                     popup.setOnPopupCallbacksListener(object : PopupTrailsMenu.Companion.PopupTrailsCallbacks {
@@ -105,7 +105,7 @@ class Trails : ScopedFragment() {
             }
 
             recyclerView.adapter = adapterTrails
-        })
+        }
     }
 
     companion object {

@@ -15,13 +15,15 @@ object DirectionPreferences {
     //--------------------------------------------------------------------------------------------------//
 
     @SuppressLint("ApplySharedPref")
-    fun setTargetLatitude(@NotNull value: Float) {
+    fun setTargetLatitude(@NotNull value: Float): Float {
         SharedPreferences.getSharedPreferences().edit().putFloat(directionLatitude, value).commit()
+        return value
     }
 
     @SuppressLint("ApplySharedPref")
-    fun setTargetLongitude(@NotNull value: Float) {
+    fun setTargetLongitude(@NotNull value: Float): Float {
         SharedPreferences.getSharedPreferences().edit().putFloat(directionLongitude, value).commit()
+        return value
     }
 
     fun getTargetCoordinates(): FloatArray {
@@ -33,8 +35,9 @@ object DirectionPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setTargetLabel(value: String) {
-        SharedPreferences.getSharedPreferences().edit().putString(directionLabel, value).apply()
+    fun setTargetLabel(value: String): String {
+        SharedPreferences.getSharedPreferences().edit().putString(directionLabel, value).commit()
+        return value
     }
 
     fun getTargetLabel(): String? {

@@ -1,11 +1,13 @@
 package app.simple.positional.ui.panels
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +20,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import app.simple.positional.R
+import app.simple.positional.activities.subactivity.DirectionsActivity
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
@@ -36,6 +40,8 @@ import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.DirectionPreferences
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.ui.subpanels.Directions
+import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
@@ -52,6 +58,8 @@ class Direction : ScopedFragment(), SensorEventListener {
     private lateinit var target: TextView
     private lateinit var bearing: TextView
     private lateinit var displacement: TextView
+    private lateinit var latitude: TextView
+    private lateinit var longitude: TextView
     private lateinit var azimuth: TextView
     private lateinit var menu: DynamicRippleImageButton
     private lateinit var targetSet: DynamicRippleImageButton
@@ -59,12 +67,14 @@ class Direction : ScopedFragment(), SensorEventListener {
     private lateinit var compassListScrollView: NestedScrollView
     private lateinit var expandUp: ImageView
     private lateinit var dim: View
+    private lateinit var mainLayout: CustomCoordinatorLayout
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private var backPress: OnBackPressedDispatcher? = null
     private var calibrationDialog: CompassCalibration? = null
     private var targetLatLng: LatLng? = null
+    private var location: Location? = null
     private lateinit var locationViewModel: LocationViewModel
 
     private val accelerometerReadings = FloatArray(3)
@@ -99,6 +109,8 @@ class Direction : ScopedFragment(), SensorEventListener {
         target = view.findViewById(R.id.direction_target)
         bearing = view.findViewById(R.id.direction_bearing)
         displacement = view.findViewById(R.id.direction_displacement)
+        latitude = view.findViewById(R.id.direction_latitude)
+        longitude = view.findViewById(R.id.direction_longitude)
         azimuth = view.findViewById(R.id.direction_compass_azimuth)
         menu = view.findViewById(R.id.direction_menu)
         targetSet = view.findViewById(R.id.direction_target_btn)
@@ -106,6 +118,7 @@ class Direction : ScopedFragment(), SensorEventListener {
         compassListScrollView = view.findViewById(R.id.direction_list_scroll_view)
         expandUp = view.findViewById(R.id.expand_up_direction_sheet)
         dim = view.findViewById(R.id.direction_dim)
+        mainLayout = view.findViewById(R.id.direction_main_layout)
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
@@ -132,6 +145,7 @@ class Direction : ScopedFragment(), SensorEventListener {
         }
 
         setPhysicalProperties()
+        setCoordinates()
 
         return view
     }
@@ -139,9 +153,12 @@ class Direction : ScopedFragment(), SensorEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel()}")
+        mainLayout.setProxyView(view)
+        target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel() ?: getString(R.string.not_available)}")
 
         locationViewModel.location.observe(viewLifecycleOwner) {
+            location = it
+
             directionAngle = LocationExtension.calculateBearingAngle(
                     it.latitude,
                     it.longitude,
@@ -157,8 +174,7 @@ class Direction : ScopedFragment(), SensorEventListener {
         }
 
         targetSet.setOnClickListener {
-            DirectionTarget.newInstance()
-                    .show(childFragmentManager, "direction_target")
+            startActivity(Intent(requireActivity(), DirectionsActivity::class.java))
         }
 
         calibrate.setOnClickListener {
@@ -289,7 +305,17 @@ class Direction : ScopedFragment(), SensorEventListener {
                 targetLatLng = LatLng(DirectionPreferences.getTargetCoordinates()[0].toDouble(),
                         DirectionPreferences.getTargetCoordinates()[1].toDouble())
 
-                target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel()}")
+                target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel() ?: getString(R.string.not_available)}")
+
+                if (location != null) {
+                    directionAngle = LocationExtension.calculateBearingAngle(
+                            location!!.latitude,
+                            location!!.longitude,
+                            targetLatLng!!.latitude,
+                            targetLatLng!!.longitude).toFloat()
+                }
+
+                setCoordinates()
             }
             DirectionPreferences.directionGimbalLock -> {
                 isGimbalLock = DirectionPreferences.isGimbalLock()
@@ -331,6 +357,11 @@ class Direction : ScopedFragment(), SensorEventListener {
             calibrationDialog = CompassCalibration.newInstance()
             calibrationDialog!!.show(parentFragmentManager, "calibration_dialog")
         }
+    }
+
+    private fun setCoordinates() {
+        latitude.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDM(targetLatLng?.latitude!!, requireContext())}")
+        longitude.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.latitudeAsDM(targetLatLng?.longitude!!, requireContext())}")
     }
 
     private fun targetDisplacement(target: LatLng, current: LatLng): StringBuilder {

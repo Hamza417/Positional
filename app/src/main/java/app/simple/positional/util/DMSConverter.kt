@@ -4,6 +4,7 @@ import android.content.Context
 import android.location.Location
 import app.simple.positional.R
 import app.simple.positional.math.MathExtensions
+import com.google.android.gms.maps.model.LatLng
 import kotlin.math.abs
 
 object DMSConverter {
@@ -19,6 +20,10 @@ object DMSConverter {
         var strLongitude = toDMS(abs(longitude))
         strLongitude += " $direction"
         return strLongitude
+    }
+
+    fun getDMS(latLng: LatLng, context: Context): String {
+        return latitudeAsDMS(latLng.latitude, context) + " | " + longitudeAsDMS(latLng.longitude, context)
     }
 
     fun latitudeAsDD(latitude: Double): String {

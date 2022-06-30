@@ -32,14 +32,12 @@
             android:text="@string/targets"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
-            android:visibility="gone"
             app:drawableStartCompat="@drawable/ic_near_me"
             app:drawableTint="@color/iconRegular" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:visibility="gone"
             android:layout_marginVertical="@dimen/options_sub_item_padding"
             android:background="@color/dividerColor" />
 

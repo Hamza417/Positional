@@ -9,6 +9,7 @@ import androidx.core.widget.doOnTextChanged
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomDialogFragment
+import app.simple.positional.model.DirectionModel
 import app.simple.positional.preferences.DirectionPreferences
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.ViewUtils.gone
@@ -24,6 +25,8 @@ class DirectionTarget : CustomDialogFragment() {
 
     private var isValidLatitude = false
     private var isValidLongitude = false
+
+    private var directionTargetCallbacks: DirectionTargetCallbacks? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_direction_target, container, false)
@@ -72,10 +75,16 @@ class DirectionTarget : CustomDialogFragment() {
         }
 
         save.setOnClickListener {
-            DirectionPreferences.setTargetLatitude(latitude.text.toString().toFloat())
-            DirectionPreferences.setTargetLongitude(longitude.text.toString().toFloat())
-            DirectionPreferences.setTargetLabel(label.text.toString())
-            dismiss()
+            val directionModel = DirectionModel()
+
+            directionModel.latitude = DirectionPreferences.setTargetLatitude(latitude.text.toString().toFloat()).toDouble()
+            directionModel.longitude = DirectionPreferences.setTargetLongitude(longitude.text.toString().toFloat()).toDouble()
+            directionModel.name = DirectionPreferences.setTargetLabel(label.text.toString())
+            directionModel.dateAdded = System.currentTimeMillis()
+
+            directionTargetCallbacks?.onDirectionAdded(directionModel).also {
+                dismiss()
+            }
         }
 
         cancel.setOnClickListener {
@@ -91,12 +100,20 @@ class DirectionTarget : CustomDialogFragment() {
         }
     }
 
+    fun setOnDirectionTargetListener(directionTargetCallbacks: DirectionTargetCallbacks) {
+        this.directionTargetCallbacks = directionTargetCallbacks
+    }
+
     companion object {
         fun newInstance(): DirectionTarget {
             val args = Bundle()
             val fragment = DirectionTarget()
             fragment.arguments = args
             return fragment
+        }
+
+        interface DirectionTargetCallbacks {
+            fun onDirectionAdded(directionModel: DirectionModel)
         }
     }
 }
