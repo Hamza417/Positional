@@ -55,11 +55,7 @@ class Directions : ScopedFragment() {
 
             adapter.setOnDirectionCallbacksListener(object : AdapterDirections.Companion.AdapterDirectionsCallbacks {
                 override fun onDirectionClicked(directionModel: DirectionModel) {
-                    DirectionPreferences.setTargetLatitude(directionModel.latitude.toFloat())
-                    DirectionPreferences.setTargetLongitude(directionModel.longitude.toFloat())
-                    DirectionPreferences.setTargetLabel(directionModel.name)
-
-                    requireActivity().onBackPressed()
+                    set(directionModel)
                 }
 
                 override fun onDirectionLongPressed(directionModel: DirectionModel) {
@@ -72,11 +68,7 @@ class Directions : ScopedFragment() {
 
                     popup.setOnPopupCallbacksListener(object : PopupDirectionsMenu.Companion.PopupDirectionsCallbacks {
                         override fun onSet() {
-                            DirectionPreferences.setTargetLatitude(directionModel.latitude.toFloat())
-                            DirectionPreferences.setTargetLongitude(directionModel.longitude.toFloat())
-                            DirectionPreferences.setTargetLabel(directionModel.name)
-
-                            requireActivity().onBackPressed()
+                            set(directionModel)
                         }
 
                         override fun onDelete() {
@@ -94,6 +86,15 @@ class Directions : ScopedFragment() {
 
             recyclerView.adapter = adapter
         }
+    }
+
+    private fun set(directionModel: DirectionModel) {
+        DirectionPreferences.setTargetLatitude(directionModel.latitude.toFloat())
+        DirectionPreferences.setTargetLongitude(directionModel.longitude.toFloat())
+        DirectionPreferences.setTargetLabel(directionModel.name)
+        DirectionPreferences.setUseMapsTarget(false)
+
+        requireActivity().onBackPressed()
     }
 
     companion object {

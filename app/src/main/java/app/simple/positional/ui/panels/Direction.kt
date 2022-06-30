@@ -28,7 +28,6 @@ import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
 import app.simple.positional.dialogs.direction.DirectionMenu
-import app.simple.positional.dialogs.direction.DirectionTarget
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.math.Angle.normalizeEulerAngle
 import app.simple.positional.math.CompassAzimuth
@@ -39,8 +38,8 @@ import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.DirectionPreferences
+import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.ui.subpanels.Directions
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper
 import app.simple.positional.util.LocationExtension
@@ -125,10 +124,7 @@ class Direction : ScopedFragment(), SensorEventListener {
         bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.direction_info_bottom_sheet))
         locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
 
-        /**
-         * Qibla latlng
-         */
-        targetLatLng = LatLng(DirectionPreferences.getTargetCoordinates()[0].toDouble(), DirectionPreferences.getTargetCoordinates()[1].toDouble())
+        setTargetCoordinates()
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         kotlin.runCatching {
@@ -301,11 +297,9 @@ class Direction : ScopedFragment(), SensorEventListener {
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            DirectionPreferences.directionLatitude -> {
-                targetLatLng = LatLng(DirectionPreferences.getTargetCoordinates()[0].toDouble(),
-                        DirectionPreferences.getTargetCoordinates()[1].toDouble())
-
-                target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel() ?: getString(R.string.not_available)}")
+            DirectionPreferences.directionLatitude, DirectionPreferences.useMapsTarget -> {
+                setTargetCoordinates()
+                setTargetLabel()
 
                 if (location != null) {
                     directionAngle = LocationExtension.calculateBearingAngle(
@@ -362,6 +356,22 @@ class Direction : ScopedFragment(), SensorEventListener {
     private fun setCoordinates() {
         latitude.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDM(targetLatLng?.latitude!!, requireContext())}")
         longitude.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.latitudeAsDM(targetLatLng?.longitude!!, requireContext())}")
+    }
+
+    private fun setTargetCoordinates() {
+        targetLatLng = if (DirectionPreferences.isUsingMapsTarget()) {
+            LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(), GPSPreferences.getTargetMarkerCoordinates()[1].toDouble())
+        } else {
+            LatLng(DirectionPreferences.getTargetCoordinates()[0].toDouble(), DirectionPreferences.getTargetCoordinates()[1].toDouble())
+        }
+    }
+
+    private fun setTargetLabel() {
+        if (DirectionPreferences.isUsingMapsTarget()) {
+            target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}: ${getString(R.string.using_maps_target)} </b>")
+        } else {
+            target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel() ?: getString(R.string.not_available)}")
+        }
     }
 
     private fun targetDisplacement(target: LatLng, current: LatLng): StringBuilder {

@@ -9,6 +9,7 @@ object DirectionPreferences {
     const val directionLatitude = "direct_target_latitude"
     const val directionLongitude = "direction_target_longitude"
     const val directionGimbalLock = "direction_gimbal_lock"
+    const val useMapsTarget = "direction_use_maps_target"
 
     private const val directionLabel = "direction_target_label"
 
@@ -52,5 +53,15 @@ object DirectionPreferences {
 
     fun isGimbalLock(): Boolean {
         return SharedPreferences.getSharedPreferences().getBoolean(directionGimbalLock, true)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setUseMapsTarget(value: Boolean) {
+        SharedPreferences.getSharedPreferences().edit().putBoolean(useMapsTarget, value).apply()
+    }
+
+    fun isUsingMapsTarget(): Boolean {
+        return SharedPreferences.getSharedPreferences().getBoolean(useMapsTarget, false)
     }
 }

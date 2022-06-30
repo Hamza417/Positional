@@ -318,4 +318,6 @@
     <string name="direction">Direction</string>
     <string name="targets">Targets</string>
     <string name="direction_info">Direction Information</string>
+    <string name="use_maps_target">Use Maps\' Target</string>
+    <string name="using_maps_target">Using Maps\' Target</string>
 </resources>
