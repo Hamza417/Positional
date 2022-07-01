@@ -432,10 +432,10 @@ class Compass : ScopedFragment(), SensorEventListener {
         dial.rotationUpdate(rotationAngle * -1, animate)
 
         if (CompassPreferences.isFlowerBloomOn()) {
-            flowerOne.rotationUpdate(rotationAngle * 2, animate)
-            flowerTwo.rotationUpdate(rotationAngle * -3 + 45, animate)
-            flowerThree.rotationUpdate(rotationAngle * 1 + 90, animate)
-            flowerFour.rotationUpdate(rotationAngle * -4 + 135, animate)
+            flowerOne.rotationUpdate((rotationAngle * 2).normalizeEulerAngle(false), animate)
+            flowerTwo.rotationUpdate((rotationAngle * -3 + 45).normalizeEulerAngle(false), animate)
+            flowerThree.rotationUpdate((rotationAngle * 1 + 90).normalizeEulerAngle(false), animate)
+            flowerFour.rotationUpdate((rotationAngle * -4 + 135).normalizeEulerAngle(false), animate)
         }
 
         degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append("°")
@@ -505,6 +505,10 @@ class Compass : ScopedFragment(), SensorEventListener {
                     objectAnimator?.removeAllListeners()
                     objectAnimator?.cancel()
                     dial.clearAnimation()
+                    flowerOne.clearAnimation()
+                    flowerTwo.clearAnimation()
+                    flowerThree.clearAnimation()
+                    flowerFour.clearAnimation()
                     handler.removeCallbacks(compassDialAnimationRunnable)
                     lastDialAngle = dial.rotation //if (dial.rotation < -180) abs(dial.rotation) else dial.rotation
                     startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())

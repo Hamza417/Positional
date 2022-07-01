@@ -321,12 +321,12 @@ class Clock : ScopedFragment() {
                     sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false) - 90F, true)
                 }
                 "smooth" -> {
-                    seconds.rotation = getSecondsInDegrees(getCurrentTimeData(), true)
-                    sweepSeconds.rotation = seconds.rotation - 90
+                    seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), true), true)
+                    sweepSeconds.rotationUpdate(seconds.rotation.minus(90), true)
                 }
                 "tick" -> {
-                    seconds.rotation = getSecondsInDegrees(getCurrentTimeData(), false)
-                    sweepSeconds.rotation = seconds.rotation - 90
+                    seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false), false)
+                    sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false).minus(90), false)
                 }
             }
 
