@@ -61,12 +61,14 @@ class SwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                thumb.animate()
-                    .scaleY(1.5F)
-                    .scaleX(1.5F)
-                    .setInterpolator(DecelerateInterpolator(1.5F))
-                    .setDuration(500L)
-                    .start()
+                if (isClickable) {
+                    thumb.animate()
+                        .scaleY(1.5F)
+                        .scaleX(1.5F)
+                        .setInterpolator(DecelerateInterpolator(1.5F))
+                        .setDuration(500L)
+                        .start()
+                }
             }
             MotionEvent.ACTION_MOVE,
             MotionEvent.ACTION_UP,

@@ -42,10 +42,6 @@ class DirectionMenu : CustomBottomSheetDialogFragment() {
         gimbalLock.isChecked = DirectionPreferences.isGimbalLock()
         mapsTarget.isChecked = DirectionPreferences.isUsingMapsTarget()
 
-        mapsTarget.isClickable = GPSPreferences.isTargetMarkerSet()
-        mapsTargetContainer.isClickable = GPSPreferences.isTargetMarkerSet()
-        mapsTargetContainer.alpha = (if (GPSPreferences.isTargetMarkerSet()) 1F else 0.5F)
-
         gimbalLock.setOnCheckedChangeListener {
             DirectionPreferences.setGimbalLock(it)
         }
@@ -65,6 +61,10 @@ class DirectionMenu : CustomBottomSheetDialogFragment() {
         mapsTargetContainer.setOnClickListener {
             mapsTarget.invertCheckedStatus()
         }
+
+        mapsTarget.isClickable = GPSPreferences.isTargetMarkerSet()
+        mapsTargetContainer.isClickable = GPSPreferences.isTargetMarkerSet()
+        mapsTargetContainer.alpha = (if (GPSPreferences.isTargetMarkerSet()) 1F else 0.5F)
     }
 
     companion object {

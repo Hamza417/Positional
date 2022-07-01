@@ -241,7 +241,7 @@ class Direction : ScopedFragment(), SensorEventListener {
         }
 
         dial.rotationUpdate(rotationAngle * -1, true)
-        direction.rotationUpdate((directionAngle.minus(rotationAngle)).normalizeEulerAngle(false), true)
+        direction.rotationUpdate(directionAngle.minus(rotationAngle).normalizeEulerAngle(false), true)
 
         degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append("°")
         directionDegrees.text = StringBuilder().append(abs(direction.rotation.normalizeEulerAngle(false).toInt())).append("°")
