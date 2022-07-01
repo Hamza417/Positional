@@ -359,7 +359,7 @@ class Direction : ScopedFragment(), SensorEventListener {
     }
 
     private fun setTargetCoordinates() {
-        targetLatLng = if (DirectionPreferences.isUsingMapsTarget()) {
+        targetLatLng = if (DirectionPreferences.isUsingMapsTarget() && GPSPreferences.isTargetMarkerSet()) {
             LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(), GPSPreferences.getTargetMarkerCoordinates()[1].toDouble())
         } else {
             LatLng(DirectionPreferences.getTargetCoordinates()[0].toDouble(), DirectionPreferences.getTargetCoordinates()[1].toDouble())
@@ -367,7 +367,7 @@ class Direction : ScopedFragment(), SensorEventListener {
     }
 
     private fun setTargetLabel() {
-        if (DirectionPreferences.isUsingMapsTarget()) {
+        if (DirectionPreferences.isUsingMapsTarget() && GPSPreferences.isTargetMarkerSet()) {
             target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}: ${getString(R.string.using_maps_target)} </b>")
         } else {
             target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel() ?: getString(R.string.not_available)}")
