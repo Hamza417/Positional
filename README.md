@@ -19,8 +19,8 @@ On top of all the core functionality Positional is a highly polished app and pro
 [![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
 [![Full](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
 
-[![Free](https://img.shields.io/badge/Free%20Version-Github-white?style=flat&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build158/app-lite-release.apk)
-[![Full](https://img.shields.io/badge/Full%20Version%20(Requires%20License)-Github-white?style=flat&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build158/app-full-release.apk)
+[![Free](https://img.shields.io/badge/Free%20Version-Github-white?style=flat&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build159/app-lite-release.apk)
+[![Full](https://img.shields.io/badge/Full%20Version%20(Requires%20License)-Github-white?style=flat&logo=github)](https://github.com/Hamza417/Positional/releases/download/Build159/app-full-release.apk)
 
 [![Intro](https://img.shields.io/youtube/views/34iuIlusrcs?label=Watch%20App%20Intro&logo=Youtube&logoColor=red&style=social)](https://youtu.be/34iuIlusrcs)
 
