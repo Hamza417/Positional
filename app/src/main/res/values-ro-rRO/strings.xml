@@ -284,4 +284,9 @@
     <string name="eta_hours">%1$s ore %2$s minute</string>
     <string name="eta_days">%1$s zile %2$s ore %3$s minute</string>
     <string name="eta">Timp estimat de sosire:</string>
+    <string name="gps_displacement_from_origin">Deplasare de origine:</string>
+    <string name="gps_displacement_from_dest">Deplasare de la destinație:</string>
+    <string name="direction">Direcție</string>
+    <string name="targets">Obiective</string>
+    <string name="direction_info">Informații de orientare</string>
 </resources>
