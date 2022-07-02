@@ -64,7 +64,7 @@ class DirectionMenu : CustomBottomSheetDialogFragment() {
 
         mapsTarget.isClickable = GPSPreferences.isTargetMarkerSet()
         mapsTargetContainer.isClickable = GPSPreferences.isTargetMarkerSet()
-        mapsTargetContainer.alpha = (if (GPSPreferences.isTargetMarkerSet()) 1F else 0.5F)
+        mapsTargetContainer.alpha = if (GPSPreferences.isTargetMarkerSet()) 1F else 0.5F
     }
 
     companion object {
