@@ -27,6 +27,12 @@ class PopupDirectionsMenu(anchor: View) : BasePopupWindow() {
                 dismiss()
             }
         }
+
+        contentView.findViewById<DynamicRippleTextView>(R.id.menu_edit).setOnClickListener {
+            popupDirectionsCallbacks?.onEdit().also {
+                dismiss()
+            }
+        }
     }
 
     fun setOnPopupCallbacksListener(popupDirectionsCallbacks: PopupDirectionsCallbacks) {
@@ -37,6 +43,7 @@ class PopupDirectionsMenu(anchor: View) : BasePopupWindow() {
         interface PopupDirectionsCallbacks {
             fun onSet()
             fun onDelete()
+            fun onEdit()
         }
     }
 }

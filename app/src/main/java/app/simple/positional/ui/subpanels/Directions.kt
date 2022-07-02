@@ -80,6 +80,18 @@ class Directions : ScopedFragment() {
                                 }
                             })
                         }
+
+                        override fun onEdit() {
+                            val p0 = DirectionTarget.newInstance(directionModel)
+
+                            p0.setOnDirectionTargetListener(object : DirectionTarget.Companion.DirectionTargetCallbacks {
+                                override fun onDirectionAdded(directionModel: DirectionModel) {
+                                    directionsViewModel.addDirection(directionModel)
+                                }
+                            })
+
+                            p0.show(childFragmentManager, "direction_target")
+                        }
                     })
                 }
             })

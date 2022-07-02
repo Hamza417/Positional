@@ -5,7 +5,7 @@ import app.simple.positional.model.DirectionModel
 
 @Dao
 interface DirectionDao {
-    @Query("SELECT * FROM directions ORDER BY date_added COLLATE nocase DESC LIMIT 99")
+    @Query("SELECT * FROM directions ORDER BY date_added COLLATE nocase DESC LIMIT 999")
     fun getAllDirections(): MutableList<DirectionModel>
 
     /**
@@ -22,7 +22,7 @@ interface DirectionDao {
      * @param direction that will be update
      */
     @Update
-    suspend fun updateSong(direction: DirectionModel)
+    suspend fun updateDirection(direction: DirectionModel)
 
     /**
      * @param direction removes a direction from the list

@@ -11,6 +11,7 @@ import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.model.DirectionModel
 import app.simple.positional.preferences.DirectionPreferences
+import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
@@ -26,6 +27,7 @@ class DirectionTarget : CustomDialogFragment() {
     private var isValidLatitude = false
     private var isValidLongitude = false
 
+    private var directionModel: DirectionModel? = null
     private var directionTargetCallbacks: DirectionTargetCallbacks? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,13 +39,13 @@ class DirectionTarget : CustomDialogFragment() {
         save = view.findViewById(R.id.save)
         cancel = view.findViewById(R.id.cancel)
 
+        directionModel = requireArguments().getParcelable("DirectionModel")
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        label.setText(DirectionPreferences.getTargetLabel())
 
         label.doOnTextChanged { _, _, _, _ ->
             saveButtonState()
@@ -69,26 +71,36 @@ class DirectionTarget : CustomDialogFragment() {
             saveButtonState()
         }
 
-        with(DirectionPreferences.getTargetCoordinates()) {
-            latitude.setText(this[0].toString())
-            longitude.setText(this[1].toString())
-        }
-
         save.setOnClickListener {
-            val directionModel = DirectionModel()
+            if (directionModel.isNull()) {
+                directionModel = DirectionModel()
+                directionModel?.dateAdded = System.currentTimeMillis()
+            }
 
-            directionModel.latitude = DirectionPreferences.setTargetLatitude(latitude.text.toString().toFloat()).toDouble()
-            directionModel.longitude = DirectionPreferences.setTargetLongitude(longitude.text.toString().toFloat()).toDouble()
-            directionModel.name = DirectionPreferences.setTargetLabel(label.text.toString())
-            directionModel.dateAdded = System.currentTimeMillis()
+            directionModel?.latitude = DirectionPreferences.setTargetLatitude(latitude.text.toString().toFloat()).toDouble()
+            directionModel?.longitude = DirectionPreferences.setTargetLongitude(longitude.text.toString().toFloat()).toDouble()
+            directionModel?.name = DirectionPreferences.setTargetLabel(label.text.toString())
 
-            directionTargetCallbacks?.onDirectionAdded(directionModel).also {
+            directionTargetCallbacks?.onDirectionAdded(directionModel!!).also {
                 dismiss()
             }
         }
 
         cancel.setOnClickListener {
             dismiss()
+        }
+
+        if (directionModel.isNull()) {
+            with(DirectionPreferences.getTargetCoordinates()) {
+                latitude.setText(this[0].toString())
+                longitude.setText(this[1].toString())
+            }
+
+            label.setText(DirectionPreferences.getTargetLabel())
+        } else {
+            latitude.setText(directionModel?.latitude?.toString())
+            longitude.setText(directionModel?.longitude?.toString())
+            label.setText(directionModel?.name)
         }
     }
 
@@ -105,8 +117,9 @@ class DirectionTarget : CustomDialogFragment() {
     }
 
     companion object {
-        fun newInstance(): DirectionTarget {
+        fun newInstance(directionModel: DirectionModel? = null): DirectionTarget {
             val args = Bundle()
+            args.putParcelable("DirectionModel", directionModel)
             val fragment = DirectionTarget()
             fragment.arguments = args
             return fragment
