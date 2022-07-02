@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull
 
 object DirectionPreferences {
 
-    const val directionLatitude = "direct_target_latitude"
+    const val directionLatitude = "direction_target_latitude"
     const val directionLongitude = "direction_target_longitude"
     const val directionGimbalLock = "direction_gimbal_lock"
     const val useMapsTarget = "direction_use_maps_target"
@@ -17,13 +17,13 @@ object DirectionPreferences {
 
     @SuppressLint("ApplySharedPref")
     fun setTargetLatitude(@NotNull value: Float): Float {
-        SharedPreferences.getSharedPreferences().edit().putFloat(directionLatitude, value).commit()
+        SharedPreferences.getSharedPreferences().edit().putFloat(directionLatitude, value).apply()
         return value
     }
 
     @SuppressLint("ApplySharedPref")
     fun setTargetLongitude(@NotNull value: Float): Float {
-        SharedPreferences.getSharedPreferences().edit().putFloat(directionLongitude, value).commit()
+        SharedPreferences.getSharedPreferences().edit().putFloat(directionLongitude, value).apply()
         return value
     }
 
@@ -37,7 +37,7 @@ object DirectionPreferences {
     //--------------------------------------------------------------------------------------------------//
 
     fun setTargetLabel(value: String): String {
-        SharedPreferences.getSharedPreferences().edit().putString(directionLabel, value).commit()
+        SharedPreferences.getSharedPreferences().edit().putString(directionLabel, value).apply()
         return value
     }
 

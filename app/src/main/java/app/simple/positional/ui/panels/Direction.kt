@@ -297,7 +297,7 @@ class Direction : ScopedFragment(), SensorEventListener {
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            DirectionPreferences.directionLatitude, DirectionPreferences.useMapsTarget -> {
+            DirectionPreferences.directionLatitude, DirectionPreferences.directionLongitude, DirectionPreferences.useMapsTarget -> {
                 setTargetCoordinates()
                 setTargetLabel()
 
