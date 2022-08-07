@@ -284,4 +284,12 @@
     <string name="eta_hours">%1$s घंटे %2$s मिनट</string>
     <string name="eta_days">%1$s दिन %2$s घंटे %3$s मिनट</string>
     <string name="eta">ईटीए:</string>
+    <string name="gps_displacement_from_origin">उत्पत्ति से विस्थापन:</string>
+    <string name="gps_displacement_from_dest">गंतव्य से विस्थापन:</string>
+    <string name="direction">दिशा</string>
+    <string name="targets">लक्ष्य</string>
+    <string name="direction_info">दिशा सूचना</string>
+    <string name="use_maps_target">मानचित्र के लक्ष्य का उपयोग करें</string>
+    <string name="using_maps_target">मानचित्र के लक्ष्य का उपयोग करना</string>
+    <string name="edit">ऐडिट</string>
 </resources>
