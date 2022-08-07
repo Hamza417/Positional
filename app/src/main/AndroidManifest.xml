@@ -99,7 +99,7 @@
 
         <activity-alias
             android:name=".activities.alias.IconOneAlias"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="true"
             android:icon="@mipmap/ic_launcher_default"
             android:roundIcon="@mipmap/ic_launcher_default_round"
@@ -287,7 +287,7 @@
 
         <activity-alias
             android:name=".activities.alias.IconElevenAlias"
-            android:enabled="false"
+            android:enabled="true"
             android:exported="true"
             android:icon="@mipmap/ic_launcher_eleven"
             android:label="@string/app_name"

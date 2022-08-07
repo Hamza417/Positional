@@ -48,6 +48,7 @@ class LocationService : Service(), LocationListener {
     }
 
     // only for API < 29
+    @Deprecated("Deprecated in Java")
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
         Intent().also { intent ->
             intent.action = "provider"

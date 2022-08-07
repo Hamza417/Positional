@@ -52,7 +52,7 @@ object DirectionPreferences {
     }
 
     fun isGimbalLock(): Boolean {
-        return SharedPreferences.getSharedPreferences().getBoolean(directionGimbalLock, true)
+        return SharedPreferences.getSharedPreferences().getBoolean(directionGimbalLock, false)
     }
 
     //--------------------------------------------------------------------------------------------------//

@@ -350,8 +350,6 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         val angle = if (isGimbalLock) {
-            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
-        } else {
             val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(rotation, inclination, accelerometerReadings, magnetometerReadings)
 
             if (successfullyCalculatedRotationMatrix) {
@@ -361,6 +359,8 @@ class Compass : ScopedFragment(), SensorEventListener {
             } else {
                 0F
             }
+        } else {
+            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
         }
 
         run {

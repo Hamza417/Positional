@@ -94,6 +94,6 @@ object CompassPreferences {
     }
 
     fun isUsingGimbalLock(): Boolean {
-        return getSharedPreferences().getBoolean(useGimbalLock, true)
+        return getSharedPreferences().getBoolean(useGimbalLock, false)
     }
 }
