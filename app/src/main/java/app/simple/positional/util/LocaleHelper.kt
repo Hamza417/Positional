@@ -24,7 +24,9 @@ object LocaleHelper {
             Locales("हिन्दी", "hi"),
             Locales("Română", "ro"),
             Locales("Русский", "ru"),
-            Locales("اردو", "ur"))
+            Locales("اردو", "ur"),
+            Locales("漢語 (Traditional Chinese)", "zh-TW")
+    )
 
     fun getSystemLanguageCode(): String {
         return Resources.getSystem().configuration.locales[0].language
