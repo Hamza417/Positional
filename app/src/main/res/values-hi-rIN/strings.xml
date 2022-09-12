@@ -292,4 +292,5 @@
     <string name="use_maps_target">मानचित्र के लक्ष्य का उपयोग करें</string>
     <string name="using_maps_target">मानचित्र के लक्ष्य का उपयोग करना</string>
     <string name="edit">ऐडिट</string>
+    <string name="battery_optimization_desc">घड़ी विजेट को ठीक से चलने देने के लिए कृपया बैटरी अनुकूलन अक्षम करें।</string>
 </resources>
