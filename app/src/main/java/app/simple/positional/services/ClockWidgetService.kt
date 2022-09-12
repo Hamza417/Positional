@@ -169,7 +169,7 @@ open class ClockWidgetService : Service() {
     }
 
     private fun widgetNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             val notificationBuilder = NotificationCompat.Builder(applicationContext, createNotificationChannel())
             val notification = notificationBuilder.setOngoing(true)
                     .setSmallIcon(R.drawable.ic_place_notification)

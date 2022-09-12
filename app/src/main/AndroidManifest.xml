@@ -418,6 +418,7 @@
             android:enabled="true"
             android:exported="false"
             android:externalService="false"
+            android:foregroundServiceType="mediaProjection"
             android:icon="@drawable/ic_access_time"
             android:label="@string/clock"
             android:stopWithTask="false" />
