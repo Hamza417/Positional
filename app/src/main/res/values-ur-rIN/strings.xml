@@ -284,4 +284,13 @@
     <string name="eta_hours">%1$s hours %2$s minutes</string>
     <string name="eta_days">%1$s days %2$s hours %3$s minutes</string>
     <string name="eta">ETA:</string>
+    <string name="gps_displacement_from_origin">اصل سے نقل مکانی:</string>
+    <string name="gps_displacement_from_dest">منزل سے نقل مکانی:</string>
+    <string name="direction">سمت</string>
+    <string name="targets">اہداف</string>
+    <string name="direction_info">سمت کی معلومات</string>
+    <string name="use_maps_target">Maps کا ہدف استعمال کریں۔</string>
+    <string name="using_maps_target">نقشہ جات کا ہدف استعمال کرنا</string>
+    <string name="edit">تدوین کریں</string>
+    <string name="battery_optimization_desc">گھڑی ویجیٹ کو صحیح طریقے سے چلنے دینے کے لیے براہ کرم بیٹری کی اصلاح کو غیر فعال کریں۔.</string>
 </resources>
