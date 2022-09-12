@@ -42,9 +42,10 @@ class FusedLocationService : Service() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(applicationContext)
         locationRequest = LocationRequest.create()
-            .setInterval(delay)
-            .setFastestInterval(delay)
-            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+                .setInterval(delay)
+                .setFastestInterval(delay)
+                .setWaitForAccurateLocation(true)
+                .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
 
         requestLastLocation()
 

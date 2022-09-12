@@ -7,7 +7,6 @@
 
         <!-- Theme -->
         <item name="rippleColor">@color/rippleColor</item>
-        <item name="android:windowTranslucentStatus">true</item>
         <item name="android:navigationBarColor">@color/toolbarBackground</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowLightNavigationBar">true</item>

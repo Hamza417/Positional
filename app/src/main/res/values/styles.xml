@@ -8,7 +8,6 @@
         <item name="rippleColor">@color/rippleColor</item>
         <item name="android:navigationBarColor">@color/toolbarBackground</item>
         <item name="android:colorEdgeEffect">?attr/colorAppAccent</item>
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">

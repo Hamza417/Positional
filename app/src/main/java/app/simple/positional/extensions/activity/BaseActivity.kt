@@ -2,6 +2,7 @@ package app.simple.positional.extensions.activity
 
 import android.content.Context
 import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
+import androidx.core.view.WindowCompat
 import app.simple.positional.R
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.CompassPreferences
@@ -69,6 +71,9 @@ open class BaseActivity : AppCompatActivity() {
         if (MainPreferences.isScreenOn()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
+
+        window.statusBarColor = Color.TRANSPARENT
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         /**
          * Keeps the instance of current locale of the app

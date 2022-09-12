@@ -17,7 +17,7 @@ class LocationService : Service(), LocationListener {
 
     private var locationManager: LocationManager? = null
     private var handler = Handler(Looper.getMainLooper())
-    private var delay: Long = 100
+    private var delay: Long = 1000
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -73,7 +73,7 @@ class LocationService : Service(), LocationListener {
             intent.putExtra("location_provider", provider)
             LocalBroadcastManager.getInstance(baseContext).sendBroadcast(intent)
         }
-    }
+    } 
 
     private val locationUpdater: Runnable = object : Runnable {
         override fun run() {
