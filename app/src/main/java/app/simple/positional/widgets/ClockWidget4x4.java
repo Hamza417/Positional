@@ -1,6 +1,7 @@
 package app.simple.positional.widgets;
 
 import android.app.AlarmManager;
+import android.app.ForegroundServiceStartNotAllowedException;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -49,7 +50,15 @@ public class ClockWidget4x4 extends AppWidgetProvider {
 
     private void startService(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(new Intent(context, ClockWidgetService4x4.class));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                try {
+                    context.startForegroundService(new Intent(context, ClockWidgetService4x4.class));
+                } catch (ForegroundServiceStartNotAllowedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                context.startForegroundService(new Intent(context, ClockWidgetService4x4.class));
+            }
         } else {
             context.startService(new Intent(context, ClockWidgetService4x4.class));
         }
