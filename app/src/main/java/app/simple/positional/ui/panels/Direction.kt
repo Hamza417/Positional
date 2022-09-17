@@ -65,10 +65,9 @@ class Direction : ScopedFragment(), SensorEventListener {
     private lateinit var calibrate: DynamicRippleImageButton
     private lateinit var compassListScrollView: NestedScrollView
     private lateinit var expandUp: ImageView
-    private lateinit var dim: View
-    private lateinit var mainLayout: CustomCoordinatorLayout
+    private var mainLayout: CustomCoordinatorLayout? = null
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
+    private var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>? = null
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private var backPress: OnBackPressedDispatcher? = null
     private var calibrationDialog: CompassCalibration? = null
@@ -116,12 +115,19 @@ class Direction : ScopedFragment(), SensorEventListener {
         calibrate = view.findViewById(R.id.compass_calibrate)
         compassListScrollView = view.findViewById(R.id.direction_list_scroll_view)
         expandUp = view.findViewById(R.id.expand_up_direction_sheet)
-        dim = view.findViewById(R.id.direction_dim)
-        mainLayout = view.findViewById(R.id.direction_main_layout)
+
+        kotlin.runCatching {
+            mainLayout = view.findViewById(R.id.direction_main_layout)
+        }
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
-        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.direction_info_bottom_sheet))
+        compassListScrollView.alpha = if(isLandscape()) 1F else 0F
+
+        kotlin.runCatching {
+            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.direction_info_bottom_sheet))
+        }
+
         locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
 
         setTargetCoordinates()
@@ -149,7 +155,7 @@ class Direction : ScopedFragment(), SensorEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainLayout.setProxyView(view)
+        mainLayout?.setProxyView(view)
         target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel() ?: getString(R.string.not_available)}")
 
         locationViewModel.location.observe(viewLifecycleOwner) {
@@ -178,7 +184,7 @@ class Direction : ScopedFragment(), SensorEventListener {
                     .show(parentFragmentManager, "calibration_dialog")
         }
 
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     backPressed(true)
@@ -205,7 +211,7 @@ class Direction : ScopedFragment(), SensorEventListener {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 compassListScrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
-                dim.alpha = slideOffset
+                (view.findViewById<View>(R.id.direction_dim)).alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
                 //toolbar.translationY = toolbar.height * -slideOffset
             }
@@ -411,8 +417,8 @@ class Direction : ScopedFragment(), SensorEventListener {
     private fun backPressed(value: Boolean) {
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
 
                 remove()

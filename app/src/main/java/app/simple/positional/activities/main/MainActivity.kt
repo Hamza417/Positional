@@ -8,7 +8,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.animation.DecelerateInterpolator
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -60,7 +59,7 @@ class MainActivity : BaseActivity(),
         bottomBar = findViewById(R.id.bottom_bar)
 
         bottomBar.apply {
-            layoutManager = if(StatusBarHeight.isLandscape(baseContext)) {
+            layoutManager = if (StatusBarHeight.isLandscape(baseContext)) {
                 LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
             } else {
                 LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
@@ -68,6 +67,7 @@ class MainActivity : BaseActivity(),
             adapter = bottomBarAdapter
             scheduleLayoutAnimation()
             setItemViewCacheSize(2)
+            if (StatusBarHeight.isLandscape(baseContext)) bottomBar.translationY = 0F
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {

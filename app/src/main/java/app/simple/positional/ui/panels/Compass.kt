@@ -7,7 +7,6 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.graphics.Color
 import android.hardware.*
 import android.os.Bundle
@@ -126,13 +125,13 @@ class Compass : ScopedFragment(), SensorEventListener {
     private lateinit var calibrate: DynamicRippleImageButton
     private lateinit var dialContainer: FrameLayout
     private lateinit var compassListScrollView: NestedScrollView
-    private var dim: View? = null
     private lateinit var toolbar: ConstraintLayout
 
+    @SuppressLint("WrongViewCast")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_compass, container, false)
 
-        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
+        locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
 
         accuracyAccelerometer = view.findViewById(R.id.compass_accuracy_accelerometer)
         accuracyMagnetometer = view.findViewById(R.id.compass_accuracy_magnetometer)
@@ -163,7 +162,6 @@ class Compass : ScopedFragment(), SensorEventListener {
 
         kotlin.runCatching {
             (view.findViewById(R.id.compass_main_layout) as CustomCoordinatorLayout).setProxyView(view)
-            dim = view.findViewById(R.id.compass_dim)
         }
 
         compassListScrollView = view.findViewById(R.id.compass_list_scroll_view)
@@ -198,7 +196,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         isAnimated = CompassPreferences.isUsingPhysicalProperties()
         setPhysicalProperties()
         setFlower(CompassPreferences.isFlowerBloomOn())
-        compassListScrollView.alpha = if(isLandscape()) 1F else 0F
+        compassListScrollView.alpha = if (isLandscape()) 1F else 0F
 
         return view
     }
@@ -281,7 +279,7 @@ class Compass : ScopedFragment(), SensorEventListener {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 compassListScrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
-                dim?.alpha = slideOffset
+                (view.findViewById<View>(R.id.compass_dim)).alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
                 //toolbar.translationY = toolbar.height * -slideOffset
             }

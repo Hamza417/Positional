@@ -15,6 +15,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1" />
 
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="@color/dividerColor" />
+
         <app.simple.positional.decorations.corners.DynamicCornerRecyclerView
             android:id="@+id/bottom_bar"
             android:layout_width="@dimen/bottom_nav_height"
@@ -23,7 +28,7 @@
             android:backgroundTint="@color/mainBackground"
             android:clipChildren="true"
             android:clipToPadding="false"
-            android:elevation="20dp"
+            android:elevation="0dp"
             android:layoutAnimation="@anim/grid_list_animation_controller"
             android:overScrollMode="never"
             android:paddingHorizontal="10dp"
