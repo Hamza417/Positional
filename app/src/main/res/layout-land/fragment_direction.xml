@@ -40,6 +40,11 @@
 
     </app.simple.positional.decorations.padding.PaddingAwareFrameLayout>
 
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="match_parent"

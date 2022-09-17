@@ -9,6 +9,7 @@ import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.preferences.MainPreferences.getCornerRadius
+import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.StatusBarHeight
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -39,7 +40,9 @@ class TrailToolbar : DynamicCornerLinearLayout {
             .setBottomRightCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
             .build()
 
-        background = MaterialShapeDrawable(shapeAppearanceModel)
+        if(StatusBarHeight.isLandscape(context).invert()) {
+            background = MaterialShapeDrawable(shapeAppearanceModel)
+        }
     }
 
     private fun initViews() {

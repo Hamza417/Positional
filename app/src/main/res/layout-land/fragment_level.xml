@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/indicator_bounding_box"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false">
+
+    <include layout="@layout/toolbar_level" />
+
+    <ImageView
+        android:id="@+id/level_indicator"
+        android:layout_width="@dimen/level_indicator"
+        android:layout_height="@dimen/level_indicator"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/level_dot"
+        android:layout_width="@dimen/level_dot"
+        android:layout_height="@dimen/level_dot"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/level_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/toolbar_padding"
+        android:textAlignment="center"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/level_text_size" />
+
+    <app.simple.positional.decorations.views.VerticalTextView
+        android:id="@+id/level_y"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:fontFamily="@font/regular"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/toolbar_padding"
+        android:textAlignment="center"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/level_text_size" />
+
+</FrameLayout>
+

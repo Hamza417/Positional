@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="horizontal">
@@ -13,33 +12,22 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <app.simple.positional.decorations.maps.Maps
-            android:id="@+id/map"
+        <app.simple.positional.decorations.trails.TrailMaps
+            android:id="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0" />
 
-        <ImageView
-            android:id="@+id/cross_hair"
-            android:layout_width="@dimen/app_button_size"
-            android:layout_height="@dimen/app_button_size"
-            android:layout_gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_crosshair"
-            android:visibility="gone"
-            app:tint="@color/iconColor"
-            tools:ignore="ContentDescription" />
-
         <View
-            android:id="@+id/gps_dim"
+            android:id="@+id/dim"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha="0"
             android:background="#7E000000"
             android:translationZ="20dp" />
 
-        <app.simple.positional.decorations.maps.MapsTools
-            android:id="@+id/maps_tools"
+        <app.simple.positional.decorations.trails.TrailTools
+            android:id="@+id/trail_tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -67,15 +55,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <app.simple.positional.decorations.maps.MapToolbar
-                android:id="@+id/map_toolbar"
+            <app.simple.positional.decorations.trails.TrailToolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
                 android:backgroundTint="@color/mainBackground"
                 android:elevation="0dp" />
 
-            <include layout="@layout/bottom_sheet_gps" />
+            <include layout="@layout/bottom_sheet_trail" />
 
         </LinearLayout>
 

@@ -32,6 +32,7 @@
             android:layoutAnimation="@anim/grid_list_animation_controller"
             android:overScrollMode="never"
             android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
             app:roundTopCorners="true" />
 
     </LinearLayout>

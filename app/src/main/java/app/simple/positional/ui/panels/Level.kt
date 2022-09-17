@@ -22,10 +22,10 @@ import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.VerticalTextView
 import app.simple.positional.dialogs.app.ErrorDialog
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.math.LowPassFilter.smoothAndSetReadings
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.MathExtensions.toDegrees
@@ -63,6 +63,12 @@ class Level : ScopedFragment(), SensorEventListener {
     private var readingsAlpha = 0.01f
     private var gravityWidthMotionCompensator = 0f
     private var gravityHeightMotionCompensator = 0f
+
+    private val dampingRatio = 0.32F
+    private val stiffness = SpringForce.STIFFNESS_VERY_LOW
+    private val scaleLarge = 1.5F
+    private val scaleNormal = 1.0F
+    private var isLarge = false
 
     private var anim1X: SpringAnimation? = null
     private var anim1Y: SpringAnimation? = null
@@ -112,6 +118,7 @@ class Level : ScopedFragment(), SensorEventListener {
          */
         gravityWidthMotionCompensator = screenWidth / 19.6F
         gravityHeightMotionCompensator = screenHeight / 19.6F
+
         return view
     }
 
@@ -122,11 +129,6 @@ class Level : ScopedFragment(), SensorEventListener {
         setStyle()
 
         boundingBox.setOnTouchListener { _, event ->
-
-            val dampingRatio = 0.32F
-            val stiffness = SpringForce.STIFFNESS_VERY_LOW
-            val scaleLarge = 1.5F
-            val scaleNormal = 1.0F
 
             val springForceLarge = SpringForce()
                     .setDampingRatio(dampingRatio)
@@ -155,6 +157,8 @@ class Level : ScopedFragment(), SensorEventListener {
                     anim2Y?.spring = springForceLarge
                     anim2X?.start()
                     anim2Y?.start()
+
+                    isLarge = true
                 }
                 MotionEvent.ACTION_UP -> {
                     anim1X?.cancel()
@@ -172,6 +176,8 @@ class Level : ScopedFragment(), SensorEventListener {
                     anim2Y?.spring = springForceNormal
                     anim2X?.start()
                     anim2Y?.start()
+
+                    isLarge = false
                 }
             }
             true
@@ -218,6 +224,8 @@ class Level : ScopedFragment(), SensorEventListener {
 
             val y = euler.pitch
 
+            val levelSizeCompensator = 1.0F // TODO - Buggy if (isLarge) scaleLarge else scaleNormal
+
             levelDot.translationX = levelIndicator.translationX * -0.3f //gravityReadings[0] * -1 * gravityWidthMotionCompensator / 4
             levelDot.translationY = levelIndicator.translationY * -0.3f //gravityReadings[1] * gravityHeightMotionCompensator / 4
 
@@ -230,18 +238,26 @@ class Level : ScopedFragment(), SensorEventListener {
                 levelDot.imageTintList = ColorStateList.valueOf(parseColor("#BF4848"))
             }
 
-            if (gravityReadings[0] * gravityWidthMotionCompensator - levelIndicator.width / 2
-                    > boundingBox.width / 2 * -1
-                    && gravityReadings[0] * gravityWidthMotionCompensator + levelIndicator.width / 2
-                    < boundingBox.width / 2) {
-                levelIndicator.translationX = gravityReadings[0] * gravityWidthMotionCompensator
-            }
+            if (isLandscapeVar) {
+                if (gravityReadings[0] * gravityWidthMotionCompensator - (levelIndicator.height * levelSizeCompensator) / 2 > boundingBox.height / 2 * -1
+                        && gravityReadings[0] * gravityWidthMotionCompensator + (levelIndicator.height * levelSizeCompensator) / 2 < boundingBox.height / 2) {
+                    levelIndicator.translationY = gravityReadings[0] * gravityWidthMotionCompensator
+                }
 
-            if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - levelIndicator.height / 2
-                    > boundingBox.height / 2 * -1
-                    && gravityReadings[1] * -1 * gravityHeightMotionCompensator + levelIndicator.height / 2
-                    < boundingBox.height / 2) {
-                levelIndicator.translationY = gravityReadings[1] * -1 * gravityHeightMotionCompensator
+                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - (levelIndicator.width * levelSizeCompensator) / 2 > boundingBox.width / 2 * -1
+                        && gravityReadings[1] * -1 * gravityHeightMotionCompensator + (levelIndicator.width * levelSizeCompensator) / 2 < boundingBox.width / 2) {
+                    levelIndicator.translationX = gravityReadings[1] * 1 * gravityHeightMotionCompensator
+                }
+            } else {
+                if (gravityReadings[0] * gravityWidthMotionCompensator - (levelIndicator.width * levelSizeCompensator) / 2 > boundingBox.width / 2 * -1
+                        && gravityReadings[0] * gravityWidthMotionCompensator + (levelIndicator.width * levelSizeCompensator) / 2 < boundingBox.width / 2) {
+                    levelIndicator.translationX = gravityReadings[0] * gravityWidthMotionCompensator
+                }
+
+                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - (levelIndicator.height * levelSizeCompensator) / 2 > boundingBox.height / 2 * -1
+                        && gravityReadings[1] * -1 * gravityHeightMotionCompensator + (levelIndicator.height * levelSizeCompensator) / 2 < boundingBox.height / 2) {
+                    levelIndicator.translationY = gravityReadings[1] * -1 * gravityHeightMotionCompensator
+                }
             }
 
             /**
@@ -249,8 +265,13 @@ class Level : ScopedFragment(), SensorEventListener {
              */
             //String.format("%.2g%n", abs(x))
 
-            levelX.text = fromHtml("<b>X:</b> ${abs(round(x.toDouble(), 1))}°")
-            levelY.text = fromHtml("<b>Y:</b> ${abs(round(y.toDouble(), 1))}°")
+            if (isLandscapeVar) {
+                levelX.text = fromHtml("<b>X:</b> ${abs(round(y.toDouble(), 1))}°")
+                levelY.text = fromHtml("<b>Y:</b> ${abs(round(x.toDouble(), 1))}°")
+            } else {
+                levelX.text = fromHtml("<b>X:</b> ${abs(round(x.toDouble(), 1))}°")
+                levelY.text = fromHtml("<b>Y:</b> ${abs(round(y.toDouble(), 1))}°")
+            }
         }
     }
 

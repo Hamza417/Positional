@@ -6,18 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <app.simple.positional.decorations.padding.PaddingAwareFrameLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="@dimen/clock_image_dimensions"
             android:layout_height="@dimen/clock_image_dimensions"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center">
 
             <ImageView
                 android:layout_width="@dimen/clock_image_shadow_size"
@@ -83,9 +81,15 @@
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/light"
             android:textColor="@color/textPrimary"
-            android:textSize="@dimen/info_text_primary_size" />
+            android:textSize="@dimen/info_text_secondary_size"
+            android:visibility="gone" />
 
-    </LinearLayout>
+    </app.simple.positional.decorations.padding.PaddingAwareFrameLayout>
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:background="@color/dividerColor" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"

@@ -37,6 +37,7 @@ import app.simple.positional.popups.trail.PopupMarkers
 import app.simple.positional.popups.trail.PopupTrailsDataMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
+import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.LocationExtension
@@ -61,7 +62,7 @@ class Trail : ScopedFragment() {
     private lateinit var toolbar: TrailToolbar
     private lateinit var tools: TrailTools
     private lateinit var trailRecyclerView: RecyclerView
-    private lateinit var bottomSheetPanel: BottomSheetBehavior<CoordinatorLayout>
+    private var bottomSheetPanel: BottomSheetBehavior<CoordinatorLayout>? = null
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var expandUp: ImageView
     private lateinit var art: ImageView
@@ -88,7 +89,11 @@ class Trail : ScopedFragment() {
         toolbar = view.findViewById(R.id.toolbar)
         tools = view.findViewById(R.id.trail_tools)
         trailRecyclerView = view.findViewById(R.id.trail_data_recycler_view)
-        bottomSheetPanel = BottomSheetBehavior.from(view.findViewById(R.id.trail_bottom_sheet))
+
+        kotlin.runCatching {
+            bottomSheetPanel = BottomSheetBehavior.from(view.findViewById(R.id.trail_bottom_sheet))
+        }
+
         expandUp = view.findViewById(R.id.expand_up)
         art = view.findViewById(R.id.art)
         dim = view.findViewById(R.id.dim)
@@ -112,9 +117,11 @@ class Trail : ScopedFragment() {
                        paddingTop + StatusBarHeight.getStatusBarHeight(resources),
                        paddingRight,
                        paddingBottom)
+
+            alpha = if(isLandscapeVar) 1F else 0F
         }
 
-        peekHeight = bottomSheetPanel.peekHeight
+        peekHeight = bottomSheetPanel?.peekHeight ?: 0
 
         return view
     }
@@ -207,8 +214,8 @@ class Trail : ScopedFragment() {
                 override fun onTrailClicked(latLng: LatLng) {
                     maps?.moveMapCamera(latLng, 15F, TrailPreferences.getMapTilt(), 1500)
 
-                    if (bottomSheetPanel.state == BottomSheetBehavior.STATE_EXPANDED) {
-                        bottomSheetPanel.state = BottomSheetBehavior.STATE_COLLAPSED
+                    if (bottomSheetPanel?.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        bottomSheetPanel?.state = BottomSheetBehavior.STATE_COLLAPSED
                     }
                 }
             })
@@ -222,7 +229,7 @@ class Trail : ScopedFragment() {
             }
         }
 
-        bottomSheetPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetPanel?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     backPressed(true)
@@ -317,7 +324,9 @@ class Trail : ScopedFragment() {
             }
 
             override fun onMapClicked() {
-                setFullScreen(true)
+                if(isLandscapeVar.invert()) {
+                    setFullScreen(true)
+                }
             }
 
             override fun onMapLongClicked(latLng: LatLng) {
@@ -368,15 +377,19 @@ class Trail : ScopedFragment() {
         outState.putFloat("translation", toolbar.translationY)
         outState.putBoolean("fullscreen", isFullScreen)
         outState.putParcelable("camera", maps?.getCamera())
-        outState.putInt("bottom_sheet_state", bottomSheetPanel.state)
+        outState.putInt("bottom_sheet_state", bottomSheetPanel?.state ?: 4)
         super.onSaveInstanceState(outState)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         if (savedInstanceState.isNotNull()) {
             isFullScreen = !savedInstanceState!!.getBoolean("fullscreen")
-            setFullScreen(false)
-            bottomSheetPanel.state = savedInstanceState.getInt("bottom_sheet_state")
+            if(isLandscapeVar) {
+                setFullScreen(true)
+            } else {
+                setFullScreen(false)
+            }
+            bottomSheetPanel?.state = savedInstanceState.getInt("bottom_sheet_state")
         }
         super.onViewStateRestored(savedInstanceState)
     }
@@ -403,10 +416,10 @@ class Trail : ScopedFragment() {
     private fun setFullScreen(forBottomBar: Boolean) {
         if (isFullScreen) {
             toolbar.show()
-            bottomSheetPanel.peekHeight = peekHeight
+            bottomSheetPanel?.peekHeight = peekHeight
         } else {
             toolbar.hide()
-            bottomSheetPanel.peekHeight = 0
+            bottomSheetPanel?.peekHeight = 0
         }
 
         if (forBottomBar) {
@@ -417,6 +430,8 @@ class Trail : ScopedFragment() {
     }
 
     private fun updateToolsGravity(view: View) {
+        if(isLandscapeVar) return
+
         TransitionManager.beginDelayedTransition(
                 view as ViewGroup,
                 TransitionInflater.from(requireContext())
@@ -485,8 +500,8 @@ class Trail : ScopedFragment() {
          */
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
-                if (bottomSheetPanel.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetPanel.state = BottomSheetBehavior.STATE_COLLAPSED
+                if (bottomSheetPanel?.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetPanel?.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
                 /**
                  * Remove this callback as soon as it's been called

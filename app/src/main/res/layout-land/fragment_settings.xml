@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <app.simple.positional.decorations.padding.PaddingAwareNestedScrollView
+        android:id="@+id/settings_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:overScrollMode="always"
+        app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:fontFamily="@font/heading"
+                android:paddingHorizontal="10dp"
+                android:text="@string/settings"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/top_bar_text_size"
+                android:textStyle="bold" />
+
+            <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+                android:id="@+id/rate_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16sp"
+                android:backgroundTint="?attr/colorAppAccent"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="15dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/rate_text"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/settings_secondary_text_size" />
+
+                <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+                    android:id="@+id/rate_hide"
+                    android:layout_width="@dimen/app_button_size"
+                    android:layout_height="@dimen/app_button_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_block"
+                    android:tint="@android:color/white" />
+
+            </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+
+            <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+                android:id="@+id/permission_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16sp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@android:color/holo_red_light"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="15dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/no_location_permission_alert"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/settings_secondary_text_size" />
+
+                <ImageView
+                    android:layout_width="@dimen/app_button_size"
+                    android:layout_height="@dimen/app_button_size"
+                    android:padding="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_bad_location"
+                    app:tint="@android:color/white"
+                    tools:ignore="ContentDescription" />
+
+            </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+
+            <include layout="@layout/pref_appearance" />
+
+            <include layout="@layout/pref_configuration" />
+
+            <include layout="@layout/pref_about" />
+
+            <include layout="@layout/pref_contribute" />
+
+        </LinearLayout>
+
+    </app.simple.positional.decorations.padding.PaddingAwareNestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
