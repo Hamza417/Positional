@@ -18,6 +18,7 @@ import app.simple.positional.preferences.GPSPreferences.getPinSkin
 import app.simple.positional.preferences.MainPreferences.getCornerRadius
 import app.simple.positional.preferences.MainPreferences.isCustomCoordinate
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
+import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.StatusBarHeight
 import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
@@ -46,11 +47,12 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
             .setBottomRightCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
             .build()
 
-        background = MaterialShapeDrawable(shapeAppearanceModel)
+        if(StatusBarHeight.isLandscape(context).invert()) {
+            background = MaterialShapeDrawable(shapeAppearanceModel)
+        }
 
         layoutTransition = LayoutTransition()
-        getSharedPreferences()
-            .registerOnSharedPreferenceChangeListener(this)
+        getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
     }
 
     private fun initViews() {

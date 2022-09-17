@@ -3,6 +3,7 @@ package app.simple.positional.extensions.fragment
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.os.Bundle
 import android.view.Surface
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
@@ -11,6 +12,11 @@ import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 open class ScopedFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     protected var isLandscapeVar = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        isLandscapeVar = isLandscape()
+    }
 
     override fun onResume() {
         super.onResume()

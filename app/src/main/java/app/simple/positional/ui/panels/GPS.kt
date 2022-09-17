@@ -81,7 +81,7 @@ class GPS : ScopedFragment() {
     private lateinit var tools: MapsTools
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var divider: View
-    private lateinit var dim: View
+    private var dim: View? = null
     private lateinit var locationBox: LinearLayout
     private lateinit var targetBox: DynamicRippleLinearLayout
     private lateinit var movementBox: LinearLayout
@@ -104,7 +104,7 @@ class GPS : ScopedFragment() {
     private lateinit var infoText: TextView
 
     private lateinit var handler: Handler
-    private lateinit var bottomSheetInfoPanel: BottomSheetBehavior<CoordinatorLayout>
+    private var bottomSheetInfoPanel: BottomSheetBehavior<CoordinatorLayout>? = null
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
     private lateinit var locationViewModel: LocationViewModel
@@ -129,14 +129,17 @@ class GPS : ScopedFragment() {
         toolbar = view.findViewById(R.id.map_toolbar)
         tools = view.findViewById(R.id.maps_tools)
         scrollView = view.findViewById(R.id.gps_list_scroll_view)
-        scrollView.alpha = 0f
+        scrollView.alpha = if (isLandscape()) 1F else 0F
         divider = view.findViewById(R.id.gps_divider)
         dim = view.findViewById(R.id.gps_dim)
         copy = view.findViewById(R.id.gps_copy)
         save = view.findViewById(R.id.gps_save)
         crossHair = view.findViewById(R.id.cross_hair)
         expandUp = view.findViewById(R.id.expand_up_gps_sheet)
-        bottomSheetInfoPanel = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
+
+        kotlin.runCatching {
+            bottomSheetInfoPanel = BottomSheetBehavior.from(view.findViewById(R.id.gps_info_bottom_sheet))
+        }
 
         locationBox = view.findViewById(R.id.gps_panel_location)
         targetBox = view.findViewById(R.id.gps_panel_target)
@@ -159,7 +162,7 @@ class GPS : ScopedFragment() {
         infoText = view.findViewById(R.id.gps_info_text)
 
         handler = Handler(Looper.getMainLooper())
-        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
+        locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
 
         maps = view.findViewById(R.id.map)
 
@@ -167,9 +170,11 @@ class GPS : ScopedFragment() {
 
         if (requireActivity().intent.isNotNull()) {
             if (requireActivity().intent.action == "action_map_panel_full") {
-                isFullScreen = false
-                setFullScreen(true)
-                requireActivity().intent.action = null
+                if (!isLandscapeVar) {
+                    isFullScreen = false
+                    setFullScreen(true)
+                    requireActivity().intent.action = null
+                }
             }
         }
 
@@ -189,7 +194,7 @@ class GPS : ScopedFragment() {
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
 
-        peekHeight = bottomSheetInfoPanel.peekHeight
+        peekHeight = bottomSheetInfoPanel?.peekHeight ?: 0
         tools.locationIndicatorUpdate(false)
 
         updateToolsGravity(view)
@@ -328,7 +333,7 @@ class GPS : ScopedFragment() {
             targetData.text = it
         }
 
-        bottomSheetInfoPanel.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetInfoPanel?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_DRAGGING -> {
@@ -361,7 +366,7 @@ class GPS : ScopedFragment() {
                 scrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
                 expandUp.rotationX = -180 * slideOffset
-                dim.alpha = slideOffset
+                dim?.alpha = slideOffset
                 if (!isFullScreen) {
                     bottomSheetSlide.onBottomSheetSliding(slideOffset)
                 }
@@ -509,7 +514,7 @@ class GPS : ScopedFragment() {
         }
 
         targetBox.setOnClickListener {
-            bottomSheetInfoPanel.state = BottomSheetBehavior.STATE_COLLAPSED
+            bottomSheetInfoPanel?.state = BottomSheetBehavior.STATE_COLLAPSED
 
             if (GPSPreferences.isTargetMarkerSet()) {
                 maps?.moveCameraToTarget()
@@ -535,11 +540,13 @@ class GPS : ScopedFragment() {
             }
 
             override fun onMapClicked() {
-                setFullScreen(true)
+                if(!isLandscapeVar) {
+                    setFullScreen(true)
+                }
             }
 
             override fun onMapLongClicked(latLng: LatLng) {
-                PopupLocationMenu(dim, x, y).setOnMapsCallBackListener(object : MapsCallbacks {
+                PopupLocationMenu(dim!!, x, y).setOnMapsCallBackListener(object : MapsCallbacks {
                     override fun onTargetAdd() {
                         maps?.setTargetMarker(latLng)
                     }
@@ -557,7 +564,7 @@ class GPS : ScopedFragment() {
             }
         })
 
-        dim.setOnTouchListener { _, event ->
+        dim?.setOnTouchListener { _, event ->
             when (event!!.action) {
                 MotionEvent.ACTION_DOWN -> {
                     x = event.x
@@ -594,7 +601,7 @@ class GPS : ScopedFragment() {
                     maps?.unregister()
                 }
                 MotionEvent.ACTION_UP -> {
-                    if (bottomSheetInfoPanel.state != BottomSheetBehavior.STATE_EXPANDED) {
+                    if (bottomSheetInfoPanel?.state != BottomSheetBehavior.STATE_EXPANDED) {
                         maps?.registerWithRunnable()
                     }
                 }
@@ -612,10 +619,10 @@ class GPS : ScopedFragment() {
     private fun setFullScreen(forBottomBar: Boolean) {
         if (isFullScreen) {
             toolbar.show()
-            bottomSheetInfoPanel.peekHeight = peekHeight
+            bottomSheetInfoPanel?.peekHeight = peekHeight
         } else {
             toolbar.hide()
-            bottomSheetInfoPanel.peekHeight = 0
+            bottomSheetInfoPanel?.peekHeight = 0
         }
 
         if (forBottomBar) {
@@ -709,8 +716,8 @@ class GPS : ScopedFragment() {
          */
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
-                if (bottomSheetInfoPanel.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetInfoPanel.state = BottomSheetBehavior.STATE_COLLAPSED
+                if (bottomSheetInfoPanel?.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetInfoPanel?.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
                 /**
                  * Remove this callback as soon as it's been called
@@ -731,12 +738,18 @@ class GPS : ScopedFragment() {
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         if (savedInstanceState.isNotNull()) {
             isFullScreen = !savedInstanceState!!.getBoolean("fullscreen")
-            setFullScreen(false)
+            if (isLandscapeVar) {
+                setFullScreen(true)
+            } else {
+                setFullScreen(isFullScreen)
+            }
         }
         super.onViewStateRestored(savedInstanceState)
     }
 
     private fun updateToolsGravity(view: View) {
+        if (isLandscapeVar) return
+
         TransitionManager.beginDelayedTransition(
                 view as ViewGroup,
                 TransitionInflater.from(requireContext())

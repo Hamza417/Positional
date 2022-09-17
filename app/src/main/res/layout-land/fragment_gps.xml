@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <app.simple.positional.decorations.maps.Maps
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0" />
+
+        <ImageView
+            android:id="@+id/cross_hair"
+            android:layout_width="@dimen/app_button_size"
+            android:layout_height="@dimen/app_button_size"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_crosshair"
+            android:visibility="gone"
+            app:tint="@color/iconColor"
+            tools:ignore="ContentDescription" />
+
+        <View
+            android:id="@+id/gps_dim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:background="#7E000000"
+            android:translationZ="20dp" />
+
+        <app.simple.positional.decorations.maps.MapsTools
+            android:id="@+id/maps_tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/trail_tools_margin"
+            android:animateLayoutChanges="true"
+            android:backgroundTint="@color/mainBackground"
+            android:elevation="10dp"
+            android:orientation="horizontal"
+            android:padding="@dimen/trail_tools_padding" />
+
+    </FrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <app.simple.positional.decorations.maps.MapToolbar
+                android:id="@+id/map_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:backgroundTint="@color/mainBackground"
+                android:elevation="0dp" />
+
+            <include layout="@layout/bottom_sheet_gps" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

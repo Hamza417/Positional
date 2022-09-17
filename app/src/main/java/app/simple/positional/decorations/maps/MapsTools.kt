@@ -13,6 +13,7 @@ import app.simple.positional.decorations.views.LocationButton
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.ImageLoader
+import app.simple.positional.util.StatusBarHeight
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
 
@@ -138,17 +139,21 @@ class MapsTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenc
     }
 
     private fun setAlignButtonState(animate: Boolean) {
-        if (GPSPreferences.isToolsGravityLeft()) {
-            if (animate) {
-                ImageLoader.setImage(R.drawable.ic_arrow_right, align, context, 0)
-            } else {
-                align.setImageResource(R.drawable.ic_arrow_right)
-            }
+        if(StatusBarHeight.isLandscape(context)) {
+            align.gone()
         } else {
-            if (animate) {
-                ImageLoader.setImage(R.drawable.ic_arrow_left, align, context, 0)
+            if (GPSPreferences.isToolsGravityLeft()) {
+                if (animate) {
+                    ImageLoader.setImage(R.drawable.ic_arrow_right, align, context, 0)
+                } else {
+                    align.setImageResource(R.drawable.ic_arrow_right)
+                }
             } else {
-                align.setImageResource(R.drawable.ic_arrow_left)
+                if (animate) {
+                    ImageLoader.setImage(R.drawable.ic_arrow_left, align, context, 0)
+                } else {
+                    align.setImageResource(R.drawable.ic_arrow_left)
+                }
             }
         }
     }
