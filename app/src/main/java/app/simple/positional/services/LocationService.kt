@@ -73,7 +73,7 @@ class LocationService : Service(), LocationListener {
             intent.putExtra("location_provider", provider)
             LocalBroadcastManager.getInstance(baseContext).sendBroadcast(intent)
         }
-    } 
+    }
 
     private val locationUpdater: Runnable = object : Runnable {
         override fun run() {
