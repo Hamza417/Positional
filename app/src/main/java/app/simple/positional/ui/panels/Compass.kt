@@ -7,6 +7,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.graphics.Color
 import android.hardware.*
 import android.os.Bundle
@@ -64,7 +65,7 @@ import kotlin.math.abs
 class Compass : ScopedFragment(), SensorEventListener {
 
     private var handler = Handler(Looper.getMainLooper())
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
+    private var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>? = null
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private var objectAnimator: ObjectAnimator? = null
     private var backPress: OnBackPressedDispatcher? = null
@@ -125,7 +126,7 @@ class Compass : ScopedFragment(), SensorEventListener {
     private lateinit var calibrate: DynamicRippleImageButton
     private lateinit var dialContainer: FrameLayout
     private lateinit var compassListScrollView: NestedScrollView
-    private lateinit var dim: View
+    private var dim: View? = null
     private lateinit var toolbar: ConstraintLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -159,9 +160,13 @@ class Compass : ScopedFragment(), SensorEventListener {
         menu = view.findViewById(R.id.compass_menu)
         calibrate = view.findViewById(R.id.compass_calibrate)
         dialContainer = view.findViewById(R.id.dial_container)
-        (view.findViewById(R.id.compass_main_layout) as CustomCoordinatorLayout).setProxyView(view)
+
+        kotlin.runCatching {
+            (view.findViewById(R.id.compass_main_layout) as CustomCoordinatorLayout).setProxyView(view)
+            dim = view.findViewById(R.id.compass_dim)
+        }
+
         compassListScrollView = view.findViewById(R.id.compass_list_scroll_view)
-        dim = view.findViewById(R.id.compass_dim)
         toolbar = view.findViewById(R.id.compass_appbar)
 
         showDirectionCode = CompassPreferences.getDirectionCode()
@@ -169,7 +174,11 @@ class Compass : ScopedFragment(), SensorEventListener {
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
-        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))
+
+        kotlin.runCatching {
+            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))
+        }
+
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         kotlin.runCatching {
@@ -189,6 +198,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         isAnimated = CompassPreferences.isUsingPhysicalProperties()
         setPhysicalProperties()
         setFlower(CompassPreferences.isFlowerBloomOn())
+        compassListScrollView.alpha = if(isLandscape()) 1F else 0F
 
         return view
     }
@@ -244,7 +254,7 @@ class Compass : ScopedFragment(), SensorEventListener {
             }
         }
 
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     backPressed(true)
@@ -271,7 +281,7 @@ class Compass : ScopedFragment(), SensorEventListener {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 compassListScrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
-                dim.alpha = slideOffset
+                dim?.alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
                 //toolbar.translationY = toolbar.height * -slideOffset
             }
@@ -364,8 +374,8 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         run {
-            if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_DRAGGING ||
-                    bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_DRAGGING ||
+                    bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED || isLandscape()) {
                 accelerometerX.text = fromHtml("<b>X:</b> ${round(accelerometerReadings[0].toDouble(), 3)}")
                 accelerometerY.text = fromHtml("<b>Y:</b> ${round(accelerometerReadings[1].toDouble(), 3)}")
                 accelerometerZ.text = fromHtml("<b>Z:</b> ${round(accelerometerReadings[2].toDouble(), 3)}")
@@ -486,8 +496,8 @@ class Compass : ScopedFragment(), SensorEventListener {
     private fun backPressed(value: Boolean) {
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
 
                 remove()

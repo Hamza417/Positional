@@ -4,7 +4,6 @@
     android:id="@+id/compass_list_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0"
     android:animateLayoutChanges="true"
     android:backgroundTint="@color/toolbarBackground"
     android:clipChildren="false"
