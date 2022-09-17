@@ -8,11 +8,15 @@ import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.WindowManager
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.os.ConfigurationCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import app.simple.positional.R
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.CompassPreferences
@@ -72,8 +76,8 @@ open class BaseActivity : AppCompatActivity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
 
-        window.statusBarColor = Color.TRANSPARENT
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        makeAppFullScreen()
+        fixNavigationBarOverlap()
 
         /**
          * Keeps the instance of current locale of the app
@@ -169,6 +173,43 @@ open class BaseActivity : AppCompatActivity() {
                 setTheme(R.style.Positional)
                 MainPreferences.setAccentColor(ContextCompat.getColor(baseContext, R.color.positional))
             }
+        }
+    }
+
+    private fun makeAppFullScreen() {
+        window.statusBarColor = Color.TRANSPARENT
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+    }
+
+    /**
+     * Making the Navigation system bar not overlapping with the activity
+     */
+    private fun fixNavigationBarOverlap() {
+        /**
+         * Root ViewGroup of this activity
+         */
+        val root = findViewById<FrameLayout>(android.R.id.content)
+
+        ViewCompat.setOnApplyWindowInsetsListener(root) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            /**
+             * Apply the insets as a margin to the view. Here the system is setting
+             * only the bottom, left, and right dimensions, but apply whichever insets are
+             * appropriate to your layout. You can also update the view padding
+             * if that's more appropriate.
+             */
+            view.layoutParams = (view.layoutParams as LinearLayout.LayoutParams).apply {
+                leftMargin = insets.left
+                bottomMargin = insets.bottom
+                rightMargin = insets.right
+            }
+
+            /**
+             * Return CONSUMED if you don't want want the window insets to keep being
+             * passed down to descendant views.
+             */
+            WindowInsetsCompat.CONSUMED
         }
     }
 }

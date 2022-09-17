@@ -14,19 +14,19 @@ import app.simple.positional.extensions.activity.BaseActivity
 class BatteryOptimizationActivity : BaseActivity() {
 
     private lateinit var enable: DynamicRippleButton
-    private var appWidgeCode = 0
+    private var appWidgetCode = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_battery_optimization)
 
-        enable = findViewById(R.id.enable)
+        enable = findViewById(R.id.grant)
 
-        appWidgeCode = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+        appWidgetCode = intent.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
                 ?: AppWidgetManager.INVALID_APPWIDGET_ID
 
         if (isIgnoringBatteryOptimizations()) {
-            enable.setText(R.string.button_close)
+            close()
         }
 
         enable.setOnClickListener {
@@ -43,7 +43,7 @@ class BatteryOptimizationActivity : BaseActivity() {
         if (isIgnoringBatteryOptimizations()) {
             enable.setText(R.string.button_close)
         } else {
-            enable.setText(R.string.common_google_play_services_enable_button)
+            enable.setText(R.string.button_grant)
         }
     }
 
@@ -57,7 +57,7 @@ class BatteryOptimizationActivity : BaseActivity() {
     }
 
     private fun close() {
-        val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgeCode)
+        val resultValue = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetCode)
         setResult(Activity.RESULT_OK, resultValue)
         finish()
     }

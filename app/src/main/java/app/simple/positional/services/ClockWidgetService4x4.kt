@@ -15,8 +15,6 @@ class ClockWidgetService4x4 : ClockWidgetService() {
     }
 
     override fun onDataGenerated(clockModel: ClockModel) {
-        super.onDataGenerated(clockModel)
-
         val views = RemoteViews(contextThemeWrapper?.packageName, R.layout.widget_clock)
 
         views.setImageViewBitmap(R.id.widget_hour, clockModel.hour)

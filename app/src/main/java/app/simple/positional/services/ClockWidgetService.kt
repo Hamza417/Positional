@@ -4,7 +4,10 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.display.DisplayManager
@@ -37,7 +40,7 @@ import kotlinx.coroutines.withContext
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-open class ClockWidgetService : Service() {
+abstract class ClockWidgetService : Service() {
 
     private var isScreenOn = true
     private val imageSize = 500
@@ -65,6 +68,8 @@ open class ClockWidgetService : Service() {
     }
 
     override fun onCreate() {
+        super.onCreate()
+
         val filter = IntentFilter()
         filter.addAction(Intent.ACTION_SCREEN_ON)
         filter.addAction(Intent.ACTION_SCREEN_OFF)
@@ -87,8 +92,6 @@ open class ClockWidgetService : Service() {
         }
 
         registerReceiver(mReceiver, filter)
-
-        super.onCreate()
     }
 
     override fun onDestroy() {
@@ -107,7 +110,7 @@ open class ClockWidgetService : Service() {
                         .getBoolean(ClockPreferences.is24HourFace, false)
 
                 val needleSkins = ClockSkinsConstants.clockNeedleSkins[contextThemeWrapper!!.getSharedPreferences(
-                        SharedPreferences.preferences, Context.MODE_PRIVATE).getInt(ClockPreferences.clockNeedle, 1)]
+                        SharedPreferences.preferences, Context.MODE_PRIVATE).getInt(ClockPreferences.clockNeedle, 0)]
 
                 val hour = rotateBitmap(
                         needleSkins[0].toBitmap(contextThemeWrapper!!, imageSize),
@@ -291,5 +294,5 @@ open class ClockWidgetService : Service() {
     /**
      * Post data to all subclasses
      */
-    open fun onDataGenerated(clockModel: ClockModel) {}
+    abstract fun onDataGenerated(clockModel: ClockModel)
 }
