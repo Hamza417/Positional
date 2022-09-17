@@ -110,6 +110,7 @@ On top of all the core functionality Positional is a highly polished app and pro
   * Add a timeline view for moon dates up to a few years in the future and past
   * Add a 3D solar data model for visual representation
   * Solar and Lunar Eclipse dates
+  * [x] Make the app landscape
 
 <br/>
 
