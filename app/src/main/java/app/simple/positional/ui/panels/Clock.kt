@@ -45,6 +45,7 @@ import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.util.Ordinal.toOrdinal
+import app.simple.positional.util.StatusBarHeight
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
@@ -63,7 +64,7 @@ import java.time.temporal.IsoFields
 
 class Clock : ScopedFragment() {
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
+    private var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>? = null
 
     private lateinit var hour: PhysicalRotationImageView
     private lateinit var minutes: PhysicalRotationImageView
@@ -80,7 +81,7 @@ class Clock : ScopedFragment() {
     private lateinit var customLocationButton: DynamicRippleImageButton
     private lateinit var divider: View
     private lateinit var customLocationButtonDivider: View
-    private lateinit var clockMainLayout: CustomCoordinatorLayout
+    private var clockMainLayout: CustomCoordinatorLayout? = null
     private lateinit var scrollView: NestedScrollView
 
     private lateinit var digitalTimeMain: TextView
@@ -134,7 +135,10 @@ class Clock : ScopedFragment() {
         customLocationButton = view.findViewById(R.id.clock_custom_location)
         divider = view.findViewById(R.id.clock_divider)
         customLocationButtonDivider = view.findViewById(R.id.custom_location_divider)
-        clockMainLayout = view.findViewById(R.id.clock_main_layout)
+
+        kotlin.runCatching { // Landscape mode don't have [CustomCoordinatorLayout]
+            clockMainLayout = view.findViewById(R.id.clock_main_layout)
+        }
 
         digitalTimeMain = view.findViewById(R.id.digital_time_main)
         clockInfoText = view.findViewById(R.id.clock_info_text)
@@ -153,9 +157,13 @@ class Clock : ScopedFragment() {
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         scrollView = view.findViewById(R.id.clock_panel_scrollview)
-        scrollView.alpha = 0f
+        scrollView.alpha = if (isLandscape()) 1F else 0F
         expandUp = view.findViewById(R.id.expand_up_clock_sheet)
-        bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
+
+        kotlin.runCatching { // Landscape mode don't have BottomSheet
+            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
+        }
+
         backPress = requireActivity().onBackPressedDispatcher
 
         setMotionDelay(ClockPreferences.getMovementType())
@@ -202,14 +210,14 @@ class Clock : ScopedFragment() {
             divider.visibility = View.VISIBLE
         }
 
-        clockMainLayout.setProxyView(view)
+        clockMainLayout?.setProxyView(view)
 
         locationViewModel.location.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             calculateAndUpdateData(it.latitude, it.longitude, it.altitude)
         }
 
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     backPressed(true)
@@ -563,6 +571,8 @@ class Clock : ScopedFragment() {
     }
 
     private fun backPressed(value: Boolean) {
+        if (StatusBarHeight.isLandscape(requireContext())) return
+
         /**
          * This is a workaround and not a full fledged method to
          * remove any existing callbacks
@@ -577,8 +587,8 @@ class Clock : ScopedFragment() {
          */
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
                 }
 
                 remove()

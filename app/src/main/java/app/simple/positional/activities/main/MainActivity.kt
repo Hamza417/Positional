@@ -8,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.animation.DecelerateInterpolator
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -33,6 +34,7 @@ import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
+import app.simple.positional.util.StatusBarHeight
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapsSdkInitializedCallback
 
@@ -58,10 +60,14 @@ class MainActivity : BaseActivity(),
         bottomBar = findViewById(R.id.bottom_bar)
 
         bottomBar.apply {
-            layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = if(StatusBarHeight.isLandscape(baseContext)) {
+                LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
+            } else {
+                LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
+            }
             adapter = bottomBarAdapter
             scheduleLayoutAnimation()
-            setItemViewCacheSize(10)
+            setItemViewCacheSize(2)
             (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {

@@ -40,19 +40,19 @@
 
     <uses-feature
         android:name="android.hardware.touchscreen"
-        android:required="true" />
+        android:required="false" />
 
     <uses-feature
         android:name="android.hardware.location"
-        android:required="true" />
+        android:required="false" />
 
     <uses-feature
         android:name="android.hardware.location.gps"
-        android:required="true" />
+        android:required="false" />
 
     <uses-feature
         android:name="android.hardware.location.network"
-        android:required="true" />
+        android:required="false" />
 
     <uses-feature
         android:name="android.software.input_methods"
@@ -60,7 +60,7 @@
 
     <uses-feature
         android:name="android.hardware.screen.portrait"
-        android:required="true" />
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -308,67 +308,57 @@
             android:name=".activities.main.LauncherActivity"
             android:colorMode="wideColorGamut"
             android:exported="true"
-            android:screenOrientation="portrait"
             tools:targetApi="o" />
 
         <activity
             android:name=".activities.main.MainActivity"
             android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait"
             tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.TimezonePickerActivity"
             android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait"
             tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.CustomLocationsActivity"
             android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait"
             tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.WebPageViewerActivity"
             android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait"
             tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.TrailsViewerActivity"
             android:colorMode="wideColorGamut"
             android:exported="false"
-            android:screenOrientation="portrait"
             tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.AccentColorsActivity"
             android:colorMode="wideColorGamut"
             android:exported="true"
-            android:screenOrientation="portrait"
             tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.ArtsActivity"
             android:colorMode="wideColorGamut"
             android:exported="true"
-            android:screenOrientation="portrait"
             tools:targetApi="o" />
 
         <activity
             android:name=".activities.subactivity.TargetAddressActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
+            android:exported="true" />
 
         <activity
             android:name=".activities.service.BatteryOptimizationActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -376,8 +366,7 @@
 
         <activity
             android:name=".activities.subactivity.DirectionsActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
+            android:exported="true" />
 
         <!-- Services -->
 
