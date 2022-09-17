@@ -292,5 +292,5 @@
     <string name="use_maps_target">使用地圖目標</string>
     <string name="using_maps_target">正在使用地圖目標</string>
     <string name="edit">編輯</string>
-    <string name="battery_optimization_desc">請禁用電池優化以允許時鍾小部件正常運行。</string>
+    <string name="battery_optimization_desc">請停用電池效能最佳化以允許時鍾小工具正常執行。</string>
 </resources>
