@@ -8,6 +8,9 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.Window
+import android.view.WindowManager
+import androidx.core.content.getSystemService
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -26,6 +29,7 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
                                                                SharedPreferences.OnSharedPreferenceChangeListener,
                                                                CoroutineScope {
 
+    protected var windowManager: WindowManager
     val viewHandler = Handler(Looper.getMainLooper())
     open var onTouch: ((event: MotionEvent, b: Boolean) -> Unit)? = null
     open var mapsCallbacks: MapsCallbacks? = null
@@ -48,6 +52,8 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     open val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
 
     init {
+        windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
         viewHandler.postDelayed(fun() {
             // This prevents the lag when fragment is switched
             this.alpha = 0F

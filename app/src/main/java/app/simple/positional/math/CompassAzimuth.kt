@@ -54,6 +54,10 @@ object CompassAzimuth {
         return if (azimuth.isNaN() || !azimuth.isFinite()) 0f else normalizeAngle(azimuth.toDegrees())
     }
 
+    fun calculate(gravity: Vector3, magneticField: Vector3, windowManager: WindowManager): Float {
+        return adjustAzimuthForDisplayRotation(calculate(gravity, magneticField), windowManager)
+    }
+
     fun withDeclination(declination: Float, azimuth: Float): Float {
         return azimuth + declination
     }

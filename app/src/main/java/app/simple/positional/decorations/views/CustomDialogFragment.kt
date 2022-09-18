@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.fragment.app.DialogFragment
 import app.simple.positional.R
+import app.simple.positional.util.StatusBarHeight
 
 open class CustomDialogFragment : DialogFragment() {
 
@@ -27,6 +28,14 @@ open class CustomDialogFragment : DialogFragment() {
         window.windowManager.defaultDisplay.getMetrics(displayMetrics)
         window.setDimAmount(0.35f)
         window.attributes.gravity = Gravity.CENTER
-        window.attributes.width = (displayMetrics.widthPixels * 1f / 100f * 85f).toInt()
+
+        // TODO - fixe dialog height
+        if (StatusBarHeight.isLandscape(requireContext())) {
+            window.attributes.width = (displayMetrics.widthPixels * 1f / 100f * 60f).toInt()
+            // window.attributes.height = (displayMetrics.heightPixels * 1F / 100F * 90F).toInt()
+        } else {
+            window.attributes.width = (displayMetrics.widthPixels * 1f / 100f * 75f).toInt()
+            // window.attributes.height = (displayMetrics.heightPixels * 1F / 100F * 60F).toInt()
+        }
     }
 }

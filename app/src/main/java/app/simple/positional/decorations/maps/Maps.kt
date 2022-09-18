@@ -11,6 +11,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
 import android.util.AttributeSet
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
@@ -603,7 +604,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
         }
 
         rotationAngle =
-                CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+                CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer, windowManager)
 
         if (isCompassRotation) {
             if (googleMap.isNotNull())

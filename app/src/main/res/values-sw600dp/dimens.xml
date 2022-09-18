@@ -34,9 +34,9 @@
     <!-- Compass -->
     <dimen name="compass_dial">400dp</dimen>
     <dimen name="compass_degrees_text_size">56sp</dimen>
-    <dimen name="degree_indicator_margin_top">40dp</dimen>
+    <dimen name="degree_indicator_margin_top">60dp</dimen>
     <dimen name="degrees_indicator_dimension">40dp</dimen>
-    <dimen name="compass_bloom_dimension">180dp</dimen>
+    <dimen name="compass_bloom_dimension">240dp</dimen>
     <dimen name="compass_direction_text_size">36sp</dimen>
 
     <!-- Level -->

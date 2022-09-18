@@ -238,12 +238,12 @@ class Direction : ScopedFragment(), SensorEventListener {
             if (successfullyCalculatedRotationMatrix) {
                 val orientation = FloatArray(3)
                 SensorManager.getOrientation(rotation, orientation)
-                ((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat()
+                CompassAzimuth.adjustAzimuthForDisplayRotation(((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat(), requireActivity().windowManager)
             } else {
                 0F
             }
         } else {
-            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer, requireActivity().windowManager)
         }
 
         dial.rotationUpdate(rotationAngle * -1, true)

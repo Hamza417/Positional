@@ -554,7 +554,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
         }
 
         rotationAngle =
-            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer)
+            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer, windowManager)
 
         if (isCompassRotation) {
             marker?.rotation = rotationAngle

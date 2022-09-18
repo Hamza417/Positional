@@ -1,5 +1,6 @@
 package app.simple.positional.ui.panels
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
@@ -15,9 +16,11 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.dynamicanimation.animation.DynamicAnimation
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
@@ -74,6 +77,7 @@ class Level : ScopedFragment(), SensorEventListener {
     private var anim1Y: SpringAnimation? = null
     private var anim2X: SpringAnimation? = null
     private var anim2Y: SpringAnimation? = null
+    private var animTint: ValueAnimator? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_level, container, false)
@@ -239,23 +243,23 @@ class Level : ScopedFragment(), SensorEventListener {
             }
 
             if (isLandscapeVar) {
-                if (gravityReadings[0] * gravityWidthMotionCompensator - (levelIndicator.height * levelSizeCompensator) / 2 > boundingBox.height / 2 * -1
-                        && gravityReadings[0] * gravityWidthMotionCompensator + (levelIndicator.height * levelSizeCompensator) / 2 < boundingBox.height / 2) {
-                    levelIndicator.translationY = gravityReadings[0] * gravityWidthMotionCompensator
+                if (gravityReadings[0] * gravityWidthMotionCompensator - levelIndicator.height * levelSizeCompensator / 2 > boundingBox.height / 2 * -1
+                        && gravityReadings[0] * gravityWidthMotionCompensator + levelIndicator.height * levelSizeCompensator / 2 < boundingBox.height / 2) {
+                    levelIndicator.translationY = gravityReadings[0] * 1 * gravityHeightMotionCompensator
                 }
 
-                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - (levelIndicator.width * levelSizeCompensator) / 2 > boundingBox.width / 2 * -1
-                        && gravityReadings[1] * -1 * gravityHeightMotionCompensator + (levelIndicator.width * levelSizeCompensator) / 2 < boundingBox.width / 2) {
-                    levelIndicator.translationX = gravityReadings[1] * 1 * gravityHeightMotionCompensator
+                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - levelIndicator.width * levelSizeCompensator / 2 > boundingBox.width / 2 * -1
+                        && gravityReadings[1] * -1 * gravityHeightMotionCompensator + levelIndicator.width * levelSizeCompensator / 2 < boundingBox.width / 2) {
+                    levelIndicator.translationX = gravityReadings[1] * 1 * gravityWidthMotionCompensator
                 }
             } else {
-                if (gravityReadings[0] * gravityWidthMotionCompensator - (levelIndicator.width * levelSizeCompensator) / 2 > boundingBox.width / 2 * -1
-                        && gravityReadings[0] * gravityWidthMotionCompensator + (levelIndicator.width * levelSizeCompensator) / 2 < boundingBox.width / 2) {
+                if (gravityReadings[0] * gravityWidthMotionCompensator - levelIndicator.width * levelSizeCompensator / 2 > boundingBox.width / 2 * -1
+                        && gravityReadings[0] * gravityWidthMotionCompensator + levelIndicator.width * levelSizeCompensator / 2 < boundingBox.width / 2) {
                     levelIndicator.translationX = gravityReadings[0] * gravityWidthMotionCompensator
                 }
 
-                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - (levelIndicator.height * levelSizeCompensator) / 2 > boundingBox.height / 2 * -1
-                        && gravityReadings[1] * -1 * gravityHeightMotionCompensator + (levelIndicator.height * levelSizeCompensator) / 2 < boundingBox.height / 2) {
+                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - levelIndicator.height * levelSizeCompensator / 2 > boundingBox.height / 2 * -1
+                        && gravityReadings[1] * -1 * gravityHeightMotionCompensator + levelIndicator.height * levelSizeCompensator / 2 < boundingBox.height / 2) {
                     levelIndicator.translationY = gravityReadings[1] * -1 * gravityHeightMotionCompensator
                 }
             }
@@ -300,6 +304,18 @@ class Level : ScopedFragment(), SensorEventListener {
                 setStyle()
             }
         }
+    }
+
+    // TODO - fix animation framework
+    private fun ImageView.changeTint(@ColorInt color: Int) {
+        if (imageTintList?.defaultColor == color) return
+        animTint = ValueAnimator.ofArgb(imageTintList?.defaultColor ?: parseColor("#37A4CF"), color)
+        animTint?.duration = 500L
+        animTint?.interpolator = DecelerateInterpolator(1.5F)
+        animTint?.addUpdateListener {
+            imageTintList = ColorStateList.valueOf(it.animatedValue as Int)
+        }
+        animTint?.start()
     }
 
     companion object {

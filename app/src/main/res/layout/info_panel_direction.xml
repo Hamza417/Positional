@@ -7,7 +7,6 @@
     android:backgroundTint="@color/toolbarBackground"
     android:clipChildren="false"
     android:clipToPadding="false"
-    android:elevation="5dp"
     android:fadingEdge="vertical"
     android:fadingEdgeLength="50dp"
     android:overScrollMode="always"

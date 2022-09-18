@@ -1,6 +1,8 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Positional" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- This will fix purple status bar issue when app is launched-->
+        <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAppAccent">@color/positional</item>
         <item name="colorAppAccentLight">@color/positional_light</item>
 

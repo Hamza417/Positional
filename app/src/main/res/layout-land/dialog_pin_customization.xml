@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@android:color/transparent"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:backgroundTint="@color/toolbarBackground"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:elevation="40dp"
+        android:orientation="horizontal"
+        android:padding="@dimen/options_container_horizontal_padding">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pins_view_pager"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="10dp"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/options_text_margin_start">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/customize_pin"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/info_text_secondary_size" />
+
+                <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+                    android:id="@+id/reset_pin_customization"
+                    android:layout_width="@dimen/app_button_size"
+                    android:layout_height="@dimen/app_button_size"
+                    android:background="@drawable/ripple_btn"
+                    android:contentDescription="@string/button_reset"
+                    android:src="@drawable/ic_reset"
+                    android:tint="@color/iconColor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/opacity"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/options_item_text_size" />
+
+                <SeekBar
+                    android:id="@+id/pin_opacity_seekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="@dimen/options_text_margin_start"
+                    android:max="255"
+                    android:maxHeight="4dp"
+                    android:progressDrawable="@drawable/seek_bar"
+                    android:progressTint="?attr/colorAppAccent"
+                    android:splitTrack="true"
+                    android:thumb="@drawable/seekbar_thumb"
+                    android:translationZ="8dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:text="@string/size"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/options_item_text_size" />
+
+                <SeekBar
+                    android:id="@+id/pin_size_seekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="@dimen/options_text_margin_start"
+                    android:max="12"
+                    android:maxHeight="4dp"
+                    android:progressDrawable="@drawable/seek_bar"
+                    android:progressTint="?attr/colorAppAccent"
+                    android:splitTrack="true"
+                    android:thumb="@drawable/seekbar_thumb"
+                    android:translationZ="8dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+
+</FrameLayout>
