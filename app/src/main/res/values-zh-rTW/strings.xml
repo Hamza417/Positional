@@ -235,7 +235,7 @@
     <!-- Location Provider -->
     <string name="desc_android_location_provider">預設的 Android 位置 API 具有極高的精確度，但每次僅限於一個位置提供者，而且室內位置會影響其精確度，需要一個強大的 GPS 感應器以快速更新位置。</string>
     <string name="desc_fused_location_provider">Google 的 Fused 位置 API，從不同的位置提供者進行三角測量位置資料，將結果平均化為一系列的位置。可以得到不同的結果，但消耗更少的電力。</string>
-    <string name="desc_location_provider_note">注注意：使用任何一個 API 都可能得到不同的結果，這取決於各種因素，它們都不能證明彼此的準確度，測試 API 並保持在你的區域內選取一個最適合的 API。</string>
+    <string name="desc_location_provider_note">注意：使用任何一個 API 都可能得到不同的結果，這取決於各種因素，它們都不能證明彼此的準確度，測試 API 並保持在你的區域內選取一個最適合的 API。</string>
     <string name="use_media_keys">使用媒體按鍵</string>
     <string name="auto_center_map">自動地圖置中</string>
     <string name="last_updated">上次更新</string>
@@ -283,9 +283,9 @@
     <string name="eta_minutes">%1$s 分鐘</string>
     <string name="eta_hours">%1$s 小時 %2$s 分鐘</string>
     <string name="eta_days">%1$s 天 %2$s 小時 %3$s 分鐘</string>
-    <string name="eta">預計到達時間：</string>
-    <string name="gps_displacement_from_origin">從原始置換：</string>
-    <string name="gps_displacement_from_dest">從目的置換：</string>
+    <string name="eta">預計到達時間:</string>
+    <string name="gps_displacement_from_origin">從原始置換:</string>
+    <string name="gps_displacement_from_dest">從目的置換:</string>
     <string name="direction">方向</string>
     <string name="targets">目標</string>
     <string name="direction_info">方向資訊</string>
