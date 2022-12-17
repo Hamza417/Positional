@@ -243,23 +243,35 @@ class Level : ScopedFragment(), SensorEventListener {
             }
 
             if (isLandscapeVar) {
-                if (gravityReadings[0] * gravityWidthMotionCompensator - levelIndicator.height * levelSizeCompensator / 2 > boundingBox.height / 2 * -1
-                        && gravityReadings[0] * gravityWidthMotionCompensator + levelIndicator.height * levelSizeCompensator / 2 < boundingBox.height / 2) {
-                    levelIndicator.translationY = gravityReadings[0] * 1 * gravityHeightMotionCompensator
+                if (gravityReadings[0] * gravityWidthMotionCompensator -
+                        levelIndicator.height * levelSizeCompensator / 2 > boundingBox.height * -1
+                        &&
+                        gravityReadings[0] * gravityWidthMotionCompensator +
+                        levelIndicator.height * levelSizeCompensator / 2 < boundingBox.height) {
+                    levelIndicator.translationY = gravityReadings[0] * -1 * gravityHeightMotionCompensator
                 }
 
-                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - levelIndicator.width * levelSizeCompensator / 2 > boundingBox.width / 2 * -1
-                        && gravityReadings[1] * -1 * gravityHeightMotionCompensator + levelIndicator.width * levelSizeCompensator / 2 < boundingBox.width / 2) {
-                    levelIndicator.translationX = gravityReadings[1] * 1 * gravityWidthMotionCompensator
+                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator -
+                        levelIndicator.width * levelSizeCompensator / 2 > boundingBox.width / 2 * -1
+                        &&
+                        gravityReadings[1] * -1 * gravityHeightMotionCompensator +
+                        levelIndicator.width * levelSizeCompensator / 2 < boundingBox.width / 2) {
+                    levelIndicator.translationX = gravityReadings[1] * -1 * gravityWidthMotionCompensator
                 }
             } else {
-                if (gravityReadings[0] * gravityWidthMotionCompensator - levelIndicator.width * levelSizeCompensator / 2 > boundingBox.width / 2 * -1
-                        && gravityReadings[0] * gravityWidthMotionCompensator + levelIndicator.width * levelSizeCompensator / 2 < boundingBox.width / 2) {
+                if (gravityReadings[0] * gravityWidthMotionCompensator -
+                        levelIndicator.width * levelSizeCompensator / 2 > boundingBox.width / 2 * -1
+                        &&
+                        gravityReadings[0] * gravityWidthMotionCompensator +
+                        levelIndicator.width * levelSizeCompensator / 2 < boundingBox.width / 2) {
                     levelIndicator.translationX = gravityReadings[0] * gravityWidthMotionCompensator
                 }
 
-                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator - levelIndicator.height * levelSizeCompensator / 2 > boundingBox.height / 2 * -1
-                        && gravityReadings[1] * -1 * gravityHeightMotionCompensator + levelIndicator.height * levelSizeCompensator / 2 < boundingBox.height / 2) {
+                if (gravityReadings[1] * -1 * gravityHeightMotionCompensator -
+                        levelIndicator.height * levelSizeCompensator / 2 > boundingBox.height / 2 * -1
+                        &&
+                        gravityReadings[1] * -1 * gravityHeightMotionCompensator +
+                        levelIndicator.height * levelSizeCompensator / 2 < boundingBox.height / 2) {
                     levelIndicator.translationY = gravityReadings[1] * -1 * gravityHeightMotionCompensator
                 }
             }

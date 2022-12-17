@@ -64,19 +64,19 @@ object ViewUtils {
                 .setInterpolator(AccelerateInterpolator())
                 .setDuration(this.resources.getInteger(R.integer.animation_duration).toLong())
                 .setListener(object : Animator.AnimatorListener {
-                    override fun onAnimationStart(animation: Animator?) {
+                    override fun onAnimationStart(animation: Animator) {
                         /* no-op */
                     }
 
-                    override fun onAnimationEnd(animation: Animator?) {
+                    override fun onAnimationEnd(animation: Animator) {
                         this@gone.visibility = View.GONE
                     }
 
-                    override fun onAnimationCancel(animation: Animator?) {
+                    override fun onAnimationCancel(animation: Animator) {
                         /* no-op */
                     }
 
-                    override fun onAnimationRepeat(animation: Animator?) {
+                    override fun onAnimationRepeat(animation: Animator) {
                         /* no-op */
                     }
                 })
@@ -102,19 +102,19 @@ object ViewUtils {
                 .setInterpolator(AccelerateInterpolator())
                 .setDuration(this.resources.getInteger(R.integer.animation_duration).toLong())
                 .setListener(object : Animator.AnimatorListener {
-                    override fun onAnimationStart(animation: Animator?) {
+                    override fun onAnimationStart(animation: Animator) {
                             /* no-op */
                         }
 
-                        override fun onAnimationEnd(animation: Animator?) {
+                        override fun onAnimationEnd(animation: Animator) {
                             this@invisible.visibility = View.INVISIBLE
                         }
 
-                        override fun onAnimationCancel(animation: Animator?) {
+                        override fun onAnimationCancel(animation: Animator) {
                             /* no-op */
                         }
 
-                        override fun onAnimationRepeat(animation: Animator?) {
+                        override fun onAnimationRepeat(animation: Animator) {
                             /* no-op */
                         }
                     })
@@ -140,19 +140,19 @@ object ViewUtils {
                 .setInterpolator(LinearOutSlowInInterpolator())
                 .setDuration(this.resources.getInteger(R.integer.animation_duration).toLong())
                 .setListener(object : Animator.AnimatorListener {
-                    override fun onAnimationStart(animation: Animator?) {
+                    override fun onAnimationStart(animation: Animator) {
                         this@visible.visibility = View.VISIBLE
                         }
 
-                        override fun onAnimationEnd(animation: Animator?) {
+                        override fun onAnimationEnd(animation: Animator) {
                             /* no-op */
                         }
 
-                        override fun onAnimationCancel(animation: Animator?) {
+                        override fun onAnimationCancel(animation: Animator) {
                             /* no-op */
                         }
 
-                        override fun onAnimationRepeat(animation: Animator?) {
+                        override fun onAnimationRepeat(animation: Animator) {
                             /* no-op */
                         }
                     })

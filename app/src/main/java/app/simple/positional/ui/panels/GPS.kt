@@ -245,7 +245,7 @@ class GPS : ScopedFragment() {
                     val altitude: Spanned
                     val speed: Spanned
 
-                    val providerSource = fromHtml("<b>${getString(R.string.gps_source)}</b> ${location!!.provider.uppercase(Locale.getDefault())}")
+                    val providerSource = fromHtml("<b>${getString(R.string.gps_source)}</b> ${location!!.provider?.uppercase(Locale.getDefault())}")
                     val providerStatus = fromHtml("<b>${getString(R.string.gps_status)}</b> ${
                         if (getLocationStatus(requireContext())) getString(R.string.gps_enabled) else getString(
                                 R.string.gps_disabled

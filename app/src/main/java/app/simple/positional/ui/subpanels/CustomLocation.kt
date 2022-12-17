@@ -307,7 +307,7 @@ class CustomLocation : ScopedFragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             loadingProgressBar.show()
 
-            val geocoder = Geocoder(context)
+            val geocoder = Geocoder(requireContext())
             var addresses: MutableList<Address>?
             var latitude: Double? = null
             var longitude: Double? = null
