@@ -279,7 +279,7 @@ class Compass : ScopedFragment(), SensorEventListener {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 compassListScrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
-                (view.findViewById<View>(R.id.compass_dim)).alpha = slideOffset
+                view.findViewById<View>(R.id.compass_dim).alpha = slideOffset
                 bottomSheetSlide.onBottomSheetSliding(slideOffset)
                 //toolbar.translationY = toolbar.height * -slideOffset
             }

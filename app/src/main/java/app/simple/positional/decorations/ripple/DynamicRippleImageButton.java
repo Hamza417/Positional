@@ -15,6 +15,8 @@ public class DynamicRippleImageButton extends androidx.appcompat.widget.AppCompa
     public DynamicRippleImageButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         setBackgroundColor(Color.TRANSPARENT);
-        setBackground(Utils.getRippleDrawable(getContext(), getBackground(), 2F));
+        if (!isInEditMode()) {
+            setBackground(Utils.getRippleDrawable(getContext(), getBackground(), 2F));
+        }
     }
 }

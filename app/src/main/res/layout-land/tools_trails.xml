@@ -17,12 +17,6 @@
         android:tint="@color/iconColor"
         android:visibility="gone" />
 
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:layout_marginVertical="2dp"
-        android:background="@color/dividerColor" />
-
     <app.simple.positional.decorations.views.LocationButton
         android:id="@+id/current_location"
         android:layout_width="0dp"
