@@ -293,4 +293,7 @@
     <string name="using_maps_target">正在使用地圖目標</string>
     <string name="edit">編輯</string>
     <string name="battery_optimization_desc">請停用電池效能最佳化以允許時鍾小工具正常執行。</string>
+    <string name="use_as_target">用作目標</string>
+    <string name="create_new">新增</string>
+    <string name="save_from_target">儲存自目標</string>
 </resources>
