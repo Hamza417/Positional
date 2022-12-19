@@ -293,4 +293,7 @@
     <string name="using_maps_target">Използвате Target на Maps</string>
     <string name="edit">Редактиране</string>
     <string name="battery_optimization_desc">Моля, деактивирайте оптимизирането на батерията, за да позволите на приспособлението за часовник да работи правилно.</string>
+    <string name="use_as_target">Използвай за цел</string>
+    <string name="create_new">Нова</string>
+    <string name="save_from_target">Запазване от цел</string>
 </resources>
