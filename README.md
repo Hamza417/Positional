@@ -54,6 +54,7 @@ On top of all the core functionality Positional is a highly polished app and pro
   * Compass physics properties<br/>
   * Compass manual rotation
   * Compass bloom
+  * Directions pointer
   * Gimbal lock
   * Minimal Map (with and without labels)</br>
   * Google Maps Support<br/>
