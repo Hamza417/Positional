@@ -8,7 +8,7 @@
     android:clipToPadding="true"
     android:orientation="vertical"
     android:padding="@dimen/popup_padding"
-    tools:parentTag="app.simple.positional.decorations.popup.PopupLinearLayout">
+    tools:parentTag="android.widget.LinearLayout">
 
     <app.simple.positional.decorations.ripple.DynamicRippleTextView
         android:id="@+id/menu_set"
@@ -59,6 +59,19 @@
         android:paddingHorizontal="30dp"
         android:paddingVertical="20dp"
         android:text="@string/use_as_target"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
+        android:id="@+id/menu_navigate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/medium"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/navigate"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/popup_text_size" />
 

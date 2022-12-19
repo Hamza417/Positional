@@ -11,7 +11,7 @@ import app.simple.positional.decorations.fastscroll.FastScrollWebView
 import app.simple.positional.decorations.fastscroll.FastScrollerBuilder
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.util.ConditionUtils.isNull
-import app.simple.positional.util.isNetworkAvailable
+import app.simple.positional.util.NetworkCheck.isNetworkAvailable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -103,7 +103,7 @@ class HtmlViewer : ScopedFragment() {
                 withContext(Dispatchers.IO) {
                     runCatching {
                         val url =
-                            "https://raw.githubusercontent.com/Hamza417/Positional/master/app/src/main/assets/html/translators.html"
+                                "https://raw.githubusercontent.com/Hamza417/Positional/master/app/src/main/assets/html/translators.html"
                         URL(url).openStream().use { input ->
                             cleanUpOldFiles(File("${context?.cacheDir}/translation.html"), 0)
 
@@ -118,7 +118,7 @@ class HtmlViewer : ScopedFragment() {
 
                 webView.loadUrl(
                         Uri.fromFile(File("${requireContext().cacheDir}/translation.html"))
-                            .toString()
+                                .toString()
                 )
 
             } else {

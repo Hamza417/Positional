@@ -14,7 +14,7 @@ import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.HtmlHelper.fromHtml
-import app.simple.positional.util.isNetworkAvailable
+import app.simple.positional.util.NetworkCheck.isNetworkAvailable
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
@@ -60,17 +60,17 @@ class LocationParameters : CustomBottomSheetDialogFragment() {
             address.text = fromHtml("<b>${getString(R.string.gps_address)}</b>: " +
                     MainPreferences.getAddress())
         } else {
-            locationViewModel.dms.observe(viewLifecycleOwner, {
+            locationViewModel.dms.observe(viewLifecycleOwner) {
                 this.latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " +
                         it.first)
 
                 this.longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " +
                         it.second)
-            })
+            }
 
-            locationViewModel.location.observe(viewLifecycleOwner, {
+            locationViewModel.location.observe(viewLifecycleOwner) {
                 getAddress(LatLng(it.latitude, it.longitude))
-            })
+            }
         }
     }
 

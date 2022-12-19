@@ -3,13 +3,12 @@ package app.simple.positional.viewmodels.viewmodel
 import android.annotation.SuppressLint
 import android.app.Application
 import android.provider.Settings
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import app.simple.positional.R
 import app.simple.positional.extensions.viewmodel.WrappedViewModel
 import app.simple.positional.licensing.*
-import app.simple.positional.util.isNetworkAvailable
+import app.simple.positional.util.NetworkCheck.isNetworkAvailable
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -45,7 +44,7 @@ class LicenseViewModel(application: Application) : WrappedViewModel(application)
 
     private fun beginCheck(delay: Long) {
         viewModelScope.launch {
-            if(isNetworkAvailable(getApplication())) {
+            if (isNetworkAvailable(getApplication())) {
                 delay(delay)
                 licenseChecker.checkAccess(this@LicenseViewModel)
             } else {

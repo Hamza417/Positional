@@ -1,9 +1,12 @@
 package app.simple.positional.ui.subpanels
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import app.simple.positional.R
 import app.simple.positional.adapters.direction.AdapterDirections
@@ -19,6 +22,7 @@ import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.viewmodels.viewmodel.DirectionsViewModel
 import com.google.android.material.card.MaterialCardView
+
 
 class Directions : ScopedFragment() {
 
@@ -124,6 +128,17 @@ class Directions : ScopedFragment() {
                             GPSPreferences.setTargetMarkerStartLatitude(MainPreferences.getLastCoordinates()[0])
                             GPSPreferences.setTargetMarkerStartLongitude(MainPreferences.getLastCoordinates()[1])
                             set(directionModel)
+                        }
+
+                        override fun onNavigate() {
+                            kotlin.runCatching {
+                                val uri: Uri = Uri.parse("google.navigation:q=" + directionModel.latitude.toString() + "," + directionModel.longitude.toString() + "&mode=d")
+                                val intent = Intent(Intent.ACTION_VIEW, uri)
+                                intent.setPackage("com.google.android.apps.maps")
+                                startActivity(intent)
+                            }.getOrElse {
+                                Toast.makeText(requireContext(), R.string.error, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     })
                 }

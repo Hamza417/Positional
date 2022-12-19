@@ -58,10 +58,10 @@ import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt
+import app.simple.positional.util.NetworkCheck.isNetworkAvailable
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
-import app.simple.positional.util.isNetworkAvailable
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -540,7 +540,7 @@ class GPS : ScopedFragment() {
             }
 
             override fun onMapClicked() {
-                if(!isLandscapeVar) {
+                if (!isLandscapeVar) {
                     setFullScreen(true)
                 }
             }
@@ -587,7 +587,7 @@ class GPS : ScopedFragment() {
                         maps?.resetCamera(GPSPreferences.getMapZoom())
                     }
                     KeyEvent.KEYCODE_BACK -> {
-                        requireActivity().onBackPressed()
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
                     }
                 }
             }

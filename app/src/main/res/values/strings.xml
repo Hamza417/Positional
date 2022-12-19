@@ -325,4 +325,5 @@
     <string name="use_as_target">Use as Target</string>
     <string name="create_new">New</string>
     <string name="save_from_target">Save from Target</string>
+    <string name="navigate">Navigate</string>
 </resources>

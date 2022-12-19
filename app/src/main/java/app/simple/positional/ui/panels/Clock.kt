@@ -38,6 +38,7 @@ import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
+import app.simple.positional.util.DisplayRefreshRate.getDisplayRefreshRate
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.ImageLoader.loadImage
 import app.simple.positional.util.LocaleHelper
@@ -50,7 +51,6 @@ import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.ViewUtils.gone
-import app.simple.positional.util.getDisplayRefreshRate
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
@@ -401,7 +401,7 @@ class Clock : ScopedFragment() {
 
     private fun setMotionDelay(value: String) {
         delay = if (value == "smooth") {
-            (1000 / getDisplayRefreshRate(requireContext(), requireActivity())!!).toLong()
+            (1000 / requireActivity().getDisplayRefreshRate().toLong())
         } else {
             1000
         }
