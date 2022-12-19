@@ -401,7 +401,7 @@ class Clock : ScopedFragment() {
 
     private fun setMotionDelay(value: String) {
         delay = if (value == "smooth") {
-            (1000 / requireActivity().getDisplayRefreshRate().toLong())
+            1000 / requireActivity().getDisplayRefreshRate().toLong()
         } else {
             1000
         }
