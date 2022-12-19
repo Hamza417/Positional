@@ -322,4 +322,7 @@
     <string name="using_maps_target">Using Maps\' Target</string>
     <string name="edit">Edit</string>
     <string name="battery_optimization_desc">Please disable battery optimization to allow the Clock widget to run properly.</string>
+    <string name="use_as_target">Use as Target</string>
+    <string name="create_new">New</string>
+    <string name="save_from_target">Save from Target</string>
 </resources>

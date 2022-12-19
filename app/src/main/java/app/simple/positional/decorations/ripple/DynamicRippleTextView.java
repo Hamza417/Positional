@@ -15,12 +15,16 @@ public class DynamicRippleTextView extends androidx.appcompat.widget.AppCompatTe
     public DynamicRippleTextView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         setBackgroundColor(Color.TRANSPARENT);
-        setBackground(Utils.getRippleDrawable(getContext(), getBackground(), 1.5F));
+        if (!isInEditMode()) {
+            setBackground(Utils.getRippleDrawable(getContext(), getBackground(), 1.5F));
+        }
     }
     
     public DynamicRippleTextView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setBackgroundColor(Color.TRANSPARENT);
-        setBackground(Utils.getRippleDrawable(getContext(), getBackground(), 1.5F));
+        if (!isInEditMode()) {
+            setBackground(Utils.getRippleDrawable(getContext(), getBackground(), 1.5F));
+        }
     }
 }

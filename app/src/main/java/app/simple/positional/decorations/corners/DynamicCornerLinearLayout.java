@@ -14,19 +14,25 @@ import app.simple.positional.decorations.utils.LayoutBackground;
 public class DynamicCornerLinearLayout extends LinearLayout {
     public DynamicCornerLinearLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        LayoutBackground.setBackground(context, this, attrs);
+        if (!isInEditMode()) {
+            LayoutBackground.setBackground(context, this, attrs);
+        }
     }
     
     public DynamicCornerLinearLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutBackground.setBackground(context, this, attrs);
+        if (!isInEditMode()) {
+            LayoutBackground.setBackground(context, this, attrs);
+        }
     }
     
     public DynamicCornerLinearLayout(Context context) {
         super(context);
         setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.mainBackground)));
         setOrientation(LinearLayout.VERTICAL);
-        LayoutBackground.setBackground(context, this, null);
+        if (!isInEditMode()) {
+            LayoutBackground.setBackground(context, this, null);
+        }
 
         int padding = context.getResources().getDimensionPixelOffset(R.dimen.popup_padding);
         setPadding(padding, padding, padding, padding);

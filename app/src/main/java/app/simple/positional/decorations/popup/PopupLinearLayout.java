@@ -10,11 +10,12 @@ import app.simple.positional.R;
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout;
 
 public class PopupLinearLayout extends DynamicCornerLinearLayout {
+
     public PopupLinearLayout(Context context) {
         super(context);
         init();
     }
-    
+
     private void init() {
         int p = getResources().getDimensionPixelOffset(R.dimen.popup_padding);
         setPadding(p, p, p, p);

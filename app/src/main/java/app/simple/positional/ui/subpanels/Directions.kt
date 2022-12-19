@@ -11,9 +11,11 @@ import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.dialogs.direction.DirectionTarget
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.model.DirectionModel
+import app.simple.positional.popups.directions.PopupDirectionAddMenu
 import app.simple.positional.popups.directions.PopupDirectionsMenu
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.preferences.DirectionPreferences
+import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.viewmodels.viewmodel.DirectionsViewModel
 import com.google.android.material.card.MaterialCardView
@@ -39,15 +41,37 @@ class Directions : ScopedFragment() {
         add.radius = MainPreferences.getCornerRadius().toFloat()
 
         add.setOnClickListener {
-            val p0 = DirectionTarget.newInstance()
+            PopupDirectionAddMenu(it).setOnPopupCallbacksListener(object : PopupDirectionAddMenu.Companion.PopupDirectionsAddCallbacks {
+                override fun onNew() {
+                    val p0 = DirectionTarget.newInstance()
 
-            p0.setOnDirectionTargetListener(object : DirectionTarget.Companion.DirectionTargetCallbacks {
-                override fun onDirectionAdded(directionModel: DirectionModel) {
-                    directionsViewModel.addDirection(directionModel)
+                    p0.setOnDirectionTargetListener(object : DirectionTarget.Companion.DirectionTargetCallbacks {
+                        override fun onDirectionAdded(directionModel: DirectionModel) {
+                            directionsViewModel.addDirection(directionModel)
+                        }
+                    })
+
+                    p0.show(childFragmentManager, "direction_target")
+                }
+
+                override fun onSaveFromTarget() {
+                    val directionModel = DirectionModel(
+                            GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(),
+                            GPSPreferences.getTargetMarkerCoordinates()[1].toDouble(),
+                            "",
+                            System.currentTimeMillis())
+
+                    val p0 = DirectionTarget.newInstance(directionModel)
+
+                    p0.setOnDirectionTargetListener(object : DirectionTarget.Companion.DirectionTargetCallbacks {
+                        override fun onDirectionAdded(directionModel: DirectionModel) {
+                            directionsViewModel.addDirection(directionModel)
+                        }
+                    })
+
+                    p0.show(childFragmentManager, "direction_target")
                 }
             })
-
-            p0.show(childFragmentManager, "direction_target")
         }
 
         directionsViewModel.getDirections().observe(viewLifecycleOwner) {
@@ -92,6 +116,15 @@ class Directions : ScopedFragment() {
 
                             p0.show(childFragmentManager, "direction_target")
                         }
+
+                        override fun onUseAsTarget() {
+                            GPSPreferences.setTargetMarker(true)
+                            GPSPreferences.setTargetMarkerLatitude(directionModel.latitude.toFloat())
+                            GPSPreferences.setTargetMarkerLongitude(directionModel.longitude.toFloat())
+                            GPSPreferences.setTargetMarkerStartLatitude(MainPreferences.getLastCoordinates()[0])
+                            GPSPreferences.setTargetMarkerStartLongitude(MainPreferences.getLastCoordinates()[1])
+                            set(directionModel)
+                        }
                     })
                 }
             })
@@ -106,7 +139,7 @@ class Directions : ScopedFragment() {
         DirectionPreferences.setTargetLabel(directionModel.name)
         DirectionPreferences.setUseMapsTarget(false)
 
-        requireActivity().onBackPressed()
+        requireActivity().onBackPressedDispatcher.onBackPressed()
     }
 
     companion object {
