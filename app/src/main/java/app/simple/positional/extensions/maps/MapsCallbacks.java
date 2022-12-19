@@ -44,4 +44,8 @@ public interface MapsCallbacks {
     default void onTargetAdd() {
 
     }
+
+    default void onNavigate() {
+
+    }
 }

@@ -1,13 +1,11 @@
 package app.simple.positional.ui.panels
 
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.*
 import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -549,6 +547,17 @@ class GPS : ScopedFragment() {
                 PopupLocationMenu(dim!!, x, y).setOnMapsCallBackListener(object : MapsCallbacks {
                     override fun onTargetAdd() {
                         maps?.setTargetMarker(latLng)
+                    }
+
+                    override fun onNavigate() {
+                        kotlin.runCatching {
+                            val uri: Uri = Uri.parse("google.navigation:q=" + latLng.latitude.toString() + "," + latLng.longitude.toString() + "&mode=d")
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            intent.setPackage("com.google.android.apps.maps")
+                            startActivity(intent)
+                        }.getOrElse {
+                            Toast.makeText(requireContext(), R.string.error, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 })
             }

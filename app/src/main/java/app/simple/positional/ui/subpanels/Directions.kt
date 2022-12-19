@@ -91,10 +91,7 @@ class Directions : ScopedFragment() {
                 }
 
                 override fun onMenuPressed(directionModel: DirectionModel, view: View) {
-                    val popup = PopupDirectionsMenu(view)
-
-
-                    popup.setOnPopupCallbacksListener(object : PopupDirectionsMenu.Companion.PopupDirectionsCallbacks {
+                    PopupDirectionsMenu(view).setOnPopupCallbacksListener(object : PopupDirectionsMenu.Companion.PopupDirectionsCallbacks {
                         override fun onSet() {
                             set(directionModel)
                         }

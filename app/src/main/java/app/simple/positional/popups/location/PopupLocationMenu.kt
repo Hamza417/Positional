@@ -14,6 +14,7 @@ class PopupLocationMenu(anchor: View, x: Float, y: Float) : PopupWindow() {
 
     private var mapsCallbacks: MapsCallbacks? = null
     private val target: DynamicRippleTextView
+    private val navigate: DynamicRippleTextView
 
     init {
         val contentView = LayoutInflater.from(anchor.context)
@@ -39,9 +40,16 @@ class PopupLocationMenu(anchor: View, x: Float, y: Float) : PopupWindow() {
         setContentView(contentView)
 
         target = contentView.findViewById(R.id.map_menu_target)
+        navigate = contentView.findViewById(R.id.map_menu_navigate)
 
         target.setOnClickListener {
             mapsCallbacks?.onTargetAdd().also {
+                dismiss()
+            }
+        }
+
+        navigate.setOnClickListener {
+            mapsCallbacks?.onNavigate().also {
                 dismiss()
             }
         }
