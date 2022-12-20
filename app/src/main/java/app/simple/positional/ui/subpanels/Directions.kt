@@ -134,7 +134,7 @@ class Directions : ScopedFragment() {
                                 intent.setPackage("com.google.android.apps.maps")
                                 startActivity(intent)
                             }.getOrElse {
-                                Toast.makeText(requireContext(), R.string.error, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                             }
                         }
                     })

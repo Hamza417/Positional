@@ -194,6 +194,17 @@ class Trail : ScopedFragment() {
                                         .show()
                             }
                         }
+
+                        override fun onNavigate() {
+                            kotlin.runCatching {
+                                val uri: Uri = Uri.parse("google.navigation:q=" + trailData.latitude.toString() + "," + trailData.longitude.toString() + "&mode=d")
+                                val intent = Intent(Intent.ACTION_VIEW, uri)
+                                intent.setPackage("com.google.android.apps.maps")
+                                startActivity(intent)
+                            }.getOrElse {
+                                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     })
                 }
 
