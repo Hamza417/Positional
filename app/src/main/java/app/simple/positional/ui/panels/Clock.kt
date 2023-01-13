@@ -473,7 +473,7 @@ class Clock : ScopedFragment() {
                 moonPositionData =
                         with(MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).height(altitude).execute()) {
                             fromHtml("<b>${getString(R.string.moon_azimuth)}</b> ${round(azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), azimuth)}<br>" +
-                                    "<b>${getString(R.string.moon_altitude)}</b> ${round(altitude, 2)}°<br>" +
+                                    "<b>${getString(R.string.moon_altitude)}</b> ${round(this.altitude, 2)}°<br>" +
                                     (if (isMetric) {
                                         "<b>${getString(R.string.moon_distance)}</b> ${String.format("%.3E", distance)} ${getString(R.string.kilometer)}<br>"
                                     } else {
