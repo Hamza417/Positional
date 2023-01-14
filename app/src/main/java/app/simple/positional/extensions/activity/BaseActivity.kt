@@ -70,7 +70,7 @@ open class BaseActivity : AppCompatActivity() {
 
         /**
          * Checks if keep screen on flag is on
-         * and updates the flags accordingly
+         * and update the flags accordingly
          */
         if (MainPreferences.isScreenOn()) {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
