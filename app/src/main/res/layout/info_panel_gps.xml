@@ -155,7 +155,7 @@
 
         </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+        <LinearLayout
             android:id="@+id/gps_panel_movement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -171,7 +171,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/gps_movement"
                 android:textSize="@dimen/info_text_primary_size" />
@@ -219,7 +218,7 @@
                 app:first_gradient_color="#009bce"
                 app:gradient_needle="false" />
 
-        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+        </LinearLayout>
 
         <View
             android:id="@+id/gps_divider"
