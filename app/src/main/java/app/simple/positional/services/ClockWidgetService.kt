@@ -84,7 +84,7 @@ abstract class ClockWidgetService : Service() {
                     }
                     Intent.ACTION_SCREEN_OFF -> {
                         isScreenOn = false
-                        stopForeground(true)
+                        stopForeground(STOP_FOREGROUND_REMOVE)
                         removeCallbacks()
                     }
                 }
