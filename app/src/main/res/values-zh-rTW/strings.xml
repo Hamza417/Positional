@@ -104,7 +104,7 @@
     <string name="invalid_coordinates">無效的座標</string>
     <string name="internet_connection_alert">網際網路連線不可用</string>
     <string name="error">錯誤</string>
-    <string name="not_available">N/A</string>
+    <string name="not_available">不適用</string>
     <string name="no_address_found">目前位置找不到地址</string>
     <string name="location_saved">儲存成功</string>
     <string name="location_not_saved">無法儲存！</string>
