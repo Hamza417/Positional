@@ -37,7 +37,7 @@ class MovementExpansion : CustomBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        locationViewModel.location.observe(viewLifecycleOwner, {
+        locationViewModel.location.observe(viewLifecycleOwner) {
             speedometer.setSpeedValue(
                     if (MainPreferences.getUnit()) {
                         it.speed.toKiloMetersPerHour()
@@ -54,7 +54,7 @@ class MovementExpansion : CustomBottomSheetDialogFragment() {
                         "${MathExtensions.round(it.speed.toDouble().toKiloMetersPerHour().toMilesPerHour(), 2)} " +
                         getString(R.string.miles_hour))
             }
-        })
+        }
     }
 
     override fun onDestroy() {

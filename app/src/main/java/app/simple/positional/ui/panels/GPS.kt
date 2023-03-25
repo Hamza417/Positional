@@ -34,6 +34,7 @@ import app.simple.positional.decorations.maps.Maps
 import app.simple.positional.decorations.maps.MapsTools
 import app.simple.positional.decorations.maps.MapsToolsCallbacks
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+import app.simple.positional.decorations.views.Speedometer
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.gps.*
@@ -98,6 +99,7 @@ class GPS : ScopedFragment() {
     private lateinit var targetData: TextView
     private lateinit var direction: TextView
     private lateinit var speed: TextView
+    private lateinit var speedometer: Speedometer
     private lateinit var specifiedLocationTextView: TextView
     private lateinit var infoText: TextView
 
@@ -156,6 +158,7 @@ class GPS : ScopedFragment() {
         bearing = view.findViewById(R.id.gps_bearing)
         direction = view.findViewById(R.id.gps_direction)
         speed = view.findViewById(R.id.gps_speed)
+        speedometer = view.findViewById(R.id.speedometer)
         specifiedLocationTextView = view.findViewById(R.id.specified_location_notice_gps)
         infoText = view.findViewById(R.id.gps_info_text)
 
@@ -277,6 +280,12 @@ class GPS : ScopedFragment() {
                         this@GPS.bearing.text = bearing
                         this@GPS.accuracy.text = accuracy
                         this@GPS.direction.text = direction
+
+                        speedometer.setSpeedValue(if (MainPreferences.getUnit()) {
+                            it.speed.toKiloMetersPerHour()
+                        } else {
+                            it.speed.toMilesPerHour()
+                        })
 
                         if (!isCustomCoordinate) {
                             maps?.setFirstLocation(location)
@@ -519,10 +528,6 @@ class GPS : ScopedFragment() {
             } else {
                 GPSPreferences.setTargetMarkerMode(true)
             }
-        }
-
-        movementBox.setOnClickListener {
-            MovementExpansion.newInstance().show(childFragmentManager, "movement_expansion")
         }
 
         coordinatesBox.setOnClickListener {

@@ -239,4 +239,11 @@
   <component name="SuppressKotlinCodeStyleNotification">
     <option name="disableForAll" value="true" />
   </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.325" />
+      </ProjectState>
+    </option>
+  </component>
 </project>

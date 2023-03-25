@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.widget.ImageViewCompat
+import androidx.dynamicanimation.animation.SpringAnimation
+import androidx.dynamicanimation.animation.SpringForce
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import app.simple.positional.R
 import app.simple.positional.constants.SpeedometerConstants
@@ -50,6 +52,7 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
      */
     private var objectAnimator: ObjectAnimator? = null
     private var colorAnimation: ValueAnimator? = null
+    private var springAnimation: SpringAnimation? = null
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.speedometer, this, true)
@@ -108,11 +111,17 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
     }
 
     private fun rotateNeedle(value: Float) {
-        objectAnimator = ObjectAnimator.ofFloat(needle, "rotation", needle.rotation, value.reifyNeedleAngle())
-        objectAnimator!!.duration = 1000L
-        objectAnimator!!.interpolator = LinearOutSlowInInterpolator()
-        objectAnimator!!.setAutoCancel(true)
-        objectAnimator!!.start()
+        if (springAnimation != null) {
+            springAnimation!!.cancel()
+        }
+
+        springAnimation = SpringAnimation(needle, SpringAnimation.ROTATION)
+        springAnimation!!.spring = SpringForce()
+                .setFinalPosition(value - needleAngleCompensator)
+                .setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY)
+                .setStiffness(SpringForce.STIFFNESS_VERY_LOW)
+        springAnimation!!.setStartValue(needle.rotation)
+        springAnimation!!.start()
 
         if (colorfulNeedle) {
             animateColorChange(value = value)
@@ -171,6 +180,11 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
         }
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        clear()
+    }
+
     /**
      * Clears the references and animation of the objects.
      * It is recommended to call this in onDestroy or before
@@ -179,6 +193,7 @@ class Speedometer constructor(context: Context, attrs: AttributeSet? = null) : F
     fun clear() {
         objectAnimator?.cancel()
         colorAnimation?.cancel()
+        springAnimation?.cancel()
         dial.clearAnimation()
         needle.clearAnimation()
         invalidate()

@@ -61,11 +61,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="5dp"
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
-            android:paddingHorizontal="10dp">
+            android:padding="10dp">
 
             <TextView
                 style="@style/PrimaryTextView"
@@ -92,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:layout_marginTop="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
                 android:text="@string/gps_source"
                 android:textSize="@dimen/info_text_secondary_size" />
@@ -148,7 +148,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:layout_marginTop="@dimen/info_text_item_margin_vertical"
                 android:maxLines="1"
                 android:text="@string/gps_latency"
                 android:textSize="@dimen/info_text_secondary_size" />
@@ -170,12 +170,11 @@
                 style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginVertical="5dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:text="@string/gps_movement"
-                android:textSize="@dimen/info_text_primary_size"
-                app:drawableEndCompat="@drawable/ic_arrow_right" />
+                android:textSize="@dimen/info_text_primary_size" />
 
             <TextView
                 android:id="@+id/gps_bearing"
@@ -209,6 +208,16 @@
                 android:maxLines="1"
                 android:text="@string/gps_speed"
                 android:textSize="@dimen/info_text_secondary_size" />
+
+            <app.simple.positional.decorations.views.Speedometer
+                android:id="@+id/speedometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/info_text_item_margin_vertical"
+                android:padding="20dp"
+                app:colorful_needle="false"
+                app:first_gradient_color="#009bce"
+                app:gradient_needle="false" />
 
         </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
