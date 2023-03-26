@@ -454,8 +454,7 @@ public class Base64 {
                             throw new Base64DecoderException(
                                     "invalid padding byte '=' at byte offset " + i);
                         }
-                        else if ((b4Posn == 3 && bytesLeft > 2)
-                                || (b4Posn == 4 && bytesLeft > 1)) {
+                        else if (b4Posn == 3 && bytesLeft > 2) {
                             throw new Base64DecoderException(
                                     "padding byte '=' falsely signals end of encoded value "
                                             + "at offset " + i);

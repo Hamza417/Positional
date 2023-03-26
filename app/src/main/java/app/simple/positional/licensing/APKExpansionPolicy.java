@@ -8,6 +8,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Vector;
 
@@ -151,7 +152,7 @@ public class APKExpansionPolicy implements Policy {
                 }
                 else if (key.startsWith("FILE_SIZE")) {
                     int index = Integer.parseInt(key.substring("FILE_SIZE".length())) - 1;
-                    setExpansionFileSize(index, Long.parseLong(extras.get(key)));
+                    setExpansionFileSize(index, Long.parseLong(Objects.requireNonNull(extras.get(key))));
                 }
             }
         }

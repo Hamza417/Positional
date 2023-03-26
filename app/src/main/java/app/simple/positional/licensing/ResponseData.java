@@ -39,7 +39,9 @@ public class ResponseData {
         }
         else {
             mainData = responseData.substring(0, index);
-            extraData = index >= responseData.length() ? "" : responseData.substring(index + 1);
+            //noinspection ResultOfMethodCallIgnored
+            responseData.length();
+            extraData = responseData.substring(index + 1);
         }
         
         String[] fields = TextUtils.split(mainData, Pattern.quote("|"));

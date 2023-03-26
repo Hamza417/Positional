@@ -159,15 +159,15 @@ class LicenseValidator {
                 break;
             case ERROR_CONTACTING_SERVER:
                 Log.w(TAG, "Error contacting licensing server.");
-                handleResponse(Policy.RETRY, data);
+                handleResponse(Policy.RETRY, null);
                 break;
             case ERROR_SERVER_FAILURE:
                 Log.w(TAG, "An error has occurred on the licensing server.");
-                handleResponse(Policy.RETRY, data);
+                handleResponse(Policy.RETRY, null);
                 break;
             case ERROR_OVER_QUOTA:
                 Log.w(TAG, "Licensing server is refusing to talk to this device, over quota.");
-                handleResponse(Policy.RETRY, data);
+                handleResponse(Policy.RETRY, null);
                 break;
             case ERROR_INVALID_PACKAGE_NAME:
                 handleApplicationError(LicenseCheckerCallback.ERROR_INVALID_PACKAGE_NAME);

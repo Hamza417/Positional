@@ -1,5 +1,6 @@
 package app.simple.positional.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -31,7 +32,7 @@ public class StatusBarHeight {
      */
     public static int getStatusBarHeight(Resources resources) {
         int result = 0;
-        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        @SuppressLint({"DiscouragedApi", "InternalInsetResource"}) int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = resources.getDimensionPixelSize(resourceId);
         }
@@ -45,7 +46,7 @@ public class StatusBarHeight {
      * @return int
      */
     public static int getNavigationBarHeight(Resources resources) {
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        @SuppressLint({"InternalInsetResource", "DiscouragedApi"}) int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
             if (isEdgeToEdgeEnabled(resources) == 2) {
                 return 0;

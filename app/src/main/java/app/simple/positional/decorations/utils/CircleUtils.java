@@ -14,7 +14,7 @@ import app.simple.positional.decorations.interpolators.LatLngInterpolator;
 
 public class CircleUtils {
 
-    static int duration = 1000;
+    static final int duration = 1000;
 
     /**
      * Method to animate circle to destination location
