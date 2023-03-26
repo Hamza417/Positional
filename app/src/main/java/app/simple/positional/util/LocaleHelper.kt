@@ -25,8 +25,23 @@ object LocaleHelper {
             Locales("Română", "ro"),
             Locales("Русский", "ru"),
             Locales("اردو", "ur"),
-            Locales("漢語 (Traditional Chinese)", "zh-TW")
+            Locales("繁體中文 (Traditional Chinese)", "zh-TW")
     )
+
+    fun isOneOfTraditionalChinese(): Boolean {
+        return with(getSystemLanguageCode()) {
+            this == "zh" ||
+                    this == "zh-HK" ||
+                    this == "zh-MO" ||
+                    this == "zh-TW" ||
+                    this == "zh-Hant" ||
+                    this == "zh-Hant-HK" ||
+                    this == "zh-Hant-MO" ||
+                    this == "zh-Hant-TW" ||
+                    this == "zh-Hant-CN" ||
+                    this == "zh-Hant-SG"
+        }
+    }
 
     fun getSystemLanguageCode(): String {
         return Resources.getSystem().configuration.locales[0].language

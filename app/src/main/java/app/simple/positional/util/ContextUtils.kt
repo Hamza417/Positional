@@ -1,5 +1,6 @@
 package app.simple.positional.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.res.Configuration
@@ -20,12 +21,18 @@ open class ContextUtils(context: Context) : ContextWrapper(context) {
          * @param baseContext is base context
          * @param languageCode is code of the language e.g. en for English
          */
+        @SuppressLint("ObsoleteSdkInt")
         fun updateLocale(baseContext: Context, languageCode: String): ContextWrapper {
             val localeToSwitchTo = if (languageCode == "default") {
-                Locale.forLanguageTag(LocaleHelper.getSystemLanguageCode())
+                if (LocaleHelper.isOneOfTraditionalChinese()) {
+                    Locale.forLanguageTag("zh-TW")
+                } else {
+                    Locale.forLanguageTag(LocaleHelper.getSystemLanguageCode())
+                }
             } else {
                 Locale.forLanguageTag(languageCode)
             }
+
             var context = baseContext
             val resources: Resources = context.resources
             val configuration: Configuration = resources.configuration
