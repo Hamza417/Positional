@@ -41,11 +41,12 @@ class FusedLocationService : Service() {
         intentFilter.addAction(Intent.ACTION_PROVIDER_CHANGED)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(applicationContext)
-        locationRequest = LocationRequest.create()
-                .setInterval(delay)
-                .setFastestInterval(delay)
+
+        locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, delay)
                 .setWaitForAccurateLocation(true)
-                .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+                .setIntervalMillis(delay)
+                .setMinUpdateIntervalMillis(delay)
+                .build()
 
         requestLastLocation()
 
@@ -55,11 +56,6 @@ class FusedLocationService : Service() {
                 if (result.lastLocation.isNotNull()) {
                     broadcastLocation(result.lastLocation!!)
                 }
-            }
-
-            override fun onLocationAvailability(p0: LocationAvailability) {
-                super.onLocationAvailability(p0)
-                /* no-op */
             }
         }
 

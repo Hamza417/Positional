@@ -58,6 +58,7 @@ import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt
 import app.simple.positional.util.NetworkCheck.isNetworkAvailable
+import app.simple.positional.util.ParcelUtils.parcelable
 import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
@@ -538,7 +539,7 @@ class GPS : ScopedFragment() {
         maps?.setOnMapsCallbackListener(object : MapsCallbacks {
             override fun onMapInitialized() {
                 if (savedInstanceState.isNotNull()) {
-                    maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
+                    maps?.setCamera(savedInstanceState!!.parcelable("camera"))
                 }
             }
 
@@ -661,6 +662,7 @@ class GPS : ScopedFragment() {
                     } else {
                         val geocoder = Geocoder(requireContext(), Locale.getDefault())
 
+                        @Suppress("DEPRECATION")
                         with(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)) {
                             if (this != null && this.isNotEmpty()) {
                                 this[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
