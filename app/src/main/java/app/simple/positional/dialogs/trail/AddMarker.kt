@@ -17,6 +17,7 @@ import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.model.TrailData
 import app.simple.positional.popups.trail.PopupMarkers
 import app.simple.positional.preferences.TrailPreferences
+import app.simple.positional.util.ParcelUtils.parcelable
 import com.google.android.gms.maps.model.LatLng
 
 class AddMarker : CustomDialogFragment() {
@@ -42,7 +43,7 @@ class AddMarker : CustomDialogFragment() {
         save = view.findViewById(R.id.save)
         cancel = view.findViewById(R.id.cancel)
 
-        latLng = requireArguments().getParcelable("latlng")
+        latLng = requireArguments().parcelable("latlng")
         accuracy = requireArguments().getFloat("accuracy")
         setMarkerIcon(requireArguments().getInt("icon_position"))
 
@@ -63,6 +64,7 @@ class AddMarker : CustomDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager) {
+            @Suppress("DEPRECATION")
             showSoftInput(nameInputEditText, InputMethodManager.SHOW_FORCED)
         }
 

@@ -29,6 +29,7 @@ import app.simple.positional.util.DMSConverter.longitudeAsDMS
 import app.simple.positional.util.Direction
 import app.simple.positional.util.HtmlHelper
 import app.simple.positional.util.LocationExtension
+import app.simple.positional.util.ParcelUtils.parcelable
 import app.simple.positional.util.UTMConverter
 import com.google.android.gms.maps.model.LatLng
 import gov.nasa.worldwind.geom.Angle
@@ -77,7 +78,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                 if (intent != null) {
                     when (intent.action) {
                         "location" -> {
-                            with(intent.getParcelableExtra<Location>("location")!!) {
+                            with(intent.parcelable<Location>("location")!!) {
                                 location.postValue(this)
 
                                 measureLatency()

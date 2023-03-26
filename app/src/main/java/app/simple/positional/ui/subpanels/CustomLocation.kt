@@ -316,6 +316,7 @@ class CustomLocation : ScopedFragment() {
                 runCatching {
                     MainPreferences.setAddress(address)
 
+                    @Suppress("DEPRECATION")
                     addresses = geocoder.getFromLocationName(address, 1)
                     if (addresses != null && addresses!!.isNotEmpty()) {
                         latitude = addresses!![0].latitude

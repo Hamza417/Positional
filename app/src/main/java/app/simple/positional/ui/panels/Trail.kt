@@ -42,6 +42,7 @@ import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.LocationPrompt
+import app.simple.positional.util.ParcelUtils.parcelable
 import app.simple.positional.util.StatusBarHeight
 import app.simple.positional.util.TimeFormatter.formatDate
 import app.simple.positional.util.ViewUtils.invisible
@@ -326,7 +327,7 @@ class Trail : ScopedFragment() {
         maps?.setOnMapsCallbackListener(object : MapsCallbacks {
             override fun onMapInitialized() {
                 if (savedInstanceState.isNotNull()) {
-                    maps?.setCamera(savedInstanceState!!.getParcelable("camera"))
+                    maps?.setCamera(savedInstanceState!!.parcelable("camera"))
                 }
 
                 trailDataViewModel.trailDataAscending.observe(viewLifecycleOwner) {

@@ -13,6 +13,7 @@ import app.simple.positional.model.DirectionModel
 import app.simple.positional.preferences.DirectionPreferences
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension
+import app.simple.positional.util.ParcelUtils.parcelable
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
 
@@ -39,7 +40,7 @@ class DirectionTarget : CustomDialogFragment() {
         save = view.findViewById(R.id.save)
         cancel = view.findViewById(R.id.cancel)
 
-        directionModel = requireArguments().getParcelable("DirectionModel")
+        directionModel = requireArguments().parcelable("DirectionModel")
 
         return view
     }

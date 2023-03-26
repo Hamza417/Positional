@@ -37,7 +37,7 @@ class HtmlViewer : ScopedFragment() {
         FastScrollerBuilder(webView).useMd2Style().build()
 
         if (this.arguments != null && savedInstanceState.isNull()) {
-            when (this.requireArguments().get("source")) {
+            when (this.requireArguments().getString("source")) {
                 getString(R.string.privacy_policy) -> {
                     webView.loadUrl("file:///android_asset/html/privacy_policy.html")
                 }
@@ -127,7 +127,8 @@ class HtmlViewer : ScopedFragment() {
                         R.string.internet_connection_alert,
                         Toast.LENGTH_SHORT
                 ).show()
-                requireActivity().onBackPressed()
+
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         } catch (e: FileNotFoundException) {
             Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()

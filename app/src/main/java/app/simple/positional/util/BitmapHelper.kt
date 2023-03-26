@@ -132,7 +132,7 @@ object BitmapHelper {
      * @param size Resolution/Dimension of the output bitmap
      * @return [Bitmap]
      */
-    fun Int.toBitmap(context: Context, size: Int, padding: Float): Bitmap {
+    fun Int.toBitmap(context: Context, size: Int, @Suppress("UNUSED_PARAMETER") padding: Float): Bitmap {
         val drawable = ContextCompat.getDrawable(context, this)
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)

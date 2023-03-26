@@ -26,6 +26,7 @@ class AddressViewModel(application: Application) : AndroidViewModel(application)
                     runCatching {
                         MainPreferences.setAddress(address)
 
+                        @Suppress("DEPRECATION")
                         addresses = geocoder.getFromLocationName(address, 5)
 
                         coordinates.postValue(Pair(addresses!![0].latitude, addresses!![0].longitude))
