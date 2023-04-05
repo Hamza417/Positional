@@ -2,16 +2,12 @@
 
   ![banner](https://github.com/Hamza417/Positional/blob/master/screenshots/banner.png?raw=false)
 
-<br/>
-
 ## What's This ?
 **Positional** is a location based app that utilizes the device's GPS and fetches various details of the current latitude and longitude data like Altitude, Speed, Address and similar other information and show it in easily understandable format to the user. Alongside this main functionality of being a location app, Positional also provides a separate panel for **Compass** and **Clock**, and they serve their own purpose as their name suggests.
 
 **Compass** provides info related to direction and **Clock** fetches the time related information based on the current location and time zone and also sun's information like Sunset, Sunrise, Twilight and a good deal of other info.
 
 On top of all the core functionality Positional is a highly polished app and provides another layer of flexibility to customize the app as per liking including skins for Clock and Compass faces, colors, and many other features that should have been there.
-
-<br/>
 
 ## Download
 ![API](https://img.shields.io/badge/API-24%2B-%23138D75?style=flat&logo=android)
@@ -21,8 +17,6 @@ On top of all the core functionality Positional is a highly polished app and pro
 
 [![Intro](https://img.shields.io/youtube/views/34iuIlusrcs?label=Watch%20App%20Intro&logo=Youtube&logoColor=red&style=social)](https://youtu.be/34iuIlusrcs)
 
-<br/>
-
 ## Stats
 ![Total Lines](https://img.shields.io/tokei/lines/github.com/Hamza417/Positional?color=%23DE7E42&label=Total%20Lines)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visits&edge_flat=false)](https://hits.seeyoufarm.com)
@@ -31,8 +25,6 @@ On top of all the core functionality Positional is a highly polished app and pro
 ![Size](https://img.shields.io/github/repo-size/Hamza417/Positional?color=teal&label=Repo%20Size&logo=github)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional)
 
-<br/>
-
 ## Screenshots
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/01.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/02.png" width="100%">
@@ -40,8 +32,6 @@ On top of all the core functionality Positional is a highly polished app and pro
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/04.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/05.png" width="100%">
 <img src="https://github.com/Hamza417/Positional/blob/master/screenshots/06.png" width="100%">
-
-<br/>
 
 ## Features
   * Easy to use</br>
@@ -98,9 +88,7 @@ On top of all the core functionality Positional is a highly polished app and pro
   * Sun time widget with splash arts
   * Clock widget
   * Moon phase widget
-  * Completely Ad-Free</br>
-
-<br/>
+  * Completely Ad-Free
 
 ## Road Map
   * Add a custom date mode along with specified coordinates
@@ -109,12 +97,8 @@ On top of all the core functionality Positional is a highly polished app and pro
   * Solar and Lunar Eclipse dates
   * [x] Make the app landscape
 
-<br/>
-
 ## Contribution
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-<br/>
 
 ## Translate
 This app has been as of completely translated in these languages.
@@ -130,8 +114,6 @@ This app has been as of completely translated in these languages.
  * Chinese (Traditional)
 
 You can also contribute into translating the app in your native language on [Crowdin](https://crowdin.com/project/positional/).
-
-<br/>
 
 ## License
 **Positional** Copyright © 2022 - Hamza Rizwan
