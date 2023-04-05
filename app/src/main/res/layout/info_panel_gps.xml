@@ -275,7 +275,6 @@
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="6dp"
-                android:lines="5"
                 android:lineSpacingExtra="@dimen/info_text_item_line_spacing"
                 android:textSize="@dimen/info_text_secondary_size"
                 app:layout_constraintBottom_toTopOf="@+id/gps_target_bearing"

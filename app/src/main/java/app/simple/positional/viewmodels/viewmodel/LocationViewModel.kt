@@ -1,10 +1,8 @@
 package app.simple.positional.viewmodels.viewmodel
 
 import android.app.Application
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
+import android.location.Geocoder
 import android.location.Location
 import android.text.Spanned
 import androidx.lifecycle.MutableLiveData
@@ -18,24 +16,23 @@ import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.*
 import app.simple.positional.util.ArrayHelper.isLastValueSame
 import app.simple.positional.util.ConditionUtils.invert
+import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.DMSConverter.latitudeAsDD
 import app.simple.positional.util.DMSConverter.latitudeAsDM
 import app.simple.positional.util.DMSConverter.latitudeAsDMS
 import app.simple.positional.util.DMSConverter.longitudeAsDD
 import app.simple.positional.util.DMSConverter.longitudeAsDM
 import app.simple.positional.util.DMSConverter.longitudeAsDMS
-import app.simple.positional.util.Direction
-import app.simple.positional.util.HtmlHelper
-import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.ParcelUtils.parcelable
-import app.simple.positional.util.UTMConverter
 import com.google.android.gms.maps.model.LatLng
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -68,6 +65,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
     val altitudeGraphData = MutableLiveData<ArrayList<Float>>()
 
     private var lastLatencyInMilliseconds: Number = System.currentTimeMillis().toDouble()
+    private var targetAddress: String? = null
 
     init {
         filter.addAction("location")
@@ -146,6 +144,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                 append(targetBearing(target, current))
                 append(targetDirection(target, current))
                 append(targetETA(target, current, speed))
+                append(targetAddress(target))
 
                 targetData.postValue(HtmlHelper.fromHtml(this.toString()))
             }
@@ -303,6 +302,49 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
             } else {
                 it.append(getString(R.string.not_available))
             }
+
+            it.append("<br>")
+        }
+    }
+
+    private fun targetAddress(target: LatLng): StringBuilder {
+        return StringBuilder().also {
+            it.append("<b>${getString(R.string.gps_address)}: </b>")
+
+            if (targetAddress.isNull()) {
+                if (GPSPreferences.isTargetMarkerSet()) {
+                    targetAddress = try {
+                        if (!NetworkCheck.isNetworkAvailable(getApplication())) {
+                            null
+                        } else {
+                            val geocoder = Geocoder(getApplication(), Locale.getDefault())
+
+                            @Suppress("DEPRECATION")
+                            with(geocoder.getFromLocation(target.latitude, target.longitude, 1)) {
+                                if (this != null && this.isNotEmpty()) {
+                                    this[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
+                                } else {
+                                    getString(R.string.not_available)
+                                }
+                            }
+                        }
+                    } catch (e: IOException) {
+                        null
+                    } catch (e: NullPointerException) {
+                        null
+                    } catch (e: IllegalArgumentException) {
+                        null
+                    }
+                }
+
+                if (targetAddress.isNull()) {
+                    it.append(getString(R.string.not_available))
+                } else {
+                    it.append(targetAddress)
+                }
+            } else {
+                it.append(targetAddress)
+            }
         }
     }
 
@@ -358,6 +400,17 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
 
         arrayList.add(value)
         return arrayList
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        super.onSharedPreferenceChanged(sharedPreferences, key)
+        when (key) {
+            GPSPreferences.isTargetMarkerMode,
+            GPSPreferences.mapTargetMarkerLatitude,
+            GPSPreferences.mapTargetMarkerLongitude -> {
+                targetAddress = null
+            }
+        }
     }
 
     override fun onCleared() {

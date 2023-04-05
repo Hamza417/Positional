@@ -11,8 +11,8 @@ object GPSPreferences {
     private const val mapZoom = "map_zoom_value"
     private const val mapTilt = "map_tilt_value"
     private const val mapBearing = "map_bearing_value"
-    private const val mapTargetMarkerLatitude = "target_marker_latitude"
-    private const val mapTargetMarkerLongitude = "target_marker_longitude"
+    const val mapTargetMarkerLatitude = "target_marker_latitude"
+    const val mapTargetMarkerLongitude = "target_marker_longitude"
     private const val mapTargetMarkerStartLatitude = "target_start_latitude"
     private const val mapTargetMarkerStartLongitude = "target_start_longitude"
 
