@@ -29,8 +29,7 @@ On top of all the core functionality Positional is a highly polished app and pro
 [![Release](https://img.shields.io/github/v/release/Hamza417/Positional?color=212F3D&label=Release)](https://github.com/Hamza417/Positional/releases)
 ![Status](https://img.shields.io/badge/Status-Stable-orange)
 ![Size](https://img.shields.io/github/repo-size/Hamza417/Positional?color=teal&label=Repo%20Size&logo=github)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional) [![CodeFactor](https://www.codefactor.io/repository/github/hamza417/positional/badge)](https://www.codefactor.io/repository/github/hamza417/positional)
-[![Telegram Channel](https://img.shields.io/badge/Telegram%20Channel-blue?logo=telegram)](https://t.me/positional_app)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional)
 
 <br/>
 
