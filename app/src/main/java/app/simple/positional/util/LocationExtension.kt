@@ -34,6 +34,14 @@ object LocationExtension {
         return latitude >= -90 && latitude <= 90
     }
 
+    fun isHemisphereNorth(latitude: Double): Boolean {
+        return latitude >= 0
+    }
+
+    fun isHemisphereSouth(latitude: Double): Boolean {
+        return latitude < 0
+    }
+
     fun measureDisplacement(list: List<TrailData>): Float {
 
         val result = floatArrayOf(0f)

@@ -1,6 +1,7 @@
 package app.simple.positional.ui.panels
 
 import android.content.*
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -28,7 +29,9 @@ import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
+import app.simple.positional.math.DrawMoonBitmap
 import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.SunMoonCalculator
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
 import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
@@ -42,6 +45,7 @@ import app.simple.positional.util.DisplayRefreshRate.getDisplayRefreshRate
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.ImageLoader.loadImage
 import app.simple.positional.util.LocaleHelper
+import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
@@ -419,6 +423,9 @@ class Clock : ScopedFragment() {
             var moonDatesData: Spanned
 
             var moonPhase: Double?
+            var sunMoonCalculator: SunMoonCalculator?
+            var moonBitmap: Bitmap?
+            var size =  moonPhaseGraphics.width
 
             withContext(Dispatchers.Default) {
                 val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTimeFormat()) {
@@ -500,6 +507,13 @@ class Clock : ScopedFragment() {
                                     "<b>${getString(R.string.moon_first_quarter)}</b> ${formatMoonDate(phase(MoonPhase.Phase.FIRST_QUARTER).execute().time)}<br>" +
                                     "<b>${getString(R.string.moon_last_quarter)}</b> ${formatMoonDate(phase(MoonPhase.Phase.LAST_QUARTER).execute().time)}<br>")
                         }
+
+                sunMoonCalculator= SunMoonCalculator(getCurrentTimeData(), latitude, longitude, altitude.toInt())
+                sunMoonCalculator!!.calcSunAndMoon()
+
+                moonBitmap = with(MoonIllumination.compute().timezone(timezone).on(Instant.now()).execute()) {
+                    DrawMoonBitmap.getLunarPhaseBitmap(sunMoonCalculator!!.moonPhase, fraction, sunMoonCalculator!!, latitude, LocationExtension.isHemisphereNorth(latitude))
+                }
             }
 
             try {
@@ -509,8 +523,9 @@ class Clock : ScopedFragment() {
                 this@Clock.sunPositionData.text = sunPositionData
                 this@Clock.moonPositionData.text = moonPositionData
                 this@Clock.moonIlluminationData.text = moonIlluminationData
-                this@Clock.moonPhaseGraphics.setImageResource(getMoonPhaseGraphics(round(moonPhase!!, 2)))
+                //this@Clock.moonPhaseGraphics.setImageResource(getMoonPhaseGraphics(round(moonPhase!!, 2)))
                 //this@Clock.moonPhaseGraphics.rotation = (moonPosition.parallacticAngle - moonIllumination.angle).toFloat()
+                this@Clock.moonPhaseGraphics.setImageBitmap(moonBitmap)
                 this@Clock.moonDatesData.text = moonDatesData
             } catch (ignored: NullPointerException) {
             } catch (ignored: UninitializedPropertyAccessException) {
