@@ -251,7 +251,7 @@
     <string name="accent_colors">輔色</string>
     <string name="opacity">不透明度</string>
     <string name="size">大小</string>
-    <string name="customize_pin">自訂 PIN</string>
+    <string name="customize_pin">自訂圖釘</string>
     <string name="twenty_four_hours_clock">24 小時時鐘</string>
     <string name="gimbal_lock">環架鎖定</string>
     <string name="clock_widget_notification">時鐘小工具正在執行。</string>
@@ -296,4 +296,6 @@
     <string name="use_as_target">用作目標</string>
     <string name="create_new">新增</string>
     <string name="save_from_target">儲存自目標</string>
+    <string name="navigate">導航</string>
+    <string name="mechanical">機械</string>
 </resources>
