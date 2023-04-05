@@ -296,4 +296,6 @@
     <string name="use_as_target">用作目標</string>
     <string name="create_new">新增</string>
     <string name="save_from_target">儲存自目標</string>
+    <string name="navigate">導航</string>
+    <string name="mechanical">機械</string>
 </resources>
