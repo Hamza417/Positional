@@ -15,6 +15,7 @@ class ClockMotionType : CustomBottomSheetDialogFragment() {
     private lateinit var tick: CustomRadioButton
     private lateinit var oscillate: CustomRadioButton
     private lateinit var tickSmooth: CustomRadioButton
+    private lateinit var mechanical: CustomRadioButton
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_clock_motion_type, container, false)
@@ -23,6 +24,7 @@ class ClockMotionType : CustomBottomSheetDialogFragment() {
         tick = view.findViewById(R.id.motion_tick)
         oscillate = view.findViewById(R.id.motion_tick_oscillate)
         tickSmooth = view.findViewById(R.id.motion_tick_smooth)
+        mechanical = view.findViewById(R.id.motion_mechanical)
 
         return view
     }
@@ -47,6 +49,10 @@ class ClockMotionType : CustomBottomSheetDialogFragment() {
         tickSmooth.setOnClickListener {
             setButton("tick_smooth")
         }
+
+        mechanical.setOnClickListener {
+            setButton("mechanical")
+        }
     }
 
     private fun setButton(value: String) {
@@ -54,6 +60,7 @@ class ClockMotionType : CustomBottomSheetDialogFragment() {
         tick.isChecked = value == "tick"
         oscillate.isChecked = value == "oscillate"
         tickSmooth.isChecked = value == "tick_smooth"
+        mechanical.isChecked = value == "mechanical"
 
         ClockPreferences.setMovementType(value)
     }

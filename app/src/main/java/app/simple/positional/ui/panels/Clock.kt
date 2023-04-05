@@ -339,6 +339,10 @@ class Clock : ScopedFragment() {
                     seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false), false)
                     sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false).minus(90), false)
                 }
+                "mechanical" -> {
+                    seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), true), false)
+                    sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), true).minus(90), false)
+                }
             }
 
             if (dayNightIndicatorImageCountViolation != 0) {
@@ -402,10 +406,16 @@ class Clock : ScopedFragment() {
     }
 
     private fun setMotionDelay(value: String) {
-        delay = if (value == "smooth") {
-            1000 / requireActivity().getDisplayRefreshRate().toLong()
-        } else {
-            1000
+        delay = when (value) {
+            "smooth" -> {
+                1000 / requireActivity().getDisplayRefreshRate().toLong()
+            }
+            "mechanical" -> {
+                240
+            }
+            else -> {
+                1000
+            }
         }
     }
 
