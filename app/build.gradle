@@ -50,7 +50,7 @@ android {
 
     compileSdkVersion 33
 
-    def appVersionCode = 167
+    def appVersionCode = 168
     def appVersionName = "build${appVersionCode}_final"
 
     defaultConfig {
