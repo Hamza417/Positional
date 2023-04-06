@@ -8,9 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.Window
 import android.view.WindowManager
-import androidx.core.content.getSystemService
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import com.google.android.gms.maps.CameraUpdateFactory

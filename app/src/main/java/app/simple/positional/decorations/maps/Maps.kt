@@ -11,7 +11,6 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
 import android.util.AttributeSet
-import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
@@ -680,8 +679,10 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             }
             GPSPreferences.pinSize,
             GPSPreferences.pinOpacity -> {
-                if (latLng.isNotNull()) {
-                    addMarker(latLng!!)
+                if (location.isNotNull()) {
+                    if (latLng.isNotNull()) {
+                        addMarker(latLng!!)
+                    }
                 }
             }
             GPSPreferences.compassRotation -> {
