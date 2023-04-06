@@ -91,4 +91,5 @@
         android:background="#7E000000" />
 
     <include layout="@layout/bottom_sheet_compass" />
+
 </app.simple.positional.decorations.views.CustomCoordinatorLayout>

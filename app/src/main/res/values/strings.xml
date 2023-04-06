@@ -69,6 +69,8 @@
     <string name="moon_last_quarter">Last Quarter:</string>
 
     <!-- Compass information items -->
+    <string name="magnetometer">Magnetometer</string>
+    <string name="accelerometer">Accelerometer</string>
     <string name="accelerometer_accuracy">Accelerometer:</string>
     <string name="magnetometer_accuracy">Magnetometer:</string>
     <string name="compass_inclination">Inclination:</string>
