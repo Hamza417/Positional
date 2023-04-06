@@ -64,6 +64,8 @@
     <string name="moon_first_quarter">Първа четвърт:</string>
     <string name="moon_last_quarter">Последна четвърт:</string>
     <!-- Compass information items -->
+    <string name="magnetometer">Магнетометър</string>
+    <string name="accelerometer">Акселерометър</string>
     <string name="accelerometer_accuracy">Акселерометър:</string>
     <string name="magnetometer_accuracy">Магнетометър:</string>
     <string name="compass_inclination">Наклон:</string>
