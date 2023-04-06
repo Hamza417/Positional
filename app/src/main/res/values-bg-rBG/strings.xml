@@ -296,4 +296,6 @@
     <string name="use_as_target">Използвай за цел</string>
     <string name="create_new">Нова</string>
     <string name="save_from_target">Запазване от цел</string>
+    <string name="navigate">Навигация</string>
+    <string name="mechanical">Механика</string>
 </resources>
