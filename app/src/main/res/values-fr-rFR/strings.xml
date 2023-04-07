@@ -64,6 +64,8 @@
     <string name="moon_first_quarter">Premier quart:</string>
     <string name="moon_last_quarter">Dernier quart:</string>
     <!-- Compass information items -->
+    <string name="magnetometer">Magnétomètre</string>
+    <string name="accelerometer">Accéléromètre</string>
     <string name="accelerometer_accuracy">Accéléromètre:</string>
     <string name="magnetometer_accuracy">Magnétomètre:</string>
     <string name="compass_inclination">Inclinaison:</string>
@@ -284,4 +286,19 @@
     <string name="eta_hours">%1$s heures %2$s minutes</string>
     <string name="eta_days">%1$s jours %2$s heures %3$s minutes</string>
     <string name="eta">ETA:</string>
+    <string name="gps_displacement_from_origin">Déplacement de l\'origine :</string>
+    <string name="gps_displacement_from_dest">Déplacement de Distance :</string>
+    <string name="direction">Direction</string>
+    <string name="targets">Cibles</string>
+    <string name="direction_info">Informations sur la direction</string>
+    <string name="use_maps_target">Utiliser la cible des cartes</string>
+    <string name="using_maps_target">Utiliser la cible des cartes</string>
+    <string name="edit">Modifier</string>
+    <string name="battery_optimization_desc">Veuillez désactiver l\'optimisation de la batterie pour permettre au widget Horloge de fonctionner correctement.</string>
+    <string name="use_as_target">Utiliser comme cible</string>
+    <string name="create_new">Nouveautés</string>
+    <string name="save_from_target">Enregistrer à partir de la cible</string>
+    <string name="navigate">Naviguer</string>
+    <string name="mechanical">Mechanical</string>
+    <string name="app_coordinates_format">Format des coordonnées</string>
 </resources>
