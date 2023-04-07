@@ -1,7 +1,6 @@
 package app.simple.positional.ui.panels
 
 import android.content.*
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -30,7 +29,6 @@ import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.clock.ClockMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.math.MathExtensions.round
-import app.simple.positional.math.SunMoonCalculator
 import app.simple.positional.math.TimeConverter.getHoursInDegrees
 import app.simple.positional.math.TimeConverter.getHoursInDegreesFor24
 import app.simple.positional.math.TimeConverter.getMinutesInDegrees
@@ -431,9 +429,9 @@ class Clock : ScopedFragment() {
             var moonDatesData: Spanned
 
             var moonPhase: Double?
-            var sunMoonCalculator: SunMoonCalculator?
-            var moonBitmap: Bitmap?
-            var size = moonPhaseGraphics.width
+//            var sunMoonCalculator: SunMoonCalculator?
+//            var moonBitmap: Bitmap?
+//            var size = moonPhaseGraphics.width
 
             withContext(Dispatchers.Default) {
                 val pattern: DateTimeFormatter = if (ClockPreferences.getDefaultClockTimeFormat()) {

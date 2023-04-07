@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <app.simple.positional.decorations.padding.PaddingAwareNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/gps_list_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -284,7 +284,7 @@
 
         </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
-        <app.simple.positional.decorations.ripple.DynamicRippleFrameLayout
+        <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
             android:id="@+id/gps_panel_coordinates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -292,71 +292,39 @@
             android:background="@drawable/ripple"
             android:clickable="true"
             android:focusable="true"
-            android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/coordinates_icon"
-                android:layout_width="@dimen/info_graphics_dimension"
-                android:layout_height="@dimen/info_graphics_dimension"
-                android:layout_gravity="end|center_vertical"
-                android:src="@drawable/ic_pin_01"
-                tools:ignore="ContentDescription" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/PrimaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/gps_coordinates"
-                    android:textSize="@dimen/info_text_primary_size"
-                    app:drawableRightCompat="@drawable/ic_arrow_right" />
-
-                <TextView
-                    android:id="@+id/latitude_input"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/gps_latitude"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-                <TextView
-                    android:id="@+id/longitude"
-                    style="@style/SecondaryTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                    android:maxLines="1"
-                    android:text="@string/gps_longitude"
-                    android:textSize="@dimen/info_text_secondary_size" />
-
-            </LinearLayout>
-        </app.simple.positional.decorations.ripple.DynamicRippleFrameLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:clickable="true"
-            android:focusable="true"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/coordinates"
                 style="@style/PrimaryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/gps_address"
-                android:textSize="@dimen/info_text_primary_size" />
+                android:text="@string/gps_coordinates"
+                android:textSize="@dimen/info_text_primary_size"
+                app:drawableRightCompat="@drawable/ic_pin_01" />
+
+            <TextView
+                android:id="@+id/latitude"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:text="@string/gps_latitude"
+                android:textSize="@dimen/info_text_secondary_size" />
+
+            <TextView
+                android:id="@+id/longitude"
+                style="@style/SecondaryTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:maxLines="1"
+                android:text="@string/gps_longitude"
+                android:textSize="@dimen/info_text_secondary_size" />
 
             <TextView
                 android:id="@+id/gps_address"
@@ -365,10 +333,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                android:text="@string/gps_address"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-        </LinearLayout>
-
+        </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
     </LinearLayout>
-
 </app.simple.positional.decorations.padding.PaddingAwareNestedScrollView>

@@ -85,7 +85,7 @@ class GPS : ScopedFragment() {
     private lateinit var locationBox: LinearLayout
     private lateinit var targetBox: DynamicRippleLinearLayout
     private lateinit var movementBox: LinearLayout
-    private lateinit var coordinatesBox: FrameLayout
+    private lateinit var coordinatesBox: DynamicRippleLinearLayout
     private lateinit var copy: ImageButton
     private lateinit var save: ImageButton
     private lateinit var accuracy: TextView
@@ -149,7 +149,7 @@ class GPS : ScopedFragment() {
 
         accuracy = view.findViewById(R.id.gps_accuracy)
         address = view.findViewById(R.id.gps_address)
-        latitude = view.findViewById(R.id.latitude_input)
+        latitude = view.findViewById(R.id.latitude)
         longitude = view.findViewById(R.id.longitude)
         providerSource = view.findViewById(R.id.provider_source)
         providerStatus = view.findViewById(R.id.provider_status)
@@ -681,7 +681,7 @@ class GPS : ScopedFragment() {
             }
 
             withContext(Dispatchers.Main) {
-                this@GPS.address.text = address
+                this@GPS.address.text = fromHtml("<b>${getString(R.string.gps_address)}:</b> $address")
             }
         }
     }
@@ -714,8 +714,8 @@ class GPS : ScopedFragment() {
     }
 
     private fun setLocationPin() {
-        view?.findViewById<ImageView>(R.id.coordinates_icon)!!
-                .setImageResource(LocationPins.locationsPins[GPSPreferences.getPinSkin()])
+        view?.findViewById<TextView>(R.id.coordinates)!!
+                .setCompoundDrawablesWithIntrinsicBounds(0, 0, LocationPins.locationsPins[GPSPreferences.getPinSkin()], 0)
     }
 
     private fun targetMode() {
