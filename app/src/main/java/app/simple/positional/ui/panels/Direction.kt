@@ -360,8 +360,12 @@ class Direction : ScopedFragment(), SensorEventListener {
     }
 
     private fun setCoordinates() {
-        latitude.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDM(targetLatLng?.latitude!!, requireContext())}")
-        longitude.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.latitudeAsDM(targetLatLng?.longitude!!, requireContext())}")
+        kotlin.runCatching {
+            with(DMSConverter.getFormattedCoordinates(targetLatLng!!, requireContext())) {
+                latitude.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${this[0]}")
+                longitude.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${this[1]}")
+            }
+        }
     }
 
     private fun setTargetCoordinates() {

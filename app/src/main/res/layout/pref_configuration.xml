@@ -52,6 +52,34 @@
     </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
 
     <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+        android:id="@+id/settings_coordinates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/app_coordinates_format"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <TextView
+            android:id="@+id/current_coordinate_format"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/settings_secondary_text_size" />
+
+    </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+
+    <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
         android:id="@+id/settings_location_provider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

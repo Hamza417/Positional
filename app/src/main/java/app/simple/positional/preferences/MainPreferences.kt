@@ -2,10 +2,8 @@ package app.simple.positional.preferences
 
 import android.annotation.SuppressLint
 import androidx.annotation.IntRange
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatDelegate
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
-import org.jetbrains.annotations.NotNull
 
 object MainPreferences {
 
@@ -31,6 +29,7 @@ object MainPreferences {
     const val lastLatitude = "last_latitude"
     const val lastLongitude = "last_longitude"
     const val lastAltitude = "last_altitude"
+    const val coordinatesFormat = "coordinate_format"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -71,7 +70,7 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setDayNight(@NotNull value: Boolean) {
+    fun setDayNight(value: Boolean) {
         getSharedPreferences().edit().putBoolean(dayNightMode, value).apply()
     }
 
@@ -81,7 +80,7 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setShowPermissionDialog(@NotNull value: Boolean) {
+    fun setShowPermissionDialog(value: Boolean) {
         getSharedPreferences().edit().putBoolean(showAgain, value).apply()
     }
 
@@ -91,7 +90,7 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setShowRatingDialog(@NotNull value: Boolean) {
+    fun setShowRatingDialog(value: Boolean) {
         getSharedPreferences().edit().putBoolean(ratingDialog, value).apply()
     }
 
@@ -101,7 +100,7 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setLicenseStatus(@NotNull value: Boolean) {
+    fun setLicenseStatus(value: Boolean) {
         getSharedPreferences().edit().putBoolean(licenseStatus, value).apply()
     }
 
@@ -111,7 +110,7 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setUnit(@NotNull value: Boolean) {
+    fun setUnit(value: Boolean) {
         getSharedPreferences().edit().putBoolean(unit, value).apply()
     }
 
@@ -126,7 +125,7 @@ object MainPreferences {
     //--------------------------------------------------------------------------------------------------//
 
     @SuppressLint("ApplySharedPref")
-    fun setCustomCoordinates(@NotNull value: Boolean) {
+    fun setCustomCoordinates(value: Boolean) {
         getSharedPreferences().edit().putBoolean(isCustomCoordinate, value).commit()
     }
 
@@ -137,12 +136,12 @@ object MainPreferences {
     //--------------------------------------------------------------------------------------------------//
 
     @SuppressLint("ApplySharedPref")
-    fun setLatitude(@NotNull value: Float) {
+    fun setLatitude(value: Float) {
         getSharedPreferences().edit().putFloat(latitude, value).commit()
     }
 
     @SuppressLint("ApplySharedPref")
-    fun setLongitude(@NotNull value: Float) {
+    fun setLongitude(value: Float) {
         getSharedPreferences().edit().putFloat(longitude, value).commit()
     }
 
@@ -155,11 +154,11 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setLastLatitude(@NotNull value: Float) {
+    fun setLastLatitude(value: Float) {
         getSharedPreferences().edit().putFloat(lastLatitude, value).apply()
     }
 
-    fun setLastLongitude(@NotNull value: Float) {
+    fun setLastLongitude(value: Float) {
         getSharedPreferences().edit().putFloat(lastLongitude, value).apply()
     }
 
@@ -182,7 +181,7 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setAddress(@NotNull value: String) {
+    fun setAddress(value: String) {
         getSharedPreferences().edit().putString(address, value).apply()
     }
 
@@ -192,7 +191,7 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setAppLanguage(@NonNull locale: String) {
+    fun setAppLanguage(locale: String) {
         getSharedPreferences().edit().putString(appLanguage, locale).apply()
     }
 
@@ -226,7 +225,7 @@ object MainPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setSkipSplashScreen(@NotNull value: Boolean) {
+    fun setSkipSplashScreen(value: Boolean) {
         getSharedPreferences().edit().putBoolean(skipSplashScreen, value).apply()
     }
 
@@ -253,4 +252,26 @@ object MainPreferences {
     fun getCurrentArt(): Int {
         return getSharedPreferences().getInt(currentArt, 0)
     }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    /**
+     * @param value 0 for DD
+     *              1 for DDM
+     *              2 for DMS
+     */
+    fun setCoordinatesFormat(value: Int) {
+        getSharedPreferences().edit().putInt(coordinatesFormat, value).apply()
+    }
+
+    /**
+     * @return 0 for DD
+     *         1 for DDM
+     *         2 for DMS
+     */
+    fun getCoordinatesFormat(): Int {
+        return getSharedPreferences().getInt(coordinatesFormat, 2)
+    }
+
+
 }

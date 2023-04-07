@@ -20,7 +20,7 @@ import com.google.android.material.shape.CornerFamily
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 
-class RoundedCorner : CustomBottomSheetDialogFragment() {
+class RoundedCorners : CustomBottomSheetDialogFragment() {
 
     private lateinit var radiusValue: TextView
     private lateinit var radiusSeekBar: SeekBar
@@ -113,9 +113,9 @@ class RoundedCorner : CustomBottomSheetDialogFragment() {
     }
 
     companion object {
-        fun newInstance(): RoundedCorner {
+        fun newInstance(): RoundedCorners {
             val args = Bundle()
-            val fragment = RoundedCorner()
+            val fragment = RoundedCorners()
             fragment.arguments = args
             return fragment
         }

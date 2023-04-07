@@ -28,8 +28,8 @@ class LocationsAdapter : RecyclerView.Adapter<LocationsAdapter.Holder>() {
     override fun onBindViewHolder(holder: Holder, position: Int) {
         Log.d("Locations:", "${locations[position].latitude} : ${locations[position].longitude}")
         holder.address.text = locations[position].address
-        holder.latitude.text = DMSConverter.latitudeAsDMS(locations[position].latitude, holder.itemView.context)
-        holder.longitude.text = DMSConverter.longitudeAsDMS(locations[position].longitude, holder.itemView.context)
+        holder.latitude.text = DMSConverter.getFormattedLatitude(locations[position].latitude, holder.itemView.context)
+        holder.longitude.text = DMSConverter.getFormattedLongitude(locations[position].longitude, holder.itemView.context)
 
         holder.container.setOnClickListener {
             locationsAdapterCallback?.onLocationClicked(locations = locations[position])

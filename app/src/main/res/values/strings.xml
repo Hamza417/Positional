@@ -329,4 +329,5 @@
     <string name="save_from_target">Save from Target</string>
     <string name="navigate">Navigate</string>
     <string name="mechanical">Mechanical</string>
+    <string name="app_coordinates_format">Coordinates Format</string>
 </resources>

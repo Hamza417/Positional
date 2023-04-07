@@ -12,6 +12,7 @@ import android.os.Looper
 import android.text.Spannable
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.activity.OnBackPressedCallback
@@ -293,6 +294,11 @@ class GPS : ScopedFragment() {
                             maps?.location = location
                             maps?.addMarker(LatLng(location!!.latitude, location!!.longitude))
                             getAddress(LatLng(location!!.latitude, location!!.longitude))
+
+                            with(DMSConverter.getFormattedCoordinates(location!!, requireContext())) {
+                                latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${this[0]}")
+                                longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${this[1]}")
+                            }
                         }
                     }
                 }
@@ -301,8 +307,8 @@ class GPS : ScopedFragment() {
 
         locationViewModel.dms.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
-            latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " + it.first)
-            longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " + it.second)
+            Log.d("GPS", "DMS: ${it.first} ${it.second}")
+            /* no-op */
         }
 
         locationViewModel.latency.observe(viewLifecycleOwner) {
@@ -626,9 +632,9 @@ class GPS : ScopedFragment() {
 
     private fun updateCoordinates(latitude_: Double, longitude_: Double) {
         latitude.text =
-                fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.latitudeAsDMS(latitude_, requireContext())}")
+                fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getFormattedLatitude(latitude_, requireContext())}")
         longitude.text =
-                fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.longitudeAsDMS(longitude_, requireContext())}")
+                fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getFormattedLongitude(longitude_, requireContext())}")
     }
 
     private fun setFullScreen(forBottomBar: Boolean) {

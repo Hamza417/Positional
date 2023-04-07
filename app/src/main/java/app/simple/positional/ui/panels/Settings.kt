@@ -34,10 +34,10 @@ import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.dialogs.settings.*
-import app.simple.positional.dialogs.settings.RoundedCorner
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.popups.settings.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.AppUtils
 import app.simple.positional.util.LocaleHelper.localeList
 import app.simple.positional.util.PermissionUtils
 import app.simple.positional.util.ViewUtils.gone
@@ -46,7 +46,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 
-class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
+class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
     private var xOff = 0F
     private var yOff = 0F
@@ -73,6 +73,9 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var github: DynamicRippleLinearLayout
     private lateinit var translate: DynamicRippleLinearLayout
     private lateinit var keepScreenOn: DynamicRippleConstraintLayout
+    private lateinit var coordinatesFormatContainer: DynamicRippleLinearLayout
+    private lateinit var coordinatesFormat: TextView
+
 
     private lateinit var toggleKeepScreenOn: SwitchView
     private lateinit var toggleCustomLocation: SwitchView
@@ -134,6 +137,8 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         myOtherApps = view.findViewById(R.id.my_other_apps)
         translate = view.findViewById(R.id.translate)
         keepScreenOn = view.findViewById(R.id.setting_keep_screen_on)
+        coordinatesFormatContainer = view.findViewById(R.id.settings_coordinates)
+        coordinatesFormat = view.findViewById(R.id.current_coordinate_format)
 
         toggleKeepScreenOn = view.findViewById(R.id.toggle_screen_on)
         toggleCustomLocation = view.findViewById(R.id.toggle_custom_location)
@@ -164,6 +169,12 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             }
         }
 
+        if (AppUtils.isFullFlavor()) {
+            setCoordinatesFormat()
+        } else {
+            coordinatesFormatContainer.gone()
+        }
+
         permissionNotification()
 
         setCurrentUnit(MainPreferences.getUnit())
@@ -192,7 +203,7 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         corner.setOnClickListener {
-            RoundedCorner.newInstance().show(parentFragmentManager, "rounded_corners")
+            RoundedCorners.newInstance().show(parentFragmentManager, "rounded_corners")
         }
 
         unit.setOnClickListener {
@@ -332,6 +343,11 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
                                 Manifest.permission.ACCESS_FINE_LOCATION))
             }
         }
+
+        coordinatesFormatContainer.setOnClickListener {
+            CoordinatesFormat.newInstance()
+                    .show(childFragmentManager, "coordinates_format")
+        }
     }
 
     private fun setCurrentLocation() {
@@ -365,6 +381,15 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             permission.gone()
         } else {
             permission.visible(false)
+        }
+    }
+
+    private fun setCoordinatesFormat() {
+        coordinatesFormat.text = when (MainPreferences.getCoordinatesFormat()) {
+            0 -> getString(R.string.dd_ddd)
+            1 -> getString(R.string.dd_mm_mmm)
+            2 -> getString(R.string.dd_mm_ss_sss)
+            else -> "Unknown Format Selected!!" // Unreachable
         }
     }
 
@@ -464,13 +489,16 @@ class AppSettings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             MainPreferences.isCustomCoordinate -> {
                 toggleCustomLocation.isChecked = MainPreferences.isCustomCoordinate()
             }
+            MainPreferences.coordinatesFormat -> {
+                setCoordinatesFormat()
+            }
         }
     }
 
     companion object {
-        fun newInstance(): AppSettings {
+        fun newInstance(): app.simple.positional.ui.panels.Settings {
             val args = Bundle()
-            val fragment = AppSettings()
+            val fragment = app.simple.positional.ui.panels.Settings()
             fragment.arguments = args
             return fragment
         }

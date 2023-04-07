@@ -20,8 +20,8 @@ class AdapterTargetAddress(private val addresses: MutableList<Address>) : Recycl
     override fun onBindViewHolder(holder: Holder, position: Int) {
         with(holder) {
             address.text = addresses[position].getAddressLine(0)
-            latitude.text = DMSConverter.latitudeAsDMS(addresses[position].latitude, itemView.context)
-            longitude.text = DMSConverter.longitudeAsDMS(addresses[position].longitude, itemView.context)
+            latitude.text = DMSConverter.getFormattedLatitude(addresses[position].latitude, itemView.context)
+            longitude.text = DMSConverter.getFormattedLongitude(addresses[position].longitude, itemView.context)
         }
     }
 

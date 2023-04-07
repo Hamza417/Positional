@@ -61,8 +61,8 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
             holder.date.text = trailData.first[position].timeAdded.formatDate()
             holder.coordinates.text = with(holder.itemView.context) {
                 getString(R.string.coordinates_format,
-                          DMSConverter.latitudeAsDMS(trailData.first[position].latitude, this),
-                          DMSConverter.longitudeAsDMS(trailData.first[position].longitude, this))
+                        DMSConverter.getFormattedLatitude(trailData.first[position].latitude, this),
+                        DMSConverter.getFormattedLongitude(trailData.first[position].longitude, this))
             }
 
             holder.accuracy.text = holder.itemView.context.getString(

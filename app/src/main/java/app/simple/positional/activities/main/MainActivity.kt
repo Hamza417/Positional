@@ -209,8 +209,8 @@ class MainActivity : BaseActivity(),
                         ?: Level.newInstance()
             }
             "settings" -> {
-                return supportFragmentManager.findFragmentByTag("settings") as AppSettings?
-                        ?: AppSettings.newInstance()
+                return supportFragmentManager.findFragmentByTag("settings") as Settings?
+                        ?: Settings.newInstance()
             }
             else -> {
                 return supportFragmentManager.findFragmentByTag("location") as GPS?

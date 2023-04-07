@@ -52,24 +52,22 @@ class LocationParameters : CustomBottomSheetDialogFragment() {
 
         if (MainPreferences.isCustomCoordinate()) {
             latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " +
-                    DMSConverter.latitudeAsDMS(MainPreferences.getCoordinates()[0].toDouble(), requireContext()))
+                    DMSConverter.getFormattedLatitude(MainPreferences.getCoordinates()[0].toDouble(), requireContext()))
 
             longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " +
-                    DMSConverter.longitudeAsDMS(MainPreferences.getCoordinates()[1].toDouble(), requireContext()))
+                    DMSConverter.getFormattedLongitude(MainPreferences.getCoordinates()[1].toDouble(), requireContext()))
 
             address.text = fromHtml("<b>${getString(R.string.gps_address)}</b>: " +
                     MainPreferences.getAddress())
         } else {
-            locationViewModel.dms.observe(viewLifecycleOwner) {
-                this.latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " +
-                        it.first)
-
-                this.longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " +
-                        it.second)
-            }
-
             locationViewModel.location.observe(viewLifecycleOwner) {
                 getAddress(LatLng(it.latitude, it.longitude))
+
+                latitude.text = fromHtml("<b>${getString(R.string.gps_latitude)}</b> " +
+                        DMSConverter.getFormattedLatitude(it.latitude, requireContext()))
+
+                longitude.text = fromHtml("<b>${getString(R.string.gps_longitude)}</b> " +
+                        DMSConverter.getFormattedLongitude(it.longitude, requireContext()))
             }
         }
     }
