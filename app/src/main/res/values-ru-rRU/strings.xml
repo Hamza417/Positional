@@ -64,6 +64,8 @@
     <string name="moon_first_quarter">Первая четверть:</string>
     <string name="moon_last_quarter">Последняя четверть:</string>
     <!-- Compass information items -->
+    <string name="magnetometer">Магнитометр</string>
+    <string name="accelerometer">Акселерометр</string>
     <string name="accelerometer_accuracy">Акселерометр:</string>
     <string name="magnetometer_accuracy">Магнитометр:</string>
     <string name="compass_inclination">Наклон:</string>
@@ -284,4 +286,19 @@
     <string name="eta_hours">%1$s часов %2$s минут</string>
     <string name="eta_days">%1$s дней %2$s часов %3$s минут</string>
     <string name="eta">ETA:</string>
+    <string name="gps_displacement_from_origin">Вытеснение из происхождения:</string>
+    <string name="gps_displacement_from_dest">Смещение с Dest:</string>
+    <string name="direction">Направление</string>
+    <string name="targets">Цели</string>
+    <string name="direction_info">Информация о направлении</string>
+    <string name="use_maps_target">Использование цели карты</string>
+    <string name="using_maps_target">Использование цели карты</string>
+    <string name="edit">Редактирование</string>
+    <string name="battery_optimization_desc">Пожалуйста, отключите оптимизацию батареи, чтобы виджет часов работал должным образом.</string>
+    <string name="use_as_target">Использовать как цель</string>
+    <string name="create_new">Нов</string>
+    <string name="save_from_target">Сохранить из адресата</string>
+    <string name="navigate">Проводить</string>
+    <string name="mechanical">Механический питомец</string>
+    <string name="app_coordinates_format">Формат координат</string>
 </resources>
