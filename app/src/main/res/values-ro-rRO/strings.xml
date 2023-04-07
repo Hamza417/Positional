@@ -64,6 +64,8 @@
     <string name="moon_first_quarter">Primul pătrar:</string>
     <string name="moon_last_quarter">Ultimul pătrar:</string>
     <!-- Compass information items -->
+    <string name="magnetometer">Magnetometru</string>
+    <string name="accelerometer">Accelerometru</string>
     <string name="accelerometer_accuracy">Accelerometru:</string>
     <string name="magnetometer_accuracy">Magnetometru:</string>
     <string name="compass_inclination">Inclinație:</string>
@@ -289,4 +291,14 @@
     <string name="direction">Direcție</string>
     <string name="targets">Obiective</string>
     <string name="direction_info">Informații de orientare</string>
+    <string name="use_maps_target">Folosind obiectivul hărților</string>
+    <string name="using_maps_target">Folosind obiectivul hărților</string>
+    <string name="edit">Editare</string>
+    <string name="battery_optimization_desc">Dezactivați optimizarea bateriei pentru a permite widget-ului Ceas să ruleze corect.</string>
+    <string name="use_as_target">Folosește ca țintă</string>
+    <string name="create_new">Nou</string>
+    <string name="save_from_target">Salvează din Țintă</string>
+    <string name="navigate">Navigaţi</string>
+    <string name="mechanical">Mecanice</string>
+    <string name="app_coordinates_format">Formatul coordonatelor</string>
 </resources>
