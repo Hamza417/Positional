@@ -64,6 +64,8 @@
     <string name="moon_first_quarter">První čtvrť:</string>
     <string name="moon_last_quarter">Poslední čtvrť:</string>
     <!-- Compass information items -->
+    <string name="magnetometer">Magnetometr</string>
+    <string name="accelerometer">Akcelerometr</string>
     <string name="accelerometer_accuracy">Akcelerometr:</string>
     <string name="magnetometer_accuracy">Magnetometr:</string>
     <string name="compass_inclination">Inklinace:</string>
@@ -284,4 +286,19 @@
     <string name="eta_hours">%1$s hodin %2$s minut</string>
     <string name="eta_days">%1$s dnů %2$s hodin %3$s minut</string>
     <string name="eta">ETA:</string>
+    <string name="gps_displacement_from_origin">Posunutí z původu:</string>
+    <string name="gps_displacement_from_dest">Posunutí z cíle:</string>
+    <string name="direction">Směr</string>
+    <string name="targets">Cíle</string>
+    <string name="direction_info">Informace o směru</string>
+    <string name="use_maps_target">Použití cíle mapy</string>
+    <string name="using_maps_target">Použití cíle mapy</string>
+    <string name="edit">Upravit</string>
+    <string name="battery_optimization_desc">Zakažte optimalizaci baterie, aby widget hodin mohl správně fungovat.</string>
+    <string name="use_as_target">Použít jako cíl</string>
+    <string name="create_new">Nový</string>
+    <string name="save_from_target">Uložit z cíle</string>
+    <string name="navigate">Navigace</string>
+    <string name="mechanical">Mechanické</string>
+    <string name="app_coordinates_format">Formát souřadnic</string>
 </resources>
