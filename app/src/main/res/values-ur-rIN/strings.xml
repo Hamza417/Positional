@@ -64,6 +64,8 @@
     <string name="moon_first_quarter">پہلا کوارٹر:</string>
     <string name="moon_last_quarter">آخری کوارٹر:</string>
     <!-- Compass information items -->
+    <string name="magnetometer">میگنیٹومیٹر</string>
+    <string name="accelerometer">ایکسلرومیٹر</string>
     <string name="accelerometer_accuracy">ایکسیلیومیٹر:</string>
     <string name="magnetometer_accuracy">مقناطیسی میٹر:</string>
     <string name="compass_inclination">جھکاو:</string>
@@ -293,4 +295,10 @@
     <string name="using_maps_target">نقشہ جات کا ہدف استعمال کرنا</string>
     <string name="edit">تدوین کریں</string>
     <string name="battery_optimization_desc">گھڑی ویجیٹ کو صحیح طریقے سے چلنے دینے کے لیے براہ کرم بیٹری کی اصلاح کو غیر فعال کریں۔.</string>
+    <string name="use_as_target">ہدف کے طور پر استعمال کریں۔</string>
+    <string name="create_new">نئی</string>
+    <string name="save_from_target">ہدف سے بچائیں۔</string>
+    <string name="navigate">نیویگیٹ کریں</string>
+    <string name="mechanical">مکینیکل</string>
+    <string name="app_coordinates_format">کوآرڈینیٹ فارمیٹ</string>
 </resources>

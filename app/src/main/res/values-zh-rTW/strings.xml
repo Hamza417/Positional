@@ -64,6 +64,8 @@
     <string name="moon_first_quarter">上弦月:</string>
     <string name="moon_last_quarter">下弦月:</string>
     <!-- Compass information items -->
+    <string name="magnetometer">磁力計</string>
+    <string name="accelerometer">加速計</string>
     <string name="accelerometer_accuracy">加速計:</string>
     <string name="magnetometer_accuracy">磁力計:</string>
     <string name="compass_inclination">傾斜:</string>
