@@ -64,6 +64,8 @@
     <string name="moon_first_quarter">अर्धचन्द्र:</string>
     <string name="moon_last_quarter">अंतिम तिमाही:</string>
     <!-- Compass information items -->
+    <string name="magnetometer">मैग्नेटोमीटर</string>
+    <string name="accelerometer">एक्सेलेरोमीटर</string>
     <string name="accelerometer_accuracy">एक्सेलेरोमीटर:</string>
     <string name="magnetometer_accuracy">मैग्नेटोमीटर:</string>
     <string name="compass_inclination">झुकाव:</string>
@@ -293,4 +295,10 @@
     <string name="using_maps_target">मानचित्र के लक्ष्य का उपयोग करना</string>
     <string name="edit">ऐडिट</string>
     <string name="battery_optimization_desc">घड़ी विजेट को ठीक से चलने देने के लिए कृपया बैटरी अनुकूलन अक्षम करें।</string>
+    <string name="use_as_target">लक्ष्य के रूप में उपयोग करे</string>
+    <string name="create_new">नया</string>
+    <string name="save_from_target">लक्ष्य से सेव करें</string>
+    <string name="navigate">नेविगेट</string>
+    <string name="mechanical">यांत्रिक</string>
+    <string name="app_coordinates_format">निर्देशांक प्रारूप</string>
 </resources>
