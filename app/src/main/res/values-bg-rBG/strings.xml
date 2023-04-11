@@ -301,4 +301,5 @@
     <string name="navigate">Навигация</string>
     <string name="mechanical">Механика</string>
     <string name="app_coordinates_format">Формат на координати</string>
+    <string name="share">Сподели</string>
 </resources>
