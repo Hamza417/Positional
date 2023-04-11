@@ -46,6 +46,7 @@ import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKiloMetersPerHour
 import app.simple.positional.math.UnitConverter.toMilesPerHour
 import app.simple.positional.model.Locations
+import app.simple.positional.popups.location.PopupCoordinateBox
 import app.simple.positional.popups.location.PopupLocationMenu
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.preferences.GPSPreferences
@@ -542,6 +543,16 @@ class GPS : ScopedFragment() {
                     .show(childFragmentManager, "coordinates_expansion")
         }
 
+        coordinatesBox.setOnLongClickListener { view1 ->
+            PopupCoordinateBox(view1).setPopupCoordinateBoxCallbacks(object : PopupCoordinateBox.Companion.PopupCoordinateBoxCallbacks {
+                @Suppress("RemoveCurlyBracesFromTemplate")
+                override fun send() {
+                    share()
+                }
+            })
+            true
+        }
+
         maps?.setOnMapsCallbackListener(object : MapsCallbacks {
             override fun onMapInitialized() {
                 if (savedInstanceState.isNotNull()) {
@@ -635,6 +646,28 @@ class GPS : ScopedFragment() {
                 fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getFormattedLatitude(latitude_, requireContext())}")
         longitude.text =
                 fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getFormattedLongitude(longitude_, requireContext())}")
+    }
+
+    @Suppress("RemoveCurlyBracesFromTemplate")
+    private fun share() {
+        kotlin.runCatching {
+            val latitude1 = round(location?.latitude!!, 6)
+            val longitude2 = round(location?.longitude!!, 6)
+            val link = "https://www.google.com/maps/search/?api=1&query=${latitude1},${longitude2}"
+            val geoLink = "geo:${latitude1},${longitude2}?q=${latitude1},${longitude2}"
+            val info = "${getString(R.string.gps_coordinates)}: ${latitude1}, ${longitude2}"
+            val address = address.text.toString()
+
+            val combined = "$info\n\n$address\n\nMaps:\n$link\n\nGeoLink:\n$geoLink"
+
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, combined)
+            startActivity(Intent.createChooser(intent, getString(R.string.share)))
+        }.getOrElse {
+            Toast.makeText(requireContext(), it.message
+                    ?: getString(R.string.error), Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setFullScreen(forBottomBar: Boolean) {

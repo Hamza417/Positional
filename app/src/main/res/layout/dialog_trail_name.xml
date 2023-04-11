@@ -86,7 +86,7 @@
             android:layout_height="@dimen/app_button_size"
             android:layout_gravity="center_vertical"
             android:text="@string/button_cancel"
-            android:textColor="@color/textPrimary" />
+            android:textColor="?attr/colorAppAccent" />
 
         <app.simple.positional.decorations.ripple.DynamicRippleButton
             android:id="@+id/save"
@@ -94,7 +94,7 @@
             android:layout_height="@dimen/app_button_size"
             android:layout_gravity="center_vertical"
             android:text="@string/save"
-            android:textColor="@color/textPrimary"
+            android:textColor="?attr/colorAppAccent"
             android:visibility="gone" />
 
     </LinearLayout>

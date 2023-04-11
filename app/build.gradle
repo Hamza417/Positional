@@ -131,7 +131,7 @@ dependencies {
     // AndroidX
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.fragment:fragment-ktx:1.5.6'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     implementation 'androidx.webkit:webkit:1.6.1'
@@ -150,7 +150,7 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:2.2.4'
 
     // Third Party Implementations
-    implementation 'org.shredzone.commons:commons-suncalc:3.5'
+    implementation 'org.shredzone.commons:commons-suncalc:3.6'
     implementation 'com.github.Berico-Technologies:Geo-Coordinate-Conversion-Java:360781e5be'
     implementation 'com.github.vipulasri:timelineview:1.1.5'
 
