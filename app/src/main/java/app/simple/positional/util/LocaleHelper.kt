@@ -25,6 +25,7 @@ object LocaleHelper {
             Locales("Română", "ro"),
             Locales("Русский", "ru"),
             Locales("اردو", "ur"),
+            Locales("Português (Brasil)", "pt-BR"),
             Locales("繁體中文 (Traditional Chinese)", "zh-TW")
     )
 
