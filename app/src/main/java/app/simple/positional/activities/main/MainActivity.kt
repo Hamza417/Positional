@@ -185,8 +185,8 @@ class MainActivity : BaseActivity(),
     private fun getFragment(name: String): Fragment {
         when (name) {
             "clock" -> {
-                return supportFragmentManager.findFragmentByTag("clock") as Clock?
-                        ?: Clock.newInstance()
+                return supportFragmentManager.findFragmentByTag("clock") as Time?
+                        ?: Time.newInstance()
             }
             "compass" -> {
                 return supportFragmentManager.findFragmentByTag("compass") as Compass?

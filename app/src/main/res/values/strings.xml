@@ -1,13 +1,13 @@
 <resources>
     <!-- Panels -->
-    <string name="clock">Clock</string>
+    <string name="clock">Time</string>
     <string name="compass">Compass</string>
     <string name="gps_location">Location</string>
     <string name="level">Level</string>
     <string name="settings">Settings</string>
 
     <!-- Info Headers -->
-    <string name="clock_info">Clock Information</string>
+    <string name="clock_info">Time Information</string>
     <string name="compass_info">Compass Information</string>
     <string name="gps_info">GPS Information</string>
 

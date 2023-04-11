@@ -508,7 +508,7 @@ class Trail : ScopedFragment() {
 
     private fun backPressed(value: Boolean) {
         /**
-         * @see Clock.backPressed
+         * @see Time.backPressed
          */
         backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
             override fun handleOnBackPressed() {
