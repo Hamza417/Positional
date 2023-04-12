@@ -1,6 +1,7 @@
 package app.simple.positional.decorations.views;
 
 import android.content.Context;
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
@@ -16,28 +17,42 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import app.simple.positional.R;
+import app.simple.positional.util.MoonAngle;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class SunPosition extends View {
 
+    private final String TAG = "SunPosition";
+
     private final Paint circlePaint = new Paint();
+    private final Paint nightPaint = new Paint();
     private final Paint pointPaint = new Paint();
     private final Paint dashedLinePaint = new Paint();
+    private final Paint linePaint = new Paint();
     private final Paint textPaint = new Paint();
+    private final Paint sunElevationPaint = new Paint();
+    private final Paint moonElevationPaint = new Paint();
+    private final Paint earthElevationPaint = new Paint();
+
     private final RectF rectF = new RectF();
     private final Rect sunRect = new Rect();
+    private final Rect moonRect = new Rect();
+    private final Rect earthRect = new Rect();
 
     private Drawable sunDrawable;
+    private Drawable moonDrawable;
+    private Drawable earthDrawable;
 
     private float x;
     private float y;
-    private float sunX;
-    private float sunY;
-    private double azimuth = 0.0;
+    private double sunAzimuth = 270.0;
+    private double moonAzimuth = 0.0;
 
     private int radius = 50;
-    private int width = 100;
-    private int height = 100;
-    private int sunSize = 42;
+    private int moonRadius = 125;
+    private final int sunSize = 42;
+    private final int moonSize = 14;
+    private final int earthSize = 24;
 
     private final int lineColor = Color.parseColor("#2c3e50");
 
@@ -79,7 +94,7 @@ public class SunPosition extends View {
 
         dashedLinePaint.setAntiAlias(true);
         dashedLinePaint.setStyle(Paint.Style.STROKE);
-        dashedLinePaint.setColor(ContextCompat.getColor(getContext(), R.color.dividerColor));
+        dashedLinePaint.setColor(ContextCompat.getColor(getContext(), R.color.textPrimary));
         dashedLinePaint.setAlpha(100);
         dashedLinePaint.setStrokeWidth(2);
         dashedLinePaint.setStrokeCap(Paint.Cap.ROUND);
@@ -93,6 +108,28 @@ public class SunPosition extends View {
         textPaint.setStrokeWidth(35);
         textPaint.setStrokeCap(Paint.Cap.ROUND);
 
+        linePaint.setAntiAlias(true);
+        linePaint.setStyle(Paint.Style.STROKE);
+        linePaint.setColor(lineColor);
+        linePaint.setAlpha(100);
+        linePaint.setStrokeWidth(3);
+        linePaint.setStrokeCap(Paint.Cap.ROUND);
+
+        sunElevationPaint.setAntiAlias(true);
+        sunElevationPaint.setAlpha(50);
+        sunElevationPaint.setShadowLayer(50, 0, 0, Color.parseColor("#50f5b041"));
+        sunElevationPaint.setMaskFilter(new BlurMaskFilter(150, BlurMaskFilter.Blur.NORMAL));
+
+        moonElevationPaint.setAntiAlias(true);
+        moonElevationPaint.setAlpha(50);
+        moonElevationPaint.setShadowLayer(50, 0, 0, Color.parseColor("#FFFFFF")); // White color for the moon
+        moonElevationPaint.setMaskFilter(new BlurMaskFilter(150, BlurMaskFilter.Blur.NORMAL));
+
+        earthElevationPaint.setAntiAlias(true);
+        earthElevationPaint.setAlpha(20);
+        earthElevationPaint.setShadowLayer(50, 0, 0, Color.parseColor("#702980b9"));
+        earthElevationPaint.setMaskFilter(new BlurMaskFilter(100, BlurMaskFilter.Blur.NORMAL));
+
         post(() -> {
             x = getWidth() / 2f;
             y = getHeight() / 2f;
@@ -100,6 +137,8 @@ public class SunPosition extends View {
         });
 
         sunDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_sunrise);
+        moonDrawable = ContextCompat.getDrawable(getContext(), R.drawable.moon10);
+        earthDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_earth);
         // calculateCoordinatesFromAzimuth(82, 2.6);
     }
 
@@ -110,8 +149,11 @@ public class SunPosition extends View {
         y = getHeight() / 2f;
         radius = Math.min(getWidth(), getHeight()) / 2;
 
+        // Moon radius should be 25% of the sun radius
+        moonRadius = (int) (radius * 0.25);
+
         rectF.set(x - radius, y - radius, x + radius, y + radius);
-        canvas.drawArc(rectF, 0, 360, false, circlePaint);
+        canvas.drawArc(rectF, 0, 360, false, dashedLinePaint);
 
         // draw a dashed line in the middle horizontally
         canvas.drawLine(0, y, getWidth(), y, dashedLinePaint);
@@ -123,29 +165,61 @@ public class SunPosition extends View {
         canvas.drawText(getContext().getString(R.string.west_W), x - radius + 20, y + 10, textPaint);
 
         // Position the sun on the arc
-        Log.d("SunPosition", "onDraw: " + sunX + " " + sunY);
-        canvas.rotate(Math.abs((float) (azimuth)), getWidth() / 2F, getHeight() / 2F);
+        canvas.rotate(Math.abs((float) (sunAzimuth)), getWidth() / 2F, getHeight() / 2F);
         canvas.translate(radius * -1, 0);
 
-        // Rotate the drawable
-        Log.d("SunPosition", "onDraw: " + (x) + " " + (y));
+        // Draw the line from the center to the sun
+        canvas.drawLine(x, y, x + radius, y, linePaint);
 
         // Position the sun on the arc
         sunRect.set((int) (x - sunSize), (int) (y - sunSize), (int) (x + sunSize), (int) (y + sunSize));
+
+        // Draw the shadow under the sun
+        canvas.drawRect(sunRect, sunElevationPaint);
+
+        // Draw the sun
         sunDrawable.setBounds(sunRect);
         sunDrawable.draw(canvas);
+
+        // Draw the earth at the center
+        canvas.translate(radius, 0);
+        earthRect.set((int) (x - earthSize), (int) (y - earthSize), (int) (x + earthSize), (int) (y + earthSize));
+        earthDrawable.setBounds(earthRect);
+        earthDrawable.draw(canvas);
+
+        // Draw the shadow under the earth
+        canvas.drawRect(earthRect, earthElevationPaint);
+
+        // Draw arc for the moon
+        rectF.set(x - moonRadius, y - moonRadius, x + moonRadius, y + moonRadius);
+        canvas.drawArc(rectF, 0, 360, false, dashedLinePaint);
+
+        // Draw the moon
+        Log.d(TAG, "onDraw: Moon Azimuth " + moonAzimuth);
+        canvas.rotate(Math.abs((float) (Math.abs(moonAzimuth - sunAzimuth))), getWidth() / 2F, getHeight() / 2F);
+        canvas.translate(moonRadius * -1, 0);
+        // canvas.drawLine(x, y, x + moonRadius, y, linePaint);
+        moonRect.set((int) (x - moonSize), (int) (y - moonSize), (int) (x + moonSize), (int) (y + moonSize));
+        moonDrawable.setBounds(moonRect);
+        moonDrawable.draw(canvas);
+
+        // Draw the shadow under the moon
+        canvas.drawRect(moonRect, moonElevationPaint);
 
         super.onDraw(canvas);
     }
 
-    public void setAzimuth(double azimuth) {
+    public void setSunAzimuth(double sunAzimuth) {
         // Compensate for the rotation of the canvas
-        this.azimuth = azimuth + 90;
-        invalidate();
+        this.sunAzimuth = sunAzimuth + 90;
     }
 
     public void setSunDrawable(Drawable sunDrawable) {
         this.sunDrawable = sunDrawable;
-        invalidate();
+    }
+
+    public void setMoonDrawable(double azimuth, double moonPhase) {
+        this.moonAzimuth = azimuth + 90;
+        this.moonDrawable = ContextCompat.getDrawable(getContext(), MoonAngle.INSTANCE.getMoonPhaseGraphics(moonPhase));
     }
 }

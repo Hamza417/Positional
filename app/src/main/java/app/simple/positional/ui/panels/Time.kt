@@ -37,6 +37,7 @@ import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.AppUtils
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.DisplayRefreshRate.getDisplayRefreshRate
 import app.simple.positional.util.HtmlHelper.fromHtml
@@ -51,6 +52,7 @@ import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
@@ -217,6 +219,12 @@ class Time : ScopedFragment() {
         locationViewModel.location.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             calculateAndUpdateData(it.latitude, it.longitude, it.altitude)
+        }
+
+        if (AppUtils.isLiteFlavor()) {
+            sunPosition.gone()
+        } else {
+            sunPosition.visible(false)
         }
 
         bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -432,6 +440,7 @@ class Time : ScopedFragment() {
 
             var moonPhase: Double?
             var sunAzimuth: Double?
+            var moonAzimuth: Double?
 //            var sunMoonCalculator: SunMoonCalculator?
 //            var moonBitmap: Bitmap?
 //            var size = moonPhaseGraphics.width
@@ -490,6 +499,8 @@ class Time : ScopedFragment() {
 
                 moonPositionData =
                         with(MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).height(altitude).execute()) {
+                            moonAzimuth = this.azimuth
+
                             fromHtml("<b>${getString(R.string.moon_azimuth)}</b> ${round(azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), azimuth)}<br>" +
                                     "<b>${getString(R.string.moon_altitude)}</b> ${round(this.altitude, 2)}°<br>" +
                                     (if (isMetric) {
@@ -533,7 +544,9 @@ class Time : ScopedFragment() {
                 this@Time.moonPositionData.text = moonPositionData
                 this@Time.moonIlluminationData.text = moonIlluminationData
                 this@Time.moonPhaseGraphics.setImageResource(getMoonPhaseGraphics(round(moonPhase!!, 2)))
-                sunPosition.setAzimuth(sunAzimuth ?: 0.0)
+                sunPosition.setSunAzimuth(sunAzimuth ?: 0.0)
+                sunPosition.setMoonDrawable(moonAzimuth!!, moonPhase!!)
+                sunPosition.invalidate()
                 //this@Clock.moonPhaseGraphics.rotation = (moonPosition.parallacticAngle - moonIllumination.angle).toFloat()
                 //this@Clock.moonPhaseGraphics.setImageBitmap(moonBitmap)
                 this@Time.moonDatesData.text = moonDatesData

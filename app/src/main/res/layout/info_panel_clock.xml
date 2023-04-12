@@ -13,6 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipChildren="false"
         android:orientation="vertical"
         android:paddingVertical="10dp">
 
@@ -154,6 +155,7 @@
             android:layout_marginVertical="20dp"
             android:clickable="true"
             android:clipChildren="false"
+            android:clipToPadding="false"
             android:focusable="true"
             android:orientation="vertical"
             android:paddingHorizontal="10dp">
@@ -175,12 +177,6 @@
                 android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
                 android:lineSpacingExtra="10dp"
                 android:textSize="@dimen/info_text_secondary_size" />
-
-            <app.simple.positional.decorations.views.SunPosition
-                android:id="@+id/sun_position_diagram"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 
@@ -307,6 +303,14 @@
                 android:textSize="@dimen/info_text_secondary_size" />
 
         </LinearLayout>
+
+        <app.simple.positional.decorations.views.SunPosition
+            android:id="@+id/sun_position_diagram"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/info_text_item_margin_vertical" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
