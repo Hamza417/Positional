@@ -136,6 +136,8 @@ colors, and many other features that should have been there.
 
 ## Road Map
 
+Last updated: 2023, April 12
+
 - [ ] Add a custom date mode along with specified coordinates
 - [ ] Add a timeline view for moon dates up to a few years in the future and past
 - [x] Add a 3D solar data model for visual representation
