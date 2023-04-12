@@ -90,6 +90,7 @@ class Time : ScopedFragment() {
     private lateinit var utcTimeData: TextView
     private lateinit var specifiedLocationNotice: TextView
     private lateinit var sunPositionData: TextView
+    private lateinit var sunPosition: app.simple.positional.decorations.views.SunPosition
     private lateinit var sunTimeData: TextView
     private lateinit var twilightData: TextView
     private lateinit var moonPositionData: TextView
@@ -148,6 +149,7 @@ class Time : ScopedFragment() {
 
         specifiedLocationNotice = view.findViewById(R.id.specified_location_notice_clock)
         sunPositionData = view.findViewById(R.id.sun_position_data)
+        sunPosition = view.findViewById(R.id.sun_position_diagram)
         sunTimeData = view.findViewById(R.id.sun_time_data)
         twilightData = view.findViewById(R.id.twilight_data)
         moonPositionData = view.findViewById(R.id.moon_position_data)
@@ -429,6 +431,7 @@ class Time : ScopedFragment() {
             var moonDatesData: Spanned
 
             var moonPhase: Double?
+            var sunAzimuth: Double?
 //            var sunMoonCalculator: SunMoonCalculator?
 //            var moonBitmap: Bitmap?
 //            var size = moonPhaseGraphics.width
@@ -474,6 +477,8 @@ class Time : ScopedFragment() {
 
                 sunPositionData =
                         with(SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).height(altitude).execute()) {
+                            sunAzimuth = azimuth
+
                             fromHtml("<b>${getString(R.string.sun_azimuth)}</b> ${round(azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), azimuth)}<br>" +
                                     "<b>${getString(R.string.sun_altitude)}</b> ${round(trueAltitude, 2)}°<br>" +
                                     if (isMetric) {
@@ -528,6 +533,7 @@ class Time : ScopedFragment() {
                 this@Time.moonPositionData.text = moonPositionData
                 this@Time.moonIlluminationData.text = moonIlluminationData
                 this@Time.moonPhaseGraphics.setImageResource(getMoonPhaseGraphics(round(moonPhase!!, 2)))
+                sunPosition.setAzimuth(sunAzimuth ?: 0.0)
                 //this@Clock.moonPhaseGraphics.rotation = (moonPosition.parallacticAngle - moonIllumination.angle).toFloat()
                 //this@Clock.moonPhaseGraphics.setImageBitmap(moonBitmap)
                 this@Time.moonDatesData.text = moonDatesData
