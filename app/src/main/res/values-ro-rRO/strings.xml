@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">Ceas</string>
+    <string name="clock">Ora</string>
     <string name="compass">Busolă</string>
     <string name="gps_location">Locație</string>
     <string name="level">Nivel</string>
     <string name="settings">Setări</string>
     <!-- Info Headers -->
-    <string name="clock_info">Informații ceas</string>
+    <string name="clock_info">Informatii timp</string>
     <string name="compass_info">Informații busolă</string>
     <string name="gps_info">Informaţii GPS</string>
     <!-- Clock Information Headers-->
@@ -301,4 +301,5 @@
     <string name="navigate">Navigaţi</string>
     <string name="mechanical">Mecanice</string>
     <string name="app_coordinates_format">Formatul coordonatelor</string>
+    <string name="share">Distribuie</string>
 </resources>
