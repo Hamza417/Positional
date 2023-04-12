@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">時鐘</string>
+    <string name="clock">時間</string>
     <string name="compass">指南針</string>
     <string name="gps_location">位置</string>
     <string name="level">水平儀</string>
     <string name="settings">設定</string>
     <!-- Info Headers -->
-    <string name="clock_info">時鐘資訊</string>
+    <string name="clock_info">時間資訊</string>
     <string name="compass_info">指南針資訊</string>
     <string name="gps_info">GPS 資訊</string>
     <!-- Clock Information Headers-->
