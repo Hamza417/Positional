@@ -136,11 +136,11 @@ colors, and many other features that should have been there.
 
 ## Road Map
 
-* Add a custom date mode along with specified coordinates
-* Add a timeline view for moon dates up to a few years in the future and past
-* Add a 3D solar data model for visual representation
-* Solar and Lunar Eclipse dates
-* [x] Make the app landscape
+- [ ] Add a custom date mode along with specified coordinates
+- [ ] Add a timeline view for moon dates up to a few years in the future and past
+- [x] Add a 3D solar data model for visual representation
+- [ ] Solar and Lunar Eclipse dates
+- [x] Make the app landscape
 
 ## Contribution
 
