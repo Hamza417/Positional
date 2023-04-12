@@ -112,7 +112,7 @@ public class SunPosition extends View {
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setColor(lineColor);
         linePaint.setAlpha(100);
-        linePaint.setStrokeWidth(3);
+        linePaint.setStrokeWidth(1);
         linePaint.setStrokeCap(Paint.Cap.ROUND);
 
         sunElevationPaint.setAntiAlias(true);
@@ -165,6 +165,7 @@ public class SunPosition extends View {
         canvas.drawText(getContext().getString(R.string.west_W), x - radius + 20, y + 10, textPaint);
 
         // Position the sun on the arc
+        canvas.save();
         canvas.rotate(Math.abs((float) (sunAzimuth)), getWidth() / 2F, getHeight() / 2F);
         canvas.translate(radius * -1, 0);
 
@@ -180,12 +181,7 @@ public class SunPosition extends View {
         // Draw the sun
         sunDrawable.setBounds(sunRect);
         sunDrawable.draw(canvas);
-
-        // Draw the earth at the center
-        canvas.translate(radius, 0);
-        earthRect.set((int) (x - earthSize), (int) (y - earthSize), (int) (x + earthSize), (int) (y + earthSize));
-        earthDrawable.setBounds(earthRect);
-        earthDrawable.draw(canvas);
+        canvas.restore();
 
         // Draw the shadow under the earth
         canvas.drawRect(earthRect, earthElevationPaint);
@@ -196,15 +192,26 @@ public class SunPosition extends View {
 
         // Draw the moon
         Log.d(TAG, "onDraw: Moon Azimuth " + moonAzimuth);
-        canvas.rotate(Math.abs((float) (Math.abs(moonAzimuth - sunAzimuth))), getWidth() / 2F, getHeight() / 2F);
+        canvas.save();
+        canvas.rotate(Math.abs((float) (Math.abs(moonAzimuth))), getWidth() / 2F, getHeight() / 2F);
         canvas.translate(moonRadius * -1, 0);
-        // canvas.drawLine(x, y, x + moonRadius, y, linePaint);
+        canvas.drawLine(x, y, x + moonRadius, y, linePaint);
         moonRect.set((int) (x - moonSize), (int) (y - moonSize), (int) (x + moonSize), (int) (y + moonSize));
         moonDrawable.setBounds(moonRect);
         moonDrawable.draw(canvas);
+        canvas.restore();
 
         // Draw the shadow under the moon
         canvas.drawRect(moonRect, moonElevationPaint);
+
+        // Draw the earth at the center
+        canvas.save();
+        canvas.translate(0, 0);
+        // canvas.rotate(Math.abs((float) (-sunAzimuth)), getWidth() / 2F, getHeight() / 2F);
+        earthRect.set((int) (x - earthSize), (int) (y - earthSize), (int) (x + earthSize), (int) (y + earthSize));
+        earthDrawable.setBounds(earthRect);
+        earthDrawable.draw(canvas);
+        canvas.restore();
 
         super.onDraw(canvas);
     }

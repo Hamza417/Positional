@@ -52,7 +52,6 @@ import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.ViewUtils.gone
-import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
@@ -199,8 +198,9 @@ class Time : ScopedFragment() {
                 MainPreferences.getLastCoordinates()[1].toDouble(),
                 MainPreferences.getLastAltitude().toDouble())
 
-        if (BuildConfig.FLAVOR == "lite") {
+        if (AppUtils.isLiteFlavor()) {
             timezoneButton.gone()
+            sunPosition.gone()
         }
 
         return view
@@ -219,12 +219,6 @@ class Time : ScopedFragment() {
         locationViewModel.location.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             calculateAndUpdateData(it.latitude, it.longitude, it.altitude)
-        }
-
-        if (AppUtils.isLiteFlavor()) {
-            sunPosition.gone()
-        } else {
-            sunPosition.visible(false)
         }
 
         bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
