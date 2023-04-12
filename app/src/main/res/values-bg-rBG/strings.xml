@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">Часовник</string>
+    <string name="clock">Време</string>
     <string name="compass">Компас</string>
     <string name="gps_location">Местоположение</string>
     <string name="level">Ниво</string>
     <string name="settings">Настройки</string>
     <!-- Info Headers -->
-    <string name="clock_info">Информация за часовника</string>
+    <string name="clock_info">Информация относно времето</string>
     <string name="compass_info">Информация за компаса</string>
     <string name="gps_info">GPS Инфо</string>
     <!-- Clock Information Headers-->
