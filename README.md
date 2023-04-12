@@ -162,13 +162,14 @@ This app has been as of completely translated in these languages.
 * Romanian
 * Russian
 * Chinese (Traditional)
+* Portuguese (Brazil)
 
 You can also contribute into translating the app in your native language
 on [Crowdin](https://crowdin.com/project/positional/).
 
 ## License
 
-**Positional** Copyright © 2022 - Hamza Rizwan
+**Positional** Copyright © 2023 - Hamza Rizwan
 
 **Positional** is released as open source software under
 the [GPL v3](https://opensource.org/licenses/gpl-3.0.html)
