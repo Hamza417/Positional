@@ -1,15 +1,23 @@
-
-
-  ![banner](https://github.com/Hamza417/Positional/blob/master/screenshots/banner.png?raw=false)
+![banner](https://github.com/Hamza417/Positional/blob/master/screenshots/banner.png?raw=false)
 
 ## What's This ?
-**Positional** is a location based app that utilizes the device's GPS and fetches various details of the current latitude and longitude data like Altitude, Speed, Address and similar other information and show it in easily understandable format to the user. Alongside this main functionality of being a location app, Positional also provides a separate panel for **Compass** and **Clock**, and they serve their own purpose as their name suggests.
 
-**Compass** provides info related to direction and **Clock** fetches the time related information based on the current location and time zone and also sun's information like Sunset, Sunrise, Twilight and a good deal of other info.
+**Positional** is a location based app that utilizes the device's GPS and fetches various details of
+the current latitude and longitude data like Altitude, Speed, Address and similar other information
+and show it in easily understandable format to the user. Alongside this main functionality of being
+a location app, Positional also provides a separate panel for **Compass** and **Clock**, and they
+serve their own purpose as their name suggests.
 
-On top of all the core functionality Positional is a highly polished app and provides another layer of flexibility to customize the app as per liking including skins for Clock and Compass faces, colors, and many other features that should have been there.
+**Compass** provides info related to direction and **Clock** fetches the time related information
+based on the current location and time zone and also sun's information like Sunset, Sunrise,
+Twilight and a good deal of other info.
+
+On top of all the core functionality Positional is a highly polished app and provides another layer
+of flexibility to customize the app as per liking including skins for Clock and Compass faces,
+colors, and many other features that should have been there.
 
 ## Download
+
 ![API](https://img.shields.io/badge/API-24%2B-%23138D75?style=flat&logo=android)
 
 [![Free](https://img.shields.io/badge/Free%20Version-Play%20Store-839192?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional.lite)
@@ -28,11 +36,45 @@ On top of all the core functionality Positional is a highly polished app and pro
 
 ## Screenshots
 
+### Splash Screens
+
+| ![01](screenshots/01.png) | ![02](screenshots/02.png) | ![03](screenshots/03.png) | ![04](screenshots/04.png) |
+|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+|           0x01            |           0x02            |           0x03            |           0x04            |
+
 ### Time Panel
 
-| ![01](screenshots/01.png) | ![02](screenshots/02.png) | ![03](screenshots/03.png) | 
+| ![01](screenshots/05.png) | ![02](screenshots/06.png) | ![03](screenshots/07.png) | 
 |:-------------------------:|:-------------------------:|:-------------------------:|
 |           0x01            |           0x02            |           0x03            |
+
+| ![01](screenshots/08.png) | ![02](screenshots/09.png) | 
+|:-------------------------:|:-------------------------:|
+|           0x04            |           0x05            | 
+
+### Compass Panel
+
+| ![04](screenshots/10.png) | ![05](screenshots/18.png) | ![06](screenshots/19.png) | ![07](screenshots/11.png) |
+|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+|           0x01            |           0x02            |           0x03            |           0x04            |
+
+### Map Panel
+
+| ![07](screenshots/12.png) | ![08](screenshots/13.png) | 
+|:-------------------------:|:-------------------------:|
+|           0x01            |           0x02            |
+
+### Trail Panel
+
+| ![09](screenshots/14.png) | ![10](screenshots/15.png) |
+|:-------------------------:|:-------------------------:|
+|           0x01            |            0x2            |
+
+### Level and Preferences
+
+| ![11](screenshots/16.png) | ![12](screenshots/17.png) |
+|:-------------------------:|:-------------------------:|
+|           0x01            |           0x02            |
 
 ## Features
 
@@ -81,7 +123,7 @@ On top of all the core functionality Positional is a highly polished app and pro
   * Moon Phases<br/>
   * Moon Angle and Fraction<br/>
   * Moon states (Waning and Waxing)<br/>
-  * Upcoming moon dates i.e.  New Moon, Full Moon, Third and First Quarter<br/>
+  * Upcoming moon dates i.e. New Moon, Full Moon, Third and First Quarter<br/>
   * Moon Illumination</br>
   * Dark Mode</br>
   * Level </br>
@@ -93,34 +135,41 @@ On top of all the core functionality Positional is a highly polished app and pro
   * Completely Ad-Free
 
 ## Road Map
-  * Add a custom date mode along with specified coordinates
-  * Add a timeline view for moon dates up to a few years in the future and past
-  * Add a 3D solar data model for visual representation
-  * Solar and Lunar Eclipse dates
-  * [x] Make the app landscape
+
+* Add a custom date mode along with specified coordinates
+* Add a timeline view for moon dates up to a few years in the future and past
+* Add a 3D solar data model for visual representation
+* Solar and Lunar Eclipse dates
+* [x] Make the app landscape
 
 ## Contribution
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would
+like to change.
 
 ## Translate
+
 This app has been as of completely translated in these languages.
 
- * Bulgarian
- * English
- * Hindi
- * Urdu
- * French
- * Czech
- * Romanian
- * Russian
- * Chinese (Traditional)
+* Bulgarian
+* English
+* Hindi
+* Urdu
+* French
+* Czech
+* Romanian
+* Russian
+* Chinese (Traditional)
 
-You can also contribute into translating the app in your native language on [Crowdin](https://crowdin.com/project/positional/).
+You can also contribute into translating the app in your native language
+on [Crowdin](https://crowdin.com/project/positional/).
 
 ## License
+
 **Positional** Copyright © 2022 - Hamza Rizwan
 
-**Positional** is released as open source software under the [GPL v3](https://opensource.org/licenses/gpl-3.0.html) 
+**Positional** is released as open source software under
+the [GPL v3](https://opensource.org/licenses/gpl-3.0.html)
 license, see the [LICENSE](./LICENSE) file in the project root for the full license text.
 
-  [1]: http://www.inf.ufrgs.br
+[1]: http://www.inf.ufrgs.br
