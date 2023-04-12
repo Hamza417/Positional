@@ -85,54 +85,54 @@ colors, and many other features that should have been there.
 * Customizable with various options to choose from</br>
 * Magnetic Compass</br>
 * Compass Sensor Speed</br>
-  * Compass physics properties<br/>
-  * Compass manual rotation
-  * Compass bloom
-  * Gimbal lock
-  * Minimal Map (with and without labels)</br>
-  * Google Maps Support<br/>
-  * Dark mode for maps<br/>
-  * High contrast map<br/>
-  * Satellite map<br/>
-  * Many pin styles for the whole app<br/>
-  * Media keys support for map<br/>
-  * Target location mode
-  * Displacement information
-  * GPS information</br>
-  * Speedometer</br>
-  * Altitude</br>
-  * Distance<br/>
-  * Displacement<br/>
-  * Address of the current location<br/>
-  * UTM, MGRS coordinate formatting<br/>
-  * DMS coordinates support<br/>
-  * Movement direction<br/>
-  * Clock</br>
-  * Clock motion types (both linear and inertia induced motion)</br>
-  * Clock needle styles<br/>
-  * Custom timezone support<br/>
-  * UTC and Local Time references</br>
-  * Sun Position/Location<br/>
-  * Sun Azimuth<br/>
-  * Sun Distance and Sun Altitude<br/>
-  * Sunset and Sunrise time<br/>
-  * Astronomical, Nautical, Civil twilight<br/>
-  * Moon Position/Location</br>
-  * Moonrise and Moonset time<br/>
-  * Moon Altitude<br/>
-  * Moon Phases<br/>
-  * Moon Angle and Fraction<br/>
-  * Moon states (Waning and Waxing)<br/>
-  * Upcoming moon dates i.e. New Moon, Full Moon, Third and First Quarter<br/>
-  * Moon Illumination</br>
-  * Dark Mode</br>
-  * Level </br>
-  * Custom location mode for manually fetching information of any part of the world<br/>
-  * Sun time widgets
-  * Sun time widget with splash arts
-  * Clock widget
-  * Moon phase widget
-  * Completely Ad-Free
+* Compass physics properties<br/>
+* Compass manual rotation
+* Compass bloom
+* Gimbal lock
+* Minimal Map (with and without labels)</br>
+* Google Maps Support<br/>
+* Dark mode for maps<br/>
+* High contrast map<br/>
+* Satellite map<br/>
+* Many pin styles for the whole app<br/>
+* Media keys support for map<br/>
+* Target location mode
+* Displacement information
+* GPS information</br>
+* Speedometer</br>
+* Altitude</br>
+* Distance<br/>
+* Displacement<br/>
+* Address of the current location<br/>
+* UTM, MGRS coordinate formatting<br/>
+* DMS coordinates support<br/>
+* Movement direction<br/>
+* Clock</br>
+* Clock motion types (both linear and inertia induced motion)</br>
+* Clock needle styles<br/>
+* Custom timezone support<br/>
+* UTC and Local Time references</br>
+* Sun Position/Location<br/>
+* Sun Azimuth<br/>
+* Sun Distance and Sun Altitude<br/>
+* Sunset and Sunrise time<br/>
+* Astronomical, Nautical, Civil twilight<br/>
+* Moon Position/Location</br>
+* Moonrise and Moonset time<br/>
+* Moon Altitude<br/>
+* Moon Phases<br/>
+* Moon Angle and Fraction<br/>
+* Moon states (Waning and Waxing)<br/>
+* Upcoming moon dates i.e. New Moon, Full Moon, Third and First Quarter<br/>
+* Moon Illumination</br>
+* Dark Mode</br>
+* Level </br>
+* Custom location mode for manually fetching information of any part of the world<br/>
+* Sun time widgets
+* Sun time widget with splash arts
+* Clock widget
+* Moon phase widget
+* Completely Ad-Free
 
 ## Road Map
 
