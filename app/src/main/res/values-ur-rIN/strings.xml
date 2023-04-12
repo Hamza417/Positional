@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">گھڑی</string>
+    <string name="clock">وقت</string>
     <string name="compass">کمپاس</string>
     <string name="gps_location">مقام</string>
     <string name="level">سطح</string>
     <string name="settings">ملاحظہ کریں</string>
     <!-- Info Headers -->
-    <string name="clock_info">گھڑی کی معلومات</string>
+    <string name="clock_info">وقت کی معلومات</string>
     <string name="compass_info">کمپاس کی معلومات</string>
     <string name="gps_info">مقام کی معلومات</string>
     <!-- Clock Information Headers-->
@@ -301,4 +301,5 @@
     <string name="navigate">نیویگیٹ کریں</string>
     <string name="mechanical">مکینیکل</string>
     <string name="app_coordinates_format">کوآرڈینیٹ فارمیٹ</string>
+    <string name="share">بانٹیں</string>
 </resources>
