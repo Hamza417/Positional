@@ -18,6 +18,7 @@ On top of all the core functionality Positional is a highly polished app and pro
 [![Intro](https://img.shields.io/youtube/views/34iuIlusrcs?label=Watch%20App%20Intro&logo=Youtube&logoColor=red&style=social)](https://youtu.be/34iuIlusrcs)
 
 ## Stats
+
 ![Total Lines](https://img.shields.io/tokei/lines/github.com/Hamza417/Positional?color=%23DE7E42&label=Total%20Lines)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visits&edge_flat=false)](https://hits.seeyoufarm.com)
 [![Release](https://img.shields.io/github/v/release/Hamza417/Positional?color=212F3D&label=Release)](https://github.com/Hamza417/Positional/releases)
@@ -26,21 +27,22 @@ On top of all the core functionality Positional is a highly polished app and pro
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional)
 
 ## Screenshots
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/01.png" width="100%">
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/02.png" width="100%">
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/03.png" width="100%">
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/04.png" width="100%">
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/05.png" width="100%">
-<img src="https://github.com/Hamza417/Positional/blob/master/screenshots/06.png" width="100%">
+
+### Time Panel
+
+| ![01](screenshots/01.png) | ![02](screenshots/02.png) | ![03](screenshots/03.png) | 
+|:-------------------------:|:-------------------------:|:-------------------------:|
+|           0x01            |           0x02            |           0x03            |
 
 ## Features
-  * Easy to use</br>
-  * Smooth, with fluid animations</br>
-  * Minimal UI</br>
-  * Many Accent Colors<br/>
-  * Customizable with various options to choose from</br>
-  * Magnetic Compass</br>
-  * Compass Sensor Speed</br>
+
+* Easy to use</br>
+* Smooth, with fluid animations</br>
+* Minimal UI</br>
+* Many Accent Colors<br/>
+* Customizable with various options to choose from</br>
+* Magnetic Compass</br>
+* Compass Sensor Speed</br>
   * Compass physics properties<br/>
   * Compass manual rotation
   * Compass bloom
