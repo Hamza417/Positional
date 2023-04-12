@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">L\'horloge</string>
+    <string name="clock">Temps</string>
     <string name="compass">Boussole</string>
     <string name="gps_location">Emplacement</string>
     <string name="level">Niveau</string>
     <string name="settings">Paramètres</string>
     <!-- Info Headers -->
-    <string name="clock_info">Informations sur l\'horloge</string>
+    <string name="clock_info">Information temps</string>
     <string name="compass_info">Informations sur la boussole</string>
     <string name="gps_info">Information de Lieu</string>
     <!-- Clock Information Headers-->
@@ -301,4 +301,5 @@
     <string name="navigate">Naviguer</string>
     <string name="mechanical">Mechanical</string>
     <string name="app_coordinates_format">Format des coordonnées</string>
+    <string name="share">Partager</string>
 </resources>
