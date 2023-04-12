@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
-            android:text="Buy Full Version (~$1.99)"
+            android:text="Buy Full Version"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/settings_primary_text_size"
             tools:ignore="HardcodedText" />
