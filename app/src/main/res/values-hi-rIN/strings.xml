@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">क्लॉक</string>
+    <string name="clock">समय</string>
     <string name="compass">दिशा-सूचक</string>
     <string name="gps_location">लोकेशन</string>
     <string name="level">स्तर</string>
@@ -301,4 +301,5 @@
     <string name="navigate">नेविगेट</string>
     <string name="mechanical">यांत्रिक</string>
     <string name="app_coordinates_format">निर्देशांक प्रारूप</string>
+    <string name="share">शेयर करें</string>
 </resources>

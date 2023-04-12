@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">Часы</string>
+    <string name="clock">Время</string>
     <string name="compass">Компас</string>
     <string name="gps_location">Местоположение</string>
     <string name="level">Уровень</string>
     <string name="settings">Настройки</string>
     <!-- Info Headers -->
-    <string name="clock_info">Информация о часах</string>
+    <string name="clock_info">Информация о времени</string>
     <string name="compass_info">Информация компаса</string>
     <string name="gps_info">Информация GPS</string>
     <!-- Clock Information Headers-->
@@ -301,4 +301,5 @@
     <string name="navigate">Проводить</string>
     <string name="mechanical">Механический питомец</string>
     <string name="app_coordinates_format">Формат координат</string>
+    <string name="share">Поделиться</string>
 </resources>

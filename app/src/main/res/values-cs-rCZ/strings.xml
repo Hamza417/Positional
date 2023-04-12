@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">Hodiny</string>
+    <string name="clock">Čas</string>
     <string name="compass">Kompas</string>
     <string name="gps_location">Umístění</string>
     <string name="level">Vodováha</string>
     <string name="settings">Nastavení</string>
     <!-- Info Headers -->
-    <string name="clock_info">Informace o hodinách</string>
+    <string name="clock_info">Informace o čase</string>
     <string name="compass_info">Informace o kompasu</string>
     <string name="gps_info">Informace GPS</string>
     <!-- Clock Information Headers-->
@@ -301,4 +301,5 @@
     <string name="navigate">Navigace</string>
     <string name="mechanical">Mechanické</string>
     <string name="app_coordinates_format">Formát souřadnic</string>
+    <string name="share">Sdílet</string>
 </resources>
