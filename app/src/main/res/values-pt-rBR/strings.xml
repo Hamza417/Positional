@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">Relógio</string>
+    <string name="clock">Horário</string>
     <string name="compass">Bússola</string>
     <string name="gps_location">Localização</string>
     <string name="level">Nível</string>
     <string name="settings">Configurações</string>
     <!-- Info Headers -->
-    <string name="clock_info">Informação do Relógio</string>
+    <string name="clock_info">Informação de tempo</string>
     <string name="compass_info">Informação de Bússola</string>
     <string name="gps_info">Informação de GPS</string>
     <!-- Clock Information Headers-->
