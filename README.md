@@ -37,6 +37,7 @@ colors, and many other features that should have been there.
 ## Screenshots
 
 ### Splash Screens
+Pin style is subject to user preferences.
 
 | ![01](screenshots/01.png) | ![02](screenshots/02.png) | ![03](screenshots/03.png) | ![04](screenshots/04.png) |
 |:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
@@ -70,7 +71,7 @@ colors, and many other features that should have been there.
 |:-------------------------:|:-------------------------:|
 |           0x01            |            0x2            |
 
-### Level and Preferences
+### Level and Preferences Panel
 
 | ![11](screenshots/16.png) | ![12](screenshots/17.png) |
 |:-------------------------:|:-------------------------:|
