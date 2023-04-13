@@ -1,7 +1,7 @@
 {
     "schedule": "monthly", // daily|weekly|monthly
     "ignoredFiles": [
-        "app/src/main/*", // ignore by folderpath
+        "app/*", // ignore by folderpath
     ],
     "aggressiveCompression": "false", // true|false
     "compressWiki": "true", // true|false
