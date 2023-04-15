@@ -10,7 +10,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -191,7 +190,6 @@ public class SunPosition extends View {
         canvas.drawArc(rectF, 0, 360, false, dashedLinePaint);
 
         // Draw the moon
-        Log.d(TAG, "onDraw: Moon Azimuth " + moonAzimuth);
         canvas.save();
         canvas.rotate(Math.abs((float) (Math.abs(moonAzimuth))), getWidth() / 2F, getHeight() / 2F);
         canvas.translate(moonRadius * -1, 0);
