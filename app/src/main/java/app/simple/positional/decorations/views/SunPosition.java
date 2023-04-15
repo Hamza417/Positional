@@ -199,10 +199,11 @@ public class SunPosition extends View {
         moonRect.set((int) (x - moonSize), (int) (y - moonSize), (int) (x + moonSize), (int) (y + moonSize));
         moonDrawable.setBounds(moonRect);
         moonDrawable.draw(canvas);
-        canvas.restore();
 
         // Draw the shadow under the moon
         canvas.drawRect(moonRect, moonElevationPaint);
+
+        canvas.restore();
 
         // Draw the earth at the center
         canvas.save();
