@@ -143,7 +143,7 @@
     <string name="desc_git">ऐप का रिपॉजिटरी खोलें</string>
     <string name="desc_translate">अपनी मूल भाषा में एप्लिकेशन का अनुवाद करने में सहायता करें I</string>
     <!-- Clock Menu -->
-    <string name="needles">सुई</string>
+    <string name="needles">कांटा</string>
     <string name="motion_type">मोशन टाइप</string>
     <string name="time_format">12-घंटे वाली घड़ी का इस्तेमाल करें</string>
     <string name="motion_type_smooth">स्मूथ</string>
