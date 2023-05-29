@@ -26,7 +26,8 @@ object LocaleHelper {
             Locales("Русский", "ru"),
             Locales("اردو", "ur"),
             Locales("Português (Brasil)", "pt-BR"),
-            Locales("繁體中文 (Traditional Chinese)", "zh-TW")
+            Locales("繁體中文 (Traditional Chinese)", "zh-TW"),
+            Locales("Deutsch (German)", "de-DE"),
     )
 
     fun isOneOfTraditionalChinese(): Boolean {
