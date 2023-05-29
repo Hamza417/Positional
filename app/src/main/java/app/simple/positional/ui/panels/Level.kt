@@ -282,11 +282,11 @@ class Level : ScopedFragment(), SensorEventListener {
             //String.format("%.2g%n", abs(x))
 
             if (isLandscapeVar) {
-                levelX.text = fromHtml("<b>X:</b> ${abs(round(y.toDouble(), 1))}°")
-                levelY.text = fromHtml("<b>Y:</b> ${abs(round(x.toDouble(), 1))}°")
+                levelX.text = fromHtml("<b>X:</b> ${abs(round(y.toDouble(), 2))}°")
+                levelY.text = fromHtml("<b>Y:</b> ${abs(round(x.toDouble(), 2))}°")
             } else {
-                levelX.text = fromHtml("<b>X:</b> ${abs(round(x.toDouble(), 1))}°")
-                levelY.text = fromHtml("<b>Y:</b> ${abs(round(y.toDouble(), 1))}°")
+                levelX.text = fromHtml("<b>X:</b> ${abs(round(x.toDouble(), 2))}°")
+                levelY.text = fromHtml("<b>Y:</b> ${abs(round(y.toDouble(), 2))}°")
             }
         }
     }
