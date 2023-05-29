@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Spanned
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -239,9 +240,20 @@ class Time : ScopedFragment() {
                 scrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
                 view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
             }
         })
+
+        if (StatusBarHeight.isLandscape(requireContext())) {
+            scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                Log.d("ClockFragment", "onViewCreated: $scrollY $oldScrollY")
+                if (scrollY < oldScrollY) {
+                    bottomSheetSlide.onBottomSheetSliding(0F, true)
+                } else {
+                    bottomSheetSlide.onBottomSheetSliding(1F, false)
+                }
+            }
+        }
 
         menu.setOnClickListener {
             ClockMenu.newInstance().show(parentFragmentManager, "clock_menu")

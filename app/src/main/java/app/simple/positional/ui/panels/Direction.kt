@@ -212,7 +212,7 @@ class Direction : ScopedFragment(), SensorEventListener {
                 compassListScrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
                 view.findViewById<View>(R.id.direction_dim).alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
                 //toolbar.translationY = toolbar.height * -slideOffset
             }
         })
@@ -238,12 +238,12 @@ class Direction : ScopedFragment(), SensorEventListener {
             if (successfullyCalculatedRotationMatrix) {
                 val orientation = FloatArray(3)
                 SensorManager.getOrientation(rotation, orientation)
-                CompassAzimuth.adjustAzimuthForDisplayRotation(((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat(), requireActivity().windowManager)
+                CompassAzimuth.adjustAzimuthForDisplayRotation(((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat(), requireActivity().windowManager).normalizeEulerAngle(inverseResult = false)
             } else {
                 0F
             }
         } else {
-            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer, requireActivity().windowManager)
+            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer, requireActivity().windowManager).normalizeEulerAngle(false)
         }
 
         dial.rotationUpdate(rotationAngle * -1, true)

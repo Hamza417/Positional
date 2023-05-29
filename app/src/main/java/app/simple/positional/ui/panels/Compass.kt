@@ -280,7 +280,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                 compassListScrollView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
                 view.findViewById<View>(R.id.compass_dim).alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
                 //toolbar.translationY = toolbar.height * -slideOffset
             }
         })
@@ -372,8 +372,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         run {
-            if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_DRAGGING ||
-                    bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED || isLandscape()) {
+            if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_DRAGGING || bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED || isLandscape()) {
                 accelerometerX.text = fromHtml("<b>X:</b> ${round(accelerometerReadings[0].toDouble(), 3)}")
                 accelerometerY.text = fromHtml("<b>Y:</b> ${round(accelerometerReadings[1].toDouble(), 3)}")
                 accelerometerZ.text = fromHtml("<b>Z:</b> ${round(accelerometerReadings[2].toDouble(), 3)}")
@@ -385,7 +384,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         if (!isUserRotatingDial) {
-            rotationAngle = angle
+            rotationAngle = angle.normalizeEulerAngle(false)
             viewRotation(rotationAngle, isAnimated)
         }
     }

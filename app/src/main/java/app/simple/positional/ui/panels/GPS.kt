@@ -383,7 +383,7 @@ class GPS : ScopedFragment() {
                 expandUp.rotationX = -180 * slideOffset
                 dim?.alpha = slideOffset
                 if (!isFullScreen) {
-                    bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                    bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
                 }
             }
         })

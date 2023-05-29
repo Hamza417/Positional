@@ -258,7 +258,7 @@ class Trail : ScopedFragment() {
                 expandUp.alpha = 1 - slideOffset
                 dim.alpha = slideOffset
                 if (!isFullScreen) {
-                    bottomSheetSlide.onBottomSheetSliding(slideOffset)
+                    bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
                 }
             }
         })

@@ -229,7 +229,7 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    override fun onBottomSheetSliding(slideOffset: Float) {
+    override fun onBottomSheetSliding(slideOffset: Float, animate: Boolean) {
         bottomBarContainer.scaleX = 1 - slideOffset
         bottomBarContainer.scaleY = 1 - slideOffset
         bottomBarContainer.alpha = 1 - slideOffset
