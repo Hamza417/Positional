@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,18 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <app.simple.positional.decorations.corners.DynamicCornerRecyclerView
-        android:id="@+id/bottom_bar"
-        android:layout_width="match_parent"
+    <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
+        android:id="@+id/bottom_bar_container"
+        android:layout_width="@dimen/bottom_nav_height"
         android:layout_height="@dimen/bottom_nav_height"
-        android:layout_gravity="bottom"
-        android:backgroundTint="@color/mainBackground"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:background="?attr/colorAppAccent"
+        android:backgroundTint="?attr/colorAppAccent"
         android:elevation="20dp"
-        android:overScrollMode="never"
-        android:paddingHorizontal="10dp"
-        android:clipChildren="true"
-        android:clipToPadding="false"
-        android:layoutAnimation="@anim/grid_list_animation_controller"
-        app:roundTopCorners="true" />
+        tools:ignore="ContentDescription">
 
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="true"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/grid_list_animation_controller"
+            android:overScrollMode="never"
+            android:paddingHorizontal="10dp"
+            app:roundTopCorners="true" />
+
+    </app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
 </merge>

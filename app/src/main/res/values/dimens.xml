@@ -61,7 +61,7 @@
     <dimen name="settings_secondary_text_size">14sp</dimen>
 
     <!-- Miscellaneous/Main Base Activity -->
-    <dimen name="bottom_nav_height">70dp</dimen>
+    <dimen name="bottom_nav_height">60dp</dimen>
     <dimen name="all_corner_radius">20dp</dimen>
     <dimen name="launcher_app_title">31sp</dimen>
     <dimen name="launcher_app_icon_dimen">200dp</dimen>

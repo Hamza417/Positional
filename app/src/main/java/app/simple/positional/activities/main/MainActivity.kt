@@ -11,17 +11,17 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
+import androidx.viewpager2.widget.ViewPager2
 import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.BottomBarAdapter
 import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
-import app.simple.positional.decorations.corners.DynamicCornerRecyclerView
+import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.dialogs.app.Permission
 import app.simple.positional.extensions.activity.BaseActivity
+import app.simple.positional.popups.miscellaneous.PopupFragments
 import app.simple.positional.preferences.BottomBarPreferences
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
@@ -33,7 +33,7 @@ import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
-import app.simple.positional.util.StatusBarHeight
+import app.simple.positional.util.ViewUtils
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapsSdkInitializedCallback
 
@@ -44,7 +44,8 @@ class MainActivity : BaseActivity(),
         OnMapsSdkInitializedCallback {
 
     private val defaultPermissionRequestCode = 123
-    private lateinit var bottomBar: DynamicCornerRecyclerView
+    private lateinit var bottomBar: ViewPager2
+    private lateinit var bottomBarContainer: DynamicCornerFrameLayout
     private lateinit var bottomBarAdapter: BottomBarAdapter
     private val handler = Handler(Looper.getMainLooper())
 
@@ -53,30 +54,42 @@ class MainActivity : BaseActivity(),
         MapsInitializer.initialize(baseContext, MapsInitializer.Renderer.LATEST, this)
         setContentView(R.layout.activity_main)
 
-        bottomBarAdapter = BottomBarAdapter(BottomBarItems.getBottomBarItems(baseContext))
+        bottomBar = findViewById(R.id.bottom_bar)
+        bottomBarContainer = findViewById(R.id.bottom_bar_container)
+
+        bottomBarAdapter = BottomBarAdapter(BottomBarItems.getBottomBarItems(baseContext)) {
+            PopupFragments(bottomBarContainer) { _, tag, position ->
+                bottomBar.setCurrentItem(position, true)
+                openFragment(tag, position)
+                FragmentPreferences.setCurrentPage(position)
+                FragmentPreferences.setCurrentTag(tag)
+            }.setOnDismissListener {
+                bottomBarContainer.animate()
+                        .alpha(1f)
+                        .setInterpolator(DecelerateInterpolator())
+                        .setDuration(500)
+                        .start()
+            }
+        }
+
         bottomBarAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
 
-        bottomBar = findViewById(R.id.bottom_bar)
+        ViewUtils.addShadow(bottomBarContainer)
 
         bottomBar.apply {
-            layoutManager = if (StatusBarHeight.isLandscape(baseContext)) {
-                LinearLayoutManager(baseContext, LinearLayoutManager.VERTICAL, false)
-            } else {
-                LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
-            }
             adapter = bottomBarAdapter
-            scheduleLayoutAnimation()
-            setItemViewCacheSize(2)
-            if (StatusBarHeight.isLandscape(baseContext)) bottomBar.translationY = 0F
-            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+            orientation = ViewPager2.ORIENTATION_VERTICAL
 
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-
-                }
-
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                        val position = bottomBar.currentItem
+                        val name = BottomBarItems.getBottomBarItems(baseContext)[position].tag
+                        FragmentPreferences.setCurrentPage(position)
+                        FragmentPreferences.setCurrentTag(name)
+                        openFragment(name, position)
+                    }
                 }
             })
         }
@@ -173,7 +186,9 @@ class MainActivity : BaseActivity(),
     }
 
     private fun openFragment(tag: String, position: Int) {
-        bottomBar.smoothScrollToPosition(position)
+        if (bottomBar.currentItem != position) {
+            bottomBar.currentItem = position
+        }
         getFragment(tag).let {
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
@@ -220,15 +235,23 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onBottomSheetSliding(slideOffset: Float) {
-        bottomBar.translationY = bottomBar.height * slideOffset
+        bottomBarContainer.scaleX = 1 - slideOffset
+        bottomBarContainer.scaleY = 1 - slideOffset
+        bottomBarContainer.alpha = 1 - slideOffset
     }
 
     override fun onMapClicked(fullScreen: Boolean) {
         if (fullScreen) {
-            bottomBar.animate().translationY(0F).setInterpolator(DecelerateInterpolator(1.5F))
-                    .start()
+            bottomBarContainer.animate()
+                    .scaleX(0F)
+                    .scaleY(0F)
+                    .alpha(0F)
+                    .setInterpolator(DecelerateInterpolator(1.5F)).start()
         } else {
-            bottomBar.animate().translationY(bottomBar.height.toFloat())
+            bottomBarContainer.animate()
+                    .scaleX(1F)
+                    .scaleY(1F)
+                    .alpha(1F)
                     .setInterpolator(DecelerateInterpolator(1.5F)).start()
         }
     }

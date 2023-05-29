@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:behavior_hideable="false"
-    app:behavior_peekHeight="@dimen/peek_height"
+    app:behavior_peekHeight="@dimen/bottom_nav_height"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <ImageView

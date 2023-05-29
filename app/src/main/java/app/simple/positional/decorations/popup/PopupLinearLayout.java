@@ -18,7 +18,7 @@ public class PopupLinearLayout extends DynamicCornerLinearLayout {
 
     private void init() {
         int p = getResources().getDimensionPixelOffset(R.dimen.popup_padding);
-        setPadding(p, p, p, p);
+        // setPadding(p, p, p, p);
         setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.mainBackground)));
         setOrientation(LinearLayout.VERTICAL);
     }

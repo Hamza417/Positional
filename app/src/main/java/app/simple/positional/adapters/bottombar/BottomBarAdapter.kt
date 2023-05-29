@@ -7,56 +7,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
-import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.preferences.FragmentPreferences
-import app.simple.positional.util.ViewUtils.invisible
-import app.simple.positional.util.ViewUtils.visible
 
-class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
+class BottomBarAdapter(private var list: ArrayList<BottomBarModel>, val onClick: (View) -> Unit) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
 
     private var currentTag = FragmentPreferences.getCurrentTag()
     private var lastItem = FragmentPreferences.getCurrentPage()
     private var bottomBarCallbacks: BottomBarCallbacks? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        return Holder(
-                LayoutInflater.from(parent.context).inflate(R.layout.adapter_bottom_bar, parent, false))
+        return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_bottom_bar, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, @SuppressLint("RecyclerView") position: Int) {
-        if (currentTag == list[position].tag) {
-            holder.bg.visible(animate = true)
-            holder.icon.animateColor(ContextCompat.getColor(holder.itemView.context, R.color.iconColor))
-        } else {
-            holder.bg.invisible(animate = true)
-            holder.icon.animateColor(ContextCompat.getColor(holder.itemView.context, R.color.iconRegular))
-        }
-
         holder.icon.setImageResource(list[position].icon)
 
-        holder.container.setOnClickListener {
-            currentTag = list[position].tag
-            notifyItemChanged(lastItem)
-            FragmentPreferences.setCurrentPage(position)
-            FragmentPreferences.setCurrentTag(list[position].tag)
-            notifyItemChanged(position)
-            lastItem = position
-            bottomBarCallbacks?.onItemClicked(position, list[position].tag)
+        holder.icon.setOnClickListener {
+            onClick(it)
         }
     }
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    override fun onViewDetachedFromWindow(holder: Holder) {
-        super.onViewDetachedFromWindow(holder)
-        holder.bg.clearAnimation()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -93,7 +68,5 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>) : RecyclerVi
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val icon: ImageView = itemView.findViewById(R.id.bottom_bar_item)
-        val bg: DynamicCornerFrameLayout = itemView.findViewById(R.id.bottom_bar_item_background)
-        val container: FrameLayout = itemView.findViewById(R.id.bottom_bar_container)
     }
 }

@@ -22,6 +22,10 @@ public class DynamicCornerRecyclerView extends RecyclerView {
     }
 
     private void init(AttributeSet attrs) {
+        if (isInEditMode()) {
+            return;
+        }
+
         if (StatusBarHeight.isLandscape(getContext())) {
             setPadding(getPaddingLeft(),
                     getPaddingTop() + StatusBarHeight.getStatusBarHeight(getResources()),

@@ -9,11 +9,11 @@
         android:id="@+id/settings_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bottom_nav_height"
         android:animateLayoutChanges="true"
         android:clipChildren="false"
         android:clipToPadding="false"
         android:overScrollMode="always"
+        android:paddingBottom="@dimen/bottom_nav_height"
         app:layout_behavior="app.simple.positional.behaviors.OverScrollBehavior">
 
         <LinearLayout
@@ -91,8 +91,8 @@
                 <ImageView
                     android:layout_width="@dimen/app_button_size"
                     android:layout_height="@dimen/app_button_size"
-                    android:padding="5dp"
                     android:layout_gravity="center_vertical"
+                    android:padding="5dp"
                     android:src="@drawable/ic_bad_location"
                     app:tint="@android:color/white"
                     tools:ignore="ContentDescription" />

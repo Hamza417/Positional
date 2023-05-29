@@ -4,7 +4,6 @@
     android:id="@+id/indicator_bounding_box"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/bottom_nav_height"
     android:clipToPadding="false">
 
     <include layout="@layout/toolbar_level" />
