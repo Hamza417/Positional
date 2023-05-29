@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/mainBackground"
+    android:clipChildren="true"
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    tools:parentTag="app.simple.positional.decorations.popup.PopupLinearLayout">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
+            android:id="@+id/clock"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawablePadding="@dimen/popup_padding"
+            android:focusable="true"
+            android:fontFamily="@font/medium"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="20dp"
+            android:text="@string/clock"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/popup_text_size" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
+            android:id="@+id/compass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/popup_padding"
+            android:fontFamily="@font/medium"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="20dp"
+            android:text="@string/compass"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/popup_text_size" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
+            android:id="@+id/direction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawablePadding="@dimen/popup_padding"
+            android:fontFamily="@font/medium"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="20dp"
+            android:text="@string/direction"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/popup_text_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
+            android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/popup_padding"
+            android:fontFamily="@font/medium"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="20dp"
+            android:text="@string/gps_location"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/popup_text_size" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
+            android:id="@+id/trail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/popup_padding"
+            android:fontFamily="@font/medium"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="20dp"
+            android:text="@string/trail"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/popup_text_size" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleTextView
+            android:id="@+id/level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/popup_padding"
+            android:fontFamily="@font/medium"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="20dp"
+            android:text="@string/level"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/popup_text_size" />
+
+    </LinearLayout>
+
+
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
+        android:id="@+id/settings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/popup_padding"
+        android:fontFamily="@font/medium"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="20dp"
+        android:text="@string/settings"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/popup_text_size" />
+
+</merge>
