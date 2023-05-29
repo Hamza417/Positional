@@ -41,10 +41,10 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
             }
             "action_map_panel_full",
             "open_gps" -> {
-                setScreenValue(2, "location")
+                setScreenValue(3, "location")
             }
             "open_level" -> {
-                setScreenValue(3, "level")
+                setScreenValue(5, "level")
             }
         }
     }

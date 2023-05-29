@@ -19,6 +19,7 @@ import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
+import app.simple.positional.decorations.transformers.DepthTransformer
 import app.simple.positional.dialogs.app.Permission
 import app.simple.positional.extensions.activity.BaseActivity
 import app.simple.positional.popups.miscellaneous.PopupFragments
@@ -60,7 +61,7 @@ class MainActivity : BaseActivity(),
         bottomBarAdapter = BottomBarAdapter(BottomBarItems.getBottomBarItems(baseContext)) {
             PopupFragments(bottomBarContainer) { _, tag, position ->
                 bottomBar.setCurrentItem(position, true)
-                openFragment(tag, position)
+                openFragment(tag)
                 FragmentPreferences.setCurrentPage(position)
                 FragmentPreferences.setCurrentTag(tag)
             }.setOnDismissListener {
@@ -79,8 +80,8 @@ class MainActivity : BaseActivity(),
         bottomBar.apply {
             adapter = bottomBarAdapter
             orientation = ViewPager2.ORIENTATION_VERTICAL
-            currentItem = FragmentPreferences.getCurrentPage()
-            Log.d("MainActivity", "onCreate: ${FragmentPreferences.getCurrentPage()}")
+            setCurrentItem(FragmentPreferences.getCurrentPage(), false)
+            setPageTransformer(DepthTransformer())
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrollStateChanged(state: Int) {
@@ -90,21 +91,17 @@ class MainActivity : BaseActivity(),
                         val name = BottomBarItems.getBottomBarItems(baseContext)[position].tag
                         FragmentPreferences.setCurrentPage(position)
                         FragmentPreferences.setCurrentTag(name)
-                        openFragment(name, position)
+                        openFragment(name)
                     }
                 }
             })
-        }
-
-        bottomBarAdapter.setOnBottomBarCallbackListener { position, name ->
-            openFragment(name, position)
         }
 
         checkRunTimePermission()
         MainPreferences.setLaunchCount(MainPreferences.getLaunchCount() + 1)
 
         if (savedInstanceState.isNull()) {
-            openFragment(FragmentPreferences.getCurrentTag(), FragmentPreferences.getCurrentPage())
+            openFragment(FragmentPreferences.getCurrentTag())
         }
     }
 
@@ -186,8 +183,7 @@ class MainActivity : BaseActivity(),
         ), defaultPermissionRequestCode)
     }
 
-    private fun openFragment(tag: String, position: Int) {
-        bottomBar.currentItem = position
+    private fun openFragment(tag: String) {
         getFragment(tag).let {
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
