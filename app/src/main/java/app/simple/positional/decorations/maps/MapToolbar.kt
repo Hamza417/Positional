@@ -5,10 +5,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
+import androidx.core.view.setPadding
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins.locationsPins
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
@@ -42,25 +44,33 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
         initViews()
 
         val shapeAppearanceModel = ShapeAppearanceModel()
-            .toBuilder()
-            .setBottomLeftCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
-            .setBottomRightCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
-            .build()
+                .toBuilder()
+                .setAllCorners(CornerFamily.ROUNDED, getCornerRadius().toFloat())
+                .build()
 
-        if(StatusBarHeight.isLandscape(context).invert()) {
+        if (StatusBarHeight.isLandscape(context).invert()) {
             background = MaterialShapeDrawable(shapeAppearanceModel)
         }
 
+        gravity = Gravity.END
         layoutTransition = LayoutTransition()
         getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
     }
 
     private fun initViews() {
         val view = LayoutInflater.from(context).inflate(R.layout.toolbar_map_panel, this, true)
-        setPadding(resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
-                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding) + StatusBarHeight.getStatusBarHeight(resources),
-                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
-                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding))
+
+        setPadding(resources.getDimensionPixelSize(R.dimen.toolbar_padding).div(2))
+
+        // Set margin
+        post {
+            val params = layoutParams as MarginLayoutParams
+            params.setMargins(paddingLeft, StatusBarHeight.getStatusBarHeight(resources) + paddingTop, paddingRight, paddingBottom)
+            layoutParams = params
+
+            // set wrap content width
+            layoutParams.width = LayoutParams.MATCH_PARENT
+        }
 
         menu = view.findViewById(R.id.gps_menu)
         customLocationButton = view.findViewById(R.id.gps_custom_location)
@@ -102,7 +112,7 @@ class MapToolbar : DynamicCornerLinearLayout, OnSharedPreferenceChangeListener {
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         getSharedPreferences()
-            .unregisterOnSharedPreferenceChangeListener(this)
+                .unregisterOnSharedPreferenceChangeListener(this)
     }
 
     fun setOnMapToolbarCallbacks(mapToolbarCallbacks: MapToolbarCallbacks) {

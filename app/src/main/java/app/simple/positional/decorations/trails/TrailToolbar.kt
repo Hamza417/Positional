@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.animation.DecelerateInterpolator
+import androidx.core.view.setPadding
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
@@ -35,22 +36,29 @@ class TrailToolbar : DynamicCornerLinearLayout {
         layoutTransition = LayoutTransition()
 
         val shapeAppearanceModel = ShapeAppearanceModel()
-            .toBuilder()
-            .setBottomLeftCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
-            .setBottomRightCorner(CornerFamily.ROUNDED, getCornerRadius().toFloat())
-            .build()
+                .toBuilder()
+                .setAllCorners(CornerFamily.ROUNDED, getCornerRadius().toFloat())
+                .build()
 
-        if(StatusBarHeight.isLandscape(context).invert()) {
+        if (StatusBarHeight.isLandscape(context).invert()) {
             background = MaterialShapeDrawable(shapeAppearanceModel)
         }
     }
 
     private fun initViews() {
         val view = LayoutInflater.from(context).inflate(R.layout.toolbar_trail_maps, this, true)
-        setPadding(resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
-                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding) + StatusBarHeight.getStatusBarHeight(resources),
-                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding),
-                   resources.getDimensionPixelOffset(R.dimen.toolbar_padding))
+
+        setPadding(resources.getDimensionPixelSize(R.dimen.toolbar_padding).div(2))
+
+        // Set margin
+        post {
+            val params = layoutParams as MarginLayoutParams
+            params.setMargins(paddingLeft, StatusBarHeight.getStatusBarHeight(resources) + paddingTop, paddingRight, paddingBottom)
+            layoutParams = params
+
+            // set wrap content width
+            layoutParams.width = LayoutParams.MATCH_PARENT
+        }
 
         trails = view.findViewById(R.id.trail_flag)
         menu = view.findViewById(R.id.trail_menu)

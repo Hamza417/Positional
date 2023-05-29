@@ -79,6 +79,8 @@ class MainActivity : BaseActivity(),
         bottomBar.apply {
             adapter = bottomBarAdapter
             orientation = ViewPager2.ORIENTATION_VERTICAL
+            currentItem = FragmentPreferences.getCurrentPage()
+            Log.d("MainActivity", "onCreate: ${FragmentPreferences.getCurrentPage()}")
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrollStateChanged(state: Int) {
@@ -102,8 +104,7 @@ class MainActivity : BaseActivity(),
         MainPreferences.setLaunchCount(MainPreferences.getLaunchCount() + 1)
 
         if (savedInstanceState.isNull()) {
-            openFragment(FragmentPreferences.getCurrentTag(),
-                    FragmentPreferences.getCurrentPage())
+            openFragment(FragmentPreferences.getCurrentTag(), FragmentPreferences.getCurrentPage())
         }
     }
 
@@ -186,9 +187,7 @@ class MainActivity : BaseActivity(),
     }
 
     private fun openFragment(tag: String, position: Int) {
-        if (bottomBar.currentItem != position) {
-            bottomBar.currentItem = position
-        }
+        bottomBar.currentItem = position
         getFragment(tag).let {
             supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
@@ -243,15 +242,15 @@ class MainActivity : BaseActivity(),
     override fun onMapClicked(fullScreen: Boolean) {
         if (fullScreen) {
             bottomBarContainer.animate()
-                    .scaleX(0F)
-                    .scaleY(0F)
-                    .alpha(0F)
-                    .setInterpolator(DecelerateInterpolator(1.5F)).start()
-        } else {
-            bottomBarContainer.animate()
                     .scaleX(1F)
                     .scaleY(1F)
                     .alpha(1F)
+                    .setInterpolator(DecelerateInterpolator(1.5F)).start()
+        } else {
+            bottomBarContainer.animate()
+                    .scaleX(0F)
+                    .scaleY(0F)
+                    .alpha(0F)
                     .setInterpolator(DecelerateInterpolator(1.5F)).start()
         }
     }

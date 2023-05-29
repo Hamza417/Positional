@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:parentTag="app.simple.positional.decorations.corners.DynamicCornerLinearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="8dp"
+    android:backgroundTint="@color/mainBackground"
     android:elevation="10dp"
-    android:backgroundTint="@color/mainBackground">
+    android:orientation="horizontal"
+    android:padding="8dp"
+    tools:parentTag="app.simple.positional.decorations.corners.DynamicCornerLinearLayout">
 
     <TextView
         android:id="@+id/header_title"
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
         android:fontFamily="@font/heading"
         android:text="@string/trail"
-        android:layout_gravity="center_vertical"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/top_bar_text_size"
         android:textStyle="bold" />
@@ -27,8 +27,8 @@
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
         android:layout_gravity="center_vertical|end"
+        android:layout_marginStart="8dp"
         android:background="@drawable/ripple_btn"
-        android:layout_marginEnd="10dp"
         android:contentDescription="@string/gps_reset_location"
         android:src="@drawable/ic_add"
         android:tint="@color/iconColor" />
@@ -38,8 +38,8 @@
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
         android:layout_gravity="center_vertical|end"
+        android:layout_marginHorizontal="5dp"
         android:background="@drawable/ripple_btn"
-        android:layout_marginEnd="10dp"
         android:contentDescription="@string/gps_reset_location"
         android:src="@drawable/ic_saved_trails"
         android:tint="@color/iconColor" />
