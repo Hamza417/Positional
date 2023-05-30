@@ -24,13 +24,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.adapters.settings.LocationsAdapter
 import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.padding.PaddingAwareLinearLayout
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.dialogs.app.MapSearch.Companion.showMapSearch
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.model.Locations
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.popups.settings.CustomLocationPopupMenu
@@ -51,6 +52,7 @@ class CustomLocation : ScopedFragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var art: ImageView
+    private lateinit var search: DynamicRippleImageButton
     private lateinit var options: DynamicRippleImageButton
     private lateinit var loadingProgressBar: ContentLoadingProgressBar
     private lateinit var addressInputEditText: EditText
@@ -71,6 +73,7 @@ class CustomLocation : ScopedFragment() {
 
         recyclerView = view.findViewById(R.id.custom_locations_recycler_view)
         art = view.findViewById(R.id.art_empty)
+        search = view.findViewById(R.id.search)
         options = view.findViewById(R.id.options_custom_coordinates)
         loadingProgressBar = view.findViewById(R.id.address_indicator)
         addressInputEditText = view.findViewById(R.id.address)
@@ -102,6 +105,16 @@ class CustomLocation : ScopedFragment() {
             longitudeInputEditText.setText(MainPreferences.getCoordinates()[1].toString())
         } else {
             loadingProgressBar.hide()
+        }
+
+        search.setOnClickListener {
+            childFragmentManager.showMapSearch().setOnMapSearch { address, latitude, longitude ->
+                if (address.isNotEmpty()) {
+                    addressInputEditText.setText(address)
+                }
+                latitudeInputEditText.setText(latitude.toString())
+                longitudeInputEditText.setText(longitude.toString())
+            }
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

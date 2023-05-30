@@ -11,6 +11,7 @@ import android.view.MotionEvent
 import android.view.WindowManager
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
+import app.simple.positional.util.ConditionUtils.invert
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -46,10 +47,15 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    open val lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
-    open val lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
+    open var lastLatitude = 0.0
+    open val lastLongitude = 0.0
 
     init {
+        if (isInEditMode.invert()) {
+            lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
+            lastLatitude = MainPreferences.getLastCoordinates()[1].toDouble()
+        }
+
         windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
         viewHandler.postDelayed(fun() {

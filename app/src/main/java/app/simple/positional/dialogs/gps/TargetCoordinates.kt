@@ -8,7 +8,9 @@ import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleButton
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
+import app.simple.positional.dialogs.app.MapSearch.Companion.showMapSearch
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.ViewUtils.gone
@@ -18,6 +20,7 @@ class TargetCoordinates : CustomDialogFragment() {
 
     private lateinit var latitude: EditText
     private lateinit var longitude: EditText
+    private lateinit var search: DynamicRippleImageButton
     private lateinit var save: DynamicRippleButton
     private lateinit var cancel: DynamicRippleButton
 
@@ -30,6 +33,7 @@ class TargetCoordinates : CustomDialogFragment() {
         latitude = view.findViewById(R.id.target_latitude)
         longitude = view.findViewById(R.id.target_longitude)
         save = view.findViewById(R.id.save)
+        search = view.findViewById(R.id.search)
         cancel = view.findViewById(R.id.cancel)
 
         return view
@@ -37,6 +41,13 @@ class TargetCoordinates : CustomDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        search.setOnClickListener {
+            childFragmentManager.showMapSearch().setOnMapSearch { _, latitude, longitude ->
+                this.latitude.setText(latitude.toString())
+                this.longitude.setText(longitude.toString())
+            }
+        }
 
         latitude.doOnTextChanged { text, _, _, _ ->
             isValidLatitude = kotlin.runCatching {

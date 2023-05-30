@@ -1,6 +1,8 @@
 package app.simple.positional.decorations.views
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
@@ -10,6 +12,8 @@ import app.simple.positional.R
 import app.simple.positional.util.StatusBarHeight
 
 open class CustomDialogFragment : DialogFragment() {
+
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +34,32 @@ open class CustomDialogFragment : DialogFragment() {
         window.attributes.gravity = Gravity.CENTER
 
         // TODO - fixe dialog height
-        if (StatusBarHeight.isLandscape(requireContext())) {
-            window.attributes.width = (displayMetrics.widthPixels * 1f / 100f * 60f).toInt()
-            // window.attributes.height = (displayMetrics.heightPixels * 1F / 100F * 90F).toInt()
+        window.attributes.width = getWindowWidth()
+    }
+
+    open fun getWindowWidth(): Int {
+        val window = dialog!!.window ?: return 0
+        val displayMetrics = DisplayMetrics()
+
+        @Suppress("deprecation")
+        window.windowManager.defaultDisplay.getMetrics(displayMetrics)
+
+        return if (StatusBarHeight.isLandscape(requireContext())) {
+            (displayMetrics.widthPixels * 1f / 100f * 60f).toInt()
         } else {
-            window.attributes.width = (displayMetrics.widthPixels * 1f / 100f * 75f).toInt()
-            // window.attributes.height = (displayMetrics.heightPixels * 1F / 100F * 60F).toInt()
+            (displayMetrics.widthPixels * 1f / 100f * 75f).toInt()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    fun postDelayed(delay: Long, runnable: () -> Unit) {
+        handler.removeCallbacksAndMessages(null)
+        handler.postDelayed({
+            runnable()
+        }, delay)
     }
 }

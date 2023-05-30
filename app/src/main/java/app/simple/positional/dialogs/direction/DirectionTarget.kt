@@ -8,7 +8,9 @@ import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleButton
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
+import app.simple.positional.dialogs.app.MapSearch.Companion.showMapSearch
 import app.simple.positional.model.DirectionModel
 import app.simple.positional.preferences.DirectionPreferences
 import app.simple.positional.util.ConditionUtils.isNull
@@ -22,6 +24,7 @@ class DirectionTarget : CustomDialogFragment() {
     private lateinit var label: EditText
     private lateinit var latitude: EditText
     private lateinit var longitude: EditText
+    private lateinit var search: DynamicRippleImageButton
     private lateinit var save: DynamicRippleButton
     private lateinit var cancel: DynamicRippleButton
 
@@ -37,6 +40,7 @@ class DirectionTarget : CustomDialogFragment() {
         label = view.findViewById(R.id.target_label)
         latitude = view.findViewById(R.id.target_latitude)
         longitude = view.findViewById(R.id.target_longitude)
+        search = view.findViewById(R.id.search)
         save = view.findViewById(R.id.save)
         cancel = view.findViewById(R.id.cancel)
 
@@ -89,6 +93,14 @@ class DirectionTarget : CustomDialogFragment() {
 
         cancel.setOnClickListener {
             dismiss()
+        }
+
+        search.setOnClickListener {
+            childFragmentManager.showMapSearch().setOnMapSearch { address, latitude, longitude ->
+                this.latitude.setText(latitude.toString())
+                this.longitude.setText(longitude.toString())
+                label.setText(address)
+            }
         }
 
         if (directionModel.isNull()) {

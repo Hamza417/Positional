@@ -11,10 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:clipToPadding="false"
+        android:layout_marginBottom="@dimen/popup_padding"
         android:clipChildren="false"
-        android:layout_marginBottom="@dimen/popup_padding">
+        android:clipToPadding="false"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -35,8 +35,8 @@
             android:inputType="numberDecimal"
             android:maxLength="40"
             android:maxLines="1"
-            android:paddingHorizontal="@dimen/popup_padding"
             android:minHeight="50dp"
+            android:paddingHorizontal="@dimen/popup_padding"
             android:saveEnabled="true"
             android:textColor="@color/textSecondary"
             android:textColorHighlight="?attr/colorAppAccentLight"
@@ -47,9 +47,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/popup_padding"
             android:fontFamily="@font/medium"
             android:text="@string/specified_hint_longitude"
-            android:layout_marginTop="@dimen/popup_padding"
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/description_text_size" />
 
@@ -64,8 +64,8 @@
             android:inputType="numberDecimal"
             android:maxLength="40"
             android:maxLines="1"
-            android:paddingHorizontal="@dimen/popup_padding"
             android:minHeight="50dp"
+            android:paddingHorizontal="@dimen/popup_padding"
             android:saveEnabled="true"
             android:textColor="@color/textSecondary"
             android:textColorHighlight="?attr/colorAppAccentLight"
@@ -80,6 +80,18 @@
         android:layout_gravity="end"
         android:animateLayoutChanges="true"
         android:orientation="horizontal">
+
+        <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+            android:id="@+id/search"
+            android:layout_width="@dimen/app_button_size"
+            android:layout_height="@dimen/app_button_size"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_search" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
         <app.simple.positional.decorations.ripple.DynamicRippleButton
             android:id="@+id/cancel"

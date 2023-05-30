@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <app.simple.positional.decorations.corners.DynamicCornerLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:backgroundTint="@color/mainBackground"
-    android:orientation="vertical"
-    android:padding="@dimen/popup_padding">
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <app.simple.positional.decorations.maps.SearchMap
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginBottom="@dimen/popup_padding" />
+
+        <ImageView
+            android:layout_width="@dimen/app_button_size"
+            android:layout_height="@dimen/app_button_size"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_crosshair"
+            app:tint="@color/iconRegular"
+            tools:ignore="ContentDescription" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,18 +34,19 @@
         android:layout_marginBottom="@dimen/popup_padding"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/popup_padding">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/medium"
-            android:text="@string/target"
+            android:text="@string/gps_address"
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/description_text_size" />
 
-        <EditText
-            android:id="@+id/target_label"
+        <AutoCompleteTextView
+            android:id="@+id/address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -54,7 +75,7 @@
             android:textSize="@dimen/description_text_size" />
 
         <EditText
-            android:id="@+id/target_latitude"
+            android:id="@+id/latitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -83,7 +104,7 @@
             android:textSize="@dimen/description_text_size" />
 
         <EditText
-            android:id="@+id/target_longitude"
+            android:id="@+id/longitude"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -108,27 +129,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:animateLayoutChanges="true"
-        android:orientation="horizontal">
-
-        <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-            android:id="@+id/search"
-            android:layout_width="@dimen/app_button_size"
-            android:layout_height="@dimen/app_button_size"
-            android:layout_marginEnd="5dp"
-            android:src="@drawable/ic_search" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/popup_padding"
+        android:paddingBottom="@dimen/popup_padding"
+        tools:ignore="RtlSymmetry">
 
         <app.simple.positional.decorations.ripple.DynamicRippleButton
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/app_button_size"
             android:layout_gravity="center_vertical"
+            android:layout_marginEnd="5dp"
             android:text="@string/button_cancel"
-            android:textColor="@color/textPrimary" />
+            android:textColor="?attr/colorAppAccent" />
 
         <app.simple.positional.decorations.ripple.DynamicRippleButton
             android:id="@+id/save"
@@ -136,8 +149,7 @@
             android:layout_height="@dimen/app_button_size"
             android:layout_gravity="center_vertical"
             android:text="@string/save"
-            android:textColor="@color/textPrimary"
-            android:visibility="gone" />
+            android:textColor="?attr/colorAppAccent" />
 
     </LinearLayout>
 
