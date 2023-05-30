@@ -10,28 +10,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <app.simple.positional.decorations.corners.DynamicCornerFrameLayout
+    <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:id="@+id/bottom_bar_container"
-        android:layout_width="@dimen/bottom_nav_height"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/bottom_nav_height"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
+        android:animateLayoutChanges="true"
         android:background="?attr/colorAppAccent"
         android:backgroundTint="?attr/colorAppAccent"
         android:elevation="20dp"
+        android:minWidth="@dimen/bottom_nav_height"
         tools:ignore="ContentDescription">
-
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
             android:clipChildren="true"
             android:clipToPadding="false"
             android:layoutAnimation="@anim/grid_list_animation_controller"
+            android:minWidth="@dimen/bottom_nav_height"
             android:overScrollMode="never"
             android:paddingHorizontal="10dp"
             app:roundTopCorners="true" />
 
-    </app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/medium"
+            android:maxLines="1"
+            android:minWidth="75dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/popup_text_size" />
+
+    </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
 </merge>

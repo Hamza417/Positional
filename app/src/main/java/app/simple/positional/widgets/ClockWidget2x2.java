@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.SystemClock;
 
 import app.simple.positional.services.ClockWidgetService2x2;
+import app.simple.positional.util.PermissionUtils;
 
 public class ClockWidget2x2 extends AppWidgetProvider {
 
@@ -49,18 +50,20 @@ public class ClockWidget2x2 extends AppWidgetProvider {
     }
 
     private void startService(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                try {
+        if (PermissionUtils.INSTANCE.isIgnoringBatteryOptimizations(context)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    try {
+                        context.startForegroundService(new Intent(context, ClockWidgetService2x2.class));
+                    } catch (ForegroundServiceStartNotAllowedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
                     context.startForegroundService(new Intent(context, ClockWidgetService2x2.class));
-                } catch (ForegroundServiceStartNotAllowedException e) {
-                    e.printStackTrace();
                 }
             } else {
-                context.startForegroundService(new Intent(context, ClockWidgetService2x2.class));
+                context.startService(new Intent(context, ClockWidgetService2x2.class));
             }
-        } else {
-            context.startService(new Intent(context, ClockWidgetService2x2.class));
         }
     }
 

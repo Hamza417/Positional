@@ -2,14 +2,13 @@ package app.simple.positional.activities.service
 
 import android.app.Activity
 import android.appwidget.AppWidgetManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PowerManager
 import android.provider.Settings
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.extensions.activity.BaseActivity
+import app.simple.positional.util.PermissionUtils.isIgnoringBatteryOptimizations
 
 class BatteryOptimizationActivity : BaseActivity() {
 
@@ -45,15 +44,6 @@ class BatteryOptimizationActivity : BaseActivity() {
         } else {
             enable.setText(R.string.button_grant)
         }
-    }
-
-    /**
-     * return true if in App's Battery settings "Not optimized" and false if "Optimizing battery use"
-     */
-    private fun isIgnoringBatteryOptimizations(): Boolean {
-        val powerManager = applicationContext.getSystemService(Context.POWER_SERVICE) as PowerManager
-        val name = baseContext.packageName
-        return powerManager.isIgnoringBatteryOptimizations(name)
     }
 
     private fun close() {

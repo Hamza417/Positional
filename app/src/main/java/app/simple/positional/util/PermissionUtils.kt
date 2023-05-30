@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.PermissionInfo
 import android.os.Build
+import android.os.PowerManager
 import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 
@@ -30,6 +31,14 @@ object PermissionUtils {
                     ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION)
                     == PackageManager.PERMISSION_GRANTED)
         }
+    }
+
+    /**
+     * return true if in App's Battery settings "Not optimized" and false if "Optimizing battery use"
+     */
+    fun Context.isIgnoringBatteryOptimizations(): Boolean {
+        val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+        return powerManager.isIgnoringBatteryOptimizations(packageName)
     }
 
     @Nullable

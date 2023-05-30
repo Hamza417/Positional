@@ -162,7 +162,7 @@ object MoonAngle {
                 R.drawable.moon29
             }
             else -> {
-                0
+                R.drawable.moon15 // full moon
             }
         }
     }

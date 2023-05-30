@@ -1,6 +1,7 @@
 package app.simple.positional.activities.main
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.animation.DecelerateInterpolator
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -18,7 +20,7 @@ import app.simple.positional.adapters.bottombar.BottomBarAdapter
 import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
-import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.transformers.DepthTransformer
 import app.simple.positional.dialogs.app.Permission
 import app.simple.positional.extensions.activity.BaseActivity
@@ -46,10 +48,12 @@ class MainActivity : BaseActivity(),
 
     private val defaultPermissionRequestCode = 123
     private lateinit var bottomBar: ViewPager2
-    private lateinit var bottomBarContainer: DynamicCornerFrameLayout
+    private lateinit var bottomBarContainer: DynamicCornerLinearLayout
+    private lateinit var label: TextView
     private lateinit var bottomBarAdapter: BottomBarAdapter
     private val handler = Handler(Looper.getMainLooper())
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         MapsInitializer.initialize(baseContext, MapsInitializer.Renderer.LATEST, this)
@@ -57,6 +61,7 @@ class MainActivity : BaseActivity(),
 
         bottomBar = findViewById(R.id.bottom_bar)
         bottomBarContainer = findViewById(R.id.bottom_bar_container)
+        label = findViewById(R.id.label)
 
         bottomBarAdapter = BottomBarAdapter(BottomBarItems.getBottomBarItems(baseContext)) {
             PopupFragments(bottomBarContainer) { _, tag, position ->
@@ -83,6 +88,11 @@ class MainActivity : BaseActivity(),
             setCurrentItem(FragmentPreferences.getCurrentPage(), false)
             setPageTransformer(DepthTransformer())
 
+            label.text = BottomBarItems.getBottomBarItems(baseContext)[FragmentPreferences.getCurrentPage()].name
+            postDelayed({
+                label.visibility = TextView.GONE
+            }, 1000)
+
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageScrollStateChanged(state: Int) {
                     super.onPageScrollStateChanged(state)
@@ -92,7 +102,21 @@ class MainActivity : BaseActivity(),
                         FragmentPreferences.setCurrentPage(position)
                         FragmentPreferences.setCurrentTag(name)
                         openFragment(name)
+
+                        postDelayed({
+                            label.visibility = TextView.GONE
+                        }, 500)
                     }
+
+                    if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
+                        label.visibility = TextView.VISIBLE
+                        label.alpha = 1f
+                    }
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+                    label.text = BottomBarItems.getBottomBarItems(baseContext)[position].name
                 }
             })
         }
