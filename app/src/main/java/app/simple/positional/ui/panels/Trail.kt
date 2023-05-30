@@ -119,7 +119,7 @@ class Trail : ScopedFragment() {
                        paddingRight,
                        paddingBottom)
 
-            alpha = if(isLandscapeVar) 1F else 0F
+            alpha = if (isLandscapeOrientation) 1F else 0F
         }
 
         peekHeight = bottomSheetPanel?.peekHeight ?: 0
@@ -336,8 +336,8 @@ class Trail : ScopedFragment() {
             }
 
             override fun onMapClicked() {
-                if(isLandscapeVar.invert()) {
-                    setFullScreen(true)
+                if (isLandscapeOrientation.invert()) {
+                    setFullScreen()
                 }
             }
 
@@ -395,11 +395,11 @@ class Trail : ScopedFragment() {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         if (savedInstanceState.isNotNull()) {
-            isFullScreen = !savedInstanceState!!.getBoolean("fullscreen")
-            if(isLandscapeVar) {
-                setFullScreen(true)
+            isFullScreen = savedInstanceState!!.getBoolean("fullscreen")
+            if (isLandscapeOrientation) {
+                setFullScreen()
             } else {
-                setFullScreen(false)
+                setFullScreen()
             }
             bottomSheetPanel?.state = savedInstanceState.getInt("bottom_sheet_state")
         }
@@ -425,7 +425,7 @@ class Trail : ScopedFragment() {
         handler.removeCallbacksAndMessages(null)
     }
 
-    private fun setFullScreen(forBottomBar: Boolean) {
+    private fun setFullScreen() {
         if (isFullScreen) {
             toolbar.show()
             bottomSheetPanel?.peekHeight = peekHeight
@@ -434,7 +434,10 @@ class Trail : ScopedFragment() {
             bottomSheetPanel?.peekHeight = 0
         }
 
-        if (forBottomBar) {
+        if (isLandscapeOrientation) {
+            toolbar.show()
+            bottomSheetSlide.onMapClicked(fullScreen = true)
+        } else {
             bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
         }
 
@@ -442,7 +445,7 @@ class Trail : ScopedFragment() {
     }
 
     private fun updateToolsGravity(view: View) {
-        if(isLandscapeVar) return
+        if (isLandscapeOrientation) return
 
         TransitionManager.beginDelayedTransition(
                 view as ViewGroup,

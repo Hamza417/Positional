@@ -16,9 +16,9 @@ import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.FragmentManager
 import app.simple.positional.R
-import app.simple.positional.decorations.maps.SearchMap
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomDialogFragment
+import app.simple.positional.decorations.views.SearchMap
 import app.simple.positional.math.MathExtensions
 import app.simple.positional.preferences.MainPreferences
 import kotlinx.coroutines.CoroutineScope

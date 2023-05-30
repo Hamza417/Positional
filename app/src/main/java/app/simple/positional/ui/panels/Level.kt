@@ -242,7 +242,7 @@ class Level : ScopedFragment(), SensorEventListener {
                 levelDot.imageTintList = ColorStateList.valueOf(parseColor("#BF4848"))
             }
 
-            if (isLandscapeVar) {
+            if (isLandscapeOrientation) {
                 if (gravityReadings[0] * gravityWidthMotionCompensator -
                         levelIndicator.height * levelSizeCompensator / 2 > boundingBox.height * -1
                         &&
@@ -281,7 +281,7 @@ class Level : ScopedFragment(), SensorEventListener {
              */
             //String.format("%.2g%n", abs(x))
 
-            if (isLandscapeVar) {
+            if (isLandscapeOrientation) {
                 levelX.text = fromHtml("<b>X:</b> ${abs(round(y.toDouble(), 2))}°")
                 levelY.text = fromHtml("<b>Y:</b> ${abs(round(x.toDouble(), 2))}°")
             } else {

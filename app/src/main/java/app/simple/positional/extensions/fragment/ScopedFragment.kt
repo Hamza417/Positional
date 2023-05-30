@@ -11,11 +11,11 @@ import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 
 open class ScopedFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    protected var isLandscapeVar = false
+    protected var isLandscapeOrientation = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        isLandscapeVar = isLandscape()
+        isLandscapeOrientation = isLandscape()
     }
 
     override fun onResume() {
@@ -30,7 +30,7 @@ open class ScopedFragment : Fragment(), SharedPreferences.OnSharedPreferenceChan
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        isLandscapeVar = isLandscape()
+        isLandscapeOrientation = isLandscape()
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {}

@@ -1,4 +1,4 @@
-package app.simple.positional.decorations.maps
+package app.simple.positional.decorations.views
 
 import android.content.Context
 import android.content.res.Configuration

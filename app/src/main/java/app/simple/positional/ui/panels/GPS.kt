@@ -174,9 +174,9 @@ class GPS : ScopedFragment() {
 
         if (requireActivity().intent.isNotNull()) {
             if (requireActivity().intent.action == "action_map_panel_full") {
-                if (!isLandscapeVar) {
+                if (!isLandscapeOrientation) {
                     isFullScreen = false
-                    setFullScreen(true)
+                    setFullScreen()
                     requireActivity().intent.action = null
                 }
             }
@@ -561,8 +561,8 @@ class GPS : ScopedFragment() {
             }
 
             override fun onMapClicked() {
-                if (!isLandscapeVar) {
-                    setFullScreen(true)
+                if (!isLandscapeOrientation) {
+                    setFullScreen()
                 }
             }
 
@@ -670,7 +670,7 @@ class GPS : ScopedFragment() {
         }
     }
 
-    private fun setFullScreen(forBottomBar: Boolean) {
+    private fun setFullScreen() {
         if (isFullScreen) {
             toolbar.show()
             bottomSheetInfoPanel?.peekHeight = peekHeight
@@ -679,7 +679,10 @@ class GPS : ScopedFragment() {
             bottomSheetInfoPanel?.peekHeight = 0
         }
 
-        if (forBottomBar) {
+        if (isLandscapeOrientation) {
+            toolbar.show()
+            bottomSheetSlide.onMapClicked(fullScreen = true)
+        } else {
             bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
         }
 
@@ -792,18 +795,18 @@ class GPS : ScopedFragment() {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         if (savedInstanceState.isNotNull()) {
-            isFullScreen = !savedInstanceState!!.getBoolean("fullscreen")
-            if (isLandscapeVar) {
-                setFullScreen(true)
+            isFullScreen = savedInstanceState!!.getBoolean("fullscreen")
+            if (isLandscapeOrientation) {
+                setFullScreen()
             } else {
-                setFullScreen(isFullScreen)
+                setFullScreen()
             }
         }
         super.onViewStateRestored(savedInstanceState)
     }
 
     private fun updateToolsGravity(view: View) {
-        if (isLandscapeVar) return
+        if (isLandscapeOrientation) return
 
         TransitionManager.beginDelayedTransition(
                 view as ViewGroup,

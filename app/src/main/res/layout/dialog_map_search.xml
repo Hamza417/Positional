@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <app.simple.positional.decorations.maps.SearchMap
+        <app.simple.positional.decorations.views.SearchMap
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="350dp"
