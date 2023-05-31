@@ -331,4 +331,5 @@
     <string name="mechanical">Mechanical</string>
     <string name="app_coordinates_format">Coordinates Format</string>
     <string name="share">Share</string>
+    <string name="telegram_group">Telegram Group</string>
 </resources>
