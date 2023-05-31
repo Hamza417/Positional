@@ -33,6 +33,7 @@ colors, and many other features that should have been there.
 ![Status](https://img.shields.io/badge/Status-Stable-orange)
 ![Size](https://img.shields.io/github/repo-size/Hamza417/Positional?color=teal&label=Repo%20Size&logo=github)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/Hamza417/Positional/blob/master/LICENSE) [![Crowdin](https://badges.crowdin.net/positional/localized.svg)](https://crowdin.com/project/positional)
+[![Telegram Group](https://img.shields.io/badge/Telegram%20Group-blue?logo=telegram)](https://t.me/pstnl)
 
 ## Featured
 - [Top Android Apps! (May 2023) - Sam Beckman](https://youtu.be/g6pMQAFfd3Q?t=489)
