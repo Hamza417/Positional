@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import android.widget.Toast
@@ -21,6 +24,8 @@ import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+import app.simple.positional.decorations.popup.PopupLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.transformers.DepthTransformer
 import app.simple.positional.dialogs.app.Permission
 import app.simple.positional.extensions.activity.BaseActivity
@@ -51,6 +56,7 @@ class MainActivity : BaseActivity(),
     private lateinit var bottomBarContainer: DynamicCornerLinearLayout
     private lateinit var label: TextView
     private lateinit var bottomBarAdapter: BottomBarAdapter
+    private lateinit var popupContainer: View
     private val handler = Handler(Looper.getMainLooper())
 
     @SuppressLint("ClickableViewAccessibility")
@@ -78,6 +84,10 @@ class MainActivity : BaseActivity(),
             }
         }
 
+        label.setOnClickListener {
+            // hideBottomBarMenuAndShowPopup()
+        }
+
         bottomBarAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.ALLOW
 
         ViewUtils.addShadow(bottomBarContainer)
@@ -89,6 +99,7 @@ class MainActivity : BaseActivity(),
             setPageTransformer(DepthTransformer())
 
             label.text = BottomBarItems.getBottomBarItems(baseContext)[FragmentPreferences.getCurrentPage()].name
+
             postDelayed({
                 label.visibility = TextView.GONE
             }, 1000)
@@ -144,6 +155,100 @@ class MainActivity : BaseActivity(),
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        when (ev?.action) {
+            MotionEvent.ACTION_DOWN -> {
+                Log.d("MainActivity", "dispatchTouchEvent: ")
+                // Check if touch region is inside the bottom bar
+                if (ev.rawY < bottomBarContainer.y || ev.rawX < bottomBarContainer.x) {
+                    // showBottomBarMenu()
+                    Log.d("MainActivity", "dispatchTouchEvent: inside")
+                } else {
+                    /* no-op */
+                }
+            }
+            MotionEvent.ACTION_UP -> {
+                /* no-op */
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
+    @Suppress("unused")
+    private fun layOutPopupData() {
+        popupContainer = LayoutInflater.from(baseContext).inflate(R.layout.popup_fragments, PopupLinearLayout(baseContext), true)
+
+        popupContainer.findViewById<DynamicRippleTextView>(R.id.clock).setOnClickListener {
+            bottomBar.setCurrentItem(0, true)
+            openFragment(BottomBarItems.CLOCK)
+            FragmentPreferences.setCurrentPage(0)
+            FragmentPreferences.setCurrentTag(BottomBarItems.getBottomBarItems(baseContext)[0].tag)
+            showBottomBarMenu()
+        }
+
+        popupContainer.findViewById<DynamicRippleTextView>(R.id.compass).setOnClickListener {
+            bottomBar.setCurrentItem(1, true)
+            openFragment(BottomBarItems.COMPASS)
+            FragmentPreferences.setCurrentPage(1)
+            FragmentPreferences.setCurrentTag(BottomBarItems.getBottomBarItems(baseContext)[1].tag)
+            showBottomBarMenu()
+        }
+
+        popupContainer.findViewById<DynamicRippleTextView>(R.id.direction).setOnClickListener {
+            bottomBar.setCurrentItem(2, true)
+            openFragment(BottomBarItems.DIRECTION)
+            FragmentPreferences.setCurrentPage(2)
+            FragmentPreferences.setCurrentTag(BottomBarItems.getBottomBarItems(baseContext)[2].tag)
+            showBottomBarMenu()
+        }
+
+        popupContainer.findViewById<DynamicRippleTextView>(R.id.location).setOnClickListener {
+            bottomBar.setCurrentItem(3, true)
+            openFragment(BottomBarItems.LOCATION)
+            FragmentPreferences.setCurrentPage(3)
+            FragmentPreferences.setCurrentTag(BottomBarItems.getBottomBarItems(baseContext)[3].tag)
+            showBottomBarMenu()
+        }
+
+        popupContainer.findViewById<DynamicRippleTextView>(R.id.trail).setOnClickListener {
+            bottomBar.setCurrentItem(4, true)
+            openFragment(BottomBarItems.TRAIL)
+            FragmentPreferences.setCurrentPage(4)
+            FragmentPreferences.setCurrentTag(BottomBarItems.getBottomBarItems(baseContext)[4].tag)
+            showBottomBarMenu()
+        }
+
+        popupContainer.findViewById<DynamicRippleTextView>(R.id.level).setOnClickListener {
+            bottomBar.setCurrentItem(5, true)
+            openFragment(BottomBarItems.LEVEL)
+            FragmentPreferences.setCurrentPage(5)
+            FragmentPreferences.setCurrentTag(BottomBarItems.getBottomBarItems(baseContext)[5].tag)
+            showBottomBarMenu()
+        }
+
+        popupContainer.findViewById<DynamicRippleTextView>(R.id.settings).setOnClickListener {
+            bottomBar.setCurrentItem(6, true)
+            openFragment(BottomBarItems.SETTINGS)
+            FragmentPreferences.setCurrentPage(6)
+            FragmentPreferences.setCurrentTag(BottomBarItems.getBottomBarItems(baseContext)[6].tag)
+            showBottomBarMenu()
+        }
+    }
+
+    private fun showBottomBarMenu() {
+        bottomBar.visibility = ViewPager2.VISIBLE
+        if (label.text != BottomBarItems.getBottomBarItems(baseContext)[FragmentPreferences.getCurrentPage()].name) {
+            label.visibility = TextView.VISIBLE
+        }
+        bottomBarContainer.removeView(popupContainer)
+    }
+
+    private fun hideBottomBarMenuAndShowPopup() {
+        bottomBar.visibility = ViewPager2.GONE
+        label.visibility = TextView.GONE
+        bottomBarContainer.addView(popupContainer)
     }
 
     private fun checkRunTimePermission() {

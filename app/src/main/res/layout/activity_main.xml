@@ -13,7 +13,7 @@
     <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
         android:id="@+id/bottom_bar_container"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/bottom_nav_height"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:animateLayoutChanges="true"
@@ -26,7 +26,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/bottom_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/bottom_nav_height"
             android:animateLayoutChanges="true"
             android:clipChildren="true"
             android:clipToPadding="false"
@@ -39,11 +39,12 @@
         <TextView
             android:id="@+id/label"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="10dp"
             android:ellipsize="end"
             android:fontFamily="@font/medium"
+            android:gravity="center_vertical"
             android:maxLines="1"
             android:minWidth="75dp"
             android:textColor="@android:color/white"
