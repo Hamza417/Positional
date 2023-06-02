@@ -302,4 +302,5 @@
     <string name="mechanical">Mecânico</string>
     <string name="app_coordinates_format">Formato das coordenadas</string>
     <string name="share">Compartilhar</string>
+    <string name="telegram_group">Grupo do Telegram</string>
 </resources>
