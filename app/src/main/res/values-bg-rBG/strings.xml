@@ -302,4 +302,5 @@
     <string name="mechanical">Механика</string>
     <string name="app_coordinates_format">Формат на координати</string>
     <string name="share">Сподели</string>
+    <string name="telegram_group">Телеграм група</string>
 </resources>
