@@ -40,7 +40,7 @@ public class SearchView extends DynamicCornerLinearLayout {
     
     private void setProperties() {
         setElevation(30F);
-        setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.mainBackground)));
+        setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(getContext(), R.color.toolbarBackground)));
         setOrientation(LinearLayout.HORIZONTAL);
         setLayoutTransition(new LayoutTransition());
         setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));

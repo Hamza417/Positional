@@ -99,79 +99,83 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     private fun setTheme() {
-        when (MainPreferences.getAccentColor()) {
-            ContextCompat.getColor(baseContext, R.color.positional) -> {
-                setTheme(R.style.Positional)
-            }
-            ContextCompat.getColor(baseContext, R.color.blue) -> {
-                setTheme(R.style.Blue)
-            }
-            ContextCompat.getColor(baseContext, R.color.blueGrey) -> {
-                setTheme(R.style.BlueGrey)
-            }
-            ContextCompat.getColor(baseContext, R.color.darkBlue) -> {
-                setTheme(R.style.DarkBlue)
-            }
-            ContextCompat.getColor(baseContext, R.color.red) -> {
-                setTheme(R.style.Red)
-            }
-            ContextCompat.getColor(baseContext, R.color.green) -> {
-                setTheme(R.style.Green)
-            }
-            ContextCompat.getColor(baseContext, R.color.orange) -> {
-                setTheme(R.style.Orange)
-            }
-            ContextCompat.getColor(baseContext, R.color.purple) -> {
-                setTheme(R.style.Purple)
-            }
-            ContextCompat.getColor(baseContext, R.color.yellow) -> {
-                setTheme(R.style.Yellow)
-            }
-            ContextCompat.getColor(baseContext, R.color.caribbeanGreen) -> {
-                setTheme(R.style.CaribbeanGreen)
-            }
-            ContextCompat.getColor(baseContext, R.color.persianGreen) -> {
-                setTheme(R.style.PersianGreen)
-            }
-            ContextCompat.getColor(baseContext, R.color.amaranth) -> {
-                setTheme(R.style.Amaranth)
-            }
-            ContextCompat.getColor(baseContext, R.color.indian_red) -> {
-                setTheme(R.style.IndianRed)
-            }
-            ContextCompat.getColor(baseContext, R.color.light_coral) -> {
-                setTheme(R.style.LightCoral)
-            }
-            ContextCompat.getColor(baseContext, R.color.pink_flare) -> {
-                setTheme(R.style.PinkFlare)
-            }
-            ContextCompat.getColor(baseContext, R.color.makeup_tan) -> {
-                setTheme(R.style.MakeupTan)
-            }
-            ContextCompat.getColor(baseContext, R.color.egg_yellow) -> {
-                setTheme(R.style.EggYellow)
-            }
-            ContextCompat.getColor(baseContext, R.color.medium_green) -> {
-                setTheme(R.style.MediumGreen)
-            }
-            ContextCompat.getColor(baseContext, R.color.olive) -> {
-                setTheme(R.style.Olive)
-            }
-            ContextCompat.getColor(baseContext, R.color.copperfield) -> {
-                setTheme(R.style.Copperfield)
-            }
-            ContextCompat.getColor(baseContext, R.color.mineral_green) -> {
-                setTheme(R.style.MineralGreen)
-            }
-            ContextCompat.getColor(baseContext, R.color.lochinvar) -> {
-                setTheme(R.style.Lochinvar)
-            }
-            ContextCompat.getColor(baseContext, R.color.beach_grey) -> {
-                setTheme(R.style.BeachGrey)
-            }
-            else -> {
-                setTheme(R.style.Positional)
-                MainPreferences.setAccentColor(ContextCompat.getColor(baseContext, R.color.positional))
+        if (MainPreferences.isMaterialYouAccentColor()) {
+            setTheme(R.style.MaterialYou)
+        } else {
+            when (MainPreferences.getAccentColor()) {
+                ContextCompat.getColor(baseContext, R.color.positional) -> {
+                    setTheme(R.style.Positional)
+                }
+                ContextCompat.getColor(baseContext, R.color.blue) -> {
+                    setTheme(R.style.Blue)
+                }
+                ContextCompat.getColor(baseContext, R.color.blueGrey) -> {
+                    setTheme(R.style.BlueGrey)
+                }
+                ContextCompat.getColor(baseContext, R.color.darkBlue) -> {
+                    setTheme(R.style.DarkBlue)
+                }
+                ContextCompat.getColor(baseContext, R.color.red) -> {
+                    setTheme(R.style.Red)
+                }
+                ContextCompat.getColor(baseContext, R.color.green) -> {
+                    setTheme(R.style.Green)
+                }
+                ContextCompat.getColor(baseContext, R.color.orange) -> {
+                    setTheme(R.style.Orange)
+                }
+                ContextCompat.getColor(baseContext, R.color.purple) -> {
+                    setTheme(R.style.Purple)
+                }
+                ContextCompat.getColor(baseContext, R.color.yellow) -> {
+                    setTheme(R.style.Yellow)
+                }
+                ContextCompat.getColor(baseContext, R.color.caribbeanGreen) -> {
+                    setTheme(R.style.CaribbeanGreen)
+                }
+                ContextCompat.getColor(baseContext, R.color.persianGreen) -> {
+                    setTheme(R.style.PersianGreen)
+                }
+                ContextCompat.getColor(baseContext, R.color.amaranth) -> {
+                    setTheme(R.style.Amaranth)
+                }
+                ContextCompat.getColor(baseContext, R.color.indian_red) -> {
+                    setTheme(R.style.IndianRed)
+                }
+                ContextCompat.getColor(baseContext, R.color.light_coral) -> {
+                    setTheme(R.style.LightCoral)
+                }
+                ContextCompat.getColor(baseContext, R.color.pink_flare) -> {
+                    setTheme(R.style.PinkFlare)
+                }
+                ContextCompat.getColor(baseContext, R.color.makeup_tan) -> {
+                    setTheme(R.style.MakeupTan)
+                }
+                ContextCompat.getColor(baseContext, R.color.egg_yellow) -> {
+                    setTheme(R.style.EggYellow)
+                }
+                ContextCompat.getColor(baseContext, R.color.medium_green) -> {
+                    setTheme(R.style.MediumGreen)
+                }
+                ContextCompat.getColor(baseContext, R.color.olive) -> {
+                    setTheme(R.style.Olive)
+                }
+                ContextCompat.getColor(baseContext, R.color.copperfield) -> {
+                    setTheme(R.style.Copperfield)
+                }
+                ContextCompat.getColor(baseContext, R.color.mineral_green) -> {
+                    setTheme(R.style.MineralGreen)
+                }
+                ContextCompat.getColor(baseContext, R.color.lochinvar) -> {
+                    setTheme(R.style.Lochinvar)
+                }
+                ContextCompat.getColor(baseContext, R.color.beach_grey) -> {
+                    setTheme(R.style.BeachGrey)
+                }
+                else -> {
+                    setTheme(R.style.Positional)
+                    MainPreferences.setAccentColor(ContextCompat.getColor(baseContext, R.color.positional))
+                }
             }
         }
     }

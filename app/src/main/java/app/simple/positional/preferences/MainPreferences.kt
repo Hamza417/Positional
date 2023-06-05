@@ -18,6 +18,7 @@ object MainPreferences {
     private const val skipSplashScreen = "skip_splash_screen"
     private const val ratingDialog = "is_showing_rating_dialog"
     private const val currentArt = "current_art_position"
+    private const val isMaterialYouAccent = "is_material_you_accent"
 
     const val isCustomCoordinate = "is_custom_coordinate_set"
     const val locationProvider = "location_provider"
@@ -273,5 +274,13 @@ object MainPreferences {
         return getSharedPreferences().getInt(coordinatesFormat, 2)
     }
 
+    //--------------------------------------------------------------------------------------------------//
 
+    fun isMaterialYouAccentColor(): Boolean {
+        return getSharedPreferences().getBoolean(isMaterialYouAccent, false)
+    }
+
+    fun setMaterialYouAccentColor(value: Boolean) {
+        getSharedPreferences().edit().putBoolean(isMaterialYouAccent, value).apply()
+    }
 }

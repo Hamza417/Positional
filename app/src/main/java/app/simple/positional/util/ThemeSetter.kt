@@ -20,14 +20,24 @@ object ThemeSetter {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
             }
             4 -> {
-                // Day/Night Auto
-                val calendar = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-                if (calendar < 7 || calendar > 18) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                } else if (calendar < 18 || calendar > 6) {
+                if (isDayOrNight()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 }
             }
         }
+    }
+
+    /**
+     * Check if it is day or night
+     *
+     * @return true if it is day, false if it is night
+     */
+    fun isDayOrNight(): Boolean {
+        val cal = Calendar.getInstance()
+        cal.timeInMillis = System.currentTimeMillis()
+        val hour = cal[Calendar.HOUR_OF_DAY]
+        return hour >= 6 && hour < 18
     }
 }

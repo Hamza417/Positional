@@ -6,7 +6,6 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ResolveInfo
-import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -23,7 +22,6 @@ import app.simple.positional.activities.subactivity.ArtsActivity
 import app.simple.positional.activities.subactivity.CustomLocationsActivity
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.callbacks.CoordinatesCallback
-import app.simple.positional.decorations.corners.DynamicCornerFrameLayout
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.padding.PaddingAwareNestedScrollView
 import app.simple.positional.decorations.popup.PopupLinearLayout
@@ -63,7 +61,6 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var language: DynamicRippleLinearLayout
     private lateinit var theme: DynamicRippleLinearLayout
     private lateinit var accent: DynamicRippleLinearLayout
-    private lateinit var currentAccent: DynamicCornerFrameLayout
     private lateinit var icon: DynamicRippleTextView
     private lateinit var corner: DynamicRippleTextView
     private lateinit var skipSplashScreenContainer: DynamicRippleConstraintLayout
@@ -126,7 +123,6 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         language = view.findViewById(R.id.settings_languages)
         theme = view.findViewById(R.id.settings_theme)
         accent = view.findViewById(R.id.settings_accent)
-        currentAccent = view.findViewById(R.id.current_accent)
         icon = view.findViewById(R.id.settings_icons)
         corner = view.findViewById(R.id.settings_corner_radius)
         skipSplashScreenContainer = view.findViewById(R.id.setting_skip_splash_screen_container)
@@ -186,7 +182,6 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         toggleKeepScreenOn.isChecked = MainPreferences.isScreenOn()
         toggleSkipSplashScreen.isChecked = MainPreferences.getSkipSplashScreen()
         isCoordinatesSet(MainPreferences.isCustomCoordinate())
-        currentAccent.backgroundTintList = ColorStateList.valueOf(MainPreferences.getAccentColor())
 
         for (i in localeList.indices) {
             if (MainPreferences.getAppLanguage() == localeList[i].localeCode) {

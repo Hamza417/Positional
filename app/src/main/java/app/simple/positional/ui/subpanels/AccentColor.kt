@@ -1,6 +1,7 @@
 package app.simple.positional.ui.subpanels
 
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import app.simple.positional.R
-import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.adapters.settings.AccentColorAdapter
 import app.simple.positional.decorations.views.CustomRecyclerView
+import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.preferences.MainPreferences
 
 class AccentColor : ScopedFragment() {
@@ -51,6 +52,10 @@ class AccentColor : ScopedFragment() {
                 Pair(ContextCompat.getColor(requireContext(), R.color.beach_grey), "Beach Grey"),
         )
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            list.add(1, Pair(ContextCompat.getColor(requireContext(), android.R.color.system_accent1_500), "Material You (Dynamic)"))
+        }
+
         accentColorAdapter = AccentColorAdapter(list)
 
         return view
@@ -61,7 +66,13 @@ class AccentColor : ScopedFragment() {
 
         accentColorAdapter.setOnPaletteChangeListener(object : AccentColorAdapter.Companion.PalettesAdapterCallbacks {
             override fun onColorPressed(source: Int) {
-                MainPreferences.setAccentColor(source)
+                if (source == ContextCompat.getColor(requireContext(), android.R.color.system_accent1_500)) {
+                    MainPreferences.setAccentColor(source)
+                    MainPreferences.setMaterialYouAccentColor(true)
+                } else {
+                    MainPreferences.setAccentColor(source)
+                    MainPreferences.setMaterialYouAccentColor(false)
+                }
             }
         })
 

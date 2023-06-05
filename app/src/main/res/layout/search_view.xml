@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/mainBackground"
+    android:backgroundTint="@color/toolbarBackground"
     android:orientation="horizontal"
     tools:parentTag="android.widget.LinearLayout">
 

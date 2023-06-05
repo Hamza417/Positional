@@ -21,7 +21,6 @@ import app.simple.positional.preferences.MainPreferences.getCornerRadius
 import app.simple.positional.util.ColorUtils.toHex
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.HtmlHelper
-import org.jetbrains.annotations.NotNull
 import java.util.*
 
 class AccentColorAdapter(private val list: ArrayList<Pair<Int, String>>) : RecyclerView.Adapter<VerticalListViewHolder>() {
@@ -115,7 +114,7 @@ class AccentColorAdapter(private val list: ArrayList<Pair<Int, String>>) : Recyc
 
     companion object {
         interface PalettesAdapterCallbacks {
-            fun onColorPressed(@NotNull source: Int)
+            fun onColorPressed(source: Int)
         }
     }
 }

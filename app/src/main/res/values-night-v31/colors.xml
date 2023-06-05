@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#000000</color>
+
+    <color name="mainBackground">@android:color/system_neutral1_900</color>
+    <color name="iconColor">@android:color/system_neutral1_50</color>
+    <color name="textSecondary">@android:color/system_neutral1_200</color>
+    <color name="textPrimary">@android:color/system_neutral1_100</color>
+    <color name="textTertiary">@android:color/system_neutral1_300</color>
+    <color name="dividerColor">@android:color/system_accent3_200</color>
+    <color name="toolbarBackground">@color/mainBackground</color>
+    <color name="rippleColor">@android:color/system_accent3_300</color>
+    <color name="editTextBackground">@android:color/system_neutral1_800</color>
+
+    <!-- Bottom Bar Color -->
+    <color name="iconRegular">@android:color/system_neutral1_50</color>
+    <color name="indicator">#3A3A3A</color>
+
+    <color name="switch_off">#B5404040</color>
+
+    <color name="clock_needle_stroke_color">#292929</color>
+    <color name="clock_needle_fill_color">#f0f0f0</color>
+    <color name="clock_element_fill">#E1E1E1</color>
+    <color name="clock_face_color">@color/mainBackground</color>
+
+    <!-- Speedometer -->
+    <color name="speedometer_needle_start">#FF1000</color>
+    <color name="speedometer_needle_end">#FF8400</color>
+    <color name="speedometer_dial">#FFFFFF</color>
+    <color name="speedometer_number">#E6E6E6</color>
+</resources>
