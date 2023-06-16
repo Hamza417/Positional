@@ -54,8 +54,8 @@ class CompassService : Service(), SensorEventListener {
      */
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         sensorManager = baseContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-        sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
+        sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
+        sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)!!
         mSensorThread = HandlerThread("Sensor Thread", Process.THREAD_PRIORITY_FOREGROUND)
         mSensorThread.start()
         mSensorHandler = Handler(mSensorThread.looper)

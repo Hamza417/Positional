@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import app.simple.positional.R
-import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.decorations.views.CustomDialogFragment
 import app.simple.positional.util.HtmlHelper.fromHtml
 
@@ -35,8 +34,8 @@ class CompassCalibration : CustomDialogFragment(), SensorEventListener {
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null && sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
-            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)!!
+            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
             haveMagnetometerSensor = true
             haveAccelerometerSensor = true
         } else {

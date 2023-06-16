@@ -178,11 +178,11 @@ class SparkLineLayout @JvmOverloads constructor(context: Context, attrs: Attribu
         }
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        canvas?.let {
-            if (data.count() > 0) {
+        canvas.let {
+            if (data.isNotEmpty()) {
                 initLocalVars()
                 if (!isSplitLine) {
                     drawLine(it)

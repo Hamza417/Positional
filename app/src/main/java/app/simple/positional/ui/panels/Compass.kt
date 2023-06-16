@@ -180,8 +180,8 @@ class Compass : ScopedFragment(), SensorEventListener {
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         kotlin.runCatching {
-            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
-            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+            sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)!!
+            sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
             haveMagnetometerSensor = true
             haveAccelerometerSensor = true
         }.getOrElse {

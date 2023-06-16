@@ -97,7 +97,7 @@ class Level : ScopedFragment(), SensorEventListener {
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         kotlin.runCatching {
-            gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)
+            gravity = sensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY)!!
             hasGravitySensor = true
         }.getOrElse {
             hasGravitySensor = false
