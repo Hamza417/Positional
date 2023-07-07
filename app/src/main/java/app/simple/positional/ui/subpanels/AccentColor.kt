@@ -13,6 +13,7 @@ import app.simple.positional.adapters.settings.AccentColorAdapter
 import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.AppUtils
 
 class AccentColor : ScopedFragment() {
 
@@ -52,8 +53,10 @@ class AccentColor : ScopedFragment() {
                 Pair(ContextCompat.getColor(requireContext(), R.color.beach_grey), "Beach Grey"),
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            list.add(1, Pair(ContextCompat.getColor(requireContext(), android.R.color.system_accent1_500), "Material You (Dynamic)"))
+        if (AppUtils.isFullFlavor()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                list.add(1, Pair(ContextCompat.getColor(requireContext(), android.R.color.system_accent1_500), "Material You (Dynamic)"))
+            }
         }
 
         accentColorAdapter = AccentColorAdapter(list)
