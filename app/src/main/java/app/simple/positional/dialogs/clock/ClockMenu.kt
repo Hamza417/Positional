@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.ClockPreferences
+import app.simple.positional.util.AppUtils
 
 class ClockMenu : CustomBottomSheetDialogFragment() {
 
+    private lateinit var motionType: DynamicRippleTextView
     private lateinit var defaultTimeFormatSwitch: SwitchView
     private lateinit var secondsPrecisionSwitchView: SwitchView
     private lateinit var clock24HourFace: SwitchView
@@ -23,6 +26,7 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_clock_menu, container, false)
 
+        motionType = view.findViewById(R.id.clock_motion_type_text)
         defaultTimeFormatContainer = view.findViewById(R.id.clock_menu_default_time_format)
         defaultTimeFormatSwitch = view.findViewById(R.id.toggle_default_time_format)
         clock24HourFace = view.findViewById(R.id.toggle_24_hours_clock)
@@ -35,6 +39,10 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (AppUtils.isLiteFlavor()) {
+            motionType.visibility = View.GONE
+        }
 
         defaultTimeFormatSwitch.isChecked = ClockPreferences.getDefaultClockTimeFormat()
         secondsPrecisionSwitchView.isChecked = ClockPreferences.isUsingSecondsPrecision()
@@ -69,7 +77,7 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
             dismiss()
         }
 
-        view.findViewById<TextView>(R.id.clock_motion_type_text).setOnClickListener {
+        motionType.setOnClickListener {
             ClockMotionType.newInstance().show(parentFragmentManager, "clock_menu")
             dismiss()
         }

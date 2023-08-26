@@ -14,6 +14,7 @@ import app.simple.positional.preferences.CompassPreferences
 import app.simple.positional.preferences.CompassPreferences.isFlowerBloomOn
 import app.simple.positional.preferences.CompassPreferences.setDirectionCode
 import app.simple.positional.preferences.CompassPreferences.setFlowerBloom
+import app.simple.positional.util.AppUtils
 
 class CompassMenu : CustomBottomSheetDialogFragment() {
 
@@ -24,7 +25,7 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
     private lateinit var bloomSwitchContainer: DynamicRippleLinearLayout
     private lateinit var codeSwitchContainer: DynamicRippleLinearLayout
     private lateinit var gimbalLockSwitchContainer: DynamicRippleLinearLayout
-    private lateinit var speed: TextView
+    private lateinit var physicalProperties: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_compass_menu, container, false)
@@ -36,13 +37,17 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
         bloomSwitchContainer = view.findViewById(R.id.bloom_switch_container)
         codeSwitchContainer = view.findViewById(R.id.compass_menu_show_code)
         gimbalLockSwitchContainer = view.findViewById(R.id.compass_menu_gimbal_lock)
-        speed = view.findViewById(R.id.compass_speed)
+        physicalProperties = view.findViewById(R.id.compass_speed)
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (AppUtils.isLiteFlavor()) {
+            physicalProperties.visibility = View.GONE
+        }
 
         toggleCode.isChecked = CompassPreferences.getDirectionCode()
         toggleFlower.isChecked = isFlowerBloomOn()
@@ -77,7 +82,7 @@ class CompassMenu : CustomBottomSheetDialogFragment() {
             toggleGimbalLock.isChecked = !toggleGimbalLock.isChecked
         }
 
-        speed.setOnClickListener {
+        physicalProperties.setOnClickListener {
             CompassPhysicalProperties().show(parentFragmentManager, "compass_properties")
             dismiss()
         }

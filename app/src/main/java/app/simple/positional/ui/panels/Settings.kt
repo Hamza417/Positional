@@ -50,10 +50,9 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private var yOff = 0F
 
     private lateinit var scrollView: PaddingAwareNestedScrollView
-
     private lateinit var hideRate: DynamicRippleImageButton
-
-    private lateinit var buyFull: DynamicRippleLinearLayout
+    private lateinit var buyFullContainer: DynamicCornerLinearLayout
+    private lateinit var buyFull: DynamicRippleImageButton
     private lateinit var rate: DynamicCornerLinearLayout
     private lateinit var permission: DynamicCornerLinearLayout
     private lateinit var unit: DynamicRippleLinearLayout
@@ -117,7 +116,8 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         hideRate = view.findViewById(R.id.rate_hide)
         rate = view.findViewById(R.id.rate_layout)
         permission = view.findViewById(R.id.permission_layout)
-        buyFull = view.findViewById(R.id.buy_full)
+        buyFullContainer = view.findViewById(R.id.buy_layout)
+        buyFull = view.findViewById(R.id.buy_full_btn)
         unit = view.findViewById(R.id.settings_units)
         locationProvider = view.findViewById(R.id.settings_location_provider)
         language = view.findViewById(R.id.settings_languages)
@@ -169,10 +169,11 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         if (AppUtils.isFullFlavor()) {
             setCoordinatesFormat()
-            buyFull.gone(animate = false)
+            buyFullContainer.gone(animate = false)
         } else {
             coordinatesFormatContainer.gone()
-            buyFull.visible(animate = false)
+            corner.gone()
+            buyFullContainer.visible(animate = false)
         }
 
         permissionNotification()
@@ -314,6 +315,10 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
             intent.putExtra("source", "Buy")
             startActivity(intent)
+        }
+
+        buyFullContainer.setOnClickListener {
+            buyFull.performClick()
         }
 
         toggleSkipSplashScreen.setOnCheckedChangeListener { isChecked ->
@@ -482,18 +487,23 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             MainPreferences.locationProvider -> {
                 setCurrentLocation()
             }
+
             MainPreferences.unit -> {
                 setCurrentUnit(MainPreferences.getUnit())
             }
+
             MainPreferences.theme -> {
                 setCurrentThemeValue(MainPreferences.getTheme())
             }
+
             MainPreferences.accentColor -> {
                 requireActivity().recreate()
             }
+
             MainPreferences.isCustomCoordinate -> {
                 toggleCustomLocation.isChecked = MainPreferences.isCustomCoordinate()
             }
+
             MainPreferences.coordinatesFormat -> {
                 setCoordinatesFormat()
             }

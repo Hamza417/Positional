@@ -70,7 +70,7 @@ class PopupFragments(view: View, val callbacks: (View, String, Int) -> Unit) : B
         }
 
         popupLinearLayout.post {
-            circularReveal(popupLinearLayout)
+            // circularReveal(popupLinearLayout)
             view.animate()
                     .alpha(0.5F)
                     .setInterpolator(DecelerateInterpolator(1.5F))

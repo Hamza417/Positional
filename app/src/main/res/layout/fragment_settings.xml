@@ -34,10 +34,43 @@
                 android:textStyle="bold" />
 
             <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
+                android:id="@+id/buy_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:backgroundTint="?attr/colorAppAccent"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="15dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="16dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/buy_full_desc"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/settings_secondary_text_size" />
+
+                <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+                    android:id="@+id/buy_full_btn"
+                    android:layout_width="@dimen/app_button_size"
+                    android:layout_height="@dimen/app_button_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_open_in_new"
+                    android:tint="@android:color/white" />
+
+            </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>
+
+            <app.simple.positional.decorations.corners.DynamicCornerLinearLayout
                 android:id="@+id/rate_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16sp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="?attr/colorAppAccent"
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp"
@@ -69,7 +102,7 @@
                 android:id="@+id/permission_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16sp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@android:color/holo_red_light"
                 android:orientation="horizontal"
