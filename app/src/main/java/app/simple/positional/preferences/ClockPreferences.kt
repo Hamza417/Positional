@@ -1,8 +1,7 @@
 package app.simple.positional.preferences
 
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
-import org.jetbrains.annotations.NotNull
-import java.util.*
+import java.util.Calendar
 
 /**
  * Only preferences related to Clock panel
@@ -18,7 +17,7 @@ object ClockPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setDefaultClockTime(@NotNull value: Boolean) {
+    fun setDefaultClockTime(value: Boolean) {
         getSharedPreferences().edit().putBoolean(isUsingAmPm, value).apply()
     }
 
@@ -28,7 +27,7 @@ object ClockPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setClockNeedleTheme(@NotNull value: Int) {
+    fun setClockNeedleTheme(value: Int) {
         getSharedPreferences().edit().putInt(clockNeedle, value).apply()
     }
 
@@ -38,7 +37,7 @@ object ClockPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setMovementType(@NotNull value: String) {
+    fun setMovementType(value: String) {
         getSharedPreferences().edit().putString(clockNeedleMovementType, value).apply()
     }
 
@@ -48,7 +47,7 @@ object ClockPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setTimeZone(@NotNull value: String) {
+    fun setTimeZone(value: String) {
         getSharedPreferences().edit().putString(timezone, value).apply()
     }
 
@@ -58,7 +57,7 @@ object ClockPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setUseSecondsPrecision(@NotNull value: Boolean) {
+    fun setUseSecondsPrecision(value: Boolean) {
         getSharedPreferences().edit().putBoolean(isUsingSecondsPrecision, value).apply()
     }
 
@@ -68,7 +67,7 @@ object ClockPreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setClockFaceType(@NotNull value: Boolean) {
+    fun setClockFaceType(value: Boolean) {
         getSharedPreferences().edit().putBoolean(is24HourFace, value).apply()
     }
 

@@ -80,7 +80,7 @@ android {
         }
     }
 
-    flavorDimensions "version"
+    flavorDimensions.add("version")
     productFlavors {
         lite {
             dimension "version"
