@@ -13,48 +13,42 @@ import kotlinx.coroutines.withContext
 
 object ImageLoader {
     fun loadImage(resourceValue: Int, imageView: ImageView, context: Context, delay: Int) {
-        CoroutineScope(Dispatchers.Default).launch {
-            val drawable = if (resourceValue != 0) context.resources?.let {
-                ResourcesCompat.getDrawable(it, resourceValue, context.theme)
-            }!! else null
+        val animOut: Animation = AnimationUtils.loadAnimation(context, R.anim.image_out)
+        val animIn: Animation = AnimationUtils.loadAnimation(context, R.anim.image_in)
 
-            withContext(Dispatchers.Main) {
-                val animOut: Animation = AnimationUtils.loadAnimation(context, R.anim.image_out)
-                val animIn: Animation = AnimationUtils.loadAnimation(context, R.anim.image_in)
+        animIn.startOffset = delay.toLong()
+        animOut.startOffset = delay.toLong()
 
-                animIn.startOffset = delay.toLong()
-                animOut.startOffset = delay.toLong()
+        animOut.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {}
 
-                animOut.setAnimationListener(object : Animation.AnimationListener {
-                    override fun onAnimationStart(animation: Animation?) {}
+            override fun onAnimationEnd(animation: Animation?) {
+                imageView.setImageResource(resourceValue)
+
+                animIn.setAnimationListener(object : Animation.AnimationListener {
+                    override fun onAnimationStart(animation: Animation?) {
+                        /* no-op */
+                    }
 
                     override fun onAnimationEnd(animation: Animation?) {
-                        imageView.setImageDrawable(drawable)
-                        animIn.setAnimationListener(object : Animation.AnimationListener {
-                            override fun onAnimationStart(animation: Animation?) {
-                                /* no-op */
-                            }
-
-                            override fun onAnimationEnd(animation: Animation?) {
-                                /* no-op */
-                            }
-
-                            override fun onAnimationRepeat(animation: Animation?) {
-                                /* no-op */
-                            }
-
-                        })
-                        imageView.startAnimation(animIn)
+                        /* no-op */
                     }
 
                     override fun onAnimationRepeat(animation: Animation?) {
                         /* no-op */
                     }
-                })
-                imageView.startAnimation(animOut)
 
+                })
+
+                imageView.startAnimation(animIn)
             }
-        }
+
+            override fun onAnimationRepeat(animation: Animation?) {
+                /* no-op */
+            }
+        })
+
+        imageView.startAnimation(animOut)
     }
 
     fun loadImageResourcesWithoutAnimation(resourceValue: Int, imageView: ImageView, context: Context) {
@@ -73,10 +67,6 @@ object ImageLoader {
     }
 
     fun setImage(resourceValue: Int, imageView: ImageView, context: Context, delay: Int) {
-        val drawable = if (resourceValue != 0) context.resources?.let {
-            ResourcesCompat.getDrawable(it, resourceValue, context.theme)
-        }!! else null
-
         val animOut: Animation = AnimationUtils.loadAnimation(context, R.anim.image_out)
         val animIn: Animation = AnimationUtils.loadAnimation(context, R.anim.image_in)
 
@@ -87,7 +77,8 @@ object ImageLoader {
             override fun onAnimationStart(animation: Animation?) {}
 
             override fun onAnimationEnd(animation: Animation?) {
-                imageView.setImageDrawable(drawable)
+                imageView.setImageResource(resourceValue)
+
                 animIn.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationStart(animation: Animation?) {
                         /* no-op */
@@ -109,6 +100,7 @@ object ImageLoader {
                 /* no-op */
             }
         })
+
         imageView.startAnimation(animOut)
     }
 }
