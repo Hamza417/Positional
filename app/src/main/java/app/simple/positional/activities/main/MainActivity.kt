@@ -27,7 +27,6 @@ import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.transformers.DepthTransformer
-import app.simple.positional.dialogs.app.Permission
 import app.simple.positional.extensions.activity.BaseActivity
 import app.simple.positional.popups.miscellaneous.PopupFragments
 import app.simple.positional.preferences.BottomBarPreferences
@@ -169,6 +168,7 @@ class MainActivity : BaseActivity(),
                     /* no-op */
                 }
             }
+
             MotionEvent.ACTION_UP -> {
                 /* no-op */
             }
@@ -252,12 +252,10 @@ class MainActivity : BaseActivity(),
     }
 
     private fun checkRunTimePermission() {
-        if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (MainPreferences.getShowPermissionDialog()) {
-                val permissionDialog = Permission.newInstance()
-                permissionDialog.show(supportFragmentManager, "permission_info")
+                onGrantRequest()
             } else {
                 Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_LONG).show()
             }
@@ -327,30 +325,37 @@ class MainActivity : BaseActivity(),
                 return supportFragmentManager.findFragmentByTag("clock") as Time?
                         ?: Time.newInstance()
             }
+
             "compass" -> {
                 return supportFragmentManager.findFragmentByTag("compass") as Compass?
                         ?: Compass.newInstance()
             }
+
             "direction" -> {
                 return supportFragmentManager.findFragmentByTag("direction") as Direction?
                         ?: Direction.newInstance()
             }
+
             "location" -> {
                 return supportFragmentManager.findFragmentByTag("location") as GPS?
                         ?: GPS.newInstance()
             }
+
             "trail" -> {
                 return supportFragmentManager.findFragmentByTag("trail") as Trail?
                         ?: Trail.newInstance()
             }
+
             "level" -> {
                 return supportFragmentManager.findFragmentByTag("level") as Level?
                         ?: Level.newInstance()
             }
+
             "settings" -> {
                 return supportFragmentManager.findFragmentByTag("settings") as Settings?
                         ?: Settings.newInstance()
             }
+
             else -> {
                 return supportFragmentManager.findFragmentByTag("location") as GPS?
                         ?: GPS.newInstance()
@@ -389,6 +394,7 @@ class MainActivity : BaseActivity(),
                             stopService(Intent(applicationContext, LocationService::class.java))
                             startService(Intent(applicationContext, FusedLocationService::class.java))
                         }
+
                         "android" -> {
                             stopService(Intent(applicationContext, FusedLocationService::class.java))
                             startService(Intent(applicationContext, LocationService::class.java))
@@ -398,6 +404,7 @@ class MainActivity : BaseActivity(),
                     Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
                 }
             }
+
             BottomBarPreferences.clockPanel,
             BottomBarPreferences.compassPanel,
             BottomBarPreferences.gpsPanel,
