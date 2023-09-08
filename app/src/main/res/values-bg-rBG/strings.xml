@@ -303,4 +303,5 @@
     <string name="app_coordinates_format">Формат на координати</string>
     <string name="share">Сподели</string>
     <string name="telegram_group">Телеграм група</string>
+    <string name="buy_full_desc">Купете пълната версия и отключете пълния потенциал на приложението.</string>
 </resources>

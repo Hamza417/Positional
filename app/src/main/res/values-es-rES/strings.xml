@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Panels -->
+    <string name="clock">Reloj</string>
+    <string name="compass">Brújula</string>
+    <string name="gps_location">Lugar</string>
+    <string name="level">Nivel</string>
+    <string name="settings">Configuración</string>
+    <!-- Info Headers -->
+    <string name="clock_info">Información de la hora</string>
+    <string name="compass_info">Información de Brújula</string>
+    <string name="gps_info">Información GPS</string>
+    <!-- Clock Information Headers-->
+    <string name="local_time">Hora local</string>
+    <string name="utc_time">Hora UTC</string>
+    <string name="sun_position">Posición sol</string>
+    <string name="sun_time">Tamaño sol</string>
+    <string name="twilight">Crepuscular</string>
+    <string name="moon_position">Posición de la Luna</string>
+    <string name="moon_time">Hora de la Luna</string>
+    <string name="moon_illumination">Iluminación lunar</string>
+    <string name="moon_dates">Dato lunar</string>
+    <!-- GPS Information Headers -->
+    <string name="gps_provider">Proveedor</string>
+    <string name="gps_movement">Movimiento</string>
+    <string name="gps_coordinates">Incluir coordenadas en la nota</string>
+    <string name="gps_address">Dirección</string>
+    <!--Compass Information Header -->
+    <string name="compass_accuracy">Precisión</string>
+    <string name="compass_field">Campo magnético X</string>
+    <!-- Clock Information Items-->
+    <string name="local_timezone">Zonas horarias</string>
+    <string name="local_time_24hr">Tiempo 24hr:</string>
+    <string name="local_time_12hr">Tiempo 24hr:</string>
+    <string name="local_day">Días</string>
+    <string name="local_date">Fecha:</string>
+    <string name="local_day_of_year">Día del año:</string>
+    <string name="local_week_of_year">Semana del Año:</string>
+    <string name="utc_local_time_offset">Desplazamiento de hora local:</string>
+    <string name="utc_current_time">Hora:</string>
+    <string name="sun_azimuth">Zimut:</string>
+    <string name="sun_distance">Destancia:</string>
+    <string name="sun_altitude">Altura:</string>
+    <string name="sun_sunrise">Aislamiento:</string>
+    <string name="sun_noon">Medio:</string>
+    <string name="sun_sunset">Puesta del Sol:</string>
+    <string name="sun_nadir">Nadi:</string>
+    <string name="twilight_astronomical_dawn">Amanecer astronómico:</string>
+    <string name="twilight_nautical_dawn">Amanecer náutico:</string>
+    <string name="twilight_civil_dawn">Amanecer:</string>
+    <string name="twilight_civil_dusk">Ocaso:</string>
+    <string name="twilight_nautical_dusk">Ocaso Náutico:</string>
+    <string name="twilight_astronomical_dusk">Ocaso Astronómico:</string>
+    <string name="moon_parallactic_angle">Ángulo de paralaje:</string>
+    <string name="moon_moonrise">Salida de la luna:</string>
+    <string name="moon_moonset">Puesta de la Luna:</string>
+    <string name="moon_fraction">Fracción:</string>
+    <string name="moon_angle">Ángulo:</string>
+    <string name="moon_angle_state">Estado de ángulo:</string>
+    <string name="moon_phase">Fase:</string>
+    <string name="moon_phase_angle">Ángulo de Fase:</string>
+    <string name="moon_full_moon">Luna Llena</string>
+    <string name="moon_new_moon">Luna Nueva,</string>
+    <string name="moon_first_quarter">Cuarto creciente:</string>
+    <string name="moon_last_quarter">Cuarto menguante:</string>
+    <!-- Compass information items -->
+    <string name="magnetometer">Magnetómetro</string>
+    <string name="accelerometer">Acelerómetro</string>
+    <string name="accelerometer_accuracy">Acelerómetro X</string>
+    <string name="magnetometer_accuracy">Magnetómetro - Ga</string>
+    <string name="compass_inclination">Inclinación:</string>
+    <string name="compass_declination">Declinación:</string>
+    <string name="compass_field_strength">Intensidad de campo:</string>
+    <!-- GPS Information Panel -->
+    <string name="gps_status">Estado:</string>
+    <string name="gps_source">Fuentes:</string>
+    <string name="gps_accuracy">Precisión:</string>
+    <string name="gps_altitude">Altitud gps</string>
+    <string name="gps_latency">Latencia:</string>
+    <string name="gps_bearing">Marcando:</string>
+    <string name="gps_displacement">Desplazar:</string>
+    <string name="gps_direction">Rumbo</string>
+    <string name="gps_speed">Velocidad:</string>
+    <string name="gps_latitude">Latitud:</string>
+    <string name="gps_longitude">Longitud:</string>
+    <!-- Sensor Accuracy -->
+    <string name="sensor_accuracy_unreliable">Inexacto</string>
+    <string name="sensor_accuracy_low">Mínimo</string>
+    <string name="sensor_accuracy_medium">Medio</string>
+    <string name="sensor_accuracy_high">Alto</string>
+    <!-- GPS Source Status -->
+    <string name="gps_enabled">Habilitado</string>
+    <string name="gps_disabled">Desactivado</string>
+    <!-- Units -->
+    <string name="meter">min</string>
+    <string name="kilometer">kms</string>
+    <string name="feet">pies, pulgadas</string>
+    <string name="miles">millas</string>
+    <string name="kilometer_hour">km/h</string>
+    <string name="miles_hour">mph</string>
+    <string name="milliseconds">ms</string>
+    <string name="seconds">s</string>
+    <!-- Alert -->
+    <string name="info_copied">Copiado al portapapeles</string>
+    <string name="info_error">No se pudo copiar la información!!</string>
+    <string name="invalid_coordinates">Coordenadas no válidas</string>
+    <string name="internet_connection_alert">No hay disponible ninguna conexión a Internet</string>
+    <string name="error">Error</string>
+    <string name="not_available">N/D</string>
+    <string name="no_address_found">No se encontró ninguna dirección para la ubicación actual</string>
+    <string name="location_saved">Guardado con éxito</string>
+    <string name="location_not_saved">No se pudo guardar!</string>
+    <string name="no_update">Sin actualizaciones dosponibles</string>
+    <string name="location_not_available">La ubicación todavía no está disponible</string>
+    <!-- Settings Categories -->
+    <string name="appearance">Apariencia</string>
+    <string name="configuration">Configuración</string>
+    <string name="about">Acerca de</string>
+    <string name="contribute">Contribuir</string>
+    <!-- Settings Heading -->
+    <string name="theme">Plantilla</string>
+    <string name="icon">Icono:</string>
+    <string name="corner_radius">Radio de la esquina</string>
+    <string name="units">Unidad de medida</string>
+    <string name="location_provider">Proveedor de Ubicación</string>
+    <string name="language">Idioma</string>
+    <string name="skip_splash_screen">Saltar pantalla de presentación</string>
+    <string name="specified_location">Usar una ubicación específica</string>
+    <string name="keep_screen_on">Mantener pantalla activa</string>
+    <string name="legal_notes">Notas legales</string>
+    <string name="app_version">Versión de aplicación</string>
+    <string name="found_an_issue">¿Encontró un problema?</string>
+    <string name="translate">Traducción</string>
+    <!-- Settings Description -->
+    <string name="theme_follow_system">Igual que el sistema</string>
+    <string name="theme_day">Claro</string>
+    <string name="theme_night">Oscuro</string>
+    <string name="theme_auto">Claro, oscuro automático</string>
+    <string name="desc_skip_splash_Screen">Saltar la pantalla de presentación cuando se inicie la aplicación e ir directamente a la pantalla principal</string>
+    <string name="desc_specified_location">Especifique latitud y longitud personalizadas y utilícelas para obtener información. Cualquier información que utilice únicamente los datos de GPS no se verá afectada</string>
+    <string name="desc_screen_on">Evita que el dispositivo se suspenda mientras la aplicación sea visible</string>
+    <string name="desc_legal">Leer el aviso de responsabilidad de la aplicación, la política de privacidad y los términos de uso</string>
+    <string name="desc_git">Abrir repositorio de aplicaciones</string>
+    <string name="desc_translate">¡Puedes ayudar a traducir la aplicación a tu lengua nativa!</string>
+    <!-- Clock Menu -->
+    <string name="needles">aguja</string>
+    <string name="motion_type">Tipo de movimiento</string>
+    <string name="time_format">Usa el formato 12 horas</string>
+    <string name="motion_type_smooth">Suave</string>
+    <string name="motion_type_tick">Correcto</string>
+    <!-- Compass Menu -->
+    <string name="bloom">Efecto Bloom</string>
+    <string name="bloom_skins">Aspectos de Bloom</string>
+    <string name="show_code">Ver código</string>
+    <!-- GPS Menu -->
+    <string name="labels">Etiquetas</string>
+    <string name="buildings">Edificios</string>
+    <string name="traffic">Tráfico</string>
+    <string name="satellite_mode">Modo Satellite</string>
+    <string name="high_contrast_mode">Mapa de alto contraste</string>
+    <!-- Settings Menus -->
+    <string name="unit_metric">Métrico</string>
+    <string name="unit_imperial">Imperial</string>
+    <!-- Specified Coordinates Menu -->
+    <string name="specified_hint_header">Introducir datos de localización</string>
+    <string name="specified_hint_latitude">Latitud, (±90)</string>
+    <string name="specified_hint_longitude">Largitud, (±180)</string>
+    <!-- Info -->
+    <string name="compass_calibration_notice">Si la precisión del sensor de la brújula de su dispositivo es baja, mueva su dispositivo como dibujando un 8 en el aire, como se ve en la figura, para calibrar los sensores.</string>
+    <string name="specified_location_notice">La información mostrada a continuación está siendo actualizada para las coordenadas de ubicación especificadas.</string>
+    <string name="show_again">Volver a mostrar</string>
+    <string name="search_timezone">Seleccionar la zona horaria</string>
+    <string name="verifying_license">Verificando licencia</string>
+    <string name="license_successful">Éxito :)</string>
+    <string name="license_failed">Verificación de licencia errónea</string>
+    <string name="auto_system_default_language">Automático (Predeterminados del sistema)</string>
+    <string name="location_permission_denied">"¡Permiso de ubicación denegado!"</string>
+    <string name="no_location_permission_alert">Algunas características pueden no funcionar sin permiso de ubicación</string>
+    <!-- Button Text -->
+    <string name="button_cancel">Cancelar</string>
+    <string name="button_set">Establecer</string>
+    <string name="button_close">Cerrar</string>
+    <string name="button_grant">Permitir</string>
+    <string name="button_reset">Reiniciar</string>
+    <!-- Button Descriptions -->
+    <string name="clock_options">Menú de reloj</string>
+    <string name="compass_options">Menú de brújula</string>
+    <string name="gps_options">Menú GPS</string>
+    <string name="gps_reset_location">Restablecer ubicación</string>
+    <string name="delete_all">Borrar todo</string>
+    <string name="open_specified_location_documentation">Abrir la documentación de ubicación especificada</string>
+    <!-- Legal Menu -->
+    <string name="disclaimer">Aviso legal</string>
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="terms_of_use">Términos y condiciones de uso</string>
+    <string name="permissions">Permisos</string>
+    <string name="credits">Créditos</string>
+    <string name="internet_uses">Usos de Internet</string>
+    <!-- Moon Illumination -->
+    <string name="waning">Menguante</string>
+    <string name="waning_gibbous">Cuarto menguante</string>
+    <string name="waning_crescent">Cuarto creciente</string>
+    <string name="waxing">Creciente</string>
+    <string name="waxing_gibbous">Luna creciente</string>
+    <string name="waxing_crescent">Cuarto creciente</string>
+    <string name="full_moon">Luna llena</string>
+    <string name="new_moon">Luna nueva</string>
+    <string name="third_quarter">Tercer trimestre</string>
+    <string name="first_quarter">Cuarto creciente</string>
+    <!-- Directions -->
+    <string name="north">Norte</string>
+    <string name="north_west">Noroeste</string>
+    <string name="west">Occidente</string>
+    <string name="south_west">Sudoeste</string>
+    <string name="south">Sur</string>
+    <string name="south_east">Sudeste</string>
+    <string name="east">este | oriente</string>
+    <string name="north_east">Noreste</string>
+    <string name="north_N">N</string>
+    <string name="north_west_NW">NO</string>
+    <string name="west_W">O</string>
+    <string name="south_west_SW">SO</string>
+    <string name="south_S">S</string>
+    <string name="south_east_SE">SE</string>
+    <string name="east_E">Mi</string>
+    <string name="north_east_NE">NE</string>
+    <!-- Graph -->
+    <string name="location_details">Detalles de la ubicación</string>
+    <string name="min">Mín:</string>
+    <string name="max">Máx:</string>
+    <string name="avg">Promedio:</string>
+    <!-- UTM -->
+    <string name="utm_zone">Zona:</string>
+    <string name="utm_easting">Al este:</string>
+    <string name="utm_northing">Norte:</string>
+    <string name="utm_meridian">Meridiano central:</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">La API de ubicación predeterminada de Android, es muy precisa pero está limitada a un solo proveedor de ubicación a la vez y las solicitudes de ubicación en interiores pueden afectar su precisión, requiere un potente sensor GPS para actualizar la ubicación rápidamente.</string>
+    <string name="desc_fused_location_provider">La API de localización fusa de Google que triangula los datos de ubicación de varios proveedores de ubicación y promedia el resultado en una serie de ubicaciones. Puede dar resultados variables pero utiliza menos batería.</string>
+    <string name="desc_location_provider_note">Nota: El uso de cualquiera de las APIs puede dar diferentes resultados dependiendo de los distintos factores y ninguno de ellos es una prueba de la exactitud entre sí pruebe las APIs y mantenga la que mejor funciona dentro de su región.</string>
+    <string name="use_media_keys">Usar teclas multimedia</string>
+    <string name="auto_center_map">Autocentrar mapa</string>
+    <string name="last_updated">Última Actualización</string>
+    <string name="coefficient_of_magnetic_field">Coeficiente del campo magnético</string>
+    <string name="damping_coefficient">Velocidad de estabilización</string>
+    <string name="rotational_inertia">Resistencia a la rotación</string>
+    <string name="physical_properties">Propiedades físicas</string>
+    <string name="help">Ayuda</string>
+    <string name="tick_smooth">Movimiento suavizado</string>
+    <string name="tick_oscillate">Oscilación de la aguja</string>
+    <string name="use_physical_properties">Ajuste de las propiedades físicas</string>
+    <string name="seconds_precision">Precisión en segundos</string>
+    <string name="accent_colors">Color de énfasis</string>
+    <string name="opacity">Opacidad</string>
+    <string name="size">Tamaño</string>
+    <string name="customize_pin">Personalizar Pin</string>
+    <string name="twenty_four_hours_clock">Reloj de 24 horas</string>
+    <string name="gimbal_lock">Bloquear Gimbal</string>
+    <string name="clock_widget_notification">Widget de reloj se está ejecutando.</string>
+    <string name="notification_desc">Desactiva \"Canal de widget\" en la configuración de notificación para ocultar esta notificación.</string>
+    <string name="save">Guardar</string>
+    <string name="set_and_save">Establecer y Guardar</string>
+    <string name="failed">Error!</string>
+    <string name="set_only">Solo aplicar</string>
+    <string name="sure">Seguro</string>
+    <string name="desc_custom_coord_dialog">Estos parámetros se utilizan actualmente para calcular información.</string>
+    <string name="trail">Ruta</string>
+    <string name="geodesic_trail">Ruta geodésica</string>
+    <string name="sensor_error">Su dispositivo no tiene los sensores necesarios.</string>
+    <string name="play_services_error">Tu dispositivo no soporta las dependencias necesarias de Google Play.</string>
+    <string name="enter_trail_name">Introducir nombre de la ruta</string>
+    <string name="note">Nota</string>
+    <string name="total">Total:</string>
+    <string name="saved_trails">Rutas guardadas</string>
+    <string name="starting_point">Punto de Inicio</string>
+    <string name="enter_marker_name">Introduce el nombre del marcador</string>
+    <string name="delete">Borrar</string>
+    <string name="show_on_map">Mostrar en el mapa</string>
+    <string name="copy">Copiar</string>
+    <string name="trail_data_accuracy">En %1$s %2$s desde la ubicación</string>
+    <string name="rate_text">¿Cuán satisfecho estás con esta aplicación? Haz clic aquí para calificar la aplicación en Play Store.</string>
+    <string name="target">Destino</string>
+    <string name="my_developer_profile">Mi perfil de desarrollador</string>
+    <string name="eta_seconds">%1$s segundos</string>
+    <string name="eta_minutes">%1$s minutos</string>
+    <string name="eta_hours">%1$s horas %2$s minutos</string>
+    <string name="eta_days">%1$s dias %2$s horas %3$s minutos</string>
+    <string name="eta">ETA:</string>
+    <string name="gps_displacement_from_origin">Desplazamiento desde el Origen:</string>
+    <string name="gps_displacement_from_dest">Desplazamiento de Dest:</string>
+    <string name="direction">Dirección</string>
+    <string name="targets">Objetivos</string>
+    <string name="direction_info">Información de la dirección</string>
+    <string name="use_maps_target">Utilice el objetivo de Maps</string>
+    <string name="using_maps_target">Usando objetivo de mapas</string>
+    <string name="edit">Editar</string>
+    <string name="battery_optimization_desc">Por favor, deshabilite la optimización de la batería para permitir que el widget del reloj se ejecute correctamente.</string>
+    <string name="use_as_target">Usar como destino</string>
+    <string name="create_new">Nuevo</string>
+    <string name="save_from_target">Guardar de destino</string>
+    <string name="navigate">Navegar</string>
+    <string name="mechanical">Mecánica</string>
+    <string name="app_coordinates_format">Formato de las Coordenadas</string>
+    <string name="share">Compartir</string>
+    <string name="telegram_group">Grupo en Telegram</string>
+    <string name="buy_full_desc">Compra la versión completa y desbloquea todo el potencial de la aplicación.</string>
+</resources>

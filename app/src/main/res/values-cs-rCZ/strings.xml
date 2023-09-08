@@ -302,4 +302,6 @@
     <string name="mechanical">Mechanické</string>
     <string name="app_coordinates_format">Formát souřadnic</string>
     <string name="share">Sdílet</string>
+    <string name="telegram_group">Telegram skupina</string>
+    <string name="buy_full_desc">Koupit plnou verzi a odemknout plný potenciál aplikace.</string>
 </resources>

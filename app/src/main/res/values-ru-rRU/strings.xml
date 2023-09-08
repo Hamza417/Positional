@@ -302,4 +302,6 @@
     <string name="mechanical">Механический питомец</string>
     <string name="app_coordinates_format">Формат координат</string>
     <string name="share">Поделиться</string>
+    <string name="telegram_group">Группа в Telegram</string>
+    <string name="buy_full_desc">Купите полную версию и разблокируйте все возможности приложения.</string>
 </resources>

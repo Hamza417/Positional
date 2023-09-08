@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Panels -->
+    <string name="clock">Idő</string>
+    <string name="compass">Iránytű</string>
+    <string name="gps_location">Hely</string>
+    <string name="level">Szint</string>
+    <string name="settings">Beállítások</string>
+    <!-- Info Headers -->
+    <string name="clock_info">Időinformáció</string>
+    <string name="compass_info">Iránytű információ</string>
+    <string name="gps_info">GPS információ</string>
+    <!-- Clock Information Headers-->
+    <string name="local_time">Helyi idő</string>
+    <string name="utc_time">UTC idő</string>
+    <string name="sun_position">Nap pozíciója</string>
+    <string name="sun_time">Nap idő</string>
+    <string name="twilight">Szürkület</string>
+    <string name="moon_position">Hold pozíciója</string>
+    <string name="moon_time">Hold idő</string>
+    <string name="moon_illumination">Hold megvilágítás</string>
+    <string name="moon_dates">Hold dátumok</string>
+    <!-- GPS Information Headers -->
+    <string name="gps_provider">Szolgáltató</string>
+    <string name="gps_movement">Mozgás</string>
+    <string name="gps_coordinates">Koordináták</string>
+    <string name="gps_address">Cím</string>
+    <!--Compass Information Header -->
+    <string name="compass_accuracy">Pontosság</string>
+    <string name="compass_field">Mágneses mező</string>
+    <!-- Clock Information Items-->
+    <string name="local_timezone">Időzóna:</string>
+    <string name="local_time_24hr">24 órás idő:</string>
+    <string name="local_time_12hr">12 órás idő:</string>
+    <string name="local_day">Nap:</string>
+    <string name="local_date">Dátum:</string>
+    <string name="local_day_of_year">Az év napja:</string>
+    <string name="local_week_of_year">Az év hete:</string>
+    <string name="utc_local_time_offset">Helyi időeltolódás:</string>
+    <string name="utc_current_time">Idő:</string>
+    <string name="sun_azimuth">Azimut:</string>
+    <string name="sun_distance">Távolság:</string>
+    <string name="sun_altitude">Magasság:</string>
+    <string name="sun_sunrise">Napkelte:</string>
+    <string name="sun_noon">Délben:</string>
+    <string name="sun_sunset">Napnyugta:</string>
+    <string name="sun_nadir">Talppont:</string>
+    <string name="twilight_astronomical_dawn">Csillagászati hajnal:</string>
+    <string name="twilight_nautical_dawn">Tengeri hajnal:</string>
+    <string name="twilight_civil_dawn">Polgári hajnal:</string>
+    <string name="twilight_civil_dusk">Polgári alkonyat:</string>
+    <string name="twilight_nautical_dusk">Tengeri alkonyat:</string>
+    <string name="twilight_astronomical_dusk">Csillagászati alkonyat:</string>
+    <string name="moon_parallactic_angle">Parallaktikus szög:</string>
+    <string name="moon_moonrise">Holdkelte:</string>
+    <string name="moon_moonset">Holdnyugta:</string>
+    <string name="moon_fraction">Tört:</string>
+    <string name="moon_angle">Szög:</string>
+    <string name="moon_angle_state">Szögállapot:</string>
+    <string name="moon_phase">Fázis:</string>
+    <string name="moon_phase_angle">Fázisszög:</string>
+    <string name="moon_full_moon">Telihold:</string>
+    <string name="moon_new_moon">Újhold:</string>
+    <string name="moon_first_quarter">Első negyed:</string>
+    <string name="moon_last_quarter">Utolsó negyed:</string>
+    <!-- Compass information items -->
+    <string name="magnetometer">Magnetométer</string>
+    <string name="accelerometer">Gyorsulásmérő</string>
+    <string name="accelerometer_accuracy">Gyorsulásmérő:</string>
+    <string name="magnetometer_accuracy">Magnetométer:</string>
+    <string name="compass_inclination">Dőlésszög:</string>
+    <string name="compass_declination">Deklináció:</string>
+    <string name="compass_field_strength">Térerősség:</string>
+    <!-- GPS Information Panel -->
+    <string name="gps_status">Állapot:</string>
+    <string name="gps_source">Forrás:</string>
+    <string name="gps_accuracy">Pontosság:</string>
+    <string name="gps_altitude">Magasság:</string>
+    <string name="gps_latency">Késés:</string>
+    <string name="gps_bearing">Irány:</string>
+    <string name="gps_displacement">Elmozdulás:</string>
+    <string name="gps_direction">Irány:</string>
+    <string name="gps_speed">Sebesség:</string>
+    <string name="gps_latitude">Szélesség:</string>
+    <string name="gps_longitude">Hosszúság:</string>
+    <!-- Sensor Accuracy -->
+    <string name="sensor_accuracy_unreliable">Bizonytalan</string>
+    <string name="sensor_accuracy_low">Alacsony</string>
+    <string name="sensor_accuracy_medium">Közepes</string>
+    <string name="sensor_accuracy_high">Magas</string>
+    <!-- GPS Source Status -->
+    <string name="gps_enabled">Engedélyezve</string>
+    <string name="gps_disabled">Letiltva</string>
+    <!-- Units -->
+    <string name="meter">m</string>
+    <string name="kilometer">km</string>
+    <string name="feet">láb</string>
+    <string name="miles">mérföld</string>
+    <string name="kilometer_hour">km/h</string>
+    <string name="miles_hour">mph</string>
+    <string name="milliseconds">ms</string>
+    <string name="seconds">p</string>
+    <!-- Alert -->
+    <string name="info_copied">Másolás a vágólapra</string>
+    <string name="info_error">Az adatokat nem sikerült átmásolni!!</string>
+    <string name="invalid_coordinates">Érvénytelen koordináták</string>
+    <string name="internet_connection_alert">Nincs internetkapcsolat</string>
+    <string name="error">Hiba</string>
+    <string name="not_available">N/A</string>
+    <string name="no_address_found">A jelenlegi helyhez nem található cím</string>
+    <string name="location_saved">Sikeresen elmentve</string>
+    <string name="location_not_saved">Nem sikerült elmenteni!</string>
+    <string name="no_update">Nem érhető el frissítés</string>
+    <string name="location_not_available">A hely még nem érhető el</string>
+    <!-- Settings Categories -->
+    <string name="appearance">Megjelenés</string>
+    <string name="configuration">Konfiguráció</string>
+    <string name="about">Névjegy</string>
+    <string name="contribute">Hozzájárulás</string>
+    <!-- Settings Heading -->
+    <string name="theme">Téma</string>
+    <string name="icon">Ikon</string>
+    <string name="corner_radius">Sarkak lekerekítése</string>
+    <string name="units">Mértékegységek</string>
+    <string name="location_provider">Helyszolgáltató</string>
+    <string name="language">Nyelv</string>
+    <string name="skip_splash_screen">Indítóképernyő kihagyása</string>
+    <string name="specified_location">Megadott hely használata</string>
+    <string name="keep_screen_on">Képernyő bekapcsolva tartása</string>
+    <string name="legal_notes">Jogi nyilatkozatok</string>
+    <string name="app_version">App verzió</string>
+    <string name="found_an_issue">Problémát talált?</string>
+    <string name="translate">Fordítás</string>
+    <!-- Settings Description -->
+    <string name="theme_follow_system">Rendszer követése</string>
+    <string name="theme_day">Világos</string>
+    <string name="theme_night">Sötét</string>
+    <string name="theme_auto">Automatikus (nappali/éjszakai)</string>
+    <string name="desc_skip_splash_Screen">Indításkor kihagyhatja a kezdőképernyőt, és közvetlenül a főképernyőre lép</string>
+    <string name="desc_specified_location">Adja meg az egyéni szélességi és hosszúsági fokokat, és használja ezeket az információk lekéréséhez. A csak GPS-t használó információk nem változnak</string>
+    <string name="desc_screen_on">Megakadályozza, hogy a készülék elaludjon, amíg az alkalmazás látható</string>
+    <string name="desc_legal">Az alkalmazás jognyilatkozata, adatvédelmi szabályzata és felhasználási feltételei</string>
+    <string name="desc_git">Az alkalmazás gyűjteményének megnyitása</string>
+    <string name="desc_translate">Segítsen lefordítani az alkalmazást az Ön anyanyelvére</string>
+    <!-- Clock Menu -->
+    <string name="needles">Iránytű</string>
+    <string name="motion_type">Mozgástípus</string>
+    <string name="time_format">12 órás formátum használata</string>
+    <string name="motion_type_smooth">Sima</string>
+    <string name="motion_type_tick">Jelölők</string>
+    <!-- Compass Menu -->
+    <string name="bloom">Virágzás</string>
+    <string name="bloom_skins">Virágzás skinek</string>
+    <string name="show_code">Kód mutatása</string>
+    <!-- GPS Menu -->
+    <string name="labels">Címkék</string>
+    <string name="buildings">Épületek</string>
+    <string name="traffic">Forgalom</string>
+    <string name="satellite_mode">Műholdas üzemmód</string>
+    <string name="high_contrast_mode">Nagy kontrasztú térkép</string>
+    <!-- Settings Menus -->
+    <string name="unit_metric">Metrikus</string>
+    <string name="unit_imperial">Angolszász</string>
+    <!-- Specified Coordinates Menu -->
+    <string name="specified_hint_header">Helyadatok megadása</string>
+    <string name="specified_hint_latitude">Szélesség (±90)</string>
+    <string name="specified_hint_longitude">Hosszúság (±180)</string>
+    <!-- Info -->
+    <string name="compass_calibration_notice">Ha a készülék iránytű-érzékelőjének pontossága alacsony, mozgassa a készüléket nyolcas irányban az érzékelők kalibrálásához.</string>
+    <string name="specified_location_notice">Az alább látható információk a megadott helykoordinátákhoz frissülnek.</string>
+    <string name="show_again">Újra mutassa</string>
+    <string name="search_timezone">Időzóna keresése</string>
+    <string name="verifying_license">Licenc ellenőrzése</string>
+    <string name="license_successful">Sikerült :)</string>
+    <string name="license_failed">A licenc ellenőrzése nem sikerült</string>
+    <string name="auto_system_default_language">Automatikus (rendszer alapértelmezett)</string>
+    <string name="location_permission_denied">"A helymeghatározási engedély megtagadva!"</string>
+    <string name="no_location_permission_alert">Előfordulhat, hogy egyes funkciók helymeghatározási engedély nélkül nem működnek</string>
+    <!-- Button Text -->
+    <string name="button_cancel">Mégse</string>
+    <string name="button_set">Beállít</string>
+    <string name="button_close">Bezárás</string>
+    <string name="button_grant">Engedélyez</string>
+    <string name="button_reset">Visszaállítás</string>
+    <!-- Button Descriptions -->
+    <string name="clock_options">Óra menü</string>
+    <string name="compass_options">Iránytű menü</string>
+    <string name="gps_options">GPS menü</string>
+    <string name="gps_reset_location">Hely visszaállítása</string>
+    <string name="delete_all">Összes törlése</string>
+    <string name="open_specified_location_documentation">A megadott hely dokumentációjának megnyitása</string>
+    <!-- Legal Menu -->
+    <string name="disclaimer">Jognyilatkozat</string>
+    <string name="privacy_policy">Adatvédelmi irányelvek</string>
+    <string name="terms_of_use">Felhasználási feltételek</string>
+    <string name="permissions">Engedélyek</string>
+    <string name="credits">Közreműködők</string>
+    <string name="internet_uses">Internet-használat</string>
+    <!-- Moon Illumination -->
+    <string name="waning">Fogyatkozó</string>
+    <string name="waning_gibbous">Fogyó félhold</string>
+    <string name="waning_crescent">Fogyó holdsarló</string>
+    <string name="waxing">Növekvő</string>
+    <string name="waxing_gibbous">Növő telihold</string>
+    <string name="waxing_crescent">Növekvő félhold</string>
+    <string name="full_moon">Telihold</string>
+    <string name="new_moon">Újhold</string>
+    <string name="third_quarter">Harmadik negyed</string>
+    <string name="first_quarter">Első negyed</string>
+    <!-- Directions -->
+    <string name="north">Észak</string>
+    <string name="north_west">Északnyugat</string>
+    <string name="west">Nyugat</string>
+    <string name="south_west">Délnyugat</string>
+    <string name="south">Dél</string>
+    <string name="south_east">Délkelet</string>
+    <string name="east">Kelet</string>
+    <string name="north_east">Északkelet</string>
+    <string name="north_N">É</string>
+    <string name="north_west_NW">ÉNY</string>
+    <string name="west_W">NY</string>
+    <string name="south_west_SW">DNY</string>
+    <string name="south_S">D</string>
+    <string name="south_east_SE">DK</string>
+    <string name="east_E">K</string>
+    <string name="north_east_NE">ÉK</string>
+    <!-- Graph -->
+    <string name="location_details">Helyadatok</string>
+    <string name="min">Min.:</string>
+    <string name="max">Max.:</string>
+    <string name="avg">Átl.:</string>
+    <!-- UTM -->
+    <string name="utm_zone">Zóna:</string>
+    <string name="utm_easting">Kelet:</string>
+    <string name="utm_northing">Észak:</string>
+    <string name="utm_meridian">Központi meridián:</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">Az Android alapértelmezett helymeghatározó API-ja rendkívül pontos, de egyszerre csak egy helymeghatározó szolgáltatóra korlátozódik, és a beltéri helymeghatározási kérelmek befolyásolhatják a pontosságát, a hely gyors frissítése nagyteljesítményű GPS-érzékelőt igényel.</string>
+    <string name="desc_fused_location_provider">A Google Fused Location API-ja háromszögeli a különböző helymeghatározó szolgáltatóktól származó helyadatokat, és az eredményt egy sor helyszínre átlagolja. Változó eredményeket adhat, de kevesebb akkumulátort használ.</string>
+    <string name="desc_location_provider_note">Megjegyzés: Bármely API használata az egyes tényezőktől függően, különböző eredményeket adhat, és egyik sem bizonyítja a másik pontosságát. Tesztelje le az API-kat, és válassza ki azt, amelyik a legjobban működik az Ön régiójában.</string>
+    <string name="use_media_keys">Média gombok használata</string>
+    <string name="auto_center_map">Aut. központi térkép</string>
+    <string name="last_updated">Legutóbb frissítve</string>
+    <string name="coefficient_of_magnetic_field">Mágneses mező együtthatója</string>
+    <string name="damping_coefficient">Csillapítási együttható</string>
+    <string name="rotational_inertia">Forgási tehetetlenség</string>
+    <string name="physical_properties">Fizikai jellemzők</string>
+    <string name="help">Súgó</string>
+    <string name="tick_smooth">Folyamatos jelölés</string>
+    <string name="tick_oscillate">Periódikus jelölés</string>
+    <string name="use_physical_properties">Fizikai jellemzők használata</string>
+    <string name="seconds_precision">Másodperces pontosság</string>
+    <string name="accent_colors">Kiemelő színek</string>
+    <string name="opacity">Átlátszóság</string>
+    <string name="size">Méret</string>
+    <string name="customize_pin">Jelölő testreszabása</string>
+    <string name="twenty_four_hours_clock">24 órás időformátum</string>
+    <string name="gimbal_lock">Giroszkóp zárolása</string>
+    <string name="clock_widget_notification">Az óra widget fut.</string>
+    <string name="notification_desc">Az értesítés elrejtéséhez kapcsolja ki a \"Widget csatorna\" opciót az értesítési beállítások közül.</string>
+    <string name="save">Mentés</string>
+    <string name="set_and_save">Beállítás és mentés</string>
+    <string name="failed">Nem sikerült!</string>
+    <string name="set_only">Csak beállítás</string>
+    <string name="sure">Rendben</string>
+    <string name="desc_custom_coord_dialog">Ezeket a paramétereket jelenleg az adatok kiszámításához használják.</string>
+    <string name="trail">Útvonal</string>
+    <string name="geodesic_trail">Geodéziai útvonal</string>
+    <string name="sensor_error">Az Ön készüléke nem rendelkezik a szükséges érzékelőkkel.</string>
+    <string name="play_services_error">Az Ön készüléke nem támogatja a szükséges Google Play függőségeket.</string>
+    <string name="enter_trail_name">Útvonal nevének a megadása</string>
+    <string name="note">Megjegyzés</string>
+    <string name="total">Összesen:</string>
+    <string name="saved_trails">Mentett útvonalak</string>
+    <string name="starting_point">Kiindulási pont</string>
+    <string name="enter_marker_name">Jelölő nevének a megadása</string>
+    <string name="delete">Törlés</string>
+    <string name="show_on_map">Mutatás a térképen</string>
+    <string name="copy">Másolás</string>
+    <string name="trail_data_accuracy">A helytől %1$s %2$s távolságon belül</string>
+    <string name="rate_text">Mennyire elégedett ezzel az alkalmazással? Kattintson ide az alkalmazás értékeléséhez a Play Store-on.</string>
+    <string name="target">Cél</string>
+    <string name="my_developer_profile">A fejlesztői profilom</string>
+    <string name="eta_seconds">%1$s másodperc</string>
+    <string name="eta_minutes">%1$s perc</string>
+    <string name="eta_hours">%1$s óra %2$s perc</string>
+    <string name="eta_days">%1$s nap %2$s óra %3$s perc</string>
+    <string name="eta">Becsült idő:</string>
+    <string name="gps_displacement_from_origin">Elmozdulás a kiindulási helytől:</string>
+    <string name="gps_displacement_from_dest">Elmozdulás a célállomástól:</string>
+    <string name="direction">Irány</string>
+    <string name="targets">Célok</string>
+    <string name="direction_info">Irány információk</string>
+    <string name="use_maps_target">Térképek célpont használata</string>
+    <string name="using_maps_target">Térképek célpontjának használata</string>
+    <string name="edit">Szerkesztés</string>
+    <string name="battery_optimization_desc">Kérjük, kapcsolja ki az akkumulátor optimalizálását, hogy az Óra widget megfelelően működhessen.</string>
+    <string name="use_as_target">Célpontként történő felhasználás</string>
+    <string name="create_new">Új</string>
+    <string name="save_from_target">Mentés a célból</string>
+    <string name="navigate">Navigálás</string>
+    <string name="mechanical">Mechanikus</string>
+    <string name="app_coordinates_format">Koordináták formátuma</string>
+    <string name="share">Megosztás</string>
+    <string name="telegram_group">Telegram csoport</string>
+    <string name="buy_full_desc">Vásárolja meg a teljes verziót, és fedezze fel az alkalmazás összes lehetőségét.</string>
+</resources>
