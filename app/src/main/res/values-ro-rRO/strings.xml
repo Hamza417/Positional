@@ -302,4 +302,6 @@
     <string name="mechanical">Mecanice</string>
     <string name="app_coordinates_format">Formatul coordonatelor</string>
     <string name="share">Distribuie</string>
+    <string name="telegram_group">Grup Telegram</string>
+    <string name="buy_full_desc">Cumpără versiunea completă și deblochează întregul potențial al aplicației.</string>
 </resources>
