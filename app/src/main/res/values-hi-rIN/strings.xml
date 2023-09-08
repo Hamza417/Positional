@@ -302,4 +302,6 @@
     <string name="mechanical">यांत्रिक</string>
     <string name="app_coordinates_format">निर्देशांक प्रारूप</string>
     <string name="share">शेयर करें</string>
+    <string name="telegram_group">टेलीग्राम ग्रुप</string>
+    <string name="buy_full_desc">पूर्ण संस्करण खरीदें और ऐप की पूरी क्षमता को अनलॉक करें।</string>
 </resources>
