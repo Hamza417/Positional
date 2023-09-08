@@ -302,4 +302,6 @@
     <string name="mechanical">Mechaniker</string>
     <string name="app_coordinates_format">Koordinatenformat</string>
     <string name="share">Teilen</string>
+    <string name="telegram_group">Telegram Gruppe</string>
+    <string name="buy_full_desc">Kaufen Sie die Vollversion und erschließen Sie das volle Potenzial der App.</string>
 </resources>
