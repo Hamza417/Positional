@@ -19,9 +19,10 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
     static final public float TIME_DELTA_THRESHOLD = 0.25f; // maximum time difference between iterations, s
     static final public float ANGLE_DELTA_THRESHOLD = 0.1f; // minimum rotation change to be redrawn, deg
 
-    static final public float INERTIA_MOMENT_DEFAULT = 0.1f;    // default physical properties
+    // default physical properties
+    static final public float INERTIA_MOMENT_DEFAULT = 0.5f;
     static final public float ALPHA_DEFAULT = 10f;
-    static final public float MB_DEFAULT = 1000f;
+    static final public float MB_DEFAULT = 5000f;
 
     long time1, time2;              // timestamps of previous iterations--used in numerical integration
     float angle1, angle2, angle0;   // angles of previous iterations
@@ -73,8 +74,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
             if (angleRecalculate(System.currentTimeMillis())) {
                 this.setRotation(angle1);
             }
-        }
-        else {
+        } else {
             this.setRotation(angle1);
         }
 
@@ -113,8 +113,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
                 this.invalidate();
             }
             animationOn = true;
-        }
-        else {
+        } else {
             angle1 = angleNew;
             angle2 = angleNew;
             angle0 = angleNew;
@@ -164,8 +163,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
         // if angles changed less then threshold, return false - no need to redraw the view
         if (Math.abs(angleLastDrawn - angle1) < ANGLE_DELTA_THRESHOLD) {
             return false;
-        }
-        else {
+        } else {
             angleLastDrawn = angle1;
             return true;
         }

@@ -3,7 +3,7 @@ package app.simple.positional.util
 import android.content.res.Resources
 import android.view.View
 import app.simple.positional.model.Locales
-import java.util.*
+import java.util.Locale
 
 object LocaleHelper {
 
@@ -28,6 +28,8 @@ object LocaleHelper {
             Locales("Português (Brasil)", "pt-BR"),
             Locales("繁體中文 (Traditional Chinese)", "zh-TW"),
             Locales("Deutsch (German)", "de-DE"),
+            Locales("Hungarian (Magyar)", "hu-HU"),
+            Locales("Spanish (Español)", "es-ES"),
     )
 
     fun isOneOfTraditionalChinese(): Boolean {
