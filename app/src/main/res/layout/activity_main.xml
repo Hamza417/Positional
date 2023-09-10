@@ -26,7 +26,7 @@
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/bottom_bar"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/bottom_nav_height"
             android:layout_height="@dimen/bottom_nav_height"
             android:animateLayoutChanges="true"
             android:clipChildren="true"
