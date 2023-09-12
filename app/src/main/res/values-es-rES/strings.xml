@@ -210,11 +210,11 @@
     <!-- Directions -->
     <string name="north">Norte</string>
     <string name="north_west">Noroeste</string>
-    <string name="west">Occidente</string>
+    <string name="west">Oeste</string>
     <string name="south_west">Sudoeste</string>
     <string name="south">Sur</string>
     <string name="south_east">Sudeste</string>
-    <string name="east">este | oriente</string>
+    <string name="east">Este</string>
     <string name="north_east">Noreste</string>
     <string name="north_N">N</string>
     <string name="north_west_NW">NO</string>
@@ -222,7 +222,7 @@
     <string name="south_west_SW">SO</string>
     <string name="south_S">S</string>
     <string name="south_east_SE">SE</string>
-    <string name="east_E">Mi</string>
+    <string name="east_E">E</string>
     <string name="north_east_NE">NE</string>
     <!-- Graph -->
     <string name="location_details">Detalles de la ubicación</string>
