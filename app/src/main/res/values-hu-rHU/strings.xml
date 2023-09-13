@@ -4,7 +4,7 @@
     <string name="clock">Idő</string>
     <string name="compass">Iránytű</string>
     <string name="gps_location">Hely</string>
-    <string name="level">Szint</string>
+    <string name="level">Szintező</string>
     <string name="settings">Beállítások</string>
     <!-- Info Headers -->
     <string name="clock_info">Időinformáció</string>
@@ -36,7 +36,7 @@
     <string name="local_date">Dátum:</string>
     <string name="local_day_of_year">Az év napja:</string>
     <string name="local_week_of_year">Az év hete:</string>
-    <string name="utc_local_time_offset">Helyi időeltolódás:</string>
+    <string name="utc_local_time_offset">Időzóna eltolódás:</string>
     <string name="utc_current_time">Idő:</string>
     <string name="sun_azimuth">Azimut:</string>
     <string name="sun_distance">Távolság:</string>
