@@ -77,7 +77,7 @@
     <string name="gps_accuracy">Pontosság:</string>
     <string name="gps_altitude">Magasság:</string>
     <string name="gps_latency">Késés:</string>
-    <string name="gps_bearing">Irány:</string>
+    <string name="gps_bearing">Irányszög:</string>
     <string name="gps_displacement">Elmozdulás:</string>
     <string name="gps_direction">Irány:</string>
     <string name="gps_speed">Sebesség:</string>
