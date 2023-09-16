@@ -33,7 +33,7 @@ jobs:
           # Example: Check for specific files, changes, or other criteria
 
       - name: Merge Crowdin PR
-        if: steps.check-crowdin-pr.outputs.is_crowdin_pr == "true"
+        if: steps.check-crowdin-pr.outputs.is_crowdin_pr == true
         run: |
           # Use the default GITHUB_TOKEN for authentication
           # This token is automatically provided by GitHub Actions
