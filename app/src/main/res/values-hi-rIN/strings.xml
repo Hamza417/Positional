@@ -2,7 +2,7 @@
 <resources>
     <!-- Panels -->
     <string name="clock">समय</string>
-    <string name="compass">दिशा-सूचक</string>
+    <string name="compass">दिक्सूचक</string>
     <string name="gps_location">लोकेशन</string>
     <string name="level">स्तर</string>
     <string name="settings">सेटिंग्स</string>
