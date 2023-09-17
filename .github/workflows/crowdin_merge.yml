@@ -28,12 +28,17 @@ jobs:
             echo "PR author is not the repository owner. Exiting..."
             exit 0
           fi
-
+          
           # Add more checks as needed
           # Example: Check for specific files, changes, or other criteria
+          
+          # The above checks have passed so this is a Crowdin PR
+          # otherwise the job would have exited
+          # Set an environment variable to indicate this
+          echo "IS_CROWDIN_PR=true" >> $GITHUB_ENV
 
       - name: Merge Crowdin PR
-        if: steps.check-crowdin-pr.outputs.is_crowdin_pr == true
+        if: env.IS_CROWDIN_PR == 'true'
         run: |
           # Replace with your GitHub token and repository information
           GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
