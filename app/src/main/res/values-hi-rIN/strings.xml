@@ -8,7 +8,7 @@
     <string name="settings">सेटिंग्स</string>
     <!-- Info Headers -->
     <string name="clock_info">समय की जानकारी</string>
-    <string name="compass_info">कम्पास की जानकारी</string>
+    <string name="compass_info">दिक्सूचक की जानकारी</string>
     <string name="gps_info">स्थिति सूचना</string>
     <!-- Clock Information Headers-->
     <string name="local_time">स्थानीय समय</string>
