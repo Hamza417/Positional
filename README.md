@@ -153,21 +153,7 @@ Last updated: 2023, April 12
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would
 like to change.
 
-## Translate
-
-This app has been as of completely translated in these languages.
-
-* Bulgarian
-* English
-* Hindi
-* Urdu
-* French
-* Czech
-* Romanian
-* Russian
-* Chinese (Traditional)
-* Portuguese (Brazil)
-
+### Translation
 You can also contribute into translating the app in your native language
 on [Crowdin](https://crowdin.com/project/positional/).
 
