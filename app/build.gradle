@@ -95,7 +95,9 @@ android {
 
     buildTypes {
         release {
-
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
@@ -160,7 +162,7 @@ dependencies {
 
     // Room components
     implementation "androidx.room:room-ktx:2.6.0"
-    ksp "androidx.room:room-compiler:2.6.0"
+    kapt "androidx.room:room-compiler:2.6.0"
     androidTestImplementation "androidx.room:room-testing:2.6.0"
 
     // Leak Canary -- debugImplementation because LeakCanary should only run in debug builds.
