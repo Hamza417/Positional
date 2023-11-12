@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences.*
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.display.DisplayManager
@@ -33,6 +34,7 @@ import app.simple.positional.singleton.SharedPreferences
 import app.simple.positional.util.BitmapHelper.rotateBitmap
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
+import app.simple.positional.util.ConditionUtils.isNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,12 +42,18 @@ import kotlinx.coroutines.withContext
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-abstract class ClockWidgetService : Service() {
+abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener {
 
     private var isScreenOn = true
     private val imageSize = 500
     private val serviceChannelId = "widget_channel"
     private val serviceChannelName = "Widget Channel"
+
+    private var materialYouResCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        android.R.color.system_accent1_500
+    } else {
+        -1
+    }
 
     internal var contextThemeWrapper: ContextThemeWrapper? = null
     private var mReceiver: BroadcastReceiver? = null
@@ -63,6 +71,10 @@ abstract class ClockWidgetService : Service() {
             postCallbacks()
             widgetNotification()
         }
+
+        contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
+        SharedPreferences.init(applicationContext)
+        SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -82,6 +94,7 @@ abstract class ClockWidgetService : Service() {
                         postCallbacks()
                         widgetNotification()
                     }
+
                     Intent.ACTION_SCREEN_OFF -> {
                         isScreenOn = false
                         stopForeground(STOP_FOREGROUND_REMOVE)
@@ -103,28 +116,32 @@ abstract class ClockWidgetService : Service() {
     private val clockWidgetRunnable = object : Runnable {
         override fun run() {
             CoroutineScope(Dispatchers.Default).launch {
-                contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
+                if (contextThemeWrapper.isNull()) {
+                    contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
+                }
 
                 val zonedDateTime = ZonedDateTime.now()
-                val face = contextThemeWrapper!!.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE)
-                        .getBoolean(ClockPreferences.is24HourFace, false)
+                val face = ClockPreferences.isClockFace24Hour()
+                val needleSkins = ClockSkinsConstants.clockNeedleSkins[ClockPreferences.getClockNeedleTheme()]
 
-                val needleSkins = ClockSkinsConstants.clockNeedleSkins[contextThemeWrapper!!.getSharedPreferences(
-                        SharedPreferences.preferences, Context.MODE_PRIVATE).getInt(ClockPreferences.clockNeedle, 0)]
-
-                val hour = rotateBitmap(
-                        needleSkins[0].toBitmap(contextThemeWrapper!!, imageSize),
+                val hour = rotateBitmap(needleSkins[0].toBitmap(contextThemeWrapper!!, imageSize),
                         if (face) {
                             getHoursInDegreesFor24(zonedDateTime)
                         } else {
                             getHoursInDegrees(zonedDateTime)
                         })
 
-                val minute = rotateBitmap(needleSkins[1].toBitmap(contextThemeWrapper!!, imageSize), getMinutesInDegrees(zonedDateTime))
-                val second = rotateBitmap(needleSkins[2].toBitmap(contextThemeWrapper!!, imageSize), getSecondsInDegrees(zonedDateTime, false))
+                val minute = rotateBitmap(needleSkins[1].toBitmap(contextThemeWrapper!!, imageSize),
+                        getMinutesInDegrees(zonedDateTime))
 
-                val trail = rotateBitmap(R.drawable.clock_trail.toBitmap(contextThemeWrapper!!, imageSize), getSecondsInDegrees(zonedDateTime, false))
+                val second = rotateBitmap(needleSkins[2].toBitmap(contextThemeWrapper!!, imageSize),
+                        getSecondsInDegrees(zonedDateTime, false))
+
+                val trail = rotateBitmap(R.drawable.clock_trail.toBitmap(contextThemeWrapper!!, imageSize),
+                        getSecondsInDegrees(zonedDateTime, false))
+
                 val dayNight = contextThemeWrapper!!.getDayNightIndicator()
+
                 val faceBitmap = if (face) {
                     R.drawable.clock_face_24.toBitmap(contextThemeWrapper!!, imageSize)
                 } else {
@@ -162,9 +179,11 @@ abstract class ClockWidgetService : Service() {
             ZonedDateTime.now().hour < 7 || ZonedDateTime.now().hour > 18 -> {
                 R.drawable.ic_night.toBitmapKeepingSize(this, 2)
             }
+
             ZonedDateTime.now().hour < 18 || ZonedDateTime.now().hour > 6 -> {
                 R.drawable.ic_day.toBitmapKeepingSize(this, 2)
             }
+
             else -> {
                 null
             }
@@ -204,78 +223,114 @@ abstract class ClockWidgetService : Service() {
     }
 
     private fun getAccentTheme(): Int {
-        return when (applicationContext.getSharedPreferences(SharedPreferences.preferences, Context.MODE_PRIVATE).getInt(MainPreferences.accentColor, 0)) {
+        return when (MainPreferences.getAccentColor()) {
             ContextCompat.getColor(baseContext, R.color.positional) -> {
                 R.style.Positional
             }
+
             ContextCompat.getColor(baseContext, R.color.blue) -> {
                 R.style.Blue
             }
+
             ContextCompat.getColor(baseContext, R.color.blueGrey) -> {
                 R.style.BlueGrey
             }
+
             ContextCompat.getColor(baseContext, R.color.darkBlue) -> {
                 R.style.DarkBlue
             }
+
             ContextCompat.getColor(baseContext, R.color.red) -> {
                 R.style.Red
             }
+
             ContextCompat.getColor(baseContext, R.color.green) -> {
                 R.style.Green
             }
+
             ContextCompat.getColor(baseContext, R.color.orange) -> {
                 R.style.Orange
             }
+
             ContextCompat.getColor(baseContext, R.color.purple) -> {
                 R.style.Purple
             }
+
             ContextCompat.getColor(baseContext, R.color.yellow) -> {
                 R.style.Yellow
             }
+
             ContextCompat.getColor(baseContext, R.color.caribbeanGreen) -> {
                 R.style.CaribbeanGreen
             }
+
             ContextCompat.getColor(baseContext, R.color.persianGreen) -> {
                 R.style.PersianGreen
             }
+
             ContextCompat.getColor(baseContext, R.color.amaranth) -> {
                 R.style.Amaranth
             }
+
             ContextCompat.getColor(baseContext, R.color.indian_red) -> {
                 R.style.IndianRed
             }
+
             ContextCompat.getColor(baseContext, R.color.light_coral) -> {
                 R.style.LightCoral
             }
+
             ContextCompat.getColor(baseContext, R.color.pink_flare) -> {
                 R.style.PinkFlare
             }
+
             ContextCompat.getColor(baseContext, R.color.makeup_tan) -> {
                 R.style.MakeupTan
             }
+
             ContextCompat.getColor(baseContext, R.color.egg_yellow) -> {
                 R.style.EggYellow
             }
+
             ContextCompat.getColor(baseContext, R.color.medium_green) -> {
                 R.style.MediumGreen
             }
+
             ContextCompat.getColor(baseContext, R.color.olive) -> {
                 R.style.Olive
             }
+
             ContextCompat.getColor(baseContext, R.color.copperfield) -> {
                 R.style.Copperfield
             }
+
             ContextCompat.getColor(baseContext, R.color.mineral_green) -> {
                 R.style.MineralGreen
             }
+
             ContextCompat.getColor(baseContext, R.color.lochinvar) -> {
                 R.style.Lochinvar
             }
+
             ContextCompat.getColor(baseContext, R.color.beach_grey) -> {
                 R.style.BeachGrey
             }
+
+            ContextCompat.getColor(baseContext, materialYouResCode) -> {
+                R.style.MaterialYou
+            }
+
             else -> {
                 R.style.Positional
+            }
+        }
+    }
+
+
+    override fun onSharedPreferenceChanged(sharedPreferences: android.content.SharedPreferences?, key: String?) {
+        when (key) {
+            MainPreferences.accentColor -> {
+                contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
             }
         }
     }
