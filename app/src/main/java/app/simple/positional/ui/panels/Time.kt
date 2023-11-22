@@ -1,11 +1,14 @@
 package app.simple.positional.ui.panels
 
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Spanned
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,9 +61,18 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.shredzone.commons.suncalc.*
+import org.shredzone.commons.suncalc.MoonIllumination
+import org.shredzone.commons.suncalc.MoonPhase
+import org.shredzone.commons.suncalc.MoonPosition
+import org.shredzone.commons.suncalc.MoonTimes
+import org.shredzone.commons.suncalc.SunPosition
+import org.shredzone.commons.suncalc.SunTimes
 import java.text.ParseException
-import java.time.*
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.IsoFields
 
@@ -245,8 +257,7 @@ class Time : ScopedFragment() {
         })
 
         if (StatusBarHeight.isLandscape(requireContext())) {
-            scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                Log.d("ClockFragment", "onViewCreated: $scrollY $oldScrollY")
+            scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
                 if (scrollY < oldScrollY) {
                     bottomSheetSlide.onBottomSheetSliding(0F, true)
                 } else {

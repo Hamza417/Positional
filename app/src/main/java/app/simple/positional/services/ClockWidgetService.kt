@@ -121,6 +121,11 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
                     contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
                 }
 
+                /**
+                 * Make sure shared preferences are initialized
+                 */
+                SharedPreferences.init(applicationContext)
+
                 val zonedDateTime = ZonedDateTime.now()
                 val face = ClockPreferences.isClockFace24Hour()
                 val needleSkins = ClockSkinsConstants.clockNeedleSkins[ClockPreferences.getClockNeedleTheme()]
