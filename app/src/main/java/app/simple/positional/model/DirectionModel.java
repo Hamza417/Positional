@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "directions")
@@ -30,6 +31,7 @@ public class DirectionModel implements Parcelable {
         this.dateAdded = dateAdded;
     }
 
+    @Ignore
     public DirectionModel() {
     }
 

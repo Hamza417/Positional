@@ -17,6 +17,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.util.Log
 import android.view.Display
 import androidx.annotation.RequiresApi
 import androidx.appcompat.view.ContextThemeWrapper
@@ -69,14 +70,14 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
         isScreenOn = (getSystemService(Context.DISPLAY_SERVICE) as DisplayManager)
                 .displays[0].state == Display.STATE_ON
 
+        SharedPreferences.init(applicationContext)
+        SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
+        contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
+
         if (isScreenOn) {
             postCallbacks()
             widgetNotification()
         }
-
-        SharedPreferences.init(applicationContext)
-        SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
-        contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -95,12 +96,17 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
                         isScreenOn = true
                         postCallbacks()
                         widgetNotification()
+                        Log.d("ClockWidgetService", "Screen is on")
                     }
 
                     Intent.ACTION_SCREEN_OFF -> {
                         isScreenOn = false
-                        stopForeground(STOP_FOREGROUND_REMOVE)
+                        // Leave the service running in the foreground
+                        // because Android 14 is killing the service when
+                        // the screen is off
+                        // stopForeground(STOP_FOREGROUND_REMOVE)
                         removeCallbacks()
+                        Log.d("ClockWidgetService", "Screen is off")
                     }
                 }
             }

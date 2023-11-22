@@ -51,7 +51,7 @@ android {
 
     compileSdk 34
 
-    def appVersionCode = 177
+    def appVersionCode = 178
     def appVersionName = "build${appVersionCode}_final"
 
     defaultConfig {
@@ -162,6 +162,7 @@ dependencies {
 
     // Room components
     implementation "androidx.room:room-ktx:2.6.0"
+    //noinspection KaptUsageInsteadOfKsp
     kapt "androidx.room:room-compiler:2.6.0"
     androidTestImplementation "androidx.room:room-testing:2.6.0"
 
