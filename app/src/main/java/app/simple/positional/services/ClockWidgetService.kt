@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences.*
+import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.hardware.display.DisplayManager
@@ -200,7 +201,16 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
                     .setSubText(getString(R.string.clock_widget_notification))
                     .setContentText(getString(R.string.notification_desc))
                     .build()
-            startForeground(101, notification)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    startForeground(101, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+                } else {
+                    startForeground(101, notification)
+                }
+            } else {
+                startForeground(101, notification)
+            }
         }
     }
 

@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -395,7 +396,7 @@
             android:enabled="true"
             android:exported="false"
             android:externalService="false"
-            android:foregroundServiceType="dataSync"
+            android:foregroundServiceType="specialUse"
             android:icon="@drawable/ic_access_time"
             android:label="@string/clock"
             android:stopWithTask="false" />
@@ -405,7 +406,7 @@
             android:enabled="true"
             android:exported="false"
             android:externalService="false"
-            android:foregroundServiceType="dataSync"
+            android:foregroundServiceType="specialUse"
             android:icon="@drawable/ic_access_time"
             android:label="@string/clock"
             android:stopWithTask="false" />
@@ -415,7 +416,7 @@
             android:enabled="true"
             android:exported="false"
             android:externalService="false"
-            android:foregroundServiceType="mediaProjection"
+            android:foregroundServiceType="specialUse"
             android:icon="@drawable/ic_access_time"
             android:label="@string/clock"
             android:stopWithTask="false" />
