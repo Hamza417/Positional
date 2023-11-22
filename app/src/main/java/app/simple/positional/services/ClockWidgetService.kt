@@ -57,7 +57,7 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
     }
 
     internal var contextThemeWrapper: ContextThemeWrapper? = null
-    private var mReceiver: BroadcastReceiver? = null
+    private var broadcastReceiver: BroadcastReceiver? = null
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onBind(intent: Intent): IBinder? {
@@ -66,16 +66,17 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
 
-        isScreenOn = (getSystemService(Context.DISPLAY_SERVICE) as DisplayManager).displays[0].state == Display.STATE_ON
+        isScreenOn = (getSystemService(Context.DISPLAY_SERVICE) as DisplayManager)
+                .displays[0].state == Display.STATE_ON
 
         if (isScreenOn) {
             postCallbacks()
             widgetNotification()
         }
 
-        contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
         SharedPreferences.init(applicationContext)
         SharedPreferences.getSharedPreferences().registerOnSharedPreferenceChangeListener(this)
+        contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
 
         return super.onStartCommand(intent, flags, startId)
     }
@@ -87,7 +88,7 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
         filter.addAction(Intent.ACTION_SCREEN_ON)
         filter.addAction(Intent.ACTION_SCREEN_OFF)
 
-        mReceiver = object : BroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 when (intent.action) {
                     Intent.ACTION_SCREEN_ON -> {
@@ -105,26 +106,27 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
             }
         }
 
-        registerReceiver(mReceiver, filter)
+        registerReceiver(broadcastReceiver, filter)
     }
 
     override fun onDestroy() {
         removeCallbacks()
-        unregisterReceiver(mReceiver)
+        unregisterReceiver(broadcastReceiver)
+        SharedPreferences.getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this)
         super.onDestroy()
     }
 
     private val clockWidgetRunnable = object : Runnable {
         override fun run() {
             CoroutineScope(Dispatchers.Default).launch {
-                if (contextThemeWrapper.isNull()) {
-                    contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
-                }
-
                 /**
                  * Make sure shared preferences are initialized
                  */
                 SharedPreferences.init(applicationContext)
+
+                if (contextThemeWrapper.isNull()) {
+                    contextThemeWrapper = ContextThemeWrapper(applicationContext, getAccentTheme())
+                }
 
                 val zonedDateTime = ZonedDateTime.now()
                 val face = ClockPreferences.isClockFace24Hour()
