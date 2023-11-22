@@ -104,7 +104,11 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
                         // Leave the service running in the foreground
                         // because Android 14 is killing the service when
                         // the screen is off
-                        // stopForeground(STOP_FOREGROUND_REMOVE)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                            Log.d("ClockWidgetService", "Screen is off, we're on Android 14+")
+                        } else {
+                            stopForeground(STOP_FOREGROUND_REMOVE)
+                        }
                         removeCallbacks()
                         Log.d("ClockWidgetService", "Screen is off")
                     }

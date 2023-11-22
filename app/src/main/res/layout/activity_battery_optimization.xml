@@ -1,31 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.padding.PaddingAwareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<app.simple.positional.decorations.padding.PaddingAwareLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/toolbar_padding">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="@dimen/clock_image_shadow_size"
+            android:layout_height="@dimen/clock_image_shadow_size"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_clock_shadow"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/sweep_seconds"
+            android:layout_width="@dimen/clock_image_dimensions"
+            android:layout_height="@dimen/clock_image_dimensions"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:rotation="-90"
+            android:src="@drawable/clock_trail"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/clock_face"
+            android:layout_width="@dimen/clock_image_dimensions"
+            android:layout_height="@dimen/clock_image_dimensions"
+            android:layout_gravity="center"
+            android:src="@drawable/clock_face"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/day_night_indicator"
+            android:layout_width="@dimen/clock_day_night_indicator"
+            android:layout_height="@dimen/clock_day_night_indicator"
+            android:layout_gravity="center"
+            android:layout_marginBottom="60dp"
+            android:src="@drawable/ic_night"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/hour"
+            android:layout_width="@dimen/clock_needle_dimensions"
+            android:layout_height="@dimen/clock_needle_dimensions"
+            android:layout_gravity="center"
+            android:rotation="70"
+            android:src="@drawable/clock_needle_minimal_hour"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/minutes"
+            android:layout_width="@dimen/clock_needle_dimensions"
+            android:layout_height="@dimen/clock_needle_dimensions"
+            android:layout_gravity="center"
+            android:rotation="235"
+            android:src="@drawable/clock_needle_minimal_minute"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/seconds"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/clock_needle_dimensions"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:rotation="120"
+            android:src="@drawable/clock_needle_minimal_second"
+            tools:ignore="ContentDescription" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/toolbar_padding">
 
         <TextView
-            android:id="@+id/adapter_address_latitude"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="75dp"
             android:fontFamily="@font/regular"
-            android:gravity="center"
+            android:gravity="start"
             android:text="@string/battery_optimization_desc"
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/settings_primary_text_size" />
 
         <app.simple.positional.decorations.ripple.DynamicRippleButton
-            android:id="@+id/grant"
+            android:id="@+id/grant_battery_optimization"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/medium"
+            android:text="@string/button_grant"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/regular"
+            android:gravity="start"
+            android:text="@string/notification_permission_desc"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/settings_primary_text_size" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleButton
+            android:id="@+id/grant_notification_access"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/medium"
             android:text="@string/button_grant"
@@ -33,4 +128,4 @@
 
     </LinearLayout>
 
-</app.simple.positional.decorations.padding.PaddingAwareFrameLayout>
+</app.simple.positional.decorations.padding.PaddingAwareLinearLayout>

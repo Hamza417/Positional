@@ -333,4 +333,5 @@
     <string name="share">Share</string>
     <string name="telegram_group">Telegram Group</string>
     <string name="buy_full_desc">Buy full version and unlock the full potential of the app.</string>
+    <string name="notification_permission_desc">Notification access is required to persistently run the clock widget service.</string>
 </resources>

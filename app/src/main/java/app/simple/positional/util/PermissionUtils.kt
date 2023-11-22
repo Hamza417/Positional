@@ -1,6 +1,7 @@
 package app.simple.positional.util
 
 import android.Manifest
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.PermissionInfo
@@ -39,6 +40,11 @@ object PermissionUtils {
     fun Context.isIgnoringBatteryOptimizations(): Boolean {
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         return powerManager.isIgnoringBatteryOptimizations(packageName)
+    }
+
+    fun Context.hasNotificationPermission(): Boolean {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        return notificationManager.areNotificationsEnabled()
     }
 
     @Nullable
