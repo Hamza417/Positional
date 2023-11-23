@@ -32,6 +32,8 @@
 -keep class app.simple.positional.activities.alias.IconSevenAlias
 -keep class app.simple.positional.activities.alias.IconEightAlias
 -keep class app.simple.positional.activities.alias.IconNineAlias
+-keep class app.simple.positional.activities.alias.IconTenAlias
+-keep class app.simple.positional.activities.alias.IconElevenAlias
 -keep class app.simple.positional.activities.alias.IconLegacyAlias
 -keep class kotlin.KotlinNullPointerException
 

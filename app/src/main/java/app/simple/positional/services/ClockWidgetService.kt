@@ -91,27 +91,31 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
 
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                when (intent.action) {
-                    Intent.ACTION_SCREEN_ON -> {
-                        isScreenOn = true
-                        postCallbacks()
-                        widgetNotification()
-                        Log.d("ClockWidgetService", "Screen is on")
-                    }
-
-                    Intent.ACTION_SCREEN_OFF -> {
-                        isScreenOn = false
-                        // Leave the service running in the foreground
-                        // because Android 14 is killing the service when
-                        // the screen is off
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                            Log.d("ClockWidgetService", "Screen is off, we're on Android 14+")
-                        } else {
-                            stopForeground(STOP_FOREGROUND_REMOVE)
+                try {
+                    when (intent.action) {
+                        Intent.ACTION_SCREEN_ON -> {
+                            isScreenOn = true
+                            postCallbacks()
+                            widgetNotification()
+                            Log.d("ClockWidgetService", "Screen is on")
                         }
-                        removeCallbacks()
-                        Log.d("ClockWidgetService", "Screen is off")
+
+                        Intent.ACTION_SCREEN_OFF -> {
+                            isScreenOn = false
+                            // Leave the service running in the foreground
+                            // because Android 14 is killing the service when
+                            // the screen is off
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                                Log.d("ClockWidgetService", "Screen is off, we're on Android 14+")
+                            } else {
+                                stopForeground(STOP_FOREGROUND_REMOVE)
+                            }
+                            removeCallbacks()
+                            Log.d("ClockWidgetService", "Screen is off")
+                        }
                     }
+                } catch (e: NullPointerException) {
+                    e.printStackTrace()
                 }
             }
         }

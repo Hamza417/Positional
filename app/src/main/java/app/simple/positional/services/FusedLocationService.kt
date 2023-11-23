@@ -9,10 +9,16 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.HandlerThread
 import android.os.IBinder
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.PermissionUtils
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 
 /**
  * Service class to use [FusedLocationProviderClient] as location
@@ -69,7 +75,7 @@ class FusedLocationService : Service() {
             }
         }
 
-        registerReceiver(broadcastReceiver, intentFilter)
+        ContextCompat.registerReceiver(applicationContext, broadcastReceiver, intentFilter, ContextCompat.RECEIVER_NOT_EXPORTED)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
