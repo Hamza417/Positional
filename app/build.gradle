@@ -115,7 +115,9 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+
     namespace 'app.simple.positional'
+
     buildFeatures {
         aidl true
     }

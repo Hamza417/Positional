@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="app.simple.positional.activities.service.BatteryOptimizationActivity"
+    android:configure="app.simple.positional.activities.service.ClockWidgetActivity"
     android:initialLayout="@layout/widget_clock"
     android:minWidth="180dp"
     android:minHeight="180dp"

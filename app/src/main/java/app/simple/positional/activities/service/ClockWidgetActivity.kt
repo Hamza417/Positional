@@ -15,7 +15,7 @@ import app.simple.positional.util.PermissionUtils.hasNotificationPermission
 import app.simple.positional.util.PermissionUtils.isIgnoringBatteryOptimizations
 
 
-class BatteryOptimizationActivity : BaseActivity() {
+class ClockWidgetActivity : BaseActivity() {
 
     private lateinit var grantBattery: DynamicRippleButton
     private lateinit var grantNotification: DynamicRippleButton
@@ -32,7 +32,7 @@ class BatteryOptimizationActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_battery_optimization)
+        setContentView(R.layout.activity_clock_widget)
 
         grantBattery = findViewById(R.id.grant_battery_optimization)
         grantNotification = findViewById(R.id.grant_notification_access)

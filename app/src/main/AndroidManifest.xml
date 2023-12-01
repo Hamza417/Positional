@@ -358,7 +358,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".activities.service.BatteryOptimizationActivity"
+            android:name=".activities.service.ClockWidgetActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />

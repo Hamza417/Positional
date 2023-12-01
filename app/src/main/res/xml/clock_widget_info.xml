@@ -4,5 +4,5 @@
     android:resizeMode="none"
     android:minWidth="250dp"
     android:minHeight="250dp"
-    android:configure="app.simple.positional.activities.service.BatteryOptimizationActivity"
+    android:configure="app.simple.positional.activities.service.ClockWidgetActivity"
     android:updatePeriodMillis="0" />
