@@ -24,10 +24,21 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
     static final public float ALPHA_DEFAULT = 10f;
     static final public float MB_DEFAULT = 5000f;
 
-    long time1, time2;              // timestamps of previous iterations--used in numerical integration
-    float angle1, angle2, angle0;   // angles of previous iterations
-    float angleLastDrawn;           // last drawn angular position
-    boolean animationOn = false;    // if animation should be performed
+    // timestamps of previous iterations--used in numerical integration
+    long time1;
+    long time2;
+
+    // angles of previous iterations
+    double angle1;
+    double angle2;
+    double angle0;
+
+
+    // last drawn angular position
+    double angleLastDrawn;
+
+    // if animation should be performed
+    boolean animationOn = false;
 
     float inertiaMoment = INERTIA_MOMENT_DEFAULT;   // moment of inertia
     float alpha = ALPHA_DEFAULT;    // damping coefficient
@@ -72,10 +83,11 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
     public void onDraw(Canvas canvas) {
         if (animationOn) {
             if (angleRecalculate(System.currentTimeMillis())) {
-                this.setRotation(angle1);
+                this.setRotation(angle1 > 0 ? (float) (angle1 % 360) : (float) (360 + angle1 % 360));
+                // Log.d("PhysicalRotationImageView", "angle1: " + angle1);
             }
         } else {
-            this.setRotation(angle1);
+            this.setRotation(angle1 > 0 ? (float) (angle1 % 360) : (float) (360 + angle1 % 360));
         }
 
         super.onDraw(canvas);
@@ -143,16 +155,16 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
         }
 
         // circular acceleration coefficient
-        float coefI = inertiaMoment / deltaT1 / deltaT2;
+        double coefI = inertiaMoment / deltaT1 / deltaT2;
 
         // circular velocity coefficient
-        float coefAlpha = alpha / deltaT1;
+        double coefAlpha = alpha / deltaT1;
 
         // angular momentum coefficient
-        float coefk = mB * (float) (Math.sin(Math.toRadians(angle0)) * Math.cos(Math.toRadians(angle1)) -
+        double coefk = mB * (float) (Math.sin(Math.toRadians(angle0)) * Math.cos(Math.toRadians(angle1)) -
                 (Math.sin(Math.toRadians(angle1)) * Math.cos(Math.toRadians(angle0))));
 
-        float angleNew = (coefI * (angle1 * 2f - angle2) + coefAlpha * angle1 + coefk) / (coefI + coefAlpha);
+        double angleNew = (coefI * (angle1 * 2f - angle2) + coefAlpha * angle1 + coefk) / (coefI + coefAlpha);
 
         // reassign previous iteration variables
         angle2 = angle1;
