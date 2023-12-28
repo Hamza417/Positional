@@ -161,7 +161,7 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
         double coefAlpha = alpha / deltaT1;
 
         // angular momentum coefficient
-        double coefk = mB * (float) (Math.sin(Math.toRadians(angle0)) * Math.cos(Math.toRadians(angle1)) -
+        double coefk = mB * (Math.sin(Math.toRadians(angle0)) * Math.cos(Math.toRadians(angle1)) -
                 (Math.sin(Math.toRadians(angle1)) * Math.cos(Math.toRadians(angle0))));
 
         double angleNew = (coefI * (angle1 * 2f - angle2) + coefAlpha * angle1 + coefk) / (coefI + coefAlpha);

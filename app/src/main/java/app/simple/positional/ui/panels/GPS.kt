@@ -353,24 +353,41 @@ class GPS : ScopedFragment() {
                 when (newState) {
                     BottomSheetBehavior.STATE_DRAGGING -> {
                         maps?.unregister()
+                        locationBox.isClickable = false
+                        targetBox.isClickable = false
+                        movementBox.isClickable = false
+                        coordinatesBox.isClickable = false
                     }
+
                     BottomSheetBehavior.STATE_EXPANDED -> {
                         backPressed(true)
                         maps?.unregister()
+                        locationBox.isClickable = true
+                        targetBox.isClickable = true
+                        movementBox.isClickable = true
+                        coordinatesBox.isClickable = true
                     }
+
                     BottomSheetBehavior.STATE_COLLAPSED -> {
                         backPressed(false)
                         while (backPress!!.hasEnabledCallbacks()) {
                             backPress?.onBackPressed()
                         }
                         maps?.registerWithRunnable()
+                        locationBox.isClickable = false
+                        targetBox.isClickable = false
+                        movementBox.isClickable = false
+                        coordinatesBox.isClickable = false
                     }
+
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
                         /* no-op */
                     }
+
                     BottomSheetBehavior.STATE_HIDDEN -> {
                         /* no-op */
                     }
+
                     BottomSheetBehavior.STATE_SETTLING -> {
                         /* no-op */
                     }
@@ -387,6 +404,12 @@ class GPS : ScopedFragment() {
                 }
             }
         })
+
+        expandUp.setOnClickListener {
+            if (bottomSheetInfoPanel?.state == BottomSheetBehavior.STATE_COLLAPSED) {
+                bottomSheetInfoPanel?.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+        }
 
         toolbar.setOnMapToolbarCallbacks(object : MapToolbar.MapToolbarCallbacks {
             override fun onMenuClicked(view: View) {
@@ -442,9 +465,9 @@ class GPS : ScopedFragment() {
         save.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
                 val isLocationSaved: Boolean
-                val db =
-                        Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db")
-                                .fallbackToDestructiveMigration().build()
+                val db = Room.databaseBuilder(requireContext(), LocationDatabase::class.java, "locations.db")
+                        .fallbackToDestructiveMigration().build()
+
                 val locations = Locations()
 
                 if (location.isNull()) {
@@ -545,7 +568,6 @@ class GPS : ScopedFragment() {
 
         coordinatesBox.setOnLongClickListener { view1 ->
             PopupCoordinateBox(view1).setPopupCoordinateBoxCallbacks(object : PopupCoordinateBox.Companion.PopupCoordinateBoxCallbacks {
-                @Suppress("RemoveCurlyBracesFromTemplate")
                 override fun send() {
                     share()
                 }
@@ -612,12 +634,15 @@ class GPS : ScopedFragment() {
                     KeyEvent.KEYCODE_VOLUME_UP -> {
                         maps?.zoomIn()
                     }
+
                     KeyEvent.KEYCODE_VOLUME_DOWN -> {
                         maps?.zoomOut()
                     }
+
                     KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
                         maps?.resetCamera(GPSPreferences.getMapZoom())
                     }
+
                     KeyEvent.KEYCODE_BACK -> {
                         requireActivity().onBackPressedDispatcher.onBackPressed()
                     }
@@ -632,6 +657,7 @@ class GPS : ScopedFragment() {
                 MotionEvent.ACTION_DOWN -> {
                     maps?.unregister()
                 }
+
                 MotionEvent.ACTION_UP -> {
                     if (bottomSheetInfoPanel?.state != BottomSheetBehavior.STATE_EXPANDED) {
                         maps?.registerWithRunnable()
@@ -641,11 +667,11 @@ class GPS : ScopedFragment() {
         }
     }
 
-    private fun updateCoordinates(latitude_: Double, longitude_: Double) {
-        latitude.text =
-                fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getFormattedLatitude(latitude_, requireContext())}")
-        longitude.text =
-                fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getFormattedLongitude(longitude_, requireContext())}")
+    private fun updateCoordinates(latitude: Double, longitude: Double) {
+        this.latitude.text =
+                fromHtml("<b>${getString(R.string.gps_latitude)}</b> ${DMSConverter.getFormattedLatitude(latitude, requireContext())}")
+        this.longitude.text =
+                fromHtml("<b>${getString(R.string.gps_longitude)}</b> ${DMSConverter.getFormattedLongitude(longitude, requireContext())}")
     }
 
     @Suppress("RemoveCurlyBracesFromTemplate")
@@ -840,12 +866,15 @@ class GPS : ScopedFragment() {
                     view?.clearFocus()
                 }
             }
+
             GPSPreferences.pinSkin -> {
                 setLocationPin()
             }
+
             GPSPreferences.toolsGravity -> {
                 updateToolsGravity(requireView())
             }
+
             GPSPreferences.isTargetMarkerMode -> {
                 targetMode()
             }
