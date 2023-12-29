@@ -15,6 +15,8 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import java.time.ZonedDateTime;
+
 import app.simple.positional.R;
 import app.simple.positional.util.MoonAngle;
 
@@ -24,7 +26,7 @@ public class SunPosition extends View {
     private final String TAG = "SunPosition";
 
     private final Paint circlePaint = new Paint();
-    private final Paint nightPaint = new Paint();
+    private final Paint horizonPaints = new Paint();
     private final Paint pointPaint = new Paint();
     private final Paint dashedLinePaint = new Paint();
     private final Paint linePaint = new Paint();
@@ -227,5 +229,9 @@ public class SunPosition extends View {
     public void setMoonDrawable(double azimuth, double moonPhase) {
         this.moonAzimuth = azimuth + 90;
         this.moonDrawable = ContextCompat.getDrawable(getContext(), MoonAngle.INSTANCE.getMoonPhaseGraphics(moonPhase));
+    }
+
+    private float getAngleFromTime(ZonedDateTime time) {
+        return (float) (time.getHour() + time.getMinute() / 60.0);
     }
 }

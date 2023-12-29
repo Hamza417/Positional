@@ -22,13 +22,14 @@ import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.BottomBarAdapter
 import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.callbacks.PanelsCallback
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.transformers.DepthTransformer
+import app.simple.positional.dialogs.app.Panels.Companion.showPanelsDialog
 import app.simple.positional.extensions.activity.BaseActivity
-import app.simple.positional.popups.miscellaneous.PopupFragments
 import app.simple.positional.preferences.BottomBarPreferences
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
@@ -69,18 +70,25 @@ class MainActivity : BaseActivity(),
         label = findViewById(R.id.label)
 
         bottomBarAdapter = BottomBarAdapter(BottomBarItems.getBottomBarItems(baseContext)) {
-            PopupFragments(bottomBarContainer) { _, tag, position ->
+//            PopupFragments(bottomBarContainer) { _, tag, position ->
+//                bottomBar.setCurrentItem(position, true)
+//                openFragment(tag)
+//                FragmentPreferences.setCurrentPage(position)
+//                FragmentPreferences.setCurrentTag(tag)
+//            }.setOnDismissListener {
+//                bottomBarContainer.animate()
+//                        .alpha(1f)
+//                        .setInterpolator(DecelerateInterpolator())
+//                        .setDuration(500)
+//                        .start()
+//            }
+
+            supportFragmentManager.showPanelsDialog(PanelsCallback { view, string, position ->
                 bottomBar.setCurrentItem(position, true)
-                openFragment(tag)
+                openFragment(string!!)
                 FragmentPreferences.setCurrentPage(position)
-                FragmentPreferences.setCurrentTag(tag)
-            }.setOnDismissListener {
-                bottomBarContainer.animate()
-                        .alpha(1f)
-                        .setInterpolator(DecelerateInterpolator())
-                        .setDuration(500)
-                        .start()
-            }
+                FragmentPreferences.setCurrentTag(string)
+            })
         }
 
         label.setOnClickListener {

@@ -15,13 +15,14 @@
         android:elevation="40dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/icon_recycler_view"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:layoutAnimation="@anim/grid_list_animation_controller"
             android:padding="@dimen/options_container_horizontal_padding" />
+
 
     </app.simple.positional.decorations.corners.DynamicCornerFrameLayout>
 
