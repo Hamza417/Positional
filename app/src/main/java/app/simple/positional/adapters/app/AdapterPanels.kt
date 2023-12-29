@@ -23,7 +23,7 @@ class AdapterPanels(private val items: ArrayList<BottomBarModel>, private val on
         holder.label.text = item.name
 
         holder.container.setOnClickListener {
-            onClick(it, item.name, position)
+            onClick(it, item.tag, position)
         }
     }
 

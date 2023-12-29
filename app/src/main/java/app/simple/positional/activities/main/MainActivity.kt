@@ -83,7 +83,7 @@ class MainActivity : BaseActivity(),
 //                        .start()
 //            }
 
-            supportFragmentManager.showPanelsDialog(PanelsCallback { view, string, position ->
+            supportFragmentManager.showPanelsDialog(PanelsCallback { _, string, position ->
                 bottomBar.setCurrentItem(position, true)
                 openFragment(string!!)
                 FragmentPreferences.setCurrentPage(position)

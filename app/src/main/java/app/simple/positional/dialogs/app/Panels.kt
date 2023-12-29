@@ -49,10 +49,13 @@ class Panels : CustomBottomSheetDialogFragment() {
             return fragment
         }
 
-        fun FragmentManager.showPanelsDialog(panelsCallback: PanelsCallback) {
-            newInstance().apply {
+        fun FragmentManager.showPanelsDialog(panelsCallback: PanelsCallback): Panels {
+            val dialog = newInstance()
+            dialog.apply {
                 setPanelsCallback(panelsCallback)
-            }.show(this, Panels::class.java.simpleName)
+            }
+            dialog.show(this, Panels::class.java.simpleName)
+            return dialog
         }
     }
 }

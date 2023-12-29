@@ -9,16 +9,16 @@
         android:pathData="M11.99,2C6.47,2 2,6.48 2,12s4.47,10 9.99,10C17.52,22 22,17.52 22,12S17.52,2 11.99,2zM12,20c-4.42,0 -8,-3.58 -8,-8s3.58,-8 8,-8 8,3.58 8,8 -3.58,8 -8,8zM11.78,7h-0.06c-0.4,0 -0.72,0.32 -0.72,0.72v4.72c0,0.35 0.18,0.68 0.49,0.86l4.15,2.49c0.34,0.2 0.78,0.1 0.98,-0.24 0.21,-0.34 0.1,-0.79 -0.25,-0.99l-3.87,-2.3L12.5,7.72c0,-0.4 -0.32,-0.72 -0.72,-0.72z">
         <aapt:attr name="android:fillColor">
             <gradient
-                android:endX="24"
-                android:endY="80"
+                android:endX="0"
+                android:endY="0"
                 android:startX="0"
-                android:startY="0"
+                android:startY="24"
                 android:type="linear">
                 <item
-                    android:color="#00b9cc"
+                    android:color="#F87706"
                     android:offset="0" />
                 <item
-                    android:color="#00434A"
+                    android:color="#FF0C92"
                     android:offset="1" />
             </gradient>
         </aapt:attr>

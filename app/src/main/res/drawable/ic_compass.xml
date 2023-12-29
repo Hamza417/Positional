@@ -15,7 +15,7 @@
                 android:startY="0"
                 android:type="linear">
                 <item
-                    android:color="#FFB700"
+                    android:color="#FF7E5F"
                     android:offset="0" />
                 <item
                     android:color="#EF2400"
