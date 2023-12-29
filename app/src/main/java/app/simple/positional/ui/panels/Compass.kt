@@ -353,6 +353,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                 smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
                 accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
             }
+
             Sensor.TYPE_MAGNETIC_FIELD -> {
                 smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
                 magnetometer = Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
@@ -360,12 +361,14 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         val angle = if (isGimbalLock) {
-            val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(rotation, inclination, accelerometerReadings, magnetometerReadings)
+            val successfullyCalculatedRotationMatrix =
+                    SensorManager.getRotationMatrix(rotation, inclination, accelerometerReadings, magnetometerReadings)
 
             if (successfullyCalculatedRotationMatrix) {
                 val orientation = FloatArray(3)
                 SensorManager.getOrientation(rotation, orientation)
-                CompassAzimuth.adjustAzimuthForDisplayRotation(((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat(), requireActivity().windowManager)
+                CompassAzimuth.adjustAzimuthForDisplayRotation(
+                        ((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat(), requireActivity().windowManager)
             } else {
                 0F
             }
@@ -374,7 +377,9 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         run {
-            if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_DRAGGING || bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED || isLandscape()) {
+            if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_DRAGGING ||
+                    bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED ||
+                    isLandscape()) {
                 accelerometerX.text = fromHtml("<b>X:</b> ${round(accelerometerReadings[0].toDouble(), 3)}")
                 accelerometerY.text = fromHtml("<b>Y:</b> ${round(accelerometerReadings[1].toDouble(), 3)}")
                 accelerometerZ.text = fromHtml("<b>Z:</b> ${round(accelerometerReadings[2].toDouble(), 3)}")
@@ -398,16 +403,20 @@ class Compass : ScopedFragment(), SensorEventListener {
                     openCalibrationDialog()
                     fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
                     openCalibrationDialog()
                     fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
                     fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
                     fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
                 }
+
                 else -> {
                     fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
@@ -420,16 +429,20 @@ class Compass : ScopedFragment(), SensorEventListener {
                     openCalibrationDialog()
                     fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
                     openCalibrationDialog()
                     fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
                     fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
                     fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
                 }
+
                 else -> {
                     fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
@@ -523,12 +536,14 @@ class Compass : ScopedFragment(), SensorEventListener {
                     startAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     return true
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     val currentAngle = getAngle(event.x.toDouble(), event.y.toDouble(), dialContainer.width.toFloat(), dialContainer.height.toFloat())
                     val finalAngle = currentAngle - startAngle + lastDialAngle
                     viewRotation(abs(finalAngle.normalizeEulerAngle(inverseResult = true)), animate = false)
                     return true
                 }
+
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                     handler.postDelayed(compassDialAnimationRunnable, 1000)
                     return true
@@ -574,18 +589,23 @@ class Compass : ScopedFragment(), SensorEventListener {
             CompassPreferences.rotationalInertia -> {
                 setPhysicalProperties()
             }
+
             CompassPreferences.direction_code -> {
                 showDirectionCode = CompassPreferences.getDirectionCode()
             }
+
             CompassPreferences.flowerBloomTheme -> {
                 setFlowerTheme(CompassPreferences.getFlowerBloomTheme())
             }
+
             CompassPreferences.flowerBloom -> {
                 setFlower(CompassPreferences.isFlowerBloomOn())
             }
+
             CompassPreferences.usePhysicalProperties -> {
                 isAnimated = CompassPreferences.isUsingPhysicalProperties()
             }
+
             CompassPreferences.useGimbalLock -> {
                 isGimbalLock = CompassPreferences.isUsingGimbalLock()
             }

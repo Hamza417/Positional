@@ -122,7 +122,7 @@ class Direction : ScopedFragment(), SensorEventListener {
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
-        compassListScrollView.alpha = if(isLandscape()) 1F else 0F
+        compassListScrollView.alpha = if (isLandscape()) 1F else 0F
 
         kotlin.runCatching {
             bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.direction_info_bottom_sheet))
@@ -226,6 +226,7 @@ class Direction : ScopedFragment(), SensorEventListener {
                 LowPassFilter.smoothAndSetReadings(accelerometerReadings, event.values, readingsAlpha)
                 accelerometer = Vector3(accelerometerReadings[0], accelerometerReadings[1], accelerometerReadings[2])
             }
+
             Sensor.TYPE_MAGNETIC_FIELD -> {
                 LowPassFilter.smoothAndSetReadings(magnetometerReadings, event.values, readingsAlpha)
                 magnetometer = Vector3(magnetometerReadings[0], magnetometerReadings[1], magnetometerReadings[2])
@@ -233,17 +234,21 @@ class Direction : ScopedFragment(), SensorEventListener {
         }
 
         rotationAngle = if (isGimbalLock) {
-            val successfullyCalculatedRotationMatrix = SensorManager.getRotationMatrix(rotation, inclination, accelerometerReadings, magnetometerReadings)
+            val successfullyCalculatedRotationMatrix =
+                    SensorManager.getRotationMatrix(rotation, inclination, accelerometerReadings, magnetometerReadings)
 
             if (successfullyCalculatedRotationMatrix) {
                 val orientation = FloatArray(3)
                 SensorManager.getOrientation(rotation, orientation)
-                CompassAzimuth.adjustAzimuthForDisplayRotation(((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat(), requireActivity().windowManager).normalizeEulerAngle(inverseResult = false)
+                CompassAzimuth.adjustAzimuthForDisplayRotation(
+                        ((orientation[0] + twoTimesPi) % twoTimesPi * degreesPerRadian).toFloat(),
+                        requireActivity().windowManager).normalizeEulerAngle(inverseResult = false)
             } else {
                 0F
             }
         } else {
-            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer, requireActivity().windowManager).normalizeEulerAngle(false)
+            CompassAzimuth.calculate(gravity = accelerometer, magneticField = magnetometer,
+                    requireActivity().windowManager).normalizeEulerAngle(false)
         }
 
         dial.rotationUpdate(rotationAngle * -1, true)
@@ -262,16 +267,20 @@ class Direction : ScopedFragment(), SensorEventListener {
                     openCalibrationDialog()
                     HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
                     openCalibrationDialog()
                     HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
                     HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
                     HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
                 }
+
                 else -> {
                     HtmlHelper.fromHtml("<b>${getString(R.string.magnetometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
@@ -284,16 +293,20 @@ class Direction : ScopedFragment(), SensorEventListener {
                     openCalibrationDialog()
                     HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
                     openCalibrationDialog()
                     HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_low)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
                     HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_medium)}")
                 }
+
                 SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
                     HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_high)}")
                 }
+
                 else -> {
                     HtmlHelper.fromHtml("<b>${getString(R.string.accelerometer_accuracy)}</b> ${getString(R.string.sensor_accuracy_unreliable)}")
                 }
@@ -317,6 +330,7 @@ class Direction : ScopedFragment(), SensorEventListener {
 
                 setCoordinates()
             }
+
             DirectionPreferences.directionGimbalLock -> {
                 isGimbalLock = DirectionPreferences.isGimbalLock()
             }
