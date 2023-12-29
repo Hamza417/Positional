@@ -93,6 +93,7 @@ class Compass : ScopedFragment(), SensorEventListener {
     private var startAngle = 0F
     private val degreesPerRadian = 180 / Math.PI
     private val twoTimesPi = 2.0 * Math.PI
+    private val degreeSymbol = "\u00B0"
 
     private lateinit var sensorManager: SensorManager
     private lateinit var sensorAccelerometer: Sensor
@@ -236,6 +237,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                 append("${declination.text}\n")
                 append("${fieldStrength.text}\n\n")
 
+                @Suppress("KotlinConstantConditions")
                 if (BuildConfig.FLAVOR == "lite") {
                     append("\n\n")
                     append("Information is copied using Positional\n")
@@ -300,8 +302,8 @@ class Compass : ScopedFragment(), SensorEventListener {
                         location.time
                 )
 
-                declination = fromHtml("<b>${getString(R.string.compass_declination)}</b> ${round(geomagneticField.declination.toDouble(), 2)}°")
-                inclination = fromHtml("<b>${getString(R.string.compass_inclination)}</b> ${round(geomagneticField.inclination.toDouble(), 2)}°")
+                declination = fromHtml("<b>${getString(R.string.compass_declination)}</b> ${round(geomagneticField.declination.toDouble(), 2)}$degreeSymbol")
+                inclination = fromHtml("<b>${getString(R.string.compass_inclination)}</b> ${round(geomagneticField.inclination.toDouble(), 2)}$degreeSymbol")
                 fieldStrength = fromHtml("<b>${getString(R.string.compass_field_strength)}</b> ${round(geomagneticField.fieldStrength.toDouble(), 2)} nT")
 
                 withContext(Dispatchers.Main) {
@@ -460,7 +462,7 @@ class Compass : ScopedFragment(), SensorEventListener {
             flowerFour.rotationUpdate((rotationAngle * -4 + 135).normalizeEulerAngle(false), animate)
         }
 
-        degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append("°")
+        degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append(degreeSymbol)
 
         direction.text = if (showDirectionCode) {
             getDirectionCodeFromAzimuth(requireContext(), azimuth = rotationAngle.toDouble()).uppercase(LocaleHelper.getAppLocale())

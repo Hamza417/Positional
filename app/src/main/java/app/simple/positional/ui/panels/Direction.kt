@@ -89,6 +89,7 @@ class Direction : ScopedFragment(), SensorEventListener {
     private var directionAngle = 0F
     private val degreesPerRadian = 180 / Math.PI
     private val twoTimesPi = 2.0 * Math.PI
+    private val degreeSymbol = "\u00B0"
 
     private var haveAccelerometerSensor = false
     private var haveMagnetometerSensor = false
@@ -256,8 +257,8 @@ class Direction : ScopedFragment(), SensorEventListener {
         dial.rotationUpdate(rotationAngle * -1, true)
         direction.rotationUpdate(directionAngle.minus(rotationAngle).normalizeEulerAngle(false), true)
 
-        degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append("°")
-        directionDegrees.text = StringBuilder().append(abs(direction.rotation.normalizeEulerAngle(false).toInt())).append("°")
+        degrees.text = StringBuilder().append(abs(dial.rotation.normalizeEulerAngle(true).toInt())).append(degreeSymbol)
+        directionDegrees.text = StringBuilder().append(abs(direction.rotation.normalizeEulerAngle(false).toInt())).append(degreeSymbol)
         azimuth.text = HtmlHelper.fromHtml("<b>${getString(R.string.moon_azimuth)}</b> ${degrees.text}")
         bearing.text = HtmlHelper.fromHtml("<b>${getString(R.string.gps_bearing)}</b> ${directionDegrees.text}")
     }
