@@ -274,6 +274,8 @@ class Compass : ScopedFragment(), SensorEventListener {
                         backPress?.onBackPressed()
                     }
                 }
+
+                copy.isClickable = newState == BottomSheetBehavior.STATE_EXPANDED
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {

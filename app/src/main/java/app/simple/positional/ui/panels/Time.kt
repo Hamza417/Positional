@@ -246,6 +246,8 @@ class Time : ScopedFragment() {
                         backPress?.onBackPressed()
                     }
                 }
+
+                copyButton.isClickable = newState == BottomSheetBehavior.STATE_EXPANDED
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -349,21 +351,25 @@ class Time : ScopedFragment() {
                     sweepSeconds.setPhysical(1F, -1F, 25000F)
                     sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false) - 90F, true)
                 }
+
                 "tick_smooth" -> {
                     seconds.setPhysical(-1F, 5F, 5000F)
                     seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false), true)
                     sweepSeconds.setPhysical(-1F, 5F, 5000F)
                     sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false) - 90F, true)
                 }
+
                 "smooth" -> {
                     seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), true), true)
                     sweepSeconds.setPhysical(0.1F, 10F, 5000F)
                     sweepSeconds.rotationUpdate(seconds.rotation - 90F, true)
                 }
+
                 "tick" -> {
                     seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false), false)
                     sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), false).minus(90), false)
                 }
+
                 "mechanical" -> {
                     seconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), true), false)
                     sweepSeconds.rotationUpdate(getSecondsInDegrees(getCurrentTimeData(), true).minus(90), false)
@@ -371,12 +377,12 @@ class Time : ScopedFragment() {
             }
 
             if (dayNightIndicatorImageCountViolation != 0) {
-                val calendar = getCurrentTimeData().hour
-                if (calendar < 7 || calendar > 18) {
+                if (getCurrentTimeData().hour in 6..18) {
                     dayNightIndicator.setImageResource(R.drawable.ic_night)
-                } else if (calendar < 18 || calendar > 6) {
+                } else {
                     dayNightIndicator.setImageResource(R.drawable.ic_day)
                 }
+
                 // Setting this to zero will prevent the image from applying again every second
                 dayNightIndicatorImageCountViolation = 0
             }
@@ -435,9 +441,11 @@ class Time : ScopedFragment() {
             "smooth" -> {
                 1000 / requireActivity().getDisplayRefreshRate().toLong()
             }
+
             "mechanical" -> {
                 240
             }
+
             else -> {
                 1000
             }
@@ -657,12 +665,15 @@ class Time : ScopedFragment() {
                 movementType = ClockPreferences.getMovementType()
                 setMotionDelay(ClockPreferences.getMovementType())
             }
+
             ClockPreferences.clockNeedle -> {
                 setNeedle(ClockPreferences.getClockNeedleTheme())
             }
+
             ClockPreferences.timezone -> {
                 timezone = ClockPreferences.getTimeZone()
             }
+
             ClockPreferences.is24HourFace -> {
                 is24HourFace = if (ClockPreferences.isClockFace24Hour()) {
                     face.setImageResource(R.drawable.clock_face_24)

@@ -357,6 +357,7 @@ class GPS : ScopedFragment() {
                         targetBox.isClickable = false
                         movementBox.isClickable = false
                         coordinatesBox.isClickable = false
+                        copy.isClickable = false
                     }
 
                     BottomSheetBehavior.STATE_EXPANDED -> {
@@ -366,6 +367,7 @@ class GPS : ScopedFragment() {
                         targetBox.isClickable = true
                         movementBox.isClickable = true
                         coordinatesBox.isClickable = true
+                        copy.isClickable = true
                     }
 
                     BottomSheetBehavior.STATE_COLLAPSED -> {
@@ -378,6 +380,7 @@ class GPS : ScopedFragment() {
                         targetBox.isClickable = false
                         movementBox.isClickable = false
                         coordinatesBox.isClickable = false
+                        copy.isClickable = false
                     }
 
                     BottomSheetBehavior.STATE_HALF_EXPANDED -> {
@@ -732,7 +735,7 @@ class GPS : ScopedFragment() {
 
                         @Suppress("DEPRECATION")
                         with(geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)) {
-                            if (this != null && this.isNotEmpty()) {
+                            if (!this.isNullOrEmpty()) {
                                 this[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
                             } else {
                                 getString(R.string.not_available)
