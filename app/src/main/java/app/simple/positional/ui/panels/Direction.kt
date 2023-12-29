@@ -9,6 +9,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -156,7 +157,8 @@ class Direction : ScopedFragment(), SensorEventListener {
         super.onViewCreated(view, savedInstanceState)
 
         mainLayout?.setProxyView(view)
-        target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel() ?: getString(R.string.not_available)}")
+        setTargetLabel()
+        setTargetCoordinates()
 
         locationViewModel.location.observe(viewLifecycleOwner) {
             location = it
@@ -316,9 +318,10 @@ class Direction : ScopedFragment(), SensorEventListener {
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            DirectionPreferences.directionLatitude, DirectionPreferences.directionLongitude, DirectionPreferences.useMapsTarget -> {
+            DirectionPreferences.directionLatitude,
+            DirectionPreferences.directionLongitude,
+            -> {
                 setTargetCoordinates()
-                setTargetLabel()
 
                 if (location != null) {
                     directionAngle = LocationExtension.calculateBearingAngle(
@@ -329,6 +332,11 @@ class Direction : ScopedFragment(), SensorEventListener {
                 }
 
                 setCoordinates()
+            }
+
+            DirectionPreferences.directionLabel,
+            DirectionPreferences.useMapsTarget -> {
+                setTargetLabel()
             }
 
             DirectionPreferences.directionGimbalLock -> {
@@ -391,8 +399,9 @@ class Direction : ScopedFragment(), SensorEventListener {
     }
 
     private fun setTargetLabel() {
+        Log.d("Direction", "setTargetLabel: ${DirectionPreferences.getTargetLabel()}")
         if (DirectionPreferences.isUsingMapsTarget() && GPSPreferences.isTargetMarkerSet()) {
-            target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}: ${getString(R.string.using_maps_target)} </b>")
+            target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${getString(R.string.using_maps_target)}")
         } else {
             target.text = HtmlHelper.fromHtml("<b>${getString(R.string.target)}:</b> ${DirectionPreferences.getTargetLabel() ?: getString(R.string.not_available)}")
         }

@@ -124,7 +124,7 @@ class Directions : ScopedFragment() {
                             GPSPreferences.setTargetMarkerLongitude(directionModel.longitude.toFloat())
                             GPSPreferences.setTargetMarkerStartLatitude(MainPreferences.getLastCoordinates()[0])
                             GPSPreferences.setTargetMarkerStartLongitude(MainPreferences.getLastCoordinates()[1])
-                            set(directionModel)
+                            set(directionModel, useMapsTarget = true)
                         }
 
                         override fun onNavigate() {
@@ -145,11 +145,11 @@ class Directions : ScopedFragment() {
         }
     }
 
-    private fun set(directionModel: DirectionModel) {
+    private fun set(directionModel: DirectionModel, useMapsTarget: Boolean = false) {
         DirectionPreferences.setTargetLatitude(directionModel.latitude.toFloat())
         DirectionPreferences.setTargetLongitude(directionModel.longitude.toFloat())
         DirectionPreferences.setTargetLabel(directionModel.name)
-        DirectionPreferences.setUseMapsTarget(false)
+        DirectionPreferences.setUseMapsTarget(useMapsTarget)
 
         requireActivity().onBackPressedDispatcher.onBackPressed()
     }

@@ -2,7 +2,6 @@ package app.simple.positional.preferences
 
 import android.annotation.SuppressLint
 import app.simple.positional.singleton.SharedPreferences
-import org.jetbrains.annotations.NotNull
 
 object DirectionPreferences {
 
@@ -10,19 +9,18 @@ object DirectionPreferences {
     const val directionLongitude = "direction_target_longitude"
     const val directionGimbalLock = "direction_gimbal_lock"
     const val useMapsTarget = "direction_use_maps_target"
-
-    private const val directionLabel = "direction_target_label"
+    const val directionLabel = "direction_target_label"
 
     //--------------------------------------------------------------------------------------------------//
 
     @SuppressLint("ApplySharedPref")
-    fun setTargetLatitude(@NotNull value: Float): Float {
+    fun setTargetLatitude(value: Float): Float {
         SharedPreferences.getSharedPreferences().edit().putFloat(directionLatitude, value).apply()
         return value
     }
 
     @SuppressLint("ApplySharedPref")
-    fun setTargetLongitude(@NotNull value: Float): Float {
+    fun setTargetLongitude(value: Float): Float {
         SharedPreferences.getSharedPreferences().edit().putFloat(directionLongitude, value).apply()
         return value
     }
