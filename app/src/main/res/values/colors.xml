@@ -16,6 +16,15 @@
     <color name="iconRegular">#9A9A9A</color>
     <color name="indicator">#F3F3F3</color>
 
+    <!-- Bottom Bar Icon Colors -->
+    <color name="time_bb_color">#cb4335</color>
+    <color name="compass_bb_color">#76448a</color>
+    <color name="direction_bb_color">#1f618d</color>
+    <color name="location_bb_color">#117a65</color>
+    <color name="trail_bb_color">#b7950b</color>
+    <color name="level_bb_color">#a04000</color>
+    <color name="settings_bb_color">#616a6b</color>
+
     <color name="notification_icon_color">#D60044</color>
 
     <color name="clock_needle_stroke_color">#FFFFFF</color>

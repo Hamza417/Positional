@@ -10,9 +10,10 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
+import app.simple.positional.model.BottomBar
 import app.simple.positional.preferences.FragmentPreferences
 
-class BottomBarAdapter(private var list: ArrayList<BottomBarModel>, val onClick: (View) -> Unit) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
+class BottomBarAdapter(private var list: ArrayList<BottomBar>, val onClick: (View) -> Unit) : RecyclerView.Adapter<BottomBarAdapter.Holder>() {
 
     private var currentTag = FragmentPreferences.getCurrentTag()
     private var lastItem = FragmentPreferences.getCurrentPage()
@@ -35,7 +36,7 @@ class BottomBarAdapter(private var list: ArrayList<BottomBarModel>, val onClick:
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setBottomBarItems(list: ArrayList<BottomBarModel>) {
+    fun setBottomBarItems(list: ArrayList<BottomBar>) {
         this.list = list
 
         /**

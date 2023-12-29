@@ -1,26 +1,28 @@
-package app.simple.positional.adapters.bottombar;
+package app.simple.positional.model;
 
-public class BottomBarModel {
+public class BottomBar {
     private int icon;
     private String tag;
     private String name;
+    private int color;
 
-    public BottomBarModel(int icon, String tag, String name) {
+    public BottomBar(int icon, String tag, String name, int color) {
         this.icon = icon;
         this.tag = tag;
         this.name = name;
+        this.color = color;
     }
 
     public int getIcon() {
         return icon;
     }
 
-    public String getTag() {
-        return tag;
-    }
-
     public void setIcon(int icon) {
         this.icon = icon;
+    }
+
+    public String getTag() {
+        return tag;
     }
 
     public void setTag(String tag) {
@@ -33,5 +35,13 @@ public class BottomBarModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }
