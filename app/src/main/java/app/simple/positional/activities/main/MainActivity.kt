@@ -253,13 +253,6 @@ class MainActivity : BaseActivity(),
         bottomBarContainer.removeView(popupContainer)
     }
 
-    @Suppress("unused")
-    private fun hideBottomBarMenuAndShowPopup() {
-        bottomBar.visibility = ViewPager2.GONE
-        label.visibility = TextView.GONE
-        bottomBarContainer.addView(popupContainer)
-    }
-
     private fun checkRunTimePermission() {
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
