@@ -22,14 +22,13 @@ import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.BottomBarAdapter
 import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
-import app.simple.positional.callbacks.PanelsCallback
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.transformers.DepthTransformer
-import app.simple.positional.dialogs.app.Panels.Companion.showPanelsDialog
 import app.simple.positional.extensions.activity.BaseActivity
+import app.simple.positional.popups.miscellaneous.PopupFragments
 import app.simple.positional.preferences.BottomBarPreferences
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
@@ -70,25 +69,26 @@ class MainActivity : BaseActivity(),
         label = findViewById(R.id.label)
 
         bottomBarAdapter = BottomBarAdapter(BottomBarItems.getBottomBarItems(baseContext)) {
-//            PopupFragments(bottomBarContainer) { _, tag, position ->
-//                bottomBar.setCurrentItem(position, true)
-//                openFragment(tag)
-//                FragmentPreferences.setCurrentPage(position)
-//                FragmentPreferences.setCurrentTag(tag)
-//            }.setOnDismissListener {
-//                bottomBarContainer.animate()
-//                        .alpha(1f)
-//                        .setInterpolator(DecelerateInterpolator())
-//                        .setDuration(500)
-//                        .start()
-//            }
-
-            supportFragmentManager.showPanelsDialog(PanelsCallback { _, string, position ->
+            PopupFragments(bottomBarContainer) { _, tag, position ->
                 bottomBar.setCurrentItem(position, true)
-                openFragment(string!!)
+                openFragment(tag)
                 FragmentPreferences.setCurrentPage(position)
-                FragmentPreferences.setCurrentTag(string)
-            })
+                FragmentPreferences.setCurrentTag(tag)
+            }.setOnDismissListener {
+                bottomBarContainer.animate()
+                        .alpha(1f)
+                        .setInterpolator(DecelerateInterpolator())
+                        .setDuration(500)
+                        .start()
+            }
+
+            // They didn't like it :(
+//            supportFragmentManager.showPanelsDialog(PanelsCallback { _, string, position ->
+//                bottomBar.setCurrentItem(position, true)
+//                openFragment(string!!)
+//                FragmentPreferences.setCurrentPage(position)
+//                FragmentPreferences.setCurrentTag(string)
+//            })
         }
 
         label.setOnClickListener {
@@ -253,6 +253,7 @@ class MainActivity : BaseActivity(),
         bottomBarContainer.removeView(popupContainer)
     }
 
+    @Suppress("unused")
     private fun hideBottomBarMenuAndShowPopup() {
         bottomBar.visibility = ViewPager2.GONE
         label.visibility = TextView.GONE
