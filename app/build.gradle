@@ -120,6 +120,7 @@ android {
 
     buildFeatures {
         aidl true
+        buildConfig true
     }
 
     applicationVariants.configureEach { variant ->
