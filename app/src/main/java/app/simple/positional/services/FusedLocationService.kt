@@ -1,5 +1,6 @@
 package app.simple.positional.services
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,9 +8,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.location.Location
 import android.location.LocationManager
+import android.os.Build
 import android.os.HandlerThread
 import android.os.IBinder
-import androidx.core.content.ContextCompat
+import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.PermissionUtils
@@ -40,6 +42,7 @@ class FusedLocationService : Service() {
         return null
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onCreate() {
         super.onCreate()
 
@@ -75,7 +78,15 @@ class FusedLocationService : Service() {
             }
         }
 
-        ContextCompat.registerReceiver(applicationContext, broadcastReceiver, intentFilter, ContextCompat.RECEIVER_NOT_EXPORTED)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(broadcastReceiver, intentFilter, RECEIVER_NOT_EXPORTED)
+            } else {
+                registerReceiver(broadcastReceiver, intentFilter)
+            }
+        } else {
+            registerReceiver(broadcastReceiver, intentFilter)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -108,7 +119,13 @@ class FusedLocationService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         fusedLocationProviderClient.removeLocationUpdates(locationCallback)
-        unregisterReceiver(broadcastReceiver)
+        try {
+            Log.d("FusedLocationService", "BroadcastReceiver attempting to unregister")
+            unregisterReceiver(broadcastReceiver)
+            Log.d("FusedLocationService", "BroadcastReceiver unregistered")
+        } catch (e: IllegalArgumentException) {
+            Log.e("FusedLocationService", "BroadcastReceiver not registered")
+        }
         handlerThread.quitSafely()
     }
 
