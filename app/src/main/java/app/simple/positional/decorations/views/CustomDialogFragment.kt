@@ -6,6 +6,7 @@ import android.os.Looper
 import android.util.DisplayMetrics
 import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
 import android.widget.FrameLayout
 import androidx.fragment.app.DialogFragment
 import app.simple.positional.R
@@ -32,6 +33,7 @@ open class CustomDialogFragment : DialogFragment() {
         window.windowManager.defaultDisplay.getMetrics(displayMetrics)
         window.setDimAmount(0.35f)
         window.attributes.gravity = Gravity.CENTER
+        window.attributes.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
 
         // TODO - fixe dialog height
         window.attributes.width = getWindowWidth()

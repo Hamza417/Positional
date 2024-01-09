@@ -65,63 +65,87 @@
             android:textCursorDrawable="@drawable/text_cursor"
             tools:ignore="LabelFor" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/popup_padding"
-            android:fontFamily="@font/medium"
-            android:text="@string/specified_hint_latitude"
-            android:textColor="@color/textTertiary"
-            android:textSize="@dimen/description_text_size" />
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
-        <EditText
-            android:id="@+id/latitude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:autofillHints="@string/note"
-            android:background="@drawable/text_field"
-            android:fontFamily="@font/regular"
-            android:inputType="numberDecimal"
-            android:maxLength="40"
-            android:maxLines="1"
-            android:minHeight="50dp"
-            android:paddingHorizontal="@dimen/popup_padding"
-            android:saveEnabled="true"
-            android:textColor="@color/textSecondary"
-            android:textColorHighlight="?attr/colorAppAccentLight"
-            android:textColorHint="@color/textTertiary"
-            android:textCursorDrawable="@drawable/text_cursor"
-            tools:ignore="LabelFor" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/popup_padding"
-            android:fontFamily="@font/medium"
-            android:text="@string/specified_hint_longitude"
-            android:textColor="@color/textTertiary"
-            android:textSize="@dimen/description_text_size" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/popup_padding"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/specified_hint_latitude"
+                    android:textColor="@color/textTertiary"
+                    android:textSize="@dimen/description_text_size" />
 
-        <EditText
-            android:id="@+id/longitude"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:autofillHints="@string/note"
-            android:background="@drawable/text_field"
-            android:fontFamily="@font/regular"
-            android:inputType="numberDecimal"
-            android:maxLength="40"
-            android:maxLines="1"
-            android:minHeight="50dp"
-            android:paddingHorizontal="@dimen/popup_padding"
-            android:saveEnabled="true"
-            android:textColor="@color/textSecondary"
-            android:textColorHighlight="?attr/colorAppAccentLight"
-            android:textColorHint="@color/textTertiary"
-            android:textCursorDrawable="@drawable/text_cursor"
-            tools:ignore="LabelFor" />
+                <EditText
+                    android:id="@+id/latitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:autofillHints="@string/note"
+                    android:background="@drawable/text_field"
+                    android:fontFamily="@font/regular"
+                    android:inputType="numberDecimal"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:minHeight="50dp"
+                    android:paddingHorizontal="@dimen/popup_padding"
+                    android:saveEnabled="true"
+                    android:textColor="@color/textSecondary"
+                    android:textColorHighlight="?attr/colorAppAccentLight"
+                    android:textColorHint="@color/textTertiary"
+                    android:textCursorDrawable="@drawable/text_cursor"
+                    tools:ignore="LabelFor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/popup_padding"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/specified_hint_longitude"
+                    android:textColor="@color/textTertiary"
+                    android:textSize="@dimen/description_text_size" />
+
+                <EditText
+                    android:id="@+id/longitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:autofillHints="@string/note"
+                    android:background="@drawable/text_field"
+                    android:fontFamily="@font/regular"
+                    android:inputType="numberDecimal"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:minHeight="50dp"
+                    android:paddingHorizontal="@dimen/popup_padding"
+                    android:saveEnabled="true"
+                    android:textColor="@color/textSecondary"
+                    android:textColorHighlight="?attr/colorAppAccentLight"
+                    android:textColorHint="@color/textTertiary"
+                    android:textCursorDrawable="@drawable/text_cursor"
+                    tools:ignore="LabelFor" />
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
