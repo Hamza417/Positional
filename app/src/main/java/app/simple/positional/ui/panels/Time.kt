@@ -118,7 +118,6 @@ class Time : ScopedFragment() {
     private lateinit var locationViewModel: LocationViewModel
 
     var delay: Long = 1000
-    private var dayNightIndicatorImageCountViolation = 1
     private var isMetric = true
     private var is24HourFace = false
     private var isCustomCoordinate = false
@@ -277,7 +276,7 @@ class Time : ScopedFragment() {
             val clipboard: ClipboardManager =
                     requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
-            val stringBuilder = StringBuilder().apply {
+            @Suppress("KotlinConstantConditions") val stringBuilder = StringBuilder().apply {
                 append("${R.string.local_time}\n")
                 append("${localTimeData.text}\n")
                 append("${R.string.utc_time}\n")
@@ -376,16 +375,7 @@ class Time : ScopedFragment() {
                 }
             }
 
-            if (dayNightIndicatorImageCountViolation != 0) {
-                if (getCurrentTimeData().hour in 6..18) {
-                    dayNightIndicator.setImageResource(R.drawable.ic_night)
-                } else {
-                    dayNightIndicator.setImageResource(R.drawable.ic_day)
-                }
-
-                // Setting this to zero will prevent the image from applying again every second
-                dayNightIndicatorImageCountViolation = 0
-            }
+            setDayNightIcon()
 
             handler.postDelayed(this, delay)
         }
@@ -428,6 +418,14 @@ class Time : ScopedFragment() {
 
     private fun setSkins() {
         setNeedle(ClockPreferences.getClockNeedleTheme())
+    }
+
+    private fun setDayNightIcon() {
+        if (getCurrentTimeData().hour in 6..18) {
+            dayNightIndicator.setImageResource(R.drawable.ic_day)
+        } else {
+            dayNightIndicator.setImageResource(R.drawable.ic_night)
+        }
     }
 
     private fun setNeedle(value: Int) {
