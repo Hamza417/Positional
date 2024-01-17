@@ -51,16 +51,13 @@ android {
 
     compileSdk 34
 
-    def appVersionCode = 180
-    def appVersionName = "build${appVersionCode}_final"
-
     defaultConfig {
         applicationId "app.simple.positional"
         minSdkVersion 24
         //noinspection OldTargetApi
         targetSdkVersion 34
-        versionCode appVersionCode
-        versionName appVersionName
+        versionCode 180020
+        versionName "v180.2.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -121,6 +118,7 @@ android {
     buildFeatures {
         aidl true
         buildConfig true
+        viewBinding true
     }
 
     applicationVariants.configureEach { variant ->
@@ -145,7 +143,7 @@ dependencies {
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     implementation 'androidx.webkit:webkit:1.9.0'
     implementation 'androidx.recyclerview:recyclerview:1.3.2'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
 
     // Kotlin
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
@@ -157,8 +155,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'com.google.maps.android:android-maps-utils:2.2.4'
 
-    // Third Party Implementations
-    implementation 'org.shredzone.commons:commons-suncalc:3.6'
+    // Third Party
+    implementation 'org.shredzone.commons:commons-suncalc:3.7'
     implementation 'com.github.Berico-Technologies:Geo-Coordinate-Conversion-Java:360781e5be'
     implementation 'com.github.vipulasri:timelineview:1.1.5'
 

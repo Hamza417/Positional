@@ -1,12 +1,14 @@
 package app.simple.positional.ui.subpanels
 
 import android.animation.ValueAnimator
+import android.app.Activity
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -24,13 +27,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import app.simple.positional.R
+import app.simple.positional.activities.subactivity.MapSearchActivity
 import app.simple.positional.activities.subactivity.WebPageViewerActivity
 import app.simple.positional.adapters.settings.LocationsAdapter
 import app.simple.positional.database.instances.LocationDatabase
 import app.simple.positional.decorations.padding.PaddingAwareLinearLayout
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.dialogs.app.MapSearch.Companion.showMapSearch
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.model.Locations
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
@@ -67,6 +70,30 @@ class CustomLocation : ScopedFragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
 
     private var address = ""
+
+    private val registerForActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        when (result.resultCode) {
+            Activity.RESULT_OK -> {
+                result.data?.let { intent ->
+                    intent.getStringExtra("address")?.let { address ->
+                        intent.getDoubleExtra("latitude", 0.0).let { latitude ->
+                            intent.getDoubleExtra("longitude", 0.0).let { longitude ->
+                                this.latitudeInputEditText.setText(latitude.toString())
+                                this.longitudeInputEditText.setText(longitude.toString())
+                                if (address.isNotEmpty()) {
+                                    this.addressInputEditText.setText(address)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            Activity.RESULT_CANCELED -> {
+                Log.d("DirectionTarget", "Search cancelled")
+            }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_custom_location, container, false)
@@ -108,13 +135,7 @@ class CustomLocation : ScopedFragment() {
         }
 
         search.setOnClickListener {
-            childFragmentManager.showMapSearch().setOnMapSearch { address, latitude, longitude ->
-                if (address.isNotEmpty()) {
-                    addressInputEditText.setText(address)
-                }
-                latitudeInputEditText.setText(latitude.toString())
-                longitudeInputEditText.setText(longitude.toString())
-            }
+            registerForActivityResult.launch(Intent(requireContext(), MapSearchActivity::class.java))
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -131,19 +152,19 @@ class CustomLocation : ScopedFragment() {
             }
         })
 
-        customLocationViewModel.customLocations.observe(viewLifecycleOwner, {
+        customLocationViewModel.customLocations.observe(viewLifecycleOwner) {
             locationsAdapter.setList(it)
             recyclerView.adapter = locationsAdapter
-        })
+        }
 
-        customLocationViewModel.artState.observe(viewLifecycleOwner, {
+        customLocationViewModel.artState.observe(viewLifecycleOwner) {
             if (it) {
                 art.visible(true)
                 inputLayoutsContainer.animateElevation(0F)
             } else {
                 art.invisible(true)
             }
-        })
+        }
 
         options.setOnClickListener {
             val popup = CustomLocationPopupMenu(

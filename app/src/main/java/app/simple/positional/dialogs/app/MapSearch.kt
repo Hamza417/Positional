@@ -27,6 +27,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
 
+@Suppress("unused")
+@Deprecated("Use MapSearchActivity instead")
 class MapSearch : CustomDialogFragment() {
 
     private lateinit var maps: SearchMap
@@ -60,7 +62,7 @@ class MapSearch : CustomDialogFragment() {
 
         latitude.setText(MathExtensions.round(maps.lastLatitude, 6).toString())
         longitude.setText(MathExtensions.round(maps.lastLongitude, 6).toString())
-        address.threshold = 5
+        address.threshold = 3
 
         maps.callbacks = {
             latitude.setText(MathExtensions.round(it.latitude, 6).toString())
@@ -172,6 +174,7 @@ class MapSearch : CustomDialogFragment() {
         if (job?.isActive == true) job?.cancel(kotlinx.coroutines.CancellationException("Dialog destroyed"))
     }
 
+    @Suppress("DEPRECATION")
     companion object {
         fun newInstance(): MapSearch {
             val args = Bundle()
@@ -181,7 +184,7 @@ class MapSearch : CustomDialogFragment() {
         }
 
         fun FragmentManager.showMapSearch(): MapSearch {
-            val fragment = MapSearch.newInstance()
+            val fragment = newInstance()
             fragment.show(this, "map_search")
             return fragment
         }

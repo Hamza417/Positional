@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.format.DateFormat
 import android.view.WindowManager
 import android.widget.FrameLayout
@@ -29,6 +31,8 @@ import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.ThemeSetter
 
 open class BaseActivity : AppCompatActivity() {
+
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun attachBaseContext(newBaseContext: Context) {
         /**
@@ -215,5 +219,14 @@ open class BaseActivity : AppCompatActivity() {
              */
             WindowInsetsCompat.CONSUMED
         }
+    }
+
+    protected fun postDelayed(delay: Long, action: () -> Unit) {
+        handler.postDelayed(action, delay)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
     }
 }

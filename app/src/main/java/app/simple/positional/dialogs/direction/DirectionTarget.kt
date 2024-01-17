@@ -1,16 +1,20 @@
 package app.simple.positional.dialogs.direction
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import app.simple.positional.R
+import app.simple.positional.activities.subactivity.MapSearchActivity
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
-import app.simple.positional.dialogs.app.MapSearch.Companion.showMapSearch
 import app.simple.positional.model.DirectionModel
 import app.simple.positional.preferences.DirectionPreferences
 import app.simple.positional.util.ConditionUtils.isNull
@@ -33,6 +37,28 @@ class DirectionTarget : CustomDialogFragment() {
 
     private var directionModel: DirectionModel? = null
     private var directionTargetCallbacks: DirectionTargetCallbacks? = null
+
+    private val registerForActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        when (result.resultCode) {
+            Activity.RESULT_OK -> {
+                result.data?.let { intent ->
+                    intent.getStringExtra("address")?.let { address ->
+                        intent.getDoubleExtra("latitude", 0.0).let { latitude ->
+                            intent.getDoubleExtra("longitude", 0.0).let { longitude ->
+                                this.latitude.setText(latitude.toString())
+                                this.longitude.setText(longitude.toString())
+                                label.setText(address)
+                            }
+                        }
+                    }
+                }
+            }
+
+            Activity.RESULT_CANCELED -> {
+                Log.d("DirectionTarget", "Search cancelled")
+            }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_direction_target, container, false)
@@ -96,11 +122,7 @@ class DirectionTarget : CustomDialogFragment() {
         }
 
         search.setOnClickListener {
-            childFragmentManager.showMapSearch().setOnMapSearch { address, latitude, longitude ->
-                this.latitude.setText(latitude.toString())
-                this.longitude.setText(longitude.toString())
-                label.setText(address)
-            }
+            registerForActivityResult.launch(Intent(requireContext(), MapSearchActivity::class.java))
         }
 
         if (directionModel.isNull()) {

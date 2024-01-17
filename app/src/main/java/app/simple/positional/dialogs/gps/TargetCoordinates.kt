@@ -1,16 +1,20 @@
 package app.simple.positional.dialogs.gps
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
 import app.simple.positional.R
+import app.simple.positional.activities.subactivity.MapSearchActivity
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
-import app.simple.positional.dialogs.app.MapSearch.Companion.showMapSearch
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.ViewUtils.gone
@@ -26,6 +30,27 @@ class TargetCoordinates : CustomDialogFragment() {
 
     private var isValidLatitude = false
     private var isValidLongitude = false
+
+    private val registerForActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        when (result.resultCode) {
+            Activity.RESULT_OK -> {
+                result.data?.let { intent ->
+                    intent.getStringExtra("address")?.let { _ ->
+                        intent.getDoubleExtra("latitude", 0.0).let { latitude ->
+                            intent.getDoubleExtra("longitude", 0.0).let { longitude ->
+                                this.latitude.setText(latitude.toString())
+                                this.longitude.setText(longitude.toString())
+                            }
+                        }
+                    }
+                }
+            }
+
+            Activity.RESULT_CANCELED -> {
+                Log.d("TargetCoordinates", "Search cancelled")
+            }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_target_location, container, false)
@@ -43,10 +68,7 @@ class TargetCoordinates : CustomDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         search.setOnClickListener {
-            childFragmentManager.showMapSearch().setOnMapSearch { _, latitude, longitude ->
-                this.latitude.setText(latitude.toString())
-                this.longitude.setText(longitude.toString())
-            }
+            registerForActivityResult.launch(Intent(requireContext(), MapSearchActivity::class.java))
         }
 
         latitude.doOnTextChanged { text, _, _, _ ->

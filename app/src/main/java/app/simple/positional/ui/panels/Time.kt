@@ -132,7 +132,7 @@ class Time : ScopedFragment() {
         timezone = ClockPreferences.getTimeZone()
         movementType = ClockPreferences.getMovementType()
 
-        locationViewModel = ViewModelProvider(requireActivity()).get(LocationViewModel::class.java)
+        locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
         handler = Handler(Looper.getMainLooper())
 
         hour = view.findViewById(R.id.hour)

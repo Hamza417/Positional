@@ -358,6 +358,10 @@
             android:exported="true" />
 
         <activity
+            android:name=".activities.subactivity.MapSearchActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".activities.service.ClockWidgetActivity"
             android:exported="true">
             <intent-filter>
@@ -380,7 +384,8 @@
             android:icon="@drawable/ic_pin_01"
             android:label="@string/location_provider"
             android:logo="@drawable/ic_pin_01"
-            android:stopWithTask="true" />
+            android:stopWithTask="true"
+            tools:ignore="ForegroundServicePermission" />
 
         <service
             android:name=".services.FusedLocationService"
@@ -390,7 +395,8 @@
             android:foregroundServiceType="location"
             android:icon="@drawable/ic_pin_01"
             android:label="@string/fused_location_provider"
-            android:stopWithTask="true" />
+            android:stopWithTask="true"
+            tools:ignore="ForegroundServicePermission" />
 
         <service
             android:name=".services.ClockWidgetService2x2"

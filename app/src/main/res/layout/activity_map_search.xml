@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.simple.positional.decorations.padding.PaddingAwareLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:backgroundTint="@color/mainBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:animateLayoutChanges="true"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/popup_padding"
+        android:paddingTop="@dimen/popup_padding"
+        tools:ignore="RtlSymmetry">
+
+        <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+            android:id="@+id/cancel"
+            android:layout_width="@dimen/app_button_size"
+            android:layout_height="@dimen/app_button_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/popup_padding"
+            android:src="@drawable/ic_clear" />
+
+        <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+            android:id="@+id/confirm"
+            android:layout_width="@dimen/app_button_size"
+            android:layout_height="@dimen/app_button_size"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_check" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="@dimen/popup_padding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/medium"
+            android:text="@string/gps_address"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/description_text_size" />
+
+        <AutoCompleteTextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:autofillHints="@string/note"
+            android:background="@drawable/text_field"
+            android:fontFamily="@font/regular"
+            android:inputType="textAutoComplete"
+            android:maxLength="60"
+            android:maxLines="1"
+            android:minHeight="50dp"
+            android:paddingHorizontal="@dimen/popup_padding"
+            android:saveEnabled="true"
+            android:textColor="@color/textSecondary"
+            android:textColorHighlight="?attr/colorAppAccentLight"
+            android:textColorHint="@color/textTertiary"
+            android:textCursorDrawable="@drawable/text_cursor"
+            tools:ignore="LabelFor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/popup_padding"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/specified_hint_latitude"
+                    android:textColor="@color/textTertiary"
+                    android:textSize="@dimen/description_text_size" />
+
+                <EditText
+                    android:id="@+id/latitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:autofillHints="@string/note"
+                    android:background="@drawable/text_field"
+                    android:fontFamily="@font/regular"
+                    android:inputType="numberDecimal"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:minHeight="50dp"
+                    android:paddingHorizontal="@dimen/popup_padding"
+                    android:saveEnabled="true"
+                    android:textColor="@color/textSecondary"
+                    android:textColorHighlight="?attr/colorAppAccentLight"
+                    android:textColorHint="@color/textTertiary"
+                    android:textCursorDrawable="@drawable/text_cursor"
+                    tools:ignore="LabelFor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/popup_padding"
+                    android:fontFamily="@font/medium"
+                    android:text="@string/specified_hint_longitude"
+                    android:textColor="@color/textTertiary"
+                    android:textSize="@dimen/description_text_size" />
+
+                <EditText
+                    android:id="@+id/longitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:autofillHints="@string/note"
+                    android:background="@drawable/text_field"
+                    android:fontFamily="@font/regular"
+                    android:inputType="numberDecimal"
+                    android:maxLength="40"
+                    android:maxLines="1"
+                    android:minHeight="50dp"
+                    android:paddingHorizontal="@dimen/popup_padding"
+                    android:saveEnabled="true"
+                    android:textColor="@color/textSecondary"
+                    android:textColorHighlight="?attr/colorAppAccentLight"
+                    android:textColorHint="@color/textTertiary"
+                    android:textCursorDrawable="@drawable/text_cursor"
+                    tools:ignore="LabelFor" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dividerColor" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <app.simple.positional.decorations.views.SearchMap
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_crosshair"
+            app:tint="@color/iconRegular"
+            tools:ignore="ContentDescription" />
+
+    </FrameLayout>
+
+</app.simple.positional.decorations.padding.PaddingAwareLinearLayout>
