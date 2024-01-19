@@ -45,8 +45,7 @@ class MapSearchActivity : BaseActivity() {
             postDelayed(1000) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     Geocoder(applicationContext).getFromLocationName(text.toString(), 10) { addresses ->
-                        postDelayed(0) {
-                            Log.d("MapSearch", "Addresses: $addresses")
+                        runOnUiThread {
                             try {
                                 ArrayAdapter(applicationContext, android.R.layout.simple_dropdown_item_1line, addresses.map { it.getAddressLine(0) }).also {
                                     binding.address.setAdapter(it)
