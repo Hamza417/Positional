@@ -33,18 +33,13 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/info_text_secondary_size" />
 
-            <androidx.core.widget.ContentLoadingProgressBar
-                android:id="@+id/address_indicator"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="10dp"
-                android:indeterminateBehavior="repeat"
-                android:indeterminateDuration="100"
-                android:indeterminateOnly="true"
-                android:indeterminateTint="@color/iconColor"
-                android:progressTint="@color/iconColor" />
+            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+                android:id="@+id/search"
+                android:layout_width="@dimen/app_button_size"
+                android:layout_height="@dimen/app_button_size"
+                android:layout_marginEnd="5dp"
+                android:tint="@color/iconColor"
+                android:src="@drawable/ic_search" />
 
             <app.simple.positional.decorations.ripple.DynamicRippleImageButton
                 android:id="@+id/options_custom_coordinates"
