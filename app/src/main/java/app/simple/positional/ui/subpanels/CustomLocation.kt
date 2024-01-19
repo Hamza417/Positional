@@ -3,8 +3,6 @@ package app.simple.positional.ui.subpanels
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Intent
-import android.location.Address
-import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -17,7 +15,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.widget.ContentLoadingProgressBar
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
@@ -57,7 +54,6 @@ class CustomLocation : ScopedFragment() {
     private lateinit var art: ImageView
     private lateinit var search: DynamicRippleImageButton
     private lateinit var options: DynamicRippleImageButton
-    private lateinit var loadingProgressBar: ContentLoadingProgressBar
     private lateinit var addressInputEditText: EditText
     private lateinit var latitudeInputEditText: EditText
     private lateinit var longitudeInputEditText: EditText
@@ -102,7 +98,6 @@ class CustomLocation : ScopedFragment() {
         art = view.findViewById(R.id.art_empty)
         search = view.findViewById(R.id.search)
         options = view.findViewById(R.id.options_custom_coordinates)
-        loadingProgressBar = view.findViewById(R.id.address_indicator)
         addressInputEditText = view.findViewById(R.id.address)
         latitudeInputEditText = view.findViewById(R.id.latitude)
         longitudeInputEditText = view.findViewById(R.id.longitude)
@@ -126,12 +121,9 @@ class CustomLocation : ScopedFragment() {
 
         if (MainPreferences.isCustomCoordinate()) {
             address = MainPreferences.getAddress()
-            handler.postDelayed(geoCoderRunnable, 500L)
             addressInputEditText.setText(address)
             latitudeInputEditText.setText(MainPreferences.getCoordinates()[0].toString())
             longitudeInputEditText.setText(MainPreferences.getCoordinates()[1].toString())
-        } else {
-            loadingProgressBar.hide()
         }
 
         search.setOnClickListener {
@@ -286,9 +278,7 @@ class CustomLocation : ScopedFragment() {
         }
 
         addressInputEditText.doOnTextChanged { text, _, _, _ ->
-            handler.removeCallbacks(geoCoderRunnable)
             address = text.toString()
-            handler.postDelayed(geoCoderRunnable, 500)
         }
 
         locationsAdapter.setOnLocationsCallbackListener(object : LocationsAdapter.LocationsCallback {
@@ -324,53 +314,8 @@ class CustomLocation : ScopedFragment() {
      * Always runs the toast message from the main thread
      */
     private fun showToast(message: String) {
-        handler.post {
+        requireActivity().runOnUiThread {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private val geoCoderRunnable: Runnable = Runnable { getCoordinatesFromAddress(address) }
-
-    private fun getCoordinatesFromAddress(address: String) {
-
-        if (address == "----") {
-            loadingProgressBar.hide()
-            return
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            loadingProgressBar.show()
-
-            val geocoder = Geocoder(requireContext())
-            var addresses: MutableList<Address>?
-            var latitude: Double? = null
-            var longitude: Double? = null
-
-            withContext(Dispatchers.IO) {
-                runCatching {
-                    MainPreferences.setAddress(address)
-
-                    @Suppress("DEPRECATION")
-                    addresses = geocoder.getFromLocationName(address, 1)
-                    if (addresses != null && addresses!!.isNotEmpty()) {
-                        latitude = addresses!![0].latitude
-                        longitude = addresses!![0].longitude
-                    }
-                }
-            }
-
-            try {
-                if (latitude != null && longitude != null) {
-                    latitudeInputEditText.setText(latitude.toString())
-                    longitudeInputEditText.setText(longitude.toString())
-                } else {
-                    latitudeInputEditText.text?.clear()
-                    longitudeInputEditText.text?.clear()
-                }
-                loadingProgressBar.hide()
-            } catch (ignored: NullPointerException) {
-            } catch (ignored: UninitializedPropertyAccessException) {
-            }
         }
     }
 
