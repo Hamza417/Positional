@@ -524,14 +524,17 @@ class Time : ScopedFragment() {
                         with(MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).height(altitude).execute()) {
                             moonAzimuth = this.azimuth
 
-                            fromHtml("<b>${getString(R.string.moon_azimuth)}</b> ${round(azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), azimuth)}<br>" +
-                                    "<b>${getString(R.string.moon_altitude)}</b> ${round(this.altitude, 2)}°<br>" +
-                                    (if (isMetric) {
-                                        "<b>${getString(R.string.moon_distance)}</b> ${String.format("%.3E", distance)} ${getString(R.string.kilometer)}<br>"
-                                    } else {
-                                        "<b>${getString(R.string.moon_distance)}</b> ${String.format("%.3E", distance.toMiles())} ${getString(R.string.miles)}<br>"
-                                    }) +
-                                    "<b>${getString(R.string.moon_parallactic_angle)}</b> ${round(parallacticAngle, 2)}°")
+                            fromHtml(buildString {
+                                append("<b>${getString(R.string.moon_azimuth)}</b> ${round(azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), azimuth)}<br>")
+                                append("<b>${getString(R.string.moon_altitude)}</b> ${round(this@with.altitude, 2)}°<br>")
+                                append("<b>${getString(R.string.true_altitude)}</b> ${round(trueAltitude, 2)}°<br>")
+                                append(if (isMetric) {
+                                    "<b>${getString(R.string.moon_distance)}</b> ${String.format("%.3E", distance)} ${getString(R.string.kilometer)}<br>"
+                                } else {
+                                    "<b>${getString(R.string.moon_distance)}</b> ${String.format("%.3E", distance.toMiles())} ${getString(R.string.miles)}<br>"
+                                })
+                                append("<b>${getString(R.string.moon_parallactic_angle)}</b> ${round(parallacticAngle, 2)}°")
+                            })
                         }
 
                 moonIlluminationData =
