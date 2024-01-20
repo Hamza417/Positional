@@ -304,4 +304,6 @@
     <string name="share">Partager</string>
     <string name="telegram_group">Groupe Telegram</string>
     <string name="buy_full_desc">Achetez la version complète et débloquez tout le potentiel de l\'application.</string>
+    <string name="notification_permission_desc">L\'accès aux notifications est nécessaire pour exécuter de façon permanente le service de widget horloge.</string>
+    <string name="true_altitude">Altitude réelle</string>
 </resources>
