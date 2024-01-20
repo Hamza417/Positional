@@ -304,4 +304,6 @@
     <string name="share">بانٹیں</string>
     <string name="telegram_group">ٹیلیگرام گروپ</string>
     <string name="buy_full_desc">مکمل ورژن خریدیں اور ایپ کی پوری صلاحیت کو غیر مقفل کریں۔</string>
+    <string name="notification_permission_desc">گھڑی ویجیٹ سروس کو مستقل طور پر چلانے کے لیے اطلاع تک رسائی درکار ہے۔</string>
+    <string name="true_altitude">حقیقی اونچائی</string>
 </resources>

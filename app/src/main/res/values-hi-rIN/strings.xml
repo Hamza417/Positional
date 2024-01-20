@@ -304,4 +304,6 @@
     <string name="share">शेयर करें</string>
     <string name="telegram_group">टेलीग्राम ग्रुप</string>
     <string name="buy_full_desc">पूर्ण संस्करण खरीदें और ऐप की पूरी क्षमता को अनलॉक करें।</string>
+    <string name="notification_permission_desc">क्लॉक विजेट सेवा को लगातार चलाने के लिए अधिसूचना पहुंच की आवश्यकता होती है।</string>
+    <string name="true_altitude">सच्ची ऊंचाई</string>
 </resources>
