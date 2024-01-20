@@ -305,4 +305,5 @@
     <string name="telegram_group">Telegram 群組</string>
     <string name="buy_full_desc">購買完整版本並釋放應用程序的全部潛力。</string>
     <string name="notification_permission_desc">通知存取需要持續執行時鐘小工具服務。</string>
+    <string name="true_altitude">真實海拔</string>
 </resources>
