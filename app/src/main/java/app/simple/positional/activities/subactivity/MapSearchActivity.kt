@@ -5,8 +5,12 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
-import app.simple.positional.databinding.ActivityMapSearchBinding
+import app.simple.positional.R
+import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.decorations.views.SearchMap
 import app.simple.positional.extensions.activity.BaseActivity
 import app.simple.positional.math.MathExtensions
 import kotlinx.coroutines.CoroutineScope
@@ -17,26 +21,38 @@ import kotlin.coroutines.cancellation.CancellationException
 
 class MapSearchActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityMapSearchBinding
+    private lateinit var map: SearchMap
+    private lateinit var latitude: TextView
+    private lateinit var longitude: TextView
+    private lateinit var address: AutoCompleteTextView
+    private lateinit var confirm: DynamicRippleImageButton
+    private lateinit var cancel: DynamicRippleImageButton
+
     private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMapSearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_map_search)
 
-        binding.map.onCreate(savedInstanceState)
+        map = findViewById(R.id.map)
+        latitude = findViewById(R.id.latitude)
+        longitude = findViewById(R.id.longitude)
+        address = findViewById(R.id.address)
+        confirm = findViewById(R.id.confirm)
+        cancel = findViewById(R.id.cancel)
 
-        binding.latitude.setText(MathExtensions.round(binding.map.lastLatitude, 6).toString())
-        binding.longitude.setText(MathExtensions.round(binding.map.lastLongitude, 6).toString())
-        binding.address.threshold = 3
+        map.onCreate(savedInstanceState)
 
-        binding.map.callbacks = {
-            binding.latitude.setText(MathExtensions.round(it.latitude, 6).toString())
-            binding.longitude.setText(MathExtensions.round(it.longitude, 6).toString())
+        latitude.text = MathExtensions.round(map.lastLatitude, 6).toString()
+        longitude.text = MathExtensions.round(map.lastLongitude, 6).toString()
+        address.threshold = 3
+
+        map.callbacks = {
+            latitude.text = MathExtensions.round(it.latitude, 6).toString()
+            longitude.text = MathExtensions.round(it.longitude, 6).toString()
         }
 
-        binding.address.doOnTextChanged { text, _, _, _ ->
+        address.doOnTextChanged { text, _, _, _ ->
             try {
                 job?.cancel(CancellationException("New search"))
             } catch (_: IllegalStateException) {
@@ -48,15 +64,15 @@ class MapSearchActivity : BaseActivity() {
                         runOnUiThread {
                             try {
                                 ArrayAdapter(applicationContext, android.R.layout.simple_dropdown_item_1line, addresses.map { it.getAddressLine(0) }).also {
-                                    binding.address.setAdapter(it)
-                                    (binding.address.adapter as ArrayAdapter<*>).setNotifyOnChange(true)
-                                    (binding.address.adapter as ArrayAdapter<*>).notifyDataSetChanged()
-                                    binding.address.showDropDown()
+                                    address.setAdapter(it)
+                                    (address.adapter as ArrayAdapter<*>).setNotifyOnChange(true)
+                                    (address.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+                                    address.showDropDown()
 
-                                    binding.address.setOnItemClickListener { _, _, position, _ ->
-                                        binding.latitude.setText(MathExtensions.round(addresses[position].latitude, 6).toString())
-                                        binding.longitude.setText(MathExtensions.round(addresses[position].longitude, 6).toString())
-                                        binding.map.moveCamera(addresses[position].latitude, addresses[position].longitude)
+                                    address.setOnItemClickListener { _, _, position, _ ->
+                                        latitude.text = MathExtensions.round(addresses[position].latitude, 6).toString()
+                                        longitude.text = MathExtensions.round(addresses[position].longitude, 6).toString()
+                                        map.moveCamera(addresses[position].latitude, addresses[position].longitude)
                                     }
                                 }
                             } catch (e: IllegalStateException) {
@@ -71,15 +87,15 @@ class MapSearchActivity : BaseActivity() {
                             launch(Dispatchers.Main) {
                                 try {
                                     ArrayAdapter(applicationContext, android.R.layout.simple_dropdown_item_1line, addresses.map { it.getAddressLine(0) }).also {
-                                        binding.address.setAdapter(it)
-                                        (binding.address.adapter as ArrayAdapter<*>).setNotifyOnChange(true)
-                                        (binding.address.adapter as ArrayAdapter<*>).notifyDataSetChanged()
-                                        binding.address.showDropDown()
+                                        address.setAdapter(it)
+                                        (address.adapter as ArrayAdapter<*>).setNotifyOnChange(true)
+                                        (address.adapter as ArrayAdapter<*>).notifyDataSetChanged()
+                                        address.showDropDown()
 
-                                        binding.address.setOnItemClickListener { _, _, position, _ ->
-                                            binding.latitude.setText(MathExtensions.round(addresses[position].latitude, 6).toString())
-                                            binding.longitude.setText(MathExtensions.round(addresses[position].longitude, 6).toString())
-                                            binding.map.moveCamera(addresses[position].latitude, addresses[position].longitude)
+                                        address.setOnItemClickListener { _, _, position, _ ->
+                                            latitude.text = MathExtensions.round(addresses[position].latitude, 6).toString()
+                                            longitude.text = MathExtensions.round(addresses[position].longitude, 6).toString()
+                                            map.moveCamera(addresses[position].latitude, addresses[position].longitude)
                                         }
                                     }
                                 } catch (e: IllegalStateException) {
@@ -92,16 +108,16 @@ class MapSearchActivity : BaseActivity() {
             }
         }
 
-        binding.confirm.setOnClickListener {
+        confirm.setOnClickListener {
             setResult(RESULT_OK, intent.apply {
-                putExtra("latitude", binding.latitude.text.toString().toDouble())
-                putExtra("longitude", binding.longitude.text.toString().toDouble())
-                putExtra("address", binding.address.text.toString())
+                putExtra("latitude", latitude.text.toString().toDouble())
+                putExtra("longitude", longitude.text.toString().toDouble())
+                putExtra("address", address.text.toString())
             })
             finish()
         }
 
-        binding.cancel.setOnClickListener {
+        cancel.setOnClickListener {
             setResult(RESULT_CANCELED)
             finish()
         }

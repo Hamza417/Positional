@@ -118,7 +118,7 @@ android {
     buildFeatures {
         aidl true
         buildConfig true
-        viewBinding true
+        viewBinding false
     }
 
     applicationVariants.configureEach { variant ->
@@ -141,7 +141,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.fragment:fragment-ktx:1.6.2'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
-    implementation 'androidx.webkit:webkit:1.9.0'
+    implementation 'androidx.webkit:webkit:1.10.0'
     implementation 'androidx.recyclerview:recyclerview:1.3.2'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
 
@@ -149,7 +149,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
 
     // Google Services and Default android libs
-    implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'com.google.android.gms:play-services-location:21.1.0'
     implementation 'com.google.android.play:core-ktx:1.8.1'
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
     implementation 'com.google.android.material:material:1.11.0'
