@@ -75,6 +75,14 @@
         android:windowSoftInputMode="adjustPan"
         tools:ignore="AllowBackup,LockedOrientationActivity">
 
+        <meta-data
+            android:name="open_source"
+            android:value="true" /> <!-- Set to true to indicate the app is open source -->
+
+        <meta-data
+            android:name="open_source_license"
+            android:value="GNU GENERAL PUBLIC LICENSE Version 3" /> <!-- License of your app -->
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
