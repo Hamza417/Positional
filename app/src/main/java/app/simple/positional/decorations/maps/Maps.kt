@@ -326,7 +326,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                             ).addLinearGradient(
                                     intArrayOf(
                                             Color.parseColor("#FF1B50"),
-                                            Color.parseColor("#7A07FD")))
+                                            Color.parseColor("#e11677")))
                 } else {
                     if (location.isNotNull()) {
                         if (!LocationExtension.getLocationStatus(context)) return@withContext
