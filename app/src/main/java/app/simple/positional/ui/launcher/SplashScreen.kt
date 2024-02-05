@@ -95,9 +95,8 @@ class SplashScreen : Fragment() {
                 })
 
         icon.setImageBitmap(LocationPins.locationsPins[GPSPreferences.getPinSkin()]
-                .toBitmapKeepingSize(context = requireContext(), 6, 255).let {
-                    addLinearGradient(it, intArrayOf(colorOne, colorTwo))
-                })
+                .toBitmapKeepingSize(context = requireContext(), 6, 255)
+                .addLinearGradient(intArrayOf(colorOne, colorTwo)))
 
         icon.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.launcher_icon))
         text.startAnimation(AnimationUtils.loadAnimation(requireContext(), R.anim.image_in))

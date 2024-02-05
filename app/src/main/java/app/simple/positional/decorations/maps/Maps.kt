@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -23,9 +24,11 @@ import app.simple.positional.math.LowPassFilter
 import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.BitmapHelper.addLinearGradient
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import app.simple.positional.util.ColorUtils.resolveAttrColor
+import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension
@@ -315,12 +318,15 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
 
             withContext(Dispatchers.Default) {
                 if (isCustomCoordinate) {
-                    markerBitmap = R.drawable.ic_place_custom
+                    markerBitmap = LocationPins.getLocationPin()
                             .toBitmapKeepingSize(
                                     context,
                                     GPSPreferences.getPinSize(),
                                     GPSPreferences.getPinOpacity()
-                            )
+                            ).addLinearGradient(
+                                    intArrayOf(
+                                            Color.parseColor("#FF1B50"),
+                                            Color.parseColor("#7A07FD")))
                 } else {
                     if (location.isNotNull()) {
                         if (!LocationExtension.getLocationStatus(context)) return@withContext
@@ -702,10 +708,17 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             GPSPreferences.pinSize,
             GPSPreferences.pinOpacity -> {
                 Log.d("Maps", "Pin Skin, Size or Opacity Changed")
-                if (location.isNotNull()) {
+                if (isCustomCoordinate.invert()) {
+                    if (location.isNotNull()) {
+                        if (latLng.isNotNull()) {
+                            addMarker(latLng!!)
+                            Log.d("Maps", "Marker Added")
+                        }
+                    }
+                } else {
                     if (latLng.isNotNull()) {
                         addMarker(latLng!!)
-                        Log.d("Maps", "Marker Added")
+                        Log.d("Maps", "Custom marker Added")
                     }
                 }
             }

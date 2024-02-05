@@ -1,21 +1,30 @@
 package app.simple.positional.util
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Camera
+import android.graphics.Canvas
+import android.graphics.LinearGradient
+import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.RadialGradient
+import android.graphics.Rect
+import android.graphics.Shader
+import android.view.View
 import androidx.annotation.IntRange
 import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import android.graphics.Bitmap
-import android.view.View
 
 object BitmapHelper {
-    fun addLinearGradient(originalBitmap: Bitmap, array: IntArray): Bitmap? {
-        val width = originalBitmap.width
-        val height = originalBitmap.height
+    fun Bitmap.addLinearGradient(array: IntArray): Bitmap {
+        val width = width
+        val height = height
         val updatedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(updatedBitmap)
-        canvas.drawBitmap(originalBitmap, 0f, 0f, null)
+        canvas.drawBitmap(this, 0f, 0f, null)
         val paint = Paint()
         val shader = LinearGradient(0f, 0f, 0f, height.toFloat(), array[0], array[1], Shader.TileMode.CLAMP)
         paint.shader = shader
@@ -24,7 +33,7 @@ object BitmapHelper {
         return updatedBitmap
     }
 
-    fun addLinearGradient(originalBitmap: Bitmap, array: IntArray, verticalOffset: Float): Bitmap? {
+    fun addLinearGradient(originalBitmap: Bitmap, array: IntArray, verticalOffset: Float): Bitmap {
         val width = originalBitmap.width
         val height = originalBitmap.height
         val updatedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)

@@ -17,7 +17,7 @@ import app.simple.positional.constants.LocationPins
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.util.BitmapHelper
+import app.simple.positional.util.BitmapHelper.addLinearGradient
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
 import com.google.android.material.card.MaterialCardView
 
@@ -38,9 +38,8 @@ class ArtsAdapter : RecyclerView.Adapter<ArtsAdapter.Holder>() {
         holder.count.text = position.plus(1).toString() + "/" + list.size
 
         holder.icon.setImageBitmap(LocationPins.locationsPins[GPSPreferences.getPinSkin()]
-            .toBitmapKeepingSize(holder.itemView.context, 6, 255).let {
-                BitmapHelper.addLinearGradient(it, intArrayOf(colors[position][0], colors[position][1]))
-            })
+                .toBitmapKeepingSize(holder.itemView.context, 6, 255)
+                .addLinearGradient(intArrayOf(colors[position][0], colors[position][1])))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             holder.container.outlineAmbientShadowColor = colors[position][0]
