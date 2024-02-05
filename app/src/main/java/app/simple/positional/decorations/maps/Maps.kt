@@ -11,6 +11,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
 import android.util.AttributeSet
+import android.util.Log
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.constants.LocationPins
@@ -30,7 +31,18 @@ import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.Circle
+import com.google.android.gms.maps.model.CircleOptions
+import com.google.android.gms.maps.model.CustomCap
+import com.google.android.gms.maps.model.JointType
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
@@ -188,10 +200,12 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                 moveMapCamera(LatLng(customLatitude, customLongitude), zoom)
                 // addMarker(LatLng(customLatitude, customLongitude))
             }
+
             location.isNotNull() -> {
                 moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom)
                 // addMarker(LatLng(location!!.latitude, location!!.longitude))
             }
+
             else -> {
                 kotlin.runCatching {
                     moveMapCamera(googleMap?.cameraPosition?.target!!, zoom)
@@ -242,6 +256,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                                             R.raw.maps_dark_no_label
                                         }
                                     }
+
                                     Configuration.UI_MODE_NIGHT_NO -> {
                                         if (value) {
                                             R.raw.maps_light_labelled
@@ -249,6 +264,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                                             R.raw.maps_light_no_label
                                         }
                                     }
+
                                     else -> 0
                                 }
                         )
@@ -314,15 +330,13 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                                     .toBitmapKeepingSize(
                                             context,
                                             GPSPreferences.getPinSize(),
-                                            GPSPreferences.getPinOpacity()
-                                    )
+                                            GPSPreferences.getPinOpacity())
                         } else {
                             R.drawable.ic_bearing_marker
                                     .toBitmapKeepingSize(
                                             context,
                                             GPSPreferences.getPinSize(),
-                                            GPSPreferences.getPinOpacity()
-                                    )
+                                            GPSPreferences.getPinOpacity())
                         }
                     }
                 }
@@ -516,12 +530,15 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             isCompassRotation -> {
                 rotationAngle
             }
+
             isBearingRotation -> {
                 location?.bearing
             }
+
             isNorthOnly -> {
                 0F
             }
+
             else -> {
                 0F
             }
@@ -588,6 +605,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                         accelerometerReadings[2]
                 )
             }
+
             Sensor.TYPE_MAGNETIC_FIELD -> {
                 LowPassFilter.smoothAndSetReadings(
                         magnetometerReadings,
@@ -671,20 +689,27 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
             GPSPreferences.highContrastMap, GPSPreferences.GPSLabelMode -> {
                 setMapStyle(GPSPreferences.isLabelOn())
             }
+
             GPSPreferences.GPSSatellite -> {
                 setSatellite()
             }
+
             GPSPreferences.showBuilding -> {
                 setBuildings(GPSPreferences.getShowBuildingsOnMap())
             }
+
+            GPSPreferences.pinSkin,
             GPSPreferences.pinSize,
             GPSPreferences.pinOpacity -> {
+                Log.d("Maps", "Pin Skin, Size or Opacity Changed")
                 if (location.isNotNull()) {
                     if (latLng.isNotNull()) {
                         addMarker(latLng!!)
+                        Log.d("Maps", "Marker Added")
                     }
                 }
             }
+
             GPSPreferences.compassRotation -> {
                 if (GPSPreferences.isCompassRotation()) {
                     isCompassRotation = true
@@ -694,6 +719,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                     unregister()
                 }
             }
+
             GPSPreferences.useBearingRotation -> {
                 isBearingRotation = GPSPreferences.isBearingRotation()
 
@@ -719,6 +745,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                     }
                 }
             }
+
             GPSPreferences.isNorthOnly -> {
                 isNorthOnly = GPSPreferences.isNorthOnly()
 
@@ -744,9 +771,11 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                     }
                 }
             }
+
             GPSPreferences.mapTargetMarker -> {
                 drawMarkerToTargetPolyline()
             }
+
             GPSPreferences.trafficMode -> {
                 setTraffic(GPSPreferences.isTrafficShown())
             }

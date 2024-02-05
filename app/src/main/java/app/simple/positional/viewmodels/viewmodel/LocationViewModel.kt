@@ -1,7 +1,11 @@
 package app.simple.positional.viewmodels.viewmodel
 
 import android.app.Application
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.location.Geocoder
 import android.location.Location
 import android.text.Spanned
@@ -16,7 +20,6 @@ import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.util.*
 import app.simple.positional.util.ArrayHelper.isLastValueSame
 import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.ConditionUtils.isNull
@@ -26,14 +29,19 @@ import app.simple.positional.util.DMSConverter.latitudeAsDMS
 import app.simple.positional.util.DMSConverter.longitudeAsDD
 import app.simple.positional.util.DMSConverter.longitudeAsDM
 import app.simple.positional.util.DMSConverter.longitudeAsDMS
+import app.simple.positional.util.Direction
+import app.simple.positional.util.HtmlHelper
+import app.simple.positional.util.LocationExtension
+import app.simple.positional.util.NetworkCheck
 import app.simple.positional.util.ParcelUtils.parcelable
+import app.simple.positional.util.UTMConverter
 import com.google.android.gms.maps.model.LatLng
 import gov.nasa.worldwind.geom.Angle
 import gov.nasa.worldwind.geom.coords.MGRSCoord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 /**
@@ -321,7 +329,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
 
                             @Suppress("DEPRECATION")
                             with(geocoder.getFromLocation(target.latitude, target.longitude, 1)) {
-                                if (this != null && this.isNotEmpty()) {
+                                if (!this.isNullOrEmpty()) {
                                     this[0].getAddressLine(0) //"$city, $state, $country, $postalCode, $knownName"
                                 } else {
                                     getString(R.string.not_available)

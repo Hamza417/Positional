@@ -48,12 +48,12 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
         get() = job + Dispatchers.Main
 
     open var lastLatitude = 0.0
-    open val lastLongitude = 0.0
+    open var lastLongitude = 0.0
 
     init {
         if (isInEditMode.invert()) {
             lastLatitude = MainPreferences.getLastCoordinates()[0].toDouble()
-            lastLatitude = MainPreferences.getLastCoordinates()[1].toDouble()
+            lastLongitude = MainPreferences.getLastCoordinates()[1].toDouble()
         }
 
         windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager

@@ -309,7 +309,6 @@ class GPS : ScopedFragment() {
         locationViewModel.dms.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             Log.d("GPS", "DMS: ${it.first} ${it.second}")
-            /* no-op */
         }
 
         locationViewModel.latency.observe(viewLifecycleOwner) {
