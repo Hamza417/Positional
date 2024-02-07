@@ -156,7 +156,7 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:2.2.4'
 
     // Third Party
-    implementation 'org.shredzone.commons:commons-suncalc:3.8'
+    implementation 'org.shredzone.commons:commons-suncalc:3.9'
     implementation 'com.github.Berico-Technologies:Geo-Coordinate-Conversion-Java:360781e5be'
     implementation 'com.github.vipulasri:timelineview:1.1.5'
 

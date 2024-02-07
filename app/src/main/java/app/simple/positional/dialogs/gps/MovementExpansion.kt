@@ -39,13 +39,13 @@ class MovementExpansion : CustomBottomSheetDialogFragment() {
 
         locationViewModel.location.observe(viewLifecycleOwner) {
             speedometer.setSpeedValue(
-                    if (MainPreferences.getUnit()) {
+                    if (MainPreferences.isMetric()) {
                         it.speed.toKiloMetersPerHour()
                     } else {
                         it.speed.toMilesPerHour()
                     })
 
-            speed.text = if (MainPreferences.getUnit()) {
+            speed.text = if (MainPreferences.isMetric()) {
                 HtmlHelper.fromHtml("<b>${getString(R.string.gps_speed)}</b> " +
                         "${MathExtensions.round(it.speed.toDouble().toKiloMetersPerHour(), 2)} " +
                         getString(R.string.kilometer_hour))

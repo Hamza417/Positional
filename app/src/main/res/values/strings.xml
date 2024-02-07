@@ -335,4 +335,7 @@
     <string name="buy_full_desc">Buy full version and unlock the full potential of the app.</string>
     <string name="notification_permission_desc">Notification access is required to persistently run the clock widget service.</string>
     <string name="true_altitude">True Altitude</string>
+    <string name="elongation">Elongation</string>
+    <string name="radius">Radius</string>
+    <string name="crescent_width">Crescent Width</string>
 </resources>

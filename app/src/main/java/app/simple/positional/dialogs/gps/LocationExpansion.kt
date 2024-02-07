@@ -47,7 +47,7 @@ class LocationExpansion : CustomBottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         locationViewModel.location.observe(viewLifecycleOwner, {
-            if (MainPreferences.getUnit()) { // Metric
+            if (MainPreferences.isMetric()) { // Metric
                 accuracyTextView.text = fromHtml("<b>${getString(R.string.gps_accuracy)}</b> " +
                         "${MathExtensions.round(it.accuracy.toDouble(), 2)} ${getString(R.string.meter)}")
 
@@ -81,7 +81,7 @@ class LocationExpansion : CustomBottomSheetDialogFragment() {
     }
 
     private fun Double.formatToSmallerLengthUnit(): String {
-        return if (MainPreferences.getUnit()) {
+        return if (MainPreferences.isMetric()) {
             "${MathExtensions.round(this, 2)} ${getString(R.string.meter)}"
         } else {
             "${MathExtensions.round(this, 2).toFeet()} ${getString(R.string.feet)}"

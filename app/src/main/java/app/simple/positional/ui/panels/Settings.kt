@@ -178,7 +178,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         permissionNotification()
 
-        setCurrentUnit(MainPreferences.getUnit())
+        setCurrentUnit(MainPreferences.isMetric())
         setCurrentLocation()
         toggleKeepScreenOn.isChecked = MainPreferences.isScreenOn()
         toggleSkipSplashScreen.isChecked = MainPreferences.getSkipSplashScreen()
@@ -489,7 +489,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             }
 
             MainPreferences.unit -> {
-                setCurrentUnit(MainPreferences.getUnit())
+                setCurrentUnit(MainPreferences.isMetric())
             }
 
             MainPreferences.theme -> {

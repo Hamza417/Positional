@@ -415,7 +415,7 @@ class Direction : ScopedFragment(), SensorEventListener {
             kotlin.runCatching {
                 val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
 
-                if (MainPreferences.getUnit()) {
+                if (MainPreferences.isMetric()) {
                     if (p0 < 1000) {
                         stringBuilder.append(p0.round(2))
                         stringBuilder.append(" ")

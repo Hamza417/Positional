@@ -119,7 +119,7 @@ object MainPreferences {
      * returns true if Metric else false
      * for Imperial
      */
-    fun getUnit(): Boolean {
+    fun isMetric(): Boolean {
         return getSharedPreferences().getBoolean(unit, true)
     }
 

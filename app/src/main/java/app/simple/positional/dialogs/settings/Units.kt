@@ -26,7 +26,7 @@ class Units : CustomBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setButtons(MainPreferences.getUnit())
+        setButtons(MainPreferences.isMetric())
 
         metric.setOnCheckedChangeListener { _, isChecked ->
             setButtons(isChecked)

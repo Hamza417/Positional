@@ -166,7 +166,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
             if (GPSPreferences.isTargetMarkerSet()) {
                 val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
 
-                if (MainPreferences.getUnit()) {
+                if (MainPreferences.isMetric()) {
                     if (p0 < 1000) {
                         it.append(p0.round(2))
                         it.append(" ")
@@ -205,7 +205,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
             if (GPSPreferences.isTargetMarkerSet()) {
                 val p0 = LocationExtension.measureDisplacement(arrayOf(target, current))
 
-                if (MainPreferences.getUnit()) {
+                if (MainPreferences.isMetric()) {
                     if (p0 < 1000) {
                         it.append(p0.round(2))
                         it.append(" ")

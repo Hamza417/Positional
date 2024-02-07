@@ -182,7 +182,7 @@ class GPS : ScopedFragment() {
             }
         }
 
-        isMetric = MainPreferences.getUnit()
+        isMetric = MainPreferences.isMetric()
 
         if (MainPreferences.isCustomCoordinate()) {
             isCustomCoordinate = true
@@ -284,7 +284,7 @@ class GPS : ScopedFragment() {
                         this@GPS.accuracy.text = accuracy
                         this@GPS.direction.text = direction
 
-                        speedometer.setSpeedValue(if (MainPreferences.getUnit()) {
+                        speedometer.setSpeedValue(if (MainPreferences.isMetric()) {
                             it.speed.toKiloMetersPerHour()
                         } else {
                             it.speed.toMilesPerHour()

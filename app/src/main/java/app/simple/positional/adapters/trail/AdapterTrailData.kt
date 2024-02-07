@@ -128,7 +128,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
     }
 
     private fun getAccuracy(float: Float): String {
-        return if (MainPreferences.getUnit()) {
+        return if (MainPreferences.isMetric()) {
             if (float < 1000F) {
                 float.toString()
             } else {
@@ -144,7 +144,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
     }
 
     private fun getUnit(float: Float, context: Context): String {
-        return if (MainPreferences.getUnit()) {
+        return if (MainPreferences.isMetric()) {
             if (float < 1000F) {
                 context.getString(R.string.meter)
             } else {

@@ -183,7 +183,7 @@ class Time : ScopedFragment() {
 
         setMotionDelay(ClockPreferences.getMovementType())
 
-        isMetric = MainPreferences.getUnit()
+        isMetric = MainPreferences.isMetric()
         is24HourFace = if (ClockPreferences.isClockFace24Hour()) {
             face.setImageResource(R.drawable.clock_face_24)
             true
@@ -484,7 +484,7 @@ class Time : ScopedFragment() {
                 }
 
                 sunTimeData =
-                        with(SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).height(altitude).execute()) {
+                        with(SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).elevation(altitude).execute()) {
                             fromHtml("<b>${getString(R.string.sun_sunrise)}</b> ${pattern.format(rise)}<br>" +
                                     "<b>${getString(R.string.sun_sunset)}</b> ${pattern.format(set)}<br>" +
                                     "<b>${getString(R.string.sun_noon)}</b> ${pattern.format(noon)}<br>" +
@@ -492,13 +492,13 @@ class Time : ScopedFragment() {
                         }
 
                 moonTimeData =
-                        with(MoonTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude).height(altitude).execute()) {
+                        with(MoonTimes.compute().on(Instant.now()).timezone(timezone).latitude(latitude).longitude(longitude).elevation(altitude).execute()) {
                             fromHtml("<b>${getString(R.string.moon_moonrise)}</b> ${pattern.format(rise)}<br>" +
                                     "<b>${getString(R.string.moon_moonset)}</b> ${pattern.format(set)}")
                         }
 
                 twilightData =
-                        with(SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).height(altitude)) {
+                        with(SunTimes.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).elevation(altitude)) {
                             fromHtml("<b>${getString(R.string.twilight_astronomical_dawn)}</b> ${pattern.format(twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise)}<br>" +
                                     "<b>${getString(R.string.twilight_nautical_dawn)}</b> ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().rise)}<br>" +
                                     "<b>${getString(R.string.twilight_civil_dawn)}</b> ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().rise)}<br>" +
@@ -508,7 +508,7 @@ class Time : ScopedFragment() {
                         }
 
                 sunPositionData =
-                        with(SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).height(altitude).execute()) {
+                        with(SunPosition.compute().timezone(timezone).on(Instant.now()).at(latitude, longitude).elevation(altitude).execute()) {
                             sunAzimuth = azimuth
 
                             fromHtml("<b>${getString(R.string.sun_azimuth)}</b> ${round(azimuth, 2)}° ${getDirectionCodeFromAzimuth(requireContext(), azimuth)}<br>" +
@@ -521,7 +521,7 @@ class Time : ScopedFragment() {
                         }
 
                 moonPositionData =
-                        with(MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).height(altitude).execute()) {
+                        with(MoonPosition.compute().timezone(timezone).on(Instant.now()).latitude(latitude).longitude(longitude).elevation(altitude).execute()) {
                             moonAzimuth = this.azimuth
 
                             fromHtml(buildString {
@@ -541,11 +541,43 @@ class Time : ScopedFragment() {
                         with(MoonIllumination.compute().timezone(timezone).on(Instant.now()).execute()) {
                             moonPhase = phase
 
-                            fromHtml("<b>${getString(R.string.moon_fraction)}</b> ${round(fraction, 2)}<br>" +
-                                    "<b>${getString(R.string.moon_angle)}</b> ${round(angle, 2)}°<br>" +
-                                    "<b>${getString(R.string.moon_angle_state)}</b> ${if (angle < 0) getString(R.string.waxing) else getString(R.string.waning)}<br>" +
-                                    "<b>${getString(R.string.moon_phase)}</b> ${getMoonPhase(requireContext(), phase)}<br>" +
-                                    "<b>${getString(R.string.moon_phase_angle)}</b> ${round(phase, 2)}°")
+                            fromHtml(buildString {
+                                // Moon Fraction
+                                append("<b>${getString(R.string.moon_fraction)}</b> ${round(fraction, 2)}")
+                                append("<br>")
+                                // Moon Angle
+                                append("<b>${getString(R.string.moon_angle)}</b> ${round(angle, 2)}°")
+                                append("<br>")
+                                // Moon Angle State
+                                append("<b>${getString(R.string.moon_angle_state)}</b> ${if (angle < 0) getString(R.string.waxing) else getString(R.string.waning)}")
+                                append("<br>")
+                                // Moon Phase
+                                append("<b>${getString(R.string.moon_phase)}</b> ${getMoonPhase(requireContext(), phase)}")
+                                append("<br>")
+                                // Moon Phase Angle
+                                append("<b>${getString(R.string.moon_phase_angle)}</b> ${round(phase, 2)}°")
+                                append("<br>")
+                                // Moon Elongation
+                                if (MainPreferences.isMetric()) {
+                                    append("<b>${getString(R.string.elongation)}</b> ${String.format("%.3E", elongation)} ${getString(R.string.kilometer)}")
+                                } else {
+                                    append("<b>${getString(R.string.elongation)}</b> ${String.format("%.3E", elongation.toMiles())} ${getString(R.string.miles)}")
+                                }
+                                append("<br>")
+                                // Moon Radius
+                                if (MainPreferences.isMetric()) {
+                                    append("<b>${getString(R.string.radius)}</b> ${String.format("%.3E", radius)} ${getString(R.string.kilometer)}")
+                                } else {
+                                    append("<b>${getString(R.string.radius)}</b> ${String.format("%.3E", radius.toMiles())} ${getString(R.string.miles)}")
+                                }
+                                append("<br>")
+                                // Crescent Width
+                                if (MainPreferences.isMetric()) {
+                                    append("<b>${getString(R.string.crescent_width)}</b> ${String.format("%.3E", crescentWidth)} ${getString(R.string.kilometer)}")
+                                } else {
+                                    append("<b>${getString(R.string.crescent_width)}</b> ${String.format("%.3E", crescentWidth.toMiles())} ${getString(R.string.miles)}")
+                                }
+                            })
                         }
 
                 moonDatesData =
