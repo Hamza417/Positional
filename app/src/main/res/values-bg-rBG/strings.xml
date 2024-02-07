@@ -304,4 +304,9 @@
     <string name="share">Сподели</string>
     <string name="telegram_group">Телеграм група</string>
     <string name="buy_full_desc">Купете пълната версия и отключете пълния потенциал на приложението.</string>
+    <string name="notification_permission_desc">Необходим е достъп до известията, за да работи постоянно услугата за приспособление за часовник.</string>
+    <string name="true_altitude">Реална надморска височина</string>
+    <string name="elongation">Удължение</string>
+    <string name="radius">Радиус</string>
+    <string name="crescent_width">Ширина на полумесец</string>
 </resources>
