@@ -306,4 +306,7 @@
     <string name="buy_full_desc">Achetez la version complète et débloquez tout le potentiel de l\'application.</string>
     <string name="notification_permission_desc">L\'accès aux notifications est nécessaire pour exécuter de façon permanente le service de widget horloge.</string>
     <string name="true_altitude">Altitude réelle</string>
+    <string name="elongation">Élongation</string>
+    <string name="radius">Rayon</string>
+    <string name="crescent_width">Largeur du croissant</string>
 </resources>

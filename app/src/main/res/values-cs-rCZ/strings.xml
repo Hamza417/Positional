@@ -304,4 +304,9 @@
     <string name="share">Sdílet</string>
     <string name="telegram_group">Telegram skupina</string>
     <string name="buy_full_desc">Koupit plnou verzi a odemknout plný potenciál aplikace.</string>
+    <string name="notification_permission_desc">Pro trvalé spuštění widgetu hodin je vyžadován přístup k oznámení.</string>
+    <string name="true_altitude">Skutečná výška</string>
+    <string name="elongation">Prodloužení</string>
+    <string name="radius">Poloměr</string>
+    <string name="crescent_width">Šířka sklonu</string>
 </resources>
