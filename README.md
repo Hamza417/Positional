@@ -36,6 +36,7 @@ colors, and many other features that should have been there.
 ## Featured
 - [Top Android Apps! (May 2023) - Sam Beckman](https://youtu.be/g6pMQAFfd3Q?t=489)
 - [These 6 Android Apps Are a MUST TRY - Jun 2023 - mobiscrub](https://youtu.be/1APiynfp0ZM?t=294)
+- [The Best Free and Open Source Apps in 2024! - Sam Beckman](https://youtu.be/Oar9pkc7BSc?t=88)
 
 ## Screenshots
 
