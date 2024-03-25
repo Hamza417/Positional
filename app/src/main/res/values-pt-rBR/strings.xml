@@ -306,4 +306,7 @@
     <string name="buy_full_desc">Compre a versão completa e desbloqueie todo o potencial do aplicativo.</string>
     <string name="notification_permission_desc">O acesso à notificação é necessário para executar o serviço de widget de relógio persistentemente.</string>
     <string name="true_altitude">Altitude Verdadeira</string>
+    <string name="elongation">Alongamento</string>
+    <string name="radius">Raio</string>
+    <string name="crescent_width">Largura Crescente</string>
 </resources>
