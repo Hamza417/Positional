@@ -139,21 +139,6 @@ Pin style is subject to user preferences.
 * Moon phase widget
 * Completely Ad-Free
 
-## Road Map
-
-Last updated: 2023, April 12
-
-- [ ] Add a custom date mode along with specified coordinates
-- [ ] Add a timeline view for moon dates up to a few years in the future and past
-- [x] Add a 3D solar data model for visual representation
-- [ ] Solar and Lunar Eclipse dates
-- [x] Make the app landscape
-
-## Contribution
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would
-like to change.
-
 ### Translation
 You can also contribute into translating the app in your native language
 on [Crowdin](https://crowdin.com/project/positional/).
