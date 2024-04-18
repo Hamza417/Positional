@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.content.pm.PermissionInfo
 import android.os.Build
 import android.os.PowerManager
-import androidx.annotation.Nullable
 import androidx.core.app.ActivityCompat
 
 object PermissionUtils {
@@ -47,7 +46,6 @@ object PermissionUtils {
         return notificationManager.areNotificationsEnabled()
     }
 
-    @Nullable
     fun String.getPermissionInfo(context: Context): PermissionInfo? {
         try {
             return context.packageManager.getPermissionInfo(this, PackageManager.GET_META_DATA)
