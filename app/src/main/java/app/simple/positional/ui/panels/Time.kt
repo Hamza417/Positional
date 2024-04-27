@@ -19,7 +19,6 @@ import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.clock.ClockMenu
@@ -79,7 +78,6 @@ class Time : ScopedFragment() {
     private lateinit var customLocationButton: DynamicRippleImageButton
     private lateinit var divider: View
     private lateinit var customLocationButtonDivider: View
-    private var clockMainLayout: CustomCoordinatorLayout? = null
 
     private lateinit var localTimeData: TextView
     private lateinit var utcTimeData: TextView
@@ -128,10 +126,6 @@ class Time : ScopedFragment() {
         customLocationButton = view.findViewById(R.id.clock_custom_location)
         divider = view.findViewById(R.id.clock_divider)
         customLocationButtonDivider = view.findViewById(R.id.custom_location_divider)
-
-        kotlin.runCatching { // Landscape mode don't have [CustomCoordinatorLayout]
-            clockMainLayout = view.findViewById(R.id.clock_main_layout)
-        }
 
         localTimeData = view.findViewById(R.id.local_timezone_data)
         utcTimeData = view.findViewById(R.id.utc_time_data)
@@ -193,15 +187,14 @@ class Time : ScopedFragment() {
             divider.visibility = View.VISIBLE
         }
 
-        clockMainLayout?.setProxyView(view)
-
         locationViewModel.location.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             calculateAndUpdateData(it.latitude, it.longitude, it.altitude)
         }
 
         menu.setOnClickListener {
-            ClockMenu.newInstance().show(parentFragmentManager, "clock_menu")
+            ClockMenu.newInstance()
+                    .show(parentFragmentManager, ClockMenu.TAG)
         }
 
         timezoneButton.setOnClickListener {
@@ -210,7 +203,7 @@ class Time : ScopedFragment() {
 
         customLocationButton.setOnClickListener {
             LocationParameters.newInstance()
-                    .show(parentFragmentManager, "location_parameters")
+                    .show(parentFragmentManager, LocationParameters.TAG)
         }
     }
 

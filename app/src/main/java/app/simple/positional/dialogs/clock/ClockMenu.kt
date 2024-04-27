@@ -90,5 +90,7 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
             fragment.arguments = args
             return fragment
         }
+
+        const val TAG = "clock_menu"
     }
 }
