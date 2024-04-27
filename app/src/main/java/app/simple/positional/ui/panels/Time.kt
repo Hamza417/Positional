@@ -11,10 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import app.simple.positional.R
@@ -47,12 +43,9 @@ import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.util.Ordinal.toOrdinal
-import app.simple.positional.util.StatusBarHeight
-import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -73,13 +66,10 @@ import java.time.temporal.IsoFields
 
 class Time : ScopedFragment() {
 
-    private var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>? = null
-
     private lateinit var hour: PhysicalRotationImageView
     private lateinit var minutes: PhysicalRotationImageView
     private lateinit var seconds: PhysicalRotationImageView
     private lateinit var face: ImageView
-    private lateinit var expandUp: ImageView
     private lateinit var sweepSeconds: PhysicalRotationImageView
     private lateinit var dayNightIndicator: ImageView
     private lateinit var moonPhaseGraphics: ImageView
@@ -90,7 +80,6 @@ class Time : ScopedFragment() {
     private lateinit var divider: View
     private lateinit var customLocationButtonDivider: View
     private var clockMainLayout: CustomCoordinatorLayout? = null
-    private lateinit var scrollView: NestedScrollView
 
     private lateinit var localTimeData: TextView
     private lateinit var utcTimeData: TextView
@@ -105,7 +94,6 @@ class Time : ScopedFragment() {
     private lateinit var moonDatesData: TextView
 
     private lateinit var handler: Handler
-    private var backPress: OnBackPressedDispatcher? = null
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var locationViewModel: LocationViewModel
 
@@ -159,15 +147,6 @@ class Time : ScopedFragment() {
         moonDatesData = view.findViewById(R.id.moon_dates_data)
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
-        scrollView = view.findViewById(R.id.clock_panel_scrollview)
-        scrollView.alpha = if (isLandscape()) 1F else 0F
-        expandUp = view.findViewById(R.id.expand_up_clock_sheet)
-
-        kotlin.runCatching { // Landscape mode don't have BottomSheet
-            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
-        }
-
-        backPress = requireActivity().onBackPressedDispatcher
 
         setMotionDelay(ClockPreferences.getMovementType())
 
@@ -219,36 +198,6 @@ class Time : ScopedFragment() {
         locationViewModel.location.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             calculateAndUpdateData(it.latitude, it.longitude, it.altitude)
-        }
-
-        bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    backPressed(true)
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    backPressed(false)
-                    while (backPress!!.hasEnabledCallbacks()) {
-                        backPress?.onBackPressed()
-                    }
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                scrollView.alpha = slideOffset
-                expandUp.alpha = 1 - slideOffset
-                view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
-            }
-        })
-
-        if (StatusBarHeight.isLandscape(requireContext())) {
-            scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-                if (scrollY < oldScrollY) {
-                    bottomSheetSlide.onBottomSheetSliding(0F, true)
-                } else {
-                    bottomSheetSlide.onBottomSheetSliding(1F, false)
-                }
-            }
         }
 
         menu.setOnClickListener {
@@ -341,9 +290,6 @@ class Time : ScopedFragment() {
         handler.removeCallbacks(clock)
         handler.removeCallbacks(calender)
         handler.removeCallbacks(customDataUpdater)
-        if (backPress!!.hasEnabledCallbacks()) {
-            backPressed(false)
-        }
     }
 
     private fun setSkins() {
@@ -590,32 +536,6 @@ class Time : ScopedFragment() {
 
     private fun getCurrentTimeData(): ZonedDateTime {
         return Instant.now().atZone(ZoneId.of(timezone))
-    }
-
-    private fun backPressed(value: Boolean) {
-        if (StatusBarHeight.isLandscape(requireContext())) return
-
-        /**
-         * This is a workaround and not a full fledged method to
-         * remove any existing callbacks
-         *
-         * The [bottomSheetBehavior] adds a new callback every time it is expanded
-         * and it is a feasible approach to remove any existing callbacks
-         * as soon as it is collapsed, the callback number will always remain
-         * one
-         *
-         * What makes this approach a slightly less reliable is because so
-         * many presumptions have been taken here
-         */
-        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
-            override fun handleOnBackPressed() {
-                if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
-                }
-
-                remove()
-            }
-        })
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

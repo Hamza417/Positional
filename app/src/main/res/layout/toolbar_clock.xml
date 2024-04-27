@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
-    android:paddingVertical="@dimen/toolbar_padding">
+    android:padding="@dimen/toolbar_padding">
 
     <TextView
         android:layout_width="0dp"
