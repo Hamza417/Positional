@@ -15,11 +15,13 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipChildren="false"
             android:orientation="vertical"
             android:paddingHorizontal="@dimen/toolbar_padding"
             android:paddingBottom="@dimen/toolbar_padding">
@@ -87,29 +89,6 @@
                     tools:ignore="ContentDescription" />
 
             </FrameLayout>
-
-            <View
-                android:id="@+id/clock_divider"
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/dividerColor"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/specified_location_notice_clock"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/light"
-                android:gravity="center"
-                android:text="@string/specified_location_notice"
-                android:textAlignment="center"
-                android:textColor="@color/textSecondary"
-                android:visibility="gone" />
 
             <include layout="@layout/info_panel_clock" />
 
