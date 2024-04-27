@@ -61,14 +61,15 @@
             android:adjustViewBounds="true"
             tools:ignore="ContentDescription" />
 
+        <TextView
+            android:id="@+id/degrees"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/degrees"
+            android:textColor="?attr/colorAppAccent"
+            android:textSize="@dimen/compass_degrees_text_size" />
+
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/degrees"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/degrees"
-        android:textColor="?attr/colorAppAccent"
-        android:textSize="@dimen/compass_degrees_text_size" />
 </merge>
