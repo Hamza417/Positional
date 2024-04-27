@@ -1,92 +1,483 @@
 <?xml version="1.0" encoding="utf-8"?>
 <app.simple.positional.decorations.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/clock_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/peek_height"
-        android:paddingBottom="25dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar_clock" />
-
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1">
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/toolbar_padding"
+            android:paddingHorizontal="@dimen/toolbar_padding"
+            android:orientation="vertical">
+            <include layout="@layout/toolbar_clock" />
 
-            <ImageView
-                android:layout_width="@dimen/clock_image_shadow_size"
-                android:layout_height="@dimen/clock_image_shadow_size"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="@dimen/clock_image_shadow_size"
+                    android:layout_height="@dimen/clock_image_shadow_size"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_clock_shadow"
+                    tools:ignore="ContentDescription" />
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/sweep_seconds"
+                    android:layout_width="@dimen/clock_image_dimensions"
+                    android:layout_height="@dimen/clock_image_dimensions"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:rotation="-90"
+                    android:src="@drawable/clock_trail"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/clock_face"
+                    android:layout_width="@dimen/clock_image_dimensions"
+                    android:layout_height="@dimen/clock_image_dimensions"
+                    android:layout_gravity="center"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/day_night_indicator"
+                    android:layout_width="@dimen/clock_day_night_indicator"
+                    android:layout_height="@dimen/clock_day_night_indicator"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="60dp"
+                    tools:ignore="ContentDescription" />
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/hour"
+                    android:layout_width="@dimen/clock_needle_dimensions"
+                    android:layout_height="@dimen/clock_needle_dimensions"
+                    android:layout_gravity="center"
+                    tools:ignore="ContentDescription" />
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/minutes"
+                    android:layout_width="@dimen/clock_needle_dimensions"
+                    android:layout_height="@dimen/clock_needle_dimensions"
+                    android:layout_gravity="center"
+                    tools:ignore="ContentDescription" />
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/seconds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/clock_needle_dimensions"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    tools:ignore="ContentDescription" />
+
+            </FrameLayout>
+
+            <View
+                android:id="@+id/clock_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/dividerColor"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/specified_location_notice_clock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/light"
+                android:gravity="center"
+                android:text="@string/specified_location_notice"
+                android:textAlignment="center"
+                android:textColor="@color/textSecondary"
+                android:visibility="gone" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/info_graphics_dimension"
+                    android:layout_height="@dimen/info_graphics_dimension"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="@drawable/ic_access_time"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.65999997"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    style="@style/PrimaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/local_time"
+                    android:textSize="@dimen/info_text_primary_size"
+                    app:layout_constraintBottom_toTopOf="@+id/local_timezone_data"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/local_timezone_data"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/info_text_secondary_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_clock_shadow"
-                tools:ignore="ContentDescription" />
+                android:layout_marginVertical="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
 
-            <app.simple.positional.decorations.views.PhysicalRotationImageView
-                android:id="@+id/sweep_seconds"
-                android:layout_width="@dimen/clock_image_dimensions"
-                android:layout_height="@dimen/clock_image_dimensions"
+                <TextView
+                    style="@style/PrimaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/utc_time"
+                    android:textSize="@dimen/info_text_primary_size" />
+
+                <TextView
+                    android:id="@+id/utc_time_data"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/info_text_secondary_size" />
+
+            </LinearLayout>
+
+            <app.simple.positional.decorations.views.SunPosition
+                android:id="@+id/sun_position_diagram"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/info_text_item_margin_vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+
+                <TextView
+                    style="@style/PrimaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/sun_position"
+                    android:textSize="@dimen/info_text_primary_size" />
+
+                <TextView
+                    android:id="@+id/sun_position_data"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/info_text_secondary_size" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/info_graphics_dimension"
+                    android:layout_height="@dimen/info_graphics_dimension"
+                    android:src="@drawable/ic_sunrise"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.88"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    style="@style/PrimaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sun_time"
+                    android:textSize="@dimen/info_text_primary_size"
+                    app:layout_constraintBottom_toTopOf="@id/sun_time_data"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/sun_time_data"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/info_text_secondary_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/info_graphics_dimension"
+                    android:layout_height="@dimen/info_graphics_dimension"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="@drawable/ic_twilight"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.58000004"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/PrimaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/twilight"
+                    android:textSize="@dimen/info_text_primary_size"
+                    app:layout_constraintBottom_toTopOf="@id/twilight_data"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_editor_absoluteY="0dp" />
+
+                <TextView
+                    android:id="@+id/twilight_data"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/info_text_secondary_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+
+                <TextView
+                    style="@style/PrimaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/moon_position"
+                    android:textSize="@dimen/info_text_primary_size" />
+
+                <TextView
+                    android:id="@+id/moon_position_data"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/info_text_secondary_size" />
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:layout_width="@dimen/info_graphics_dimension"
+                    android:layout_height="@dimen/info_graphics_dimension"
+                    android:layout_gravity="end|center_vertical"
+                    android:src="@drawable/ic_moon_phase"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    style="@style/PrimaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/moon_time"
+                    android:textSize="@dimen/info_text_primary_size"
+                    app:layout_constraintBottom_toTopOf="@id/moon_time_data"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/moon_time_data"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/info_text_secondary_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="20dp"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:id="@+id/moon_phase_graphics"
+                    android:layout_width="@dimen/info_graphics_dimension"
+                    android:layout_height="@dimen/info_graphics_dimension"
+                    android:layout_gravity="end|center_vertical"
+                    android:padding="10dp"
+                    android:src="@drawable/moon_phase_02"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.74"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    style="@style/PrimaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/moon_illumination"
+                    android:textSize="@dimen/info_text_primary_size"
+                    app:layout_constraintBottom_toTopOf="@id/moon_illumination_data"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/moon_illumination_data"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/info_text_secondary_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:padding="5dp"
-                android:rotation="-90"
-                android:src="@drawable/clock_trail"
-                tools:ignore="ContentDescription" />
+                android:layout_marginVertical="20dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
 
-            <ImageView
-                android:id="@+id/clock_face"
-                android:layout_width="@dimen/clock_image_dimensions"
-                android:layout_height="@dimen/clock_image_dimensions"
-                android:layout_gravity="center"
-                tools:ignore="ContentDescription" />
+                <TextView
+                    style="@style/PrimaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/moon_dates"
+                    android:textSize="@dimen/info_text_primary_size" />
 
-            <ImageView
-                android:id="@+id/day_night_indicator"
-                android:layout_width="@dimen/clock_day_night_indicator"
-                android:layout_height="@dimen/clock_day_night_indicator"
-                android:layout_gravity="center"
-                android:layout_marginBottom="60dp"
-                tools:ignore="ContentDescription" />
+                <TextView
+                    android:id="@+id/moon_dates_data"
+                    style="@style/SecondaryTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/info_text_secondary_size" />
 
-            <app.simple.positional.decorations.views.PhysicalRotationImageView
-                android:id="@+id/hour"
-                android:layout_width="@dimen/clock_needle_dimensions"
-                android:layout_height="@dimen/clock_needle_dimensions"
-                android:layout_gravity="center"
-                tools:ignore="ContentDescription" />
+            </LinearLayout>
 
-            <app.simple.positional.decorations.views.PhysicalRotationImageView
-                android:id="@+id/minutes"
-                android:layout_width="@dimen/clock_needle_dimensions"
-                android:layout_height="@dimen/clock_needle_dimensions"
-                android:layout_gravity="center"
-                tools:ignore="ContentDescription" />
+        </LinearLayout>
 
-            <app.simple.positional.decorations.views.PhysicalRotationImageView
-                android:id="@+id/seconds"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/clock_needle_dimensions"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                tools:ignore="ContentDescription" />
-
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/digital_time_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/light"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/info_text_primary_size" />
-
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <View
         android:id="@+id/clock_dim"
@@ -98,4 +489,3 @@
     <include layout="@layout/bottom_sheet_clock" />
 
 </app.simple.positional.decorations.views.CustomCoordinatorLayout>
-
