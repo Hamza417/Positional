@@ -91,6 +91,7 @@
                     android:contentDescription="@string/compass_options"
                     android:src="@drawable/ic_compass_calibration"
                     android:tint="@color/iconColor"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="@+id/textView8"
                     app:layout_constraintEnd_toStartOf="@+id/direction_target_btn"
                     app:layout_constraintHorizontal_bias="1.0"
@@ -126,27 +127,36 @@
                     app:layout_constraintStart_toEndOf="@+id/textView8"
                     app:layout_constraintTop_toTopOf="@+id/textView8" />
 
-                <TextView
-                    android:id="@+id/compass_degrees"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="24dp"
-                    android:drawablePadding="10dp"
-                    android:fontFamily="@font/light"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/compass_direction_text_size"
-                    app:drawableTint="@color/iconColor"
-                    app:drawableTopCompat="@drawable/ic_navigation"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
             </app.simple.positional.decorations.padding.PaddingAwareConstraintLayout>
 
-            <include layout="@layout/bottom_sheet_direction" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/dividerColor" />
+
+            <TextView
+                android:id="@+id/compass_degrees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/light"
+                android:gravity="center_horizontal"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/compass_direction_text_size"
+                app:drawableTint="@color/iconColor"
+                app:drawableTopCompat="@drawable/ic_navigation" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/toolbar_padding">
+
+                <include layout="@layout/info_panel_direction" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

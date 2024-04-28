@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/direction_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <app.simple.positional.decorations.padding.PaddingAwareConstraintLayout
         android:id="@+id/compass_appbar"
@@ -77,60 +78,76 @@
             app:layout_constraintStart_toEndOf="@+id/textView8"
             app:layout_constraintTop_toTopOf="@+id/textView8" />
 
-        <TextView
-            android:id="@+id/compass_degrees"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:drawablePadding="10dp"
-            android:fontFamily="@font/light"
-            android:gravity="center_horizontal"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/compass_direction_text_size"
-            app:drawableTint="@color/iconColor"
-            app:drawableTopCompat="@drawable/ic_navigation"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
     </app.simple.positional.decorations.padding.PaddingAwareConstraintLayout>
 
-    <app.simple.positional.decorations.views.PhysicalRotationImageView
-        android:id="@+id/dial"
-        android:layout_width="@dimen/compass_dial"
-        android:layout_height="@dimen/compass_dial"
-        android:layout_gravity="center"
-        android:src="@drawable/compass_dial"
-        tools:ignore="ContentDescription" />
-
-    <app.simple.positional.decorations.views.PhysicalRotationImageView
-        android:id="@+id/direction"
-        android:layout_width="@dimen/compass_bloom_dimension"
-        android:layout_height="@dimen/compass_bloom_dimension"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_direction_indicator"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/degrees"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/degrees"
-        android:textColor="?attr/colorAppAccent"
-        android:textSize="@dimen/compass_degrees_text_size" />
-
     <View
-        android:id="@+id/direction_dim"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0"
-        android:background="#7E000000"
-        app:layout_anchor="@+id/direction"
-        app:layout_anchorGravity="center" />
+        android:layout_height="1px"
+        android:background="@color/dividerColor" />
 
-    <include layout="@layout/bottom_sheet_direction" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</app.simple.positional.decorations.views.CustomCoordinatorLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/toolbar_padding">
+
+            <TextView
+                android:id="@+id/compass_degrees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="24dp"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/light"
+                android:gravity="center_horizontal"
+                android:textColor="@color/textPrimary"
+                android:textSize="@dimen/compass_direction_text_size"
+                app:drawableTint="@color/iconColor"
+                app:drawableTopCompat="@drawable/ic_navigation"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="36dp">
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/dial"
+                    android:layout_width="@dimen/compass_dial"
+                    android:layout_height="@dimen/compass_dial"
+                    android:layout_gravity="center"
+                    android:src="@drawable/compass_dial"
+                    tools:ignore="ContentDescription" />
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/direction"
+                    android:layout_width="@dimen/compass_bloom_dimension"
+                    android:layout_height="@dimen/compass_bloom_dimension"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_direction_indicator"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/degrees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/degrees"
+                    android:textColor="?attr/colorAppAccent"
+                    android:textSize="@dimen/compass_degrees_text_size" />
+
+            </FrameLayout>
+
+            <include layout="@layout/info_panel_direction" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
