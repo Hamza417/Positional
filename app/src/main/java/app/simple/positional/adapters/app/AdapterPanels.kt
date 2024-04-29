@@ -1,6 +1,5 @@
 package app.simple.positional.adapters.app
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +13,15 @@ import app.simple.positional.model.BottomBar
 class AdapterPanels(private val items: ArrayList<BottomBar>, private val onClick: (View, String, Int) -> Unit) : RecyclerView.Adapter<AdapterPanels.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        return Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_panel, parent, false))
+        return Holder(LayoutInflater.from(parent.context)
+                .inflate(R.layout.adapter_panel, parent, false))
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val item = items[position]
 
         holder.icon.setImageResource(item.icon)
-        holder.icon.imageTintList = ColorStateList.valueOf(item.color)
+        // holder.icon.imageTintList = ColorStateList.valueOf(item.color)
         holder.label.text = item.name
 
         holder.container.setOnClickListener {

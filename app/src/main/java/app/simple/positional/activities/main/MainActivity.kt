@@ -22,20 +22,27 @@ import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.BottomBarAdapter
 import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.callbacks.PanelsCallback
 import app.simple.positional.callbacks.PermissionCallbacks
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.popup.PopupLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.transformers.DepthTransformer
+import app.simple.positional.dialogs.app.Panels.Companion.showPanelsDialog
 import app.simple.positional.extensions.activity.BaseActivity
-import app.simple.positional.popups.miscellaneous.PopupFragments
 import app.simple.positional.preferences.BottomBarPreferences
 import app.simple.positional.preferences.FragmentPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.services.FusedLocationService
 import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
-import app.simple.positional.ui.panels.*
+import app.simple.positional.ui.panels.Compass
+import app.simple.positional.ui.panels.Direction
+import app.simple.positional.ui.panels.GPS
+import app.simple.positional.ui.panels.Level
+import app.simple.positional.ui.panels.Settings
+import app.simple.positional.ui.panels.Time
+import app.simple.positional.ui.panels.Trail
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension.getLocationStatus
@@ -69,26 +76,26 @@ class MainActivity : BaseActivity(),
         label = findViewById(R.id.label)
 
         bottomBarAdapter = BottomBarAdapter(BottomBarItems.getBottomBarItems(baseContext)) {
-            PopupFragments(bottomBarContainer) { _, tag, position ->
-                bottomBar.setCurrentItem(position, true)
-                openFragment(tag)
-                FragmentPreferences.setCurrentPage(position)
-                FragmentPreferences.setCurrentTag(tag)
-            }.setOnDismissListener {
-                bottomBarContainer.animate()
-                        .alpha(1f)
-                        .setInterpolator(DecelerateInterpolator())
-                        .setDuration(500)
-                        .start()
-            }
+//            PopupFragments(bottomBarContainer) { _, tag, position ->
+//                bottomBar.setCurrentItem(position, true)
+//                openFragment(tag)
+//                FragmentPreferences.setCurrentPage(position)
+//                FragmentPreferences.setCurrentTag(tag)
+//            }.setOnDismissListener {
+//                bottomBarContainer.animate()
+//                        .alpha(1f)
+//                        .setInterpolator(DecelerateInterpolator())
+//                        .setDuration(500)
+//                        .start()
+//            }
 
             // They didn't like it :(
-//            supportFragmentManager.showPanelsDialog(PanelsCallback { _, string, position ->
-//                bottomBar.setCurrentItem(position, true)
-//                openFragment(string!!)
-//                FragmentPreferences.setCurrentPage(position)
-//                FragmentPreferences.setCurrentTag(string)
-//            })
+            supportFragmentManager.showPanelsDialog(PanelsCallback { _, string, position ->
+                bottomBar.setCurrentItem(position, true)
+                openFragment(string!!)
+                FragmentPreferences.setCurrentPage(position)
+                FragmentPreferences.setCurrentTag(string)
+            })
         }
 
         label.setOnClickListener {

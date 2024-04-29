@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="15dp"
         android:importantForAccessibility="no"
-        app:tint="@color/iconColor" />
+        app:tint="@color/iconRegular" />
 
     <TextView
         android:id="@+id/label"
