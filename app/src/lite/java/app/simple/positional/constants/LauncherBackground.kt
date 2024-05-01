@@ -1,6 +1,5 @@
 package app.simple.positional.constants
 
-import android.graphics.Color.parseColor
 import app.simple.positional.R
 
 object LauncherBackground {
@@ -18,10 +17,10 @@ object LauncherBackground {
      * to achieve a nice looking gradient tint
      */
     val vectorColors: Array<IntArray> = arrayOf(
-            intArrayOf(parseColor("#FF434E94"), parseColor("#FF081146")), // 07
+            intArrayOf(0xFF434E94.toInt(), 0xFF081146.toInt()), // 07
     )
 
     val vectorNightColors: Array<IntArray> = arrayOf(
-            intArrayOf(parseColor("#FFffa32a"), parseColor("#FFcb555b")),
+            intArrayOf(0xFFFFA32A.toInt(), 0xFFCB555B.toInt()),
     )
 }
