@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Panels -->
-    <string name="clock">時間</string>
+    <string name="clock">Ora</string>
     <string name="compass">指南針</string>
     <string name="gps_location">位置</string>
     <string name="level">水平儀</string>
@@ -306,4 +306,7 @@
     <string name="buy_full_desc">購買完整版本並釋放應用程序的全部潛力。</string>
     <string name="notification_permission_desc">通知存取需要持續執行時鐘小工具服務。</string>
     <string name="true_altitude">真實海拔</string>
+    <string name="elongation">距角</string>
+    <string name="radius">半徑</string>
+    <string name="crescent_width">新月寬</string>
 </resources>
