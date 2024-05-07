@@ -26,7 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 class LocationParameters : CustomBottomSheetDialogFragment() {
     private lateinit var latitude: TextView
@@ -151,5 +151,7 @@ class LocationParameters : CustomBottomSheetDialogFragment() {
             fragment.arguments = args
             return fragment
         }
+
+        const val TAG = "location_parameters"
     }
 }

@@ -3,12 +3,14 @@ package app.simple.positional.ui.panels
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
-import android.hardware.*
+import android.hardware.GeomagneticField
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,22 +20,16 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
-import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.CompassBloom.compassBloomRes
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
@@ -48,14 +44,13 @@ import app.simple.positional.math.Vector3
 import app.simple.positional.preferences.CompassPreferences
 import app.simple.positional.util.ColorUtils.animateColorChange
 import app.simple.positional.util.ColorUtils.resolveAttrColor
+import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.Direction.getDirectionNameFromAzimuth
 import app.simple.positional.util.HtmlHelper.fromHtml
 import app.simple.positional.util.ImageLoader.loadImage
 import app.simple.positional.util.LocaleHelper
-import app.simple.positional.util.TextViewUtils.setTextAnimation
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -64,10 +59,7 @@ import kotlin.math.abs
 class Compass : ScopedFragment(), SensorEventListener {
 
     private var handler = Handler(Looper.getMainLooper())
-    private var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>? = null
-    private lateinit var bottomSheetSlide: BottomSheetSlide
     private var objectAnimator: ObjectAnimator? = null
-    private var backPress: OnBackPressedDispatcher? = null
     private var calibrationDialog: CompassCalibration? = null
     private lateinit var locationViewModel: LocationViewModel
 
@@ -99,6 +91,7 @@ class Compass : ScopedFragment(), SensorEventListener {
     private lateinit var sensorAccelerometer: Sensor
     private lateinit var sensorMagneticField: Sensor
 
+    private lateinit var compassScrollView: NestedScrollView
     private lateinit var accuracyAccelerometer: TextView
     private lateinit var accuracyMagnetometer: TextView
     private lateinit var accelerometerX: TextView
@@ -110,22 +103,18 @@ class Compass : ScopedFragment(), SensorEventListener {
     private lateinit var inclinationTextView: TextView
     private lateinit var declination: TextView
     private lateinit var fieldStrength: TextView
-    private lateinit var compassInfoText: TextView
     private lateinit var degrees: TextView
     private lateinit var direction: TextView
 
-    private lateinit var expandUp: ImageView
     private lateinit var dial: PhysicalRotationImageView
     private lateinit var flowerOne: PhysicalRotationImageView
     private lateinit var flowerTwo: PhysicalRotationImageView
     private lateinit var flowerThree: PhysicalRotationImageView
     private lateinit var flowerFour: PhysicalRotationImageView
 
-    private lateinit var copy: DynamicRippleImageButton
     private lateinit var menu: DynamicRippleImageButton
     private lateinit var calibrate: DynamicRippleImageButton
     private lateinit var dialContainer: FrameLayout
-    private lateinit var compassListScrollView: NestedScrollView
     private lateinit var toolbar: ConstraintLayout
 
     @SuppressLint("WrongViewCast")
@@ -134,6 +123,7 @@ class Compass : ScopedFragment(), SensorEventListener {
 
         locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
 
+        compassScrollView = view.findViewById(R.id.compass_scroll_view)
         accuracyAccelerometer = view.findViewById(R.id.compass_accuracy_accelerometer)
         accuracyMagnetometer = view.findViewById(R.id.compass_accuracy_magnetometer)
         accelerometerX = view.findViewById(R.id.accelerometer_x)
@@ -145,38 +135,22 @@ class Compass : ScopedFragment(), SensorEventListener {
         inclinationTextView = view.findViewById(R.id.compass_inclination)
         declination = view.findViewById(R.id.compass_declination)
         fieldStrength = view.findViewById(R.id.compass_field_strength)
-        compassInfoText = view.findViewById(R.id.compass_info_text)
         degrees = view.findViewById(R.id.degrees)
         direction = view.findViewById(R.id.direction)
 
-        expandUp = view.findViewById(R.id.expand_up_compass_sheet)
         dial = view.findViewById(R.id.dial)
         flowerOne = view.findViewById(R.id.flower_one)
         flowerTwo = view.findViewById(R.id.flower_two)
         flowerThree = view.findViewById(R.id.flower_three)
         flowerFour = view.findViewById(R.id.flower_four)
 
-        copy = view.findViewById(R.id.compass_copy)
         menu = view.findViewById(R.id.compass_menu)
         calibrate = view.findViewById(R.id.compass_calibrate)
         dialContainer = view.findViewById(R.id.dial_container)
-
-        kotlin.runCatching {
-            (view.findViewById(R.id.compass_main_layout) as CustomCoordinatorLayout).setProxyView(view)
-        }
-
-        compassListScrollView = view.findViewById(R.id.compass_list_scroll_view)
         toolbar = view.findViewById(R.id.compass_appbar)
 
         showDirectionCode = CompassPreferences.getDirectionCode()
         isGimbalLock = CompassPreferences.isUsingGimbalLock()
-
-        bottomSheetSlide = requireActivity() as BottomSheetSlide
-        backPress = requireActivity().onBackPressedDispatcher
-
-        kotlin.runCatching {
-            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.compass_info_bottom_sheet))
-        }
 
         sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
@@ -197,7 +171,6 @@ class Compass : ScopedFragment(), SensorEventListener {
         isAnimated = CompassPreferences.isUsingPhysicalProperties()
         setPhysicalProperties()
         setFlower(CompassPreferences.isFlowerBloomOn())
-        compassListScrollView.alpha = if (isLandscape()) 1F else 0F
 
         return view
     }
@@ -218,76 +191,6 @@ class Compass : ScopedFragment(), SensorEventListener {
             CompassCalibration.newInstance()
                     .show(parentFragmentManager, "calibration_dialog")
         }
-
-        copy.setOnClickListener {
-            handler.removeCallbacks(textAnimationRunnable)
-            val clipboard: ClipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-            val stringBuilder = StringBuilder().apply {
-                append("${getString(R.string.compass_info)}\n\n")
-                append("${getString(R.string.compass_accuracy)}\n")
-                append("${accuracyAccelerometer.text}\n")
-                append("${accuracyMagnetometer.text}\n")
-                append("Accelerometer\n")
-                append("${accelerometerX.text}, ${accelerometerY.text}, ${accelerometerZ.text}\n")
-                append("Magnetometer\n")
-                append("${magnetometerX.text}, ${magnetometerY.text}, ${magnetometerZ.text}\n")
-                append("\n${getString(R.string.compass_field)}\n")
-                append("${inclinationTextView.text}\n")
-                append("${declination.text}\n")
-                append("${fieldStrength.text}\n\n")
-
-                @Suppress("KotlinConstantConditions")
-                if (BuildConfig.FLAVOR == "lite") {
-                    append("\n\n")
-                    append("Information is copied using Positional\n")
-                    append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
-                }
-            }
-
-            val clip: ClipData = ClipData.newPlainText("Time Data", stringBuilder)
-            clipboard.setPrimaryClip(clip)
-
-            if (clipboard.hasPrimaryClip()) {
-                compassInfoText.setTextAnimation(getString(R.string.info_copied), 300)
-                handler.postDelayed(textAnimationRunnable, 3000)
-            }
-        }
-
-        bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    backPressed(true)
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    backPressed(false)
-                    while (backPress!!.hasEnabledCallbacks()) {
-                        /**
-                         * This is a workaround and not a full fledged method to
-                         * remove any existing callbacks
-                         *
-                         * The [bottomSheetBehavior] adds a new callback every time it is expanded
-                         * and it is a feasible approach to remove any existing callbacks
-                         * as soon as it is collapsed, the callback number will always remain
-                         * one
-                         *
-                         * What makes this approach a slightly less reliable is because so
-                         * many presumption has been taken here
-                         */
-                        backPress?.onBackPressed()
-                    }
-                }
-
-                copy.isClickable = newState == BottomSheetBehavior.STATE_EXPANDED
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                compassListScrollView.alpha = slideOffset
-                expandUp.alpha = 1 - slideOffset
-                view.findViewById<View>(R.id.compass_dim).alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
-                //toolbar.translationY = toolbar.height * -slideOffset
-            }
-        })
 
         locationViewModel.location.observe(viewLifecycleOwner) { location ->
             var declination: Spanned
@@ -326,7 +229,6 @@ class Compass : ScopedFragment(), SensorEventListener {
         objectAnimator?.removeAllListeners()
         objectAnimator?.cancel()
         dial.clearAnimation()
-        compassInfoText.clearAnimation()
         handler.removeCallbacksAndMessages(null)
         unregister()
     }
@@ -344,8 +246,6 @@ class Compass : ScopedFragment(), SensorEventListener {
             sensorManager.unregisterListener(this, sensorMagneticField)
         }
     }
-
-    private val textAnimationRunnable: Runnable = Runnable { compassInfoText.setTextAnimation(getString(R.string.compass_info), 300) }
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event == null) return
@@ -379,9 +279,7 @@ class Compass : ScopedFragment(), SensorEventListener {
         }
 
         run {
-            if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_DRAGGING ||
-                    bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED ||
-                    isLandscape()) {
+            if (BuildConfig.DEBUG.invert()) { // ANR on debug builds
                 accelerometerX.text = fromHtml("<b>X:</b> ${round(accelerometerReadings[0].toDouble(), 3)}")
                 accelerometerY.text = fromHtml("<b>Y:</b> ${round(accelerometerReadings[1].toDouble(), 3)}")
                 accelerometerZ.text = fromHtml("<b>Z:</b> ${round(accelerometerReadings[2].toDouble(), 3)}")
@@ -507,24 +405,13 @@ class Compass : ScopedFragment(), SensorEventListener {
         flowerBloom = value
     }
 
-    private fun backPressed(value: Boolean) {
-        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
-            override fun handleOnBackPressed() {
-                if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
-                }
-
-                remove()
-            }
-        })
-    }
-
     private inner class MyOnTouchListener : View.OnTouchListener {
 
         @SuppressLint("ClickableViewAccessibility")
         override fun onTouch(v: View?, event: MotionEvent): Boolean {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    compassScrollView.requestDisallowInterceptTouchEvent(true)
                     isUserRotatingDial = true
                     objectAnimator?.removeAllListeners()
                     objectAnimator?.cancel()
@@ -547,6 +434,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                 }
 
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    compassScrollView.requestDisallowInterceptTouchEvent(false)
                     handler.postDelayed(compassDialAnimationRunnable, 1000)
                     return true
                 }

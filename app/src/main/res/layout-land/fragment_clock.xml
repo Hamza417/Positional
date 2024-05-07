@@ -103,7 +103,20 @@
 
             <include layout="@layout/toolbar_clock" />
 
-            <include layout="@layout/bottom_sheet_clock" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/dividerColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/toolbar_padding">
+
+                <include layout="@layout/info_panel_clock" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

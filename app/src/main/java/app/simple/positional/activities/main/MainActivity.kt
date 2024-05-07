@@ -35,7 +35,13 @@ import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.services.FusedLocationService
 import app.simple.positional.services.LocationService
 import app.simple.positional.singleton.SharedPreferences
-import app.simple.positional.ui.panels.*
+import app.simple.positional.ui.panels.Compass
+import app.simple.positional.ui.panels.Direction
+import app.simple.positional.ui.panels.GPS
+import app.simple.positional.ui.panels.Level
+import app.simple.positional.ui.panels.Settings
+import app.simple.positional.ui.panels.Time
+import app.simple.positional.ui.panels.Trail
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension.getLocationStatus
@@ -82,7 +88,7 @@ class MainActivity : BaseActivity(),
                         .start()
             }
 
-            // They didn't like it :(
+//            // They didn't like it :(
 //            supportFragmentManager.showPanelsDialog(PanelsCallback { _, string, position ->
 //                bottomBar.setCurrentItem(position, true)
 //                openFragment(string!!)

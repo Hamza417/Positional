@@ -13,18 +13,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import app.simple.positional.R
 import app.simple.positional.activities.subactivity.DirectionsActivity
-import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.compass.CompassCalibration
@@ -46,7 +39,6 @@ import app.simple.positional.util.HtmlHelper
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlin.math.abs
 
 class Direction : ScopedFragment(), SensorEventListener {
@@ -64,13 +56,7 @@ class Direction : ScopedFragment(), SensorEventListener {
     private lateinit var menu: DynamicRippleImageButton
     private lateinit var targetSet: DynamicRippleImageButton
     private lateinit var calibrate: DynamicRippleImageButton
-    private lateinit var compassListScrollView: NestedScrollView
-    private lateinit var expandUp: ImageView
-    private var mainLayout: CustomCoordinatorLayout? = null
 
-    private var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>? = null
-    private lateinit var bottomSheetSlide: BottomSheetSlide
-    private var backPress: OnBackPressedDispatcher? = null
     private var calibrationDialog: CompassCalibration? = null
     private var targetLatLng: LatLng? = null
     private var location: Location? = null
@@ -115,20 +101,6 @@ class Direction : ScopedFragment(), SensorEventListener {
         menu = view.findViewById(R.id.direction_menu)
         targetSet = view.findViewById(R.id.direction_target_btn)
         calibrate = view.findViewById(R.id.compass_calibrate)
-        compassListScrollView = view.findViewById(R.id.direction_list_scroll_view)
-        expandUp = view.findViewById(R.id.expand_up_direction_sheet)
-
-        kotlin.runCatching {
-            mainLayout = view.findViewById(R.id.direction_main_layout)
-        }
-
-        bottomSheetSlide = requireActivity() as BottomSheetSlide
-        backPress = requireActivity().onBackPressedDispatcher
-        compassListScrollView.alpha = if (isLandscape()) 1F else 0F
-
-        kotlin.runCatching {
-            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.direction_info_bottom_sheet))
-        }
 
         locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
 
@@ -157,7 +129,6 @@ class Direction : ScopedFragment(), SensorEventListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainLayout?.setProxyView(view)
         setTargetLabel()
         setTargetCoordinates()
 
@@ -186,39 +157,6 @@ class Direction : ScopedFragment(), SensorEventListener {
             CompassCalibration.newInstance()
                     .show(parentFragmentManager, "calibration_dialog")
         }
-
-        bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    backPressed(true)
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    backPressed(false)
-                    while (backPress!!.hasEnabledCallbacks()) {
-                        /**
-                         * This is a workaround and not a full fledged method to
-                         * remove any existing callbacks
-                         *
-                         * The [bottomSheetBehavior] adds a new callback every time it is expanded
-                         * and it is a feasible approach to remove any existing callbacks
-                         * as soon as it is collapsed, the callback number will always remain
-                         * one
-                         *
-                         * What makes this approach a slightly less reliable is because so
-                         * many presumption has been taken here
-                         */
-                        backPress?.onBackPressed()
-                    }
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                compassListScrollView.alpha = slideOffset
-                expandUp.alpha = 1 - slideOffset
-                view.findViewById<View>(R.id.direction_dim).alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
-                //toolbar.translationY = toolbar.height * -slideOffset
-            }
-        })
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
@@ -440,18 +378,6 @@ class Direction : ScopedFragment(), SensorEventListener {
                 stringBuilder.append(getString(R.string.not_available))
             }
         }
-    }
-
-    private fun backPressed(value: Boolean) {
-        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
-            override fun handleOnBackPressed() {
-                if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
-                }
-
-                remove()
-            }
-        })
     }
 
     companion object {

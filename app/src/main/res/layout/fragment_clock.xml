@@ -1,101 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.simple.positional.decorations.views.CustomCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clock_main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/peek_height"
-        android:paddingBottom="25dp"
-        android:orientation="vertical">
-
-        <include layout="@layout/toolbar_clock" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="@dimen/clock_image_shadow_size"
-                android:layout_height="@dimen/clock_image_shadow_size"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_clock_shadow"
-                tools:ignore="ContentDescription" />
-
-            <app.simple.positional.decorations.views.PhysicalRotationImageView
-                android:id="@+id/sweep_seconds"
-                android:layout_width="@dimen/clock_image_dimensions"
-                android:layout_height="@dimen/clock_image_dimensions"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:rotation="-90"
-                android:src="@drawable/clock_trail"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/clock_face"
-                android:layout_width="@dimen/clock_image_dimensions"
-                android:layout_height="@dimen/clock_image_dimensions"
-                android:layout_gravity="center"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:id="@+id/day_night_indicator"
-                android:layout_width="@dimen/clock_day_night_indicator"
-                android:layout_height="@dimen/clock_day_night_indicator"
-                android:layout_gravity="center"
-                android:layout_marginBottom="60dp"
-                tools:ignore="ContentDescription" />
-
-            <app.simple.positional.decorations.views.PhysicalRotationImageView
-                android:id="@+id/hour"
-                android:layout_width="@dimen/clock_needle_dimensions"
-                android:layout_height="@dimen/clock_needle_dimensions"
-                android:layout_gravity="center"
-                tools:ignore="ContentDescription" />
-
-            <app.simple.positional.decorations.views.PhysicalRotationImageView
-                android:id="@+id/minutes"
-                android:layout_width="@dimen/clock_needle_dimensions"
-                android:layout_height="@dimen/clock_needle_dimensions"
-                android:layout_gravity="center"
-                tools:ignore="ContentDescription" />
-
-            <app.simple.positional.decorations.views.PhysicalRotationImageView
-                android:id="@+id/seconds"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/clock_needle_dimensions"
-                android:layout_gravity="center"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                tools:ignore="ContentDescription" />
-
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/digital_time_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/light"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/info_text_primary_size" />
-
-    </LinearLayout>
+    <include layout="@layout/toolbar_clock" />
 
     <View
-        android:id="@+id/clock_dim"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/dividerColor" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/time_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0"
-        android:background="#7E000000" />
+        android:clipChildren="false">
 
-    <include layout="@layout/bottom_sheet_clock" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/toolbar_padding"
+            android:paddingBottom="@dimen/toolbar_padding">
 
-</app.simple.positional.decorations.views.CustomCoordinatorLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginVertical="100dp"
+                android:layout_weight="1">
 
+                <ImageView
+                    android:layout_width="@dimen/clock_image_shadow_size"
+                    android:layout_height="@dimen/clock_image_shadow_size"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_clock_shadow"
+                    tools:ignore="ContentDescription" />
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/sweep_seconds"
+                    android:layout_width="@dimen/clock_image_dimensions"
+                    android:layout_height="@dimen/clock_image_dimensions"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:rotation="-90"
+                    android:src="@drawable/clock_trail"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/clock_face"
+                    android:layout_width="@dimen/clock_image_dimensions"
+                    android:layout_height="@dimen/clock_image_dimensions"
+                    android:layout_gravity="center"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/day_night_indicator"
+                    android:layout_width="@dimen/clock_day_night_indicator"
+                    android:layout_height="@dimen/clock_day_night_indicator"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="60dp"
+                    tools:ignore="ContentDescription" />
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/hour"
+                    android:layout_width="@dimen/clock_needle_dimensions"
+                    android:layout_height="@dimen/clock_needle_dimensions"
+                    android:layout_gravity="center"
+                    tools:ignore="ContentDescription" />
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/minutes"
+                    android:layout_width="@dimen/clock_needle_dimensions"
+                    android:layout_height="@dimen/clock_needle_dimensions"
+                    android:layout_gravity="center"
+                    tools:ignore="ContentDescription" />
+
+                <app.simple.positional.decorations.views.PhysicalRotationImageView
+                    android:id="@+id/seconds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/clock_needle_dimensions"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    tools:ignore="ContentDescription" />
+
+            </FrameLayout>
+
+            <include layout="@layout/info_panel_clock" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

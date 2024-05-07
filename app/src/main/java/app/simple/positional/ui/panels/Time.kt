@@ -1,8 +1,5 @@
 package app.simple.positional.ui.panels
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -14,20 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.subactivity.TimezonePickerActivity
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.constants.ClockSkinsConstants.clockNeedleSkins
 import app.simple.positional.constants.LocationPins
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
-import app.simple.positional.decorations.views.CustomCoordinatorLayout
 import app.simple.positional.decorations.views.PhysicalRotationImageView
 import app.simple.positional.dialogs.app.LocationParameters
 import app.simple.positional.dialogs.clock.ClockMenu
@@ -51,13 +42,9 @@ import app.simple.positional.util.MoonAngle.getMoonPhase
 import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.util.Ordinal.toOrdinal
-import app.simple.positional.util.StatusBarHeight
-import app.simple.positional.util.TextViewUtils.setTextAnimation
-import app.simple.positional.util.TimeFormatter.getTime
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -78,28 +65,20 @@ import java.time.temporal.IsoFields
 
 class Time : ScopedFragment() {
 
-    private var bottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>? = null
-
     private lateinit var hour: PhysicalRotationImageView
     private lateinit var minutes: PhysicalRotationImageView
     private lateinit var seconds: PhysicalRotationImageView
     private lateinit var face: ImageView
-    private lateinit var expandUp: ImageView
     private lateinit var sweepSeconds: PhysicalRotationImageView
     private lateinit var dayNightIndicator: ImageView
     private lateinit var moonPhaseGraphics: ImageView
 
     private lateinit var menu: DynamicRippleImageButton
-    private lateinit var copyButton: DynamicRippleImageButton
     private lateinit var timezoneButton: DynamicRippleImageButton
     private lateinit var customLocationButton: DynamicRippleImageButton
     private lateinit var divider: View
     private lateinit var customLocationButtonDivider: View
-    private var clockMainLayout: CustomCoordinatorLayout? = null
-    private lateinit var scrollView: NestedScrollView
 
-    private lateinit var digitalTimeMain: TextView
-    private lateinit var clockInfoText: TextView
     private lateinit var localTimeData: TextView
     private lateinit var utcTimeData: TextView
     private lateinit var specifiedLocationNotice: TextView
@@ -113,7 +92,6 @@ class Time : ScopedFragment() {
     private lateinit var moonDatesData: TextView
 
     private lateinit var handler: Handler
-    private var backPress: OnBackPressedDispatcher? = null
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var locationViewModel: LocationViewModel
 
@@ -144,18 +122,10 @@ class Time : ScopedFragment() {
         moonPhaseGraphics = view.findViewById(R.id.moon_phase_graphics)
 
         menu = view.findViewById(R.id.clock_menu)
-        copyButton = view.findViewById(R.id.clock_copy)
         timezoneButton = view.findViewById(R.id.clock_timezone)
         customLocationButton = view.findViewById(R.id.clock_custom_location)
         divider = view.findViewById(R.id.clock_divider)
         customLocationButtonDivider = view.findViewById(R.id.custom_location_divider)
-
-        kotlin.runCatching { // Landscape mode don't have [CustomCoordinatorLayout]
-            clockMainLayout = view.findViewById(R.id.clock_main_layout)
-        }
-
-        digitalTimeMain = view.findViewById(R.id.digital_time_main)
-        clockInfoText = view.findViewById(R.id.clock_info_text)
 
         localTimeData = view.findViewById(R.id.local_timezone_data)
         utcTimeData = view.findViewById(R.id.utc_time_data)
@@ -171,15 +141,6 @@ class Time : ScopedFragment() {
         moonDatesData = view.findViewById(R.id.moon_dates_data)
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
-        scrollView = view.findViewById(R.id.clock_panel_scrollview)
-        scrollView.alpha = if (isLandscape()) 1F else 0F
-        expandUp = view.findViewById(R.id.expand_up_clock_sheet)
-
-        kotlin.runCatching { // Landscape mode don't have BottomSheet
-            bottomSheetBehavior = BottomSheetBehavior.from(view.findViewById(R.id.clock_info_bottom_sheet))
-        }
-
-        backPress = requireActivity().onBackPressedDispatcher
 
         setMotionDelay(ClockPreferences.getMovementType())
 
@@ -226,97 +187,14 @@ class Time : ScopedFragment() {
             divider.visibility = View.VISIBLE
         }
 
-        clockMainLayout?.setProxyView(view)
-
         locationViewModel.location.observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             calculateAndUpdateData(it.latitude, it.longitude, it.altitude)
         }
 
-        bottomSheetBehavior?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    backPressed(true)
-                    copyButton.isClickable = true
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    copyButton.isClickable = false
-                    backPressed(false)
-                    while (backPress!!.hasEnabledCallbacks()) {
-                        backPress?.onBackPressed()
-                    }
-                }
-
-                copyButton.isClickable = newState == BottomSheetBehavior.STATE_EXPANDED
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                scrollView.alpha = slideOffset
-                expandUp.alpha = 1 - slideOffset
-                view.findViewById<View>(R.id.clock_dim).alpha = slideOffset
-                bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
-            }
-        })
-
-        if (StatusBarHeight.isLandscape(requireContext())) {
-            scrollView.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-                if (scrollY < oldScrollY) {
-                    bottomSheetSlide.onBottomSheetSliding(0F, true)
-                } else {
-                    bottomSheetSlide.onBottomSheetSliding(1F, false)
-                }
-            }
-        }
-
         menu.setOnClickListener {
-            ClockMenu.newInstance().show(parentFragmentManager, "clock_menu")
-        }
-
-        copyButton.setOnClickListener {
-            handler.removeCallbacks(textAnimationRunnable)
-            val clipboard: ClipboardManager =
-                    requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-
-            @Suppress("KotlinConstantConditions") val stringBuilder = StringBuilder().apply {
-                append("${R.string.local_time}\n")
-                append("${localTimeData.text}\n")
-                append("${R.string.utc_time}\n")
-                append("${utcTimeData.text}\n")
-
-                if (isCustomCoordinate) {
-                    append(specifiedLocationNotice.text)
-                    append("\n")
-                }
-
-                if (sunPositionData.text.isNotEmpty()) {
-                    append("${R.string.sun_position}\n")
-                    append("${sunPositionData.text}\n")
-                    append("${getString(R.string.sun_time)}\n")
-                    append("${sunTimeData.text}\n\n")
-                    append("${R.string.twilight}\n")
-                    append("${twilightData.text}\n\n")
-                    append("${R.string.moon_position}\n")
-                    append("${moonPositionData.text}\n\n")
-                    append("${moonTimeData.text}\n\n")
-                    append("${R.string.moon_illumination}\n")
-                    append("${moonIlluminationData.text}\n\n")
-                    append("${R.string.moon_dates}\n")
-                    append("${moonDatesData.text}\n\n")
-                }
-
-                if (BuildConfig.FLAVOR == "lite") {
-                    append("\n\n")
-                    append("Information is copied using Positional\n")
-                    append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
-                }
-            }
-
-            val clip: ClipData = ClipData.newPlainText("Time Data", stringBuilder)
-            clipboard.setPrimaryClip(clip)
-
-            if (clipboard.hasPrimaryClip()) {
-                clockInfoText.setTextAnimation(getString(R.string.info_copied), 300)
-                handler.postDelayed(textAnimationRunnable, 3000)
-            }
+            ClockMenu.newInstance()
+                    .show(parentFragmentManager, ClockMenu.TAG)
         }
 
         timezoneButton.setOnClickListener {
@@ -325,12 +203,8 @@ class Time : ScopedFragment() {
 
         customLocationButton.setOnClickListener {
             LocationParameters.newInstance()
-                    .show(parentFragmentManager, "location_parameters")
+                    .show(parentFragmentManager, LocationParameters.TAG)
         }
-    }
-
-    private val textAnimationRunnable = Runnable {
-        clockInfoText.setTextAnimation(getString(R.string.clock_info), 300)
     }
 
     private val clock = object : Runnable {
@@ -408,12 +282,7 @@ class Time : ScopedFragment() {
         super.onPause()
         handler.removeCallbacks(clock)
         handler.removeCallbacks(calender)
-        handler.removeCallbacks(textAnimationRunnable)
         handler.removeCallbacks(customDataUpdater)
-        clockInfoText.clearAnimation()
-        if (backPress!!.hasEnabledCallbacks()) {
-            backPressed(false)
-        }
     }
 
     private fun setSkins() {
@@ -617,7 +486,6 @@ class Time : ScopedFragment() {
     private fun updateTimeData() {
         viewLifecycleOwner.lifecycleScope.launch {
             var localTimeData: Spanned? = null
-            var digitalTime: Spanned? = null
             var utcTimeData: Spanned? = null
 
             withContext(Dispatchers.Default) {
@@ -637,8 +505,6 @@ class Time : ScopedFragment() {
                                         "<b>${getString(R.string.local_week_of_year)}</b> ${get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).toOrdinal()}")
                             }
 
-                    digitalTime = getTime(zonedDateTime)
-
                     utcTimeData =
                             with(ZonedDateTime.ofInstant(Instant.now(), ZoneId.of(ZoneOffset.UTC.toString()))) {
                                 fromHtml("<b>${getString(R.string.utc_local_time_offset)}</b> ${
@@ -653,7 +519,6 @@ class Time : ScopedFragment() {
             }
 
             try {
-                this@Time.digitalTimeMain.text = digitalTime
                 this@Time.localTimeData.text = localTimeData
                 this@Time.utcTimeData.text = utcTimeData
             } catch (ignored: NullPointerException) {
@@ -664,32 +529,6 @@ class Time : ScopedFragment() {
 
     private fun getCurrentTimeData(): ZonedDateTime {
         return Instant.now().atZone(ZoneId.of(timezone))
-    }
-
-    private fun backPressed(value: Boolean) {
-        if (StatusBarHeight.isLandscape(requireContext())) return
-
-        /**
-         * This is a workaround and not a full fledged method to
-         * remove any existing callbacks
-         *
-         * The [bottomSheetBehavior] adds a new callback every time it is expanded
-         * and it is a feasible approach to remove any existing callbacks
-         * as soon as it is collapsed, the callback number will always remain
-         * one
-         *
-         * What makes this approach a slightly less reliable is because so
-         * many presumptions have been taken here
-         */
-        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
-            override fun handleOnBackPressed() {
-                if (bottomSheetBehavior?.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_COLLAPSED
-                }
-
-                remove()
-            }
-        })
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {

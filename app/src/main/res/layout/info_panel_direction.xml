@@ -1,5 +1,6 @@
-<app.simple.positional.decorations.corners.DynamicCornersNestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/direction_list_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,160 +10,124 @@
     android:clipToPadding="false"
     android:fadingEdge="vertical"
     android:fadingEdgeLength="50dp"
+    android:orientation="vertical"
     android:overScrollMode="always"
     android:paddingHorizontal="10dp"
     android:requiresFadingEdge="vertical"
-    app:roundTopCorners="true">
+    app:roundTopCorners="true"
+    tools:parentTag="android.widget.LinearLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
         android:orientation="vertical"
-        android:paddingVertical="10dp">
+        android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            style="@style/PrimaryTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:layout_marginBottom="5dp"
+            android:text="@string/gps_location"
+            android:textSize="@dimen/info_text_primary_size" />
 
-            <TextView
-                android:id="@+id/compass_info_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:fontFamily="@font/medium"
-                android:text="@string/direction_info"
-                android:textColor="@color/textPrimary"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-                android:id="@+id/compass_copy"
-                android:layout_width="@dimen/copy_button_dimensions"
-                android:layout_height="@dimen/copy_button_dimensions"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/ripple_btn"
-                android:contentDescription="@string/copy"
-                android:visibility="invisible"
-                android:src="@drawable/ic_content_copy"
-                app:tint="@color/iconColor" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/direction_target"
+            style="@style/SecondaryTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+            android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+            android:maxLines="1"
+            android:text="@string/target"
+            android:textSize="@dimen/info_text_secondary_size" />
 
-            <TextView
-                style="@style/PrimaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/gps_location"
-                android:textSize="@dimen/info_text_primary_size" />
-
-            <TextView
-                android:id="@+id/direction_target"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/target"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/direction_bearing"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/gps_bearing"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/direction_displacement"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginTop="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/gps_displacement"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/direction_bearing"
+            style="@style/SecondaryTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+            android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+            android:maxLines="1"
+            android:text="@string/gps_bearing"
+            android:textSize="@dimen/info_text_secondary_size" />
 
-            <TextView
-                style="@style/PrimaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/gps_coordinates"
-                android:textSize="@dimen/info_text_primary_size" />
-
-            <TextView
-                android:id="@+id/direction_latitude"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/target"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-            <TextView
-                android:id="@+id/direction_longitude"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/gps_bearing"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/direction_displacement"
+            style="@style/SecondaryTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+            android:layout_marginTop="@dimen/info_text_item_margin_vertical"
+            android:maxLines="1"
+            android:text="@string/gps_displacement"
+            android:textSize="@dimen/info_text_secondary_size" />
 
-            <TextView
-                style="@style/PrimaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="@string/compass"
-                android:textSize="@dimen/info_text_primary_size" />
-
-            <TextView
-                android:id="@+id/direction_compass_azimuth"
-                style="@style/SecondaryTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
-                android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
-                android:maxLines="1"
-                android:text="@string/moon_azimuth"
-                android:textSize="@dimen/info_text_secondary_size" />
-
-        </LinearLayout>
     </LinearLayout>
-</app.simple.positional.decorations.corners.DynamicCornersNestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/PrimaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/gps_coordinates"
+            android:textSize="@dimen/info_text_primary_size" />
+
+        <TextView
+            android:id="@+id/direction_latitude"
+            style="@style/SecondaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+            android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+            android:maxLines="1"
+            android:text="@string/target"
+            android:textSize="@dimen/info_text_secondary_size" />
+
+        <TextView
+            android:id="@+id/direction_longitude"
+            style="@style/SecondaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+            android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+            android:maxLines="1"
+            android:text="@string/gps_bearing"
+            android:textSize="@dimen/info_text_secondary_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            style="@style/PrimaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/compass"
+            android:textSize="@dimen/info_text_primary_size" />
+
+        <TextView
+            android:id="@+id/direction_compass_azimuth"
+            style="@style/SecondaryTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/info_text_item_margin_horizontal"
+            android:layout_marginVertical="@dimen/info_text_item_margin_vertical"
+            android:maxLines="1"
+            android:text="@string/moon_azimuth"
+            android:textSize="@dimen/info_text_secondary_size" />
+
+    </LinearLayout>
+</merge>
