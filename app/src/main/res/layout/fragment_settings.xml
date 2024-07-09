@@ -140,6 +140,8 @@
 
             <include layout="@layout/pref_contribute" />
 
+            <include layout="@layout/pref_other_apps" />
+
         </LinearLayout>
 
     </app.simple.positional.decorations.padding.PaddingAwareNestedScrollView>

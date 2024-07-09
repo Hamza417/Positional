@@ -100,16 +100,4 @@
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/settings_primary_text_size" />
 
-    <app.simple.positional.decorations.ripple.DynamicRippleTextView
-        android:id="@+id/my_other_apps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/ripple"
-        android:fontFamily="@font/medium"
-        android:padding="15dp"
-        android:text="@string/my_developer_profile"
-        android:textColor="@color/textPrimary"
-        android:textSize="@dimen/settings_primary_text_size" />
-
 </LinearLayout>

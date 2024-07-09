@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="20dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:fontFamily="@font/medium"
+        android:text="@string/other_apps"
+        android:textColor="@color/textSecondary"
+        android:textSize="@dimen/settings_category_text_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginHorizontal="15dp"
+        android:background="@color/dividerColor" />
+
+    <app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
+        android:id="@+id/inure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/inure"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/medium"
+            android:text="@string/inure_app_manager"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/settings_primary_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/textView13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/inure_app_manager_summary"
+            android:textColor="@color/textTertiary"
+            android:textSize="@dimen/settings_secondary_text_size"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+    </app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>
+
+    <app.simple.positional.decorations.ripple.DynamicRippleTextView
+        android:id="@+id/my_other_apps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/ripple"
+        android:fontFamily="@font/medium"
+        android:padding="15dp"
+        android:text="@string/my_developer_profile"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/settings_primary_text_size" />
+</LinearLayout>

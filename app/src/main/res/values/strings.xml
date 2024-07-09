@@ -338,4 +338,5 @@
     <string name="elongation">Elongation</string>
     <string name="radius">Radius</string>
     <string name="crescent_width">Crescent Width</string>
+    <string name="other_apps">Other Apps</string>
 </resources>

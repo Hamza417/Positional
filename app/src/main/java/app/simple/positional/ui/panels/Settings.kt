@@ -10,7 +10,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -31,7 +35,13 @@ import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
-import app.simple.positional.dialogs.settings.*
+import app.simple.positional.dialogs.settings.CoordinatesFormat
+import app.simple.positional.dialogs.settings.Icons
+import app.simple.positional.dialogs.settings.Locales
+import app.simple.positional.dialogs.settings.LocationProvider
+import app.simple.positional.dialogs.settings.RoundedCorners
+import app.simple.positional.dialogs.settings.Theme
+import app.simple.positional.dialogs.settings.Units
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.popups.settings.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
@@ -71,6 +81,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     private lateinit var keepScreenOn: DynamicRippleConstraintLayout
     private lateinit var coordinatesFormatContainer: DynamicRippleLinearLayout
     private lateinit var coordinatesFormat: TextView
+    private lateinit var inure: DynamicRippleConstraintLayout
 
 
     private lateinit var toggleKeepScreenOn: SwitchView
@@ -137,6 +148,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         keepScreenOn = view.findViewById(R.id.setting_keep_screen_on)
         coordinatesFormatContainer = view.findViewById(R.id.settings_coordinates)
         coordinatesFormat = view.findViewById(R.id.current_coordinate_format)
+        inure = view.findViewById(R.id.inure)
 
         toggleKeepScreenOn = view.findViewById(R.id.toggle_screen_on)
         toggleCustomLocation = view.findViewById(R.id.toggle_custom_location)
@@ -358,6 +370,12 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             CoordinatesFormat.newInstance()
                     .show(childFragmentManager, "coordinates_format")
         }
+
+        inure.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(INURE_PLAY_STORE_URL)
+            startActivity(intent)
+        }
     }
 
     private fun setCurrentLocation() {
@@ -517,5 +535,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             fragment.arguments = args
             return fragment
         }
+
+        private const val INURE_PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=app.simple.inure.play"
     }
 }

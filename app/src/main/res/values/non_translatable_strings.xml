@@ -13,6 +13,8 @@
     <string name="dd_ddd" translatable="false">DD.DDD°</string>
     <string name="dd_mm_mmm" translatable="false">DD°MM.MMM</string>
     <string name="dd_mm_ss_sss" translatable="false">DD°MM\'SS.SSS</string>
+    <string name="inure_app_manager" translatable="false">Inure App Manager</string>
+    <string name="inure_app_manager_summary" translatable="false">An elegant and beautiful premium Android app manager for both rooted and non-rooted devices and a built-in terminal, analytics panel and an independent custom theme engine, developed with purely custom APIs created for this app and has Shizuku support.</string>
 
     <!-- Bottom Bar -->
 </resources>
