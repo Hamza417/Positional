@@ -284,7 +284,7 @@
     <string name="eta_seconds">%1$s segundos</string>
     <string name="eta_minutes">%1$s minutos</string>
     <string name="eta_hours">%1$s horas %2$s minutos</string>
-    <string name="eta_days">%1$s dias, %2$s horas, %3$s minutos</string>
+    <string name="eta_days">%s dias, %s horas, %s minutos</string>
     <string name="eta">Tempo Estimado:</string>
     <string name="gps_displacement_from_origin">Deslocamento da Origem:</string>
     <string name="gps_displacement_from_dest">Deslocamento do destino:</string>
@@ -309,4 +309,5 @@
     <string name="elongation">Alongamento</string>
     <string name="radius">Raio</string>
     <string name="crescent_width">Largura Crescente</string>
+    <string name="other_apps">Outros Apps</string>
 </resources>
