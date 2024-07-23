@@ -20,7 +20,6 @@
             android:layout_height="match_parent"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:layoutAnimation="@anim/grid_list_animation_controller"
             android:padding="@dimen/options_container_horizontal_padding" />
 
 

@@ -27,7 +27,10 @@ class Panels : CustomBottomSheetDialogFragment() {
         recyclerView = view.findViewById(R.id.recycler_view)
         isLandscape = StatusBarHeight.isLandscape(requireContext())
 
-        spanCount = if (isLandscape) 7 else 4
+        spanCount = when {
+            isLandscape -> LANDSCAPE_SPAN_COUNT
+            else -> PORTRAIT_SPAN_COUNT
+        }
 
         return view
     }
@@ -60,8 +63,12 @@ class Panels : CustomBottomSheetDialogFragment() {
             dialog.apply {
                 setPanelsCallback(panelsCallback)
             }
-            dialog.show(this, Panels::class.java.simpleName)
+            dialog.show(this, TAG)
             return dialog
         }
+
+        private const val TAG = "Panels"
+        private const val PORTRAIT_SPAN_COUNT = 4
+        private const val LANDSCAPE_SPAN_COUNT = 7
     }
 }
