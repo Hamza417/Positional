@@ -51,6 +51,7 @@ import app.simple.positional.util.PermissionUtils
 import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 
@@ -263,10 +264,14 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             val appUpdateInfoTask = appUpdateManager.appUpdateInfo
 
             appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-                    appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE, requireActivity(), 1337)
-                } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE) {
-                    Toast.makeText(requireContext(), R.string.no_update, Toast.LENGTH_SHORT).show()
+                when {
+                    appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) -> {
+                        appUpdateManager.startUpdateFlow(appUpdateInfo, requireActivity(), AppUpdateOptions.defaultOptions(AppUpdateType.FLEXIBLE))
+                    }
+
+                    appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE -> {
+                        Toast.makeText(requireContext(), R.string.no_update, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
