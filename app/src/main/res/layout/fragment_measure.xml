@@ -1,6 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <app.simple.positional.decorations.measure.MeasureTools
+        android:id="@+id/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="@dimen/trail_tools_margin"
+        android:animateLayoutChanges="true"
+        android:backgroundTint="@color/mainBackground"
+        android:elevation="10dp"
+        android:orientation="vertical"
+        android:padding="@dimen/trail_tools_padding" />
+
+    <app.simple.positional.decorations.trails.TrailToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/mainBackground"
+        android:elevation="5dp" />
+
+    <app.simple.positional.decorations.trails.TrailMaps
+        android:id="@+id/map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0" />
+
+    <View
+        android:id="@+id/dim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#7E000000"
+        android:translationZ="20dp" />
+
+    <include layout="@layout/bottom_sheet_trail" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
