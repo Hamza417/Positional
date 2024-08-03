@@ -12,7 +12,7 @@ import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
-import app.simple.positional.model.TrailData
+import app.simple.positional.model.TrailPoint
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.HtmlHelper
@@ -26,20 +26,20 @@ class TrailDataViewModel(application: Application) : WrappedViewModel(applicatio
 
     private var trailName = TrailPreferences.getCurrentTrail()
 
-    val trailDataAscending: MutableLiveData<ArrayList<TrailData>> by lazy {
-        MutableLiveData<ArrayList<TrailData>>().also {
+    val trailPointAscending: MutableLiveData<ArrayList<TrailPoint>> by lazy {
+        MutableLiveData<ArrayList<TrailPoint>>().also {
             loadTrailData(trailName)
         }
     }
 
-    private val trailDataDescending: MutableLiveData<ArrayList<TrailData>> by lazy {
-        MutableLiveData<ArrayList<TrailData>>().also {
+    private val trailPointDescending: MutableLiveData<ArrayList<TrailPoint>> by lazy {
+        MutableLiveData<ArrayList<TrailPoint>>().also {
             loadTrailData(trailName)
         }
     }
 
-    val trailDataDescendingWithInfo: MutableLiveData<Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>> by lazy {
-        MutableLiveData<Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>>().also {
+    val trailPointDescendingWithInfo: MutableLiveData<Pair<ArrayList<TrailPoint>, Triple<String?, Spanned?, Spanned?>>> by lazy {
+        MutableLiveData<Pair<ArrayList<TrailPoint>, Triple<String?, Spanned?, Spanned?>>>().also {
             loadTrailDataWithInformation(trailName, true)
         }
     }
@@ -54,15 +54,15 @@ class TrailDataViewModel(application: Application) : WrappedViewModel(applicatio
             val listDesc = database.trailDataDao()?.getAllTrailDataDesc()!!
             database.close()
 
-            trailDataAscending.postValue(list as ArrayList<TrailData>)
+            trailPointAscending.postValue(list as ArrayList<TrailPoint>)
 
             delay(500) // For animation
 
-            trailDataDescending.postValue(listDesc as ArrayList<TrailData>)
+            trailPointDescending.postValue(listDesc as ArrayList<TrailPoint>)
         }
     }
 
-    fun saveTrailData(trailName: String, trails: TrailData) {
+    fun saveTrailData(trailName: String, trails: TrailPoint) {
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
                                                 TrailDataDatabase::class.java,
@@ -76,7 +76,7 @@ class TrailDataViewModel(application: Application) : WrappedViewModel(applicatio
         }
     }
 
-    fun deleteTrailData(trails: TrailData?) {
+    fun deleteTrailData(trails: TrailPoint?) {
         viewModelScope.launch(Dispatchers.IO) {
             println(measureTimeMillis {
                 trails ?: return@launch
@@ -135,7 +135,7 @@ class TrailDataViewModel(application: Application) : WrappedViewModel(applicatio
                 }
             }
 
-            val pair = Pair(list as ArrayList<TrailData>,
+            val pair = Pair(list as ArrayList<TrailPoint>,
                             Triple(
                                     trailName,
                                     total,
@@ -144,7 +144,7 @@ class TrailDataViewModel(application: Application) : WrappedViewModel(applicatio
 
             if (delay) delay(500)
 
-            trailDataDescendingWithInfo.postValue(pair)
+            trailPointDescendingWithInfo.postValue(pair)
         }
     }
 

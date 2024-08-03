@@ -37,6 +37,14 @@
         android:src="@drawable/ic_full_screen"
         android:tint="@color/iconColor" />
 
+    <app.simple.positional.decorations.ripple.DynamicRippleImageButton
+        android:id="@+id/compass"
+        android:layout_width="@dimen/app_button_size"
+        android:layout_height="@dimen/app_button_size"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/ic_compass_on"
+        android:tint="@color/iconColor" />
+
     <View
         android:layout_width="@dimen/app_button_size"
         android:layout_height="1px"

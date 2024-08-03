@@ -19,7 +19,7 @@ import app.simple.positional.extensions.maps.CustomMaps
 import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter
 import app.simple.positional.math.Vector3
-import app.simple.positional.model.TrailData
+import app.simple.positional.model.TrailPoint
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
@@ -72,7 +72,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
     private val currentPolyline = arrayListOf<LatLng>()
     private val flagMarkers = arrayListOf<Marker>()
     private val polylines = arrayListOf<Polyline>()
-    private var trailData = arrayListOf<TrailData>()
+    private var trailData = arrayListOf<TrailPoint>()
 
     private var isWrapped = false
     private var isFirstLocation = true
@@ -242,7 +242,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
         }
     }
 
-    private fun updatePolylines(arrayList: ArrayList<TrailData>) {
+    private fun updatePolylines(arrayList: ArrayList<TrailPoint>) {
         googleMap?.clear()
         polylines.clear()
         currentPolyline.clear()
@@ -278,7 +278,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
         }
     }
 
-    fun addPolylines(arrayList: ArrayList<TrailData>) {
+    fun addPolylines(arrayList: ArrayList<TrailPoint>) {
         for (i in polylines) {
             i.remove()
         }
@@ -322,8 +322,8 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
         }
     }
 
-    fun addPolyline(trailData: TrailData) {
-        val latLng = LatLng(trailData.latitude, trailData.longitude)
+    fun addPolyline(trailPoint: TrailPoint) {
+        val latLng = LatLng(trailPoint.latitude, trailPoint.longitude)
 
         currentPolyline.add(latLng)
 
@@ -331,10 +331,10 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
             MarkerOptions()
                 .position(latLng)
                 .icon(BitmapDescriptorFactory.fromBitmap(
-                    TrailIcons.icons[trailData.iconPosition]
+                    TrailIcons.icons[trailPoint.iconPosition]
                         .toBitmap(context, 50))))
 
-        this.trailData.add(trailData)
+        this.trailData.add(trailPoint)
         flagMarkers.add(marker!!)
         polylineOptions?.add(latLng)
         polylines.add(googleMap?.addPolyline(polylineOptions!!)!!)

@@ -20,14 +20,15 @@ import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
-import app.simple.positional.model.TrailData
+import app.simple.positional.model.TrailPoint
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.util.DMSConverter
 import app.simple.positional.util.TimeFormatter.formatDate
 import com.github.vipulasri.timelineview.TimelineView
 import com.google.android.gms.maps.model.LatLng
 
-class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<String?, Spanned?, Spanned?>>) : RecyclerView.Adapter<VerticalListViewHolder>() {
+class AdapterTrailData(private val trailPoint: Pair<ArrayList<TrailPoint>, Triple<String?, Spanned?, Spanned?>>) :
+    RecyclerView.Adapter<VerticalListViewHolder>() {
 
     private lateinit var trailsDataCallbacks: AdapterTrailsDataCallbacks
 
@@ -54,37 +55,38 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
 
         if (holder is Holder) {
             setMarker(holder,
-                      TrailIcons.icons[trailData.first[position].iconPosition])
+                TrailIcons.icons[trailPoint.first[position].iconPosition])
 
-            holder.name.text = trailData.first[position].name ?: "--"
-            holder.note.text = trailData.first[position].note ?: holder.itemView.context.getString(R.string.not_available)
-            holder.date.text = trailData.first[position].timeAdded.formatDate()
+            holder.name.text = trailPoint.first[position].name ?: "--"
+            holder.note.text = trailPoint.first[position].note
+                ?: holder.itemView.context.getString(R.string.not_available)
+            holder.date.text = trailPoint.first[position].timeAdded.formatDate()
             holder.coordinates.text = with(holder.itemView.context) {
                 getString(R.string.coordinates_format,
-                        DMSConverter.getFormattedLatitude(trailData.first[position].latitude, this),
-                        DMSConverter.getFormattedLongitude(trailData.first[position].longitude, this))
+                    DMSConverter.getFormattedLatitude(trailPoint.first[position].latitude, this),
+                    DMSConverter.getFormattedLongitude(trailPoint.first[position].longitude, this))
             }
 
             holder.accuracy.text = holder.itemView.context.getString(
                     R.string.trail_data_accuracy,
-                    getAccuracy(trailData.first[position].accuracy.round(1)),
-                    getUnit(trailData.first[position].accuracy, holder.itemView.context)
+                getAccuracy(trailPoint.first[position].accuracy.round(1)),
+                getUnit(trailPoint.first[position].accuracy, holder.itemView.context)
             )
 
             holder.container.setOnClickListener {
-                with(trailData.first[position]) {
+                with(trailPoint.first[position]) {
                     trailsDataCallbacks.onTrailClicked(LatLng(latitude, longitude))
                 }
             }
 
             holder.container.setOnLongClickListener {
-                trailsDataCallbacks.onTrailsDataLongPressed(trailData.first[position], it, position + 1)
+                trailsDataCallbacks.onTrailsDataLongPressed(trailPoint.first[position], it, position + 1)
                 true
             }
         } else if (holder is Header) {
-            holder.name.text = trailData.second.first
-            holder.total.text = trailData.second.second
-            holder.distance.text = trailData.second.third
+            holder.name.text = trailPoint.second.first
+            holder.total.text = trailPoint.second.second
+            holder.distance.text = trailPoint.second.third
             holder.add.setOnClickListener {
                 trailsDataCallbacks.onAdd(it)
             }
@@ -92,7 +94,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
     }
 
     override fun getItemCount(): Int {
-        return trailData.first.size + 2
+        return trailPoint.first.size + 2
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -188,7 +190,7 @@ class AdapterTrailData(private val trailData: Pair<ArrayList<TrailData>, Triple<
 
     companion object {
         interface AdapterTrailsDataCallbacks {
-            fun onTrailsDataLongPressed(trailData: TrailData, view: View, position: Int)
+            fun onTrailsDataLongPressed(trailPoint: TrailPoint, view: View, position: Int)
             fun onAdd(view: View)
             fun onTrailClicked(latLng: LatLng)
         }

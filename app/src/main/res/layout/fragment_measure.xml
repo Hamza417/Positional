@@ -39,6 +39,6 @@
         android:background="#7E000000"
         android:translationZ="20dp" />
 
-    <include layout="@layout/bottom_sheet_trail" />
+    <include layout="@layout/bottom_sheet_measure" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

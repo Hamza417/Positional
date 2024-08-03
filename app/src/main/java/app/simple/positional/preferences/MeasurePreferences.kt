@@ -13,6 +13,7 @@ object MeasurePreferences {
     const val SHOW_BUILDINGS = "measure_show_buildings_on_map"
     const val SATELLITE_MAP = "measure_map_satellite_mode"
     const val HIGH_CONTRAST_MAP = "measure_map_high_contrast_map"
+    const val TOOLS_GRAVITY = "measure_tools_gravity"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -24,6 +25,10 @@ object MeasurePreferences {
         getSharedPreferences().edit().putBoolean(COMPASS_ROTATION, value).apply()
     }
 
+    fun invertCompassRotation() {
+        setCompassRotation(!isCompassRotation())
+    }
+
     //--------------------------------------------------------------------------------------------------//
 
     fun arePolylinesWrapped(): Boolean {
@@ -32,6 +37,10 @@ object MeasurePreferences {
 
     fun setPolylinesWrapped(value: Boolean) {
         getSharedPreferences().edit().putBoolean(POLYLINES_WRAPPED, value).apply()
+    }
+
+    fun invertPolylinesWrapped() {
+        setPolylinesWrapped(!arePolylinesWrapped())
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -102,5 +111,19 @@ object MeasurePreferences {
 
     fun getHighContrastMap(): Boolean {
         return getSharedPreferences().getBoolean(HIGH_CONTRAST_MAP, false)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setToolsGravityToLeft(boolean: Boolean) {
+        getSharedPreferences().edit().putBoolean(TOOLS_GRAVITY, boolean).apply()
+    }
+
+    fun isToolsGravityToLeft(): Boolean {
+        return getSharedPreferences().getBoolean(TOOLS_GRAVITY, false)
+    }
+
+    fun invertToolsGravity() {
+        setToolsGravityToLeft(!isToolsGravityToLeft())
     }
 }

@@ -12,12 +12,15 @@ import android.location.Location
 import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
+import app.simple.positional.constants.TrailIcons
 import app.simple.positional.decorations.utils.CircleUtils
 import app.simple.positional.decorations.utils.MarkerUtils
 import app.simple.positional.extensions.maps.CustomMaps
 import app.simple.positional.math.CompassAzimuth
 import app.simple.positional.math.LowPassFilter
 import app.simple.positional.math.Vector3
+import app.simple.positional.model.MeasurePoint
+import app.simple.positional.model.TrailPoint
 import app.simple.positional.preferences.MeasurePreferences
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.BitmapHelper.toBitmap
@@ -31,10 +34,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.CircleOptions
+import com.google.android.gms.maps.model.CustomCap
 import com.google.android.gms.maps.model.JointType
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -70,7 +76,12 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     private var lastZoom = 20F
     private var lastTilt = 0F
     private val incrementFactor = 2
+
     private var polylineOptions: PolylineOptions? = null
+    private val currentPolyline = arrayListOf<LatLng>()
+    private val flagMarkers = arrayListOf<Marker>()
+    private val polylines = arrayListOf<Polyline>()
+    private var measurePoints = arrayListOf<MeasurePoint>()
 
     init {
         polylineOptions = PolylineOptions()
@@ -245,6 +256,78 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         MeasurePreferences.setPolylinesWrapped(false)
     }
 
+    fun wrapUnwrap() {
+        if (isWrapped) {
+            moveMapCamera(latLng!!, lastZoom, lastTilt, cameraSpeed)
+        } else {
+            wrap(true)
+        }
+    }
+
+    private fun wrap(animate: Boolean) {
+        kotlin.runCatching {
+            lastZoom = TrailPreferences.getMapZoom()
+            lastTilt = TrailPreferences.getMapTilt()
+
+            val builder = LatLngBounds.Builder()
+            for (latLng in currentPolyline) {
+                builder.include(latLng)
+            }
+
+            val bounds = builder.build()
+
+            //BOUND_PADDING is an int to specify padding of bound.. try 100.
+            if (animate) {
+                googleMap!!.animateCamera(CameraUpdateFactory
+                    .newLatLngBounds(bounds, 250))
+            } else {
+                googleMap!!.moveCamera(CameraUpdateFactory
+                    .newLatLngBounds(bounds, 250))
+            }
+
+            TrailPreferences.setWrapStatus(true)
+            isWrapped = true
+        }.onFailure {
+            isWrapped = TrailPreferences.arePolylinesWrapped()
+        }
+    }
+
+    private fun updatePolylines(arrayList: ArrayList<TrailPoint>) {
+        googleMap?.clear()
+        polylines.clear()
+        currentPolyline.clear()
+        flagMarkers.clear()
+        polylineOptions?.points?.clear()
+
+        for (trailData in arrayList) {
+            val latLng = LatLng(trailData.latitude, trailData.longitude)
+
+            currentPolyline.add(latLng)
+
+            val marker = googleMap?.addMarker(
+                MarkerOptions()
+                    .position(latLng)
+                    .icon(BitmapDescriptorFactory.fromBitmap(
+                        TrailIcons.icons[trailData.iconPosition]
+                            .toBitmap(context, 50))))
+
+            flagMarkers.add(marker!!)
+            polylineOptions?.add(latLng)
+            polylines.add(googleMap?.addPolyline(polylineOptions!!)!!)
+        }
+
+        invalidate()
+
+        polylineOptions?.startCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.ic_trail_start.toBitmap(context, 30))))
+        polylineOptions?.endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
+
+        mapsCallbacks?.onLineCountChanged(polylineOptions!!.points.size)
+
+        if (TrailPreferences.arePolylinesWrapped()) {
+            wrap(false)
+        }
+    }
+
     private fun registerSensors() {
         if (haveAccelerometerSensor && haveMagnetometerSensor) {
             unregisterSensors()
@@ -321,6 +404,11 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
                 } else {
                     unregisterSensors()
                 }
+            }
+
+            MeasurePreferences.POLYLINES_WRAPPED -> {
+                isWrapped = MeasurePreferences.arePolylinesWrapped()
+                wrap(true)
             }
         }
     }

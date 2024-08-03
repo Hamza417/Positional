@@ -14,7 +14,7 @@ import app.simple.positional.constants.TrailIcons
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomDialogFragment
-import app.simple.positional.model.TrailData
+import app.simple.positional.model.TrailPoint
 import app.simple.positional.popups.trail.PopupMarkers
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ParcelUtils.parcelable
@@ -28,7 +28,7 @@ class AddMarker : CustomDialogFragment() {
     private lateinit var save: DynamicRippleButton
     private lateinit var cancel: DynamicRippleButton
 
-    var onNewTrailAddedSuccessfully: (trailData: TrailData) -> Unit = {}
+    var onNewTrailAddedSuccessfully: (trailPoint: TrailPoint) -> Unit = {}
 
     private var latLng: LatLng? = null
     private var accuracy: Float = -1F
@@ -92,22 +92,22 @@ class AddMarker : CustomDialogFragment() {
         }
 
         save.setOnClickListener {
-            val trails = TrailData(
-                    latLng!!.latitude,
-                    latLng!!.longitude,
-                    requireArguments().getLong("time"),
-                    iconPosition,
-                    if (noteInputEditText.text.toString().isNotEmpty()) {
-                        noteInputEditText.text.toString()
-                    } else {
-                        null
-                    },
-                    if (nameInputEditText.text.toString().isNotEmpty()) {
-                        nameInputEditText.text.toString()
-                    } else {
-                        null
-                    },
-                    accuracy
+            val trails = TrailPoint(
+                latLng!!.latitude,
+                latLng!!.longitude,
+                requireArguments().getLong("time"),
+                iconPosition,
+                if (noteInputEditText.text.toString().isNotEmpty()) {
+                    noteInputEditText.text.toString()
+                } else {
+                    null
+                },
+                if (nameInputEditText.text.toString().isNotEmpty()) {
+                    nameInputEditText.text.toString()
+                } else {
+                    null
+                },
+                accuracy
             )
 
             TrailPreferences.setLastMarkerName("")

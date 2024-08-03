@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import app.simple.positional.database.dao.TrailDataDao
-import app.simple.positional.model.TrailData
+import app.simple.positional.model.TrailPoint
 
-@Database(entities = [TrailData::class], exportSchema = true, version = 3)
+@Database(entities = [TrailPoint::class], exportSchema = true, version = 3)
 abstract class TrailDataDatabase : RoomDatabase() {
 
     abstract fun trailDataDao(): TrailDataDao?

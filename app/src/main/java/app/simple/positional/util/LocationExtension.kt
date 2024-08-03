@@ -3,7 +3,7 @@ package app.simple.positional.util
 import android.content.Context
 import android.location.Location
 import android.location.LocationManager
-import app.simple.positional.model.TrailData
+import app.simple.positional.model.TrailPoint
 import com.google.android.gms.maps.model.LatLng
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -42,7 +42,7 @@ object LocationExtension {
         return latitude < 0
     }
 
-    fun measureDisplacement(list: List<TrailData>): Float {
+    fun measureDisplacement(list: List<TrailPoint>): Float {
 
         val result = floatArrayOf(0f)
         var distance = 0F

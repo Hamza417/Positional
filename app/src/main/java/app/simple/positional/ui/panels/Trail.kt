@@ -31,7 +31,7 @@ import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.dialogs.trail.TrailMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.extensions.maps.MapsCallbacks
-import app.simple.positional.model.TrailData
+import app.simple.positional.model.TrailPoint
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.popups.trail.PopupMarkers
 import app.simple.positional.popups.trail.PopupTrailsDataMenu
@@ -153,29 +153,29 @@ class Trail : ScopedFragment() {
             tools.locationIconStatusUpdates()
         }
 
-        trailDataViewModel.trailDataDescendingWithInfo.observe(viewLifecycleOwner) {
+        trailDataViewModel.trailPointDescendingWithInfo.observe(viewLifecycleOwner) {
             val adapter = AdapterTrailData(it)
 
             adapter.setOnTrailsDataCallbackListener(object : AdapterTrailData.Companion.AdapterTrailsDataCallbacks {
-                override fun onTrailsDataLongPressed(trailData: TrailData, view: View, position: Int) {
+                override fun onTrailsDataLongPressed(trailPoint: TrailPoint, view: View, position: Int) {
                     PopupTrailsDataMenu(view).setOnPopupCallbacksListener(object : PopupTrailsDataMenu.Companion.PopupTrailsCallbacks {
                         override fun onDelete() {
                             DeletePopupMenu(view).setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                                 override fun delete() {
-                                    trailDataViewModel.deleteTrailData(trailData)
+                                    trailDataViewModel.deleteTrailData(trailPoint)
                                 }
                             })
                         }
 
                         override fun onCopy() {
                             val builder = StringBuilder().apply {
-                                append(trailData.name ?: getString(R.string.not_available))
+                                append(trailPoint.name ?: getString(R.string.not_available))
                                 append("\n\n")
-                                append(trailData.note ?: getString(R.string.not_available))
+                                append(trailPoint.note ?: getString(R.string.not_available))
                                 append("\n\n")
-                                append(String.format(Locale.ENGLISH, "geo:%f,%f", trailData.latitude, trailData.longitude))
+                                append(String.format(Locale.ENGLISH, "geo:%f,%f", trailPoint.latitude, trailPoint.longitude))
                                 append("\n\n")
-                                append(trailData.timeAdded.formatDate())
+                                append(trailPoint.timeAdded.formatDate())
                             }
 
                             val clip: ClipData = ClipData.newPlainText("GPS Data", builder)
@@ -189,7 +189,7 @@ class Trail : ScopedFragment() {
                                 startActivity(
                                         Intent(
                                                 Intent.ACTION_VIEW,
-                                                Uri.parse("geo:${trailData.latitude},${trailData.longitude}")))
+                                            Uri.parse("geo:${trailPoint.latitude},${trailPoint.longitude}")))
                             }.getOrElse { throwable ->
                                 Toast.makeText(requireContext(), throwable.message, Toast.LENGTH_SHORT)
                                         .show()
@@ -198,7 +198,8 @@ class Trail : ScopedFragment() {
 
                         override fun onNavigate() {
                             kotlin.runCatching {
-                                val uri: Uri = Uri.parse("google.navigation:q=" + trailData.latitude.toString() + "," + trailData.longitude.toString() + "&mode=d")
+                                val uri: Uri =
+                                    Uri.parse("google.navigation:q=" + trailPoint.latitude.toString() + "," + trailPoint.longitude.toString() + "&mode=d")
                                 val intent = Intent(Intent.ACTION_VIEW, uri)
                                 intent.setPackage("com.google.android.apps.maps")
                                 startActivity(intent)
@@ -330,7 +331,7 @@ class Trail : ScopedFragment() {
                     maps?.setCamera(savedInstanceState!!.parcelable("camera"))
                 }
 
-                trailDataViewModel.trailDataAscending.observe(viewLifecycleOwner) {
+                trailDataViewModel.trailPointAscending.observe(viewLifecycleOwner) {
                     maps?.addPolylines(it)
                 }
             }
@@ -349,8 +350,8 @@ class Trail : ScopedFragment() {
                 }
             }
 
-            override fun onLineDeleted(trailData: TrailData?) {
-                trailDataViewModel.deleteTrailData(trailData)
+            override fun onLineDeleted(trailPoint: TrailPoint?) {
+                trailDataViewModel.deleteTrailData(trailPoint)
             }
 
             override fun onLineCountChanged(lineCount: Int) {
@@ -493,18 +494,18 @@ class Trail : ScopedFragment() {
             }
 
             override fun onMarkerLongClicked(position: Int) {
-                val trailData = TrailData(
-                        lat,
-                        lon,
-                        System.currentTimeMillis(),
-                        position,
-                        null,
-                        null,
-                        accuracy
+                val trailPoint = TrailPoint(
+                    lat,
+                    lon,
+                    System.currentTimeMillis(),
+                    position,
+                    null,
+                    null,
+                    accuracy
                 )
 
-                trailDataViewModel.saveTrailData(currentTrail!!, trailData)
-                maps?.addPolyline(trailData)
+                trailDataViewModel.saveTrailData(currentTrail!!, trailPoint)
+                maps?.addPolyline(trailPoint)
             }
         })
     }

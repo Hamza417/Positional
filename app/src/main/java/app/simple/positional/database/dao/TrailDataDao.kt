@@ -1,24 +1,29 @@
 package app.simple.positional.database.dao
 
-import androidx.room.*
-import app.simple.positional.model.TrailData
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
+import app.simple.positional.model.TrailPoint
 
 @Dao
 interface TrailDataDao {
 
     @Query("SELECT * FROM trail_data ORDER BY time_added COLLATE nocase")
-    fun getAllTrailData(): List<TrailData>
+    fun getAllTrailData(): List<TrailPoint>
 
     @Query("SELECT * FROM trail_data ORDER BY time_added COLLATE nocase DESC")
-    fun getAllTrailDataDesc(): List<TrailData>
+    fun getAllTrailDataDesc(): List<TrailPoint>
 
     /**
      * Insert and save trail data to Database
      *
-     * @param trailData trail data details
+     * @param trailPoint trail data details
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrailData(trailData: TrailData)
+    suspend fun insertTrailData(trailPoint: TrailPoint)
 
     /**
      * Insert and save trail data list to Database
@@ -26,21 +31,21 @@ interface TrailDataDao {
      * @param trailData trail data details
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrailData(trailData: List<TrailData>)
+    suspend fun insertTrailData(trailData: List<TrailPoint>)
 
     /**
      * Update trail data
      *
-     * @param trailData that will be updated
+     * @param trailPoint that will be updated
      */
     @Update
-    suspend fun updateTrailData(trailData: TrailData)
+    suspend fun updateTrailData(trailPoint: TrailPoint)
 
     /**
-     * @param trailData removes a location from the list
+     * @param trailPoint removes a location from the list
      */
     @Delete
-    suspend fun deleteTrailData(trailData: TrailData)
+    suspend fun deleteTrailData(trailPoint: TrailPoint)
 
     /**
      * Deletes the entire database, possibly to create a new one
