@@ -266,8 +266,8 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 
     private fun wrap(animate: Boolean) {
         kotlin.runCatching {
-            lastZoom = TrailPreferences.getMapZoom()
-            lastTilt = TrailPreferences.getMapTilt()
+            lastZoom = MeasurePreferences.getMapZoom()
+            lastTilt = MeasurePreferences.getMapTilt()
 
             val builder = LatLngBounds.Builder()
             for (latLng in currentPolyline) {
@@ -285,10 +285,10 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
                     .newLatLngBounds(bounds, 250))
             }
 
-            TrailPreferences.setWrapStatus(true)
+            MeasurePreferences.setPolylinesWrapped(true)
             isWrapped = true
         }.onFailure {
-            isWrapped = TrailPreferences.arePolylinesWrapped()
+            isWrapped = MeasurePreferences.arePolylinesWrapped()
         }
     }
 

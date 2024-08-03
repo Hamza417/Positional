@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleButton
 import app.simple.positional.decorations.views.CustomDialogFragment
-import app.simple.positional.model.TrailModel
+import app.simple.positional.model.TrailEntry
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.ViewUtils.gone
@@ -26,9 +26,9 @@ class AddTrail : CustomDialogFragment() {
     private lateinit var cancel: DynamicRippleButton
 
     private val trailsViewModel: TrailsViewModel by viewModels()
-    private var list = arrayListOf<TrailModel>()
+    private var list = arrayListOf<TrailEntry>()
 
-    var onNewTrailAddedSuccessfully: (trailModel: TrailModel) -> Unit = {}
+    var onNewTrailAddedSuccessfully: (trailEntry: TrailEntry) -> Unit = {}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_trail_name, container, false)
@@ -86,14 +86,14 @@ class AddTrail : CustomDialogFragment() {
         }
 
         save.setOnClickListener {
-            val trails = TrailModel(
-                    System.currentTimeMillis(),
-                    nameInputEditText.text.toString(),
-                    if (noteInputEditText.text.toString().isNotEmpty()) {
-                        noteInputEditText.text.toString()
-                    } else {
-                        getString(R.string.not_available)
-                    }
+            val trails = TrailEntry(
+                System.currentTimeMillis(),
+                nameInputEditText.text.toString(),
+                if (noteInputEditText.text.toString().isNotEmpty()) {
+                    noteInputEditText.text.toString()
+                } else {
+                    getString(R.string.not_available)
+                }
             )
 
             TrailPreferences.setLastTrailNote("")

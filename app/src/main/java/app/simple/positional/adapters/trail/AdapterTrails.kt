@@ -10,15 +10,15 @@ import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.viewholders.VerticalListViewHolder
-import app.simple.positional.model.TrailModel
+import app.simple.positional.model.TrailEntry
 import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.HtmlHelper
 import app.simple.positional.util.TimeFormatter.formatDate
-import java.util.*
 
-class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adapter<VerticalListViewHolder>() {
+class AdapterTrails(private val list: ArrayList<TrailEntry>) :
+    RecyclerView.Adapter<VerticalListViewHolder>() {
 
     private lateinit var adapterTrailsCallback: AdapterTrailsCallback
 
@@ -97,7 +97,7 @@ class AdapterTrails(private val list: ArrayList<TrailModel>) : RecyclerView.Adap
     companion object {
         interface AdapterTrailsCallback {
             fun onTrailClicked(name: String)
-            fun onTrailMenu(trailModel: TrailModel, anchor: View)
+            fun onTrailMenu(trailEntry: TrailEntry, anchor: View)
         }
     }
 }

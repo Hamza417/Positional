@@ -13,7 +13,7 @@ import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.dialogs.trail.AddTrail
 import app.simple.positional.extensions.fragment.ScopedFragment
-import app.simple.positional.model.TrailModel
+import app.simple.positional.model.TrailEntry
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.popups.trail.PopupTrailsMenu
 import app.simple.positional.preferences.MainPreferences
@@ -71,7 +71,7 @@ class Trails : ScopedFragment() {
                     requireActivity().finish()
                 }
 
-                override fun onTrailMenu(trailModel: TrailModel, anchor: View) {
+                override fun onTrailMenu(trailEntry: TrailEntry, anchor: View) {
                     val popup = PopupTrailsMenu(
                             layoutInflater.inflate(R.layout.popup_trails,
                                     DynamicCornerLinearLayout(requireContext())), anchor)
@@ -79,7 +79,7 @@ class Trails : ScopedFragment() {
 
                     popup.setOnPopupCallbacksListener(object : PopupTrailsMenu.Companion.PopupTrailsCallbacks {
                         override fun onShowOnMap() {
-                            TrailPreferences.setCurrentTrailName(trailModel.trailName).also {
+                            TrailPreferences.setCurrentTrailName(trailEntry.trailName).also {
                                 requireActivity().finish()
                             }
                         }
@@ -90,7 +90,7 @@ class Trails : ScopedFragment() {
 
                             deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
                                 override fun delete() {
-                                    trailViewModel.deleteTrail(trailModel)
+                                    trailViewModel.deleteTrail(trailEntry)
                                 }
                             })
                         }

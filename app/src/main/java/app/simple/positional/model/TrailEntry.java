@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "trails")
-public class TrailModel {
+public class TrailEntry {
 
     @PrimaryKey(autoGenerate = true)
     public int keyTag = 0;
@@ -19,7 +19,7 @@ public class TrailModel {
     @ColumnInfo(name = "trail_note")
     String trailNote;
 
-    public TrailModel(long dateCreated, String trailName, String trailNote) {
+    public TrailEntry(long dateCreated, String trailName, String trailNote) {
         this.dateCreated = dateCreated;
         this.trailName = trailName;
         this.trailNote = trailNote;
