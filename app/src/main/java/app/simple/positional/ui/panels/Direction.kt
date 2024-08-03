@@ -132,7 +132,7 @@ class Direction : ScopedFragment(), SensorEventListener {
         setTargetLabel()
         setTargetCoordinates()
 
-        locationViewModel.location.observe(viewLifecycleOwner) {
+        locationViewModel.getLocation().observe(viewLifecycleOwner) {
             location = it
 
             directionAngle = LocationExtension.calculateBearingAngle(

@@ -192,7 +192,7 @@ class Compass : ScopedFragment(), SensorEventListener {
                     .show(parentFragmentManager, "calibration_dialog")
         }
 
-        locationViewModel.location.observe(viewLifecycleOwner) { location ->
+        locationViewModel.getLocation().observe(viewLifecycleOwner) { location ->
             var declination: Spanned
             var inclination: Spanned
             var fieldStrength: Spanned

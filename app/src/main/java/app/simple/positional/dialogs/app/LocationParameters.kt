@@ -68,7 +68,7 @@ class LocationParameters : CustomBottomSheetDialogFragment() {
             address.text = fromHtml("<b>${getString(R.string.gps_address)}</b>: " +
                     MainPreferences.getAddress())
         } else {
-            locationViewModel.location.observe(viewLifecycleOwner) {
+            locationViewModel.getLocation().observe(viewLifecycleOwner) {
                 location = it
 
                 getAddress(LatLng(it.latitude, it.longitude))

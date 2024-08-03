@@ -187,7 +187,7 @@ class Time : ScopedFragment() {
             divider.visibility = View.VISIBLE
         }
 
-        locationViewModel.location.observe(viewLifecycleOwner) {
+        locationViewModel.getLocation().observe(viewLifecycleOwner) {
             if (isCustomCoordinate) return@observe
             calculateAndUpdateData(it.latitude, it.longitude, it.altitude)
         }

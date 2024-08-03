@@ -46,7 +46,7 @@ class LocationExpansion : CustomBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        locationViewModel.location.observe(viewLifecycleOwner, {
+        locationViewModel.getLocation().observe(viewLifecycleOwner) {
             if (MainPreferences.isMetric()) { // Metric
                 accuracyTextView.text = fromHtml("<b>${getString(R.string.gps_accuracy)}</b> " +
                         "${MathExtensions.round(it.accuracy.toDouble(), 2)} ${getString(R.string.meter)}")
@@ -57,11 +57,13 @@ class LocationExpansion : CustomBottomSheetDialogFragment() {
             } else { // Imperial
 
                 accuracyTextView.text = fromHtml("<b>${getString(R.string.gps_accuracy)}</b> " +
-                        "${MathExtensions.round(it.accuracy.toDouble().toFeet(), 2)} ${getString(R.string.feet)}")
+                        "${
+                            MathExtensions.round(it.accuracy.toDouble().toFeet(), 2)
+                        } ${getString(R.string.feet)}")
                 altitudeTextView.text = fromHtml("<b>${getString(R.string.gps_altitude)}</b> " +
                         "${MathExtensions.round(it.altitude.toFeet(), 2)} ${getString(R.string.feet)}")
             }
-        })
+        }
 
         locationViewModel.altitudeGraphData.observe(viewLifecycleOwner, {
             altitudeChart.setData(it)

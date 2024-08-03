@@ -236,7 +236,7 @@ class GPS : ScopedFragment() {
                     .show(childFragmentManager, "error_dialog")
         }
 
-        locationViewModel.location.observe(viewLifecycleOwner) {
+        locationViewModel.getLocation().observe(viewLifecycleOwner) {
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.Default) {
                     location = it
@@ -325,7 +325,7 @@ class GPS : ScopedFragment() {
             latency.text = str
         }
 
-        locationViewModel.provider.observe(viewLifecycleOwner) {
+        locationViewModel.getProvider().observe(viewLifecycleOwner) {
             providerStatus.text = fromHtml(
                     "<b>${getString(R.string.gps_status)}</b> ${
                         if (getLocationStatus(requireContext())) {

@@ -37,7 +37,7 @@ class MovementExpansion : CustomBottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        locationViewModel.location.observe(viewLifecycleOwner) {
+        locationViewModel.getLocation().observe(viewLifecycleOwner) {
             speedometer.setSpeedValue(
                     if (MainPreferences.isMetric()) {
                         it.speed.toKiloMetersPerHour()

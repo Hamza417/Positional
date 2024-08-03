@@ -131,7 +131,7 @@ class Trail : ScopedFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        locationViewModel.location.observe(viewLifecycleOwner) {
+        locationViewModel.getLocation().observe(viewLifecycleOwner) {
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.Default) {
                     location = it
@@ -149,7 +149,7 @@ class Trail : ScopedFragment() {
             }
         }
 
-        locationViewModel.provider.observe(viewLifecycleOwner) {
+        locationViewModel.getProvider().observe(viewLifecycleOwner) {
             tools.locationIconStatusUpdates()
         }
 

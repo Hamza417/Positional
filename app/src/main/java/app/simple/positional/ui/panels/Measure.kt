@@ -6,13 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedDispatcher
+import androidx.lifecycle.ViewModelProvider
 import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.BottomBarItems
+import app.simple.positional.decorations.measure.MeasureMaps
 import app.simple.positional.decorations.measure.MeasureToolbar
 import app.simple.positional.decorations.measure.MeasureToolbarCallbacks
 import app.simple.positional.decorations.measure.MeasureTools
-import app.simple.positional.decorations.trails.TrailMaps
 import app.simple.positional.extensions.fragment.ScopedFragment
+import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 
 class Measure : ScopedFragment() {
 
@@ -20,7 +22,8 @@ class Measure : ScopedFragment() {
     private lateinit var tools: MeasureTools
 
     private var backPress: OnBackPressedDispatcher? = null
-    private var maps: TrailMaps? = null
+    private var maps: MeasureMaps? = null
+    private var locationViewModel: LocationViewModel? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_measure, container, false)
@@ -31,6 +34,7 @@ class Measure : ScopedFragment() {
 
         backPress = requireActivity().onBackPressedDispatcher
         maps?.onCreate(savedInstanceState)
+        locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
 
         return view
     }
@@ -51,6 +55,30 @@ class Measure : ScopedFragment() {
                 Log.d(TAG, "onMenu: ")
             }
         })
+
+        locationViewModel?.getLocation()?.observe(viewLifecycleOwner) { location ->
+            Log.d(TAG, "onViewCreated: $location")
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        maps?.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        maps?.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        maps?.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        maps?.onLowMemory()
     }
 
     companion object {

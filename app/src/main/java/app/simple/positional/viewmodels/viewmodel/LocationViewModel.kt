@@ -9,6 +9,7 @@ import android.content.SharedPreferences
 import android.location.Geocoder
 import android.location.Location
 import android.text.Spanned
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -58,8 +59,8 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
     private val accuracyData = ArrayList<Float>()
     private val altitudeData = ArrayList<Float>()
 
-    val location = MutableLiveData<Location>()
-    val provider = MutableLiveData<String>()
+    private val location = MutableLiveData<Location>()
+    private val provider = MutableLiveData<String>()
 
     val dms = MutableLiveData<Pair<String, String>>()
     val dm = MutableLiveData<Pair<String, String>>()
@@ -103,14 +104,15 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                                 }
 
                                 targetData(
-                                        LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(), GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
-                                        if (MainPreferences.isCustomCoordinate()) LatLng(MainPreferences.getCoordinates()[0].toDouble(), MainPreferences.getCoordinates()[1].toDouble()) else LatLng(this.latitude, this.longitude),
-                                        this.speed)
+                                    LatLng(GPSPreferences.getTargetMarkerCoordinates()[0].toDouble(), GPSPreferences.getTargetMarkerCoordinates()[1].toDouble()),
+                                    if (MainPreferences.isCustomCoordinate()) LatLng(MainPreferences.getCoordinates()[0].toDouble(), MainPreferences.getCoordinates()[1].toDouble()) else LatLng(this.latitude, this.longitude),
+                                    this.speed)
                             }
                         }
+
                         "provider" -> {
                             provider.postValue(intent.getStringExtra("location_provider")
-                                    ?.uppercase(Locale.getDefault()))
+                                ?.uppercase(Locale.getDefault()))
                         }
                     }
                 }
@@ -118,7 +120,15 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
         }
 
         LocalBroadcastManager.getInstance(getApplication())
-                .registerReceiver(locationBroadcastReceiver, filter)
+            .registerReceiver(locationBroadcastReceiver, filter)
+    }
+
+    fun getLocation(): LiveData<Location> {
+        return location
+    }
+
+    fun getProvider(): LiveData<String> {
+        return provider
     }
 
     private fun measureLatency() {
@@ -198,7 +208,7 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
     private fun targetDisplacementFromOrigin(current: LatLng): StringBuilder {
         return StringBuilder().also {
             val target = LatLng(GPSPreferences.getTargetMarkerStartCoordinates()[0].toDouble(),
-                    GPSPreferences.getTargetMarkerStartCoordinates()[1].toDouble())
+                GPSPreferences.getTargetMarkerStartCoordinates()[1].toDouble())
 
             it.append("<b>${getString(R.string.gps_displacement_from_origin)} </b>")
 
@@ -240,10 +250,10 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
 
             if (GPSPreferences.isTargetMarkerSet()) {
                 val p0 = LocationExtension.calculateBearingAngle(
-                        current.latitude,
-                        current.longitude,
-                        target.latitude,
-                        target.longitude
+                    current.latitude,
+                    current.longitude,
+                    target.latitude,
+                    target.longitude
                 )
 
                 it.append(Direction.getDirectionNameFromAzimuth(getContext(), (p0 % 360 + 360) % 360))
@@ -261,10 +271,10 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
 
             if (GPSPreferences.isTargetMarkerSet()) {
                 val p0 = LocationExtension.calculateBearingAngle(
-                        current.latitude,
-                        current.longitude,
-                        target.latitude,
-                        target.longitude
+                    current.latitude,
+                    current.longitude,
+                    target.latitude,
+                    target.longitude
                 )
 
                 it.append(round((p0 % 360 + 360) % 360, 2))
@@ -290,19 +300,22 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
                     TimeUnit.SECONDS.toSeconds(time) < 60 -> {
                         getString(R.string.eta_seconds, TimeUnit.SECONDS.toSeconds(time).toString())
                     }
+
                     TimeUnit.SECONDS.toMinutes(time) < 60 -> {
                         getString(R.string.eta_minutes, TimeUnit.SECONDS.toMinutes(time).toString())
                     }
+
                     TimeUnit.SECONDS.toHours(time) < 24 -> {
                         getString(R.string.eta_hours,
-                                TimeUnit.SECONDS.toHours(time).toString(),
-                                (TimeUnit.SECONDS.toMinutes(time) % 60).toString())
+                            TimeUnit.SECONDS.toHours(time).toString(),
+                            (TimeUnit.SECONDS.toMinutes(time) % 60).toString())
                     }
+
                     else -> {
                         getString(R.string.eta_days,
-                                TimeUnit.SECONDS.toDays(time).toString(),
-                                (TimeUnit.SECONDS.toHours(time) % 24).toString(),
-                                (TimeUnit.SECONDS.toMinutes(time) % 60).toString())
+                            TimeUnit.SECONDS.toDays(time).toString(),
+                            (TimeUnit.SECONDS.toHours(time) % 24).toString(),
+                            (TimeUnit.SECONDS.toMinutes(time) % 60).toString())
                     }
                 }
 
@@ -359,32 +372,32 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
     private fun dms(location: Location) {
         with(getApplication<Application>()) {
             dms.postValue(Pair(
-                    latitudeAsDMS(location.latitude, this),
-                    longitudeAsDMS(location.longitude, this)))
+                latitudeAsDMS(location.latitude, this),
+                longitudeAsDMS(location.longitude, this)))
         }
     }
 
     private fun dm(location: Location) {
         with(getApplication<Application>()) {
             dm.postValue(Pair(
-                    latitudeAsDM(location.latitude, this),
-                    longitudeAsDM(location.longitude, this)))
+                latitudeAsDM(location.latitude, this),
+                longitudeAsDM(location.longitude, this)))
         }
     }
 
     private fun dd(location: Location) {
         dd.postValue(Pair(
-                latitudeAsDD(location.latitude),
-                longitudeAsDD(location.longitude)))
+            latitudeAsDD(location.latitude),
+            longitudeAsDD(location.longitude)))
     }
 
     private fun mgrs(location: Location) {
         with(location) {
             mgrs.postValue(
-                    MGRSCoord.fromLatLon(
-                            Angle.fromDegreesLatitude(latitude),
-                            Angle.fromDegreesLongitude(longitude)
-                    ).toString())
+                MGRSCoord.fromLatLon(
+                    Angle.fromDegreesLatitude(latitude),
+                    Angle.fromDegreesLongitude(longitude)
+                ).toString())
         }
     }
 
@@ -424,6 +437,6 @@ class LocationViewModel(application: Application) : WrappedViewModel(application
     override fun onCleared() {
         super.onCleared()
         LocalBroadcastManager.getInstance(getApplication())
-                .unregisterReceiver(locationBroadcastReceiver)
+            .unregisterReceiver(locationBroadcastReceiver)
     }
 }

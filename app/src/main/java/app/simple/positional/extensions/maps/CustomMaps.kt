@@ -2,6 +2,7 @@ package app.simple.positional.extensions.maps
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.location.Location
 import android.os.Bundle
 import android.os.Handler
@@ -9,24 +10,28 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.WindowManager
+import app.simple.positional.R
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 import app.simple.positional.util.ConditionUtils.invert
+import app.simple.positional.util.ConditionUtils.isNotNull
+import app.simple.positional.util.ConditionUtils.isNull
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
 open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, attrs),
-                                                               OnMapReadyCallback,
-                                                               SharedPreferences.OnSharedPreferenceChangeListener,
-                                                               CoroutineScope {
+    OnMapReadyCallback,
+    SharedPreferences.OnSharedPreferenceChangeListener,
+    CoroutineScope {
 
     protected var windowManager: WindowManager
     val viewHandler = Handler(Looper.getMainLooper())
@@ -137,6 +142,58 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
 
     open fun setTraffic(value: Boolean) {
         googleMap?.isTrafficEnabled = value
+    }
+
+    protected fun setMapStyle(label: Boolean, satellite: Boolean, highContrast: Boolean) {
+        setSatellite(label = label, satellite = satellite)
+
+        if (!googleMap.isNull()) {
+            if (highContrast) {
+                googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(context,
+                    if (label) {
+                        R.raw.map_high_contrast_labelled
+                    } else {
+                        R.raw.map_high_contrast_non_labelled
+                    }
+                ))
+
+            } else {
+                googleMap?.setMapStyle(MapStyleOptions.loadRawResourceStyle(context,
+                    when (this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+                        Configuration.UI_MODE_NIGHT_YES -> {
+                            if (label) {
+                                R.raw.maps_dark_labelled
+                            } else {
+                                R.raw.maps_dark_no_label
+                            }
+                        }
+
+                        Configuration.UI_MODE_NIGHT_NO -> {
+                            if (label) {
+                                R.raw.maps_light_labelled
+                            } else {
+                                R.raw.maps_light_no_label
+                            }
+                        }
+
+                        else -> 0
+                    }
+                ))
+            }
+        }
+    }
+
+    private fun setSatellite(satellite: Boolean, label: Boolean) {
+        if (googleMap.isNotNull())
+            googleMap?.mapType = if (satellite) {
+                if (label) {
+                    GoogleMap.MAP_TYPE_HYBRID
+                } else {
+                    GoogleMap.MAP_TYPE_SATELLITE
+                }
+            } else {
+                GoogleMap.MAP_TYPE_NORMAL
+            }
     }
 
     // -------------------------------------------------------------------------------------------------------- //
