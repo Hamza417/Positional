@@ -13,6 +13,7 @@ import app.simple.positional.decorations.measure.MeasureMaps
 import app.simple.positional.decorations.measure.MeasureToolbar
 import app.simple.positional.decorations.measure.MeasureToolbarCallbacks
 import app.simple.positional.decorations.measure.MeasureTools
+import app.simple.positional.dialogs.measure.MeasureMenu.Companion.showMeasureMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 
@@ -52,7 +53,7 @@ class Measure : ScopedFragment() {
             }
 
             override fun onMenu(view: View?) {
-                Log.d(TAG, "onMenu: ")
+                showMeasureMenu()
             }
         })
 

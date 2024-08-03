@@ -2,6 +2,7 @@ package app.simple.positional.decorations.measure
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -292,5 +293,29 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     override fun onResume() {
         super.onResume()
         registerSensors()
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        super.onSharedPreferenceChanged(sharedPreferences, key)
+        when (key) {
+            MeasurePreferences.LABEL_MODE,
+            MeasurePreferences.SATELLITE_MAP,
+            MeasurePreferences.HIGH_CONTRAST_MAP -> {
+                setMapStyle(MeasurePreferences.isLabelOn(), MeasurePreferences.isSatelliteOn(), MeasurePreferences.getHighContrastMap())
+            }
+
+            MeasurePreferences.SHOW_BUILDINGS -> {
+                setBuildings(MeasurePreferences.getShowBuildingsOnMap())
+            }
+
+            MeasurePreferences.COMPASS_ROTATION -> {
+                isCompassRotation = MeasurePreferences.isCompassRotation()
+                if (isCompassRotation) {
+                    registerSensors()
+                } else {
+                    unregisterSensors()
+                }
+            }
+        }
     }
 }

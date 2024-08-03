@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@android:color/transparent">
+
+    <app.simple.positional.decorations.corners.DynamicCornersNestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/options_container_horizontal_padding"
+        android:backgroundTint="@color/toolbarBackground"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="@dimen/options_container_horizontal_padding">
+
+            <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+                android:id="@+id/show_label_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_btn"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/options_item_padding">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:gravity="center_vertical"
+                    android:text="@string/labels"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/options_item_text_size"
+                    app:drawableStartCompat="@drawable/ic_label"
+                    app:drawableTint="@color/iconRegular" />
+
+                <app.simple.positional.decorations.switchview.SwitchView
+                    android:id="@+id/toggle_label"
+                    android:layout_width="@dimen/switch_width"
+                    android:layout_height="wrap_content" />
+
+            </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+
+            <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+                android:id="@+id/show_building_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_btn"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/options_item_padding">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:gravity="center_vertical"
+                    android:text="@string/buildings"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/options_item_text_size"
+                    app:drawableStartCompat="@drawable/ic_home"
+                    app:drawableTint="@color/iconRegular" />
+
+                <app.simple.positional.decorations.switchview.SwitchView
+                    android:id="@+id/toggle_buildings"
+                    android:layout_width="@dimen/switch_width"
+                    android:layout_height="wrap_content" />
+
+            </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginVertical="@dimen/options_sub_item_padding"
+                android:background="@color/dividerColor" />
+
+            <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+                android:id="@+id/satellite_mode_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_btn"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/options_item_padding">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:gravity="center_vertical"
+                    android:text="@string/satellite_mode"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/options_item_text_size"
+                    app:drawableStartCompat="@drawable/ic_satellite"
+                    app:drawableTint="@color/iconRegular" />
+
+                <app.simple.positional.decorations.switchview.SwitchView
+                    android:id="@+id/toggle_satellite"
+                    android:layout_width="@dimen/switch_width"
+                    android:layout_height="wrap_content" />
+
+            </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+
+            <app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
+                android:id="@+id/high_contrast_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ripple_btn"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:orientation="horizontal"
+                android:padding="@dimen/options_item_padding">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/options_text_margin_start"
+                    android:fontFamily="@font/regular"
+                    android:gravity="center_vertical"
+                    android:text="@string/high_contrast_mode"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="@dimen/options_item_text_size"
+                    app:drawableStartCompat="@drawable/ic_filter_b_and_w"
+                    app:drawableTint="@color/iconRegular" />
+
+                <app.simple.positional.decorations.switchview.SwitchView
+                    android:id="@+id/toggle_high_contrast"
+                    android:layout_width="@dimen/switch_width"
+                    android:layout_height="wrap_content" />
+
+            </app.simple.positional.decorations.ripple.DynamicRippleLinearLayout>
+
+        </LinearLayout>
+
+    </app.simple.positional.decorations.corners.DynamicCornersNestedScrollView>
+
+</FrameLayout>
