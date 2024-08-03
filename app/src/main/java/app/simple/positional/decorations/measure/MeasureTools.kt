@@ -7,12 +7,13 @@ import android.view.LayoutInflater
 import app.simple.positional.R
 import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
+import app.simple.positional.decorations.views.LocationButton
 import app.simple.positional.singleton.SharedPreferences as PositionalSingletonSharedPreferences
 
 class MeasureTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var align: DynamicRippleImageButton
-    private lateinit var location: DynamicRippleImageButton
+    private lateinit var location: LocationButton
     private lateinit var wrap: DynamicRippleImageButton
     private lateinit var add: DynamicRippleImageButton
     private lateinit var remove: DynamicRippleImageButton
@@ -45,7 +46,12 @@ class MeasureTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPrefer
         setCompassButtonState(false)
 
         location.setOnClickListener { v ->
-            measureToolsCallbacks?.onLocation(v)
+            measureToolsCallbacks?.onLocation(v, false)
+        }
+
+        location.setOnLongClickListener { v ->
+            measureToolsCallbacks?.onLocation(v, true)
+            true
         }
 
         wrap.setOnClickListener { v ->
@@ -72,6 +78,9 @@ class MeasureTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPrefer
     private fun setAlignButtonState(animate: Boolean) {
 
     }
+
+    fun locationIndicatorUpdate(isFixed: Boolean) = location.locationIndicatorUpdate(isFixed)
+    fun locationIconStatusUpdates() = location.locationIconStatusUpdate()
 
     fun setMeasureToolsCallbacks(callbacks: MeasureToolsCallbacks) {
         measureToolsCallbacks = callbacks

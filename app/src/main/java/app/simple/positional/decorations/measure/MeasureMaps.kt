@@ -224,6 +224,12 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         }
     }
 
+    fun resetCamera(zoom: Float) {
+        if (location != null) {
+            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, TrailPreferences.getMapTilt(), cameraSpeed)
+        }
+    }
+
     fun moveMapCamera(latLng: LatLng, zoom: Float, tilt: Float, duration: Int) {
         if (googleMap.isNull() && latLng.isNull()) return
 
