@@ -10,7 +10,7 @@
     tools:parentTag="android.widget.LinearLayout">
 
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-        android:id="@+id/tools_align_btn"
+        android:id="@+id/align"
         android:layout_width="@dimen/app_button_size"
         android:layout_height="20dp"
         android:src="@drawable/ic_arrow_right"
@@ -23,14 +23,14 @@
         android:background="@color/dividerColor" />
 
     <app.simple.positional.decorations.views.LocationButton
-        android:id="@+id/current_location"
+        android:id="@+id/location"
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
         android:src="@drawable/ic_gps_not_fixed"
         android:tint="@color/iconColor" />
 
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-        android:id="@+id/wrap_unwrap_flags"
+        android:id="@+id/wrap"
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
         android:layout_marginTop="5dp"
@@ -44,7 +44,7 @@
         android:background="@color/dividerColor" />
 
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-        android:id="@+id/add_flag"
+        android:id="@+id/add"
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
         android:layout_marginTop="5dp"
@@ -52,7 +52,7 @@
         android:tint="@color/iconColor" />
 
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton
-        android:id="@+id/remove_flag"
+        android:id="@+id/remove"
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
         android:layout_marginTop="5dp"

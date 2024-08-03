@@ -22,6 +22,7 @@
     <color name="direction_bb_color">#1f618d</color>
     <color name="location_bb_color">#117a65</color>
     <color name="trail_bb_color">#b7950b</color>
+    <color name="measure_bb_color">#8e44ad</color>
     <color name="level_bb_color">#a04000</color>
     <color name="settings_bb_color">#616a6b</color>
 

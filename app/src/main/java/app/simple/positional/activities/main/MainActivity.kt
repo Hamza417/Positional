@@ -40,6 +40,7 @@ import app.simple.positional.ui.panels.Compass
 import app.simple.positional.ui.panels.Direction
 import app.simple.positional.ui.panels.GPS
 import app.simple.positional.ui.panels.Level
+import app.simple.positional.ui.panels.Measure
 import app.simple.positional.ui.panels.Settings
 import app.simple.positional.ui.panels.Time
 import app.simple.positional.ui.panels.Trail
@@ -52,10 +53,10 @@ import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapsSdkInitializedCallback
 
 class MainActivity : BaseActivity(),
-        PermissionCallbacks,
-        BottomSheetSlide,
-        android.content.SharedPreferences.OnSharedPreferenceChangeListener,
-        OnMapsSdkInitializedCallback {
+    PermissionCallbacks,
+    BottomSheetSlide,
+    android.content.SharedPreferences.OnSharedPreferenceChangeListener,
+    OnMapsSdkInitializedCallback {
 
     private val defaultPermissionRequestCode = 123
     private lateinit var bottomBar: ViewPager2
@@ -111,7 +112,8 @@ class MainActivity : BaseActivity(),
             setCurrentItem(FragmentPreferences.getCurrentPage(), false)
             setPageTransformer(DepthTransformer())
 
-            label.text = BottomBarItems.getBottomBarItems(baseContext)[FragmentPreferences.getCurrentPage()].name
+            label.text =
+                BottomBarItems.getBottomBarItems(baseContext)[FragmentPreferences.getCurrentPage()].name
 
             postDelayed({
                 label.visibility = TextView.GONE
@@ -138,7 +140,11 @@ class MainActivity : BaseActivity(),
                     }
                 }
 
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels)
                     label.text = BottomBarItems.getBottomBarItems(baseContext)[position].name
                 }
@@ -192,7 +198,8 @@ class MainActivity : BaseActivity(),
 
     @Suppress("unused")
     private fun layOutPopupData() {
-        popupContainer = LayoutInflater.from(baseContext).inflate(R.layout.popup_fragments, PopupLinearLayout(baseContext), true)
+        popupContainer = LayoutInflater.from(baseContext)
+            .inflate(R.layout.popup_fragments, PopupLinearLayout(baseContext), true)
 
         popupContainer.findViewById<DynamicRippleTextView>(R.id.clock).setOnClickListener {
             bottomBar.setCurrentItem(0, true)
@@ -260,8 +267,15 @@ class MainActivity : BaseActivity(),
     }
 
     private fun checkRunTimePermission() {
-        if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             if (MainPreferences.getShowPermissionDialog()) {
                 onGrantRequest()
             } else {
@@ -272,7 +286,11 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == defaultPermissionRequestCode) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -280,7 +298,8 @@ class MainActivity : BaseActivity(),
                 runService()
             } else {
                 Toast.makeText(this, R.string.location_permission_denied, Toast.LENGTH_LONG).show()
-                Toast.makeText(this, R.string.no_location_permission_alert, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.no_location_permission_alert, Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
@@ -289,7 +308,12 @@ class MainActivity : BaseActivity(),
         try {
             when (MainPreferences.getLocationProvider()) {
                 "android" -> startService(Intent(applicationContext, LocationService::class.java))
-                "fused" -> startService(Intent(applicationContext, FusedLocationService::class.java))
+                "fused" -> startService(
+                    Intent(
+                        applicationContext,
+                        FusedLocationService::class.java
+                    )
+                )
             }
         } catch (ignored: IllegalStateException) {
         }
@@ -312,61 +336,68 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onGrantRequest() {
-        ActivityCompat.requestPermissions(this, arrayOf(
+        ActivityCompat.requestPermissions(
+            this, arrayOf(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
-        ), defaultPermissionRequestCode)
+            ), defaultPermissionRequestCode
+        )
     }
 
     private fun openFragment(tag: String) {
         getFragment(tag).let {
             supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
-                    .replace(R.id.containers, it, tag)
-                    .commit()
+                .setCustomAnimations(R.anim.dialog_in, R.anim.dialog_out)
+                .replace(R.id.containers, it, tag)
+                .commit()
         }
     }
 
     private fun getFragment(name: String): Fragment {
         when (name) {
-            "clock" -> {
-                return supportFragmentManager.findFragmentByTag("clock") as Time?
-                        ?: Time.newInstance()
+            BottomBarItems.CLOCK -> {
+                return supportFragmentManager.findFragmentByTag(BottomBarItems.CLOCK) as Time?
+                    ?: Time.newInstance()
             }
 
-            "compass" -> {
-                return supportFragmentManager.findFragmentByTag("compass") as Compass?
-                        ?: Compass.newInstance()
+            BottomBarItems.COMPASS -> {
+                return supportFragmentManager.findFragmentByTag(BottomBarItems.COMPASS) as Compass?
+                    ?: Compass.newInstance()
             }
 
-            "direction" -> {
-                return supportFragmentManager.findFragmentByTag("direction") as Direction?
-                        ?: Direction.newInstance()
+            BottomBarItems.DIRECTION -> {
+                return supportFragmentManager.findFragmentByTag(BottomBarItems.DIRECTION) as Direction?
+                    ?: Direction.newInstance()
             }
 
-            "location" -> {
-                return supportFragmentManager.findFragmentByTag("location") as GPS?
-                        ?: GPS.newInstance()
+            BottomBarItems.LOCATION -> {
+                return supportFragmentManager.findFragmentByTag(BottomBarItems.LOCATION) as GPS?
+                    ?: GPS.newInstance()
             }
 
-            "trail" -> {
-                return supportFragmentManager.findFragmentByTag("trail") as Trail?
-                        ?: Trail.newInstance()
+            BottomBarItems.TRAIL -> {
+                return supportFragmentManager.findFragmentByTag(BottomBarItems.TRAIL) as Trail?
+                    ?: Trail.newInstance()
             }
 
-            "level" -> {
-                return supportFragmentManager.findFragmentByTag("level") as Level?
-                        ?: Level.newInstance()
+            BottomBarItems.MEASURE -> {
+                return supportFragmentManager.findFragmentByTag(BottomBarItems.MEASURE) as Measure?
+                    ?: Measure.newInstance()
             }
 
-            "settings" -> {
-                return supportFragmentManager.findFragmentByTag("settings") as Settings?
-                        ?: Settings.newInstance()
+            BottomBarItems.LEVEL -> {
+                return supportFragmentManager.findFragmentByTag(BottomBarItems.LEVEL) as Level?
+                    ?: Level.newInstance()
+            }
+
+            BottomBarItems.SETTINGS -> {
+                return supportFragmentManager.findFragmentByTag(BottomBarItems.SETTINGS) as Settings?
+                    ?: Settings.newInstance()
             }
 
             else -> {
-                return supportFragmentManager.findFragmentByTag("location") as GPS?
-                        ?: GPS.newInstance()
+                return supportFragmentManager.findFragmentByTag(BottomBarItems.LOCATION) as GPS?
+                    ?: GPS.newInstance()
             }
         }
     }
@@ -380,31 +411,44 @@ class MainActivity : BaseActivity(),
     override fun onMapClicked(fullScreen: Boolean) {
         if (fullScreen) {
             bottomBarContainer.animate()
-                    .scaleX(1F)
-                    .scaleY(1F)
-                    .alpha(1F)
-                    .setInterpolator(DecelerateInterpolator(1.5F)).start()
+                .scaleX(1F)
+                .scaleY(1F)
+                .alpha(1F)
+                .setInterpolator(DecelerateInterpolator(1.5F)).start()
         } else {
             bottomBarContainer.animate()
-                    .scaleX(0F)
-                    .scaleY(0F)
-                    .alpha(0F)
-                    .setInterpolator(DecelerateInterpolator(1.5F)).start()
+                .scaleX(0F)
+                .scaleY(0F)
+                .alpha(0F)
+                .setInterpolator(DecelerateInterpolator(1.5F)).start()
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: android.content.SharedPreferences?, key: String?) {
+    override fun onSharedPreferenceChanged(
+        sharedPreferences: android.content.SharedPreferences?,
+        key: String?
+    ) {
         when (key) {
             MainPreferences.locationProvider -> {
                 try {
                     when (MainPreferences.getLocationProvider()) {
                         "fused" -> {
                             stopService(Intent(applicationContext, LocationService::class.java))
-                            startService(Intent(applicationContext, FusedLocationService::class.java))
+                            startService(
+                                Intent(
+                                    applicationContext,
+                                    FusedLocationService::class.java
+                                )
+                            )
                         }
 
                         "android" -> {
-                            stopService(Intent(applicationContext, FusedLocationService::class.java))
+                            stopService(
+                                Intent(
+                                    applicationContext,
+                                    FusedLocationService::class.java
+                                )
+                            )
                             startService(Intent(applicationContext, LocationService::class.java))
                         }
                     }
@@ -419,7 +463,11 @@ class MainActivity : BaseActivity(),
             BottomBarPreferences.trailPanel,
             BottomBarPreferences.levelPanel,
             BottomBarPreferences.settingsPanel -> {
-                bottomBarAdapter.setBottomBarItems(BottomBarItems.getBottomBarItems(applicationContext))
+                bottomBarAdapter.setBottomBarItems(
+                    BottomBarItems.getBottomBarItems(
+                        applicationContext
+                    )
+                )
             }
         }
     }
