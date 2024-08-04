@@ -311,4 +311,5 @@
     <string name="crescent_width">Ширина на полумесец</string>
     <string name="other_apps">Други приложения</string>
     <string name="measure">Измерване</string>
+    <string name="name">Име</string>
 </resources>
