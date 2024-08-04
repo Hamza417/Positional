@@ -15,6 +15,8 @@ object MeasurePreferences {
     const val HIGH_CONTRAST_MAP = "measure_map_high_contrast_map"
     const val TOOLS_GRAVITY = "measure_tools_gravity"
 
+    private const val LAST_SELECTED_MEASURE = "last_selected_measure"
+
     //--------------------------------------------------------------------------------------------------//
 
     fun isCompassRotation(): Boolean {
@@ -125,5 +127,15 @@ object MeasurePreferences {
 
     fun invertToolsGravity() {
         setToolsGravityToLeft(!isToolsGravityToLeft())
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setLastSelectedMeasure(id: Int) {
+        getSharedPreferences().edit().putInt(LAST_SELECTED_MEASURE, id).apply()
+    }
+
+    fun getLastSelectedMeasure(): Int {
+        return getSharedPreferences().getInt(LAST_SELECTED_MEASURE, -1)
     }
 }

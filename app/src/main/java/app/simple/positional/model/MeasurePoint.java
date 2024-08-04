@@ -1,28 +1,58 @@
 package app.simple.positional.model;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import androidx.annotation.NonNull;
 
-@Entity(tableName = "measure_points_data")
 public class MeasurePoint {
 
-    /**
-     * Latitude of the trail
-     */
-    @ColumnInfo(name = "lat")
-    double latitude;
+    private double latitude;
+    private double longitude;
+    private int order;
 
-    /**
-     * Longitude of the trail
-     */
-    @ColumnInfo(name = "lng")
-    double longitude;
+    public MeasurePoint(double latitude, double longitude, int order) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.order = order;
+    }
 
-    /**
-     * Time of when this trail marker is added
-     */
-    @PrimaryKey
-    @ColumnInfo(name = "time_added")
-    long timeAdded;
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "MeasurePoint{" + "latitude=" + latitude + ", longitude=" + longitude + ", order=" + order + '}';
+    }
+
+    public String convertForDatabase() {
+        return latitude + "," + longitude + "," + order;
+    }
+
+    public static MeasurePoint convertFromDatabase(String data) {
+        String[] parts = data.split(",");
+        return new MeasurePoint(
+                Double.parseDouble(parts[0]),
+                Double.parseDouble(parts[1]),
+                Integer.parseInt(parts[2]));
+    }
 }
