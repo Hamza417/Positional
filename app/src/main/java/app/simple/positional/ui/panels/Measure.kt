@@ -168,7 +168,10 @@ class Measure : ScopedFragment() {
             }
 
             override fun onNewAdd(view: View?) {
-
+                Log.d(TAG, "onNewAdd: ")
+                maps?.addPolyline {
+                    measureViewModel.addMeasurePoint(it)
+                }
             }
 
             override fun onClearRecentMarker(view: View?) {
@@ -184,7 +187,7 @@ class Measure : ScopedFragment() {
 
                 measureViewModel.getMeasure().observe(viewLifecycleOwner) { measure ->
                     crossHair.visible(animate = true)
-                    // maps?.createMeasurePolylines(measure)
+                    maps?.createMeasurePolylines(measure)
 
                     Log.i(TAG, "onMapInitialized: $measure")
                     if (measure.isNotNull()) {

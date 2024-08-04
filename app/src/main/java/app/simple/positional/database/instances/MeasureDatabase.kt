@@ -29,5 +29,10 @@ abstract class MeasureDatabase : RoomDatabase() {
 
             return instance
         }
+
+        fun destroyInstance() {
+            instance?.close()
+            instance = null
+        }
     }
 }

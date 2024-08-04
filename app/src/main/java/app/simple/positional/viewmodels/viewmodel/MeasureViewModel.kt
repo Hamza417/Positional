@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import app.simple.positional.database.instances.MeasureDatabase
 import app.simple.positional.extensions.viewmodel.WrappedViewModel
 import app.simple.positional.model.Measure
+import app.simple.positional.model.MeasurePoint
 import app.simple.positional.preferences.MeasurePreferences
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -59,7 +61,22 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
         }
     }
 
-    // TODO - close database
+    fun addMeasurePoint(latLng: LatLng) {
+        viewModelScope.launch(Dispatchers.Default) {
+            val measureDatabase = MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
+            val measure = measure.value
+            measure?.let {
+                val measurePoint = MeasurePoint(
+                    latLng.latitude, latLng.longitude, measure.measurePoints?.size?.plus(1) ?: 0)
+                measureDatabase.measureDao()?.updateMeasure(measure)
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        MeasureDatabase.destroyInstance()
+    }
 
     companion object {
         private const val TAG = "MeasureViewModel"
