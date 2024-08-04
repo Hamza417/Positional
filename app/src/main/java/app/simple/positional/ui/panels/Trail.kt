@@ -21,7 +21,7 @@ import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.activities.subactivity.TrailsViewerActivity
-import app.simple.positional.adapters.trail.AdapterTrailData
+import app.simple.positional.adapters.trail.AdapterTrailPoints
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.trails.TrailMaps
 import app.simple.positional.decorations.trails.TrailToolbar
@@ -62,7 +62,7 @@ class Trail : ScopedFragment() {
 
     private lateinit var toolbar: TrailToolbar
     private lateinit var tools: TrailTools
-    private lateinit var trailRecyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     private var bottomSheetPanel: BottomSheetBehavior<CoordinatorLayout>? = null
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var expandUp: ImageView
@@ -89,7 +89,7 @@ class Trail : ScopedFragment() {
 
         toolbar = view.findViewById(R.id.toolbar)
         tools = view.findViewById(R.id.trail_tools)
-        trailRecyclerView = view.findViewById(R.id.trail_data_recycler_view)
+        recyclerView = view.findViewById(R.id.trail_data_recycler_view)
 
         kotlin.runCatching {
             bottomSheetPanel = BottomSheetBehavior.from(view.findViewById(R.id.trail_bottom_sheet))
@@ -113,7 +113,7 @@ class Trail : ScopedFragment() {
 
         tools.locationIndicatorUpdate(false)
 
-        trailRecyclerView.apply {
+        recyclerView.apply {
             setPadding(paddingLeft,
                        paddingTop + StatusBarHeight.getStatusBarHeight(resources),
                        paddingRight,
@@ -154,9 +154,9 @@ class Trail : ScopedFragment() {
         }
 
         trailDataViewModel.trailPointDescendingWithInfo.observe(viewLifecycleOwner) {
-            val adapter = AdapterTrailData(it)
+            val adapter = AdapterTrailPoints(it)
 
-            adapter.setOnTrailsDataCallbackListener(object : AdapterTrailData.Companion.AdapterTrailsDataCallbacks {
+            adapter.setOnTrailsDataCallbackListener(object : AdapterTrailPoints.Companion.AdapterTrailsDataCallbacks {
                 override fun onTrailsDataLongPressed(trailPoint: TrailPoint, view: View, position: Int) {
                     PopupTrailsDataMenu(view).setOnPopupCallbacksListener(object : PopupTrailsDataMenu.Companion.PopupTrailsCallbacks {
                         override fun onDelete() {
@@ -235,27 +235,30 @@ class Trail : ScopedFragment() {
 
             if (it.first.isEmpty()) {
                 art.visible(false)
-                trailRecyclerView.adapter = null
+                recyclerView.adapter = null
             } else {
                 art.invisible(false)
-                trailRecyclerView.adapter = adapter
+                recyclerView.adapter = adapter
             }
         }
 
         bottomSheetPanel?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    backPressed(true)
-                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    backPressed(false)
-                    if (backPress!!.hasEnabledCallbacks()) {
-                        backPress?.onBackPressed()
+                when (newState) {
+                    BottomSheetBehavior.STATE_EXPANDED  -> {
+                        backPressed(true)
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        backPressed(false)
+                        if (backPress!!.hasEnabledCallbacks()) {
+                            backPress?.onBackPressed()
+                        }
                     }
                 }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                trailRecyclerView.alpha = slideOffset
+                recyclerView.alpha = slideOffset
                 expandUp.alpha = 1 - slideOffset
                 dim.alpha = slideOffset
                 if (!isFullScreen) {
@@ -366,6 +369,7 @@ class Trail : ScopedFragment() {
                     y = event.y
                 }
             }
+
             false
         }
     }

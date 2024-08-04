@@ -27,14 +27,14 @@ import app.simple.positional.util.TimeFormatter.formatDate
 import com.github.vipulasri.timelineview.TimelineView
 import com.google.android.gms.maps.model.LatLng
 
-class AdapterTrailData(private val trailPoint: Pair<ArrayList<TrailPoint>, Triple<String?, Spanned?, Spanned?>>) :
+class AdapterTrailPoints(private val trailPoint: Pair<ArrayList<TrailPoint>, Triple<String?, Spanned?, Spanned?>>) :
     RecyclerView.Adapter<VerticalListViewHolder>() {
 
     private lateinit var trailsDataCallbacks: AdapterTrailsDataCallbacks
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalListViewHolder {
         return when (viewType) {
-            0, 1, 2, 3 -> {
+            0, 1, 2, 3  -> {
                 Holder(LayoutInflater.from(parent.context).inflate(R.layout.adapter_trail_data, parent, false), viewType)
             }
             TYPE_HEADER -> {
@@ -43,7 +43,7 @@ class AdapterTrailData(private val trailPoint: Pair<ArrayList<TrailPoint>, Tripl
             TYPE_FOOTER -> {
                 Footer(LayoutInflater.from(parent.context).inflate(R.layout.adapter_trail_data_footer, parent, false))
             }
-            else -> {
+            else        -> {
                 throw RuntimeException("there is no type that matches the type $viewType + make sure your using types correctly")
             }
         }
@@ -59,7 +59,7 @@ class AdapterTrailData(private val trailPoint: Pair<ArrayList<TrailPoint>, Tripl
 
             holder.name.text = trailPoint.first[position].name ?: "--"
             holder.note.text = trailPoint.first[position].note
-                ?: holder.itemView.context.getString(R.string.not_available)
+                               ?: holder.itemView.context.getString(R.string.not_available)
             holder.date.text = trailPoint.first[position].timeAdded.formatDate()
             holder.coordinates.text = with(holder.itemView.context) {
                 getString(R.string.coordinates_format,
@@ -68,7 +68,7 @@ class AdapterTrailData(private val trailPoint: Pair<ArrayList<TrailPoint>, Tripl
             }
 
             holder.accuracy.text = holder.itemView.context.getString(
-                    R.string.trail_data_accuracy,
+                R.string.trail_data_accuracy,
                 getAccuracy(trailPoint.first[position].accuracy.round(1)),
                 getUnit(trailPoint.first[position].accuracy, holder.itemView.context)
             )
@@ -105,7 +105,7 @@ class AdapterTrailData(private val trailPoint: Pair<ArrayList<TrailPoint>, Tripl
             isPositionFooter(position) -> {
                 TYPE_FOOTER
             }
-            else -> {
+            else                       -> {
                 TimelineView.getTimeLineViewType(position - 1, itemCount - 2)
             }
         }

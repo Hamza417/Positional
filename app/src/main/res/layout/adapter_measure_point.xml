@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:paddingHorizontal="@dimen/options_container_horizontal_padding">
+
+    <com.github.vipulasri.timelineview.TimelineView
+        android:id="@+id/timeline"
+        android:layout_width="@dimen/app_button_size"
+        android:layout_height="0dp"
+        app:endLineColor="?attr/colorAppAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:linePadding="10dp"
+        app:lineWidth="2dp"
+        app:markerSize="30dp"
+        app:startLineColor="?attr/colorAppAccent" />
+
+    <TextView
+        android:id="@+id/coordinates"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/medium"
+        android:maxLines="1"
+        android:textColor="@color/textPrimary"
+        android:textSize="@dimen/info_text_secondary_size"
+        app:layout_constraintBottom_toTopOf="@id/current_distance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/timeline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/current_distance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        android:fontFamily="@font/regular"
+        android:textColor="@color/textTertiary"
+        android:textSize="@dimen/description_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/coordinates"
+        app:layout_constraintStart_toStartOf="@+id/coordinates"
+        app:layout_constraintTop_toBottomOf="@+id/coordinates" />
+
+
+</app.simple.positional.decorations.ripple.DynamicRippleConstraintLayout>

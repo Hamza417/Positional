@@ -131,11 +131,11 @@ object MeasurePreferences {
 
     //--------------------------------------------------------------------------------------------------//
 
-    fun setLastSelectedMeasure(id: Int) {
-        getSharedPreferences().edit().putInt(LAST_SELECTED_MEASURE, id).apply()
+    fun setLastSelectedMeasure(id: Long) {
+        getSharedPreferences().edit().putLong(LAST_SELECTED_MEASURE, id).apply()
     }
 
-    fun getLastSelectedMeasure(): Int {
-        return getSharedPreferences().getInt(LAST_SELECTED_MEASURE, -1)
+    fun getLastSelectedMeasure(): Long {
+        return getSharedPreferences().getLong(LAST_SELECTED_MEASURE, -1)
     }
 }

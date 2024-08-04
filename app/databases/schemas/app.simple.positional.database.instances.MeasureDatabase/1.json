@@ -2,18 +2,12 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0ee85f2247316b9bca86a075ea9e16f5",
+    "identityHash": "e6bf72c006660f9069be641aab26d9b2",
     "entities": [
       {
         "tableName": "measures",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date_added` INTEGER NOT NULL, `measure_name` TEXT, `measure_note` TEXT, `measure_points` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`date_added` INTEGER NOT NULL, `measure_name` TEXT, `measure_note` TEXT, `measure_points` TEXT, PRIMARY KEY(`date_added`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "dateCreated",
             "columnName": "date_added",
@@ -40,9 +34,9 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "id"
+            "date_added"
           ]
         },
         "indices": [],
@@ -52,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0ee85f2247316b9bca86a075ea9e16f5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e6bf72c006660f9069be641aab26d9b2')"
     ]
   }
 }

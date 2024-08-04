@@ -35,19 +35,29 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
 
     private fun loadMeasureEntries() {
         viewModelScope.launch(Dispatchers.Default) {
-            val measureDatabase =
-                MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
+            val measureDatabase = MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
             val entries = measureDatabase.measureDao()?.getAllMeasures()
             measureEntries.postValue(entries as ArrayList<Measure>)
         }
     }
 
-    private fun loadMeasure(id: Int) {
+    private fun loadMeasure(id: Long) {
         viewModelScope.launch(Dispatchers.Default) {
-            val measureDatabase =
-                MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
+            val measureDatabase = MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
             val measure = measureDatabase.measureDao()?.getMeasureById(id)
             this@MeasureViewModel.measure.postValue(measure)
         }
     }
+
+    fun addMeasure(name: String, note: String) {
+        viewModelScope.launch(Dispatchers.Default) {
+            val measureDatabase = MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
+            val measure = Measure(name, note)
+            measureDatabase.measureDao()?.insertMeasure(measure)
+            MeasurePreferences.setLastSelectedMeasure(measure.dateCreated)
+            loadMeasure(measure.dateCreated)
+        }
+    }
+
+    // TODO - close database
 }

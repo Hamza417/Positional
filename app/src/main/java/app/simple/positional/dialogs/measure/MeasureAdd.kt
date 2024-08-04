@@ -65,7 +65,7 @@ class MeasureAdd : CustomDialogFragment() {
         }
 
         fun Fragment.showMeasureAdd(): MeasureAdd {
-            val dialog = MeasureAdd.newInstance()
+            val dialog = newInstance()
             dialog.show(childFragmentManager, TAG)
             return dialog
         }

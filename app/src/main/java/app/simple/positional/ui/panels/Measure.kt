@@ -1,5 +1,6 @@
 package app.simple.positional.ui.panels
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.location.Location
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.ViewModelProvider
@@ -33,7 +35,10 @@ import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.LocationPrompt
 import app.simple.positional.util.ParcelUtils.parcelable
+import app.simple.positional.util.StatusBarHeight
+import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
+import app.simple.positional.viewmodels.viewmodel.MeasureViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
@@ -49,12 +54,15 @@ class Measure : ScopedFragment() {
     private lateinit var bottomSheetSlide: BottomSheetSlide
     private lateinit var expandUp: ImageView
     private lateinit var art: ImageView
+    private lateinit var crossHair: ImageView
     private lateinit var dim: View
 
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
     private var maps: MeasureMaps? = null
-    private var locationViewModel: LocationViewModel? = null
+
+    private lateinit var locationViewModel: LocationViewModel
+    private lateinit var measureViewModel: MeasureViewModel
 
     private var isFullScreen = false
     private var peekHeight = 0
@@ -71,15 +79,27 @@ class Measure : ScopedFragment() {
         expandUp = view.findViewById(R.id.expand_up)
         art = view.findViewById(R.id.art)
         dim = view.findViewById(R.id.dim)
+        crossHair = view.findViewById(R.id.cross_hair)
 
         kotlin.runCatching {
-            bottomSheetPanel = BottomSheetBehavior.from(view.findViewById(R.id.trail_bottom_sheet))
+            bottomSheetPanel = BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet))
         }
 
         bottomSheetSlide = requireActivity() as BottomSheetSlide
         backPress = requireActivity().onBackPressedDispatcher
         maps?.onCreate(savedInstanceState)
+
         locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
+        measureViewModel = ViewModelProvider(requireActivity())[MeasureViewModel::class.java]
+
+        recyclerView.apply {
+            setPadding(paddingLeft,
+                paddingTop + StatusBarHeight.getStatusBarHeight(resources),
+                paddingRight,
+                paddingBottom)
+
+            alpha = if (isLandscapeOrientation) 1F else 0F
+        }
 
         peekHeight = bottomSheetPanel?.peekHeight ?: 0
 
@@ -94,7 +114,7 @@ class Measure : ScopedFragment() {
                 showMeasureAdd().setOnMeasureAddCallbacks(object :
                     MeasureAdd.Companion.MeasureAddCallbacks {
                     override fun onSave(name: String, note: String) {
-                        Log.d(TAG, "onSave: $name, $note")
+                        measureViewModel.addMeasure(name, note)
                     }
                 })
             }
@@ -108,7 +128,7 @@ class Measure : ScopedFragment() {
             }
         })
 
-        locationViewModel?.getLocation()?.observe(viewLifecycleOwner) { location ->
+        locationViewModel.getLocation().observe(viewLifecycleOwner) { location ->
             viewLifecycleOwner.lifecycleScope.launch {
                 withContext(Dispatchers.Default) {
                     this@Measure.location = location
@@ -158,11 +178,42 @@ class Measure : ScopedFragment() {
                 if (savedInstanceState.isNotNull()) {
                     maps?.setCamera(savedInstanceState!!.parcelable(CAMERA))
                 }
+
+                measureViewModel.getMeasure().observe(viewLifecycleOwner) { measure ->
+                    crossHair.visible(animate = true)
+                    // maps?.createMeasurePolylines(measure)
+                }
             }
 
             override fun onMapClicked() {
                 if (isLandscapeOrientation.invert()) {
                     setFullScreen()
+                }
+            }
+        })
+
+        bottomSheetPanel?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            @SuppressLint("SwitchIntDef")
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_EXPANDED  -> {
+                        backPressed(true)
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        backPressed(false)
+                        if (backPress!!.hasEnabledCallbacks()) {
+                            backPress?.onBackPressed()
+                        }
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                recyclerView.alpha = slideOffset
+                expandUp.alpha = 1 - slideOffset
+                dim.alpha = slideOffset
+                if (!isFullScreen) {
+                    bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
                 }
             }
         })
@@ -185,6 +236,21 @@ class Measure : ScopedFragment() {
         }
 
         isFullScreen = !isFullScreen
+    }
+
+    private fun backPressed(value: Boolean) {
+        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
+            override fun handleOnBackPressed() {
+                if (bottomSheetPanel?.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetPanel?.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+                /**
+                 * Remove this callback as soon as it's been called
+                 * to prevent any further registering
+                 */
+                remove()
+            }
+        })
     }
 
     override fun onResume() {
@@ -218,7 +284,8 @@ class Measure : ScopedFragment() {
         outState.putFloat(TRANSLATION, toolbar.translationY)
         outState.putBoolean(FULL_SCREEN, isFullScreen)
         outState.putParcelable(CAMERA, maps?.getCamera())
-        outState.putInt(BOTTOM_SHEET_STATE, bottomSheetPanel?.state ?: 4)
+        outState.putInt(BOTTOM_SHEET_STATE, bottomSheetPanel?.state
+                                            ?: BottomSheetBehavior.STATE_COLLAPSED)
         super.onSaveInstanceState(outState)
     }
 
@@ -230,7 +297,8 @@ class Measure : ScopedFragment() {
             } else {
                 setFullScreen()
             }
-            bottomSheetPanel?.state = it.getInt(BOTTOM_SHEET_STATE)
+
+            bottomSheetPanel?.state = it.getInt(BOTTOM_SHEET_STATE, BottomSheetBehavior.STATE_COLLAPSED)
         }
 
         super.onViewStateRestored(savedInstanceState)

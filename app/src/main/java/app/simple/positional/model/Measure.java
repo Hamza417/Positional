@@ -1,18 +1,19 @@
 package app.simple.positional.model;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+
+import java.util.ArrayList;
 
 import app.simple.positional.database.converters.MeasurePointConverter;
 
 @Entity(tableName = "measures")
 public class Measure {
 
-    @PrimaryKey(autoGenerate = true)
-    public int id = 0;
-
+    @PrimaryKey
     @ColumnInfo(name = "date_added")
     long dateCreated;
 
@@ -24,26 +25,23 @@ public class Measure {
 
     @TypeConverters(MeasurePointConverter.class)
     @ColumnInfo(name = "measure_points")
-    MeasurePoint measurePoints;
+    @Nullable
+    ArrayList<MeasurePoint> measurePoints;
 
-    public Measure(int id, long dateCreated, String name, String note, MeasurePoint measurePoints) {
-        this.id = id;
+    public Measure(long dateCreated, String name, String note) {
         this.dateCreated = dateCreated;
         this.name = name;
         this.note = note;
-        this.measurePoints = measurePoints;
     }
 
     public Measure() {
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Measure(String name, String note) {
+        this.dateCreated = System.currentTimeMillis();
+        this.name = name;
+        this.note = note;
     }
 
     public long getDateCreated() {
@@ -70,11 +68,12 @@ public class Measure {
         this.note = note;
     }
 
-    public MeasurePoint getMeasurePoints() {
+    @Nullable
+    public ArrayList<MeasurePoint> getMeasurePoints() {
         return measurePoints;
     }
 
-    public void setMeasurePoints(MeasurePoint measurePoints) {
+    public void setMeasurePoints(@Nullable ArrayList<MeasurePoint> measurePoints) {
         this.measurePoints = measurePoints;
     }
 }

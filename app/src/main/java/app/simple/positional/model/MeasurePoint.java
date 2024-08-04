@@ -2,6 +2,8 @@ package app.simple.positional.model;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 public class MeasurePoint {
 
     private double latitude;
@@ -46,6 +48,10 @@ public class MeasurePoint {
 
     public String convertForDatabase() {
         return latitude + "," + longitude + "," + order;
+    }
+
+    public ArrayList<MeasurePoint> convertForDatabase(ArrayList<MeasurePoint> measurePoints) {
+        return new ArrayList<>(measurePoints);
     }
 
     public static MeasurePoint convertFromDatabase(String data) {

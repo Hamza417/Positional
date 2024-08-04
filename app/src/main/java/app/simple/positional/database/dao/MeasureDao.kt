@@ -14,8 +14,8 @@ interface MeasureDao {
     @Query("SELECT * FROM measures ORDER BY date_added COLLATE nocase DESC")
     fun getAllMeasures(): MutableList<Measure>
 
-    @Query("SELECT * FROM measures WHERE id = :id")
-    fun getMeasureById(id: Int): Measure
+    @Query("SELECT * FROM measures WHERE date_added = :date")
+    fun getMeasureById(date: Long): Measure
 
     @Delete
     suspend fun deleteMeasure(measure: Measure)
