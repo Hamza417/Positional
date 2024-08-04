@@ -9,7 +9,7 @@ import androidx.room.Update
 import app.simple.positional.model.TrailPoint
 
 @Dao
-interface TrailDataDao {
+interface TrailPointDao {
 
     @Query("SELECT * FROM trail_data ORDER BY time_added COLLATE nocase")
     fun getAllTrailData(): List<TrailPoint>

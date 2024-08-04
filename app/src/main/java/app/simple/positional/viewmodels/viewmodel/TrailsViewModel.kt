@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
-import app.simple.positional.database.instances.TrailDataDatabase
 import app.simple.positional.database.instances.TrailDatabase
+import app.simple.positional.database.instances.TrailPointDatabase
 import app.simple.positional.model.TrailEntry
 import app.simple.positional.preferences.TrailPreferences
 import kotlinx.coroutines.Dispatchers
@@ -86,7 +86,7 @@ class TrailsViewModel(application: Application) : AndroidViewModel(application) 
     private fun clearResidualFiles(name: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val db = Room.databaseBuilder(getApplication<Application>().applicationContext,
-                                          TrailDataDatabase::class.java,
+                TrailPointDatabase::class.java,
                                           "$name.db").build()
 
             db.trailDataDao()?.nukeTable()

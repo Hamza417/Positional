@@ -4,21 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import app.simple.positional.database.dao.TrailDataDao
+import app.simple.positional.database.dao.TrailPointDao
 import app.simple.positional.model.TrailPoint
 
 @Database(entities = [TrailPoint::class], exportSchema = true, version = 3)
-abstract class TrailDataDatabase : RoomDatabase() {
+abstract class TrailPointDatabase : RoomDatabase() {
 
-    abstract fun trailDataDao(): TrailDataDao?
+    abstract fun trailDataDao(): TrailPointDao?
 
     companion object {
-        private var instance: TrailDataDatabase? = null
+        private var instance: TrailPointDatabase? = null
 
         @Synchronized
-        fun getInstance(context: Context?, DB_NAME: String?): TrailDataDatabase? {
+        fun getInstance(context: Context?, DB_NAME: String?): TrailPointDatabase? {
             if (instance == null) {
-                instance = Room.databaseBuilder(context!!, TrailDataDatabase::class.java, DB_NAME!!)
+                instance =
+                    Room.databaseBuilder(context!!, TrailPointDatabase::class.java, DB_NAME!!)
                     .fallbackToDestructiveMigration()
                     .build()
             }

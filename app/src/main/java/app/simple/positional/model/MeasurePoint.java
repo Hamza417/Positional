@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "measure_data")
+@Entity(tableName = "measure_points_data")
 public class MeasurePoint {
 
     /**

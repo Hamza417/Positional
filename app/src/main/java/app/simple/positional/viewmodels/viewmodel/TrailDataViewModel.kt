@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Room
 import app.simple.positional.R
-import app.simple.positional.database.instances.TrailDataDatabase
+import app.simple.positional.database.instances.TrailPointDatabase
 import app.simple.positional.extensions.viewmodel.WrappedViewModel
 import app.simple.positional.math.MathExtensions.round
 import app.simple.positional.math.UnitConverter.toFeet
@@ -47,7 +47,7 @@ class TrailDataViewModel(application: Application) : WrappedViewModel(applicatio
     private fun loadTrailData(trailName: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
-                    TrailDataDatabase::class.java,
+                TrailPointDatabase::class.java,
                     "$trailName.db").fallbackToDestructiveMigration().build()
 
             val list = database.trailDataDao()?.getAllTrailData()!!
@@ -65,7 +65,7 @@ class TrailDataViewModel(application: Application) : WrappedViewModel(applicatio
     fun saveTrailData(trailName: String, trails: TrailPoint) {
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
-                                                TrailDataDatabase::class.java,
+                TrailPointDatabase::class.java,
                                                 "$trailName.db").fallbackToDestructiveMigration().build()
 
             database.trailDataDao()?.insertTrailData(trails)!!
@@ -82,7 +82,7 @@ class TrailDataViewModel(application: Application) : WrappedViewModel(applicatio
                 trails ?: return@launch
 
                 val database = Room.databaseBuilder(getApplication<Application>(),
-                                                    TrailDataDatabase::class.java,
+                    TrailPointDatabase::class.java,
                                                     "$trailName.db").fallbackToDestructiveMigration().build()
 
                 database.trailDataDao()?.deleteTrailData(trails)!!
@@ -98,7 +98,7 @@ class TrailDataViewModel(application: Application) : WrappedViewModel(applicatio
     fun loadTrailDataWithInformation(trailName: String, delay: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val database = Room.databaseBuilder(getApplication<Application>(),
-                                                TrailDataDatabase::class.java,
+                TrailPointDatabase::class.java,
                                                 "$trailName.db").fallbackToDestructiveMigration().build()
 
             val list = database.trailDataDao()?.getAllTrailDataDesc()!!
