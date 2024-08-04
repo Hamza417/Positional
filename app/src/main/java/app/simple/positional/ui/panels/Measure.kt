@@ -14,9 +14,11 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.BottomBarItems
+import app.simple.positional.adapters.measure.AdapterMeasurePoints
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.measure.MeasureMaps
 import app.simple.positional.decorations.measure.MeasureToolbar
@@ -60,6 +62,7 @@ class Measure : ScopedFragment() {
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
     private var maps: MeasureMaps? = null
+    private var adapterMeasurePoints: AdapterMeasurePoints? = null
 
     private lateinit var locationViewModel: LocationViewModel
     private lateinit var measureViewModel: MeasureViewModel
@@ -182,6 +185,15 @@ class Measure : ScopedFragment() {
                 measureViewModel.getMeasure().observe(viewLifecycleOwner) { measure ->
                     crossHair.visible(animate = true)
                     // maps?.createMeasurePolylines(measure)
+
+                    Log.i(TAG, "onMapInitialized: $measure")
+                    if (measure.isNotNull()) {
+                        adapterMeasurePoints = AdapterMeasurePoints(measure)
+                        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+                        recyclerView.adapter = adapterMeasurePoints
+                    } else {
+                        art.visible(animate = false)
+                    }
                 }
             }
 

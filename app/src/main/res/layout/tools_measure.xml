@@ -56,7 +56,7 @@
         android:layout_width="@dimen/app_button_size"
         android:layout_height="@dimen/app_button_size"
         android:layout_marginTop="5dp"
-        android:src="@drawable/ic_add"
+        android:src="@drawable/ic_add_circle"
         android:tint="@color/iconColor" />
 
     <app.simple.positional.decorations.ripple.DynamicRippleImageButton

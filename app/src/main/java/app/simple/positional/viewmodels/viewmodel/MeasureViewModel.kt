@@ -60,4 +60,8 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
     }
 
     // TODO - close database
+
+    companion object {
+        private const val TAG = "MeasureViewModel"
+    }
 }

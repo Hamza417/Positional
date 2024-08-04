@@ -12,8 +12,12 @@ public class MeasurePointConverter {
     public String fromMeasurePoints(ArrayList<MeasurePoint> measurePoints) {
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (MeasurePoint point : measurePoints) {
-            stringBuilder.append(point.convertForDatabase()).append(";");
+        if (measurePoints != null && !measurePoints.isEmpty()) {
+            for (MeasurePoint point : measurePoints) {
+                stringBuilder.append(point.convertForDatabase()).append(";");
+            }
+        } else {
+            return null;
         }
 
         return stringBuilder.toString();

@@ -76,4 +76,14 @@ public class Measure {
     public void setMeasurePoints(@Nullable ArrayList<MeasurePoint> measurePoints) {
         this.measurePoints = measurePoints;
     }
+
+    @Override
+    public String toString() {
+        return "Measure{" +
+                "dateCreated=" + dateCreated +
+                ", name='" + name + '\'' +
+                ", note='" + note + '\'' +
+                ", measurePoints=" + measurePoints +
+                '}';
+    }
 }
