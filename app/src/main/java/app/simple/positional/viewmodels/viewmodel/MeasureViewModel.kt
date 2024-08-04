@@ -68,6 +68,7 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
             measure?.let {
                 val measurePoint = MeasurePoint(
                     latLng.latitude, latLng.longitude, measure.measurePoints?.size?.plus(1) ?: 0)
+                measure.measurePoints?.add(measurePoint)
                 measureDatabase.measureDao()?.updateMeasure(measure)
             }
         }

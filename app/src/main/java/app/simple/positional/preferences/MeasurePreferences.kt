@@ -1,6 +1,7 @@
 package app.simple.positional.preferences
 
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
+import com.google.android.gms.maps.model.LatLng
 
 object MeasurePreferences {
 
@@ -16,6 +17,8 @@ object MeasurePreferences {
     const val TOOLS_GRAVITY = "measure_tools_gravity"
 
     private const val LAST_SELECTED_MEASURE = "last_selected_measure"
+    private const val LAST_LATITUDE = "_measure_last_latitude"
+    private const val LAST_LONGITUDE = "_measure_last_longitude"
 
     //--------------------------------------------------------------------------------------------------//
 
@@ -137,5 +140,31 @@ object MeasurePreferences {
 
     fun getLastSelectedMeasure(): Long {
         return getSharedPreferences().getLong(LAST_SELECTED_MEASURE, -1)
+    }
+
+    //--------------------------------------------------------------------------------------------------//
+
+    fun setLastLatitude(latitude: Double) {
+        getSharedPreferences().edit().putFloat(LAST_LATITUDE, latitude.toFloat()).apply()
+    }
+
+    fun getLastLatitude(): Double {
+        return getSharedPreferences().getFloat(LAST_LATITUDE, 0F).toDouble()
+    }
+
+    fun setLastLongitude(longitude: Double) {
+        getSharedPreferences().edit().putFloat(LAST_LONGITUDE, longitude.toFloat()).apply()
+    }
+
+    fun getLastLongitude(): Double {
+        return getSharedPreferences().getFloat(LAST_LONGITUDE, 0F).toDouble()
+    }
+
+    fun getLastLatLng(): LatLng {
+        return LatLng(getLastLatitude(), getLastLongitude())
+    }
+
+    fun isLocationSet(): Boolean {
+        return getLastLatitude() != 0.0 && getLastLongitude() != 0.0
     }
 }

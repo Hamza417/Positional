@@ -30,7 +30,6 @@ import app.simple.positional.dialogs.measure.MeasureAdd.Companion.showMeasureAdd
 import app.simple.positional.dialogs.measure.MeasureMenu.Companion.showMeasureMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.extensions.maps.MapsCallbacks
-import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.MeasurePreferences
 import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.ConditionUtils.isNotNull
@@ -131,24 +130,6 @@ class Measure : ScopedFragment() {
             }
         })
 
-        locationViewModel.getLocation().observe(viewLifecycleOwner) { location ->
-            viewLifecycleOwner.lifecycleScope.launch {
-                withContext(Dispatchers.Default) {
-                    this@Measure.location = location
-
-                    MainPreferences.setLastLatitude(location!!.latitude.toFloat())
-                    MainPreferences.setLastLongitude(location.longitude.toFloat())
-
-                    withContext(Dispatchers.Main) {
-                        maps?.setFirstLocation(location)
-                        maps?.location = location
-                        maps?.addMarker(LatLng(location.latitude, location.longitude))
-                        tools.locationIndicatorUpdate(true)
-                    }
-                }
-            }
-        }
-
         tools.setMeasureToolsCallbacks(object : MeasureToolsCallbacks {
             override fun onLocation(view: View?, reset: Boolean) {
                 if (LocationExtension.getLocationStatus(requireContext())) {
@@ -185,11 +166,25 @@ class Measure : ScopedFragment() {
                     maps?.setCamera(savedInstanceState!!.parcelable(CAMERA))
                 }
 
+                locationViewModel.getLocation().observe(viewLifecycleOwner) { location ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        withContext(Dispatchers.Default) {
+                            this@Measure.location = location
+
+                            withContext(Dispatchers.Main) {
+                                maps?.setFirstLocation(LatLng(location.latitude, location.longitude))
+                                maps?.location = location
+                                maps?.addMarker(LatLng(location.latitude, location.longitude))
+                                tools.locationIndicatorUpdate(true)
+                            }
+                        }
+                    }
+                }
+
                 measureViewModel.getMeasure().observe(viewLifecycleOwner) { measure ->
                     crossHair.visible(animate = true)
                     maps?.createMeasurePolylines(measure)
 
-                    Log.i(TAG, "onMapInitialized: $measure")
                     if (measure.isNotNull()) {
                         adapterMeasurePoints = AdapterMeasurePoints(measure)
                         recyclerView.layoutManager = LinearLayoutManager(requireContext())
