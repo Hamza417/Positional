@@ -18,6 +18,8 @@ import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.model.Measure
 import app.simple.positional.preferences.MainPreferences
+import app.simple.positional.util.DMSConverter
+import app.simple.positional.util.LocationExtension
 import com.github.vipulasri.timelineview.TimelineView
 
 class AdapterMeasurePoints(private val measure: Measure) :
@@ -34,7 +36,7 @@ class AdapterMeasurePoints(private val measure: Measure) :
             TYPE_FOOTER -> {
                 Footer(LayoutInflater.from(parent.context).inflate(R.layout.adapter_measure_footer, parent, false))
             }
-            else -> {
+            else       -> {
                 throw RuntimeException("there is no type that matches the type $viewType + make sure your using types correctly")
             }
         }
@@ -46,7 +48,15 @@ class AdapterMeasurePoints(private val measure: Measure) :
 
         when (holder) {
             is Holder -> {
-
+                setMarker(holder, R.drawable.ic_point)
+                val latlng = measure.measurePoints?.get(position)?.latLng!!
+                holder.coordinates.text = with(holder.itemView.context) {
+                    getString(R.string.coordinates_format,
+                        DMSConverter.getFormattedLatitude(latlng.latitude, this),
+                        DMSConverter.getFormattedLongitude(latlng.longitude, this))
+                }
+                val latLngArray = measure.measurePoints!!.map { it.latLng }.toTypedArray()
+                holder.currentDistance.text = LocationExtension.measureDisplacement(latLngArray).toString()
             }
             is Header -> {
                 holder.name.text = measure.name ?: "--"

@@ -314,7 +314,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     }
 
     private fun updatePolylines(points: ArrayList<MeasurePoint>) {
-        googleMap?.clear() // Will clear all markers, polylines, and circles
+        // googleMap?.clear() // Will clear all markers, polylines, and circles
         polylines.clear()
         currentPolyline.clear()
         polylineOptions?.points?.clear()

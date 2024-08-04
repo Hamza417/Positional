@@ -22,7 +22,7 @@ object LocationExtension {
             locationManager.isLocationEnabled
         } else {
             locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
-                    locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
         }
     }
 
@@ -50,11 +50,11 @@ object LocationExtension {
         for (i in list.indices) {
             if (i < list.size - 1) {
                 Location.distanceBetween(
-                        list[i].latitude,
-                        list[i].longitude,
-                        list[i + 1].latitude,
-                        list[i + 1].longitude,
-                        result
+                    list[i].latitude,
+                    list[i].longitude,
+                    list[i + 1].latitude,
+                    list[i + 1].longitude,
+                    result
                 )
 
                 distance += result[0]
@@ -74,11 +74,11 @@ object LocationExtension {
         for (i in list.indices) {
             if (i < list.size - 1) {
                 Location.distanceBetween(
-                        list[i].latitude,
-                        list[i].longitude,
-                        list[i + 1].latitude,
-                        list[i + 1].longitude,
-                        result
+                    list[i].latitude,
+                    list[i].longitude,
+                    list[i + 1].latitude,
+                    list[i + 1].longitude,
+                    result
                 )
 
                 distance += result[0]

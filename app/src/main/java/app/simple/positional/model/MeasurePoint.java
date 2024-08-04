@@ -2,6 +2,8 @@ package app.simple.positional.model;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 public class MeasurePoint {
@@ -38,6 +40,10 @@ public class MeasurePoint {
 
     public void setOrder(int order) {
         this.order = order;
+    }
+
+    public LatLng getLatLng() {
+        return new LatLng(latitude, longitude);
     }
 
     @NonNull
