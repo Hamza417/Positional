@@ -165,4 +165,12 @@ object ViewUtils {
     fun View.isNotVisible(): Boolean {
         return visibility == View.INVISIBLE || visibility == View.GONE
     }
+
+    fun View.setVisibility(visibility: Boolean) {
+        if (visibility) {
+            visible(true)
+        } else {
+            gone(true)
+        }
+    }
 }

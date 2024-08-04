@@ -21,6 +21,8 @@ import app.simple.positional.decorations.measure.MeasureToolbar
 import app.simple.positional.decorations.measure.MeasureToolbarCallbacks
 import app.simple.positional.decorations.measure.MeasureTools
 import app.simple.positional.decorations.measure.MeasureToolsCallbacks
+import app.simple.positional.dialogs.measure.MeasureAdd
+import app.simple.positional.dialogs.measure.MeasureAdd.Companion.showMeasureAdd
 import app.simple.positional.dialogs.measure.MeasureMenu.Companion.showMeasureMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.extensions.maps.MapsCallbacks
@@ -89,7 +91,12 @@ class Measure : ScopedFragment() {
 
         toolbar.setMeasureToolbarCallbacks(object : MeasureToolbarCallbacks {
             override fun onAdd(view: View?) {
-                Log.d(TAG, "onAdd: ")
+                showMeasureAdd().setOnMeasureAddCallbacks(object :
+                    MeasureAdd.Companion.MeasureAddCallbacks {
+                    override fun onSave(name: String, note: String) {
+                        Log.d(TAG, "onSave: $name, $note")
+                    }
+                })
             }
 
             override fun onMeasures(view: View?) {
@@ -138,7 +145,7 @@ class Measure : ScopedFragment() {
             }
 
             override fun onNewAdd(view: View?) {
-                Log.d(TAG, "onNewAdd: ")
+
             }
 
             override fun onClearRecentMarker(view: View?) {
