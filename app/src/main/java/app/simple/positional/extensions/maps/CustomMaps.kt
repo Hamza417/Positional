@@ -1,5 +1,6 @@
 package app.simple.positional.extensions.maps
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -10,6 +11,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.WindowManager
+import android.view.animation.DecelerateInterpolator
 import app.simple.positional.R
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
@@ -40,7 +42,9 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
     open var location: Location? = null
     open var latLng: LatLng? = null
 
-    val cameraSpeed = 500
+    private var customCameraAnimator: CustomCameraAnimator? = null
+
+    val cameraSpeed = 3000
     val autoCenterDelay = 6000L
 
     var isMapMovementEnabled = true
@@ -74,6 +78,7 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
 
     override fun onMapReady(p0: GoogleMap) {
         googleMap = p0
+        customCameraAnimator = CustomCameraAnimator(googleMap!!)
 
         /**
          * Workaround for flashing of view when map is
@@ -176,7 +181,7 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
                             }
                         }
 
-                        else -> 0
+                        else                           -> 0
                     }
                 ))
             }
@@ -196,6 +201,10 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
             }
     }
 
+    internal fun animateCamera(latLng: LatLng, zoom: Float, tilt: Float, duration: Int = cameraSpeed) {
+        customCameraAnimator?.animateCamera(latLng, zoom, tilt, duration)
+    }
+
     // -------------------------------------------------------------------------------------------------------- //
 
     internal fun isCameraWithinBounds(latLng: LatLng): Boolean {
@@ -206,5 +215,38 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
 
     fun setOnMapsCallbackListener(mapsCallbacks: MapsCallbacks) {
         this.mapsCallbacks = mapsCallbacks
+    }
+
+    private inner class CustomCameraAnimator(private val googleMap: GoogleMap) {
+        private var animator: ValueAnimator? = null
+
+        fun animateCamera(target: LatLng, zoom: Float, tilt: Float, duration: Int = 3000) {
+            val startPosition = googleMap.cameraPosition.target
+            val startZoom = googleMap.cameraPosition.zoom
+
+            animator = ValueAnimator.ofFloat(0f, 1f)
+            animator?.duration = duration.toLong()
+            animator?.interpolator = DecelerateInterpolator(3F)
+            animator?.addUpdateListener { animation ->
+                val fraction = animation.animatedFraction
+                val lat = startPosition.latitude + (target.latitude - startPosition.latitude) * fraction
+                val lng = startPosition.longitude + (target.longitude - startPosition.longitude) * fraction
+                val currentZoom = startZoom + (zoom - startZoom) * fraction
+                val currentTilt = googleMap.cameraPosition.tilt + (tilt - googleMap.cameraPosition.tilt) * fraction
+
+                val cameraPosition = CameraPosition.Builder()
+                        .target(LatLng(lat, lng))
+                        .zoom(currentZoom)
+                        .tilt(currentTilt)
+                        .build()
+
+                googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            }
+            animator?.start()
+        }
+
+        fun cancel() {
+            animator?.cancel()
+        }
     }
 }

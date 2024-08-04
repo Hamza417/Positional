@@ -265,13 +265,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     fun moveMapCamera(latLng: LatLng, zoom: Float, tilt: Float, duration: Int) {
         if (googleMap.isNull() && latLng.isNull()) return
 
-        googleMap?.animateCamera(CameraUpdateFactory
-                .newCameraPosition(CameraPosition.builder()
-                        .target(latLng)
-                        .tilt(tilt)
-                        .zoom(zoom)
-                        .bearing(MeasurePreferences.getMapBearing())
-                        .build()), duration, null)
+        animateCamera(latLng, zoom, tilt, duration)
 
         isWrapped = false
         MeasurePreferences.setPolylinesWrapped(false)

@@ -557,8 +557,7 @@ class Maps(context: Context, attributeSet: AttributeSet) : CustomMaps(context, a
                         .tilt(GPSPreferences.getMapTilt())
                         .zoom(zoom)
                         .bearing(bearing ?: 0F)
-                        .build()
-        ),
+                        .build()),
                 cameraSpeed, object : GoogleMap.CancelableCallback {
             override fun onFinish() {
                 viewHandler.postDelayed(sensorRegistrationRunnable, 100L)
