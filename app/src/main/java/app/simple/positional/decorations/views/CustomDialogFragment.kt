@@ -31,7 +31,7 @@ open class CustomDialogFragment : DialogFragment() {
         window.attributes.width = FrameLayout.LayoutParams.MATCH_PARENT
         @Suppress("deprecation")
         window.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        window.setDimAmount(0.35f)
+        window.setDimAmount(DIM_AMOUNT)
         window.attributes.gravity = Gravity.CENTER
         window.attributes.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
 
@@ -46,11 +46,13 @@ open class CustomDialogFragment : DialogFragment() {
         @Suppress("deprecation")
         window.windowManager.defaultDisplay.getMetrics(displayMetrics)
 
-        return if (StatusBarHeight.isLandscape(requireContext())) {
-            (displayMetrics.widthPixels * 1f / 100f * 60f).toInt()
+        val widthPercentage = if (StatusBarHeight.isLandscape(requireContext())) {
+            LANDSCAPE_WIDTH
         } else {
-            (displayMetrics.widthPixels * 1f / 100f * 75f).toInt()
+            PORTRAIT_WIDTH
         }
+
+        return (displayMetrics.widthPixels * widthPercentage).toInt()
     }
 
     override fun onDestroy() {
@@ -63,5 +65,11 @@ open class CustomDialogFragment : DialogFragment() {
         handler.postDelayed({
             runnable()
         }, delay)
+    }
+
+    companion object {
+        private const val PORTRAIT_WIDTH = 0.80F
+        private const val LANDSCAPE_WIDTH = 0.60F
+        private const val DIM_AMOUNT = 0.35F
     }
 }
