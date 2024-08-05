@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 
 object MeasurePreferences {
 
-    const val COMPASS_ROTATION = "compass_rotation"
+    const val COMPASS_ROTATION = "measure_compass_rotation"
     const val POLYLINES_WRAPPED = "measure_polylines_wrapped"
     const val MAP_ZOOM = "measure_map_zoom_value"
     const val MAP_TILT = "measure_map_tilt_value"

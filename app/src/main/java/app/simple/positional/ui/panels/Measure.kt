@@ -30,6 +30,7 @@ import app.simple.positional.dialogs.measure.MeasureAdd.Companion.showMeasureAdd
 import app.simple.positional.dialogs.measure.MeasureMenu.Companion.showMeasureMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.extensions.maps.MapsCallbacks
+import app.simple.positional.model.MeasurePoint
 import app.simple.positional.preferences.MeasurePreferences
 import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.ConditionUtils.isNotNull
@@ -156,7 +157,7 @@ class Measure : ScopedFragment() {
             }
 
             override fun onClearRecentMarker(view: View?) {
-                Log.d(TAG, "onClearRecentMarker: ")
+                maps?.clearRecentMarker()
             }
         })
 
@@ -199,6 +200,10 @@ class Measure : ScopedFragment() {
                 if (isLandscapeOrientation.invert()) {
                     setFullScreen()
                 }
+            }
+
+            override fun onLineDeleted(measurePoint: MeasurePoint?) {
+                measureViewModel.removeMeasurePoint(measurePoint)
             }
         })
 

@@ -27,4 +27,11 @@ object ArrayHelper {
             false
         }
     }
+
+    /**
+     * Returns the second last element, or `null` if the list is empty.
+     */
+    fun <T> List<T>.secondLastOrNull(): T? {
+        return if (size < 2) null else this[size - 2]
+    }
 }

@@ -79,6 +79,21 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
         MeasureDatabase.destroyInstance()
     }
 
+    fun removeMeasurePoint(measurePoint: MeasurePoint?) {
+        viewModelScope.launch(Dispatchers.Default) {
+            measurePoint?.let {
+                val measureDatabase = MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
+                val measure = measure.value
+                measure?.let {
+                    measurePoint.let {
+                        measure.measurePoints?.remove(it)
+                        measureDatabase.measureDao()?.updateMeasure(measure)
+                    }
+                }
+            }
+        }
+    }
+
     companion object {
         private const val TAG = "MeasureViewModel"
     }

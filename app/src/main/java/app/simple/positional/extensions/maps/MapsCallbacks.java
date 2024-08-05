@@ -6,6 +6,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import org.jetbrains.annotations.NotNull;
 
+import app.simple.positional.model.MeasurePoint;
 import app.simple.positional.model.TrailPoint;
 
 public interface MapsCallbacks {
@@ -30,6 +31,10 @@ public interface MapsCallbacks {
     }
 
     default void onLineDeleted(@Nullable TrailPoint trailPoint) {
+
+    }
+
+    default void onLineDeleted(@Nullable MeasurePoint measurePoint) {
 
     }
 
