@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.WindowManager
 import android.view.animation.DecelerateInterpolator
@@ -29,6 +30,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
+import kotlin.math.pow
 
 open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, attrs),
     OnMapReadyCallback,
@@ -44,7 +46,6 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
 
     private var customCameraAnimator: CustomCameraAnimator? = null
 
-    val cameraSpeed = 3000
     val autoCenterDelay = 6000L
 
     var isMapMovementEnabled = true
@@ -97,6 +98,11 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
 
         googleMap?.setOnMapLongClickListener {
             mapsCallbacks?.onMapLongClicked(it)
+        }
+
+        googleMap?.setOnCameraMoveCanceledListener {
+            customCameraAnimator?.cancel()
+            Log.i("CustomMaps", "onCameraMoveCanceled")
         }
     }
 
@@ -201,8 +207,9 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
             }
     }
 
-    internal fun animateCamera(latLng: LatLng, zoom: Float, tilt: Float, duration: Int = cameraSpeed) {
-        customCameraAnimator?.animateCamera(latLng, zoom, tilt, duration)
+    internal fun animateCamera(latLng: LatLng, zoom: Float, tilt: Float, bearing: Float = 0F, duration: Int = CAMERA_SPEED) {
+        clearAnimation()
+        customCameraAnimator?.animateCamera(latLng, zoom, tilt, bearing, duration)
     }
 
     // -------------------------------------------------------------------------------------------------------- //
@@ -217,27 +224,34 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
         this.mapsCallbacks = mapsCallbacks
     }
 
+    override fun clearAnimation() {
+        super.clearAnimation()
+        customCameraAnimator?.cancel()
+    }
+
     private inner class CustomCameraAnimator(private val googleMap: GoogleMap) {
         private var animator: ValueAnimator? = null
 
-        fun animateCamera(target: LatLng, zoom: Float, tilt: Float, duration: Int = 3000) {
+        fun animateCamera(target: LatLng, zoom: Float, tilt: Float, bearing: Float = 0F, duration: Int = CAMERA_SPEED) {
             val startPosition = googleMap.cameraPosition.target
             val startZoom = googleMap.cameraPosition.zoom
 
             animator = ValueAnimator.ofFloat(0f, 1f)
             animator?.duration = duration.toLong()
-            animator?.interpolator = DecelerateInterpolator(3F)
+            animator?.interpolator = DecelerateInterpolator()
             animator?.addUpdateListener { animation ->
                 val fraction = animation.animatedFraction
                 val lat = startPosition.latitude + (target.latitude - startPosition.latitude) * fraction
                 val lng = startPosition.longitude + (target.longitude - startPosition.longitude) * fraction
                 val currentZoom = startZoom + (zoom - startZoom) * fraction
                 val currentTilt = googleMap.cameraPosition.tilt + (tilt - googleMap.cameraPosition.tilt) * fraction
+                val currentBearing = googleMap.cameraPosition.bearing + (bearing - googleMap.cameraPosition.bearing) * fraction
 
                 val cameraPosition = CameraPosition.Builder()
                         .target(LatLng(lat, lng))
                         .zoom(currentZoom)
                         .tilt(currentTilt)
+                        .bearing(currentBearing)
                         .build()
 
                 googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
@@ -248,5 +262,29 @@ open class CustomMaps(context: Context, attrs: AttributeSet) : MapView(context, 
         fun cancel() {
             animator?.cancel()
         }
+
+        private fun easeInOutQuad(t: Float): Float {
+            return if (t < 0.5f) {
+                2 * t * t
+            } else {
+                -1 + (4 - 2 * t) * t
+            }
+        }
+
+        private fun easeInOutCubic(t: Float): Float {
+            return if (t < 0.5) {
+                4 * t * t * t
+            } else {
+                (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+            }
+        }
+
+        private fun easeOutQuint(t: Float): Float {
+            return 1 - (1 - t).toDouble().pow(5.0).toFloat()
+        }
+    }
+
+    companion object {
+        const val CAMERA_SPEED = 3000
     }
 }

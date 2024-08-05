@@ -268,14 +268,14 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 
     fun resetCamera(zoom: Float) {
         if (location != null) {
-            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, TrailPreferences.getMapTilt(), cameraSpeed)
+            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, TrailPreferences.getMapTilt())
         }
     }
 
-    fun moveMapCamera(latLng: LatLng, zoom: Float, tilt: Float, duration: Int) {
+    fun moveMapCamera(latLng: LatLng, zoom: Float, tilt: Float) {
         if (googleMap.isNull() && latLng.isNull()) return
 
-        animateCamera(latLng, zoom, tilt, duration)
+        animateCamera(latLng, zoom, tilt)
 
         isWrapped = false
         MeasurePreferences.setPolylinesWrapped(false)
@@ -283,7 +283,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 
     fun wrapUnwrap() {
         if (isWrapped) {
-            moveMapCamera(latLng!!, lastZoom, lastTilt, cameraSpeed)
+            moveMapCamera(latLng!!, lastZoom, lastTilt)
         } else {
             wrap(true)
         }

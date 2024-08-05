@@ -346,7 +346,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
         if (TrailPreferences.arePolylinesWrapped()) {
             wrap(true)
         } else {
-            moveMapCamera(latLng, TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt(), cameraSpeed)
+            moveMapCamera(latLng, TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt())
         }
     }
 
@@ -364,11 +364,11 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
                 wrap(true)
             } else {
                 with(trailData.lastOrNull()!!) {
-                    moveMapCamera(LatLng(latitude, longitude), TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt(), cameraSpeed)
+                    moveMapCamera(LatLng(latitude, longitude), TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt())
                 }
             }
         }.getOrElse {
-            moveMapCamera(latLng!!, TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt(), cameraSpeed)
+            moveMapCamera(latLng!!, TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt())
         }
 
         invalidate()
@@ -376,7 +376,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
 
     fun wrapUnwrap() {
         if (isWrapped) {
-            moveMapCamera(latLng!!, lastZoom, lastTilt, cameraSpeed)
+            moveMapCamera(latLng!!, lastZoom, lastTilt)
         } else {
             wrap(true)
         }
@@ -412,20 +412,14 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
 
     fun resetCamera(zoom: Float) {
         if (location != null) {
-            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, TrailPreferences.getMapTilt(), cameraSpeed)
+            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, TrailPreferences.getMapTilt())
         }
     }
 
-    fun moveMapCamera(latLng: LatLng, zoom: Float, tilt: Float, duration: Int) {
+    fun moveMapCamera(latLng: LatLng, zoom: Float, tilt: Float) {
         if (googleMap.isNull() && latLng.isNull()) return
 
-        googleMap?.animateCamera(CameraUpdateFactory
-            .newCameraPosition(CameraPosition.builder()
-                .target(latLng)
-                .tilt(tilt)
-                .zoom(zoom)
-                .bearing(TrailPreferences.getMapBearing())
-                .build()), duration, null)
+        animateCamera(latLng, zoom, tilt, TrailPreferences.getMapBearing())
 
         isWrapped = false
         TrailPreferences.setWrapStatus(false)
@@ -458,7 +452,7 @@ class TrailMaps(context: Context, attributeSet: AttributeSet) : CustomMaps(conte
                     LatLng(lastLatitude, lastLongitude)
                 }
 
-                moveMapCamera(latLng, TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt(), cameraSpeed)
+                moveMapCamera(latLng, TrailPreferences.getMapZoom(), TrailPreferences.getMapTilt())
             }
             viewHandler.postDelayed(this, autoCenterDelay)
         }

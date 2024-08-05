@@ -140,8 +140,7 @@ class Measure : ScopedFragment() {
                         } else {
                             maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
                                 MeasurePreferences.getMapZoom(),
-                                MeasurePreferences.getMapTilt(),
-                                1000)
+                                MeasurePreferences.getMapTilt())
                         }
                     }
                 } else {
