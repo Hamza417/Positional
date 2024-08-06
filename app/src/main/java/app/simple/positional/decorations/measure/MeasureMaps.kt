@@ -474,7 +474,17 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     fun createMeasurePolylines(measure: Measure?) {
         measurePoints.clear()
         measurePoints.addAll(measure!!.measurePoints!!)
+        removeAllPolylines()
         updatePolylines(measurePoints)
+    }
+
+    private fun removeAllPolylines() {
+        polylines.forEach { it.remove() }
+        polylines.clear()
+        currentPolylines.clear()
+        polylineOptions?.points?.clear()
+        textPolylines.clear()
+        invalidate()
     }
 
     fun addPolyline() {

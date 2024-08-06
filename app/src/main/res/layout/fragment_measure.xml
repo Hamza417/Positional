@@ -120,7 +120,5 @@
                 android:textSize="@dimen/options_item_text_size" />
 
         </LinearLayout>
-
     </app.simple.positional.decorations.corners.DynamicCornerConstraintLayout>
-
 </FrameLayout>

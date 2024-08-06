@@ -370,6 +370,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".activities.subactivity.MeasuresActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".activities.service.ClockWidgetActivity"
             android:exported="true">
             <intent-filter>

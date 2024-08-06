@@ -153,10 +153,9 @@ class MainActivity : BaseActivity(),
         }
 
         bottomBarContainerGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-            FloatingButtonStateCommunicator.setFloatingButtonSize(
-                bottomBarContainer.width + bottomBarContainer.marginStart + bottomBarContainer.marginEnd)
-            FloatingButtonStateCommunicator.notifyFloatingButtonStateChange(
-                FloatingButtonStateCommunicator.getFloatingButtonSize())
+            val size = bottomBarContainer.width + bottomBarContainer.marginStart + bottomBarContainer.marginEnd
+            FloatingButtonStateCommunicator.setFloatingButtonSize(size)
+            FloatingButtonStateCommunicator.notifyFloatingButtonStateChange(size)
         }
 
         bottomBarContainer.viewTreeObserver.addOnGlobalLayoutListener(bottomBarContainerGlobalLayoutListener)
@@ -347,12 +346,12 @@ class MainActivity : BaseActivity(),
 
     private fun getFragment(name: String): Fragment {
         when (name) {
-            BottomBarItems.CLOCK     -> {
+            BottomBarItems.CLOCK -> {
                 return supportFragmentManager.findFragmentByTag(BottomBarItems.CLOCK) as Time?
                        ?: Time.newInstance()
             }
 
-            BottomBarItems.COMPASS   -> {
+            BottomBarItems.COMPASS -> {
                 return supportFragmentManager.findFragmentByTag(BottomBarItems.COMPASS) as Compass?
                        ?: Compass.newInstance()
             }
@@ -362,32 +361,32 @@ class MainActivity : BaseActivity(),
                        ?: Direction.newInstance()
             }
 
-            BottomBarItems.LOCATION  -> {
+            BottomBarItems.LOCATION -> {
                 return supportFragmentManager.findFragmentByTag(BottomBarItems.LOCATION) as GPS?
                        ?: GPS.newInstance()
             }
 
-            BottomBarItems.TRAIL     -> {
+            BottomBarItems.TRAIL -> {
                 return supportFragmentManager.findFragmentByTag(BottomBarItems.TRAIL) as Trail?
                        ?: Trail.newInstance()
             }
 
-            BottomBarItems.MEASURE   -> {
+            BottomBarItems.MEASURE -> {
                 return supportFragmentManager.findFragmentByTag(BottomBarItems.MEASURE) as Measure?
                        ?: Measure.newInstance()
             }
 
-            BottomBarItems.LEVEL     -> {
+            BottomBarItems.LEVEL -> {
                 return supportFragmentManager.findFragmentByTag(BottomBarItems.LEVEL) as Level?
                        ?: Level.newInstance()
             }
 
-            BottomBarItems.SETTINGS  -> {
+            BottomBarItems.SETTINGS -> {
                 return supportFragmentManager.findFragmentByTag(BottomBarItems.SETTINGS) as Settings?
                        ?: Settings.newInstance()
             }
 
-            else                     -> {
+            else -> {
                 return supportFragmentManager.findFragmentByTag(BottomBarItems.LOCATION) as GPS?
                        ?: GPS.newInstance()
             }

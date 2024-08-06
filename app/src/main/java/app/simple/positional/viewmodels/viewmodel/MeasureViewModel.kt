@@ -1,6 +1,7 @@
 package app.simple.positional.viewmodels.viewmodel
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -89,6 +90,15 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
                         onRemoved(measure)
                     }
                 }
+            }
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        super.onSharedPreferenceChanged(sharedPreferences, key)
+        when (key) {
+            MeasurePreferences.LAST_SELECTED_MEASURE -> {
+                loadMeasure(MeasurePreferences.getLastSelectedMeasure())
             }
         }
     }

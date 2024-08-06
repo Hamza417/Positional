@@ -1,7 +1,6 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
     <JetCodeStyleSettings>
-      <option name="ALIGN_IN_COLUMNS_CASE_BRANCH" value="true" />
       <option name="LINE_BREAK_AFTER_MULTILINE_WHEN_ENTRY" value="false" />
       <option name="CONTINUATION_INDENT_FOR_CHAINED_CALLS" value="true" />
       <option name="CONTINUATION_INDENT_IN_IF_CONDITIONS" value="true" />

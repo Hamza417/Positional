@@ -15,8 +15,8 @@ object MeasurePreferences {
     const val SATELLITE_MAP = "measure_map_satellite_mode"
     const val HIGH_CONTRAST_MAP = "measure_map_high_contrast_map"
     const val TOOLS_GRAVITY = "measure_tools_gravity"
+    const val LAST_SELECTED_MEASURE = "last_selected_measure"
 
-    private const val LAST_SELECTED_MEASURE = "last_selected_measure"
     private const val LAST_LATITUDE = "_measure_last_latitude"
     private const val LAST_LONGITUDE = "_measure_last_longitude"
 

@@ -1,9 +1,9 @@
 package app.simple.positional.ui.panels
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.TransitionManager
 import app.simple.positional.R
+import app.simple.positional.activities.subactivity.MeasuresActivity
 import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.decorations.corners.DynamicCornerConstraintLayout
 import app.simple.positional.decorations.measure.MeasureMaps
@@ -107,7 +108,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
             }
 
             override fun onMeasures(view: View?) {
-                Log.d(TAG, "onMeasures: ")
+                startActivity(Intent(requireContext(), MeasuresActivity::class.java))
             }
 
             override fun onMenu(view: View?) {

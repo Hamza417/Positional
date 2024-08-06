@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/art"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleY="0"
+        android:scaleX="0"
+        android:visibility="invisible"
+        android:layout_gravity="center"
+        android:src="@drawable/art_lost"
+        tools:ignore="ContentDescription" />
+
+    <app.simple.positional.decorations.views.CustomRecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:padding="@dimen/options_container_horizontal_padding"
+        android:layoutAnimation="@anim/list_animation_controller"
+        app:statusBarPaddingRequired="true" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/add"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="25dp"
+        android:background="?attr/colorAppAccent"
+        app:cardElevation="5dp"
+        android:clickable="true"
+        android:checkable="true"
+        app:cardBackgroundColor="?attr/colorAppAccent"
+        app:rippleColor="@color/indicator"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp"
+            android:src="@drawable/ic_add"
+            app:tint="@android:color/white"
+            tools:ignore="ContentDescription" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>
