@@ -60,6 +60,14 @@ public class MeasurePoint {
         return new ArrayList<>(measurePoints);
     }
 
+    @Override
+    public int hashCode() {
+        int result = Double.hashCode(getLatitude());
+        result = 31 * result + Double.hashCode(getLongitude());
+        result = 31 * result + getOrder();
+        return result;
+    }
+
     public static MeasurePoint convertFromDatabase(String data) {
         String[] parts = data.split(",");
         return new MeasurePoint(

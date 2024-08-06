@@ -27,7 +27,12 @@ import app.simple.positional.dialogs.measure.MeasureAdd.Companion.showMeasureAdd
 import app.simple.positional.dialogs.measure.MeasureMenu.Companion.showMeasureMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.extensions.maps.MapsCallbacks
+import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.UnitConverter.toFeet
+import app.simple.positional.math.UnitConverter.toKilometers
+import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.model.MeasurePoint
+import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.MeasurePreferences
 import app.simple.positional.singleton.FloatingButtonStateCommunicator
 import app.simple.positional.util.ConditionUtils.invert
@@ -42,6 +47,7 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import app.simple.positional.model.Measure as Measure_Model
 
 class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButtonStateCallbacks {
 
@@ -50,6 +56,9 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
     private lateinit var crossHair: ImageView
     private lateinit var bottomContainer: DynamicCornerConstraintLayout
     private lateinit var name: TextView
+    private lateinit var currentDistance: TextView
+    private lateinit var totalDistance: TextView
+    private lateinit var totalPoints: TextView
 
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
@@ -71,6 +80,10 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
         crossHair = view.findViewById(R.id.cross_hair)
         bottomContainer = view.findViewById(R.id.bottom_container)
         name = view.findViewById(R.id.name)
+        currentDistance = view.findViewById(R.id.current_distance)
+        totalDistance = view.findViewById(R.id.total_distance)
+        totalPoints = view.findViewById(R.id.total_points)
+
         backPress = requireActivity().onBackPressedDispatcher
         maps?.onCreate(savedInstanceState)
 
@@ -120,9 +133,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
             }
 
             override fun onNewAdd(view: View?) {
-                maps?.addPolyline {
-                    measureViewModel.addMeasurePoint(it)
-                }
+                maps?.addPolyline()
             }
 
             override fun onClearRecentMarker(view: View?) {
@@ -155,12 +166,8 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                     crossHair.visible(animate = true)
                     maps?.createMeasurePolylines(measure)
                     name.text = measure.name
-
-                    if (measure.isNotNull()) {
-
-                    } else {
-
-                    }
+                    setTotalPoints(measure)
+                    setTotalDistance(measure)
                 }
             }
 
@@ -170,10 +177,94 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                 }
             }
 
+            override fun onLineAdded(measurePoint: MeasurePoint) {
+                measureViewModel.addMeasurePoint(measurePoint) {
+                    setTotalPoints(it)
+                    setTotalDistance(it)
+                }
+            }
+
             override fun onLineDeleted(measurePoint: MeasurePoint?) {
-                measureViewModel.removeMeasurePoint(measurePoint)
+                measureViewModel.removeMeasurePoint(measurePoint) {
+                    setTotalPoints(it)
+                    setTotalDistance(it)
+                }
+            }
+
+            override fun onMoving(latLng: LatLng?) {
+                latLng?.let {
+                    runCatching {
+                        val points: Array<LatLng> = arrayOf(maps?.getMeasurePoints()?.lastOrNull()!!.latLng, latLng)
+                        val distance = LocationExtension.measureDisplacement(points).toDouble()
+
+                        currentDistance.text = buildString {
+                            if (MainPreferences.isMetric()) {
+                                if (distance < 1000) {
+                                    append(round(distance, 2))
+                                    append(" ")
+                                    append(getString(R.string.meter))
+                                } else {
+                                    append(round(distance.toKilometers(), 2))
+                                    append(" ")
+                                    append(getString(R.string.kilometer))
+                                }
+                            } else {
+                                if (distance < 1609) {
+                                    append(round(distance.toFeet(), 2))
+                                    append(" ")
+                                    append(getString(R.string.feet))
+                                } else {
+                                    append(round(distance.toMiles(), 2))
+                                    append(" ")
+                                    append(getString(R.string.miles))
+                                }
+                            }
+                        }
+                    }
+                }
             }
         })
+    }
+
+    private fun setTotalPoints(measure: Measure_Model) {
+        totalPoints.text = buildString {
+            append(getString(R.string.total))
+            append(" ")
+            append(measure.measurePoints?.size.toString())
+        }
+    }
+
+    private fun setTotalDistance(measure: Measure_Model) {
+        totalDistance.text = buildString {
+            append(getString(R.string.gps_displacement))
+            append(" ")
+
+            val distance: Double = (measure.measurePoints?.map { LatLng(it.latitude, it.longitude) }?.toTypedArray()?.let {
+                LocationExtension.measureDisplacement(it)
+            } ?: 0.0).toDouble()
+
+            if (MainPreferences.isMetric()) {
+                if (distance < 1000) {
+                    append(round(distance, 2))
+                    append(" ")
+                    append(getString(R.string.meter))
+                } else {
+                    append(round(distance.toKilometers(), 2))
+                    append(" ")
+                    append(getString(R.string.kilometer))
+                }
+            } else {
+                if (distance < 1609) {
+                    append(distance.toFeet())
+                    append(" ")
+                    append(getString(R.string.feet))
+                } else {
+                    append(round(distance.toMiles(), 2))
+                    append(" ")
+                    append(getString(R.string.miles))
+                }
+            }
+        }
     }
 
     private fun setFullScreen() {

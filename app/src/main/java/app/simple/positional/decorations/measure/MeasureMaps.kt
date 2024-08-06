@@ -123,6 +123,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
             MeasurePreferences.isSatelliteOn(),
             MeasurePreferences.getHighContrastMap())
         setBuildings(MeasurePreferences.getShowBuildingsOnMap())
+        mapsCallbacks?.onMoving(googleMap?.cameraPosition?.target!!)
 
         if (!MeasurePreferences.arePolylinesWrapped()) {
             this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
@@ -143,6 +144,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         this.googleMap?.setOnCameraMoveListener {
             val lastPoint = currentPolylines.lastOrNull()
             val cameraTarget = googleMap?.cameraPosition?.target
+            mapsCallbacks?.onMoving(cameraTarget!!)
 
             if (lastPoint != null && cameraTarget != null) {
                 if (cameraTargetPolyline == null) {
@@ -475,14 +477,15 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         updatePolylines(measurePoints)
     }
 
-    fun addPolyline(onAddPolyline: (LatLng) -> Unit) {
+    fun addPolyline() {
         if (location.isNotNull()) {
             val latLng = googleMap?.cameraPosition?.target!!
             currentPolylines.add(latLng)
             polylineOptions?.add(latLng)
             polylines.add(googleMap?.addPolyline(polylineOptions!!)!!)
             invalidate()
-            onAddPolyline(latLng)
+            mapsCallbacks?.onLineAdded(MeasurePoint(latLng.latitude, latLng.longitude, measurePoints.size + 1))
+            mapsCallbacks?.onMoving(latLng)
         }
     }
 
@@ -491,6 +494,10 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         for (textPolyline in textPolylines) {
             textPolyline.draw(canvas)
         }
+    }
+
+    fun getMeasurePoints(): ArrayList<MeasurePoint> {
+        return measurePoints
     }
 
     inner class TextPolyline(private val polyline: Polyline, private val text: String) {

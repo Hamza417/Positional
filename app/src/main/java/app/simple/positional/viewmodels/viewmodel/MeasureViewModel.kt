@@ -9,7 +9,6 @@ import app.simple.positional.extensions.viewmodel.WrappedViewModel
 import app.simple.positional.model.Measure
 import app.simple.positional.model.MeasurePoint
 import app.simple.positional.preferences.MeasurePreferences
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -61,15 +60,14 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
         }
     }
 
-    fun addMeasurePoint(latLng: LatLng) {
+    fun addMeasurePoint(measurePoint: MeasurePoint, onAdded: (Measure) -> Unit) {
         viewModelScope.launch(Dispatchers.Default) {
             val measureDatabase = MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
             val measure = measure.value
             measure?.let {
-                val measurePoint = MeasurePoint(
-                    latLng.latitude, latLng.longitude, measure.measurePoints?.size?.plus(1) ?: 0)
                 measure.measurePoints?.add(measurePoint)
                 measureDatabase.measureDao()?.updateMeasure(measure)
+                onAdded(measure)
             }
         }
     }
@@ -79,7 +77,7 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
         MeasureDatabase.destroyInstance()
     }
 
-    fun removeMeasurePoint(measurePoint: MeasurePoint?) {
+    fun removeMeasurePoint(measurePoint: MeasurePoint?, onRemoved: (Measure) -> Unit) {
         viewModelScope.launch(Dispatchers.Default) {
             measurePoint?.let {
                 val measureDatabase = MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
@@ -88,6 +86,7 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
                     measurePoint.let {
                         measure.measurePoints?.remove(it)
                         measureDatabase.measureDao()?.updateMeasure(measure)
+                        onRemoved(measure)
                     }
                 }
             }

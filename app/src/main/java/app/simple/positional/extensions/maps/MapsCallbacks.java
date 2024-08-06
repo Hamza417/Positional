@@ -38,6 +38,14 @@ public interface MapsCallbacks {
 
     }
 
+    default void onLineAdded(@NotNull TrailPoint trailPoint) {
+
+    }
+
+    default void onLineAdded(@NotNull MeasurePoint measurePoint) {
+
+    }
+
     default void onLineCountChanged(int lineCount) {
 
     }
@@ -51,6 +59,10 @@ public interface MapsCallbacks {
     }
 
     default void onNavigate() {
+
+    }
+
+    default void onMoving(LatLng latLng) {
 
     }
 }

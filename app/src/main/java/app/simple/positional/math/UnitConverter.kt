@@ -30,6 +30,13 @@ object UnitConverter {
     }
 
     /**
+     * Converts double value in meters to kilometers
+     */
+    fun Double.toKilometers(): Double {
+        return this / 1000
+    }
+
+    /**
      * Converts float value in meters to miles
      */
     fun Float.toMiles(): Float {
