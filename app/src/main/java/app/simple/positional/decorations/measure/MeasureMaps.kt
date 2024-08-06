@@ -12,6 +12,7 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.util.AttributeSet
+import android.util.Log
 import androidx.core.content.ContextCompat
 import app.simple.positional.R
 import app.simple.positional.decorations.utils.CircleUtils
@@ -163,6 +164,8 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         val lastPoint = currentPolylines.lastOrNull() ?: return
         val cameraTarget = googleMap?.cameraPosition?.target ?: return
 
+        Log.d("MeasureMaps", "initCameraTargetPolyline: $lastPoint, $cameraTarget")
+
         val newPolylineOptions = PolylineOptions()
                 .add(lastPoint)
                 .add(cameraTarget)
@@ -173,6 +176,8 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
                 .endCap(CustomCap(BitmapDescriptorFactory.fromBitmap(R.drawable.seekbar_thumb.toBitmap(context, 30))))
 
         cameraTargetPolyline = googleMap?.addPolyline(newPolylineOptions)
+
+        Log.i("MeasureMaps", "initCameraTargetPolyline: $cameraTargetPolyline")
     }
 
     fun addMarker(latLng: LatLng) {
@@ -343,6 +348,8 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         if (MeasurePreferences.arePolylinesWrapped()) {
             wrap(false)
         }
+
+        initCameraTargetPolyline()
     }
 
     fun clearRecentMarker() {
@@ -484,6 +491,8 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         currentPolylines.clear()
         polylineOptions?.points?.clear()
         textPolylines.clear()
+        cameraTargetPolyline?.remove()
+        cameraTargetPolyline = null
         invalidate()
     }
 

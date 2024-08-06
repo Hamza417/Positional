@@ -2,7 +2,6 @@ package app.simple.positional.ui.subpanels
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,7 +56,6 @@ class Measures : ScopedFragment() {
 
             adapterMeasures.setOnAdapterMeasuresCallbackListener(object : AdapterMeasures.Companion.AdapterMeasuresCallback {
                 override fun onMeasureClicked(measure: Measure) {
-                    Log.d("Measures", "onMeasureClicked: $measure")
                     MeasurePreferences.setLastSelectedMeasure(measure.dateCreated)
                 }
 

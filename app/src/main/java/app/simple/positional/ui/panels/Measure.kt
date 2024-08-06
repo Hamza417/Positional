@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -165,6 +166,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
 
                 measureViewModel.getMeasure().observe(viewLifecycleOwner) { measure ->
                     crossHair.visible(animate = true)
+                    Log.d("Measure", "Measure: $measure")
                     maps?.createMeasurePolylines(measure)
                     name.text = measure.name
                     setTotalPoints(measure)
@@ -187,8 +189,10 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
 
             override fun onLineDeleted(measurePoint: MeasurePoint?) {
                 measureViewModel.removeMeasurePoint(measurePoint) {
-                    setTotalPoints(it)
-                    setTotalDistance(it)
+                    requireActivity().runOnUiThread {
+                        setTotalPoints(it)
+                        setTotalDistance(it)
+                    }
                 }
             }
 
