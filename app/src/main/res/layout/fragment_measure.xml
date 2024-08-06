@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="false"
     android:clipChildren="false"
-    android:clipToPadding="false">
+    android:clipToPadding="false"
+    android:orientation="vertical">
 
     <app.simple.positional.decorations.measure.MeasureTools
         android:id="@+id/tools"
@@ -45,14 +46,56 @@
         app:tint="@color/iconColor"
         tools:ignore="ContentDescription" />
 
-    <View
-        android:id="@+id/dim"
+    <app.simple.positional.decorations.corners.DynamicCornerConstraintLayout
+        android:id="@+id/bottom_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0"
-        android:background="#7E000000"
-        android:translationZ="20dp" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:elevation="@dimen/app_views_elevation"
+        android:backgroundTint="@color/mainBackground"
+        android:layout_margin="@dimen/floating_button_margin"
+        android:padding="@dimen/toolbar_padding">
 
-    <include layout="@layout/bottom_sheet_measure" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fontFamily="@font/medium"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:textColor="?attr/colorAppAccent"
+            android:textSize="@dimen/info_text_secondary_size"
+            app:layout_constraintBottom_toTopOf="@+id/total_points"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <TextView
+            android:id="@+id/total_points"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/light"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/options_item_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/total_distance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
+
+        <TextView
+            android:id="@+id/total_distance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/light"
+            android:textColor="@color/textSecondary"
+            android:textSize="@dimen/info_text_secondary_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/total_points" />
+
+    </app.simple.positional.decorations.corners.DynamicCornerConstraintLayout>
+
+</FrameLayout>

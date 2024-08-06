@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/floating_button_margin"
         android:animateLayoutChanges="true"
         android:background="?attr/colorAppAccent"
         android:backgroundTint="?attr/colorAppAccent"

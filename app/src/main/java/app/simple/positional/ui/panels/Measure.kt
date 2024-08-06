@@ -1,6 +1,5 @@
 package app.simple.positional.ui.panels
 
-import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.location.Location
 import android.os.Bundle
@@ -8,18 +7,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.activity.OnBackPressedCallback
+import android.widget.TextView
 import androidx.activity.OnBackPressedDispatcher
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.adapters.bottombar.BottomBarItems
-import app.simple.positional.adapters.measure.AdapterMeasurePoints
-import app.simple.positional.callbacks.BottomSheetSlide
+import app.simple.positional.decorations.corners.DynamicCornerConstraintLayout
 import app.simple.positional.decorations.measure.MeasureMaps
 import app.simple.positional.decorations.measure.MeasureToolbar
 import app.simple.positional.decorations.measure.MeasureToolbarCallbacks
@@ -32,43 +29,36 @@ import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.extensions.maps.MapsCallbacks
 import app.simple.positional.model.MeasurePoint
 import app.simple.positional.preferences.MeasurePreferences
+import app.simple.positional.singleton.FloatingButtonStateCommunicator
 import app.simple.positional.util.ConditionUtils.invert
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.LocationPrompt
 import app.simple.positional.util.ParcelUtils.parcelable
-import app.simple.positional.util.StatusBarHeight
 import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import app.simple.positional.viewmodels.viewmodel.MeasureViewModel
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class Measure : ScopedFragment() {
+class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButtonStateCallbacks {
 
     private lateinit var toolbar: MeasureToolbar
     private lateinit var tools: MeasureTools
-    private lateinit var recyclerView: RecyclerView
-    private var bottomSheetPanel: BottomSheetBehavior<CoordinatorLayout>? = null
-    private lateinit var bottomSheetSlide: BottomSheetSlide
-    private lateinit var expandUp: ImageView
-    private lateinit var art: ImageView
     private lateinit var crossHair: ImageView
-    private lateinit var dim: View
+    private lateinit var bottomContainer: DynamicCornerConstraintLayout
+    private lateinit var name: TextView
 
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
     private var maps: MeasureMaps? = null
-    private var adapterMeasurePoints: AdapterMeasurePoints? = null
 
     private lateinit var locationViewModel: LocationViewModel
     private lateinit var measureViewModel: MeasureViewModel
 
     private var isFullScreen = false
-    private var peekHeight = 0
     private var x = 0F
     private var y = 0F
 
@@ -78,33 +68,14 @@ class Measure : ScopedFragment() {
         toolbar = view.findViewById(R.id.toolbar)
         tools = view.findViewById(R.id.tools)
         maps = view.findViewById(R.id.map)
-        recyclerView = view.findViewById(R.id.recycler_view)
-        expandUp = view.findViewById(R.id.expand_up)
-        art = view.findViewById(R.id.art)
-        dim = view.findViewById(R.id.dim)
         crossHair = view.findViewById(R.id.cross_hair)
-
-        kotlin.runCatching {
-            bottomSheetPanel = BottomSheetBehavior.from(view.findViewById(R.id.bottom_sheet))
-        }
-
-        bottomSheetSlide = requireActivity() as BottomSheetSlide
+        bottomContainer = view.findViewById(R.id.bottom_container)
+        name = view.findViewById(R.id.name)
         backPress = requireActivity().onBackPressedDispatcher
         maps?.onCreate(savedInstanceState)
 
         locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
         measureViewModel = ViewModelProvider(requireActivity())[MeasureViewModel::class.java]
-
-        recyclerView.apply {
-            setPadding(paddingLeft,
-                paddingTop + StatusBarHeight.getStatusBarHeight(resources),
-                paddingRight,
-                paddingBottom)
-
-            alpha = if (isLandscapeOrientation) 1F else 0F
-        }
-
-        peekHeight = bottomSheetPanel?.peekHeight ?: 0
 
         return view
     }
@@ -149,7 +120,6 @@ class Measure : ScopedFragment() {
             }
 
             override fun onNewAdd(view: View?) {
-                Log.d(TAG, "onNewAdd: ")
                 maps?.addPolyline {
                     measureViewModel.addMeasurePoint(it)
                 }
@@ -184,13 +154,12 @@ class Measure : ScopedFragment() {
                 measureViewModel.getMeasure().observe(viewLifecycleOwner) { measure ->
                     crossHair.visible(animate = true)
                     maps?.createMeasurePolylines(measure)
+                    name.text = measure.name
 
                     if (measure.isNotNull()) {
-                        adapterMeasurePoints = AdapterMeasurePoints(measure)
-                        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                        recyclerView.adapter = adapterMeasurePoints
+
                     } else {
-                        art.visible(animate = false)
+
                     }
                 }
             }
@@ -205,71 +174,28 @@ class Measure : ScopedFragment() {
                 measureViewModel.removeMeasurePoint(measurePoint)
             }
         })
-
-        bottomSheetPanel?.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            @SuppressLint("SwitchIntDef")
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
-                    BottomSheetBehavior.STATE_EXPANDED  -> {
-                        backPressed(true)
-                    }
-                    BottomSheetBehavior.STATE_COLLAPSED -> {
-                        backPressed(false)
-                        if (backPress!!.hasEnabledCallbacks()) {
-                            backPress?.onBackPressed()
-                        }
-                    }
-                }
-            }
-
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                recyclerView.alpha = slideOffset
-                expandUp.alpha = 1 - slideOffset
-                dim.alpha = slideOffset
-                if (!isFullScreen) {
-                    bottomSheetSlide.onBottomSheetSliding(slideOffset, true)
-                }
-            }
-        })
     }
 
     private fun setFullScreen() {
         if (isFullScreen) {
             toolbar.show()
-            bottomSheetPanel?.peekHeight = peekHeight
         } else {
             toolbar.hide()
-            bottomSheetPanel?.peekHeight = 0
         }
 
         if (isLandscapeOrientation) {
             toolbar.show()
-            bottomSheetSlide.onMapClicked(fullScreen = true)
         } else {
-            bottomSheetSlide.onMapClicked(fullScreen = isFullScreen)
+
         }
 
         isFullScreen = !isFullScreen
     }
 
-    private fun backPressed(value: Boolean) {
-        backPress?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(value) {
-            override fun handleOnBackPressed() {
-                if (bottomSheetPanel?.state == BottomSheetBehavior.STATE_EXPANDED) {
-                    bottomSheetPanel?.state = BottomSheetBehavior.STATE_COLLAPSED
-                }
-                /**
-                 * Remove this callback as soon as it's been called
-                 * to prevent any further registering
-                 */
-                remove()
-            }
-        })
-    }
-
     override fun onResume() {
         super.onResume()
         maps?.onResume()
+        FloatingButtonStateCommunicator.addFloatingButtonStateCallbacks(this)
     }
 
     override fun onPause() {
@@ -280,6 +206,7 @@ class Measure : ScopedFragment() {
     override fun onDestroy() {
         super.onDestroy()
         maps?.onDestroy()
+        FloatingButtonStateCommunicator.removeFloatingButtonStateCallbacks(this)
     }
 
     override fun onLowMemory() {
@@ -298,8 +225,6 @@ class Measure : ScopedFragment() {
         outState.putFloat(TRANSLATION, toolbar.translationY)
         outState.putBoolean(FULL_SCREEN, isFullScreen)
         outState.putParcelable(CAMERA, maps?.getCamera())
-        outState.putInt(BOTTOM_SHEET_STATE, bottomSheetPanel?.state
-                                            ?: BottomSheetBehavior.STATE_COLLAPSED)
         super.onSaveInstanceState(outState)
     }
 
@@ -311,11 +236,17 @@ class Measure : ScopedFragment() {
             } else {
                 setFullScreen()
             }
-
-            bottomSheetPanel?.state = it.getInt(BOTTOM_SHEET_STATE, BottomSheetBehavior.STATE_COLLAPSED)
         }
 
         super.onViewStateRestored(savedInstanceState)
+    }
+
+    override fun onFloatingButtonStateChange(size: Int) {
+        TransitionManager.beginDelayedTransition(bottomContainer)
+        val marginLayoutParams = bottomContainer.layoutParams as FrameLayout.LayoutParams
+        marginLayoutParams.rightMargin = size
+        bottomContainer.layoutParams = marginLayoutParams
+        bottomContainer.requestLayout()
     }
 
     companion object {
@@ -331,6 +262,5 @@ class Measure : ScopedFragment() {
         private const val CAMERA = "camera"
         private const val FULL_SCREEN = "fullscreen"
         private const val TRANSLATION = "translation"
-        private const val BOTTOM_SHEET_STATE = "bottom_sheet_state"
     }
 }
