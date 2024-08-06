@@ -76,7 +76,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:fontFamily="@font/light"
+            android:fontFamily="@font/medium"
             android:textColor="@color/textPrimary"
             android:textSize="@dimen/options_item_text_size"
             app:layout_constraintBottom_toTopOf="@+id/total_distance"
@@ -106,13 +106,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:drawableStart="@drawable/ic_add_8dp"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/textSecondary"
-                android:fontFamily="@font/light"
+                android:fontFamily="@font/regular"
                 android:gravity="center_vertical"
                 android:textColor="@color/textSecondary"
-                android:textSize="@dimen/options_item_text_size" />
+                android:textSize="@dimen/options_item_text_size"
+                app:drawableStartCompat="@drawable/ic_add_8dp" />
 
         </LinearLayout>
     </app.simple.positional.decorations.corners.DynamicCornerConstraintLayout>

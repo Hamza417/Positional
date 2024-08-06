@@ -165,12 +165,19 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                 }
 
                 measureViewModel.getMeasure().observe(viewLifecycleOwner) { measure ->
-                    crossHair.visible(animate = true)
-                    maps?.createMeasurePolylines(measure)
-                    name.text = measure.name
-                    setTotalPoints(measure)
-                    setTotalDistance(measure)
-                    setCurrentDistance(null)
+                    if (MeasurePreferences.isMeasureSelected() && measure.isNotNull()) {
+                        crossHair.visible(animate = true)
+                        maps?.createMeasurePolylines(measure)
+                        name.text = measure.name
+                        setTotalPoints(measure)
+                        setTotalDistance(measure)
+                        setCurrentDistance(null)
+                        tools.measureMode()
+                        bottomContainer.visible(true)
+                    } else {
+                        clearMeasure()
+                        tools.noMeasureMode()
+                    }
                 }
             }
 
@@ -201,6 +208,12 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                 setCurrentDistance(latLng!!)
             }
         })
+    }
+
+    private fun clearMeasure() {
+        maps?.clear()
+        bottomContainer.gone(true)
+        crossHair.gone(true)
     }
 
     private fun setTotalPoints(measure: Measure_Model) {
@@ -321,7 +334,11 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         super.onSharedPreferenceChanged(sharedPreferences, key)
         when (key) {
-
+            MeasurePreferences.LAST_SELECTED_MEASURE -> {
+                if (MeasurePreferences.isMeasureSelected().invert()) {
+                    clearMeasure()
+                }
+            }
         }
     }
 

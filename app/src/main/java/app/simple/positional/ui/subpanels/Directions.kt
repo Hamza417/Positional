@@ -97,13 +97,9 @@ class Directions : ScopedFragment() {
                         }
 
                         override fun onDelete() {
-                            val deletePopupMenu = DeletePopupMenu(view)
-
-                            deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
-                                override fun delete() {
-                                    directionsViewModel.deleteDirection(directionModel)
-                                }
-                            })
+                            DeletePopupMenu(view) {
+                                directionsViewModel.deleteDirection(directionModel)
+                            }
                         }
 
                         override fun onEdit() {

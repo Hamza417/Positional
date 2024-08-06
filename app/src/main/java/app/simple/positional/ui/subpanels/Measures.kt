@@ -9,11 +9,14 @@ import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import app.simple.positional.R
 import app.simple.positional.adapters.measure.AdapterMeasures
+import app.simple.positional.decorations.corners.DynamicCornerLinearLayout
 import app.simple.positional.decorations.views.CustomRecyclerView
 import app.simple.positional.dialogs.measure.MeasureAdd
 import app.simple.positional.dialogs.measure.MeasureAdd.Companion.showMeasureAdd
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.model.Measure
+import app.simple.positional.popups.miscellaneous.DeletePopupMenu
+import app.simple.positional.popups.trail.PopupTrailsMenu
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.preferences.MeasurePreferences
 import app.simple.positional.util.ViewUtils
@@ -59,8 +62,27 @@ class Measures : ScopedFragment() {
                     MeasurePreferences.setLastSelectedMeasure(measure.dateCreated)
                 }
 
-                override fun onMeasureMenuClicked(measure: Measure) {
+                override fun onMeasureMenuClicked(measure: Measure, view: View) {
+                    val popup = PopupTrailsMenu(
+                        layoutInflater.inflate(R.layout.popup_trails,
+                            DynamicCornerLinearLayout(requireContext())), view)
 
+
+                    popup.setOnPopupCallbacksListener(object : PopupTrailsMenu.Companion.PopupTrailsCallbacks {
+                        override fun onShowOnMap() {
+                            MeasurePreferences.setLastSelectedMeasure(measure.dateCreated)
+                        }
+
+                        override fun onDelete() {
+                            DeletePopupMenu(view) {
+                                measureViewModel.deleteMeasure(measure) {
+                                    requireActivity().runOnUiThread {
+                                        adapterMeasures.deleteMeasure(measure)
+                                    }
+                                }
+                            }
+                        }
+                    })
                 }
             })
 
@@ -85,7 +107,9 @@ class Measures : ScopedFragment() {
         super.onSharedPreferenceChanged(sharedPreferences, key)
         when (key) {
             MeasurePreferences.LAST_SELECTED_MEASURE -> {
-                requireActivity().finish()
+                if (MeasurePreferences.isMeasureSelected()) {
+                    requireActivity().finish()
+                }
             }
         }
     }

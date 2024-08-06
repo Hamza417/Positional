@@ -486,10 +486,14 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     }
 
     fun createMeasurePolylines(measure: Measure?) {
-        measurePoints.clear()
-        measurePoints.addAll(measure!!.measurePoints!!)
-        removeAllPolylines()
-        updatePolylines(measurePoints)
+        try {
+            measurePoints.clear()
+            measurePoints.addAll(measure!!.measurePoints!!)
+            removeAllPolylines()
+            updatePolylines(measurePoints)
+        } catch (e: NullPointerException) {
+            Log.e("MeasureMaps", "createMeasurePolylines: $e")
+        }
     }
 
     private fun removeAllPolylines() {
@@ -529,6 +533,21 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 
     fun getMeasurePoints(): ArrayList<MeasurePoint> {
         return measurePoints
+    }
+
+    fun clear() {
+        removeAllPolylines()
+        marker?.remove()
+        marker = null
+        circle?.remove()
+        circle = null
+        markerBitmap = null
+        markerAnimator?.cancel()
+        circleAnimator?.cancel()
+        cameraTargetPolyline?.remove()
+        cameraTargetPolyline = null
+        googleMap?.clear()
+        invalidate()
     }
 
     inner class TextPolyline(private val polyline: Polyline, private val text: String) {

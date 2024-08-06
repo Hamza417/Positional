@@ -160,11 +160,9 @@ class Trail : ScopedFragment() {
                 override fun onTrailsDataLongPressed(trailPoint: TrailPoint, view: View, position: Int) {
                     PopupTrailsDataMenu(view).setOnPopupCallbacksListener(object : PopupTrailsDataMenu.Companion.PopupTrailsCallbacks {
                         override fun onDelete() {
-                            DeletePopupMenu(view).setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
-                                override fun delete() {
-                                    trailDataViewModel.deleteTrailData(trailPoint)
-                                }
-                            })
+                            DeletePopupMenu(view) {
+                                trailDataViewModel.deleteTrailData(trailPoint)
+                            }
                         }
 
                         override fun onCopy() {
@@ -299,11 +297,9 @@ class Trail : ScopedFragment() {
             }
 
             override fun onRemove(remove: View) {
-                DeletePopupMenu(remove).setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
-                    override fun delete() {
-                        maps?.removePolyline()
-                    }
-                })
+                DeletePopupMenu(remove) {
+                    maps?.removePolyline()
+                }
             }
 
             override fun onWrapUnwrap() {

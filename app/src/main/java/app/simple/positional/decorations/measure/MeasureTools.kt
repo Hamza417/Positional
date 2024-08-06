@@ -207,4 +207,16 @@ class MeasureTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPrefer
         PositionalSingletonSharedPreferences.getSharedPreferences()
             .unregisterOnSharedPreferenceChangeListener(this)
     }
+
+    fun noMeasureMode() {
+        wrap.gone()
+        remove.gone()
+        add.gone()
+    }
+
+    fun measureMode() {
+        wrap.visible(true)
+        remove.visible(true)
+        add.visible(true)
+    }
 }

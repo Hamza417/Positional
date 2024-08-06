@@ -85,14 +85,9 @@ class Trails : ScopedFragment() {
                         }
 
                         override fun onDelete() {
-                            val deletePopupMenu = DeletePopupMenu(
-                                    anchor)
-
-                            deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
-                                override fun delete() {
-                                    trailViewModel.deleteTrail(trailEntry)
-                                }
-                            })
+                            DeletePopupMenu(anchor) {
+                                trailViewModel.deleteTrail(trailEntry)
+                            }
                         }
                     })
                 }

@@ -94,6 +94,15 @@ class MeasureViewModel(application: Application) : WrappedViewModel(application)
         }
     }
 
+    fun deleteMeasure(measure: Measure, onDeleted: (Measure) -> Unit) {
+        viewModelScope.launch(Dispatchers.Default) {
+            val measureDatabase = MeasureDatabase.getInstance(getApplication<Application>().applicationContext)!!
+            measureDatabase.measureDao()?.deleteMeasure(measure)
+            MeasurePreferences.setLastSelectedMeasure(-1)
+            onDeleted(measure)
+        }
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         super.onSharedPreferenceChanged(sharedPreferences, key)
         when (key) {

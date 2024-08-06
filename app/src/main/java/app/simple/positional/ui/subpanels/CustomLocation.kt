@@ -197,14 +197,9 @@ class CustomLocation : ScopedFragment() {
                     }
 
                     getString(R.string.delete_all) -> {
-                        val deletePopupMenu = DeletePopupMenu(
-                                view)
-
-                        deletePopupMenu.setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
-                            override fun delete() {
-                                customLocationViewModel.deleteAll()
-                            }
-                        })
+                        DeletePopupMenu(view) {
+                            customLocationViewModel.deleteAll()
+                        }
                     }
 
                     getString(R.string.set_and_save) -> {

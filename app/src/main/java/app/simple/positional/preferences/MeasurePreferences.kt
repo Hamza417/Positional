@@ -142,6 +142,10 @@ object MeasurePreferences {
         return getSharedPreferences().getLong(LAST_SELECTED_MEASURE, -1)
     }
 
+    fun isMeasureSelected(): Boolean {
+        return getLastSelectedMeasure() != -1L
+    }
+
     //--------------------------------------------------------------------------------------------------//
 
     fun setLastLatitude(latitude: Double) {

@@ -456,11 +456,9 @@ class GPS : ScopedFragment() {
             }
 
             override fun removeTarget(view: View) {
-                DeletePopupMenu(view).setOnPopupCallbacksListener(object : DeletePopupMenu.Companion.PopupDeleteCallbacks {
-                    override fun delete() {
-                        GPSPreferences.setTargetMarker(false)
-                    }
-                })
+                DeletePopupMenu(view) {
+                    GPSPreferences.setTargetMarker(false)
+                }
             }
         })
 

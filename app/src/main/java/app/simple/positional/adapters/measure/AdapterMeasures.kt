@@ -51,7 +51,7 @@ class AdapterMeasures(private val list: ArrayList<Measure>) :
             }
 
             holder.menu.setOnClickListener {
-                adapterMeasuresCallback.onMeasureMenuClicked(list[position])
+                adapterMeasuresCallback.onMeasureMenuClicked(list[position], it)
             }
 
             holder.container.setOnClickListener {
@@ -76,6 +76,12 @@ class AdapterMeasures(private val list: ArrayList<Measure>) :
         }
     }
 
+    fun deleteMeasure(measure: Measure) {
+        val index = list.indexOf(measure)
+        list.remove(measure)
+        notifyItemRemoved(index + 1)
+    }
+
     inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.trails_name)
         val note: TextView = itemView.findViewById(R.id.trails_note)
@@ -95,7 +101,7 @@ class AdapterMeasures(private val list: ArrayList<Measure>) :
     companion object {
         interface AdapterMeasuresCallback {
             fun onMeasureClicked(measure: Measure)
-            fun onMeasureMenuClicked(measure: Measure)
+            fun onMeasureMenuClicked(measure: Measure, view: View)
         }
     }
 }
