@@ -101,21 +101,16 @@
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
-            <ImageView
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="4dp"
-                android:focusable="false"
-                android:importantForAccessibility="no"
-                android:src="@drawable/ic_add"
-                app:tint="@color/iconRegular" />
-
             <TextView
                 android:id="@+id/current_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:drawableStart="@drawable/ic_add_8dp"
+                android:drawablePadding="4dp"
+                android:drawableTint="@color/textSecondary"
                 android:fontFamily="@font/light"
+                android:gravity="center_vertical"
                 android:textColor="@color/textSecondary"
                 android:textSize="@dimen/options_item_text_size" />
 

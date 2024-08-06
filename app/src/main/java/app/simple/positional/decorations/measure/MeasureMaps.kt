@@ -124,7 +124,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
             MeasurePreferences.isSatelliteOn(),
             MeasurePreferences.getHighContrastMap())
         setBuildings(MeasurePreferences.getShowBuildingsOnMap())
-        mapsCallbacks?.onMoving(googleMap?.cameraPosition?.target!!)
+        mapsCallbacks?.onCameraDistance(googleMap?.cameraPosition?.target!!)
 
         if (!MeasurePreferences.arePolylinesWrapped()) {
             this.googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(CameraPosition(
@@ -145,7 +145,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         this.googleMap?.setOnCameraMoveListener {
             val lastPoint = currentPolylines.lastOrNull()
             val cameraTarget = googleMap?.cameraPosition?.target
-            mapsCallbacks?.onMoving(cameraTarget!!)
+            mapsCallbacks?.onCameraDistance(cameraTarget!!)
 
             if (lastPoint != null && cameraTarget != null) {
                 if (cameraTargetPolyline == null) {
@@ -187,11 +187,11 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
                     markerBitmap = if (location.isNotNull()) {
                         if (MeasurePreferences.isCompassRotation()) {
                             when (accuracy) {
-                                SensorManager.SENSOR_STATUS_UNRELIABLE    -> {
+                                SensorManager.SENSOR_STATUS_UNRELIABLE -> {
                                     R.drawable.ic_pin_unreliable.toBitmapKeepingSize(context, incrementFactor)
                                 }
 
-                                SensorManager.SENSOR_STATUS_ACCURACY_LOW  -> {
+                                SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
                                     R.drawable.ic_pin_low.toBitmapKeepingSize(context, incrementFactor)
                                 }
 
@@ -203,7 +203,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
                                     R.drawable.ic_pin_high.toBitmapKeepingSize(context, incrementFactor)
                                 }
 
-                                else                                      -> {
+                                else -> {
                                     R.drawable.ic_pin_unreliable.toBitmapKeepingSize(context, incrementFactor)
                                 }
                             }
@@ -324,7 +324,9 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     }
 
     private fun updatePolylines(points: ArrayList<MeasurePoint>) {
-        // googleMap?.clear() // Will clear all markers, polylines, and circles
+        googleMap?.clear() // Will clear all markers, polylines, and circles
+        marker = null
+        cameraTargetPolyline = null
         polylines.clear()
         currentPolylines.clear()
         polylineOptions?.points?.clear()
@@ -352,7 +354,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         initCameraTargetPolyline()
     }
 
-    fun clearRecentMarker() {
+    fun removeRecentPolyline() {
         cameraTargetPolyline?.remove()
         polylines.remove(cameraTargetPolyline)
         lastPolyline = polylines.secondLastOrNull()
@@ -363,6 +365,8 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         mapsCallbacks?.onLineDeleted(measurePoints.lastOrNull())
         mapsCallbacks?.onLineCountChanged(polylineOptions!!.points.size)
         measurePoints.removeLastOrNull()
+        cameraTargetPolyline?.remove()
+        cameraTargetPolyline = null
 
 //        kotlin.runCatching {
 //            if (MeasurePreferences.arePolylinesWrapped()) {
@@ -377,8 +381,11 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 //        }
 
         initCameraTargetPolyline()
-        polylines.add(cameraTargetPolyline!!)
+        if (currentPolylines.isNotEmpty()) {
+            polylines.add(cameraTargetPolyline!!)
+        }
         invalidate()
+        mapsCallbacks?.onCameraDistance(googleMap?.cameraPosition?.target!!)
     }
 
     // Function to add text markers along a polyline
@@ -459,7 +466,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
                 setMapStyle(MeasurePreferences.isLabelOn(), MeasurePreferences.isSatelliteOn(), MeasurePreferences.getHighContrastMap())
             }
 
-            MeasurePreferences.SHOW_BUILDINGS   -> {
+            MeasurePreferences.SHOW_BUILDINGS -> {
                 setBuildings(MeasurePreferences.getShowBuildingsOnMap())
             }
 
@@ -502,9 +509,14 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
             currentPolylines.add(latLng)
             polylineOptions?.add(latLng)
             polylines.add(googleMap?.addPolyline(polylineOptions!!)!!)
+            val measurePoint = MeasurePoint(latLng.latitude, latLng.longitude, measurePoints.size + 1)
+            measurePoints.add(measurePoint)
+            cameraTargetPolyline?.remove()
+            cameraTargetPolyline = null
+            initCameraTargetPolyline()
             invalidate()
-            mapsCallbacks?.onLineAdded(MeasurePoint(latLng.latitude, latLng.longitude, measurePoints.size + 1))
-            mapsCallbacks?.onMoving(latLng)
+            mapsCallbacks?.onLineAdded(measurePoint)
+            mapsCallbacks?.onCameraDistance(latLng)
         }
     }
 

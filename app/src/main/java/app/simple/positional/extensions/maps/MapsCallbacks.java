@@ -62,7 +62,7 @@ public interface MapsCallbacks {
 
     }
 
-    default void onMoving(LatLng latLng) {
+    default void onCameraDistance(LatLng latLng) {
 
     }
 }

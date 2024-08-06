@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +41,7 @@ import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.LocationExtension
 import app.simple.positional.util.LocationPrompt
 import app.simple.positional.util.ParcelUtils.parcelable
+import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.util.ViewUtils.visible
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import app.simple.positional.viewmodels.viewmodel.MeasureViewModel
@@ -139,7 +139,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
             }
 
             override fun onClearRecentMarker(view: View?) {
-                maps?.clearRecentMarker()
+                maps?.removeRecentPolyline()
             }
         })
 
@@ -166,11 +166,11 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
 
                 measureViewModel.getMeasure().observe(viewLifecycleOwner) { measure ->
                     crossHair.visible(animate = true)
-                    Log.d("Measure", "Measure: $measure")
                     maps?.createMeasurePolylines(measure)
                     name.text = measure.name
                     setTotalPoints(measure)
                     setTotalDistance(measure)
+                    setCurrentDistance(null)
                 }
             }
 
@@ -184,6 +184,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                 measureViewModel.addMeasurePoint(measurePoint) {
                     setTotalPoints(it)
                     setTotalDistance(it)
+                    setCurrentDistance(measurePoint.latLng)
                 }
             }
 
@@ -196,37 +197,8 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                 }
             }
 
-            override fun onMoving(latLng: LatLng?) {
-                latLng?.let {
-                    runCatching {
-                        val points: Array<LatLng> = arrayOf(maps?.getMeasurePoints()?.lastOrNull()!!.latLng, latLng)
-                        val distance = LocationExtension.measureDisplacement(points).toDouble()
-
-                        currentDistance.text = buildString {
-                            if (MainPreferences.isMetric()) {
-                                if (distance < 1000) {
-                                    append(round(distance, 2))
-                                    append(" ")
-                                    append(getString(R.string.meter))
-                                } else {
-                                    append(round(distance.toKilometers(), 2))
-                                    append(" ")
-                                    append(getString(R.string.kilometer))
-                                }
-                            } else {
-                                if (distance < 1609) {
-                                    append(round(distance.toFeet(), 2))
-                                    append(" ")
-                                    append(getString(R.string.feet))
-                                } else {
-                                    append(round(distance.toMiles(), 2))
-                                    append(" ")
-                                    append(getString(R.string.miles))
-                                }
-                            }
-                        }
-                    }
-                }
+            override fun onCameraDistance(latLng: LatLng?) {
+                setCurrentDistance(latLng!!)
             }
         })
     }
@@ -268,6 +240,42 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                     append(" ")
                     append(getString(R.string.miles))
                 }
+            }
+        }
+    }
+
+    private fun setCurrentDistance(latLng: LatLng?) {
+        runCatching {
+            if (maps?.getMeasurePoints()?.isNotEmpty() == true) {
+                currentDistance.visible(false)
+                val points: Array<LatLng> = arrayOf(maps?.getMeasurePoints()?.lastOrNull()!!.latLng, latLng!!)
+                val distance = LocationExtension.measureDisplacement(points).toDouble()
+
+                currentDistance.text = buildString {
+                    if (MainPreferences.isMetric()) {
+                        if (distance < 1000) {
+                            append(round(distance, 2))
+                            append(" ")
+                            append(getString(R.string.meter))
+                        } else {
+                            append(round(distance.toKilometers(), 2))
+                            append(" ")
+                            append(getString(R.string.kilometer))
+                        }
+                    } else {
+                        if (distance < 1609) {
+                            append(round(distance.toFeet(), 2))
+                            append(" ")
+                            append(getString(R.string.feet))
+                        } else {
+                            append(round(distance.toMiles(), 2))
+                            append(" ")
+                            append(getString(R.string.miles))
+                        }
+                    }
+                }
+            } else {
+                currentDistance.gone()
             }
         }
     }
