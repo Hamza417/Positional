@@ -298,6 +298,8 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 
     private fun wrap(animate: Boolean) {
         kotlin.runCatching {
+            clearAnimation()
+            latLng = googleMap?.cameraPosition?.target
             lastZoom = MeasurePreferences.getMapZoom()
             lastTilt = MeasurePreferences.getMapTilt()
 
@@ -321,6 +323,11 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         }.onFailure {
             isWrapped = MeasurePreferences.arePolylinesWrapped()
         }
+    }
+
+    private fun unwrap() {
+        clearAnimation()
+        moveMapCamera(latLng!!, lastZoom, lastTilt)
     }
 
     private fun updatePolylines(points: ArrayList<MeasurePoint>) {
@@ -480,7 +487,11 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
             }
 
             MeasurePreferences.POLYLINES_WRAPPED -> {
-                wrap(true)
+                if (MeasurePreferences.arePolylinesWrapped()) {
+                    wrap(true)
+                } else {
+                    unwrap()
+                }
             }
         }
     }

@@ -189,9 +189,11 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
 
             override fun onLineAdded(measurePoint: MeasurePoint) {
                 measureViewModel.addMeasurePoint(measurePoint) {
-                    setTotalPoints(it)
-                    setTotalDistance(it)
-                    setCurrentDistance(measurePoint.latLng)
+                    requireActivity().runOnUiThread {
+                        setTotalPoints(it)
+                        setTotalDistance(it)
+                        setCurrentDistance(measurePoint.latLng)
+                    }
                 }
             }
 
