@@ -62,7 +62,7 @@ class Measures : ScopedFragment() {
                     MeasurePreferences.setLastSelectedMeasure(measure.dateCreated)
                 }
 
-                override fun onMeasureMenuClicked(measure: Measure, view: View) {
+                override fun onMeasureMenuClicked(measure: Measure, view: View, position: Int) {
                     val popup = PopupTrailsMenu(
                         layoutInflater.inflate(R.layout.popup_trails,
                             DynamicCornerLinearLayout(requireContext())), view)
@@ -77,7 +77,13 @@ class Measures : ScopedFragment() {
                             DeletePopupMenu(view) {
                                 measureViewModel.deleteMeasure(measure) {
                                     requireActivity().runOnUiThread {
-                                        adapterMeasures.deleteMeasure(measure)
+                                        adapterMeasures.deleteMeasure(position).also {
+                                            if (adapterMeasures.isEmpty()) {
+                                                art.visible(true)
+                                            } else {
+                                                art.invisible(true)
+                                            }
+                                        }
                                     }
                                 }
                             }

@@ -36,36 +36,38 @@ class AdapterTrails(private val list: ArrayList<TrailEntry>) :
         }
     }
 
-    override fun onBindViewHolder(holder: VerticalListViewHolder, position_: Int) {
+    override fun onBindViewHolder(holder: VerticalListViewHolder, holderPosition: Int) {
+        val position = holderPosition - 1
 
-        val position = position_ - 1
+        when (holder) {
+            is Holder -> {
+                holder.name.text = list[position].trailName
+                holder.note.text = list[position].trailNote
+                holder.date.text = list[position].dateCreated.formatDate()
 
-        if (holder is Holder) {
-            holder.name.text = list[position].trailName
-            holder.note.text = list[position].trailNote
-            holder.date.text = list[position].dateCreated.formatDate()
+                if (list[position].trailName == TrailPreferences.getCurrentTrail()) {
+                    holder.name.setTextColor(holder.itemView.context.resolveAttrColor(R.attr.colorAppAccent))
+                } else {
+                    holder.name.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.textPrimary))
+                }
 
-            if (list[position].trailName == TrailPreferences.getCurrentTrail()) {
-                holder.name.setTextColor(holder.itemView.context.resolveAttrColor(R.attr.colorAppAccent))
-            } else {
-                holder.name.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.textPrimary))
+                holder.menu.setOnClickListener {
+                    adapterTrailsCallback.onTrailMenu(list[position], it)
+                }
+
+                holder.container.setOnClickListener {
+                    adapterTrailsCallback.onTrailClicked(list[position].trailName)
+                }
+
             }
-
-            holder.menu.setOnClickListener {
-                adapterTrailsCallback.onTrailMenu(list[position], it)
+            is Header -> {
+                holder.total.text = HtmlHelper.fromHtml("<b>${holder.itemView.context.getString(R.string.total)}</b> ${list.size}")
             }
-
-            holder.container.setOnClickListener {
-                adapterTrailsCallback.onTrailClicked(list[position].trailName)
-            }
-
-        } else if (holder is Header) {
-            holder.total.text = HtmlHelper.fromHtml("<b>${holder.itemView.context.getString(R.string.total)}</b> ${list.size}")
         }
     }
 
     override fun getItemCount(): Int {
-        return if(list.isNullOrEmpty()) {
+        return if (list.isEmpty()) {
             0
         } else {
             list.size + 1

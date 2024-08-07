@@ -16,6 +16,8 @@ import app.simple.positional.util.ColorUtils.resolveAttrColor
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.HtmlHelper
 import app.simple.positional.util.TimeFormatter.formatDate
+import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.util.ViewUtils.visible
 
 class AdapterMeasures(private val list: ArrayList<Measure>) :
     RecyclerView.Adapter<VerticalListViewHolder>() {
@@ -36,13 +38,19 @@ class AdapterMeasures(private val list: ArrayList<Measure>) :
         }
     }
 
-    override fun onBindViewHolder(holder: VerticalListViewHolder, position_: Int) {
-        val position = position_ - 1
+    override fun onBindViewHolder(holder: VerticalListViewHolder, holderPosition: Int) {
+        val position = holderPosition.minus(1)
 
         if (holder is Holder) {
             holder.name.text = list[position].name
             holder.note.text = list[position].note
             holder.date.text = list[position].dateCreated.formatDate()
+
+            if (holder.note.text.isEmpty()) {
+                holder.note.gone(false)
+            } else {
+                holder.note.visible(false)
+            }
 
             if (list[position].dateCreated == MeasurePreferences.getLastSelectedMeasure()) {
                 holder.name.setTextColor(holder.itemView.context.resolveAttrColor(R.attr.colorAppAccent))
@@ -51,7 +59,7 @@ class AdapterMeasures(private val list: ArrayList<Measure>) :
             }
 
             holder.menu.setOnClickListener {
-                adapterMeasuresCallback.onMeasureMenuClicked(list[position], it)
+                adapterMeasuresCallback.onMeasureMenuClicked(list[position], it, position)
             }
 
             holder.container.setOnClickListener {
@@ -63,10 +71,7 @@ class AdapterMeasures(private val list: ArrayList<Measure>) :
     }
 
     override fun getItemCount(): Int {
-        return when {
-            list.isEmpty() -> 0
-            else -> list.size.plus(1)
-        }
+        return list.size.plus(1)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -76,10 +81,14 @@ class AdapterMeasures(private val list: ArrayList<Measure>) :
         }
     }
 
-    fun deleteMeasure(measure: Measure) {
-        val index = list.indexOf(measure)
-        list.remove(measure)
-        notifyItemRemoved(index + 1)
+    fun deleteMeasure(position: Int) {
+        list.removeAt(position)
+        notifyItemRemoved(position.plus(1))
+        notifyItemChanged(0)
+    }
+
+    fun isEmpty(): Boolean {
+        return list.isEmpty()
     }
 
     inner class Holder(itemView: View) : VerticalListViewHolder(itemView) {
@@ -101,7 +110,7 @@ class AdapterMeasures(private val list: ArrayList<Measure>) :
     companion object {
         interface AdapterMeasuresCallback {
             fun onMeasureClicked(measure: Measure)
-            fun onMeasureMenuClicked(measure: Measure, view: View)
+            fun onMeasureMenuClicked(measure: Measure, view: View, position: Int)
         }
     }
 }
