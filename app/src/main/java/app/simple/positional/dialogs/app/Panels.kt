@@ -12,12 +12,17 @@ import app.simple.positional.adapters.app.AdapterPanels
 import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.PanelsCallback
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
+import app.simple.positional.model.BottomBar
+import app.simple.positional.ui.panels.Measure
+import app.simple.positional.util.AppUtils
 import app.simple.positional.util.StatusBarHeight
 
 class Panels : CustomBottomSheetDialogFragment() {
 
     private lateinit var recyclerView: RecyclerView
     private var panelsCallback: PanelsCallback? = null
+    private var bottomBarItems: ArrayList<BottomBar>? = null
+
     private var isLandscape = false
     private var spanCount = 4
 
@@ -32,15 +37,23 @@ class Panels : CustomBottomSheetDialogFragment() {
             else -> PORTRAIT_SPAN_COUNT
         }
 
+        bottomBarItems = BottomBarItems.getBottomBarItems(requireContext())
+
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (AppUtils.isLiteFlavor()) {
+            bottomBarItems?.removeIf {
+                it.tag == Measure.TAG
+            }
+        }
+
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
-        recyclerView.adapter = AdapterPanels(BottomBarItems.getBottomBarItems(requireContext())) { view1, name, position ->
+        recyclerView.adapter = AdapterPanels(bottomBarItems!!) { view1, name, position ->
             panelsCallback?.onPanelClick(view1, name, position)
             dismiss()
         }

@@ -1,4 +1,4 @@
-package app.simple.positional.activities.subactivity
+package app.simple.positional.activities.subacitivity
 
 import android.os.Bundle
 import app.simple.positional.R

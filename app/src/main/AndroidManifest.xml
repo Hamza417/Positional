@@ -370,7 +370,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".activities.subactivity.MeasuresActivity"
+            android:name=".activities.subacitivity.MeasuresActivity"
             android:exported="true" />
 
         <activity

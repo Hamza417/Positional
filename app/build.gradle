@@ -154,6 +154,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'com.google.maps.android:android-maps-utils:2.2.4'
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
+    implementation 'com.google.auto.service:auto-service:1.0-rc7'
+    kapt 'com.google.auto.service:auto-service:1.0-rc7'
 
     // Third Party
     implementation 'org.shredzone.commons:commons-suncalc:3.9'

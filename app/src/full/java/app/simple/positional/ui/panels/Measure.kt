@@ -15,8 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.TransitionManager
 import app.simple.positional.R
-import app.simple.positional.activities.subactivity.MeasuresActivity
-import app.simple.positional.adapters.bottombar.BottomBarItems
+import app.simple.positional.activities.subacitivity.MeasuresActivity
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.corners.DynamicCornerConstraintLayout
 import app.simple.positional.decorations.measure.MeasureMaps
@@ -378,7 +377,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
             return fragment
         }
 
-        const val TAG = BottomBarItems.MEASURE
+        const val TAG = "Measure"
 
         private const val CAMERA = "camera"
         private const val FULL_SCREEN = "fullscreen"
