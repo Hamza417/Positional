@@ -24,7 +24,6 @@ import app.simple.positional.math.Vector3
 import app.simple.positional.model.Measure
 import app.simple.positional.model.MeasurePoint
 import app.simple.positional.preferences.MeasurePreferences
-import app.simple.positional.preferences.TrailPreferences
 import app.simple.positional.util.ArrayHelper.secondLastOrNull
 import app.simple.positional.util.BitmapHelper.toBitmap
 import app.simple.positional.util.BitmapHelper.toBitmapKeepingSize
@@ -75,6 +74,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     private var circle: Circle? = null
     private var markerAnimator: ValueAnimator? = null
     private var circleAnimator: ValueAnimator? = null
+    private var polylineAnimator: ValueAnimator? = null
 
     private var isWrapped = false
     private var isFirstLocation = true
@@ -99,7 +99,6 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
                 .width(10f)
                 .jointType(JointType.ROUND)
                 .color(context.resolveAttrColor(R.attr.colorAppAccent))
-                .geodesic(TrailPreferences.isTrailGeodesic())
 
         latLng = MeasurePreferences.getLastLatLng()
         isCompassRotation = MeasurePreferences.isCompassRotation()
@@ -275,7 +274,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 
     fun resetCamera(zoom: Float) {
         if (location != null) {
-            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, TrailPreferences.getMapTilt())
+            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, MeasurePreferences.getMapTilt())
         }
     }
 
@@ -464,6 +463,14 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         registerSensors()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterSensors()
+        circleAnimator?.cancel()
+        markerAnimator?.cancel()
+        polylineAnimator?.cancel()
+    }
+
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         super.onSharedPreferenceChanged(sharedPreferences, key)
         when (key) {
@@ -519,20 +526,21 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     }
 
     fun addPolyline() {
-        if (location.isNotNull()) {
-            val latLng = googleMap?.cameraPosition?.target!!
-            currentPolylines.add(latLng)
-            polylineOptions?.add(latLng)
-            polylines.add(googleMap?.addPolyline(polylineOptions!!)!!)
-            val measurePoint = MeasurePoint(latLng.latitude, latLng.longitude, measurePoints.size + 1)
-            measurePoints.add(measurePoint)
-            cameraTargetPolyline?.remove()
-            cameraTargetPolyline = null
-            initCameraTargetPolyline()
-            invalidate()
-            mapsCallbacks?.onLineAdded(measurePoint)
-            mapsCallbacks?.onCameraDistance(latLng)
-        }
+        val latLng = googleMap?.cameraPosition?.target!!
+        val lastPoint = currentPolylines.lastOrNull() ?: latLng
+        polylineOptions?.add(lastPoint)
+        currentPolylines.add(latLng)
+        polylines.add(googleMap?.addPolyline(polylineOptions!!)!!)
+        val measurePoint = MeasurePoint(latLng.latitude, latLng.longitude, measurePoints.size + 1)
+        measurePoints.add(measurePoint)
+        cameraTargetPolyline?.remove()
+        cameraTargetPolyline = null
+        initCameraTargetPolyline()
+        invalidate()
+        mapsCallbacks?.onLineAdded(measurePoint)
+        mapsCallbacks?.onCameraDistance(latLng)
+
+        polylineAnimator = MarkerUtils.animatePolyline(lastPoint, latLng, polylines.lastOrNull()!!)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -555,6 +563,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         markerBitmap = null
         markerAnimator?.cancel()
         circleAnimator?.cancel()
+        polylineAnimator?.cancel()
         cameraTargetPolyline?.remove()
         cameraTargetPolyline = null
         googleMap?.clear()

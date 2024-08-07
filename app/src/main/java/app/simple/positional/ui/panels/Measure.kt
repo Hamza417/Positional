@@ -17,6 +17,7 @@ import androidx.transition.TransitionManager
 import app.simple.positional.R
 import app.simple.positional.activities.subactivity.MeasuresActivity
 import app.simple.positional.adapters.bottombar.BottomBarItems
+import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.corners.DynamicCornerConstraintLayout
 import app.simple.positional.decorations.measure.MeasureMaps
 import app.simple.positional.decorations.measure.MeasureToolbar
@@ -65,6 +66,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
     private var location: Location? = null
     private var backPress: OnBackPressedDispatcher? = null
     private var maps: MeasureMaps? = null
+    private var bottomSheetSlide: BottomSheetSlide? = null
 
     private lateinit var locationViewModel: LocationViewModel
     private lateinit var measureViewModel: MeasureViewModel
@@ -88,6 +90,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
 
         backPress = requireActivity().onBackPressedDispatcher
         maps?.onCreate(savedInstanceState)
+        bottomSheetSlide = requireActivity() as BottomSheetSlide
 
         locationViewModel = ViewModelProvider(requireActivity())[LocationViewModel::class.java]
         measureViewModel = ViewModelProvider(requireActivity())[MeasureViewModel::class.java]
@@ -302,12 +305,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
             toolbar.hide()
         }
 
-        if (isLandscapeOrientation) {
-            toolbar.show()
-        } else {
-
-        }
-
+        bottomSheetSlide?.onMapClicked(isFullScreen)
         isFullScreen = !isFullScreen
     }
 

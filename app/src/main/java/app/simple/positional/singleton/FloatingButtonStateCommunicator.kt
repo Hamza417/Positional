@@ -1,7 +1,5 @@
 package app.simple.positional.singleton
 
-import android.util.Log
-
 object FloatingButtonStateCommunicator {
 
     private const val TAG = "FloatingButtonStateCommunicator"
@@ -10,7 +8,6 @@ object FloatingButtonStateCommunicator {
     private val floatingButtonStateCallbacks = mutableSetOf<FloatingButtonStateCallbacks>()
 
     fun setFloatingButtonSize(size: Int) {
-        Log.d(TAG, "setFloatingButtonSize: $size")
         floatingButtonCurrentSize = size
     }
 

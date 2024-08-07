@@ -8,6 +8,9 @@ import androidx.interpolator.view.animation.LinearOutSlowInInterpolator;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.Polyline;
+
+import java.util.Arrays;
 
 import app.simple.positional.decorations.interpolators.LatLngInterpolator;
 
@@ -106,5 +109,23 @@ public class MarkerUtils {
 
         float result = fraction * rotation + start;
         return (result + 360) % 360;
+    }
+
+    public static ValueAnimator animatePolyline(LatLng start, LatLng end, Polyline polyline) {
+        LatLngInterpolator latLngInterpolator = new LatLngInterpolator.LinearFixed();
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
+        valueAnimator.setDuration(1000L);
+        valueAnimator.setInterpolator(new DecelerateInterpolator(3F));
+        valueAnimator.addUpdateListener(animation -> {
+            try {
+                float v = animation.getAnimatedFraction();
+                LatLng newPosition = latLngInterpolator.interpolate(v, start, end);
+                polyline.setPoints(Arrays.asList(start, newPosition));
+            } catch (Exception ignored) {
+            }
+        });
+
+        valueAnimator.start();
+        return valueAnimator;
     }
 }

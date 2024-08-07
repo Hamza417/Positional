@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewTreeObserver
-import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -52,6 +51,8 @@ import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.LocationExtension.getLocationStatus
 import app.simple.positional.util.LocationPrompt.displayLocationSettingsRequest
 import app.simple.positional.util.ViewUtils
+import app.simple.positional.util.ViewUtils.gone
+import app.simple.positional.util.ViewUtils.visible
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.OnMapsSdkInitializedCallback
 
@@ -401,17 +402,9 @@ class MainActivity : BaseActivity(),
 
     override fun onMapClicked(fullScreen: Boolean) {
         if (fullScreen) {
-            bottomBarContainer.animate()
-                    .scaleX(1F)
-                    .scaleY(1F)
-                    .alpha(1F)
-                    .setInterpolator(DecelerateInterpolator(1.5F)).start()
+            bottomBarContainer.visible(true)
         } else {
-            bottomBarContainer.animate()
-                    .scaleX(0F)
-                    .scaleY(0F)
-                    .alpha(0F)
-                    .setInterpolator(DecelerateInterpolator(1.5F)).start()
+            bottomBarContainer.gone(true)
         }
     }
 
