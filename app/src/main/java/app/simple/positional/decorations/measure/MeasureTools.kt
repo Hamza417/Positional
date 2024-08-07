@@ -7,7 +7,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.coordinatorlayout.widget.CoordinatorLayout
+import android.widget.FrameLayout
 import androidx.transition.TransitionInflater
 import androidx.transition.TransitionManager
 import app.simple.positional.R
@@ -147,7 +147,7 @@ class MeasureTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPrefer
         }
     }
 
-    internal fun updateToolsGravity() {
+    private fun updateToolsGravity() {
         if (StatusBarHeight.isLandscape(context)) return
 
         TransitionManager.beginDelayedTransition(
@@ -155,7 +155,7 @@ class MeasureTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPrefer
             TransitionInflater.from(context)
                 .inflateTransition(R.transition.tools_transition))
 
-        val params = CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+        val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT)
 
         params.apply {
