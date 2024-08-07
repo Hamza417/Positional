@@ -128,7 +128,8 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                         } else {
                             maps?.moveMapCamera(LatLng(location!!.latitude, location!!.longitude),
                                 MeasurePreferences.getMapZoom(),
-                                MeasurePreferences.getMapTilt())
+                                MeasurePreferences.getMapTilt(),
+                                MeasurePreferences.getMapBearing())
                         }
                     }
                 } else {

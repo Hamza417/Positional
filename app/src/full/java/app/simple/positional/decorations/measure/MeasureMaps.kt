@@ -81,6 +81,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     private var isCompassRotation = true
     private var lastZoom = 20F
     private var lastTilt = 0F
+    private var lastBearing = 0F
     private val incrementFactor = 2
 
     private var polylineOptions: PolylineOptions? = null
@@ -274,14 +275,18 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 
     fun resetCamera(zoom: Float) {
         if (location != null) {
-            moveMapCamera(LatLng(location!!.latitude, location!!.longitude), zoom, MeasurePreferences.getMapTilt())
+            moveMapCamera(
+                LatLng(location!!.latitude, location!!.longitude),
+                zoom,
+                MeasurePreferences.getMapTilt(),
+                MeasurePreferences.getMapBearing())
         }
     }
 
-    fun moveMapCamera(latLng: LatLng, zoom: Float, tilt: Float) {
+    fun moveMapCamera(latLng: LatLng, zoom: Float, tilt: Float, bearing: Float) {
         if (googleMap.isNull() && latLng.isNull()) return
 
-        animateCamera(latLng, zoom, tilt)
+        animateCamera(latLng, zoom, tilt, bearing)
 
         isWrapped = false
         MeasurePreferences.setPolylinesWrapped(false)
@@ -289,7 +294,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 
     fun wrapUnwrap() {
         if (isWrapped) {
-            moveMapCamera(latLng!!, lastZoom, lastTilt)
+            moveMapCamera(latLng!!, lastZoom, lastTilt, lastBearing)
         } else {
             wrap(true)
         }
@@ -299,8 +304,9 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         kotlin.runCatching {
             clearAnimation()
             latLng = googleMap?.cameraPosition?.target
-            lastZoom = MeasurePreferences.getMapZoom()
-            lastTilt = MeasurePreferences.getMapTilt()
+            lastZoom = googleMap?.cameraPosition?.zoom!!
+            lastTilt = googleMap?.cameraPosition?.tilt ?: 0F
+            lastBearing = googleMap?.cameraPosition?.bearing ?: 0F
 
             val builder = LatLngBounds.Builder()
             for (latLng in currentPolylines) {
@@ -326,7 +332,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
 
     private fun unwrap() {
         clearAnimation()
-        moveMapCamera(latLng!!, lastZoom, lastTilt)
+        moveMapCamera(latLng!!, lastZoom, lastTilt, lastBearing)
     }
 
     private fun updatePolylines(points: ArrayList<MeasurePoint>) {
