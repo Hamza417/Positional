@@ -312,4 +312,5 @@
     <string name="other_apps">Outros Apps</string>
     <string name="measure">Medida</string>
     <string name="name">Nome</string>
+    <string name="saved_measures">Medidas salvas</string>
 </resources>
