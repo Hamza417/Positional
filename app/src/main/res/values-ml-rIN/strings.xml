@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Panels -->
+    <string name="clock">സമയം</string>
+    <string name="compass">ദിശ</string>
+    <string name="gps_location">ജി. പി. എസ്. ലൊക്കേഷൻ</string>
+    <string name="level">വിതാദർശിനി</string>
+    <string name="settings">ക്രമീകരണങ്ങൾ</string>
+    <!-- Info Headers -->
+    <string name="clock_info">സമയം സംബന്ധിച്ച വിവരം</string>
+    <string name="compass_info">ദിശ സംബന്ധിച്ച വിവരം</string>
+    <string name="gps_info">ലൊക്കേഷൻ സംബന്ധിച്ച വിവരം</string>
+    <!-- Clock Information Headers-->
+    <string name="local_time">പ്രാദേശിക സമയം</string>
+    <string name="utc_time">അന്താരാഷ്ട്രസമയക്രമ സമയം</string>
+    <string name="sun_position">സൂര്യൻ്റെ സ്ഥാനം</string>
+    <string name="sun_time">സൂര്യ സമയം</string>
+    <string name="twilight">നാട്ടുവെളിച്ചം</string>
+    <string name="moon_position">ചന്ദ്രൻ്റെ സ്ഥാനം</string>
+    <string name="moon_time">ചന്ദ്രൻ്റെ സമയം</string>
+    <string name="moon_illumination">ചന്ദ്ര പ്രകാശം</string>
+    <string name="moon_dates">ചന്ദ്ര തീയതികൾ</string>
+    <!-- GPS Information Headers -->
+    <string name="gps_provider">ദാതാവ്</string>
+    <string name="gps_movement">ഗതി</string>
+    <string name="gps_coordinates">സമസ്ഥാനം</string>
+    <string name="gps_address">മേൽവിലാസം</string>
+    <!--Compass Information Header -->
+    <string name="compass_accuracy">കൃത്യത</string>
+    <string name="compass_field">കാന്തിക വലയം</string>
+    <!-- Clock Information Items-->
+    <string name="local_timezone">സമയമേഖല:</string>
+    <string name="local_time_24hr">സമയം 24 മ:</string>
+    <string name="local_time_12hr">സമയം 12 മ:</string>
+    <string name="local_day">ദിവസം:</string>
+    <string name="local_date">തീയതി:</string>
+    <string name="local_day_of_year">ദിവസം വർഷക്കണക്കിൽ:</string>
+    <string name="local_week_of_year">ആഴ്ച വർഷക്കണക്കിൽ:</string>
+    <string name="utc_local_time_offset">അന്താരാഷ്ട്രസമയക്രമ സമയവുമായുള്ള വ്യത്യാസം:</string>
+    <string name="utc_current_time">സമയം:</string>
+    <string name="sun_azimuth">സമാംശം:</string>
+    <string name="sun_distance">അന്തരം:</string>
+    <string name="sun_altitude">ഉയരം:</string>
+    <string name="sun_sunrise">സൂര്യോദയം:</string>
+    <string name="sun_noon">മദ്ധ്യാഹ്നം:</string>
+    <string name="sun_sunset">സൂര്യാസ്തമയം:</string>
+    <string name="sun_nadir">ഏറ്റവും താഴ്ന്ന നില:</string>
+    <string name="twilight_astronomical_dawn">ജ്യോതിശാസ്ത്ര പ്രഭാതം:</string>
+    <string name="twilight_nautical_dawn">സമുദ്രപര പ്രഭാതം:</string>
+    <string name="twilight_civil_dawn">ആഭ്യന്തര പ്രഭാതം:</string>
+    <string name="twilight_civil_dusk">ആഭ്യന്തര സന്ധ്യ:</string>
+    <string name="twilight_nautical_dusk">സമുദ്രപര സന്ധ്യ:</string>
+    <string name="twilight_astronomical_dusk">ജ്യോതിശാസ്ത്ര സന്ധ്യ:</string>
+    <string name="moon_parallactic_angle">ദർശനസ്ഥിതിവ്യത്യാസ കോൺ:</string>
+    <string name="moon_moonrise">ചന്ദ്രോദയം:</string>
+    <string name="moon_moonset">ചന്ദ്രാസ്തമയം:</string>
+    <string name="moon_fraction">ചന്ദ്രൻ്റെ അംശം:</string>
+    <string name="moon_angle">ചാന്ദ്രിക കോൺ:</string>
+    <string name="moon_angle_state">ആംഗിൾ സ്റ്റേറ്റ്:</string>
+    <string name="moon_phase">ചന്ദ്രക്കല:</string>
+    <string name="moon_phase_angle">ചന്ദ്രക്കലയുടെ കോൺ:</string>
+    <string name="moon_full_moon">പൂർണ്ണചന്ദ്രൻ:</string>
+    <string name="moon_new_moon">അമാവാസി:</string>
+    <string name="moon_first_quarter">ആദ്യ അർദ്ധചന്ദ്രൻ:</string>
+    <string name="moon_last_quarter">അവസാന അർദ്ധചന്ദ്രൻ:</string>
+    <!-- Compass information items -->
+    <string name="magnetometer">കാന്തികമാപിനി</string>
+    <string name="accelerometer">വേഗമാപിനി</string>
+    <string name="accelerometer_accuracy">വേഗമാപിനി കൃത്യത:</string>
+    <string name="magnetometer_accuracy">കാന്തികമാപിനി കൃത്യത:</string>
+    <string name="compass_inclination">ചായ്‌വ്:</string>
+    <string name="compass_declination">അപഭ്രംശം:</string>
+    <string name="compass_field_strength">കാന്തികവലയ ശക്തി:</string>
+    <!-- GPS Information Panel -->
+    <string name="gps_status">സ്ഥിതി:</string>
+    <string name="gps_source">ഉറവിടം:</string>
+    <string name="gps_accuracy">കൃത്യത:</string>
+    <string name="gps_altitude">ഉയരം:</string>
+    <string name="gps_latency">കാത്തിരിപ്പുസമയം:</string>
+    <string name="gps_bearing">താരതമ്യേന നില:</string>
+    <string name="gps_displacement">സ്ഥാനഭ്രംശം:</string>
+    <string name="gps_direction">ദിശ:</string>
+    <string name="gps_speed">വേഗത:</string>
+    <string name="gps_latitude">അക്ഷാംശരേഖ:</string>
+    <string name="gps_longitude">രേഖാംശരേഖ:</string>
+    <!-- Sensor Accuracy -->
+    <string name="sensor_accuracy_unreliable">വിശ്വാസയോഗ്യമല്ലാത്തത്</string>
+    <string name="sensor_accuracy_low">തീരെ കുറവ്</string>
+    <string name="sensor_accuracy_medium">സാമാന്യം ഭേദപ്പെട്ടത്</string>
+    <string name="sensor_accuracy_high">ഉയർന്നത്</string>
+    <!-- GPS Source Status -->
+    <string name="gps_enabled">പ്രവർത്തിക്കുന്നു</string>
+    <string name="gps_disabled">പ്രവർത്തിക്കുന്നില്ല</string>
+    <!-- Units -->
+    <string name="meter">മീറ്റർ</string>
+    <string name="kilometer">കിലോമീറ്റർ</string>
+    <string name="feet">അടി</string>
+    <string name="miles">മൈൽ</string>
+    <string name="kilometer_hour">കിലോമീറ്റർ/മണിക്കൂർ</string>
+    <string name="miles_hour">മൈൽ/മണിക്കൂർ</string>
+    <string name="milliseconds">മില്ലിസെക്കന്റുകൾ</string>
+    <string name="seconds">സെക്കന്റുകൾ</string>
+    <!-- Alert -->
+    <string name="info_copied">കോപ്പി ചെയ്യപ്പെട്ടു</string>
+    <string name="info_error">കോപ്പി ചെയ്യാൻ സാധിച്ചില്ല!!</string>
+    <string name="invalid_coordinates">തെറ്റായ സൂചികകൾ</string>
+    <string name="internet_connection_alert">ഇന്റർനെറ്റ് സേവനം ലഭ്യമല്ല</string>
+    <string name="error">പിഴവ്</string>
+    <string name="not_available">ലഭ്യമല്ല</string>
+    <string name="no_address_found">ലൊക്കേഷന്റെ മേൽവിലാസം ലഭ്യമല്ല</string>
+    <string name="location_saved">വിജയകരമായി സേവ് ചെയ്യപ്പെട്ടു</string>
+    <string name="location_not_saved">ലൊക്കേഷൻ മാറ്റങ്ങൾ പരിരക്ഷിക്കാൻ സാധിച്ചില്ല!</string>
+    <string name="no_update">പുതിയ അപ്ഡേറ്റുകൾ ലഭ്യമല്ല</string>
+    <string name="location_not_available">ലൊക്കേഷൻ ലഭ്യമല്ല</string>
+    <!-- Settings Categories -->
+    <string name="appearance">ബാഹ്യരൂപം</string>
+    <string name="configuration">ക്രമീകരണം</string>
+    <string name="about">സംബന്ധിച്ച്</string>
+    <string name="contribute">സഹായസഹകരണം</string>
+    <!-- Settings Heading -->
+    <string name="theme">ആപ്പിന്റെ ദൃശ്യരൂപം</string>
+    <string name="icon">ഐക്കൺ</string>
+    <string name="corner_radius">ഉപാന്ത ആരം</string>
+    <string name="units">യൂണിറ്റുകൾ</string>
+    <string name="location_provider">ലൊക്കേഷൻ ദാതാവ്</string>
+    <string name="language">ഭാഷ</string>
+    <string name="skip_splash_screen">സ്പ്ലാഷ് സ്ക്രീൻ ഒഴിവാക്കുക</string>
+    <string name="specified_location">ഒരു പ്രത്യേക ലൊക്കേഷൻ ഉപയോഗിക്കുക</string>
+    <string name="keep_screen_on">സ്ക്രീൻ ഓഫ് ആകാതെ സൂക്ഷിക്കുക</string>
+    <string name="legal_notes">നിയമപരമായ കുറിപ്പുകൾ</string>
+    <string name="app_version">ആപ്പ് വേർഷൻ</string>
+    <string name="found_an_issue">പ്രശ്നങ്ങൾ?</string>
+    <string name="translate">വിവർത്തനം</string>
+    <!-- Settings Description -->
+    <string name="theme_follow_system">ഫോണിന്റെ ദൃശ്യരൂപത്തിൽ തന്നെ തുടരുക</string>
+    <string name="theme_day">ലൈറ്റ്</string>
+    <string name="theme_night">ഡാർക്ക്‌</string>
+    <string name="theme_auto">യാന്ത്രികം (ലൈറ്റ്/ഡാർക്ക്‌)</string>
+    <string name="desc_skip_splash_Screen">ആപ്പ് പ്രവർത്തനനിരതമാകുമ്പോൾ സ്പ്ലാഷ് സ്ക്രീൻ ഒഴിവാക്കി പ്രധാന ജാലകത്തിലേക്ക് പ്രവേശിക്കുക</string>
+    <string name="desc_specified_location">ഒരു പ്രത്യേക അക്ഷാംശരേഖയും രേഖാംശവും ഉപയോഗപ്പെടുത്തി വിവരങ്ങൾ ശേഖരിക്കുക. ജി. പി. എസ്. മാത്രം ഉപയോഗിക്കുന്ന സേവനങ്ങൾ ബാധിക്കപ്പെടാതെ നിൽക്കുന്നതായിരിക്കും</string>
+    <string name="desc_screen_on">ആപ്പ് പ്രവർത്തന നിരതമായിരിക്കുമ്പോൾ സ്മാർട്ട് ഫോൺ നിഷ്ക്രിയമാകാതെ സൂക്ഷിക്കുക</string>
+    <string name="desc_legal">ആപ്പിന്റെ നിരാകരണം, സ്വകാര്യതാ നയം, ഉപയോഗ നിബന്ധനകൾ എന്നിവ വായിക്കുക</string>
+    <string name="desc_git">ആപ്പിന്റെ ശേഖരം തുറക്കുക</string>
+    <string name="desc_translate">നിങ്ങളുടെ ഭാഷയിലേക്ക് ഈ ആപ്പിനെ വിവർത്തനം ചെയ്യാൻ സഹായിക്കുക</string>
+    <!-- Clock Menu -->
+    <string name="needles">നീഡിൽ</string>
+    <string name="motion_type">ചലന തരം</string>
+    <string name="time_format">12 മണിക്കൂർ രീതി</string>
+    <string name="motion_type_smooth">സുഗമം</string>
+    <string name="motion_type_tick">ടിക്ക്</string>
+    <!-- Compass Menu -->
+    <string name="bloom">ബ്ലൂം</string>
+    <string name="bloom_skins">ബ്ലൂം സ്കിന്നുകൾ</string>
+    <string name="show_code">കോഡ് കാണിക്കുക</string>
+    <!-- GPS Menu -->
+    <string name="labels">ലേബലുകൾ</string>
+    <string name="buildings">കെട്ടിടങ്ങൾ</string>
+    <string name="traffic">ട്രാഫിക്</string>
+    <string name="satellite_mode">ഉപഗ്രഹ ചിത്രം</string>
+    <string name="high_contrast_mode">ദൃശ്യതീവ്രതാ മാപ്പ്</string>
+    <!-- Settings Menus -->
+    <string name="unit_metric">മെട്രിക്</string>
+    <string name="unit_imperial">സാമ്രാജ്യപരം</string>
+    <!-- Specified Coordinates Menu -->
+    <string name="specified_hint_header">ലൊക്കേഷൻ വിവരങ്ങൾ നൽകുക</string>
+    <string name="specified_hint_latitude">അക്ഷാംശരേഖ (±90)</string>
+    <string name="specified_hint_longitude">രേഖാംശം (±180)</string>
+    <!-- Info -->
+    <string name="compass_calibration_notice">നിങ്ങളുടെ സ്മാർട്ട് ഫോണിൽ ദിശ നോക്കുന്ന സെൻസർ ശരിയായി പ്രവർത്തിക്കുന്നില്ലെങ്കിൽ, 8 എന്ന സംഖ്യയുടെ ആകൃതിയിൽ സ്മാർട്ട്ഫോൺ വായുവിൽ ചുഴറ്റുക.</string>
+    <string name="specified_location_notice">താഴെ കൊടുക്കുന്ന വിവരങ്ങൾ നിങ്ങൾ നൽകിയിരിക്കുന്ന അക്ഷാംശ-രേഖാംശ രേഖകളോട് അനുബന്ധമായി അപ്ഡേറ്റ് ചെയ്യുന്നു.</string>
+    <string name="show_again">വീണ്ടും കാണിക്കുക</string>
+    <string name="search_timezone">വിവിധ ടൈം സോണുകൾ തിരയുക</string>
+    <string name="verifying_license">ലൈസൻസ് വേരിഫൈ ചെയ്യുന്നു</string>
+    <string name="license_successful">വിജയകരം :)</string>
+    <string name="license_failed">ലൈസൻസ് വേരിഫിക്കേഷൻ പരാജിതമായിരിക്കുന്നു</string>
+    <string name="auto_system_default_language">സാധാരണം (സിസ്റ്റം)</string>
+    <string name="location_permission_denied">"ലൊക്കേഷൻ അറിയുന്നതിനുള്ള അധികാരം നിഷേധിച്ചിരിക്കുന്നു!"</string>
+    <string name="no_location_permission_alert">ലൊക്കേഷൻ അറിയുന്നതിനുള്ള അധികാരം ലഭ്യമല്ലെങ്കിൽ ആപ്പിന്റെ ചില പ്രവർത്തനങ്ങൾ ലഭ്യമായിരിക്കില്ല</string>
+    <!-- Button Text -->
+    <string name="button_cancel">ഉപേക്ഷിക്കുക</string>
+    <string name="button_set">സ്ഥിരീകരിക്കുക</string>
+    <string name="button_close">പുറത്തേക്ക് പോകാം</string>
+    <string name="button_grant">അനുവദിക്കുക</string>
+    <string name="button_reset">വീണ്ടും ക്രമീകരിക്കുക</string>
+    <!-- Button Descriptions -->
+    <string name="clock_options">ഘടികാര മെനു</string>
+    <string name="compass_options">ദിശനോക്കി മെനു</string>
+    <string name="gps_options">ജി. പി. എസ്. മെനു</string>
+    <string name="gps_reset_location">ലൊക്കേഷൻ വീണ്ടും ക്രമീകരിക്കുക</string>
+    <string name="delete_all">എല്ലാം കളയുക</string>
+    <string name="open_specified_location_documentation">പ്രത്യേക ലൊക്കേഷൻ ഡോക്യുമെന്റേഷൻ തുറക്കുക</string>
+    <!-- Legal Menu -->
+    <string name="disclaimer">അറിയിപ്പ്</string>
+    <string name="privacy_policy">സ്വകാര്യതാ നയം</string>
+    <string name="terms_of_use">ഉപയോഗ മാനദണ്ഡങ്ങൾ</string>
+    <string name="permissions">അനുവാദങ്ങൾ</string>
+    <string name="credits">സഹായങ്ങൾ</string>
+    <string name="internet_uses">ഇന്റർനെറ്റ് ഉപയോഗങ്ങൾ</string>
+    <!-- Moon Illumination -->
+    <string name="waning">വാനിങ്</string>
+    <string name="waning_gibbous">വാനിങ് ഗിബ്ബസ്</string>
+    <string name="waning_crescent">വാനിങ് ക്രസന്റ്</string>
+    <string name="waxing">വാക്സിങ്</string>
+    <string name="waxing_gibbous">വാക്സിങ് ഗിബ്ബസ്</string>
+    <string name="waxing_crescent">വാക്സിങ് ക്രസന്റ്</string>
+    <string name="full_moon">പൂർണ്ണ ചന്ദ്രൻ</string>
+    <string name="new_moon">അമാവാസി</string>
+    <string name="third_quarter">മൂന്നാം ഭാഗം</string>
+    <string name="first_quarter">ഒന്നാം ഭാഗം</string>
+    <!-- Directions -->
+    <string name="north">വടക്ക്</string>
+    <string name="north_west">വടക്ക് പടിഞ്ഞാറ്</string>
+    <string name="west">പടിഞ്ഞാറ്</string>
+    <string name="south_west">തെക്ക് പടിഞ്ഞാറ്</string>
+    <string name="south">തെക്ക്</string>
+    <string name="south_east">തെക്കു കിഴക്ക്</string>
+    <string name="east">കിഴക്ക്</string>
+    <string name="north_east">വടക്കു കിഴക്ക്</string>
+    <string name="north_N">വടക്ക്</string>
+    <string name="north_west_NW">വടക്കു പടിഞ്ഞാറ്</string>
+    <string name="west_W">പടിഞ്ഞാറ്</string>
+    <string name="south_west_SW">തെക്കു പടിഞ്ഞാറ്</string>
+    <string name="south_S">തെക്ക്</string>
+    <string name="south_east_SE">തെക്കുകിഴക്ക്</string>
+    <string name="east_E">കിഴക്ക്</string>
+    <string name="north_east_NE">വടക്കുകിഴക്ക്</string>
+    <!-- Graph -->
+    <string name="location_details">ലൊക്കേഷൻ വിവരങ്ങൾ</string>
+    <string name="min">കുറഞ്ഞത്:</string>
+    <string name="max">പരമാവധി:</string>
+    <string name="avg">ശരാശരി:</string>
+    <!-- UTM -->
+    <string name="utm_zone">യു. ടി. എം. ഭാഗം:</string>
+    <string name="utm_easting">യു. ടി. എം. കിഴക്ക്:</string>
+    <string name="utm_northing">യു. ടി. എം. വടക്ക്:</string>
+    <string name="utm_meridian">യു. ടി. എം. മെറിഡിയൻ:</string>
+    <!-- Location Provider -->
+    <string name="desc_android_location_provider">ആൻഡ്രോയിഡിൽ ഡിഫോൾട്ട് ആയി വരുന്ന ലൊക്കേഷൻ API, വളരെ കൃത്യമായ വിവരങ്ങൾ നൽകുന്നതാണെങ്കിലും ഒരു സമയം ഒരു ലൊക്കേഷൻ ദാതാവിന് മാത്രമായി പരിമിതപ്പെടുത്തിയിരിക്കുന്നതാണ്, മറ്റു ആപ്പുകളിൽ നിന്നുള്ള ലൊക്കേഷൻ അഭ്യർത്ഥനകൾ കൃത്യതയെ ബാധിക്കാറുണ്ട്, ലൊക്കേഷൻ വേഗത്തിൽ അപ്‌ഡേറ്റ് ചെയ്യുന്നതിന് നിങ്ങളുടെ സ്മാർട്ട് ഫോണിൽ ശക്തമായ ഒരു GPS സെൻസർ ആവശ്യമാണ്.</string>
+    <string name="desc_fused_location_provider">ഗൂഗിളിന്റെ ഫ്യൂസ്ഡ് ലൊക്കേഷൻ എ. പി. ഐ. വ്യത്യസ്‌ത ലൊക്കേഷൻ ദാതാക്കളിൽ നിന്നുള്ള ലൊക്കേഷൻ ഡാറ്റയെ ശേഖരിച്ച് ഏകീകരിക്കുന്നു. വ്യത്യസ്ത ഔട്ട്പുട്ടുകൾ നൽകുന്നതിന് ശക്തമെങ്കിലും ഇത് കുറഞ്ഞ അളവിൽ ബാറ്ററി ഉപയോഗിക്കുന്നു.</string>
+    <string name="desc_location_provider_note">ഏതൊരു എ. പി. ഐ. യും വ്യത്യസ്ത കാരണങ്ങളാൽ വ്യത്യസ്ത ഔട്ട്പുട്ടുകൾ നൽകിയേക്കാം. അതൊരിക്കലും ഏതെങ്കിലും ഒരു എ. പി. ഐ. മെച്ചപ്പെട്ടതാണെന്ന് സൂചിപ്പിക്കുന്നില്ല. ടെസ്റ്റ് ചെയ്തു നോക്കി നിങ്ങളുടെ മേഖലയിൽ ഏറ്റവും കൃത്യതയോടെ പ്രവർത്തിക്കുന്ന എ. പി. ഐ. കണ്ടെത്തി ഉപയോഗിക്കുക.</string>
+    <string name="use_media_keys">മീഡിയ കീകൾ ഉപയോഗിക്കുക</string>
+    <string name="auto_center_map">ഓട്ടോ സെന്റർ</string>
+    <string name="last_updated">അവസാനം അപ്ഡേറ്റ് ചെയ്തത്</string>
+    <string name="coefficient_of_magnetic_field">കാന്തിക വലയത്തിന്റെ ഗുണകം</string>
+    <string name="damping_coefficient">ഡാമ്പിങ് ഗുണകം</string>
+    <string name="rotational_inertia">ഇനേർഷ്യ</string>
+    <string name="physical_properties">നൈസർഗിക ഗുണവിശേഷങ്ങൾ</string>
+    <string name="help">സഹായം</string>
+    <string name="tick_smooth">സൗമ്യമായ ടിക്ക്</string>
+    <string name="tick_oscillate">ആടുന്ന ടിക്ക്</string>
+    <string name="use_physical_properties">നൈസർഗിക ഗുണവിശേഷങ്ങൾ ഉപയോഗിക്കുക</string>
+    <string name="seconds_precision">സെക്കന്റുകളുടെ കൃത്യത</string>
+    <string name="accent_colors">പ്രധാന നിറം</string>
+    <string name="opacity">സുതാര്യത</string>
+    <string name="size">വലിപ്പം</string>
+    <string name="customize_pin">പിൻ നവീകരിക്കുക</string>
+    <string name="twenty_four_hours_clock">24 മണിക്കൂർ ക്ലോക്ക്</string>
+    <string name="gimbal_lock">ജിമ്പൽ ലോക്ക് ചെയ്യുക</string>
+    <string name="clock_widget_notification">ക്ലോക്ക് വിഡ്ജറ്റ് പ്രവർത്തിക്കുന്നു.</string>
+    <string name="notification_desc">\"വിഡ്ജറ്റ് ചാനൽ\" നോട്ടിഫിക്കേഷൻ മറക്കുന്നതിന് നോട്ടിഫിക്കേഷൻ സെറ്റിംഗ്സിൽ ടേൺ ഓഫ് ചെയ്യുക.</string>
+    <string name="save">സേവ് ചെയ്യുക</string>
+    <string name="set_and_save">ക്രമീകരിച്ചു സേവ് ചെയ്യുക</string>
+    <string name="failed">പരാജയം!</string>
+    <string name="set_only">ക്രമീകരിക്കുക മാത്രം ചെയ്യുക</string>
+    <string name="sure">തീർച്ചയായും</string>
+    <string name="desc_custom_coord_dialog">ഇത് വിവരശേഖരണത്തിന് വേണ്ടി മാത്രം ഉപയോഗിക്കുന്നു.</string>
+    <string name="trail">ചിഹ്നം</string>
+    <string name="geodesic_trail">ഭൗമിക ചിഹ്നം</string>
+    <string name="sensor_error">ആവശ്യമായിരിക്കുന്ന സെൻസറുകൾ നിങ്ങളുടെ സ്മാർട്ട്‌ ഫോണിൽ ലഭ്യമല്ല.</string>
+    <string name="play_services_error">ആവശ്യമായിരിക്കുന്ന ഗൂഗിൾ പ്ലേ ഡിപെൻഡൻസികൾ നിങ്ങളുടെ സ്മാർട്ട് ഫോൺ സപ്പോർട്ട് ചെയ്യുന്നില്ല.</string>
+    <string name="enter_trail_name">ചിഹ്നത്തിന്റെ നാമം</string>
+    <string name="note">കുറിപ്പ്</string>
+    <string name="total">തുക:</string>
+    <string name="saved_trails">സേവ് ചെയ്തിരിക്കുന്ന ചിഹ്നങ്ങൾ</string>
+    <string name="starting_point">ആരംഭ സ്ഥാനം</string>
+    <string name="enter_marker_name">മാർക്കർ നാമം</string>
+    <string name="delete">ഡിലീറ്റ്</string>
+    <string name="show_on_map">മാപ്പിൽ കാണുക</string>
+    <string name="copy">കോപ്പി</string>
+    <string name="trail_data_accuracy">%1$s %2$s എന്ന ലൊക്കേഷനിൽ</string>
+    <string name="rate_text">നിങ്ങൾക്ക് ഈ ആപ്പ് ഇഷ്ടമായോ? ഇവിടെ ക്ലിക്ക് ചെയ്ത് പ്ലേ സ്റ്റോറിൽ ആപ്പിന് റേറ്റിംഗ് നൽകൂ.</string>
+    <string name="target">ലക്ഷ്യം</string>
+    <string name="my_developer_profile">ഡെവലപ്പർ</string>
+    <string name="eta_seconds">%1$s സെക്കന്റുകൾ</string>
+    <string name="eta_minutes">%1$s മിനിറ്റുകൾ</string>
+    <string name="eta_hours">%1$s മണിക്കൂർ %2$s മിനിറ്റുകൾ</string>
+    <string name="eta_days">%1$s ദിവസം %2$s മണിക്കൂർ %3$s മിനിറ്റുകൾ</string>
+    <string name="eta">ഇ. ടി. എ:</string>
+    <string name="gps_displacement_from_origin">പ്രഭവ സ്ഥാനത്തു നിന്നുള്ള വ്യത്യാസം:</string>
+    <string name="gps_displacement_from_dest">ഡെസ്റ്റിൽ നിന്നുള്ള വ്യത്യാസം:</string>
+    <string name="direction">ദിശ</string>
+    <string name="targets">ലക്ഷ്യങ്ങൾ</string>
+    <string name="direction_info">ദിശാ വിവരങ്ങൾ</string>
+    <string name="use_maps_target">മാപ്പിന്റെ ലക്ഷ്യം ഉപയോഗിക്കുക</string>
+    <string name="using_maps_target">മാപ്പിന്റെ ലക്ഷ്യം ഉപയോഗിക്കുന്നു</string>
+    <string name="edit">തിരുത്തുക</string>
+    <string name="battery_optimization_desc">ഘടികാര വിഡ്ജറ്റിന്റെ പ്രവർത്തനം സുഗമമായി മുന്നോട്ടു പോകുവാൻ ബാറ്ററി ഒപ്ടിമൈസേഷൻ ഓഫ് ചെയ്യുക.</string>
+    <string name="use_as_target">ലക്ഷ്യമായി ഉപയോഗിക്കുക</string>
+    <string name="create_new">പുതിയത്</string>
+    <string name="save_from_target">ലക്ഷ്യത്തിൽ നിന്നും സേവ് ചെയ്യുക</string>
+    <string name="navigate">അലയുക</string>
+    <string name="mechanical">യാന്ത്രികം</string>
+    <string name="app_coordinates_format">സൂചികകളുടെ ഫോർമാറ്റ്</string>
+    <string name="share">പങ്കുവയ്ക്കുക</string>
+    <string name="telegram_group">ടെലഗ്രാം ഗ്രൂപ്പ്</string>
+    <string name="buy_full_desc">ആപ്പ് അൺലോക്ക് ചെയ്തുകൊണ്ട് ആപ്പിന്റെ മുഴുവൻ പ്രവർത്തനവും ജനങ്ങൾക്കു ലഭ്യമാക്കുക.</string>
+    <string name="notification_permission_desc">ഘടികാര വിഡ്ജറ്റിന്റെ പ്രവർത്തനം സുഗമമായി മുന്നോട്ടു പോകുവാൻ നോട്ടിഫിക്കേഷൻ അക്സസ് നൽകുക.</string>
+    <string name="true_altitude">യഥാർത്ഥ ഉയരം</string>
+    <string name="elongation">ഇ ലോ ങ്ങേ ഷൻ </string>
+    <string name="radius">ആരം</string>
+    <string name="crescent_width">ക്രസന്റ് വീതി</string>
+    <string name="other_apps">മറ്റ് ആപ്പുകൾ</string>
+    <string name="measure">കണക്കുകൂട്ടുക</string>
+    <string name="name">പേര്</string>
+    <string name="saved_measures">സേവ് ചെയ്യപ്പെട്ട കണക്കുകൂട്ടലുകൾ</string>
+</resources>
