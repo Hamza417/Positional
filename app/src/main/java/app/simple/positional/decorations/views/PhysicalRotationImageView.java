@@ -84,7 +84,6 @@ public class PhysicalRotationImageView extends androidx.appcompat.widget.AppComp
         if (animationOn) {
             if (angleRecalculate(System.currentTimeMillis())) {
                 this.setRotation(angle1 > 0 ? (float) (angle1 % 360) : (float) (360 + angle1 % 360));
-                // Log.d("PhysicalRotationImageView", "angle1: " + this.getRotation());
             }
         } else {
             this.setRotation(angle1 > 0 ? (float) (angle1 % 360) : (float) (360 + angle1 % 360));

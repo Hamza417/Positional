@@ -3,6 +3,7 @@ package app.simple.positional.preferences
 import android.annotation.SuppressLint
 import androidx.annotation.IntRange
 import androidx.appcompat.app.AppCompatDelegate
+import app.simple.positional.BuildConfig
 import app.simple.positional.singleton.SharedPreferences.getSharedPreferences
 
 object MainPreferences {
@@ -49,7 +50,7 @@ object MainPreferences {
     }
 
     fun isScreenOn(): Boolean {
-        return getSharedPreferences().getBoolean(screenOn, false)
+        return getSharedPreferences().getBoolean(screenOn, BuildConfig.DEBUG)
     }
 
     //--------------------------------------------------------------------------------------------------//
@@ -231,7 +232,7 @@ object MainPreferences {
     }
 
     fun getSkipSplashScreen(): Boolean {
-        return getSharedPreferences().getBoolean(skipSplashScreen, false)
+        return getSharedPreferences().getBoolean(skipSplashScreen, BuildConfig.DEBUG)
     }
 
     // ---------------------------------------------------------------------------------------------------------- //
