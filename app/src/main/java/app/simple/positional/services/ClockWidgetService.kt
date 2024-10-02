@@ -8,7 +8,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.SharedPreferences.*
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.content.pm.ServiceInfo
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -254,6 +254,10 @@ abstract class ClockWidgetService : Service(), OnSharedPreferenceChangeListener 
     }
 
     private fun getAccentTheme(): Int {
+        if (MainPreferences.isMaterialYouAccentColor()) {
+            return R.style.MaterialYou
+        }
+
         return when (MainPreferences.getAccentColor()) {
             ContextCompat.getColor(baseContext, R.color.positional) -> {
                 R.style.Positional

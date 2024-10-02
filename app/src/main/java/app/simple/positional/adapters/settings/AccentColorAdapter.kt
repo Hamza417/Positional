@@ -21,7 +21,7 @@ import app.simple.positional.preferences.MainPreferences.getCornerRadius
 import app.simple.positional.util.ColorUtils.toHex
 import app.simple.positional.util.ConditionUtils.isZero
 import app.simple.positional.util.HtmlHelper
-import java.util.*
+import java.util.Arrays
 
 class AccentColorAdapter(private val list: ArrayList<Pair<Int, String>>) : RecyclerView.Adapter<VerticalListViewHolder>() {
 
@@ -55,6 +55,12 @@ class AccentColorAdapter(private val list: ArrayList<Pair<Int, String>>) : Recyc
 
             holder.container.setOnClickListener {
                 palettesAdapterCallbacks.onColorPressed(list[position].first)
+
+                if (list[position].second == "Material You (Dynamic)") {
+                    MainPreferences.setMaterialYouAccentColor(true)
+                } else {
+                    MainPreferences.setMaterialYouAccentColor(false)
+                }
             }
 
             holder.name.text = list[position].second
@@ -63,10 +69,18 @@ class AccentColorAdapter(private val list: ArrayList<Pair<Int, String>>) : Recyc
             holder.container.background = null
             holder.container.background = getRippleDrawable(holder.container.background, list[position].first)
 
-            holder.tick.visibility = if (list[position].first == MainPreferences.getAccentColor()) {
-                View.VISIBLE
+            holder.tick.visibility = if (MainPreferences.isMaterialYouAccentColor()) {
+                if (list[position].second == "Material You (Dynamic)") {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
             } else {
-                View.INVISIBLE
+                if (list[position].first == MainPreferences.getAccentColor()) {
+                    View.VISIBLE
+                } else {
+                    View.INVISIBLE
+                }
             }
         } else if (holder is Header) {
             holder.total.text = HtmlHelper.fromHtml("<b>${holder.itemView.context.getString(R.string.total)}</b> ${list.size}")
