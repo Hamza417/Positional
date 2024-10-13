@@ -30,6 +30,7 @@ object LocaleHelper {
             Locales("Deutsch (German)", "de-DE"),
             Locales("Hungarian (Magyar)", "hu-HU"),
             Locales("Spanish (Español)", "es-ES"),
+        Locales("Malayalam (മലയാളം)", "ml-IN"),
     )
 
     fun isOneOfTraditionalChinese(): Boolean {
