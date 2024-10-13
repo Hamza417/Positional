@@ -11,10 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:clipToPadding="false"
+        android:layout_marginBottom="@dimen/popup_padding"
         android:clipChildren="false"
-        android:layout_marginBottom="@dimen/popup_padding">
+        android:clipToPadding="false"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -35,8 +35,8 @@
             android:inputType="text"
             android:maxLength="40"
             android:maxLines="1"
-            android:paddingHorizontal="@dimen/popup_padding"
             android:minHeight="50dp"
+            android:paddingHorizontal="@dimen/popup_padding"
             android:saveEnabled="true"
             android:textColor="@color/textSecondary"
             android:textColorHighlight="?attr/colorAppAccentLight"
@@ -47,9 +47,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/popup_padding"
             android:fontFamily="@font/medium"
             android:text="@string/note"
-            android:layout_marginTop="@dimen/popup_padding"
             android:textColor="@color/textTertiary"
             android:textSize="@dimen/description_text_size" />
 
@@ -58,13 +58,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
+            android:background="@drawable/text_field"
             android:fontFamily="@font/regular"
             android:gravity="top"
-            android:background="@drawable/text_field"
-            android:padding="@dimen/popup_padding"
             android:importantForAutofill="no"
             android:maxHeight="300dp"
             android:minHeight="100dp"
+            android:padding="@dimen/popup_padding"
             android:saveEnabled="true"
             android:textColor="@color/textSecondary"
             android:textColorHighlight="?attr/colorAppAccentLight"
@@ -83,16 +83,18 @@
         <app.simple.positional.decorations.ripple.DynamicRippleButton
             android:id="@+id/cancel"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/app_button_size"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/bold"
             android:text="@string/button_cancel"
             android:textColor="?attr/colorAppAccent" />
 
         <app.simple.positional.decorations.ripple.DynamicRippleButton
             android:id="@+id/save"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/app_button_size"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:fontFamily="@font/bold"
             android:text="@string/save"
             android:textColor="?attr/colorAppAccent"
             android:visibility="gone" />

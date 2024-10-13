@@ -74,7 +74,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
             android:textColor="?attr/colorAppAccent"
-            android:fontFamily="@font/medium"
+            android:fontFamily="@font/bold"
             android:text="@string/share" />
 
     </app.simple.positional.decorations.corners.DynamicCornerLinearLayout>

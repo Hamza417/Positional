@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_btn"
-                android:fontFamily="@font/medium"
+                android:fontFamily="@font/bold"
                 android:text="@string/button_close"
                 android:textColor="@color/textPrimary" />
 
@@ -73,10 +73,9 @@
                 android:id="@+id/grant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginHorizontal="10dp"
                 android:background="@drawable/ripple_btn"
-                android:fontFamily="@font/medium"
+                android:fontFamily="@font/bold"
                 android:text="@string/button_grant"
                 android:textColor="@color/textPrimary" />
 

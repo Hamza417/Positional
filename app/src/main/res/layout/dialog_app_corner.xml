@@ -54,6 +54,7 @@
                 android:layout_marginEnd="@dimen/options_item_padding"
                 android:background="@drawable/ripple_btn"
                 android:text="@string/button_cancel"
+                android:fontFamily="@font/bold"
                 android:textColor="@color/textSecondary" />
 
             <app.simple.positional.decorations.ripple.DynamicRippleButton
@@ -63,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/ripple_btn"
                 android:text="@string/button_set"
+                android:fontFamily="@font/bold"
                 android:textColor="@color/textSecondary" />
 
         </LinearLayout>
