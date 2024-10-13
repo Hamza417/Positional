@@ -8,7 +8,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:8.7.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.20"
         classpath 'com.google.gms:google-services:4.4.2'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -17,7 +17,7 @@ buildscript {
 }
 
 plugins {
-    id 'com.google.devtools.ksp' version '1.8.10-1.0.9' apply false
+    id 'com.google.devtools.ksp' version '2.0.20-1.0.25' apply false
 }
 
 allprojects {
