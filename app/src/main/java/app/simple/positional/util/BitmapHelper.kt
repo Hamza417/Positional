@@ -61,7 +61,7 @@ object BitmapHelper {
         return updatedBitmap
     }
 
-    fun rotateBitmap(bitmap: Bitmap, rotationAngleDegree: Float): Bitmap? {
+    fun rotateBitmap(bitmap: Bitmap, rotationAngleDegree: Float): Bitmap {
         val w = bitmap.height
         val h = bitmap.height
         var newW = w
@@ -70,7 +70,8 @@ object BitmapHelper {
             newW = h
             newH = w
         }
-        val rotatedBitmap = Bitmap.createBitmap(newW, newH, bitmap.config)
+        val rotatedBitmap = Bitmap.createBitmap(newW, newH, bitmap.config
+                                                            ?: Bitmap.Config.ARGB_8888)
         val canvas = Canvas(rotatedBitmap)
         val rect = Rect(0, 0, newW, newH)
         val matrix = Matrix()
@@ -95,7 +96,8 @@ object BitmapHelper {
             newH = w
         }
 
-        val rotatedBitmap = Bitmap.createBitmap(newW, newH, bitmap.config)
+        val rotatedBitmap = Bitmap.createBitmap(newW, newH, bitmap.config
+                                                            ?: Bitmap.Config.ARGB_8888)
         val canvas = Canvas(rotatedBitmap)
         val rect = Rect(0, 0, newW, newH)
         val matrix = Matrix()

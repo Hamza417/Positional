@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.devtools.ksp'
-apply plugin: 'kotlin-kapt'
 
 // Begin of reading the sensitive data
 def noKeyFound = '"NO_KEY_FOUND"'
@@ -49,13 +48,13 @@ if (googleMapsAPIKey == noKeyFound) {
 
 android {
 
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "app.simple.positional"
         minSdkVersion 24
         //noinspection OldTargetApi
-        targetSdkVersion 34
+        targetSdkVersion 35
         versionCode 180080
         versionName "v180.8.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -64,10 +63,8 @@ android {
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
         resValue "string", "thisAppLicensingKey", thisAppLicensingKey
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.schemaLocation": "$projectDir/databases/schemas".toString()]
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/databases/schemas")
         }
     }
 
@@ -139,7 +136,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
     implementation 'androidx.core:core-ktx:1.15.0'
-    implementation 'androidx.fragment:fragment-ktx:1.8.5'
+    implementation 'androidx.fragment:fragment-ktx:1.8.6'
     implementation 'androidx.dynamicanimation:dynamicanimation:1.0.0'
     implementation 'androidx.webkit:webkit:1.12.1'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
@@ -150,7 +147,7 @@ dependencies {
 
     // Google Services and Default android libs
     implementation 'com.google.android.gms:play-services-location:21.3.0'
-    implementation 'com.google.android.gms:play-services-maps:19.0.0'
+    implementation 'com.google.android.gms:play-services-maps:19.1.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'com.google.maps.android:android-maps-utils:2.2.4'
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
@@ -163,7 +160,7 @@ dependencies {
     // Room components
     implementation "androidx.room:room-ktx:2.6.1"
     //noinspection KaptUsageInsteadOfKsp
-    kapt "androidx.room:room-compiler:2.6.1"
+    ksp "androidx.room:room-compiler:2.6.1"
     androidTestImplementation "androidx.room:room-testing:2.6.1"
 
     // Leak Canary -- debugImplementation because LeakCanary should only run in debug builds.
