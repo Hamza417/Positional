@@ -55,6 +55,13 @@
     <string name="twilight_civil_dusk">Civil Dusk:</string>
     <string name="twilight_nautical_dusk">Nautical Dusk:</string>
     <string name="twilight_astronomical_dusk">Astronomical Dusk:</string>
+    <string name="twilight_morning">Morning (Before Sunrise)</string>
+    <string name="twilight_golden_hour">Golden Hour:</string>
+    <string name="twilight_blue_hour">Blue Hour:</string>
+    <string name="twilight_visual_lower">Visual (Lower):</string>
+    <string name="twilight_visual">Visual:</string>
+    <string name="twilight_evening">Evening (After Sunset)</string>
+    <string name="twilight_horizon">Horizon:</string>
     <string name="moon_parallactic_angle">Parallactic Angle:</string>
     <string name="moon_moonrise">Moonrise:</string>
     <string name="moon_moonset">Moonset:</string>
@@ -342,12 +349,4 @@
     <string name="measure">Measure</string>
     <string name="name">Name</string>
     <string name="saved_measures">Saved Measures</string>
-    <string name="twilight_morning">Morning (Before Sunrise)</string>
-    <string name="twilight_night_hour">Night Hour</string>
-    <string name="twilight_golden_hour">Golden Hour</string>
-    <string name="twilight_blue_hour">Blue Hour</string>
-    <string name="twilight_visual_lower">Visual (Lower)</string>
-    <string name="twilight_visual">Visual</string>
-    <string name="twilight_evening">Evening (After Sunset)</string>
-    <string name="twilight_horizon">Horizon</string>
 </resources>
