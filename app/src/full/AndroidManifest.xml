@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:installLocation="auto">
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the "MyLocation" functionality.
+    -->
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.sensor.compass"
+        android:required="true" />
+
+    <uses-feature
+        android:name="android.software.webview"
+        android:required="true" />
+
+    <uses-feature
+        android:name="android.software.app_widgets"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.location"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.location.network"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.software.input_methods"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.screen.portrait"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:configChanges="keyboardHidden|orientation|screenSize|locale"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher_default"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_default_round"
+        android:supportsRtl="true"
+        android:theme="@style/Positional"
+        android:windowSoftInputMode="adjustPan"
+        tools:ignore="AllowBackup,LockedOrientationActivity">
+
+        <meta-data
+            android:name="open_source"
+            android:value="true" /> <!-- Set to true to indicate the app is open source -->
+
+        <meta-data
+            android:name="open_source_license"
+            android:value="GNU GENERAL PUBLIC LICENSE Version 3" /> <!-- License of your app -->
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_place_notification" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/notification_icon_color" />
+
+        <!-- Activity Aliases -->
+
+        <activity-alias
+            android:name=".activities.alias.IconOneAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_default"
+            android:roundIcon="@mipmap/ic_launcher_default_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconTwoAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_two"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_two_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconLegacyAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_legacy"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_legacy_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconThreeAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_three"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_three_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconFourAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_four"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_four_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconFiveAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_five"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_five_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconSixAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_six"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_six_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconSevenAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_seven"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_seven_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconEightAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_eight"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_eight_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconNineAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_nine"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_nine_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconTenAlias"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_ten"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_ten_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <activity-alias
+            android:name=".activities.alias.IconElevenAlias"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_eleven"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_eleven_round"
+            android:targetActivity=".activities.main.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+
+        <!-- Activities -->
+
+        <activity
+            android:name=".activities.main.LauncherActivity"
+            android:colorMode="wideColorGamut"
+            android:exported="true"
+            tools:targetApi="o" />
+
+        <activity
+            android:name=".activities.main.MainActivity"
+            android:colorMode="wideColorGamut"
+            android:exported="false"
+            tools:targetApi="o" />
+
+        <activity
+            android:name=".activities.subactivity.TimezonePickerActivity"
+            android:colorMode="wideColorGamut"
+            android:exported="false"
+            tools:targetApi="o" />
+
+        <activity
+            android:name=".activities.subactivity.CustomLocationsActivity"
+            android:colorMode="wideColorGamut"
+            android:exported="false"
+            tools:targetApi="o" />
+
+        <activity
+            android:name=".activities.subactivity.WebPageViewerActivity"
+            android:colorMode="wideColorGamut"
+            android:exported="false"
+            tools:targetApi="o" />
+
+        <activity
+            android:name=".activities.subactivity.TrailsViewerActivity"
+            android:colorMode="wideColorGamut"
+            android:exported="false"
+            tools:targetApi="o" />
+
+        <activity
+            android:name=".activities.subactivity.AccentColorsActivity"
+            android:colorMode="wideColorGamut"
+            android:exported="true"
+            tools:targetApi="o" />
+
+        <activity
+            android:name=".activities.subactivity.ArtsActivity"
+            android:colorMode="wideColorGamut"
+            android:exported="true"
+            tools:targetApi="o" />
+
+        <activity
+            android:name=".activities.subactivity.TargetAddressActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".activities.subactivity.MapSearchActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.subacitivity.MeasuresActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".activities.service.ClockWidgetActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activities.subactivity.DirectionsActivity"
+            android:exported="true" />
+
+        <!-- Services -->
+
+        <service
+            android:name=".services.LocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="location"
+            android:icon="@drawable/ic_pin_01"
+            android:label="@string/location_provider"
+            android:logo="@drawable/ic_pin_01"
+            android:stopWithTask="true"
+            tools:ignore="ForegroundServicePermission" />
+
+        <service
+            android:name=".services.FusedLocationService"
+            android:enabled="true"
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="location"
+            android:icon="@drawable/ic_pin_01"
+            android:label="@string/fused_location_provider"
+            android:stopWithTask="true"
+            tools:ignore="ForegroundServicePermission" />
+
+        <service
+            android:name=".services.ClockWidgetService2x2"
+            android:enabled="true"
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="specialUse"
+            android:icon="@drawable/ic_access_time"
+            android:label="@string/clock"
+            android:stopWithTask="false" />
+
+        <service
+            android:name=".services.ClockWidgetService3x3"
+            android:enabled="true"
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="specialUse"
+            android:icon="@drawable/ic_access_time"
+            android:label="@string/clock"
+            android:stopWithTask="false" />
+
+        <service
+            android:name=".services.ClockWidgetService4x4"
+            android:enabled="true"
+            android:exported="false"
+            android:externalService="false"
+            android:foregroundServiceType="specialUse"
+            android:icon="@drawable/ic_access_time"
+            android:label="@string/clock"
+            android:stopWithTask="false" />
+
+        <!-- Widgets -->
+
+        <receiver
+            android:name=".widgets.ClockWidget4x4"
+            android:exported="false"
+            android:icon="@drawable/ic_access_time"
+            android:label="@string/clock">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/clock_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.ClockWidget2x2"
+            android:exported="false"
+            android:icon="@drawable/ic_access_time"
+            android:label="@string/clock">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/clock_widget_info_2x2" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.ClockWidget3x3"
+            android:exported="false"
+            android:icon="@drawable/ic_access_time"
+            android:label="@string/clock">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/clock_widget_info_3x3" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.SunTimeWidget"
+            android:exported="false"
+            android:icon="@drawable/ic_sunrise"
+            android:label="@string/sun_time">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/suntime_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.SunTimeWidgetArt"
+            android:exported="false"
+            android:icon="@drawable/ic_sunrise"
+            android:label="@string/sun_time">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/suntime_widget_info_art" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.MoonPhaseWidget"
+            android:exported="false"
+            android:icon="@drawable/ic_moon_phase"
+            android:label="@string/moon_illumination">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/moon_phase_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.TwilightWidget"
+            android:exported="false"
+            android:icon="@drawable/ic_twilight"
+            android:label="@string/twilight">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/twilight_widget_info" />
+        </receiver>
+
+    </application>
+</manifest>

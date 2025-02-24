@@ -591,9 +591,9 @@ class Time : ScopedFragment() {
 
         private const val TAG = "Time"
 
-        private const val GOLDEN_HOUR_MORNING_START = -4.0
-        private const val GOLDEN_HOUR_EVENING_END = -4.0
+        const val GOLDEN_HOUR_MORNING_START = -4.0
+        internal const val GOLDEN_HOUR_EVENING_END = -4.0
 
-        private const val ARROW = "<b>~</b>"
+        internal const val ARROW = "<b>~</b>"
     }
 }

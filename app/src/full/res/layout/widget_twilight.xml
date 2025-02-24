@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_widget"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/widget_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_twilight"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/medium"
+            android:text="@string/twilight"
+            android:textColor="@color/textTertiary" />
+
+        <TextView
+            android:id="@+id/widget_update_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/regular"
+            android:text="@string/app_name"
+            android:textColor="@color/dividerColor"
+            android:textSize="@dimen/description_text_size" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/twilight_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/textSecondary"
+        android:fontFamily="@font/regular"
+        android:paddingHorizontal="10dp"
+        android:textSize="@dimen/settings_secondary_text_size" />
+
+</LinearLayout>
