@@ -370,25 +370,25 @@ class Time : ScopedFragment() {
                         fromHtml(
                             // Morning (before sunrise)
                             "<h3><b>${getString(R.string.twilight_morning)}</b></h3>" +
-                            "<b>${getString(R.string.twilight_astronomical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise)} - ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().rise)}<br>" +
-                            "<b>${getString(R.string.twilight_nautical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().rise)} - ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().rise)}<br>" +
-                            "<b>${getString(R.string.twilight_blue_hour)}</b> ${pattern.format(twilight(SunTimes.Twilight.NIGHT_HOUR).execute().rise)} - ${pattern.format(twilight(SunTimes.Twilight.BLUE_HOUR).execute().rise)}<br>" +
-                            "<b>${getString(R.string.twilight_civil_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().rise)} - ${pattern.format(twilight(SunTimes.Twilight.HORIZON).execute().rise)}<br>" +
+                            "<b>${getString(R.string.twilight_astronomical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.ASTRONOMICAL).execute().rise)} $ARROW ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().rise)}<br>" +
+                            "<b>${getString(R.string.twilight_nautical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().rise)} $ARROW ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().rise)}<br>" +
+                            "<b>${getString(R.string.twilight_blue_hour)}</b> ${pattern.format(twilight(SunTimes.Twilight.NIGHT_HOUR).execute().rise)} $ARROW ${pattern.format(twilight(SunTimes.Twilight.BLUE_HOUR).execute().rise)}<br>" +
+                            "<b>${getString(R.string.twilight_civil_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().rise)} $ARROW ${pattern.format(twilight(SunTimes.Twilight.HORIZON).execute().rise)}<br>" +
                             "<b>${getString(R.string.twilight_visual)}</b> ${pattern.format(twilight(SunTimes.Twilight.VISUAL).execute().rise)}<br>" +
                             "<b>${getString(R.string.twilight_horizon)}</b> ${pattern.format(twilight(SunTimes.Twilight.HORIZON).execute().rise)}<br>" +
                             "<b>${getString(R.string.twilight_visual_lower)}</b> ${pattern.format(twilight(SunTimes.Twilight.VISUAL_LOWER).execute().rise)}<br>" +
-                            "<b>${getString(R.string.twilight_golden_hour)}</b> ${pattern.format(twilight(GOLDEN_HOUR_MORNING_START).execute().rise)} - ${pattern.format(twilight(SunTimes.Twilight.GOLDEN_HOUR).execute().rise)}<br>" +
+                            "<b>${getString(R.string.twilight_golden_hour)}</b> ${pattern.format(twilight(GOLDEN_HOUR_MORNING_START).execute().rise)} $ARROW ${pattern.format(twilight(SunTimes.Twilight.GOLDEN_HOUR).execute().rise)}<br>" +
                             "<br>" +
                             // Evening (after sunset)
                             "<h3>${getString(R.string.twilight_evening)}</h3>" +
-                            "<b>${getString(R.string.twilight_golden_hour)}</b> ${pattern.format(twilight(SunTimes.Twilight.GOLDEN_HOUR).execute().set)} - ${pattern.format(twilight(GOLDEN_HOUR_EVENING_END).execute().set)}<br>" +
+                            "<b>${getString(R.string.twilight_golden_hour)}</b> ${pattern.format(twilight(SunTimes.Twilight.GOLDEN_HOUR).execute().set)} $ARROW ${pattern.format(twilight(GOLDEN_HOUR_EVENING_END).execute().set)}<br>" +
                             "<b>${getString(R.string.twilight_visual_lower)}</b> ${pattern.format(twilight(SunTimes.Twilight.VISUAL_LOWER).execute().set)}<br>" +
                             "<b>${getString(R.string.twilight_horizon)}</b> ${pattern.format(twilight(SunTimes.Twilight.HORIZON).execute().set)}<br>" +
                             "<b>${getString(R.string.twilight_visual)}</b> ${pattern.format(twilight(SunTimes.Twilight.VISUAL).execute().set)}<br>" +
-                            "<b>${getString(R.string.twilight_civil_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.HORIZON).execute().set)} - ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().set)}<br>" +
-                            "<b>${getString(R.string.twilight_blue_hour)}</b> ${pattern.format(twilight(SunTimes.Twilight.BLUE_HOUR).execute().set)} - ${pattern.format(twilight(SunTimes.Twilight.NIGHT_HOUR).execute().set)}<br>" +
-                            "<b>${getString(R.string.twilight_nautical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().set)} - ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().set)}<br>" +
-                            "<b>${getString(R.string.twilight_astronomical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().set)} - ${pattern.format(twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set)}<br>"
+                            "<b>${getString(R.string.twilight_civil_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.HORIZON).execute().set)} $ARROW ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().set)}<br>" +
+                            "<b>${getString(R.string.twilight_blue_hour)}</b> ${pattern.format(twilight(SunTimes.Twilight.BLUE_HOUR).execute().set)} $ARROW ${pattern.format(twilight(SunTimes.Twilight.NIGHT_HOUR).execute().set)}<br>" +
+                            "<b>${getString(R.string.twilight_nautical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.CIVIL).execute().set)} $ARROW ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().set)}<br>" +
+                            "<b>${getString(R.string.twilight_astronomical_dusk)}</b> ${pattern.format(twilight(SunTimes.Twilight.NAUTICAL).execute().set)} $ARROW ${pattern.format(twilight(SunTimes.Twilight.ASTRONOMICAL).execute().set)}<br>"
                         )
                     }
 
@@ -594,6 +594,6 @@ class Time : ScopedFragment() {
         private const val GOLDEN_HOUR_MORNING_START = -4.0
         private const val GOLDEN_HOUR_EVENING_END = -4.0
 
-        private const val ASTRONOMICAL_DUSK_START = -12.0
+        private const val ARROW = "<b>~</b>"
     }
 }
