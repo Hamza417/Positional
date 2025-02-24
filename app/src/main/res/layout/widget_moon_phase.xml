@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/widget_moon_phase_art"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:src="@drawable/moon_phase_02"
         tools:ignore="ContentDescription" />
 
