@@ -51,6 +51,13 @@
     <string name="twilight_civil_dusk">Crepúsculo Civil:</string>
     <string name="twilight_nautical_dusk">Crepúsculo Náutico:</string>
     <string name="twilight_astronomical_dusk">Crepúsculo Astronômico:</string>
+    <string name="twilight_morning">De manhã</string>
+    <string name="twilight_golden_hour">Hora de Douração:</string>
+    <string name="twilight_blue_hour">Crepúsculo:</string>
+    <string name="twilight_visual_lower">Visual (baixo):</string>
+    <string name="twilight_visual">Visual:</string>
+    <string name="twilight_evening">Fim de tarde</string>
+    <string name="twilight_horizon">Horizonte:</string>
     <string name="moon_parallactic_angle">Ângulo Paraláxico:</string>
     <string name="moon_moonrise">Nascer da Lua:</string>
     <string name="moon_moonset">Pôr da Lua:</string>
