@@ -28,12 +28,12 @@
                 android:layout_marginStart="@dimen/options_text_margin_start"
                 android:layout_weight="1"
                 android:fontFamily="@font/regular"
-                android:text="@string/dd_ddd"
+                android:text="@string/dd_dddddd"
                 android:textColor="@color/textPrimary"
                 android:textSize="@dimen/options_item_text_size" />
 
             <app.simple.positional.decorations.views.CustomRadioButton
-                android:id="@+id/dd_ddd"
+                android:id="@+id/dd_dddddd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/iconColor" />

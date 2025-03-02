@@ -10,7 +10,7 @@
     <string name="fused_location_provider" translatable="false">Fused Location Provider</string>
     <string name="android_location_provider" translatable="false">Android Location Provider</string>
     <string name="coordinates_format" translatable="false">%1$s  |  %2$s</string>
-    <string name="dd_ddd" translatable="false">DD.DDD°</string>
+    <string name="dd_dddddd" translatable="false">DD.DDDDDD°</string>
     <string name="dd_mm_mmm" translatable="false">DD°MM.MMM</string>
     <string name="dd_mm_ss_sss" translatable="false">DD°MM\'SS.SSS</string>
     <string name="inure_app_manager" translatable="false">Inure App Manager</string>

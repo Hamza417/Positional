@@ -10,6 +10,8 @@ import kotlin.math.abs
 
 object DMSConverter {
 
+    private const val DD_DDDDDD_PLACES = 6
+
     fun getFormattedCoordinates(location: Location, context: Context): Array<String> {
         return when (MainPreferences.getCoordinatesFormat()) {
             0 -> { // DD
@@ -122,16 +124,16 @@ object DMSConverter {
 
     fun latitudeAsDD(latitude: Double): String {
         return if (latitude > 0)
-            "${MathExtensions.round(latitude, 3)}°"
+            "${MathExtensions.round(latitude, DD_DDDDDD_PLACES)}°"
         else
-            "${MathExtensions.round(latitude, 3)}°"
+            "${MathExtensions.round(latitude, DD_DDDDDD_PLACES)}°"
     }
 
     fun longitudeAsDD(longitude: Double): String {
         return if (longitude > 0)
-            "${MathExtensions.round(longitude, 3)}°"
+            "${MathExtensions.round(longitude, DD_DDDDDD_PLACES)}°"
         else
-            "${MathExtensions.round(longitude, 3)}°"
+            "${MathExtensions.round(longitude, DD_DDDDDD_PLACES)}°"
     }
 
     fun latitudeAsDM(lat: Double, context: Context): String {

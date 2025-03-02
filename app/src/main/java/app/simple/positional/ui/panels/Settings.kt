@@ -240,7 +240,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
                 if (isChecked) {
                     startActivity(Intent(requireActivity(), CustomLocationsActivity::class.java))
                 } else {
-                    MainPreferences.setCustomCoordinates(isChecked)
+                    MainPreferences.setCustomCoordinates(false)
                 }
             }
         }
@@ -293,8 +293,8 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         legalNotes.setOnClickListener {
             val popupMenu = LegalNotesPopupMenu(LayoutInflater.from(requireContext()).inflate(R.layout.popup_legal_notes,
-                    PopupLinearLayout(context),
-                    true), legalNotes, xOff, yOff)
+                PopupLinearLayout(context),
+                true), legalNotes, xOff, yOff)
             popupMenu.popupMenuCallback = this
         }
 
@@ -365,9 +365,9 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
                 permissionNotification()
             } else {
                 permissionContracts.launch(
-                        arrayOf(
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.ACCESS_FINE_LOCATION))
+                    arrayOf(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION))
             }
         }
 
@@ -419,7 +419,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
     private fun setCoordinatesFormat() {
         coordinatesFormat.text = when (MainPreferences.getCoordinatesFormat()) {
-            0 -> getString(R.string.dd_ddd)
+            0 -> getString(R.string.dd_dddddd)
             1 -> getString(R.string.dd_mm_mmm)
             2 -> getString(R.string.dd_mm_ss_sss)
             else -> "Unknown Format Selected!!" // Unreachable

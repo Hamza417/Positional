@@ -19,7 +19,7 @@ class CoordinatesFormat : CustomBottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.dialog_coordinates_format, container, false)
 
-        dd = view.findViewById(R.id.dd_ddd)
+        dd = view.findViewById(R.id.dd_dddddd)
         ddm = view.findViewById(R.id.dd_mm_mmm)
         dms = view.findViewById(R.id.dd_mm_ss_sss)
 
