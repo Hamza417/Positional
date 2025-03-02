@@ -1,5 +1,6 @@
 package app.simple.positional.model;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -77,6 +78,7 @@ public class Measure {
         this.measurePoints = measurePoints;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Measure{" +

@@ -1,38 +1,35 @@
-package app.simple.positional.database.converters;
+package app.simple.positional.database.converters
 
-import androidx.room.TypeConverter;
+import androidx.room.TypeConverter
+import app.simple.positional.model.MeasurePoint
 
-import java.util.ArrayList;
-
-import app.simple.positional.model.MeasurePoint;
-
-public class MeasurePointConverter {
-
+class MeasurePointConverter {
     @TypeConverter
-    public String fromMeasurePoints(ArrayList<MeasurePoint> measurePoints) {
-        StringBuilder stringBuilder = new StringBuilder();
+    fun fromMeasurePoints(measurePoints: ArrayList<MeasurePoint>?): String {
+        val stringBuilder = StringBuilder()
 
-        if (measurePoints != null && !measurePoints.isEmpty()) {
-            for (MeasurePoint point : measurePoints) {
-                stringBuilder.append(point.convertForDatabase()).append(";");
+        if (!measurePoints.isNullOrEmpty()) {
+            for (point in measurePoints) {
+                stringBuilder.append(point.convertForDatabase()).append(";")
             }
         } else {
-            return null;
+            return ""
         }
 
-        return stringBuilder.toString();
+        return stringBuilder.toString()
     }
 
     @TypeConverter
-    public ArrayList<MeasurePoint> toMeasurePoints(String data) {
-        ArrayList<MeasurePoint> measurePoints = new ArrayList<>();
-        if (data != null && !data.isEmpty()) {
-            String[] points = data.split(";");
-            for (String point : points) {
-                measurePoints.add(MeasurePoint.convertFromDatabase(point));
+    fun toMeasurePoints(data: String?): ArrayList<MeasurePoint> {
+        val measurePoints = ArrayList<MeasurePoint>()
+
+        if (!data.isNullOrEmpty()) {
+            val points = data.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            for (point in points) {
+                measurePoints.add(MeasurePoint.convertFromDatabase(point))
             }
         }
 
-        return measurePoints;
+        return measurePoints
     }
 }
