@@ -25,8 +25,6 @@ colors, and many other features that should have been there.
 
 ## Stats
 
-![Total Lines](https://img.shields.io/tokei/lines/github.com/Hamza417/Positional?color=%23DE7E42&label=Total%20Lines)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FHamza417%2FPositional&count_bg=%233FA6E6&title_bg=%23FB062F&icon=github.svg&icon_color=%23FFFFFF&title=Total+Visits&edge_flat=false)](https://hits.seeyoufarm.com)
 [![Release](https://img.shields.io/github/v/release/Hamza417/Positional?color=212F3D&label=Release)](https://github.com/Hamza417/Positional/releases)
 ![Status](https://img.shields.io/badge/Status-Stable-orange)
 ![Size](https://img.shields.io/github/repo-size/Hamza417/Positional?color=teal&label=Repo%20Size&logo=github)
