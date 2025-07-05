@@ -131,19 +131,19 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.1'
 
     // Kotlin
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
 
     // Google Services and Default android libs
     implementation 'com.google.android.gms:play-services-location:21.3.0'
     implementation 'com.google.android.gms:play-services-maps:19.2.0'
     implementation 'com.google.android.material:material:1.12.0'
-    implementation 'com.google.maps.android:android-maps-utils:2.2.4'
+    implementation 'com.google.maps.android:android-maps-utils:3.14.0'
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
 
     // Third Party
-    implementation 'org.shredzone.commons:commons-suncalc:3.9'
+    implementation 'org.shredzone.commons:commons-suncalc:3.11'
     implementation 'com.github.Berico-Technologies:Geo-Coordinate-Conversion-Java:360781e5be'
-    implementation 'com.github.vipulasri:timelineview:1.1.5'
+    implementation 'com.github.vipulasri:timelineview:1.2.2'
 
     // Room components
     //noinspection GradleDependency
