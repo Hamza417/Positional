@@ -1,6 +1,8 @@
 package app.simple.positional.dialogs.gps
 
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,7 +13,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.decorations.ripple.DynamicRippleImageButton
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
@@ -98,12 +99,6 @@ class CoordinatesExpansion : CustomBottomSheetDialogFragment() {
             stringBuilder.append("${utmEasting.text}\n")
             stringBuilder.append("${utmNorthing.text}\n")
             stringBuilder.append("${utmMeridian.text}\n")
-
-            if (BuildConfig.FLAVOR == "lite") {
-                stringBuilder.append("\n\n")
-                stringBuilder.append("Information is copied using Positional Lite\n")
-                stringBuilder.append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional.lite")
-            }
 
             val clip: ClipData = ClipData.newPlainText("Coordinates Data", stringBuilder)
             clipboard.setPrimaryClip(clip)

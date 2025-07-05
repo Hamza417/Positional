@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.transition.TransitionManager
 import app.simple.positional.R
-import app.simple.positional.activities.subacitivity.MeasuresActivity
+import app.simple.positional.activities.subactivity.MeasuresActivity
 import app.simple.positional.callbacks.BottomSheetSlide
 import app.simple.positional.decorations.corners.DynamicCornerConstraintLayout
 import app.simple.positional.decorations.measure.MeasureMaps
@@ -28,7 +28,7 @@ import app.simple.positional.dialogs.measure.MeasureAdd.Companion.showMeasureAdd
 import app.simple.positional.dialogs.measure.MeasureMenu.Companion.showMeasureMenu
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.extensions.maps.MapsCallbacks
-import app.simple.positional.math.MathExtensions.round
+import app.simple.positional.math.MathExtensions
 import app.simple.positional.math.UnitConverter.toFeet
 import app.simple.positional.math.UnitConverter.toKilometers
 import app.simple.positional.math.UnitConverter.toMiles
@@ -49,7 +49,6 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import app.simple.positional.model.Measure as Measure_Model
 
 class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButtonStateCallbacks {
 
@@ -221,7 +220,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
         crossHair.gone(true)
     }
 
-    private fun setTotalPoints(measure: Measure_Model) {
+    private fun setTotalPoints(measure: app.simple.positional.model.Measure) {
         totalPoints.text = buildString {
             append(getString(R.string.total))
             append(" ")
@@ -229,7 +228,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
         }
     }
 
-    private fun setTotalDistance(measure: Measure_Model) {
+    private fun setTotalDistance(measure: app.simple.positional.model.Measure) {
         totalDistance.text = buildString {
             append(getString(R.string.gps_displacement))
             append(" ")
@@ -240,11 +239,11 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
 
             if (MainPreferences.isMetric()) {
                 if (distance < 1000) {
-                    append(round(distance, 2))
+                    append(MathExtensions.round(distance, 2))
                     append(" ")
                     append(getString(R.string.meter))
                 } else {
-                    append(round(distance.toKilometers(), 2))
+                    append(MathExtensions.round(distance.toKilometers(), 2))
                     append(" ")
                     append(getString(R.string.kilometer))
                 }
@@ -254,7 +253,7 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                     append(" ")
                     append(getString(R.string.feet))
                 } else {
-                    append(round(distance.toMiles(), 2))
+                    append(MathExtensions.round(distance.toMiles(), 2))
                     append(" ")
                     append(getString(R.string.miles))
                 }
@@ -272,21 +271,21 @@ class Measure : ScopedFragment(), FloatingButtonStateCommunicator.FloatingButton
                 currentDistance.text = buildString {
                     if (MainPreferences.isMetric()) {
                         if (distance < 1000) {
-                            append(round(distance, 2))
+                            append(MathExtensions.round(distance, 2))
                             append(" ")
                             append(getString(R.string.meter))
                         } else {
-                            append(round(distance.toKilometers(), 2))
+                            append(MathExtensions.round(distance.toKilometers(), 2))
                             append(" ")
                             append(getString(R.string.kilometer))
                         }
                     } else {
                         if (distance < 1609) {
-                            append(round(distance.toFeet(), 2))
+                            append(MathExtensions.round(distance.toFeet(), 2))
                             append(" ")
                             append(getString(R.string.feet))
                         } else {
-                            append(round(distance.toMiles(), 2))
+                            append(MathExtensions.round(distance.toMiles(), 2))
                             append(" ")
                             append(getString(R.string.miles))
                         }

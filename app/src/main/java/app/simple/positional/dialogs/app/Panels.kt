@@ -13,8 +13,6 @@ import app.simple.positional.adapters.bottombar.BottomBarItems
 import app.simple.positional.callbacks.PanelsCallback
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.model.BottomBar
-import app.simple.positional.ui.panels.Measure
-import app.simple.positional.util.AppUtils
 import app.simple.positional.util.StatusBarHeight
 
 class Panels : CustomBottomSheetDialogFragment() {
@@ -44,12 +42,6 @@ class Panels : CustomBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (AppUtils.isLiteFlavor()) {
-            bottomBarItems?.removeIf {
-                it.tag == Measure.TAG
-            }
-        }
 
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)

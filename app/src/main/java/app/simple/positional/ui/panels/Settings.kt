@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.net.toUri
 import app.simple.positional.R
 import app.simple.positional.activities.subactivity.AccentColorsActivity
 import app.simple.positional.activities.subactivity.ArtsActivity
@@ -45,7 +46,6 @@ import app.simple.positional.dialogs.settings.Units
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.popups.settings.LegalNotesPopupMenu
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.util.AppUtils
 import app.simple.positional.util.LocaleHelper.localeList
 import app.simple.positional.util.PermissionUtils
 import app.simple.positional.util.ViewUtils.gone
@@ -62,7 +62,6 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
     private lateinit var scrollView: PaddingAwareNestedScrollView
     private lateinit var hideRate: DynamicRippleImageButton
-    private lateinit var buyFullContainer: DynamicCornerLinearLayout
     private lateinit var buyFull: DynamicRippleImageButton
     private lateinit var rate: DynamicCornerLinearLayout
     private lateinit var permission: DynamicCornerLinearLayout
@@ -128,8 +127,6 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         hideRate = view.findViewById(R.id.rate_hide)
         rate = view.findViewById(R.id.rate_layout)
         permission = view.findViewById(R.id.permission_layout)
-        buyFullContainer = view.findViewById(R.id.buy_layout)
-        buyFull = view.findViewById(R.id.buy_full_btn)
         unit = view.findViewById(R.id.settings_units)
         locationProvider = view.findViewById(R.id.settings_location_provider)
         language = view.findViewById(R.id.settings_languages)
@@ -178,15 +175,6 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             if (MainPreferences.getShowRatingDialog()) {
                 rate.visible(false)
             }
-        }
-
-        if (AppUtils.isFullFlavor()) {
-            setCoordinatesFormat()
-            buyFullContainer.gone(animate = false)
-        } else {
-            coordinatesFormatContainer.gone()
-            corner.gone()
-            buyFullContainer.visible(animate = false)
         }
 
         permissionNotification()
@@ -299,7 +287,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         github.setOnClickListener {
-            val uri: Uri = Uri.parse("https://github.com/Hamza417/Positional")
+            val uri: Uri = "https://github.com/Hamza417/Positional".toUri()
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
@@ -317,13 +305,13 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         }
 
         telegramGroup.setOnClickListener {
-            val uri: Uri = Uri.parse("https://t.me/pstnl")
+            val uri: Uri = "https://t.me/pstnl".toUri()
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
 
         myOtherApps.setOnClickListener {
-            val uri: Uri = Uri.parse("https://play.google.com/store/apps/dev?id=9002962740272949113")
+            val uri: Uri = "https://play.google.com/store/apps/dev?id=9002962740272949113".toUri()
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
@@ -332,10 +320,6 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
             val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
             intent.putExtra("source", "Buy")
             startActivity(intent)
-        }
-
-        buyFullContainer.setOnClickListener {
-            buyFull.performClick()
         }
 
         toggleSkipSplashScreen.setOnCheckedChangeListener { isChecked ->
@@ -378,7 +362,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
         inure.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(INURE_PLAY_STORE_URL)
+            intent.data = INURE_PLAY_STORE_URL.toUri()
             startActivity(intent)
         }
     }
@@ -431,7 +415,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
          * you can also use BuildConfig.APPLICATION_ID
          */
         val appId: String = requireContext().packageName
-        val rateIntent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appId"))
+        val rateIntent = Intent(Intent.ACTION_VIEW, "market://details?id=$appId".toUri())
         var marketFound = false
 
         /**
@@ -479,7 +463,7 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
          * if GP not present on device, open web browser
          */
         if (!marketFound) {
-            val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appId"))
+            val webIntent = Intent(Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$appId".toUri())
             requireContext().startActivity(webIntent)
         }
     }
@@ -487,8 +471,8 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
     override fun isCoordinatesSet(boolean: Boolean) {
         try {
             toggleCustomLocation.isChecked = boolean
-        } catch (ignored: NullPointerException) {
-        } catch (ignored: UninitializedPropertyAccessException) {
+        } catch (_: NullPointerException) {
+        } catch (_: UninitializedPropertyAccessException) {
         }
     }
 

@@ -20,7 +20,7 @@ class LauncherActivity : BaseActivity(), LicenceStatusCallback {
 
         setContentView(R.layout.activity_launcher)
 
-        if (getLicenceStatus() || BuildConfig.FLAVOR == "lite" || BuildConfig.DEBUG) {
+        if (getLicenceStatus() || BuildConfig.DEBUG) {
             onLicenseCheckCompletion()
         } else {
             supportFragmentManager.beginTransaction()

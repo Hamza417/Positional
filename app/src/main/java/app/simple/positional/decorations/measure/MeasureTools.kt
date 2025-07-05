@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.transition.TransitionInflater
@@ -97,7 +96,7 @@ class MeasureTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPrefer
                 wrap.setImageResource(R.drawable.ic_close_fullscreen)
             }
         } else {
-            if (animate && wrap.visibility != View.GONE) {
+            if (animate && wrap.visibility != GONE) {
                 ImageLoader.setImage(R.drawable.ic_full_screen, wrap, context, 0)
             } else {
                 wrap.setImageResource(R.drawable.ic_full_screen)
@@ -155,8 +154,8 @@ class MeasureTools : DynamicCornerLinearLayout, SharedPreferences.OnSharedPrefer
             TransitionInflater.from(context)
                 .inflateTransition(R.transition.tools_transition))
 
-        val params = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT)
+        val params = FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+            LayoutParams.WRAP_CONTENT)
 
         params.apply {
             gravity = if (MeasurePreferences.isToolsGravityToLeft()) {

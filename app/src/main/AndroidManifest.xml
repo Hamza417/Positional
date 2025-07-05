@@ -370,7 +370,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".activities.subacitivity.MeasuresActivity"
+            android:name=".activities.subactivity.MeasuresActivity"
             android:exported="true" />
 
         <activity
@@ -530,6 +530,21 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/moon_phase_widget_info" />
+        </receiver>
+
+        <receiver
+            android:name=".widgets.TwilightWidget"
+            android:exported="false"
+            android:icon="@drawable/ic_twilight"
+            android:label="@string/twilight">
+
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/twilight_widget_info" />
         </receiver>
 
     </application>

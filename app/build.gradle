@@ -2,49 +2,25 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.devtools.ksp'
 
-// Begin of reading the sensitive data
 def noKeyFound = '"NO_KEY_FOUND"'
 def googleMapsAPIKey = noKeyFound
 def thisAppLicensingKey = noKeyFound
 
-/**
- * Can be used for any API Key
- *
- * If you have a Google Maps API Key, you can create sensitive_data.txt file
- * in project's root directory containing your API keys and this code will
- * handle the changes.
- *
- * The format should look like this in sensitive_data.txt without any quotes
- *
- * googleMapsAPIKey YourKey
- */
-def sensitiveDataFile = file('../sensitive_data.txt')
-Properties sensitiveData = new Properties()
-
-if (sensitiveDataFile.canRead()) {
-    // Read the sensitive data from file sensitive_data.txt
-    sensitiveData.load(new FileInputStream(sensitiveDataFile))
-
-    if (sensitiveData != null) {
-        if (sensitiveData.containsKey('googleMapsAPIKey')) {
-            googleMapsAPIKey = sensitiveData['googleMapsAPIKey']
-        }
-
-        if (sensitiveData.containsKey('thisAppLicensingKey')) {
-            thisAppLicensingKey = sensitiveData['thisAppLicensingKey']
-        }
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localProperties.load(new FileInputStream(localPropertiesFile))
+    if (localProperties['googleMapsAPIKey']) {
+        googleMapsAPIKey = localProperties['googleMapsAPIKey']
+    }
+    if (localProperties['thisAppLicensingKey']) {
+        thisAppLicensingKey = localProperties['thisAppLicensingKey']
     }
 }
 
-/**
- * In this section a reviewer can insert directly his own
- * sensitive data by replacing the string "YOUR_API_KEY_GOES_HERE"
- * Just double click on the string and paste you own data
- */
 if (googleMapsAPIKey == noKeyFound) {
     googleMapsAPIKey = '"YOUR_API_KEY_GOES_HERE"'
 }
-// End of reading the sensitive data
 
 android {
 
@@ -55,8 +31,8 @@ android {
         minSdkVersion 24
         //noinspection OldTargetApi
         targetSdkVersion 35
-        versionCode 181030
-        versionName "v181.0.30"
+        versionCode 20250706
+        versionName "v2025.07.06"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -71,19 +47,6 @@ android {
     bundle {
         language {
             enableSplit = false
-        }
-    }
-
-    flavorDimensions.add("version")
-    productFlavors {
-        lite {
-            dimension "version"
-            applicationIdSuffix ".lite"
-            versionNameSuffix "/lite"
-        }
-
-        full {
-            dimension "version"
         }
     }
 
@@ -144,19 +107,19 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.1'
 
     // Kotlin
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
 
     // Google Services and Default android libs
     implementation 'com.google.android.gms:play-services-location:21.3.0'
     implementation 'com.google.android.gms:play-services-maps:19.2.0'
     implementation 'com.google.android.material:material:1.12.0'
-    implementation 'com.google.maps.android:android-maps-utils:2.2.4'
+    implementation 'com.google.maps.android:android-maps-utils:3.14.0'
     implementation 'com.google.android.play:app-update-ktx:2.1.0'
 
     // Third Party
-    implementation 'org.shredzone.commons:commons-suncalc:3.9'
+    implementation 'org.shredzone.commons:commons-suncalc:3.11'
     implementation 'com.github.Berico-Technologies:Geo-Coordinate-Conversion-Java:360781e5be'
-    implementation 'com.github.vipulasri:timelineview:1.1.5'
+    implementation 'com.github.vipulasri:timelineview:1.2.2'
 
     // Room components
     //noinspection GradleDependency

@@ -1,7 +1,11 @@
 package app.simple.positional.ui.panels
 
 import android.annotation.SuppressLint
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
@@ -13,8 +17,17 @@ import android.text.Spannable
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.Gravity
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -38,7 +51,11 @@ import app.simple.positional.decorations.ripple.DynamicRippleLinearLayout
 import app.simple.positional.decorations.views.Speedometer
 import app.simple.positional.dialogs.app.ErrorDialog
 import app.simple.positional.dialogs.app.LocationParameters
-import app.simple.positional.dialogs.gps.*
+import app.simple.positional.dialogs.gps.CoordinatesExpansion
+import app.simple.positional.dialogs.gps.GPSMenu
+import app.simple.positional.dialogs.gps.LocationExpansion
+import app.simple.positional.dialogs.gps.PinCustomization
+import app.simple.positional.dialogs.gps.TargetCoordinates
 import app.simple.positional.extensions.fragment.ScopedFragment
 import app.simple.positional.extensions.maps.MapsCallbacks
 import app.simple.positional.math.MathExtensions.round
@@ -51,7 +68,6 @@ import app.simple.positional.popups.location.PopupLocationMenu
 import app.simple.positional.popups.miscellaneous.DeletePopupMenu
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.util.AppUtils
 import app.simple.positional.util.ConditionUtils.isNotNull
 import app.simple.positional.util.ConditionUtils.isNull
 import app.simple.positional.util.DMSConverter
@@ -72,7 +88,7 @@ import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 class GPS : ScopedFragment() {
 
@@ -212,8 +228,6 @@ class GPS : ScopedFragment() {
 
         setLocationPin()
         targetMode()
-
-        if (AppUtils.isLiteFlavor()) save.gone()
 
         if (isCustomCoordinate) {
             specifiedLocationTextView.isVisible = true
@@ -424,10 +438,8 @@ class GPS : ScopedFragment() {
             }
 
             override fun onCustomLocationLongPressed(view: View) {
-                if (AppUtils.isFullFlavor()) {
-                    PinCustomization.newInstance(true)
-                            .show(parentFragmentManager, "pin_customization")
-                }
+                PinCustomization.newInstance(true)
+                        .show(parentFragmentManager, "pin_customization")
             }
         })
 
@@ -527,11 +539,6 @@ class GPS : ScopedFragment() {
                     append("${longitude.text}\n\n")
 
                     append("${getString(R.string.gps_address)}: ${address.text}")
-
-                    if (AppUtils.isLiteFlavor()) {
-                        append("\n\nInformation is copied using Positional\n")
-                        append("Get the app from:\nhttps://play.google.com/store/apps/details?id=app.simple.positional")
-                    }
                 }
 
                 val clip: ClipData = ClipData.newPlainText("GPS Data", stringBuilder)

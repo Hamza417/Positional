@@ -8,7 +8,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
 import android.widget.ImageView
@@ -18,7 +23,8 @@ import androidx.fragment.app.Fragment
 import app.simple.positional.BuildConfig
 import app.simple.positional.R
 import app.simple.positional.activities.main.MainActivity
-import app.simple.positional.constants.*
+import app.simple.positional.constants.LauncherBackground
+import app.simple.positional.constants.LocationPins
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.util.BitmapHelper.addLinearGradient
 import app.simple.positional.util.BitmapHelper.addRadialGradient
@@ -57,11 +63,7 @@ class SplashScreen : Fragment() {
 
         if (BuildConfig.DEBUG) {
             @Suppress("SetTextI18n")
-            if (BuildConfig.FLAVOR == "lite") {
-                text.text = "Positional Lite (Debug)"
-            } else {
-                text.text = "Positional (Debug)"
-            }
+            text.text = "Positional (Debug)"
         }
 
         randomDayValue = LauncherBackground.vectorBackground.indices.random()
