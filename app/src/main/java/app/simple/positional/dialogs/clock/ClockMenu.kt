@@ -11,7 +11,6 @@ import app.simple.positional.decorations.ripple.DynamicRippleTextView
 import app.simple.positional.decorations.switchview.SwitchView
 import app.simple.positional.decorations.views.CustomBottomSheetDialogFragment
 import app.simple.positional.preferences.ClockPreferences
-import app.simple.positional.util.AppUtils
 
 class ClockMenu : CustomBottomSheetDialogFragment() {
 
@@ -39,10 +38,6 @@ class ClockMenu : CustomBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        if (AppUtils.isLiteFlavor()) {
-            motionType.visibility = View.GONE
-        }
 
         defaultTimeFormatSwitch.isChecked = ClockPreferences.getDefaultClockTimeFormat()
         secondsPrecisionSwitchView.isChecked = ClockPreferences.isUsingSecondsPrecision()

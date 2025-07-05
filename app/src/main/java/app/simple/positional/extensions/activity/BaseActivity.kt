@@ -25,7 +25,6 @@ import app.simple.positional.preferences.CompassPreferences
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
 import app.simple.positional.singleton.SharedPreferences
-import app.simple.positional.util.AppUtils
 import app.simple.positional.util.ContextUtils
 import app.simple.positional.util.LocaleHelper
 import app.simple.positional.util.ThemeSetter
@@ -87,10 +86,6 @@ open class BaseActivity : AppCompatActivity() {
          * Keeps the instance of current locale of the app
          */
         LocaleHelper.setAppLocale(ConfigurationCompat.getLocales(resources.configuration)[0]!!)
-
-        if (AppUtils.isLiteFlavor()) {
-            resetLitePrefs()
-        }
 
         setTheme()
     }

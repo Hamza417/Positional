@@ -105,7 +105,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
         isCompassRotation = MeasurePreferences.isCompassRotation()
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
-        kotlin.runCatching {
+        runCatching {
             sensorMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)!!
             sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
             haveMagnetometerSensor = true
@@ -301,7 +301,7 @@ class MeasureMaps(context: Context, attrs: AttributeSet) : CustomMaps(context, a
     }
 
     private fun wrap(animate: Boolean) {
-        kotlin.runCatching {
+        runCatching {
             clearAnimation()
             latLng = googleMap?.cameraPosition?.target
             lastZoom = googleMap?.cameraPosition?.zoom!!

@@ -1,4 +1,4 @@
-package app.simple.positional.activities.subacitivity
+package app.simple.positional.activities.subactivity
 
 import android.os.Bundle
 import app.simple.positional.R
@@ -13,7 +13,7 @@ class MeasuresActivity : BaseActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.sub_container, Measures.newInstance(), Measures.TAG)
+                    .replace(R.id.sub_container, Measures.Companion.newInstance(), Measures.Companion.TAG)
                     .commit()
         }
     }

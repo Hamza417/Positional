@@ -10,7 +10,6 @@ import app.simple.positional.R;
 import app.simple.positional.constants.LocationPins;
 import app.simple.positional.model.BottomBar;
 import app.simple.positional.ui.panels.Measure;
-import app.simple.positional.util.AppUtils;
 
 public class BottomBarItems {
 
@@ -26,24 +25,14 @@ public class BottomBarItems {
     public static ArrayList<BottomBar> getBottomBarItems(Context context) {
         ArrayList<BottomBar> list = new ArrayList<>();
 
-        if (AppUtils.INSTANCE.isFullFlavor()) {
-            list.add(new BottomBar(R.drawable.ic_clock, CLOCK, context.getString(R.string.clock), ContextCompat.getColor(context, R.color.time_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_compass, COMPASS, context.getString(R.string.compass), ContextCompat.getColor(context, R.color.compass_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_near_me, DIRECTION, context.getString(R.string.direction), ContextCompat.getColor(context, R.color.direction_bb_color)));
-            list.add(new BottomBar(LocationPins.INSTANCE.getLocationPin(), LOCATION, context.getString(R.string.gps_location), ContextCompat.getColor(context, R.color.location_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_trail_line, TRAIL, context.getString(R.string.trail), ContextCompat.getColor(context, R.color.trail_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_square_foot, MEASURE, context.getString(R.string.measure), ContextCompat.getColor(context, R.color.measure_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_level, LEVEL, context.getString(R.string.level), ContextCompat.getColor(context, R.color.level_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_settings, SETTINGS, context.getString(R.string.settings), ContextCompat.getColor(context, R.color.settings_bb_color)));
-        } else {
-            list.add(new BottomBar(R.drawable.ic_clock, CLOCK, context.getString(R.string.clock), ContextCompat.getColor(context, R.color.time_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_compass, COMPASS, context.getString(R.string.compass), ContextCompat.getColor(context, R.color.compass_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_near_me, DIRECTION, context.getString(R.string.direction), ContextCompat.getColor(context, R.color.direction_bb_color)));
-            list.add(new BottomBar(LocationPins.INSTANCE.getLocationPin(), LOCATION, context.getString(R.string.gps_location), ContextCompat.getColor(context, R.color.location_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_trail_line, TRAIL, context.getString(R.string.trail), ContextCompat.getColor(context, R.color.trail_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_level, LEVEL, context.getString(R.string.level), ContextCompat.getColor(context, R.color.level_bb_color)));
-            list.add(new BottomBar(R.drawable.ic_settings, SETTINGS, context.getString(R.string.settings), ContextCompat.getColor(context, R.color.settings_bb_color)));
-        }
+        list.add(new BottomBar(R.drawable.ic_clock, CLOCK, context.getString(R.string.clock), ContextCompat.getColor(context, R.color.time_bb_color)));
+        list.add(new BottomBar(R.drawable.ic_compass, COMPASS, context.getString(R.string.compass), ContextCompat.getColor(context, R.color.compass_bb_color)));
+        list.add(new BottomBar(R.drawable.ic_near_me, DIRECTION, context.getString(R.string.direction), ContextCompat.getColor(context, R.color.direction_bb_color)));
+        list.add(new BottomBar(LocationPins.INSTANCE.getLocationPin(), LOCATION, context.getString(R.string.gps_location), ContextCompat.getColor(context, R.color.location_bb_color)));
+        list.add(new BottomBar(R.drawable.ic_trail_line, TRAIL, context.getString(R.string.trail), ContextCompat.getColor(context, R.color.trail_bb_color)));
+        list.add(new BottomBar(R.drawable.ic_square_foot, MEASURE, context.getString(R.string.measure), ContextCompat.getColor(context, R.color.measure_bb_color)));
+        list.add(new BottomBar(R.drawable.ic_level, LEVEL, context.getString(R.string.level), ContextCompat.getColor(context, R.color.level_bb_color)));
+        list.add(new BottomBar(R.drawable.ic_settings, SETTINGS, context.getString(R.string.settings), ContextCompat.getColor(context, R.color.settings_bb_color)));
 
         return list;
     }

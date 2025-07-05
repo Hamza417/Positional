@@ -32,7 +32,6 @@ import app.simple.positional.math.UnitConverter.toMiles
 import app.simple.positional.preferences.ClockPreferences
 import app.simple.positional.preferences.GPSPreferences
 import app.simple.positional.preferences.MainPreferences
-import app.simple.positional.util.AppUtils
 import app.simple.positional.util.Direction.getDirectionCodeFromAzimuth
 import app.simple.positional.util.DisplayRefreshRate.getDisplayRefreshRate
 import app.simple.positional.util.HtmlHelper.fromHtml
@@ -43,7 +42,6 @@ import app.simple.positional.util.MoonAngle.getMoonPhaseGraphics
 import app.simple.positional.util.MoonTimeFormatter.formatMoonDate
 import app.simple.positional.util.Ordinal.toOrdinal
 import app.simple.positional.util.TimeFormatter.getTimeWithSeconds
-import app.simple.positional.util.ViewUtils.gone
 import app.simple.positional.viewmodels.viewmodel.LocationViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -170,11 +168,6 @@ class Time : ScopedFragment() {
         calculateAndUpdateData(MainPreferences.getLastCoordinates()[0].toDouble(),
             MainPreferences.getLastCoordinates()[1].toDouble(),
             MainPreferences.getLastAltitude().toDouble())
-
-        if (AppUtils.isLiteFlavor()) {
-            timezoneButton.gone()
-            sunPosition.gone()
-        }
 
         return view
     }
