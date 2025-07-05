@@ -2,49 +2,25 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.google.devtools.ksp'
 
-// Begin of reading the sensitive data
 def noKeyFound = '"NO_KEY_FOUND"'
 def googleMapsAPIKey = noKeyFound
 def thisAppLicensingKey = noKeyFound
 
-/**
- * Can be used for any API Key
- *
- * If you have a Google Maps API Key, you can create sensitive_data.txt file
- * in project's root directory containing your API keys and this code will
- * handle the changes.
- *
- * The format should look like this in sensitive_data.txt without any quotes
- *
- * googleMapsAPIKey YourKey
- */
-def sensitiveDataFile = file('../sensitive_data.txt')
-Properties sensitiveData = new Properties()
-
-if (sensitiveDataFile.canRead()) {
-    // Read the sensitive data from file sensitive_data.txt
-    sensitiveData.load(new FileInputStream(sensitiveDataFile))
-
-    if (sensitiveData != null) {
-        if (sensitiveData.containsKey('googleMapsAPIKey')) {
-            googleMapsAPIKey = sensitiveData['googleMapsAPIKey']
-        }
-
-        if (sensitiveData.containsKey('thisAppLicensingKey')) {
-            thisAppLicensingKey = sensitiveData['thisAppLicensingKey']
-        }
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localProperties.load(new FileInputStream(localPropertiesFile))
+    if (localProperties['googleMapsAPIKey']) {
+        googleMapsAPIKey = localProperties['googleMapsAPIKey']
+    }
+    if (localProperties['thisAppLicensingKey']) {
+        thisAppLicensingKey = localProperties['thisAppLicensingKey']
     }
 }
 
-/**
- * In this section a reviewer can insert directly his own
- * sensitive data by replacing the string "YOUR_API_KEY_GOES_HERE"
- * Just double click on the string and paste you own data
- */
 if (googleMapsAPIKey == noKeyFound) {
     googleMapsAPIKey = '"YOUR_API_KEY_GOES_HERE"'
 }
-// End of reading the sensitive data
 
 android {
 
