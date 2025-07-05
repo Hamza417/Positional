@@ -20,7 +20,7 @@ colors, and many other features that should have been there.
 
 ![API](https://img.shields.io/badge/API-24%2B-%23138D75?style=flat&logo=android)
 
-[![Purchase Here](https://img.shields.io/badge/Full%20Version-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
+[![Purchase Here](https://img.shields.io/badge/Purchase-Play%20Store-2E86C1?style=flat&logo=google%20play)](https://play.google.com/store/apps/details?id=app.simple.positional)
 
 ## Stats
 
