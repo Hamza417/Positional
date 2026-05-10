@@ -71,12 +71,12 @@ public class Measure {
         this.note = note;
     }
 
-    @Nullable
+    @NonNull
     public ArrayList<MeasurePoint> getMeasurePoints() {
         return measurePoints;
     }
 
-    public void setMeasurePoints(@Nullable ArrayList<MeasurePoint> measurePoints) {
+    public void setMeasurePoints(@NonNull ArrayList<MeasurePoint> measurePoints) {
         this.measurePoints = measurePoints;
     }
 

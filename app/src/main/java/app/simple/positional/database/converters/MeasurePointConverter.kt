@@ -5,10 +5,10 @@ import app.simple.positional.model.MeasurePoint
 
 class MeasurePointConverter {
     @TypeConverter
-    fun fromMeasurePoints(measurePoints: ArrayList<MeasurePoint>?): String {
+    fun fromMeasurePoints(measurePoints: ArrayList<MeasurePoint>): String {
         val stringBuilder = StringBuilder()
 
-        if (!measurePoints.isNullOrEmpty()) {
+        if (measurePoints.isNotEmpty()) {
             for (point in measurePoints) {
                 stringBuilder.append(point.convertForDatabase()).append(";")
             }
@@ -20,8 +20,8 @@ class MeasurePointConverter {
     }
 
     @TypeConverter
-    fun toMeasurePoints(data: String?): ArrayList<MeasurePoint> {
-        val measurePoints = ArrayList<MeasurePoint>()
+    fun toMeasurePoints(data: String?): ArrayList<MeasurePoint?> {
+        val measurePoints = ArrayList<MeasurePoint?>()
 
         if (!data.isNullOrEmpty()) {
             val points = data.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'com.google.devtools.ksp'
 
 def noKeyFound = '"NO_KEY_FOUND"'
@@ -10,27 +9,29 @@ def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
     localProperties.load(new FileInputStream(localPropertiesFile))
-    if (localProperties['googleMapsAPIKey']) {
-        googleMapsAPIKey = localProperties['googleMapsAPIKey']
+    if (localProperties['GOOGlE_MAPS_API_KEY']) {
+        googleMapsAPIKey = localProperties['GOOGlE_MAPS_API_KEY']
     }
-    if (localProperties['thisAppLicensingKey']) {
-        thisAppLicensingKey = localProperties['thisAppLicensingKey']
+    if (localProperties['LICENSE_KEY']) {
+        thisAppLicensingKey = localProperties['LICENSE_KEY']
     }
+} else {
+    println("local.properties file not found.")
 }
 
 if (googleMapsAPIKey == noKeyFound) {
-    googleMapsAPIKey = '"YOUR_API_KEY_GOES_HERE"'
+    throw new GradleException("Google Maps API key not found. Please add 'googleMapsAPIKey' to your local.properties file.")
 }
 
 android {
 
-    compileSdk 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId "app.simple.positional"
         minSdkVersion 24
         //noinspection OldTargetApi
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode 20260510
         versionName "v2026.05.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -38,6 +39,7 @@ android {
 
         resValue "string", "googleMapsAPIKey", googleMapsAPIKey
         resValue "string", "thisAppLicensingKey", thisAppLicensingKey
+        resValue "string", "versionName", versionName
 
         ksp {
             arg("room.schemaLocation", "$projectDir/databases/schemas")
@@ -65,12 +67,14 @@ android {
 
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17
+    kotlin {
+        compilerOptions {
+            jvmTarget = "JVM_21"
+        }
     }
 
     namespace 'app.simple.positional'
@@ -79,10 +83,7 @@ android {
         aidl true
         buildConfig true
         viewBinding false
-    }
-
-    applicationVariants.configureEach { variant ->
-        variant.resValue "string", "versionName", variant.versionName
+        resValues true
     }
 }
 
@@ -105,6 +106,7 @@ dependencies {
     implementation 'androidx.webkit:webkit:1.16.0'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.10.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Kotlin
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0'
@@ -118,16 +120,13 @@ dependencies {
 
     // Third Party
     implementation 'org.shredzone.commons:commons-suncalc:3.11'
-    implementation 'com.github.Berico-Technologies:Geo-Coordinate-Conversion-Java:360781e5be'
+    implementation 'com.github.kylecorry31:Geo-Coordinate-Conversion-Java:360781e5be'
     implementation 'com.github.vipulasri:timelineview:1.2.2'
 
     // Room components
-    //noinspection GradleDependency
-    implementation "androidx.room:room-ktx:2.6.1"
-    //noinspection GradleDependency,KaptUsageInsteadOfKsp
-    ksp "androidx.room:room-compiler:2.6.1"
-    //noinspection GradleDependency
-    androidTestImplementation "androidx.room:room-testing:2.6.1"
+    implementation "androidx.room:room-ktx:2.8.4"
+    ksp "androidx.room:room-compiler:2.8.4"
+    androidTestImplementation "androidx.room:room-testing:2.8.4"
 
     // Leak Canary -- debugImplementation because LeakCanary should only run in debug builds.
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
