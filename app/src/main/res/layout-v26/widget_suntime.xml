@@ -47,9 +47,6 @@
 
     </LinearLayout>
 
-    <!-- Compound Drawables are not supported by
-            AppWidget class and RemoteViews -->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +54,7 @@
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-
+        <!-- Sunrise -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -74,16 +71,21 @@
 
             <TextView
                 android:id="@+id/widget_sunrise"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:autoSizeMaxTextSize="16sp"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:fontFamily="@font/regular"
-                android:gravity="center_horizontal"
+                android:gravity="center"
+                android:maxLines="1"
                 android:textColor="@color/textTertiary" />
 
         </LinearLayout>
 
+        <!-- Solar Noon -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -100,16 +102,21 @@
 
             <TextView
                 android:id="@+id/widget_sun_noon"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:autoSizeMaxTextSize="16sp"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:fontFamily="@font/regular"
-                android:gravity="center_horizontal"
+                android:gravity="center"
+                android:maxLines="1"
                 android:textColor="@color/textTertiary" />
 
         </LinearLayout>
 
+        <!-- Sunset -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -126,16 +133,21 @@
 
             <TextView
                 android:id="@+id/widget_sunset"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:autoSizeMaxTextSize="16sp"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:fontFamily="@font/regular"
-                android:gravity="center_horizontal"
+                android:gravity="center"
+                android:maxLines="1"
                 android:textColor="@color/textTertiary" />
 
         </LinearLayout>
 
+        <!-- Solar Nadir -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -152,12 +164,16 @@
 
             <TextView
                 android:id="@+id/widget_sun_nadir"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginTop="10dp"
+                android:autoSizeMaxTextSize="16sp"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeStepGranularity="1sp"
+                android:autoSizeTextType="uniform"
                 android:fontFamily="@font/regular"
-                android:gravity="center_horizontal"
+                android:gravity="center"
+                android:maxLines="1"
                 android:textColor="@color/textTertiary" />
 
         </LinearLayout>
@@ -165,4 +181,3 @@
     </LinearLayout>
 
 </LinearLayout>
-
