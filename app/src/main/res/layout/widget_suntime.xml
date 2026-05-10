@@ -80,7 +80,8 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/regular"
                 android:gravity="center_horizontal"
-                android:textColor="@color/textTertiary" />
+                android:textColor="@color/textTertiary"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -106,7 +107,8 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/regular"
                 android:gravity="center_horizontal"
-                android:textColor="@color/textTertiary" />
+                android:textColor="@color/textTertiary"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -132,7 +134,8 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/regular"
                 android:gravity="center_horizontal"
-                android:textColor="@color/textTertiary" />
+                android:textColor="@color/textTertiary"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
@@ -158,7 +161,8 @@
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/regular"
                 android:gravity="center_horizontal"
-                android:textColor="@color/textTertiary" />
+                android:textColor="@color/textTertiary"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
