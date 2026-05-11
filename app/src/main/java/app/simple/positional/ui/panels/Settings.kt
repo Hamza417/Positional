@@ -62,7 +62,6 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
 
     private lateinit var scrollView: PaddingAwareNestedScrollView
     private lateinit var hideRate: DynamicRippleImageButton
-    private lateinit var buyFull: DynamicRippleImageButton
     private lateinit var rate: DynamicCornerLinearLayout
     private lateinit var permission: DynamicCornerLinearLayout
     private lateinit var unit: DynamicRippleLinearLayout
@@ -313,12 +312,6 @@ class Settings : ScopedFragment(), CoordinatesCallback, PopupMenuCallback {
         myOtherApps.setOnClickListener {
             val uri: Uri = "https://play.google.com/store/apps/dev?id=9002962740272949113".toUri()
             val intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(intent)
-        }
-
-        buyFull.setOnClickListener {
-            val intent = Intent(requireActivity(), WebPageViewerActivity::class.java)
-            intent.putExtra("source", "Buy")
             startActivity(intent)
         }
 
