@@ -15,7 +15,7 @@ interface MeasureDao {
     fun getAllMeasures(): MutableList<Measure>
 
     @Query("SELECT * FROM measures WHERE date_added = :date")
-    fun getMeasureById(date: Long): Measure
+    fun getMeasureById(date: Long): Measure?
 
     @Delete
     suspend fun deleteMeasure(measure: Measure)
